@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAUH//61U\u003d",
+        "filename": "exynos4/exynos4210/liblights/lights.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 3358
+      },
+      "writtenOn": "2012-07-02T22:59:38Z",
+      "side": 1,
+      "message": "load_settings() isn\u0027t necessary since g_enable_touchlight isn\u0027t used with this patch.",
+      "revId": "d5b55e3611faef5fe9091d4aa8b0a9b6fa1b0ecd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
