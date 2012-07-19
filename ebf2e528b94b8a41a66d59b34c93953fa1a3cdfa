@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAVX///fA\u003d",
+        "filename": "exynos3/s5pc110/include/videodev2_samsung.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2012-07-19T14:42:27Z",
+      "side": 1,
+      "message": "I\u0027ll probably remove this, as audio, camera and sensors are device specific atm",
+      "parentUuid": "AAAAVX///ng\u003d",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAVX///nQ\u003d",
         "filename": "exynos3/s5pc110/libaudio/Android.mk",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-07-19T07:02:39Z",
       "side": 1,
       "message": "Change to: \n\nLOCAL_MODULE :\u003d audio.primary.$(TARGET_BOARD_PLATFORM)",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///e8\u003d",
+        "filename": "exynos3/s5pc110/libaudio/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2012-07-19T14:42:27Z",
+      "side": 1,
+      "message": "Not built.",
+      "parentUuid": "AAAAVX///nQ\u003d",
       "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAVX///e0\u003d",
+        "filename": "exynos3/s5pc110/libaudio/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2012-07-19T14:42:27Z",
+      "side": 1,
+      "message": "I see it\u0027s changed in the device specific libaudio, and this isn\u0027t built anyway",
+      "parentUuid": "AAAAVX///nU\u003d",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAVX///nk\u003d",
         "filename": "exynos3/s5pc110/libaudio/Android.mk",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2012-07-19T07:02:39Z",
       "side": 1,
       "message": "Change to:\n\nLOCAL_MODULE :\u003d audio_policy.$(TARGET_BOARD_PLATFORM)",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///e4\u003d",
+        "filename": "exynos3/s5pc110/libaudio/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2012-07-19T14:42:27Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "AAAAVX///nk\u003d",
       "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAVX///ew\u003d",
+        "filename": "exynos3/s5pc110/libaudio/AudioHardware.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2012-07-19T14:42:27Z",
+      "side": 1,
+      "message": "Not built from here.",
+      "parentUuid": "AAAAVX///nM\u003d",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAVX///nI\u003d",
         "filename": "exynos3/s5pc110/libsensors/Android.mk",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2012-07-19T07:02:39Z",
       "side": 1,
       "message": "Change to:\n\nLOCAL_MODULE :\u003d sensors.$(TARGET_BOARD_PLATFORM)",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///es\u003d",
+        "filename": "exynos3/s5pc110/libsensors/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2012-07-19T14:42:27Z",
+      "side": 1,
+      "message": "Same as others (ain\u0027t built)",
+      "parentUuid": "AAAAVX///nI\u003d",
       "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
