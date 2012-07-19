@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAVX///ng\u003d",
+        "filename": "exynos3/s5pc110/include/videodev2_samsung.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 2581
+      },
+      "writtenOn": "2012-07-19T07:02:39Z",
+      "side": 1,
+      "message": "epicmtd camera needs another define here.\n\n#define V4L2_CID_CAMERA_GPS_PROCESSINGMETHOD   (V4L2_CID_CAMERA_CLASS_BASE + 35)",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///nQ\u003d",
+        "filename": "exynos3/s5pc110/libaudio/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2581
+      },
+      "writtenOn": "2012-07-19T07:02:39Z",
+      "side": 1,
+      "message": "Change to: \n\nLOCAL_MODULE :\u003d audio.primary.$(TARGET_BOARD_PLATFORM)",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///nU\u003d",
+        "filename": "exynos3/s5pc110/libaudio/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2581
+      },
+      "writtenOn": "2012-07-19T07:02:39Z",
+      "side": 1,
+      "message": "Need a way to use the pre-jb buffer sizes, the new ones don\u0027t work on epicmtd.\n\nifeq ($(AUDIO_HW_OUT_LARGE_BUFFER),true)\n    LOCAL_CFLAGS +\u003d -DAUDIO_HW_OUT_LARGE_BUFFER\nendif",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///nk\u003d",
+        "filename": "exynos3/s5pc110/libaudio/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2581
+      },
+      "writtenOn": "2012-07-19T07:02:39Z",
+      "side": 1,
+      "message": "Change to:\n\nLOCAL_MODULE :\u003d audio_policy.$(TARGET_BOARD_PLATFORM)",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///nM\u003d",
+        "filename": "exynos3/s5pc110/libaudio/AudioHardware.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2581
+      },
+      "writtenOn": "2012-07-19T07:02:39Z",
+      "side": 1,
+      "message": "epicmtd audio does not work with new buffer sizes, make this configurable someway:\n\n #ifdef AUDIO_HW_OUT_LARGE_BUFFER\n #define AUDIO_HW_OUT_PERIOD_SZ 1024\n #define AUDIO_HW_OUT_PERIOD_CNT 4\n #else\n #define AUDIO_HW_OUT_PERIOD_SZ 880\n #define AUDIO_HW_OUT_PERIOD_CNT 2\n #endif",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///nI\u003d",
+        "filename": "exynos3/s5pc110/libsensors/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2581
+      },
+      "writtenOn": "2012-07-19T07:02:39Z",
+      "side": 1,
+      "message": "Change to:\n\nLOCAL_MODULE :\u003d sensors.$(TARGET_BOARD_PLATFORM)",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
