@@ -101,6 +101,23 @@
       "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAVX///m0\u003d",
+        "filename": "exynos3/s5pc110/sec_mm/sec_omx/sec_codecs/video/mfc_c110/include/SsbSipMfcApi.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 883
+      },
+      "writtenOn": "2012-07-19T07:09:20Z",
+      "side": 1,
+      "message": "this need to ifdef too",
+      "revId": "ebf2e528b94b8a41a66d59b34c93953fa1a3cdfa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
