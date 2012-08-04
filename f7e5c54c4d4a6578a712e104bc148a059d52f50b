@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAVn//+d8\u003d",
+        "filename": "exynos4/hal/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2793
+      },
+      "writtenOn": "2012-08-04T01:29:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this change just be handled by removing BOARD_USES_PROPRIETARY_LIBFIMC from boardconfig?",
+      "revId": "f7e5c54c4d4a6578a712e104bc148a059d52f50b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
