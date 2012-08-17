@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAWH//+6c\u003d",
+        "filename": "exynos3/s5pc110/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2012-08-17T15:42:08Z",
+      "side": 1,
+      "message": "Also no need to guard here",
+      "revId": "a5d714d3417e8750c1fa5e05b10326311bb5e263",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAWH//+6Q\u003d",
+        "filename": "exynos3/s5pc110/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2012-08-17T15:42:08Z",
+      "side": 1,
+      "message": "Might as well just use\n\ninclude $(all-subdir-makefiles)\n\ninstead of specifying each",
+      "revId": "a5d714d3417e8750c1fa5e05b10326311bb5e263",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAWH//+6g\u003d",
+        "filename": "s5pc110.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2012-08-17T15:42:08Z",
+      "side": 1,
+      "message": "Already a guard in Android.mk, no need to guard here again",
+      "revId": "a5d714d3417e8750c1fa5e05b10326311bb5e263",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
