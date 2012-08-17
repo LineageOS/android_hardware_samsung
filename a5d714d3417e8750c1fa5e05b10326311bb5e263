@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAWH//+4Y\u003d",
+        "filename": "exynos3/s5pc110/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2012-08-17T17:08:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAWH//+6c\u003d",
+      "revId": "a5d714d3417e8750c1fa5e05b10326311bb5e263",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAWH//+6Q\u003d",
         "filename": "exynos3/s5pc110/Android.mk",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAWH//+4Q\u003d",
+        "filename": "exynos3/s5pc110/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2012-08-17T17:08:34Z",
+      "side": 1,
+      "message": "I did this because initially i put everything from crespo in here, but we don\u0027t want to build everything from here.",
+      "parentUuid": "AAAAWH//+6Q\u003d",
+      "revId": "a5d714d3417e8750c1fa5e05b10326311bb5e263",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAWH//+6g\u003d",
         "filename": "s5pc110.mk",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2012-08-17T15:42:08Z",
       "side": 1,
       "message": "Already a guard in Android.mk, no need to guard here again",
+      "revId": "a5d714d3417e8750c1fa5e05b10326311bb5e263",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAWH//+4c\u003d",
+        "filename": "s5pc110.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2012-08-17T17:08:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAWH//+6g\u003d",
       "revId": "a5d714d3417e8750c1fa5e05b10326311bb5e263",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
