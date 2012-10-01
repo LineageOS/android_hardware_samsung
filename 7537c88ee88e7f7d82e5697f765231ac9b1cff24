@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAYn///LQ\u003d",
+        "filename": "exynos4/hal/libhwcomposer/SecHWCUtils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4421
+      },
+      "writtenOn": "2012-10-01T16:33:48Z",
+      "side": 1,
+      "message": "Minor comment: fix comment to \"57fps * 60\".",
+      "revId": "7537c88ee88e7f7d82e5697f765231ac9b1cff24",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
