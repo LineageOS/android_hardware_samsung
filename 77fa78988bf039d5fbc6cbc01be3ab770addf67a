@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAaH//9g4\u003d",
+        "filename": "exynos3/s5pc110/sec_mm/sec_omx/sec_omx_component/video/dec/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2793
+      },
+      "writtenOn": "2012-10-26T22:12:43Z",
+      "side": 1,
+      "message": "What is it that allows hwdec with tvout on just these devices?  The fact that they are HDMI and not analog?\n\nIf so, perhaps this should get keyed off of one of the HDMI boardconfig entries?\n\nI really need to get caught up on Infuse as this may also be valid on Infuse.",
+      "revId": "77fa78988bf039d5fbc6cbc01be3ab770addf67a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
