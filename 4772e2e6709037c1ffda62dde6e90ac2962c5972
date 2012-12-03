@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAa3//4uo\u003d",
+        "filename": "exynos4/hal/libhwcomposer/SecHWCUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 2793
+      },
+      "writtenOn": "2012-12-03T00:44:09Z",
+      "side": 1,
+      "message": "What\u0027s this doing?",
+      "revId": "4772e2e6709037c1ffda62dde6e90ac2962c5972",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAa3//4uk\u003d",
+        "filename": "exynos4/hal/libhwcomposer/SecHWCUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 2793
+      },
+      "writtenOn": "2012-12-03T00:44:09Z",
+      "side": 1,
+      "message": "And this...",
+      "revId": "4772e2e6709037c1ffda62dde6e90ac2962c5972",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAa3//4ug\u003d",
+        "filename": "exynos4/hal/libhwcomposer/SecHWCUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 2793
+      },
+      "writtenOn": "2012-12-03T00:44:09Z",
+      "side": 1,
+      "message": "This will fail on N7000.  Don\u0027t think it\u0027s necessary either.",
+      "revId": "4772e2e6709037c1ffda62dde6e90ac2962c5972",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
