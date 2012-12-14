@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAbH///QI\u003d",
+        "filename": "exynos4/hal/libcamera/SecCameraHWInterface.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 2035
+      },
+      "writtenOn": "2012-12-14T05:30:47Z",
+      "side": 1,
+      "message": "requires KEY_SUPPORTED_FOCUS_MODES",
+      "revId": "c3c833ec148b5295f126a60db33a46a6bfb54af1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
