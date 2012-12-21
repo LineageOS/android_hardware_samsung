@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAbH//88s\u003d",
+        "filename": "exynos4/hal/libfimg3x/FimgApi.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2793
+      },
+      "writtenOn": "2012-12-21T04:35:56Z",
+      "side": 1,
+      "message": "BAD!",
+      "revId": "820a6be1faacf3742bf3ee14c427f68bb9d9903f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
