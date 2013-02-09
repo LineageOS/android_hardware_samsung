@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAdH//+Uc\u003d",
+        "filename": "exynos3/s5pc110/power/power.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1381
+      },
+      "writtenOn": "2013-02-09T23:36:13Z",
+      "side": 1,
+      "message": "assigning a pointer to a char?",
+      "revId": "8c32df0dbe7b0d58bc6e35c5ad147e167fadf921",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
