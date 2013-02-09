@@ -16,6 +16,24 @@
       "revId": "8c32df0dbe7b0d58bc6e35c5ad147e167fadf921",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAdH//+UU\u003d",
+        "filename": "exynos3/s5pc110/power/power.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 401
+      },
+      "writtenOn": "2013-02-09T23:44:43Z",
+      "side": 1,
+      "message": "Heh it \"works\"\n\nIt\u0027s still early here, hence no +1 xD",
+      "parentUuid": "AAAAdH//+Uc\u003d",
+      "revId": "8c32df0dbe7b0d58bc6e35c5ad147e167fadf921",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
