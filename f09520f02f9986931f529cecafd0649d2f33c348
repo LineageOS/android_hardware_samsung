@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAdX//9ns\u003d",
+        "filename": "exynos4/hal/libsecion/libsecion.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 2874
+      },
+      "writtenOn": "2013-02-18T18:06:04Z",
+      "side": 1,
+      "message": "White spaces",
+      "revId": "f09520f02f9986931f529cecafd0649d2f33c348",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
