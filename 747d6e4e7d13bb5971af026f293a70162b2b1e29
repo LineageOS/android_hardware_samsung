@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "hr9DM2w",
+        "filename": "macloader/macloader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1850
+      },
+      "writtenOn": "2013-05-14T22:43:33Z",
+      "side": 1,
+      "message": "Function could be static.",
+      "revId": "747d6e4e7d13bb5971af026f293a70162b2b1e29",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "hl9bD1U",
+        "filename": "macloader/macloader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1850
+      },
+      "writtenOn": "2013-05-14T22:43:33Z",
+      "side": 1,
+      "message": "Extra spaces between parentheses (also happens at other places).",
+      "revId": "747d6e4e7d13bb5971af026f293a70162b2b1e29",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "hn9ey0Y",
+        "filename": "macloader/macloader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1850
+      },
+      "writtenOn": "2013-05-14T22:43:33Z",
+      "side": 1,
+      "message": "Function could be static.",
+      "revId": "747d6e4e7d13bb5971af026f293a70162b2b1e29",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "hh8DRxE",
+        "filename": "macloader/macloader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1850
+      },
+      "writtenOn": "2013-05-14T22:43:33Z",
+      "side": 1,
+      "message": "Initialization of those is not needed, as they will be overriden by the calls to get_system_uid() and get_system_gid() in any case.",
+      "revId": "747d6e4e7d13bb5971af026f293a70162b2b1e29",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "hj9YQ1Y",
+        "filename": "macloader/macloader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1850
+      },
+      "writtenOn": "2013-05-14T22:43:33Z",
+      "side": 1,
+      "message": "Extra whitespace at end of line.",
+      "revId": "747d6e4e7d13bb5971af026f293a70162b2b1e29",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "hh9Vhxw",
+        "filename": "macloader/macloader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1850
+      },
+      "writtenOn": "2013-05-14T22:43:33Z",
+      "side": 1,
+      "message": "You should check that system_uid and system_gid are not -1 before attempting to chown(). If one of them is -1, maybe you should fail as if chown() had failed.",
+      "revId": "747d6e4e7d13bb5971af026f293a70162b2b1e29",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
