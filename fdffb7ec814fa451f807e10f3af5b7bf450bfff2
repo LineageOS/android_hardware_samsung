@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dac4157f_4769ed8a",
+        "filename": "ril/xmm6260/libril/ril_commands.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2013-07-07T20:50:21Z",
+      "side": 1,
+      "message": "{RIL_REQUEST_VOICE_RADIO_TECH, dispatchVoid, responseInts}",
+      "revId": "fdffb7ec814fa451f807e10f3af5b7bf450bfff2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
