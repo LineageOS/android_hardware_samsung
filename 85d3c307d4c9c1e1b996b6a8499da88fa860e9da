@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dac4157f_47a1eca8",
+        "filename": "exynos4/hal/libhwc/hwc.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2013-07-08T17:37:07Z",
+      "side": 1,
+      "message": "needs s3cfb updates (kernel)",
+      "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dac4157f_27a6f8c1",
+        "filename": "exynos4/hal/libhwc/hwc.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2013-07-08T17:37:07Z",
+      "side": 1,
+      "message": "commented because we\u0027ve no fence support",
+      "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dac4157f_07abf48a",
+        "filename": "exynos4/hal/libhwc/hwc.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2256,
+      "author": {
+        "id": 523
+      },
+      "writtenOn": "2013-07-08T17:37:07Z",
+      "side": 1,
+      "message": "changed to match current 4412 kernel",
+      "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
