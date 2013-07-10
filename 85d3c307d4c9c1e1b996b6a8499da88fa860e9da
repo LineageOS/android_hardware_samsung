@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "dac4157f_90497cd3",
+        "filename": "exynos4/hal/include/exynos_format.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-07-10T22:10:54Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dac4157f_b03c8030",
+        "filename": "exynos4/hal/include/videodev2_exynos_media.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-07-10T22:10:54Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dac4157f_f039d842",
+        "filename": "exynos4/hal/libexynosutils/exynos5_format_v4l2.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-07-10T22:10:54Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dac4157f_10356c45",
+        "filename": "exynos4/hal/libfimc/exynos_fimc.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-07-10T22:10:54Z",
+      "side": 1,
+      "message": "Whitespaces",
+      "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dac4157f_47a1eca8",
         "filename": "exynos4/hal/libhwc/hwc.cpp",
         "patchSetId": 6
@@ -13,6 +81,23 @@
       "writtenOn": "2013-07-08T17:37:07Z",
       "side": 1,
       "message": "needs s3cfb updates (kernel)",
+      "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dac4157f_30307056",
+        "filename": "exynos4/hal/libhwc/hwc.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-07-10T22:10:54Z",
+      "side": 1,
+      "message": "Whitespace",
       "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
