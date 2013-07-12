@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "dac4157f_a1f670d5",
+        "filename": "exynos4/hal/libhwc/hwc.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 4795
+      },
+      "writtenOn": "2013-07-12T02:02:31Z",
+      "side": 1,
+      "message": "This may need to be changed for other screens that S2\u0027s.",
+      "revId": "85d3c307d4c9c1e1b996b6a8499da88fa860e9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dac4157f_47a1eca8",
         "filename": "exynos4/hal/libhwc/hwc.cpp",
         "patchSetId": 6
