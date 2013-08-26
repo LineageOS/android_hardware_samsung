@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baee8101_7c2017f8",
+        "filename": "cmhw/org/cyanogenmod/hardware/VibratorHW.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 883
+      },
+      "writtenOn": "2013-08-26T04:24:30Z",
+      "side": 1,
+      "message": "only include this, some devices don\u0027t include this thing.",
+      "revId": "19ede2c73898a2a74486ef0f2070bbfd00d8eb2f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_5c1d53bc",
+        "filename": "cmhw/org/cyanogenmod/hardware/VibratorHW.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 883
+      },
+      "writtenOn": "2013-08-26T04:24:30Z",
+      "side": 1,
+      "message": "a.exist(); only.",
+      "revId": "19ede2c73898a2a74486ef0f2070bbfd00d8eb2f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
