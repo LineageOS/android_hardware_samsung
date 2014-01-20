@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a5ae5dd_e6a48109",
+        "filename": "ril/xmm6260/libril/ril_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 6473
+      },
+      "writtenOn": "2014-01-20T05:05:47Z",
+      "side": 1,
+      "message": "Whitespace! :P",
+      "revId": "f92344d9009db7de1850ccb34ec7288cd03c06fe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
