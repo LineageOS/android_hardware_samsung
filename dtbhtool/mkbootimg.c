@@ -67,6 +67,7 @@ int usage(void)
             "       [ --pagesize <pagesize> ]\n"
             "       [ --ramdisk_offset <address> ]\n"
             "       [ --dt <filename> ]\n"
+            "       [ --signature <filename> ]\n"
             "       -o|--output <filename>\n"
             );
     return 1;
@@ -109,6 +110,8 @@ int main(int argc, char **argv)
     char *board = "";
     char *dt_fn = 0;
     void *dt_data = 0;
+    char *sig_fn = 0;
+    void *sig_data = 0;
     unsigned pagesize = 2048;
     int fd;
     SHA_CTX ctx;
@@ -162,6 +165,8 @@ int main(int argc, char **argv)
             }
         } else if(!strcmp(arg, "--dt")) {
             dt_fn = val;
+        } else if(!strcmp(arg, "--signature")) {
+            sig_fn = val;
         } else {
             return usage();
         }
@@ -236,6 +241,14 @@ int main(int argc, char **argv)
         }
     }
 
+    if(sig_fn) {
+        sig_data = load_file(sig_fn, 0);
+        if (sig_data == 0) {
+            fprintf(stderr,"error: could not load signature '%s'\n", sig_fn);
+            return 1;
+        }
+    }
+
     /* put a hash of the contents in the header so boot images can be
      * differentiated based on their first 2k.
      */
@@ -278,6 +291,11 @@ int main(int argc, char **argv)
         if(write(fd, dt_data, hdr.dt_size) != hdr.dt_size) goto fail;
         if(write_padding(fd, pagesize, hdr.dt_size)) goto fail;
     }
+
+    if(sig_data) {
+        if(write(fd, sig_data, 256) != 256) goto fail;
+    }
+
     return 0;
 
 fail:

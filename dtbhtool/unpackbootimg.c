@@ -203,7 +203,19 @@ int main(int argc, char** argv)
     total_read += header.dt_size;
     fwrite(dt, header.dt_size, 1, r);
     fclose(d);
-    
+
+    total_read += read_padding(f, header.dt_size, pagesize);
+
+    sprintf(tmp, "%s/%s", directory, basename(filename));
+    strcat(tmp, "-signature");
+    FILE *fsig = fopen(tmp, "wb");
+    byte* bsig = (byte*)malloc(256);
+    //printf("Reading signature...\n");
+    fread(bsig, 256, 1, f);
+    total_read += 256;
+    fwrite(bsig, 256, 1, r);
+    fclose(fsig);
+
     fclose(f);
     
     //printf("Total Read: %d\n", total_read);
