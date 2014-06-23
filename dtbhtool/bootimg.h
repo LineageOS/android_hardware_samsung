@@ -61,6 +61,8 @@ struct boot_img_hdr
 ** +-----------------+
 ** | device tree     | p pages
 ** +-----------------+
+** | signature       | 256 bytes
+** +-----------------+
 **
 ** n = (kernel_size + page_size - 1) / page_size
 ** m = (ramdisk_size + page_size - 1) / page_size
