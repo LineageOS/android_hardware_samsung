@@ -1,6 +1,7 @@
 /* tools/mkbootimg/mkbootimg.c
 **
 ** Copyright 2007, The Android Open Source Project
+** Copyright 2013, Sony Mobile Communications
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -13,6 +14,9 @@
 ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ** See the License for the specific language governing permissions and
 ** limitations under the License.
+**
+** June 2014, Ketut Putu Kumajaya
+** Modified for Samsung Exynos DTBH, based on mkqcdtbootimg from Sony
 */
 
 #include <stdio.h>
@@ -22,8 +26,80 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#include <sys/types.h>
+#include <arpa/inet.h>
+#include <assert.h>
+#include <dirent.h>
+#include <err.h>
+#include <stdint.h>
+
+#include "libfdt.h"
 #include "mincrypt/sha.h"
 #include "bootimg.h"
+
+#define DTBH_MAGIC         "DTBH"
+#define DTBH_VERSION       2
+#define DTBH_PLATFORM      "k3g"
+#define DTBH_SUBTYPE       "k3g_eur_open"
+/* Hardcoded entry */
+#define DTBH_PLATFORM_CODE 0x1e92
+#define DTBH_SUBTYPE_CODE  0x7d64f612
+
+struct dt_blob;
+
+/* DTBH_MAGIC + DTBH_VERSION + DTB counts */
+#define DT_HEADER_PHYS_SIZE 12
+
+/* Samsung K 3G EUR revision 10's dts:
+ * model = "Samsung K 3G EUR revision 10 board based on EXYNOS5422";
+ * model_info-chip = <5422>;
+ * model_info-platform = "k3g";
+ * model_info-subtype = "k3g_eur_open";
+ * model_info-hw_rev = <10>;
+ * model_info-hw_rev_end = <255>;
+ * compatible = "samsung,K 3G EUR,r04", "samsung,exynos5422";
+ */
+
+/*
+ * keep the eight uint32_t entries first in this struct so we can memcpy them to the file
+ */
+#define DT_ENTRY_PHYS_SIZE (sizeof(uint32_t) * 8)
+struct dt_entry {
+    uint32_t chip;
+    uint32_t platform;
+    uint32_t subtype;
+    uint32_t hw_rev;
+    uint32_t hw_rev_end;
+    uint32_t offset;
+    uint32_t size; /* including padding */
+    uint32_t space;
+
+    struct dt_blob *blob;
+};
+
+/*
+ * Comparator for sorting dt_entries
+ */
+static int dt_entry_cmp(const void *ap, const void *bp)
+{
+    struct dt_entry *a = (struct dt_entry*)ap;
+    struct dt_entry *b = (struct dt_entry*)bp;
+
+    if (a->chip != b->chip)
+        return a->chip - b->chip;
+    return a->hw_rev - b->hw_rev;
+}
+
+/*
+ * In memory representation of a dtb blob
+ */
+struct dt_blob {
+    uint32_t size;
+    uint32_t offset;
+
+    void *payload;
+    struct dt_blob *next;
+};
 
 static void *load_file(const char *fn, unsigned *_sz)
 {
@@ -55,6 +131,192 @@ oops:
     return 0;
 }
 
+static void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz)
+{
+    const unsigned pagemask = pagesize - 1;
+    struct dt_entry *new_entries;
+    struct dt_entry *entries = NULL;
+    struct dt_entry *entry;
+    struct dt_blob *blob;
+    struct dt_blob *blob_list = NULL;
+    struct dt_blob *last_blob = NULL;
+    struct dirent *de;
+    unsigned new_count;
+    unsigned entry_count = 0;
+    unsigned offset;
+    unsigned dtb_sz;
+    unsigned hdr_sz = DT_HEADER_PHYS_SIZE;
+    uint32_t version = DTBH_VERSION;
+    unsigned blob_sz = 0;
+    char fname[PATH_MAX];
+    const unsigned *prop_chip;
+    const unsigned *prop_platform;
+    const unsigned *prop_subtype;
+    const unsigned *prop_hw_rev;
+    const unsigned *prop_hw_rev_end;
+    int namlen;
+    int len;
+    void *dtb;
+    char *dtbh;
+    DIR *dir;
+    unsigned c;
+
+    dir = opendir(dtb_path);
+
+    if (dir == NULL)
+        err(1, "failed to open '%s'", dtb_path);
+
+    while ((de = readdir(dir)) != NULL) {
+        namlen = strlen(de->d_name);
+        if (namlen < 4 || strcmp(&de->d_name[namlen - 4], ".dtb"))
+            continue;
+
+        snprintf(fname, sizeof(fname), "%s/%s", dtb_path, de->d_name);
+
+        dtb = load_file(fname, &dtb_sz);
+        if (dtb == NULL)
+            err(1, "failed to read dtb '%s'", fname);
+
+        if (fdt_check_header(dtb) != 0) {
+            warnx("'%s' is not a valid dtb, skipping", fname);
+            free(dtb);
+            continue;
+        }
+
+        offset = fdt_path_offset(dtb, "/");
+        prop_chip = fdt_getprop(dtb, offset, "model_info-chip", &len);
+        if (len % (sizeof(uint32_t)) != 0) {
+            warnx("model_info-chip of %s is of invalid size, skipping", fname);
+            free(dtb);
+            continue;
+        }
+
+        prop_platform = fdt_getprop(dtb, offset, "model_info-platform", &len);
+        if (strcmp((char *)&prop_platform[0], DTBH_PLATFORM)) {
+            warnx("model_info-platform of %s is invalid, skipping", fname);
+            free(dtb);
+            continue;
+        }
+
+        prop_subtype = fdt_getprop(dtb, offset, "model_info-subtype", &len);
+        if (strcmp((char *)&prop_subtype[0], DTBH_SUBTYPE)) {
+            warnx("model_info-subtype of %s is invalid, skipping", fname);
+            free(dtb);
+            continue;
+        }
+
+        prop_hw_rev = fdt_getprop(dtb, offset, "model_info-hw_rev", &len);
+        if (len % (sizeof(uint32_t)) != 0) {
+            warnx("model_info-hw_rev of %s is of invalid size, skipping", fname);
+            free(dtb);
+            continue;
+        }
+
+        prop_hw_rev_end = fdt_getprop(dtb, offset, "model_info-hw_rev_end", &len);
+        if (len % (sizeof(uint32_t)) != 0) {
+            warnx("model_info-hw_rev_end of %s is of invalid size, skipping", fname);
+            free(dtb);
+            continue;
+        }
+
+        blob = calloc(1, sizeof(struct dt_blob));
+        if (blob == NULL)
+            err(1, "failed to allocate memory");
+
+        blob->payload = dtb;
+        blob->size = dtb_sz;
+        if (blob_list == NULL) {
+            blob_list = blob;
+            last_blob = blob;
+        } else {
+            last_blob->next = blob;
+            last_blob = blob;
+        }
+
+        blob_sz += (blob->size + pagemask) & ~pagemask;
+        new_count = entry_count + 1;
+        new_entries = realloc(entries, new_count * sizeof(struct dt_entry));
+        if (new_entries == NULL)
+            err(1, "failed to allocate memory");
+
+        entries = new_entries;
+        entry = &entries[entry_count];
+        memset(entry, 0, sizeof(*entry));
+        entry->chip = ntohl(prop_chip[0]);
+        entry->platform = DTBH_PLATFORM_CODE;
+        entry->subtype = DTBH_SUBTYPE_CODE;
+        entry->hw_rev = ntohl(prop_hw_rev[0]);
+        entry->hw_rev_end = ntohl(prop_hw_rev_end[0]);
+        entry->space = 0x20; /* space delimiter */
+        entry->blob = blob;
+
+        entry_count++;
+
+        hdr_sz += entry_count * DT_ENTRY_PHYS_SIZE;
+    }
+
+    closedir(dir);
+
+    if (entry_count == 0) {
+        warnx("unable to locate any dtbs in the given path");
+        return NULL;
+    }
+
+    hdr_sz += sizeof(uint32_t); /* eot marker */
+    hdr_sz = (hdr_sz + pagemask) & ~pagemask;
+
+    qsort(entries, entry_count, sizeof(struct dt_entry), dt_entry_cmp);
+
+    /* The size of the dt header is now known, calculate the blob offsets... */
+    offset = hdr_sz;
+    for (blob = blob_list; blob; blob = blob->next) {
+        blob->offset = offset;
+        offset += (blob->size + pagemask) & ~pagemask;
+    }
+
+    /* ...and update the entries */
+    for (c = 0; c < entry_count; c++) {
+        entry = &entries[c];
+
+        entry->offset = entry->blob->offset;
+        entry->size = (entry->blob->size + pagemask) & ~pagemask;
+    }
+
+    /*
+     * All parts are now gathered, so build the dt block
+     */
+    dtbh = calloc(hdr_sz + blob_sz, 1);
+    if (dtbh == NULL)
+            err(1, "failed to allocate memory");
+
+    offset = 0;
+
+    memcpy(dtbh, DTBH_MAGIC, sizeof(uint32_t));
+    memcpy(dtbh + sizeof(uint32_t), &version, sizeof(uint32_t));
+    memcpy(dtbh + (sizeof(uint32_t) * 2), &entry_count, sizeof(uint32_t));
+
+    offset += DT_HEADER_PHYS_SIZE;
+
+    /* add dtbh entries */
+    for (c = 0; c < entry_count; c++) {
+        entry = &entries[c];
+        memcpy(dtbh + offset, entry, DT_ENTRY_PHYS_SIZE);
+        offset += DT_ENTRY_PHYS_SIZE;
+    }
+
+    /* add padding after dt header */
+    offset += pagesize - (offset & pagemask);
+
+    for (blob = blob_list; blob; blob = blob->next) {
+        memcpy(dtbh + offset, blob->payload, blob->size);
+        offset += (blob->size + pagemask) & ~pagemask;
+    }
+
+    *_sz = hdr_sz + blob_sz;
+
+    return dtbh;
+}
+
 int usage(void)
 {
     fprintf(stderr,"usage: mkbootimg\n"
@@ -66,6 +328,7 @@ int usage(void)
             "       [ --base <address> ]\n"
             "       [ --pagesize <pagesize> ]\n"
             "       [ --ramdisk_offset <address> ]\n"
+            "       [ --dt_dir <dtb path> ]\n"
             "       [ --dt <filename> ]\n"
             "       [ --signature <filename> ]\n"
             "       -o|--output <filename>\n"
@@ -108,6 +371,7 @@ int main(int argc, char **argv)
     char *cmdline = "";
     char *bootimg = 0;
     char *board = "";
+    char *dt_dir = 0;
     char *dt_fn = 0;
     void *dt_data = 0;
     char *sig_fn = 0;
@@ -163,6 +427,8 @@ int main(int argc, char **argv)
                 fprintf(stderr,"error: unsupported page size %d\n", pagesize);
                 return -1;
             }
+        } else if (!strcmp(arg, "--dt_dir")) {
+            dt_dir = val;
         } else if(!strcmp(arg, "--dt")) {
             dt_fn = val;
         } else if(!strcmp(arg, "--signature")) {
@@ -177,6 +443,11 @@ int main(int argc, char **argv)
     hdr.ramdisk_addr = base + ramdisk_offset;
     hdr.second_addr =  base + second_offset;
     hdr.tags_addr =    base + tags_offset;
+
+    if (dt_dir && dt_fn) {
+        fprintf(stderr,"error: don't use both --dt_dir and --dt option\n");
+        return usage();
+    }
 
     if(bootimg == 0) {
         fprintf(stderr,"error: no output filename specified\n");
@@ -229,6 +500,14 @@ int main(int argc, char **argv)
         second_data = load_file(second_fn, &hdr.second_size);
         if(second_data == 0) {
             fprintf(stderr,"error: could not load secondstage '%s'\n", second_fn);
+            return 1;
+        }
+    }
+
+    if (dt_dir) {
+        dt_data = load_dtbh_block(dt_dir, pagesize, &hdr.dt_size);
+        if (dt_data == 0) {
+            fprintf(stderr, "error: could not load device tree blobs '%s'\n", dt_dir);
             return 1;
         }
     }
