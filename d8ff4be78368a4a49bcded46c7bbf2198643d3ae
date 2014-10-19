@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a18252c_5b8d9b7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2014-10-19T04:08:42Z",
+      "side": 1,
+      "message": "Please use line breaks, this commit message appears to be a single massively long line.",
+      "revId": "d8ff4be78368a4a49bcded46c7bbf2198643d3ae",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a18252c_1b9323a5",
+        "filename": "ril/xmm6260/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2014-10-19T04:08:42Z",
+      "side": 1,
+      "message": "You probably didn\u0027t mean to leave this on.",
+      "revId": "d8ff4be78368a4a49bcded46c7bbf2198643d3ae",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a18252c_7b905796",
+        "filename": "ril/xmm6260/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2149,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2014-10-19T04:08:42Z",
+      "side": 1,
+      "message": "Changes to the signalstrength function are unnecessary.",
+      "revId": "d8ff4be78368a4a49bcded46c7bbf2198643d3ae",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
