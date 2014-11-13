@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a122d0e_1f6dc604",
+        "filename": "exynos4/hal/libgralloc_ump/alloc_device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2014-11-13T10:30:22Z",
+      "side": 1,
+      "message": "Just delete the line.",
+      "revId": "20223f9d10b9dd553c18ee3afa13bf1628f0207c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
