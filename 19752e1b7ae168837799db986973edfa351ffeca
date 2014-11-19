@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faac7902_fb11035f",
+        "filename": "ril/xmm6262/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 10918
+      },
+      "writtenOn": "2014-11-19T12:56:47Z",
+      "side": 1,
+      "message": "#define MAX_RIL_UNSOL   RIL_UNSOL_CELL_INFO_LIST",
+      "revId": "19752e1b7ae168837799db986973edfa351ffeca",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
