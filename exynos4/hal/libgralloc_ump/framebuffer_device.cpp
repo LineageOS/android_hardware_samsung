@@ -27,6 +27,8 @@
  * limitations under the License.
  */
 
+//#define LOG_NDEBUG 0
+
 #include <string.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -42,24 +44,34 @@
 
 #include <GLES/gl.h>
 
-#ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
-#include "gralloc_vsync_report.h"
-#endif
-
 #include "gralloc_priv.h"
 #include "gralloc_helper.h"
 
 #include "linux/fb.h"
+#include "s3c_lcd.h"
+
+#ifdef USE_WFD
+#include "WfdVideoFbInput.h"
+#endif
 
 /* numbers of buffers for page flipping */
-#define NUM_BUFFERS 2
+#define NUM_BUFFERS 2   //wjj, only set 2 or 3
+#define WAIT_VSYNC_OPT
+
+#define FBIO_WAITFORVSYNC       _IOW('F', 0x20, __u32)
 
 enum {
     PAGE_FLIP = 0x00000001,
 };
 
+#ifdef USE_WFD
+static android::WfdVideoFbInput       *g_WfdVideoFbInput;
+#endif
+
 static int fb_set_swap_interval(struct framebuffer_device_t* dev, int interval)
 {
+    ALOGD_IF(debug_level > 0, "%s interval=%d", __func__,interval);
+
     if (interval < dev->minSwapInterval || interval > dev->maxSwapInterval)
         return -EINVAL;
 
@@ -67,10 +79,41 @@ static int fb_set_swap_interval(struct framebuffer_device_t* dev, int interval)
     return 0;
 }
 
+static int wait_for_vsync(int fd)
+{
+        int interrupt, crtc;
+
+        ALOGD_IF(debug_level > 0, "%s", __func__);
+
+        // enable VSYNC
+        interrupt = 1;
+        if (ioctl(fd, S3CFB_SET_VSYNC_INT, &interrupt) < 0) {
+            ALOGE("S3CFB_SET_VSYNC_INT enable failed");
+            return -EINVAL;
+        }
+        // wait for VSYNC
+        crtc = 0;
+        if (ioctl(fd, FBIO_WAITFORVSYNC, &crtc) < 0) {
+            ALOGE("FBIO_WAITFORVSYNC failed");
+            return -EINVAL;
+        }
+        // disable VSYNC
+        interrupt = 0;
+        if (ioctl(fd, S3CFB_SET_VSYNC_INT, &interrupt) < 0) {
+            ALOGE("S3CFB_SET_VSYNC_INT disable failed");
+            return -EINVAL;
+        }
+        return 0;
+}
+
 static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
 {
+    ALOGD_IF(debug_level > 0, "%s", __func__);
+
     if (private_handle_t::validate(buffer) < 0)
         return -EINVAL;
+
+    ALOGD_IF(debug_level > 0, "%s valid buffer", __func__);
 
     private_handle_t const* hnd = reinterpret_cast<private_handle_t const*>(buffer);
     private_module_t* m = reinterpret_cast<private_module_t*>(dev->common.module);
@@ -85,69 +128,35 @@ static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
                 0, 0, m->info.xres, m->info.yres, NULL);
 
         const size_t offset = hnd->base - m->framebuffer->base;
-        int interrupt;
         m->info.activate = FB_ACTIVATE_VBL;
         m->info.yoffset = offset / m->finfo.line_length;
 
-#ifdef STANDARD_LINUX_SCREEN
-#define FBIO_WAITFORVSYNC       _IOW('F', 0x20, __u32)
-#define S3CFB_SET_VSYNC_INT     _IOW('F', 206, unsigned int)
-        if (ioctl(m->framebuffer->fd, FBIOPAN_DISPLAY, &m->info) == -1) {
-            ALOGE("FBIOPAN_DISPLAY failed");
+        if (ioctl(m->framebuffer->fd, FBIOPAN_DISPLAY, &m->info) < 0) {
+            ALOGE("%s FBIOPAN_DISPLAY failed", __func__);
             m->base.unlock(&m->base, buffer);
             return 0;
         }
 
         if (m->enableVSync) {
-            /* enable VSYNC */
-            interrupt = 1;
-            if (ioctl(m->framebuffer->fd, S3CFB_SET_VSYNC_INT, &interrupt) < 0) {
-                ALOGE("S3CFB_SET_VSYNC_INT enable failed");
-                return 0;
-            }
-            /* wait for VSYNC */
+            char value[PROPERTY_VALUE_MAX];
+            unsigned int test=0;
 
-#ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
-            gralloc_mali_vsync_report(MALI_VSYNC_EVENT_BEGIN_WAIT);
-#endif
-            int crtc;
-            crtc = 0;
-            if (ioctl(m->framebuffer->fd, FBIO_WAITFORVSYNC, &crtc) < 0) {
-                ALOGE("FBIO_WAITFORVSYNC failed");
-#ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
-                gralloc_mali_vsync_report(MALI_VSYNC_EVENT_END_WAIT);
-#endif
-                return 0;
+            property_get("pwr.powersave_fps", value, "0");
+            if (atoi(value) == 1) {
+                if (ioctl(m->framebuffer->fd, FBIO_WAITFORVSYNC, &test) < 0) {
+                    ALOGE("%s FBIO_WAITFORVSYNC failed", __func__);
+                    return 0;
+                }
             }
-#ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
-            gralloc_mali_vsync_report(MALI_VSYNC_EVENT_END_WAIT);
-#endif
-            // disable VSYNC
-            interrupt = 0;
-            if (ioctl(m->framebuffer->fd, S3CFB_SET_VSYNC_INT, &interrupt) < 0) {
-                ALOGE("S3CFB_SET_VSYNC_INT disable failed");
+            /* yes, twice */
+            if (ioctl(m->framebuffer->fd, FBIO_WAITFORVSYNC, &test) < 0) {
+                ALOGE("%s FBIO_WAITFORVSYNC failed", __func__);
                 return 0;
             }
         }
-#else
-        /*Standard Android way*/
-#ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
-        gralloc_mali_vsync_report(MALI_VSYNC_EVENT_BEGIN_WAIT);
-#endif
-        if (ioctl(m->framebuffer->fd, FBIOPUT_VSCREENINFO, &m->info) == -1) {
-            ALOGE("FBIOPUT_VSCREENINFO failed");
-#ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
-            gralloc_mali_vsync_report(MALI_VSYNC_EVENT_END_WAIT);
-#endif
-            m->base.unlock(&m->base, buffer);
-            return -errno;
-        }
-#ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
-        gralloc_mali_vsync_report(MALI_VSYNC_EVENT_END_WAIT);
-#endif
-#endif
 
         m->currentBuffer = buffer;
+
     } else {
         /*
          * If we can't do the page_flip, just copy the buffer to the front
@@ -167,6 +176,7 @@ static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
         m->base.unlock(&m->base, buffer);
         m->base.unlock(&m->base, m->framebuffer);
     }
+
     return 0;
 }
 
@@ -175,6 +185,8 @@ int init_frame_buffer_locked(struct private_module_t* module)
     /* Nothing to do, already initialized */
     if (module->framebuffer)
         return 0;
+
+    ALOGD("%s Initializing framebuffer", __func__);
 
     char const * const device_template[] = {
         "/dev/graphics/fb%u",
@@ -194,6 +206,9 @@ int init_frame_buffer_locked(struct private_module_t* module)
 
     if (fd < 0)
         return -errno;
+
+    if (ioctl(fd, S3CFB_SET_INITIAL_CONFIG) != 0)
+        ALOGE("%s S3CFB_SET_INITIAL_CONFIG failed", __func__);
 
     struct fb_fix_screeninfo finfo;
     if (ioctl(fd, FBIOGET_FSCREENINFO, &finfo) == -1)
@@ -331,7 +346,7 @@ int init_frame_buffer_locked(struct private_module_t* module)
     size_t fbSize = round_up_to_page_size(finfo.line_length * info.yres_virtual);
     void* vaddr = mmap(0, fbSize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
     if (vaddr == MAP_FAILED) {
-        ALOGE("Error mapping the framebuffer (%s)", strerror(errno));
+        ALOGE("%s Error mapping the framebuffer (%s)", __func__, strerror(errno));
         return -errno;
     }
 
@@ -391,6 +406,8 @@ static int fb_close(struct hw_device_t *device)
 
 int compositionComplete(struct framebuffer_device_t* dev)
 {
+    ALOGD_IF(debug_level > 0, "%s",__func__);
+
 #ifndef HWC_HWOVERLAY
     unsigned char pixels[4];
     /* By doing a readpixel here we force the GL driver to start rendering
@@ -417,30 +434,24 @@ int framebuffer_device_open(hw_module_t const* module, const char* name, hw_devi
 {
     int status = -EINVAL;
 
+#ifdef USE_WFD
+    g_WfdVideoFbInput = android::WfdVideoFbInput::getInstance();
+#endif
+
     alloc_device_t* gralloc_device;
     status = gralloc_open(module, &gralloc_device);
-    if (status < 0) {
-        ALOGE("Fail to Open gralloc device");
+    if (status < 0)
         return status;
-    }
-
-    /* initialize our state here */
-    framebuffer_device_t *dev = (framebuffer_device_t *)malloc(sizeof(framebuffer_device_t));
-    if (dev == NULL) {
-        ALOGE("Failed to allocate memory for dev");
-        gralloc_close(gralloc_device);
-        return status;
-    }    
 
     private_module_t* m = (private_module_t*)module;
     status = init_frame_buffer(m);
     if (status < 0) {
-        ALOGE("Fail to init framebuffer");
-        free(dev);
         gralloc_close(gralloc_device);
         return status;
     }
 
+    /* initialize our state here */
+    framebuffer_device_t *dev = new framebuffer_device_t();
     memset(dev, 0, sizeof(*dev));
 
     /* initialize the procs */
@@ -471,6 +482,17 @@ int framebuffer_device_open(hw_module_t const* module, const char* name, hw_devi
     const_cast<int&>(dev->maxSwapInterval) = 1;
     *device = &dev->common;
     status = 0;
+
+#ifdef USE_WFD
+    g_WfdVideoFbInput->setSrcParams(
+                           (uint32_t)dev->format,
+                           m->info.xres,
+                           m->info.yres,
+                           0,
+                           0,
+                           m->info.xres,
+                           m->info.yres);
+#endif
 
     return status;
 }
