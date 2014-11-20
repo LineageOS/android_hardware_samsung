@@ -43,6 +43,10 @@
 #define DEV_NAME    "/dev/i2c-2"
 #endif
 
+#ifdef DDC_CH_I2C_5
+#define DEV_NAME    "/dev/i2c-5"
+#endif
+
 #ifdef DDC_CH_I2C_7
 #define DEV_NAME    "/dev/i2c-7"
 #endif
