@@ -20,7 +20,7 @@
 #ifndef _S5P_FIMC_H_
 #define _S5P_FIMC_H_
 
-#include <linux/videodev2.h>
+#include <videodev2.h>
 #include "SecBuffer.h"
 /*
  * G E N E R A L S
@@ -74,13 +74,14 @@
 #define V4L2_PIX_FMT_NV12T      v4l2_fourcc('T', 'V', '1', '2') /* 12  Y/CbCr 4:2:0 64x32 macroblocks */
 
 /* CID extensions */
-#define V4L2_CID_ROTATION       (V4L2_CID_PRIVATE_BASE + 0)
+#define V4L2_CID_ROTATION               (V4L2_CID_PRIVATE_BASE + 0)
 #define V4L2_CID_OVLY_MODE              (V4L2_CID_PRIVATE_BASE + 9)
-#define V4L2_CID_DST_INFO       (V4L2_CID_PRIVATE_BASE + 10)
-#define V4L2_CID_GET_PHY_SRC_YADDR  (V4L2_CID_PRIVATE_BASE + 12)
-#define V4L2_CID_GET_PHY_SRC_CADDR  (V4L2_CID_PRIVATE_BASE + 13)
+#define V4L2_CID_DST_INFO               (V4L2_CID_PRIVATE_BASE + 10)
+#define V4L2_CID_GET_PHY_SRC_YADDR      (V4L2_CID_PRIVATE_BASE + 12)
+#define V4L2_CID_GET_PHY_SRC_CADDR      (V4L2_CID_PRIVATE_BASE + 13)
 #define V4L2_CID_RESERVED_MEM_BASE_ADDR (V4L2_CID_PRIVATE_BASE + 20)
-#define V4L2_CID_FIMC_VERSION       (V4L2_CID_PRIVATE_BASE + 21)
+#define V4L2_CID_FIMC_VERSION           (V4L2_CID_PRIVATE_BASE + 21)
+#define V4L2_CID_RESERVED_MEM_SIZE      (V4L2_CID_PRIVATE_BASE + 63)
 
 /*
  * U S E R   D E F I N E D   T Y P E S
