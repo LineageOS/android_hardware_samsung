@@ -55,6 +55,7 @@ typedef struct {
 #ifdef BOARD_USE_V4L2_ION
 struct s3c_fb_user_ion_client {
     int fd;
+    int offset;
 };
 #endif
 
@@ -66,14 +67,36 @@ struct s3c_fb_user_ion_client {
 #define S3CFB_WIN_POSITION          _IOW ('F', 203, struct s3cfb_user_window)
 #define S3CFB_WIN_SET_PLANE_ALPHA   _IOW ('F', 204, struct s3cfb_user_plane_alpha)
 #define S3CFB_WIN_SET_CHROMA        _IOW ('F', 205, struct s3cfb_user_chroma)
+
 #define S3CFB_SET_VSYNC_INT         _IOW ('F', 206, unsigned int)
+#define S3CFB_GET_VSYNC_INT_STATUS  _IOR ('F', 207, unsigned int)
+
+#define S3CFB_GET_ION_USER_HANDLE   _IOWR('F', 208, struct s3c_fb_user_ion_client)
+#define S3CFB_WIN_CONFIG            _IOW ('F', 209, struct s3c_fb_win_config_data)
+
 #define S3CFB_SET_SUSPEND_FIFO      _IOW ('F', 300, unsigned long)
 #define S3CFB_SET_RESUME_FIFO       _IOW ('F', 301, unsigned long)
+
 #define S3CFB_GET_LCD_WIDTH         _IOR ('F', 302, int)
 #define S3CFB_GET_LCD_HEIGHT        _IOR ('F', 303, int)
+
+#define S3CFB_SET_WRITEBACK         _IOW ('F', 304, unsigned int)
+#define S3CFB_SET_WIN_ON            _IOW ('F', 305, unsigned int)
+#define S3CFB_SET_WIN_OFF           _IOW ('F', 306, unsigned int)
+#define S3CFB_SET_WIN_PATH          _IOW ('F', 307, enum s3cfb_data_path_t)
+#define S3CFB_SET_WIN_ADDR          _IOW ('F', 308, unsigned long)
+#define S3CFB_SET_WIN_MEM           _IOW ('F', 309, enum s3cfb_mem_owner_t)
+
 #define S3CFB_GET_FB_PHY_ADDR       _IOR ('F', 310, unsigned int)
-#define S3C_FB_GET_CURR_FB_INFO     _IOR ('F', 305, s3c_fb_next_info_t)
-#define S3CFB_GET_ION_USER_HANDLE   _IOWR('F', 208, struct s3c_fb_user_ion_client)
+#define S3CFB_GET_CUR_WIN_BUF_ADDR  _IOR ('F', 311, unsigned int)
+/*#if defined(CONFIG_CPU_EXYNOS4210)
+#define S3CFB_SET_WIN_MEM_START		_IOW('F', 312, u32)
+#endif*/
+
+#define S3CFB_SET_ALPHA_MODE        _IOW ('F', 313, unsigned int)
+#define S3CFB_SET_INITIAL_CONFIG    _IO  ('F', 314)
+#define S3CFB_SUPPORT_FENCE         _IOW ('F', 315, unsigned int)
+
 
 /***************** LCD frame buffer *****************/
 #define FB0_NAME    "/dev/fb0"
