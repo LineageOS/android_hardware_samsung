@@ -47,6 +47,9 @@
 #define HWC_HWOVERLAY 1
 
 #define GRALLOC_ARM_UMP_MODULE 1
+#define debug_level 0
+
+static int gMemfd = 0;
 
 struct private_handle_t;
 
@@ -132,19 +135,13 @@ struct private_handle_t {
     int     bpp;
     int     stride;
 
-    /* Following members are for ION memory only */
-    int     ion_client;
-
     /* Following members ard for YUV information */
-#ifdef USELESS_SEC_YADDR
-    /* Samsung Mobile's blobs don't appear to be using yaddr 
-     * in their header file, and none of the source uses it
-     * anywhere
-     */
     unsigned int yaddr;
-#endif
     unsigned int uoffset;
     unsigned int voffset;
+
+    /* Following members are for ION memory only */
+    int     ion_client;
 
     uint64_t backing_store;
     uint64_t producer_usage;
@@ -175,9 +172,7 @@ struct private_handle_t {
     bpp(0),
     stride(0),
     ion_client(0),
-#ifdef USELESS_SEC_YADDR
     yaddr(0),
-#endif
     uoffset(0),
     voffset(0)
     {
@@ -208,9 +203,7 @@ struct private_handle_t {
     bpp(0),
     stride(0),
     ion_client(0),
-#ifdef USELESS_SEC_YADDR
     yaddr(0),
-#endif
     uoffset(0),
     voffset(0)
     {
