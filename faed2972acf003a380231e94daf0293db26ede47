@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab6814e_cab9c7ee",
+        "filename": "macloader/macloader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2014-11-25T10:56:16Z",
+      "side": 1,
+      "message": "SEMCO appears to be unused?",
+      "revId": "faed2972acf003a380231e94daf0293db26ede47",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
