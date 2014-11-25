@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab6814e_0ae74fe5",
+        "filename": "macloader/macloader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2014-11-25T11:28:15Z",
+      "side": 1,
+      "message": "WISOLFEM1 is also unused, sorry forgot to mention it previously.",
+      "revId": "7b0301b7d72ac04df23c1848ecbbda723504ee6c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
