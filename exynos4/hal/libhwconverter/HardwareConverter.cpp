@@ -24,7 +24,7 @@ HardwareConverter::HardwareConverter()
     SecFimc* handle_fimc = new SecFimc();
     mSecFimc = (void *)handle_fimc;
 
-    if (handle_fimc->create(SecFimc::DEV_0, SecFimc::MODE_MULTI_BUF, 1) == false)
+    if (handle_fimc->create(SecFimc::FIMC_DEV0, FIMC_OVLY_NONE_MULTI_BUF, 1) == false)
         bHWconvert_flag = 0;
     else
         bHWconvert_flag = 1;
@@ -72,7 +72,7 @@ bool HardwareConverter::convert(
         return false;
     }
 
-    if (!handle_fimc->setSrcAddr((unsigned int)src_addr_array[0],
+    if (!handle_fimc->setSrcPhyAddr((unsigned int)src_addr_array[0],
                                  (unsigned int)src_addr_array[1],
                                  (unsigned int)src_addr_array[1],
                                  src_har_format)) {
@@ -94,7 +94,7 @@ bool HardwareConverter::convert(
 
     switch (dst_format) {
     case OMX_COLOR_FormatYUV420SemiPlanar:
-        if (!handle_fimc->setDstAddr((unsigned int)(dst_addr_array[0]),
+        if (!handle_fimc->setDstPhyAddr((unsigned int)(dst_addr_array[0]),
                                      (unsigned int)(dst_addr_array[1]),
                                      (unsigned int)(dst_addr_array[1]))) {
             ALOGE("%s:: setDstPhyAddr() failed", __func__);
@@ -103,7 +103,7 @@ bool HardwareConverter::convert(
         break;
     case OMX_COLOR_FormatYUV420Planar:
     default:
-        if (!handle_fimc->setDstAddr((unsigned int)(dst_addr_array[0]),
+        if (!handle_fimc->setDstPhyAddr((unsigned int)(dst_addr_array[0]),
                                      (unsigned int)(dst_addr_array[1]),
                                      (unsigned int)(dst_addr_array[2]))) {
             ALOGE("%s:: setDstPhyAddr() failed", __func__);
@@ -112,7 +112,7 @@ bool HardwareConverter::convert(
         break;
     }
 
-    if (!handle_fimc->draw(0, 0)) {
+    if (!handle_fimc->handleOneShot()) {
         ALOGE("%s:: handleOneShot() failed", __func__);
         return false;
     }
