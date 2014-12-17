@@ -111,7 +111,7 @@ private_handle_rect *find_rect(int secure_id)
 
 private_handle_rect *find_last_rect(int secure_id)
 {
-    private_handle_rect *psRect;
+    private_handle_rect *psRect = NULL;
     private_handle_rect *psFRect = NULL;
 
     ALOGD_IF(debug_level > 0, "%s secure_id=%d",__func__,secure_id);
@@ -122,9 +122,9 @@ private_handle_rect *find_last_rect(int secure_id)
         psFRect = rect_list;
     } else {
         for (psRect = rect_list; psRect; psRect = psRect->next) {
+            psFRect = psRect;
             if (psRect->handle == secure_id)
                 break;
-            psFRect = psRect;
         }
     }
     pthread_mutex_unlock(&s_rect_lock);
