@@ -283,18 +283,26 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
         ion_paddr = ion_getphys(m->ion_client, ion_fd);
 
 /* TODO: #ifdef SAMSUNG_EXYNOS_CACHE_UMP here...*/
-        if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE)
+        if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
+            ALOGD_IF(debug_level > 0, "%s FIMC1 none", __func__);
             ump_mem_handle = ump_ref_drv_ion_import(ion_fd, UMP_REF_DRV_CONSTRAINT_NONE);
-        else
+        } else {
+            ALOGD_IF(debug_level > 0, "%s FIMC1 cached", __func__);
             ump_mem_handle = ump_ref_drv_ion_import(ion_fd, UMP_REF_DRV_CONSTRAINT_USE_CACHE);
+            ump_cpu_msync_now((ump_handle)ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE, NULL, 0);
+        }
 
     } else {
 
 #ifdef SAMSUNG_EXYNOS_CACHE_UMP
-        if ((usage & GRALLOC_USAGE_SW_READ_MASK) == GRALLOC_USAGE_SW_READ_OFTEN)
+        if ((usage & GRALLOC_USAGE_SW_READ_MASK) == GRALLOC_USAGE_SW_READ_OFTEN) {
+            ALOGD_IF(debug_level > 0, "%s UMP cached", __func__);
             ump_mem_handle = ump_ref_drv_allocate(size, UMP_REF_DRV_CONSTRAINT_USE_CACHE);
-        else
+            ump_cpu_msync_now((ump_handle)ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE, NULL, 0);
+        } else {
+            ALOGD_IF(debug_level > 0, "%s UMP none", __func__);
             ump_mem_handle = ump_ref_drv_allocate(size, UMP_REF_DRV_CONSTRAINT_NONE);
+        }
 #else
         else
             ump_mem_handle = ump_ref_drv_allocate(size, UMP_REF_DRV_CONSTRAINT_NONE);
