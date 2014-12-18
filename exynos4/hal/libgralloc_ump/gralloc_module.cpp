@@ -479,6 +479,9 @@ static int gralloc_lock(gralloc_module_t const* module, buffer_handle_t handle,
 #endif
 
         hnd->writeOwner = usage & GRALLOC_USAGE_SW_WRITE_MASK;
+
+        if ((usage & GRALLOC_USAGE_SW_READ_MASK) == GRALLOC_USAGE_SW_READ_OFTEN)
+            ump_cpu_msync_now((ump_handle)hnd->ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE, NULL, 0);
     }
 #endif
 
@@ -532,10 +535,10 @@ static int gralloc_unlock(gralloc_module_t const* module, buffer_handle_t handle
             if (psRect) {
                 ALOGD_IF(debug_level > 0, "%s rect found hnd->base=%x (psRect->stride(%d) * psRect->t(%d))=%d psRect->stride * psRect->h(%d)=%d", __func__, hnd->base, psRect->stride, psRect->t, (psRect->stride * psRect->t), psRect->h, (psRect->stride * psRect->h));
 
-                ump_cpu_msync_now((ump_handle)hnd->ump_mem_handle, UMP_MSYNC_CLEAN,
+                ump_cpu_msync_now((ump_handle)hnd->ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE,
                         (void *)(hnd->base + (psRect->stride * psRect->t)), psRect->stride * psRect->h );
             } else {
-                ump_cpu_msync_now((ump_handle)hnd->ump_mem_handle, UMP_MSYNC_CLEAN, NULL, 0);
+                ump_cpu_msync_now((ump_handle)hnd->ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE, NULL, 0);
             }
 #endif
         }
