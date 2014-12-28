@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aa08908_06d9ee21",
+        "filename": "cmhw/org/cyanogenmod/hardware/AdaptiveBacklight.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2014-12-28T02:29:50Z",
+      "side": 1,
+      "message": "Can readOneLine() return null? If yes, it would be even more safe to write this as\n\nif (\"1\".equals(FileUtils.readOneLine(FILE_CABC))) {\n\nor\n\nif (TextUtils.equals(FileUtils.readOneLine(FILE_CABC)), \"1\") {\n\n\n(personally I prefer the latter)",
+      "revId": "d0504b306b65c2f18e7a487b247d2623bd3a0c14",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
