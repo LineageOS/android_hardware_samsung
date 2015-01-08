@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aa08908_acfd3f3c",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 11114
+      },
+      "writtenOn": "2015-01-08T09:35:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"addresses\"?",
+      "revId": "af2ee9623b23fc5f24545f1e3747dc1ead2aadfe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aa08908_8cf8434b",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 11114
+      },
+      "writtenOn": "2015-01-08T09:35:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"addresses\"?",
+      "revId": "af2ee9623b23fc5f24545f1e3747dc1ead2aadfe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
