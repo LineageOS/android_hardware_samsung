@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a9d85d2_133e74b8",
+        "filename": "ril/xmm6262/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-01-14T12:38:34Z",
+      "side": 1,
+      "message": "This is going to end up as an unused variable warning if modem type isn\u0027t 7260.",
+      "revId": "43286d2a2d9e3175ccd7f76d2da59d6088b57bc9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
