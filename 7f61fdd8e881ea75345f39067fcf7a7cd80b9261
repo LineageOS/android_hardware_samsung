@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a9d85d2_80ee7bea",
+        "filename": "ril/xmm6262/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-01-18T16:32:03Z",
+      "side": 1,
+      "message": "It\u0027s intentional to write 0s here?",
+      "revId": "7f61fdd8e881ea75345f39067fcf7a7cd80b9261",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
