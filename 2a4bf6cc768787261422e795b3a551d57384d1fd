@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fad55976_a7aab217",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-01-29T16:24:03Z",
+      "side": 1,
+      "message": "It appears you are writing nvram_str here, which is all zero.",
+      "revId": "2a4bf6cc768787261422e795b3a551d57384d1fd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad55976_67b0ba8c",
         "filename": "macloader/macloader.c",
         "patchSetId": 1
