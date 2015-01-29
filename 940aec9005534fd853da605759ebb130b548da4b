@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad55976_32260269",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 7549
+      },
+      "writtenOn": "2015-01-29T23:22:36Z",
+      "side": 1,
+      "message": "You already check this, before you call the function.",
+      "revId": "940aec9005534fd853da605759ebb130b548da4b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad55976_122bfe31",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 7549
+      },
+      "writtenOn": "2015-01-29T23:22:36Z",
+      "side": 1,
+      "message": "This will also never occur",
+      "revId": "940aec9005534fd853da605759ebb130b548da4b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad55976_d23046a1",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 7549
+      },
+      "writtenOn": "2015-01-29T23:22:36Z",
+      "side": 1,
+      "message": "You should maybe also close cidfile here.",
+      "revId": "940aec9005534fd853da605759ebb130b548da4b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
