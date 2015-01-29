@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fad55976_d2d4c648",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 7566
+      },
+      "writtenOn": "2015-01-29T22:16:42Z",
+      "side": 1,
+      "message": "It needs to be nvram_path",
+      "parentUuid": "fad55976_a7aab217",
+      "revId": "2a4bf6cc768787261422e795b3a551d57384d1fd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad55976_67b0ba8c",
         "filename": "macloader/macloader.c",
         "patchSetId": 1
