@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad55976_adf29398",
+        "filename": "cmhw/org/cyanogenmod/hardware/TouchscreenHovering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2015-01-30T14:28:58Z",
+      "side": 1,
+      "message": "We are in 2015 now",
+      "revId": "bfcddeff0abc2b229283f17f72ee8f1558c55edb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
