@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bacf61ea_75ffbd34",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-02-14T10:51:56Z",
+      "side": 1,
+      "message": "Why the tabs here?",
+      "revId": "234a32be8976fdd75d2159a14a1206f7bbc7099d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bacf61ea_b5f93550",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-02-14T10:51:56Z",
+      "side": 1,
+      "message": "Probably redundant since you\u0027re null checking at the caller.",
+      "revId": "234a32be8976fdd75d2159a14a1206f7bbc7099d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bacf61ea_75869dba",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-02-14T10:51:56Z",
+      "side": 1,
+      "message": "You\u0027re doing strerror(errno) elsewhere, why not here?",
+      "revId": "234a32be8976fdd75d2159a14a1206f7bbc7099d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bacf61ea_35a42556",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-02-14T10:51:56Z",
+      "side": 1,
+      "message": "Why not just return -1 here too?",
+      "revId": "234a32be8976fdd75d2159a14a1206f7bbc7099d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bacf61ea_15bc816b",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-02-14T10:51:56Z",
+      "side": 1,
+      "message": "Is this an error? The below comment and logic here makes it seem like this is a success.",
+      "revId": "234a32be8976fdd75d2159a14a1206f7bbc7099d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bacf61ea_35bb8574",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-02-14T10:51:56Z",
+      "side": 1,
+      "message": "Same here, ALOGE is being used, but is this really an error?",
+      "revId": "234a32be8976fdd75d2159a14a1206f7bbc7099d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
