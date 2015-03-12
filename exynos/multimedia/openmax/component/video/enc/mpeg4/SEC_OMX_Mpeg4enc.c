@@ -201,7 +201,6 @@ void Set_Mpeg4Enc_Param(SSBSIP_MFC_ENC_MPEG4_PARAM *pMpeg4Param, SEC_OMX_BASECOM
     pMpeg4Param->SourceHeight         = pSECOutputPort->portDefinition.format.video.nFrameHeight;
     pMpeg4Param->IDRPeriod            = pMpeg4Enc->mpeg4Component[OUTPUT_PORT_INDEX].nPFrames + 1;
     pMpeg4Param->SliceMode            = 0;
-    pMpeg4Param->RandomIntraMBRefresh = 0;
     pMpeg4Param->Bitrate              = pSECOutputPort->portDefinition.format.video.nBitrate;
     pMpeg4Param->QSCodeMax            = 30;
     pMpeg4Param->QSCodeMin            = 10;
@@ -240,6 +239,15 @@ void Set_Mpeg4Enc_Param(SSBSIP_MFC_ENC_MPEG4_PARAM *pMpeg4Param, SEC_OMX_BASECOM
         pMpeg4Param->EnableFRMRateControl = 0;
         pMpeg4Param->CBRPeriodRf          = 100;
         break;
+    }
+
+    if (pVideoEnc->intraRefresh.eRefreshMode == OMX_VIDEO_IntraRefreshCyclic) {
+        /* Cyclic Mode */
+        pMpeg4Param->RandomIntraMBRefresh = pVideoEnc->intraRefresh.nCirMBs;
+        SEC_OSAL_Log(SEC_LOG_TRACE, "RandomIntraMBRefresh: %d", pMpeg4Param->RandomIntraMBRefresh);
+    } else {
+        /* Don't support "Adaptive" and "Cyclic + Adaptive" */
+        pMpeg4Param->RandomIntraMBRefresh = 0;
     }
 
     switch ((SEC_OMX_COLOR_FORMATTYPE)pSECInputPort->portDefinition.format.video.eColorFormat) {
@@ -322,7 +330,6 @@ void Set_H263Enc_Param(SSBSIP_MFC_ENC_H263_PARAM *pH263Param, SEC_OMX_BASECOMPON
     pH263Param->SourceHeight         = pSECOutputPort->portDefinition.format.video.nFrameHeight;
     pH263Param->IDRPeriod            = pMpeg4Enc->h263Component[OUTPUT_PORT_INDEX].nPFrames + 1;
     pH263Param->SliceMode            = 0;
-    pH263Param->RandomIntraMBRefresh = 0;
     pH263Param->Bitrate              = pSECOutputPort->portDefinition.format.video.nBitrate;
     pH263Param->QSCodeMax            = 30;
     pH263Param->QSCodeMin            = 10;
@@ -354,6 +361,15 @@ void Set_H263Enc_Param(SSBSIP_MFC_ENC_H263_PARAM *pH263Param, SEC_OMX_BASECOMPON
         pH263Param->EnableFRMRateControl = 0;
         pH263Param->CBRPeriodRf          = 100;
         break;
+    }
+
+    if (pVideoEnc->intraRefresh.eRefreshMode == OMX_VIDEO_IntraRefreshCyclic) {
+        /* Cyclic Mode */
+        pH263Param->RandomIntraMBRefresh = pVideoEnc->intraRefresh.nCirMBs;
+        SEC_OSAL_Log(SEC_LOG_TRACE, "RandomIntraMBRefresh: %d", pH263Param->RandomIntraMBRefresh);
+    } else {
+        /* Don't support "Adaptive" and "Cyclic + Adaptive" */
+        pH263Param->RandomIntraMBRefresh = 0;
     }
 
     switch ((SEC_OMX_COLOR_FORMATTYPE)pSECInputPort->portDefinition.format.video.eColorFormat) {

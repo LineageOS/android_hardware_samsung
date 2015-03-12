@@ -205,7 +205,6 @@ void Set_H264Enc_Param(SSBSIP_MFC_ENC_H264_PARAM *pH264Arg, SEC_OMX_BASECOMPONEN
     pH264Arg->SourceHeight = pSECOutputPort->portDefinition.format.video.nFrameHeight;
     pH264Arg->IDRPeriod    = pH264Enc->AVCComponent[OUTPUT_PORT_INDEX].nPFrames + 1;
     pH264Arg->SliceMode    = 0;
-    pH264Arg->RandomIntraMBRefresh = 0;
     pH264Arg->Bitrate      = pSECOutputPort->portDefinition.format.video.nBitrate;
     pH264Arg->QSCodeMax    = 51;
     pH264Arg->QSCodeMin    = 10;
@@ -257,6 +256,15 @@ void Set_H264Enc_Param(SSBSIP_MFC_ENC_H264_PARAM *pH264Arg, SEC_OMX_BASECOMPONEN
         pH264Arg->EnableMBRateControl  = 0;
         pH264Arg->CBRPeriodRf  = 100;
         break;
+    }
+
+    if (pVideoEnc->intraRefresh.eRefreshMode == OMX_VIDEO_IntraRefreshCyclic) {
+        /* Cyclic Mode */
+        pH264Arg->RandomIntraMBRefresh = pVideoEnc->intraRefresh.nCirMBs;
+        SEC_OSAL_Log(SEC_LOG_TRACE, "RandomIntraMBRefresh: %d", pH264Arg->RandomIntraMBRefresh);
+    } else {
+        /* Don't support "Adaptive" and "Cyclic + Adaptive" */
+        pH264Arg->RandomIntraMBRefresh = 0;
     }
 
     switch ((SEC_OMX_COLOR_FORMATTYPE)pSECInputPort->portDefinition.format.video.eColorFormat) {
