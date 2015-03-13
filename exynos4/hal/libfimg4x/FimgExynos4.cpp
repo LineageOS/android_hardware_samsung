@@ -23,6 +23,8 @@
 
 #include "FimgExynos4.h"
 
+extern pthread_mutex_t fimg2d_mutex;
+
 namespace android
 {
 Mutex      FimgV4x::m_instanceLock;
@@ -85,7 +87,8 @@ CreateInstance_End :
 
 void FimgV4x::DestroyInstance(FimgApi * ptrFimgApi)
 {
-    Mutex::Autolock autolock(m_instanceLock);
+    //Mutex::Autolock autolock(m_instanceLock);
+    pthread_mutex_lock(&fimg2d_mutex);
 
     for(int i = 0; i < NUMBER_FIMG_LIST; i++) {
         if (m_ptrFimgApiList[i] != NULL && m_ptrFimgApiList[i] == ptrFimgApi) {
@@ -102,11 +105,14 @@ void FimgV4x::DestroyInstance(FimgApi * ptrFimgApi)
             break;
         }
     }
+
+    pthread_mutex_unlock(&fimg2d_mutex);
 }
 
 void FimgV4x::DestroyAllInstance(void)
 {
-    Mutex::Autolock autolock(m_instanceLock);
+    //Mutex::Autolock autolock(m_instanceLock);
+    pthread_mutex_lock(&fimg2d_mutex);
 
     for(int i = 0; i < NUMBER_FIMG_LIST; i++) {
         if (m_ptrFimgApiList[i] != NULL) {
@@ -120,6 +126,8 @@ void FimgV4x::DestroyAllInstance(void)
             }
         }
     }
+
+    pthread_mutex_unlock(&fimg2d_mutex);
 }
 
 bool FimgV4x::t_Create(void)
@@ -254,12 +262,37 @@ bool FimgV4x::m_DestroyG2D(void)
 
 bool FimgV4x::m_DoG2D(struct fimg2d_blit *cmd)
 {
-    /* BLIT_OP_SOLID_FILL fails. Don't use it for now */
-    if (cmd->op == BLIT_OP_SOLID_FILL)
+    if (cmd->seq_no == SEQ_NO_CMD_SET_DBUFFER) {
+        PRINT("%s SEQ_NO_CMD_SET_DBUFFER start=0x%x", __func__, cmd->tmp->addr.start);
+        if (ioctl(m_g2dFd, FIMG2D_BITBLT_DBUFFER, &cmd->tmp->addr.start) < 0)
+            return false;
+        else
+            return true;
+    }
+
+    if (cmd->seq_no == SEQ_NO_CMD_SECURE_ON) {
+        PRINT("%s SEQ_NO_CMD_SECURE_ON", __func__);
+        // TODO
         return true;
+    }
+
+    if (cmd->seq_no == SEQ_NO_CMD_SECURE_OFF) {
+        PRINT("%s SEQ_NO_CMD_SECURE_OFF", __func__);
+        // TODO
+        return true;
+    }
+
+    if (cmd->seq_no == SEQ_NO_BLT_HWC_SEC) {
+        PRINT("%s SEQ_NO_BLT_HWC_SEC", __func__);
+        // TODO
+        return true;
+    }
 
     if (ioctl(m_g2dFd, FIMG2D_BITBLT_BLIT, cmd) < 0)
         return false;
+
+    if (cmd->op != BLIT_OP_SRC)
+        PRINT("%s FIMG2D_BITBLT_BLIT seq_no=%x op=%d", __func__, cmd->seq_no, cmd->op);
 
     return true;
 }
