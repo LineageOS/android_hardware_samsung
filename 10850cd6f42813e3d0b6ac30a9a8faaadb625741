@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac665da_9c742bfe",
+        "filename": "ril/xmm6260/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2148,
+      "author": {
+        "id": 7566
+      },
+      "writtenOn": "2015-03-26T00:13:03Z",
+      "side": 1,
+      "message": "I guess we can remove that ...",
+      "revId": "10850cd6f42813e3d0b6ac30a9a8faaadb625741",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac665da_fc5f1f73",
+        "filename": "ril/xmm6262/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2141,
+      "author": {
+        "id": 7566
+      },
+      "writtenOn": "2015-03-26T00:13:03Z",
+      "side": 1,
+      "message": "This can be removed ...",
+      "revId": "10850cd6f42813e3d0b6ac30a9a8faaadb625741",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
