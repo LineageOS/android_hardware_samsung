@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac665da_828de27d",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 7566
+      },
+      "writtenOn": "2015-03-27T02:42:33Z",
+      "side": 1,
+      "message": "Could you please use MODEM_TYPE_6262 and it should be:\n\n#if defined(MODEM_TYPE_6262) || defined(MODEM_TYPE_XMM7260)",
+      "revId": "257738ee712874cb8b0d470eb3325461fde5985d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac665da_e2e81619",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 7566
+      },
+      "writtenOn": "2015-03-27T02:42:33Z",
+      "side": 1,
+      "message": "#elif defined(MODEM_TYPE_6260)",
+      "revId": "257738ee712874cb8b0d470eb3325461fde5985d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
