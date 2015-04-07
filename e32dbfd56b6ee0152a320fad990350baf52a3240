@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac371cc_0a23df06",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3950,
+      "author": {
+        "id": 8964
+      },
+      "writtenOn": "2015-04-07T09:48:09Z",
+      "side": 1,
+      "message": "hardware/samsung/ril/libril/ril.cpp:3950:28: error: \u0027SIM_COUNT\u0027 was not declared in this scope\n     RLOGI(\"SIM_COUNT: %d\", SIM_COUNT);",
+      "revId": "e32dbfd56b6ee0152a320fad990350baf52a3240",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
