@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3ac371cc_b6e5c6a9",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2970,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-04-13T17:06:12Z",
+      "side": 1,
+      "message": "You probably don\u0027t want to ifdef this section at all. That should fix the compilation issues.",
+      "revId": "6af1d30f3c19d0680d6a5839dab0c7c4a2158480",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ac371cc_56e4520c",
         "filename": "ril/libril/ril.cpp",
         "patchSetId": 1
