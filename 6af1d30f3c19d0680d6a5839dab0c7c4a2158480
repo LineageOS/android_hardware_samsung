@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac371cc_56e4520c",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3078,
+      "author": {
+        "id": 10663
+      },
+      "writtenOn": "2015-04-13T09:24:11Z",
+      "side": 1,
+      "message": "These variables are unknown if modem is different that two defined above. Either make these declared for all modems (in first lines), or ifdef them here.",
+      "revId": "6af1d30f3c19d0680d6a5839dab0c7c4a2158480",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
