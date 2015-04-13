@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ac371cc_995f1d0e",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2970,
+      "author": {
+        "id": 7231
+      },
+      "writtenOn": "2015-04-13T18:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ac371cc_b6e5c6a9",
+      "revId": "6af1d30f3c19d0680d6a5839dab0c7c4a2158480",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ac371cc_56e4520c",
         "filename": "ril/libril/ril.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-04-13T09:24:11Z",
       "side": 1,
       "message": "These variables are unknown if modem is different that two defined above. Either make these declared for all modems (in first lines), or ifdef them here.",
+      "revId": "6af1d30f3c19d0680d6a5839dab0c7c4a2158480",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ac371cc_f99a91c4",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3078,
+      "author": {
+        "id": 7231
+      },
+      "writtenOn": "2015-04-13T18:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ac371cc_56e4520c",
       "revId": "6af1d30f3c19d0680d6a5839dab0c7c4a2158480",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
