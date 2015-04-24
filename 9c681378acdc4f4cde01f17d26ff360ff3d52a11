@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7fb54a_d54ebc95",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2987,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-04-24T05:34:02Z",
+      "side": 1,
+      "message": "You intended to use CDMA signal strength here? Also, this logic looks like it could be merged with the below.",
+      "revId": "9c681378acdc4f4cde01f17d26ff360ff3d52a11",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
