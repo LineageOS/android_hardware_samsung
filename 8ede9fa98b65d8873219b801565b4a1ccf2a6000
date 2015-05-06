@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a89bdaa_f38118fd",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2987,
+      "author": {
+        "id": 7566
+      },
+      "writtenOn": "2015-05-06T19:05:32Z",
+      "side": 1,
+      "message": "Why is gsm signal strength set to CMDA signal strengh?",
+      "range": {
+        "startLine": 2987,
+        "startChar": 32,
+        "endLine": 2987,
+        "endChar": 37
+      },
+      "revId": "8ede9fa98b65d8873219b801565b4a1ccf2a6000",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
