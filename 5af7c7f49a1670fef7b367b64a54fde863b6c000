@@ -50,6 +50,24 @@
       "revId": "5af7c7f49a1670fef7b367b64a54fde863b6c000",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_61a0cd91",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2312,
+      "author": {
+        "id": 7231
+      },
+      "writtenOn": "2015-05-11T19:57:53Z",
+      "side": 1,
+      "message": "Pre-RIL-merge, both modems behaved this way.",
+      "parentUuid": "9a89bdaa_a173b54c",
+      "revId": "5af7c7f49a1670fef7b367b64a54fde863b6c000",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
