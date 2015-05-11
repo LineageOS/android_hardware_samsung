@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a89bdaa_6179ad2f",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-05-11T19:09:03Z",
+      "side": 1,
+      "message": "This change seems separate from the signal strength change. Why not put it in a separate commit?",
+      "revId": "5af7c7f49a1670fef7b367b64a54fde863b6c000",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_8176b13c",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2244,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-05-11T19:09:03Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "5af7c7f49a1670fef7b367b64a54fde863b6c000",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_a173b54c",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2312,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-05-11T19:09:03Z",
+      "side": 1,
+      "message": "Are all radio types behaving this way? Does this need to be an optional behavior?",
+      "revId": "5af7c7f49a1670fef7b367b64a54fde863b6c000",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
