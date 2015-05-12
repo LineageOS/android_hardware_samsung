@@ -34,6 +34,24 @@
       "revId": "5856583c07ef395c09b8a7f9447ad98110ebff83",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_fc864064",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2986,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-05-12T06:11:30Z",
+      "side": 1,
+      "message": "I looked at the code before, my issue is that the code doesn\u0027t make any real sense. It makes zero sense to use GSM strength, check if valid, use CDMA strength if not, check if valid again, then finally fall back to some other value if still not valid.\n\nIt doesn\u0027t make any logical sense.",
+      "parentUuid": "9a89bdaa_5c680cbb",
+      "revId": "5856583c07ef395c09b8a7f9447ad98110ebff83",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
