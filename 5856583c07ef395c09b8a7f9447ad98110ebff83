@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a89bdaa_fc51e00f",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2986,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-05-12T05:57:36Z",
+      "side": 1,
+      "message": "This part already duplicates the checks below, no?\nAlternately, if you intended to check the result of CDMA_SignalStrength.dbm, why not just swap line 2982 for gsmSignalStrength \u003d p_cur-\u003eCDMA_SignalStrength.dbm and verify against lines 2990-2995? Logically I\u0027m not sure what this is supposed to be doing anymore.",
+      "revId": "5856583c07ef395c09b8a7f9447ad98110ebff83",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
