@@ -16,6 +16,24 @@
       "revId": "5856583c07ef395c09b8a7f9447ad98110ebff83",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a89bdaa_5c680cbb",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2986,
+      "author": {
+        "id": 7231
+      },
+      "writtenOn": "2015-05-12T06:06:28Z",
+      "side": 1,
+      "message": "We only use CDMA signal strength when gsm one is out of bounds. But we must also check if CDMA signal strength is in bounds. This is only for xmm6260.\nFor other modems, we just use the min/max strength.\n\nCan\u0027t swap line 2982 because gsm signal strength is always the first priority.\n\nLook at the code before ril merge, this is how it is supposed to be.",
+      "parentUuid": "9a89bdaa_fc51e00f",
+      "revId": "5856583c07ef395c09b8a7f9447ad98110ebff83",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
