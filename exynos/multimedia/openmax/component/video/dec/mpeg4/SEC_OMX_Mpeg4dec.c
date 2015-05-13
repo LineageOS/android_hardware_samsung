@@ -45,7 +45,7 @@
 #endif
 
 /* To use CSC FIMC in SEC OMX, gralloc should allocate physical memory using FIMC */
-/* It means GRALLOC_USAGE_HW_FIMC1 should be set on Native Window usage */
+/* It means GRALLOC_USAGE_HW_ION should be set on Native Window usage */
 #ifdef USE_CSC_FIMC
 #include "csc_fimc.h"
 #endif
