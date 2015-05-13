@@ -515,6 +515,31 @@ static int alloc_device_alloc(alloc_device_t* dev, int w, int h, int format,
         stride = EXYNOS4_ALIGN(w, 16);
         vstride = EXYNOS4_ALIGN(h, 16);
 
+        /* take borrowed logic which was deactivated in https://github.com/NamelessRom/android_frameworks_native/commit/4860d41c044e0cff732fbfa13d83af76fc37e1b5 */
+        if ((format == HAL_PIXEL_FORMAT_YCbCr_420_P) ||
+            (format == HAL_PIXEL_FORMAT_YCbCr_420_SP) ||
+            (format == HAL_PIXEL_FORMAT_YCbCr_420_SP_TILED)) {
+            // 0x101 = HAL_PIXEL_FORMAT_YCbCr_420_P (Samsung-specific pixel format)
+            // 0x105 = HAL_PIXEL_FORMAT_YCbCr_420_SP (Samsung-specific pixel format)
+            // 0x107 = HAL_PIXEL_FORMAT_YCbCr_420_SP_TILED (Samsung-specific pixel format)
+
+            /* We need at least 0x1802930 for playing video */
+            if (!(l_usage & GRALLOC_USAGE_HW_FIMC1)) {
+                l_usage |= GRALLOC_USAGE_HW_FIMC1; // Exynos HWC wants FIMC-friendly memory allocation
+                ALOGD("%s added usage GRALLOC_USAGE_HW_FIMC1 because of format\n", __func__);
+            }
+
+            if (!(l_usage & GRALLOC_USAGE_PRIVATE_NONECACHE)) {
+                l_usage |= GRALLOC_USAGE_PRIVATE_NONECACHE; // Exynos HWC wants FIMC-friendly memory allocation
+                ALOGD("%s added usage GRALLOC_USAGE_PRIVATE_NONECACHE because of format\n", __func__);
+            }
+
+            if (!(l_usage & GRALLOC_USAGE_SW_WRITE_OFTEN)) {
+                l_usage |= GRALLOC_USAGE_SW_WRITE_OFTEN; // Exynos HWC wants FIMC-friendly memory allocation
+                ALOGD("%s added usage GRALLOC_USAGE_SW_WRITE_OFTEN because of format\n", __func__);
+            }
+        }
+
         switch (format) {
         case HAL_PIXEL_FORMAT_YV12: //0x32315659
             l_usage |= GRALLOC_USAGE_HW_FIMC1;
@@ -562,36 +587,13 @@ static int alloc_device_alloc(alloc_device_t* dev, int w, int h, int format,
         case OMX_COLOR_FormatYUV420Planar: //0x13
         case OMX_COLOR_FormatYUV420SemiPlanar: //0x15
             size = stride * vstride + EXYNOS4_ALIGN((w / 2), 16) * EXYNOS4_ALIGN((h / 2), 16) * 2;
-            if (usage & GRALLOC_USAGE_HW_FIMC1)
+            if (l_usage & GRALLOC_USAGE_HW_FIMC1)
                 size += PAGE_SIZE * 2;
 
             break;
 
         default:
             return -EINVAL;
-        }
-
-        /* take borrowed logic which was deactivated in https://gerrit.nameless-rom.org/#/c/8948/ */
-        if ((format == 0x101) || (format == 0x105) || (format == 0x107)) {
-            // 0x101 = HAL_PIXEL_FORMAT_YCbCr_420_P (Samsung-specific pixel format)
-            // 0x105 = HAL_PIXEL_FORMAT_YCbCr_420_SP (Samsung-specific pixel format)
-            // 0x107 = HAL_PIXEL_FORMAT_YCbCr_420_SP_TILED (Samsung-specific pixel format)
-
-            /* We need at least 0x1802930 for playing video */
-            if (!(l_usage & GRALLOC_USAGE_HW_FIMC1)) {
-                l_usage |= GRALLOC_USAGE_HW_FIMC1; // Exynos HWC wants FIMC-friendly memory allocation
-                ALOGD("%s added usage GRALLOC_USAGE_HW_FIMC1 because of format\n", __func__);
-            }
-
-            if (!(l_usage & GRALLOC_USAGE_PRIVATE_NONECACHE)) {
-                l_usage |= GRALLOC_USAGE_PRIVATE_NONECACHE; // Exynos HWC wants FIMC-friendly memory allocation
-                ALOGD("%s added usage GRALLOC_USAGE_PRIVATE_NONECACHE because of format\n", __func__);
-            }
-
-            if (!(l_usage & GRALLOC_USAGE_SW_WRITE_OFTEN)) {
-                l_usage |= GRALLOC_USAGE_SW_WRITE_OFTEN; // Exynos HWC wants FIMC-friendly memory allocation
-                ALOGD("%s added usage GRALLOC_USAGE_SW_WRITE_OFTEN because of format\n", __func__);
-            }
         }
 
     } else {
