@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a89bdaa_3240d156",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2308,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-05-13T05:02:28Z",
+      "side": 1,
+      "message": "While functionally equivalent to if (network_search \u0026\u0026 i % 5 \u003d\u003d 0) continue, this is a little harder to read. You can also avoid changing any of the below lines if you use a if (...) continue as well.",
+      "revId": "a533b42c7286d759f0c97db15b4c3de90a76be93",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
