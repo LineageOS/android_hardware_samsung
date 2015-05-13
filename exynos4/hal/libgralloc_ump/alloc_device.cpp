@@ -125,8 +125,8 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
 
     size = round_up_to_page_size(size);
 
-    if (usage & GRALLOC_USAGE_HW_ION) {
-        ALOGD_IF(debug_level > 0, "%s usage = GRALLOC_USAGE_HW_ION", __func__);
+    if (usage & GRALLOC_USAGE_HW_FIMC1) {
+        ALOGD_IF(debug_level > 0, "%s usage = GRALLOC_USAGE_HW_FIMC1", __func__);
 
         char node[20];
         int ret;
@@ -203,7 +203,7 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
 
         current_address = gReservedMemAddr + buffer_offset;
 
-        if ( (usage < 0 || usage & (GRALLOC_USAGE_HWC_HWOVERLAY | GRALLOC_USAGE_HW_ION)) &&
+        if ( (usage < 0 || usage & (GRALLOC_USAGE_HWC_HWOVERLAY | GRALLOC_USAGE_HW_FIMC1)) &&
              (format == (int)HAL_PIXEL_FORMAT_RGBA_8888 || format == (int)HAL_PIXEL_FORMAT_RGB_565) ) {
 
             if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
@@ -246,8 +246,8 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
         return 0;
     }
 
-    if (usage & GRALLOC_USAGE_HW_FIMC1) {
-        ALOGD_IF(debug_level > 0, "%s usage = GRALLOC_USAGE_HW_FIMC1", __func__);
+    if (usage & GRALLOC_USAGE_HW_ION) {
+        ALOGD_IF(debug_level > 0, "%s usage = GRALLOC_USAGE_HW_ION", __func__);
 
         if (!ion_dev_open) {
             ALOGE("%s ERROR, failed to open ion", __func__);
@@ -524,26 +524,26 @@ static int alloc_device_alloc(alloc_device_t* dev, int w, int h, int format,
             // 0x107 = HAL_PIXEL_FORMAT_YCbCr_420_SP_TILED (Samsung-specific pixel format)
 
             /* We need at least 0x1802930 for playing video */
-            if (!(l_usage & GRALLOC_USAGE_HW_FIMC1)) {
-                l_usage |= GRALLOC_USAGE_HW_FIMC1; // Exynos HWC wants FIMC-friendly memory allocation
-                ALOGD("%s added usage GRALLOC_USAGE_HW_FIMC1 because of format\n", __func__);
+            if (!(l_usage & GRALLOC_USAGE_HW_ION)) {
+                l_usage |= GRALLOC_USAGE_HW_ION; // Exynos HWC wants ION-friendly memory allocation
+                ALOGD("%s added usage GRALLOC_USAGE_HW_ION because of format\n", __func__);
             }
 
             if (!(l_usage & GRALLOC_USAGE_PRIVATE_NONECACHE)) {
-                l_usage |= GRALLOC_USAGE_PRIVATE_NONECACHE; // Exynos HWC wants FIMC-friendly memory allocation
+                l_usage |= GRALLOC_USAGE_PRIVATE_NONECACHE; // Exynos HWC wants ION-friendly memory allocation
                 ALOGD("%s added usage GRALLOC_USAGE_PRIVATE_NONECACHE because of format\n", __func__);
             }
 
             if (!(l_usage & GRALLOC_USAGE_SW_WRITE_OFTEN)) {
-                l_usage |= GRALLOC_USAGE_SW_WRITE_OFTEN; // Exynos HWC wants FIMC-friendly memory allocation
+                l_usage |= GRALLOC_USAGE_SW_WRITE_OFTEN; // Exynos HWC wants ION-friendly memory allocation
                 ALOGD("%s added usage GRALLOC_USAGE_SW_WRITE_OFTEN because of format\n", __func__);
             }
         }
 
         switch (format) {
         case HAL_PIXEL_FORMAT_YV12: //0x32315659
-            l_usage |= GRALLOC_USAGE_HW_FIMC1;
-            ALOGD("%s added GRALLOC_USAGE_HW_FIMC1 because of YV12", __func__);
+            l_usage |= GRALLOC_USAGE_HW_ION;
+            ALOGD("%s added GRALLOC_USAGE_HW_ION because of YV12", __func__);
 
         case 0x200:
         case 0x201:
@@ -568,9 +568,9 @@ static int alloc_device_alloc(alloc_device_t* dev, int w, int h, int format,
         case HAL_PIXEL_FORMAT_YCbCr_420_P: //0x101
             //lc_20a4
             size = (stride * vstride) + ((EXYNOS4_ALIGN(w/2,16) * EXYNOS4_ALIGN(h/2,16)) * 2);
-            //stride_raw = l_usage & GRALLOC_USAGE_HW_FIMC1; //It is later overwritten to 0
+            //stride_raw = l_usage & GRALLOC_USAGE_HW_ION; //It is later overwritten to 0
 
-            if (l_usage & GRALLOC_USAGE_HW_FIMC1)
+            if (l_usage & GRALLOC_USAGE_HW_ION)
                 size += (PAGE_SIZE * 2);
 
             break;
@@ -587,7 +587,7 @@ static int alloc_device_alloc(alloc_device_t* dev, int w, int h, int format,
         case OMX_COLOR_FormatYUV420Planar: //0x13
         case OMX_COLOR_FormatYUV420SemiPlanar: //0x15
             size = stride * vstride + EXYNOS4_ALIGN((w / 2), 16) * EXYNOS4_ALIGN((h / 2), 16) * 2;
-            if (l_usage & GRALLOC_USAGE_HW_FIMC1)
+            if (l_usage & GRALLOC_USAGE_HW_ION)
                 size += PAGE_SIZE * 2;
 
             break;
