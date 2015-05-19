@@ -15,7 +15,7 @@
 
     <SwitchPreference
         android:key="gesture_hand_wave"
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:title="@string/hand_wave_gesture_title"
         android:summary="@string/hand_wave_gesture_summary" />
 
