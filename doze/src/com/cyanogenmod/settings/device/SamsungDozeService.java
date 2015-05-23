@@ -161,8 +161,8 @@ public class SamsungDozeService extends Service {
     }
 
     private void loadPreferences(SharedPreferences sharedPreferences) {
-        mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, true);
-        mPocketGestureEnabled = sharedPreferences.getBoolean(GESTURE_POCKET_KEY, true);
+        mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, false);
+        mPocketGestureEnabled = sharedPreferences.getBoolean(GESTURE_POCKET_KEY, false);
     }
 
     private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
@@ -181,9 +181,9 @@ public class SamsungDozeService extends Service {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (GESTURE_HAND_WAVE_KEY.equals(key)) {
-                mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, true);
+                mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, false);
             } else if (GESTURE_POCKET_KEY.equals(key)) {
-                mPocketGestureEnabled = sharedPreferences.getBoolean(key, true);
+                mPocketGestureEnabled = sharedPreferences.getBoolean(GESTURE_POCKET_KEY, false);
             }
         }
     };
