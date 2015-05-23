@@ -17,6 +17,11 @@
     <string name="screen_gestures_panel_title">Gestures</string>
     <string name="screen_gestures_panel_summary">Use gestures to perform actions</string>
 
+    <string name="ambient_display_title">Ambient display</string>
+
+    <string name="ambient_display_enable_title">Ambient display</string>
+    <string name="ambient_display_enable_summary">Wake screen when you receive notifications</string>
+
     <string name="hand_wave_gesture_title">Hand wave</string>
     <string name="hand_wave_gesture_summary">Pulse notifications on hand wave</string>
 
