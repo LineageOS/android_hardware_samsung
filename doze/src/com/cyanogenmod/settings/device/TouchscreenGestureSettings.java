@@ -18,11 +18,14 @@ package com.cyanogenmod.settings.device;
 
 import com.android.internal.util.cm.ScreenType;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class TouchscreenGestureSettings extends PreferenceActivity {
 
@@ -50,6 +53,9 @@ public class TouchscreenGestureSettings extends PreferenceActivity {
         mPocketPreference =
             (SwitchPreference) findPreference(KEY_GESTURE_POCKET);
         mPocketPreference.setEnabled(dozeEnabled);
+
+        final ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -60,6 +66,15 @@ public class TouchscreenGestureSettings extends PreferenceActivity {
         if (!ScreenType.isTablet(this)) {
             getListView().setPadding(0, 0, 0, 0);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 
     private boolean enableDoze(boolean enable) {
