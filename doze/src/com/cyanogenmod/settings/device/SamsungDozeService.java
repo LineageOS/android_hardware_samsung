@@ -33,6 +33,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.List;
 
 public class SamsungDozeService extends Service {
@@ -43,6 +44,7 @@ public class SamsungDozeService extends Service {
 
     private static final String GESTURE_HAND_WAVE_KEY = "gesture_hand_wave";
     private static final String GESTURE_POCKET_KEY = "gesture_pocket";
+    private static final String PROXIMITY_WAKE_KEY = "proximity_wake_enable";
 
     private static final int POCKET_DELTA_NS = 1000 * 1000 * 1000;
 
@@ -52,6 +54,7 @@ public class SamsungDozeService extends Service {
 
     private boolean mHandwaveGestureEnabled = false;
     private boolean mPocketGestureEnabled = false;
+    private boolean mProximityWakeEnabled = false;
 
     class SamsungProximitySensor implements SensorEventListener {
         private SensorManager mSensorManager;
@@ -88,6 +91,9 @@ public class SamsungDozeService extends Service {
 
             if (mHandwaveGestureEnabled && mPocketGestureEnabled) {
                 return true;
+            } else if (mProximityWakeEnabled && (delta < POCKET_DELTA_NS)) {
+                mPowerManager.wakeUp(TimeUnit.NANOSECONDS.toMillis(timestamp));
+                return false;
             } else if (mHandwaveGestureEnabled && !mPocketGestureEnabled) {
                 return delta < POCKET_DELTA_NS;
             } else if (!mHandwaveGestureEnabled && mPocketGestureEnabled) {
@@ -96,8 +102,9 @@ public class SamsungDozeService extends Service {
             return false;
         }
 
-        public void enable() {
-            if (mHandwaveGestureEnabled || mPocketGestureEnabled) {
+        public void testAndEnable() {
+            if ((isDozeEnabled() && (mHandwaveGestureEnabled || mPocketGestureEnabled)) ||
+                    mProximityWakeEnabled) {
                 mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
             }
         }
@@ -116,8 +123,8 @@ public class SamsungDozeService extends Service {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         loadPreferences(sharedPrefs);
         sharedPrefs.registerOnSharedPreferenceChangeListener(mPrefListener);
-        if (!isInteractive() && isDozeEnabled()) {
-            mSensor.enable();
+        if (!isInteractive()) {
+            mSensor.testAndEnable();
         }
     }
 
@@ -155,9 +162,7 @@ public class SamsungDozeService extends Service {
 
     private void onDisplayOff() {
         if (DEBUG) Log.d(TAG, "Display off");
-        if (isDozeEnabled()) {
-            mSensor.enable();
-        }
+        mSensor.testAndEnable();
     }
 
     private void loadPreferences(SharedPreferences sharedPreferences) {
@@ -184,6 +189,8 @@ public class SamsungDozeService extends Service {
                 mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, false);
             } else if (GESTURE_POCKET_KEY.equals(key)) {
                 mPocketGestureEnabled = sharedPreferences.getBoolean(GESTURE_POCKET_KEY, false);
+            } else if (PROXIMITY_WAKE_KEY.equals(key)) {
+                mProximityWakeEnabled = sharedPreferences.getBoolean(PROXIMITY_WAKE_KEY, false);
             }
         }
     };
