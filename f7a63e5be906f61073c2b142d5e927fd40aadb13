@@ -16,6 +16,23 @@
       "revId": "f7a63e5be906f61073c2b142d5e927fd40aadb13",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6895a0_994c7b78",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2308,
+      "author": {
+        "id": 13565
+      },
+      "writtenOn": "2015-06-08T22:01:49Z",
+      "side": 0,
+      "message": "This lines should drop every 5th element (#5,#10,#15,...). At the moment it is dropping element #6, #11, #16, ...\n\nRevert everything in this merge and only change this line to\nif (network_search \u0026\u0026 ( (i + 1) % 5 \u003d\u003d 0))",
+      "revId": "f7a63e5be906f61073c2b142d5e927fd40aadb13",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
