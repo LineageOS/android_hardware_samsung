@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a8ec9b2_80922456",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-06-08T06:12:18Z",
+      "side": 0,
+      "message": "There was an alternate version that had an ifdef for the number of expected responses. That would be a better solution.",
+      "revId": "f7a63e5be906f61073c2b142d5e927fd40aadb13",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
