@@ -13,13 +13,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="screen_gestures_panel_title">Gestá</string>
-  <string name="screen_gestures_panel_summary">Použite gestá na vykonávanie akcií</string>
-  <string name="ambient_display_title">Ambientné zobrazenie</string>
-  <string name="ambient_display_enable_title">Ambientné zobrazenie</string>
-  <string name="ambient_display_enable_summary">Prebudiť obrazovku po prijatí oznámenia</string>
-  <string name="hand_wave_gesture_title">Mávnutie ruky</string>
-  <string name="hand_wave_gesture_summary">Pulzné oznámenia po mávnutí rukou</string>
-  <string name="pocket_gesture_title">Vrecko</string>
-  <string name="pocket_gesture_summary">Pulzné oznámenia po vybratí z vrecka</string>
+  <string name="screen_gestures_panel_title">手势</string>
+  <string name="screen_gestures_panel_summary">使用手势来执行动作</string>
+  <string name="ambient_display_title">环境显示</string>
+  <string name="ambient_display_enable_title">环境显示</string>
+  <string name="ambient_display_enable_summary">当接收到通知时唤醒屏幕</string>
+  <string name="hand_wave_gesture_title">挥手</string>
+  <string name="hand_wave_gesture_summary">挥手时闪烁通知呼吸灯</string>
+  <string name="pocket_gesture_title">口袋</string>
+  <string name="pocket_gesture_summary">从口袋中拿出时闪烁通知呼吸灯</string>
 </resources>

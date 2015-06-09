@@ -13,13 +13,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="screen_gestures_panel_title">Gestá</string>
-  <string name="screen_gestures_panel_summary">Použite gestá na vykonávanie akcií</string>
-  <string name="ambient_display_title">Ambientné zobrazenie</string>
-  <string name="ambient_display_enable_title">Ambientné zobrazenie</string>
-  <string name="ambient_display_enable_summary">Prebudiť obrazovku po prijatí oznámenia</string>
-  <string name="hand_wave_gesture_title">Mávnutie ruky</string>
-  <string name="hand_wave_gesture_summary">Pulzné oznámenia po mávnutí rukou</string>
-  <string name="pocket_gesture_title">Vrecko</string>
-  <string name="pocket_gesture_summary">Pulzné oznámenia po vybratí z vrecka</string>
+  <string name="screen_gestures_panel_title">Gestai</string>
+  <string name="screen_gestures_panel_summary">Naudoti gestus veiksmams atlikti</string>
+  <string name="ambient_display_title">Ambient display</string>
+  <string name="ambient_display_enable_title">Ambient display</string>
+  <string name="ambient_display_enable_summary">Pažadinti ekraną, kai gaunami pranešimai</string>
+  <string name="hand_wave_gesture_title">Rankos mostas</string>
+  <string name="hand_wave_gesture_summary">Pulsuoti pranešimus rankos mostu</string>
+  <string name="pocket_gesture_title">Kišenė</string>
+  <string name="pocket_gesture_summary">Pulsuoti pranešimus pašalinant iš kišenės</string>
 </resources>

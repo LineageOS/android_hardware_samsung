@@ -13,13 +13,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="screen_gestures_panel_title">Gestá</string>
-  <string name="screen_gestures_panel_summary">Použite gestá na vykonávanie akcií</string>
-  <string name="ambient_display_title">Ambientné zobrazenie</string>
-  <string name="ambient_display_enable_title">Ambientné zobrazenie</string>
-  <string name="ambient_display_enable_summary">Prebudiť obrazovku po prijatí oznámenia</string>
-  <string name="hand_wave_gesture_title">Mávnutie ruky</string>
-  <string name="hand_wave_gesture_summary">Pulzné oznámenia po mávnutí rukou</string>
-  <string name="pocket_gesture_title">Vrecko</string>
-  <string name="pocket_gesture_summary">Pulzné oznámenia po vybratí z vrecka</string>
+  <string name="screen_gestures_panel_title">Gesty</string>
+  <string name="screen_gestures_panel_summary">Używaj gestów do wykonywania czynności</string>
+  <string name="ambient_display_title">Aktywny wyświetlacz</string>
+  <string name="ambient_display_enable_title">Aktywny wyświetlacz</string>
+  <string name="ambient_display_enable_summary">Wybudź ekran, po otrzymaniu powiadomienia</string>
+  <string name="pocket_gesture_title">Kieszeń</string>
+  <string name="pocket_gesture_summary">Pulsujące powiadomienia po wyjęciu z kieszeni</string>
 </resources>
