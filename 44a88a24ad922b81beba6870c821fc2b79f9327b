@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da36d5c6_4c030fb9",
+        "filename": "cmhw/org/cyanogenmod/hardware/KeyDisabler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-06-18T05:37:12Z",
+      "side": 1,
+      "message": "Java uses camel cased variable names, eg. mEnableKeyDisabler\nYou could also get this as a string and Boolean.parseBool it to true. Additionally, you should probably make this a persist.* property so it persists across reboots. Finally, the property should be named something like \"keydisabler_enable\" or something similar that implies state.",
+      "revId": "44a88a24ad922b81beba6870c821fc2b79f9327b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
