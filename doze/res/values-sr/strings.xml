@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Пулсно обавештење при покрету руком</string>
   <string name="pocket_gesture_title">Џеп</string>
   <string name="pocket_gesture_summary">Пулсно обавештење при уклањању из џепа</string>
+  <string name="proximity_wake_title">Буђење близином</string>
+  <string name="proximity_wake_enable_title">Буђење близином</string>
+  <string name="proximity_wake_enable_summary">Пробуди уређај покретом руке</string>
 </resources>

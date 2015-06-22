@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Jakinarazpen argia eskuarekin agurtzean</string>
   <string name="pocket_gesture_title">Poltsikoratu</string>
   <string name="pocket_gesture_summary">Jakinarazpen argia poltsikotik ateratzean</string>
+  <string name="proximity_wake_title">Hurbiltasun bidezko esnatzea</string>
+  <string name="proximity_wake_enable_title">Hurbiltasun bidezko esnatzea</string>
+  <string name="proximity_wake_enable_summary">Esnatu gailua eskuarekin agurtzean</string>
 </resources>

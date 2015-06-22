@@ -13,13 +13,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="screen_gestures_panel_title">Gesty</string>
-  <string name="screen_gestures_panel_summary">Używaj gestów do wykonywania czynności</string>
-  <string name="ambient_display_title">Aktywny wyświetlacz</string>
-  <string name="ambient_display_enable_title">Aktywny wyświetlacz</string>
-  <string name="ambient_display_enable_summary">Wybudź ekran, po otrzymaniu powiadomienia</string>
-  <string name="hand_wave_gesture_title">Machnij ręką</string>
-  <string name="hand_wave_gesture_summary">Pulsujące powiadomienia po machnięciu ręką</string>
-  <string name="pocket_gesture_title">Kieszeń</string>
-  <string name="pocket_gesture_summary">Pulsujące powiadomienia po wyjęciu z kieszeni</string>
+  <string name="screen_gestures_panel_title">Gebaren</string>
+  <string name="screen_gestures_panel_summary">Gebaren gebruiken om acties uit te voeren</string>
+  <string name="ambient_display_title">Omgevingsdisplay</string>
+  <string name="ambient_display_enable_title">Omgevingsdisplay</string>
+  <string name="ambient_display_enable_summary">Scherm aan bij het ontvangen van meldingen</string>
+  <string name="hand_wave_gesture_title">Handgebaar</string>
+  <string name="hand_wave_gesture_summary">Meldingen laten knipperen bij handgebaar</string>
+  <string name="pocket_gesture_title">Broekzak</string>
+  <string name="pocket_gesture_summary">Meldingen laten knipperen bij verwijderen uit broekzak</string>
 </resources>

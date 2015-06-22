@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Upozornit pulsováním při zamáváním rukou</string>
   <string name="pocket_gesture_title">Kapsa</string>
   <string name="pocket_gesture_summary">Upozornit pulsováním při vyjmutí z kapsy</string>
+  <string name="proximity_wake_title">Probudit přiblížením</string>
+  <string name="proximity_wake_enable_title">Probudit přiblížením</string>
+  <string name="proximity_wake_enable_summary">Probudit zařízení pomocí zamávání rukou</string>
 </resources>

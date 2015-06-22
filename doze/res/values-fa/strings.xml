@@ -14,4 +14,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">حرکات</string>
+  <string name="screen_gestures_panel_summary">استفاده از حرکات برای انجام کارها</string>
+  <string name="ambient_display_title">نمایش محیط</string>
+  <string name="ambient_display_enable_title">نمایش محیط</string>
+  <string name="ambient_display_enable_summary">روشن شدن صفحه هنگام دریافت اعلان</string>
+  <string name="hand_wave_gesture_title">حرکت دست</string>
+  <string name="hand_wave_gesture_summary">چشمک زدن اعلان‌ها هنگام حرکت دست</string>
+  <string name="pocket_gesture_title">جیب</string>
+  <string name="pocket_gesture_summary">چشمک زدن اعلان‌ها هنگام بیرون آوردن از جیب</string>
 </resources>
