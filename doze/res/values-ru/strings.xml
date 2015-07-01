@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Проведите ладонью над экраном для просмотра уведомлений</string>
   <string name="pocket_gesture_title">Карман</string>
   <string name="pocket_gesture_summary">Отображать уведомления при извлечении устройства из кармана</string>
+  <string name="proximity_wake_title">Включение по датчикам</string>
+  <string name="proximity_wake_enable_title">Включение по датчикам</string>
+  <string name="proximity_wake_enable_summary">Проведите ладонью над экраном, чтобы вывести устройство из режима сна</string>
 </resources>

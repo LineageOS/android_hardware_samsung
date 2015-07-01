@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">El sallayınca bildirimleri at</string>
   <string name="pocket_gesture_title">Cep</string>
   <string name="pocket_gesture_summary">Cepten çıkarınca bildirimleri at</string>
+  <string name="proximity_wake_title">Harekette uyandır</string>
+  <string name="proximity_wake_enable_title">Harekette uyandır</string>
+  <string name="proximity_wake_enable_summary">El sallamasında cihazı uyandır</string>
 </resources>

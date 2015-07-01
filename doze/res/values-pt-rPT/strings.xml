@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Notificações Led ao passar a mão</string>
   <string name="pocket_gesture_title">Bolso</string>
   <string name="pocket_gesture_summary">Notificações Led ao retirar do bolso</string>
+  <string name="proximity_wake_title">Sensor de proximidade</string>
+  <string name="proximity_wake_enable_title">Sensor de proximidade</string>
+  <string name="proximity_wake_enable_summary">Ligar o dispositivo ao passar a mão pelo sensor de proximidade</string>
 </resources>

@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Értesítések pulzálása lebegő simításnál</string>
   <string name="pocket_gesture_title">Zseb</string>
   <string name="pocket_gesture_summary">Értesítések pulzálása zsebből való kivétel után</string>
+  <string name="proximity_wake_title">Közelség ébresztés</string>
+  <string name="proximity_wake_enable_title">Közelség ébresztés</string>
+  <string name="proximity_wake_enable_summary">Készülék ébresztése lebegő simításra</string>
 </resources>

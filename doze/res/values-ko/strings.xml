@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">손을 좌우로 흔들면 알림 표시</string>
   <string name="pocket_gesture_title">주머니</string>
   <string name="pocket_gesture_summary">주머니에서 꺼내면 알림 표시</string>
+  <string name="proximity_wake_title">근접 깨우기</string>
+  <string name="proximity_wake_enable_title">근접 깨우기</string>
+  <string name="proximity_wake_enable_summary">손을 흔들어 기기 깨우기</string>
 </resources>

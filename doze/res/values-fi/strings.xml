@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Näytä ilmoitukset heilautettaessa kättä</string>
   <string name="pocket_gesture_title">Tasku</string>
   <string name="pocket_gesture_summary">Näytä ilmoitukset kun laite otetaan taskusta</string>
+  <string name="proximity_wake_title">Läheisyysanturin herätys</string>
+  <string name="proximity_wake_enable_title">Läheisyysanturin herätys</string>
+  <string name="proximity_wake_enable_summary">Herätä laite heilauttamalla kättä</string>
 </resources>

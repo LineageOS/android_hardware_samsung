@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Sendi atentigojn mansvingante</string>
   <string name="pocket_gesture_title">Poŝo</string>
   <string name="pocket_gesture_summary">Sendi atentigojn elpoŝigante</string>
+  <string name="proximity_wake_title">Proksima veko</string>
+  <string name="proximity_wake_enable_title">Proksima veko</string>
+  <string name="proximity_wake_enable_summary">Veki aparaton per mana movo</string>
 </resources>

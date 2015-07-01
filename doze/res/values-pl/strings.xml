@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Pulsujące powiadomienia po machnięciu ręką</string>
   <string name="pocket_gesture_title">Kieszeń</string>
   <string name="pocket_gesture_summary">Pulsujące powiadomienia po wyjęciu z kieszeni</string>
+  <string name="proximity_wake_title">Wybudzenie czujnikiem zbliżeniowym</string>
+  <string name="proximity_wake_enable_title">Wybudzenie czujnikiem zbliżeniowym</string>
+  <string name="proximity_wake_enable_summary">Wybudź urządzenie machnięciem ręką</string>
 </resources>

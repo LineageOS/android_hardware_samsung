@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">挥手时闪烁通知呼吸灯</string>
   <string name="pocket_gesture_title">口袋</string>
   <string name="pocket_gesture_summary">从口袋中拿出时闪烁通知呼吸灯</string>
+  <string name="proximity_wake_title">距离传感器唤醒</string>
+  <string name="proximity_wake_enable_title">距离传感器唤醒</string>
+  <string name="proximity_wake_enable_summary">挥手时唤醒设备</string>
 </resources>

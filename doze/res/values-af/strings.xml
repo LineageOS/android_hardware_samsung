@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Pols kennisgewings op die handgebaar</string>
   <string name="pocket_gesture_title">Sak</string>
   <string name="pocket_gesture_summary">Pols kennisgewings wanneer jy toestel uit jou sak haal</string>
+  <string name="proximity_wake_title">Nabyheid wakker word</string>
+  <string name="proximity_wake_enable_title">Nabyheid wakker word</string>
+  <string name="proximity_wake_enable_summary">Maak toestel wakker met waai van hand</string>
 </resources>
