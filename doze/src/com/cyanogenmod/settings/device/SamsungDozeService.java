@@ -168,6 +168,7 @@ public class SamsungDozeService extends Service {
     private void loadPreferences(SharedPreferences sharedPreferences) {
         mHandwaveGestureEnabled = sharedPreferences.getBoolean(GESTURE_HAND_WAVE_KEY, false);
         mPocketGestureEnabled = sharedPreferences.getBoolean(GESTURE_POCKET_KEY, false);
+        mProximityWakeEnabled = sharedPreferences.getBoolean(PROXIMITY_WAKE_KEY, false);
     }
 
     private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
