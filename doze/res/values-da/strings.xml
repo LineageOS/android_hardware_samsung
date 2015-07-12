@@ -15,9 +15,14 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Bevægelser</string>
   <string name="screen_gestures_panel_summary">Anvend bevægelser til at udføre handlinger</string>
+  <string name="ambient_display_title">Inaktivitetsvisning</string>
+  <string name="ambient_display_enable_title">Inaktivitetsvisning</string>
   <string name="ambient_display_enable_summary">Tænder skærmen, når du modtager notifikationer</string>
   <string name="hand_wave_gesture_title">Vink med hånden</string>
   <string name="hand_wave_gesture_summary">Vibrér, hvis der er notifikationer, når du vinker over skærmen</string>
   <string name="pocket_gesture_title">Lomme</string>
   <string name="pocket_gesture_summary">Vibrér, hvis der er notifikationer, når telefonen tages op ad lommen</string>
+  <string name="proximity_wake_title">Berøringsfri vækning</string>
+  <string name="proximity_wake_enable_title">Berøringsfri vækning</string>
+  <string name="proximity_wake_enable_summary">Vækker enheden ved at vinke</string>
 </resources>

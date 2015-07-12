@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Mostra notificacions quan s\'agiti amb la ma</string>
   <string name="pocket_gesture_title">Butxaca</string>
   <string name="pocket_gesture_summary">Mostra notificacions quan te\'l treguis de la butxaca</string>
+  <string name="proximity_wake_title">Desperta en apropar-se</string>
+  <string name="proximity_wake_enable_title">Desperta en apropar-se</string>
+  <string name="proximity_wake_enable_summary">Desperta el dispositiu en agitar</string>
 </resources>

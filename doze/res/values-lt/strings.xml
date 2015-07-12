@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Pulsuoti pranešimus rankos mostu</string>
   <string name="pocket_gesture_title">Kišenė</string>
   <string name="pocket_gesture_summary">Pulsuoti pranešimus pašalinant iš kišenės</string>
+  <string name="proximity_wake_title">Artumo pažadinimas</string>
+  <string name="proximity_wake_enable_title">Artumo pažadinimas</string>
+  <string name="proximity_wake_enable_summary">Pažadinti įrenginį rankos mostu</string>
 </resources>
