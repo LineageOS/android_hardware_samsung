@@ -14,7 +14,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">ジェスチャー</string>
-  <string name="screen_gestures_panel_summary">ジェスチャを使用してアクションを実行する</string>
+  <string name="screen_gestures_panel_summary">ジェスチャーを使用してアクションを実行する</string>
   <string name="ambient_display_title">常時オンディスプレイ</string>
   <string name="ambient_display_enable_title">常時オンディスプレイ</string>
   <string name="ambient_display_enable_summary">通知を受信したときに画面を点灯させる</string>

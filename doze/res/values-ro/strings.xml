@@ -15,4 +15,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gesturi</string>
   <string name="screen_gestures_panel_summary">Utilizați gesturi pentru a efectua acțiuni</string>
+  <string name="pocket_gesture_title">Buzunar</string>
 </resources>

@@ -17,5 +17,6 @@
   <string name="screen_gestures_panel_summary">Utiliser des gestes pour effectuer des actions</string>
   <string name="ambient_display_title">Affichage ambiant</string>
   <string name="ambient_display_enable_title">Affichage ambiant</string>
+  <string name="ambient_display_enable_summary">Activer l\'écran quand vous recevez des notifications</string>
   <string name="pocket_gesture_title">Poche</string>
 </resources>
