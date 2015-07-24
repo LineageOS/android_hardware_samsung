@@ -32,6 +32,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 
+import java.lang.System;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.List;
@@ -87,6 +88,11 @@ public class SamsungDozeService extends Service {
         }
 
         private boolean shouldPulse(long timestamp) {
+            // Never pulse if the timestamp is from the future
+            if (timestamp > System.nanoTime()) {
+                return false;
+            }
+
             long delta = timestamp - mInPocketTime;
 
             if (mHandwaveGestureEnabled && mPocketGestureEnabled) {
