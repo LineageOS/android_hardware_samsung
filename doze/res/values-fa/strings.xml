@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">چشمک زدن اعلان‌ها هنگام حرکت دست</string>
   <string name="pocket_gesture_title">جیب</string>
   <string name="pocket_gesture_summary">چشمک زدن اعلان‌ها هنگام بیرون آوردن از جیب</string>
+  <string name="proximity_wake_title">بیدارباش مجاورت</string>
+  <string name="proximity_wake_enable_title">بیدارباش مجاورت</string>
+  <string name="proximity_wake_enable_summary">بیدارباش دستگاه در لرزش دست</string>
 </resources>

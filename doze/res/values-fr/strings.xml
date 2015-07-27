@@ -18,5 +18,11 @@
   <string name="ambient_display_title">Affichage ambiant</string>
   <string name="ambient_display_enable_title">Affichage ambiant</string>
   <string name="ambient_display_enable_summary">Activer l\'écran quand vous recevez des notifications</string>
+  <string name="hand_wave_gesture_title">Geste de la main</string>
+  <string name="hand_wave_gesture_summary">Activer les notification sur un geste de la main</string>
   <string name="pocket_gesture_title">Poche</string>
+  <string name="pocket_gesture_summary">Activer les notification en sortant l\'appareil de la poche</string>
+  <string name="proximity_wake_title">Activation de proximité</string>
+  <string name="proximity_wake_enable_title">Activation de proximité</string>
+  <string name="proximity_wake_enable_summary">Activer l\'appareil d\'un geste de la main</string>
 </resources>
