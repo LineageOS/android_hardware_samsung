@@ -88,17 +88,12 @@ public class SamsungDozeService extends Service {
         }
 
         private boolean shouldPulse(long timestamp) {
-            // Never pulse if the timestamp is from the future
-            if (timestamp > System.nanoTime()) {
-                return false;
-            }
-
             long delta = timestamp - mInPocketTime;
 
             if (mHandwaveGestureEnabled && mPocketGestureEnabled) {
                 return true;
             } else if (mProximityWakeEnabled && (delta < POCKET_DELTA_NS)) {
-                mPowerManager.wakeUp(TimeUnit.NANOSECONDS.toMillis(timestamp));
+                mPowerManager.wakeUp(TimeUnit.NANOSECONDS.toMillis(System.nanoTime()));
                 return false;
             } else if (mHandwaveGestureEnabled && !mPocketGestureEnabled) {
                 return delta < POCKET_DELTA_NS;
