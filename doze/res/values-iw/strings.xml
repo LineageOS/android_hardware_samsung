@@ -15,8 +15,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">מחוות</string>
   <string name="screen_gestures_panel_summary">השתמש במחוות לביצוע פעולות</string>
-  <string name="ambient_display_title">תצוגת התראות ברקע</string>
-  <string name="ambient_display_enable_title">תצוגת התראות ברקע</string>
+  <string name="ambient_display_title">התראות ברקע</string>
+  <string name="ambient_display_enable_title">התראות ברקע</string>
   <string name="ambient_display_enable_summary">הפעל את המסך בעת קבלת התראות</string>
   <string name="hand_wave_gesture_title">נפנוף יד</string>
   <string name="hand_wave_gesture_summary">הצג התראות בנפנוף יד</string>
