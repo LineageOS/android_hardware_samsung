@@ -15,5 +15,11 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gesturi</string>
   <string name="screen_gestures_panel_summary">Utilizați gesturi pentru a efectua acțiuni</string>
+  <string name="ambient_display_title">Afișare ambientală</string>
+  <string name="ambient_display_enable_title">Afișare ambientală</string>
+  <string name="ambient_display_enable_summary">Trezește ecran când primiți notificări</string>
   <string name="pocket_gesture_title">Buzunar</string>
+  <string name="pocket_gesture_summary">Puls notificări privind eliminarea din buzunar</string>
+  <string name="proximity_wake_title">Trezire prin proximitate</string>
+  <string name="proximity_wake_enable_title">Trezire prin proximitate</string>
 </resources>
