@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">Pulzné oznámenia po mávnutí rukou</string>
   <string name="pocket_gesture_title">Vrecko</string>
   <string name="pocket_gesture_summary">Pulzné oznámenia po vybratí z vrecka</string>
+  <string name="proximity_wake_title">Prebudiť priblížením</string>
+  <string name="proximity_wake_enable_title">Prebudiť priblížením</string>
+  <string name="proximity_wake_enable_summary">Prebudiť zariadenie mávnutím ruky</string>
 </resources>
