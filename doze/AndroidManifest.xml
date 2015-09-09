@@ -32,7 +32,7 @@
         <activity
             android:name=".TouchscreenGestureSettings"
             android:label="@string/screen_gestures_panel_title"
-            android:theme="@android:style/Theme.Material.Settings">>
+            android:theme="@android:style/Theme.Material.Settings">
             <intent-filter>
                 <action android:name="com.cyanogenmod.action.LAUNCH_TOUCHSCREEN_GESTURE_SETTINGS" />
             </intent-filter>
