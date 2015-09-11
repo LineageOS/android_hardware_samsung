@@ -17,6 +17,6 @@
   <string name="pocket_gesture_title">口袋</string>
   <string name="pocket_gesture_summary">從口袋中取出時發出脈動通知</string>
   <string name="proximity_wake_title">接近喚醒</string>
-  <string name="proximity_wake_enable_title">接近啟動</string>
-  <string name="proximity_wake_enable_summary">揮手啟動設備</string>
+  <string name="proximity_wake_enable_title">接近喚醒</string>
+  <string name="proximity_wake_enable_summary">揮手喚醒裝置</string>
 </resources>
