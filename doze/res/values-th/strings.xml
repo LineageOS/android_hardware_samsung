@@ -22,4 +22,7 @@
   <string name="hand_wave_gesture_summary">เช็คการแจ้งเตือนเมื่อมีการแกว่งมือ</string>
   <string name="pocket_gesture_title">กระเป๋า</string>
   <string name="pocket_gesture_summary">เช็คการแจ้งเตือนเมื่อนำออกจากกระเป๋า</string>
+  <string name="proximity_wake_title">การปลุกระยะใกล้เคียง</string>
+  <string name="proximity_wake_enable_title">การปลุกระยะใกล้เคียง</string>
+  <string name="proximity_wake_enable_summary">ปลุกอุปกรณ์เมื่อโบกแกว่งมือ</string>
 </resources>
