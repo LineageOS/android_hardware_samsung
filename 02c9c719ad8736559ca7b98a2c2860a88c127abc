@@ -16,6 +16,24 @@
       "revId": "02c9c719ad8736559ca7b98a2c2860a88c127abc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f287b81_685b262e",
+        "filename": "exynos4/hal/libgralloc_ump/alloc_device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 12082
+      },
+      "writtenOn": "2015-10-15T00:26:15Z",
+      "side": 0,
+      "message": "I thought about that, but I\u0027m not sure if it\u0027s used at all now, gotta check that",
+      "parentUuid": "7f287b81_a8510e11",
+      "revId": "02c9c719ad8736559ca7b98a2c2860a88c127abc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
