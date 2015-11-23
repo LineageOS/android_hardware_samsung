@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f4e5783_ee1dee0f",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3812,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2015-11-23T14:49:32Z",
+      "side": 0,
+      "message": "Please just add a \" at the beginning of the string in this line ...",
+      "revId": "dbf394e8477a258df05fcf76feb267888931e18a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f4e5783_ce1a3216",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3842,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2015-11-23T14:49:32Z",
+      "side": 0,
+      "message": "Same here, please just add a \" at the beginning of the string in this line ...",
+      "revId": "dbf394e8477a258df05fcf76feb267888931e18a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
