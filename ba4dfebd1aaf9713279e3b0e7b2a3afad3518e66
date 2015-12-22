@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7f9b97_650490c7",
+        "filename": "power/power.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 11409
+      },
+      "writtenOn": "2015-12-22T19:13:32Z",
+      "side": 1,
+      "message": "The name is misleading or the value should be 1000 as nano seconds per micrososecond.",
+      "revId": "ba4dfebd1aaf9713279e3b0e7b2a3afad3518e66",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
