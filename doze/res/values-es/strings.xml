@@ -15,14 +15,13 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gestos</string>
   <string name="screen_gestures_panel_summary">Utilizar gestos para realizar acciones</string>
-  <string name="ambient_display_title">Pantalla ambiental</string>
-  <string name="ambient_display_enable_title">Pantalla ambiental</string>
-  <string name="ambient_display_enable_summary">Activar la pantalla cuando se reciben notificaciones</string>
+  <string name="ambient_display_title">Pantalla ambiente</string>
+  <string name="ambient_display_enable_title">Pantalla ambiente</string>
+  <string name="ambient_display_enable_summary">Activa la pantalla cuando recibes notificaciones</string>
   <string name="hand_wave_gesture_title">Pasar la mano</string>
   <string name="hand_wave_gesture_summary">Mostrar notificaciones cuando se pase la mano por el dispositivo</string>
   <string name="pocket_gesture_title">Bolsillo</string>
   <string name="pocket_gesture_summary">Mostrar notificaciones cuando se saque del bolsillo</string>
   <string name="proximity_wake_title">Despertar por proximidad</string>
-  <string name="proximity_wake_enable_title">Despertar por proximidad</string>
-  <string name="proximity_wake_enable_summary">Despertar el dispositivo al agitar</string>
+  <string name="proximity_wake_enable_summary">Despertar el dispositivo al pasar la mano</string>
 </resources>

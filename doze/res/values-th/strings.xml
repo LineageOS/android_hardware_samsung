@@ -13,15 +13,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="screen_gestures_panel_title">ท่าทาง</string>
-  <string name="screen_gestures_panel_summary">ใช้ท่าทางเพื่อเรียกใช้งาน</string>
-  <string name="ambient_display_title">หน้าจอแวดล้อม</string>
-  <string name="ambient_display_enable_title">หน้าจอแวดล้อม</string>
-  <string name="ambient_display_enable_summary">เปิดหน้าจอเมื่อมีการแจ้งเตือน</string>
-  <string name="hand_wave_gesture_title">แกว่งมือ</string>
-  <string name="hand_wave_gesture_summary">เช็คการแจ้งเตือนเมื่อมีการแกว่งมือ</string>
-  <string name="pocket_gesture_title">กระเป๋า</string>
-  <string name="pocket_gesture_summary">เช็คการแจ้งเตือนเมื่อนำออกจากกระเป๋า</string>
   <string name="proximity_wake_title">การปลุกระยะใกล้เคียง</string>
   <string name="proximity_wake_enable_title">การปลุกระยะใกล้เคียง</string>
   <string name="proximity_wake_enable_summary">ปลุกอุปกรณ์เมื่อโบกแกว่งมือ</string>
