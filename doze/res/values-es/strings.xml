@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gestos</string>
-  <string name="screen_gestures_panel_summary">Utilizar gestos para realizar acciones</string>
   <string name="ambient_display_title">Pantalla ambiente</string>
   <string name="ambient_display_enable_title">Pantalla ambiente</string>
   <string name="ambient_display_enable_summary">Activa la pantalla cuando recibes notificaciones</string>

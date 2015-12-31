@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Χειρονομίες</string>
-  <string name="screen_gestures_panel_summary">Χρησιμοποιήστε χειρονομίες για να εκτελέσετε ενέργειες</string>
   <string name="ambient_display_title">Οθόνη ambient</string>
   <string name="ambient_display_enable_title">Οθόνη ambient</string>
   <string name="ambient_display_enable_summary">Ενεργοποίηση της οθόνης όταν λαμβάνετε ειδοποιήσεις</string>

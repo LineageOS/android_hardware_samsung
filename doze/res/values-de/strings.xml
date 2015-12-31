@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gesten</string>
-  <string name="screen_gestures_panel_summary">Gesten verwenden, um Aktionen auszuführen</string>
   <string name="ambient_display_title">Inaktivitätsdisplay</string>
   <string name="ambient_display_enable_title">Inaktivitätsdisplay</string>
   <string name="ambient_display_enable_summary">Bildschirm wecken, wenn Sie Benachrichtigungen erhalten</string>

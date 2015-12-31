@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Mozdulatok</string>
-  <string name="screen_gestures_panel_summary">Használjon mozdulatokat műveletek végrehajtásához</string>
   <string name="ambient_display_title">Környezeti kijelző</string>
   <string name="ambient_display_enable_title">Környezeti kijelző</string>
   <string name="ambient_display_enable_summary">Képernyő ébresztése értesítések fogadásakor</string>

@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gestoj</string>
-  <string name="screen_gestures_panel_summary">Uzi gestojn por agi</string>
   <string name="ambient_display_title">Ĉirkaŭaĵa afiŝado</string>
   <string name="ambient_display_enable_title">Ĉirkaŭaĵa afiŝado</string>
   <string name="ambient_display_enable_summary">Vekigi ekranon, kiam vi ricevas atentigojn</string>

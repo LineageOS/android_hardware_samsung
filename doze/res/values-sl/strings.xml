@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Poteze</string>
-  <string name="screen_gestures_panel_summary">Uporabi poteze za opravljanje dejanj</string>
   <string name="ambient_display_title">Okoliški zaslon</string>
   <string name="ambient_display_enable_title">Okoliški zaslon</string>
   <string name="ambient_display_enable_summary">Zbudi zaslon, ko prejmem obvestila</string>

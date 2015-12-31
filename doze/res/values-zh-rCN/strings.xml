@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">手势</string>
-  <string name="screen_gestures_panel_summary">使用手势来执行动作</string>
   <string name="ambient_display_title">环境显示</string>
   <string name="ambient_display_enable_title">环境显示</string>
   <string name="ambient_display_enable_summary">当接收到通知时唤醒屏幕</string>

@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gerakan</string>
-  <string name="screen_gestures_panel_summary">Gunakan gerakan untuk melakukan sesuatu</string>
   <string name="ambient_display_title">Layar Ambient</string>
   <string name="ambient_display_enable_title">Layar Ambient</string>
   <string name="ambient_display_enable_summary">Bangunkan layar saat Anda menerima Pemberitahuan</string>

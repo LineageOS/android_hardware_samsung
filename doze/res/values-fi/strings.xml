@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Eleet</string>
-  <string name="screen_gestures_panel_summary">Käytä eleitä suorittaaksesi toimintoja</string>
   <string name="ambient_display_title">Ambient-näyttö</string>
   <string name="ambient_display_enable_title">Ambient-näyttö</string>
   <string name="ambient_display_enable_summary">Herätä näyttö kun saat ilmoituksia</string>

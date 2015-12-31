@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Jestlər</string>
-  <string name="screen_gestures_panel_summary">Əməliyyatı həyata keçirmək üçün jestlərdən istifadə edin</string>
   <string name="ambient_display_title">Ekran mühiti</string>
   <string name="ambient_display_enable_title">Ekran mühiti</string>
   <string name="ambient_display_enable_summary">Bildiriş gələndə ekranı oyandırar</string>

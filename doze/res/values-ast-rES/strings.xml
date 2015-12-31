@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Xestos</string>
-  <string name="screen_gestures_panel_summary">Usa xestos pa facer aiciones</string>
   <string name="ambient_display_title">Pantalla ambiente</string>
   <string name="ambient_display_enable_title">Pantalla ambiente</string>
   <string name="ambient_display_enable_summary">Prender pantalla al recibir avisos</string>

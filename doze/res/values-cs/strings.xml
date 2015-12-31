@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gesta</string>
-  <string name="screen_gestures_panel_summary">Používat gesta k provedení akce</string>
   <string name="ambient_display_title">Ambientní zobrazení</string>
   <string name="ambient_display_enable_title">Ambientní zobrazení</string>
   <string name="ambient_display_enable_summary">Probudit obrazovku při upozornění</string>

@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gestai</string>
-  <string name="screen_gestures_panel_summary">Naudoti gestus veiksmams atlikti</string>
   <string name="ambient_display_title">Ambient display</string>
   <string name="ambient_display_enable_title">Ambient display</string>
   <string name="ambient_display_enable_summary">Pažadinti ekraną, kai gaunami pranešimai</string>

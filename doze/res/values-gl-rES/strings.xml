@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Xestos</string>
-  <string name="screen_gestures_panel_summary">Utilizar xestos para realizar accións</string>
   <string name="ambient_display_title">Visualización ambiental</string>
   <string name="ambient_display_enable_title">Visualización ambiental</string>
   <string name="ambient_display_enable_summary">Activar a pantalla ao recibir notificacións</string>

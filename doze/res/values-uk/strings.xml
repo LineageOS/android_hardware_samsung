@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Жести</string>
-  <string name="screen_gestures_panel_summary">Користуйтеся жестами для виконання дій</string>
   <string name="ambient_display_title">Ambient display</string>
   <string name="ambient_display_enable_title">Ambient display</string>
   <string name="ambient_display_enable_summary">Вмикати екран, коли ви отримали сповіщення</string>

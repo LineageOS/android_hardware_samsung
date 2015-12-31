@@ -14,7 +14,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">ಸನ್ನೆಗಳು</string>
-  <string name="screen_gestures_panel_summary">ಕ್ರಿಯೆಗಳನ್ನು ನಿರ್ವಹಿಸಲು ಸನ್ನೆಗಳನ್ನು ಉಪಯೋಗಿಸಿ</string>
   <string name="ambient_display_title">ಆವರಿಸಿದ ಪರದೆ</string>
   <string name="ambient_display_enable_title">ಆವರಿಸಿದ ಪರದೆ</string>
   <string name="ambient_display_enable_summary">ನೀವು ಅಧಿಸೂಚನೆಗಳನ್ನು ಸ್ವೀಕರಿಸಿದಾಗ ಪರದೆಯನ್ನು ಎಚ್ಚರಗೊಳಿಸಿ</string>
