@@ -15,7 +15,6 @@
 
     <!-- Gesture shortcuts -->
     <string name="screen_gestures_panel_title">Gestures</string>
-    <string name="screen_gestures_panel_summary">Use gestures to perform actions</string>
 
     <string name="ambient_display_title">Ambient display</string>
 
