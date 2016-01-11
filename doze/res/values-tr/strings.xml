@@ -16,7 +16,7 @@
   <string name="screen_gestures_panel_title">Hareketler</string>
   <string name="ambient_display_title">Bildirim ekranı</string>
   <string name="ambient_display_enable_title">Bildirim ekranı</string>
-  <string name="ambient_display_enable_summary">Bildirim geldiğinde ekranı uyandırır</string>
+  <string name="ambient_display_enable_summary">Bildirim aldığınızda ekranı uyandırın</string>
   <string name="hand_wave_gesture_title">El sallama</string>
   <string name="hand_wave_gesture_summary">El sallayınca bildirimleri at</string>
   <string name="pocket_gesture_title">Cep</string>

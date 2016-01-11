@@ -22,5 +22,6 @@
   <string name="pocket_gesture_title">Bolsillo</string>
   <string name="pocket_gesture_summary">Mostrar notificaciones cuando se saque del bolsillo</string>
   <string name="proximity_wake_title">Despertar por proximidad</string>
+  <string name="proximity_wake_enable_title">Despertar por proximidad</string>
   <string name="proximity_wake_enable_summary">Despertar el dispositivo al pasar la mano</string>
 </resources>
