@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcbff3d_76ac308c",
+        "filename": "liblights/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-01-29T02:13:58Z",
+      "side": 1,
+      "message": "The commonly used guard variable is \"TARGET_PROVIDES_LIBLIGHT\". We should continue to use that to prefer a custom lights HAL in the device repo/blob/other for consistency.",
+      "revId": "0b413f35ca660718c1e5ff86d795b624e9f77008",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
