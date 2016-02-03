@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcbff3d_cce0e6cf",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2016-02-03T20:38:53Z",
+      "side": 1,
+      "message": "All the dynamic boostpulse code has been reverted by Google: https://github.com/CyanogenMod/android_device_htc_flounder/commit/9d381a28ba2ff4e5f715b189a9d32b627ef7b0e8",
+      "revId": "7bdfedf13e164363c3d6a537ee2bd5a5dd3f6344",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fcbff3d_8ceadea9",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2016-02-03T20:38:53Z",
+      "side": 1,
+      "message": "This code is supposed to be dynamic.\nWe cannot set device specific parameters in here, at the very least this has to be a compile time parameter (macro set via Android.mk).",
+      "revId": "7bdfedf13e164363c3d6a537ee2bd5a5dd3f6344",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fcbff3d_2cd16afc",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2016-02-03T20:38:53Z",
+      "side": 1,
+      "message": "Reducing the frequency to the minimum supported frequency per cluster/core causes stuttering with BT playback when the device goes into non-interactive state.",
+      "revId": "7bdfedf13e164363c3d6a537ee2bd5a5dd3f6344",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
