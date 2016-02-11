@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb9cba7_24e9ce7f",
+        "filename": "cmhw/org/cyanogenmod/hardware/SunlightEnhancement.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-02-11T06:59:30Z",
+      "side": 1,
+      "message": "Is there a reason to make this variable via property? Shouldn\u0027t this path be relatively constant?",
+      "revId": "f531a137bbc5c186c1f10a0a16ae013fbe078c1b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
