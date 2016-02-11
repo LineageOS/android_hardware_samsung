@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb9cba7_45f2b908",
+        "filename": "cmhw/org/cyanogenmod/hardware/SunlightEnhancement.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2016-02-11T12:20:01Z",
+      "side": 1,
+      "message": "Yea, I was working off AdaptiveBacklight, but looks like the prop won\u0027t be necessary.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 84
+      },
+      "revId": "460b48da0c112d26d5a91345b103dcb9ec322bf2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
