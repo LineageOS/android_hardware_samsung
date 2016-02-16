@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb9cba7_12cb9e53",
+        "filename": "power/power.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-02-16T00:43:06Z",
+      "side": 1,
+      "message": "PerformanceManager is handling the power power hint already, and doing the same thing as here. This entire block is redundant and can be removed.",
+      "revId": "c22e211c92117076fd41036f1671e523588cabbf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
