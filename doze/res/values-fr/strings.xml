@@ -14,8 +14,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="screen_gestures_panel_title">Gestes</string>
-  <string name="ambient_display_title">Affichage ambiant</string>
-  <string name="ambient_display_enable_title">Affichage ambiant</string>
+  <string name="ambient_display_title">Affichage en mode veille</string>
+  <string name="ambient_display_enable_title">Affichage en mode veille</string>
   <string name="ambient_display_enable_summary">Activer l\'écran quand vous recevez des notifications</string>
   <string name="hand_wave_gesture_title">Geste de la main</string>
   <string name="hand_wave_gesture_summary">Activer les notification sur un geste de la main</string>
