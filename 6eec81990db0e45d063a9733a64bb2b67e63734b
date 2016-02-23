@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb9cba7_1091459a",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2394,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2016-02-23T04:00:16Z",
+      "side": 0,
+      "message": "Andreas, do we really need the isVideo field here?\nIs this a leftover from Samsung kitkat RILs?\n\nI couldn\u0027t find any hints that we need this in my RIL code..",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
