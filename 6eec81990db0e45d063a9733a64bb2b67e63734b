@@ -16,6 +16,24 @@
       "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_90f21506",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2394,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-02-23T04:32:35Z",
+      "side": 0,
+      "message": "I remember having to account for this on a KK QC RIL. I don\u0027t remember what this is for on non-QCs.",
+      "parentUuid": "ffb9cba7_1091459a",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
