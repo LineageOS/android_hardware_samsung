@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb9cba7_308fa9cd",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "Could you please use:\n\nif (request-\u003ecurr-\u003epayload !\u003d NULL)",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_d0bded68",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "Could you please use:\n\nif (listItem \u003d\u003d NULL)",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_f0c271e9",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "Please use:\n\nif (currRequest \u003d\u003d NULL)",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_90b77587",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "if (response !\u003d NULL \u0026\u0026 response_len \u003e 0)",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_b0bcf969",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "If some values need to be initialized with zero, I would prefer:\n\nMsgHeader rsp \u003d {\n  .token \u003d request-\u003ecurr-\u003etoken,\n  .type \u003d MsgType_RESPONSE,\n  ...\n};",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_50b1fd8e",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "if (rsp.payload \u003d\u003d NULL) {",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_70ae812f",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "if (data \u003d\u003d NULL \u0026\u0026 datalen \u003e 0 {",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_10ab851d",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "if (payload \u003d\u003d NULL) {",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_30a8091e",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "if (reqHeader \u003d\u003d NULL) {",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_d062cd16",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "I would also clean this up:\n\nbool ok;\n\nok \u003d pb_decode(..);\nif (!ok) {\n    RLOGE(\"Error ...\");\n    free(reqHeader);\n    return;\n}\n\nDo the rest here, we can remove the } else {",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_f067d124",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "if (recv \u003d\u003d NULL) {",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_906c5509",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "if (payload \u003d\u003d NULL) {",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_b07159e3",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "if (hdr \u003d\u003d NULL)",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffb9cba7_5076ddda",
+        "filename": "ril/libril/RilSapSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-02-23T14:45:44Z",
+      "side": 1,
+      "message": "if (currRequest \u003d\u003d NULL)",
+      "revId": "6eec81990db0e45d063a9733a64bb2b67e63734b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
