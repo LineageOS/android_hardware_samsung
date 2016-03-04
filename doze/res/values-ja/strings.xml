@@ -13,6 +13,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- Gesture shortcuts -->
   <string name="screen_gestures_panel_title">ジェスチャー</string>
   <string name="ambient_display_title">アンビエント表示</string>
   <string name="ambient_display_enable_title">アンビエント表示</string>

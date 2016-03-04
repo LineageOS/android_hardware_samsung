@@ -13,15 +13,16 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- Gesture shortcuts -->
   <string name="screen_gestures_panel_title">Gestes</string>
   <string name="ambient_display_title">Affichage en mode veille</string>
   <string name="ambient_display_enable_title">Affichage en mode veille</string>
   <string name="ambient_display_enable_summary">Activer l\'écran quand vous recevez des notifications</string>
-  <string name="hand_wave_gesture_title">Geste de la main</string>
-  <string name="hand_wave_gesture_summary">Activer les notification sur un geste de la main</string>
+  <string name="hand_wave_gesture_title">Passage de la main</string>
+  <string name="hand_wave_gesture_summary">Le voyant des notifications clignote en passage de main</string>
   <string name="pocket_gesture_title">Poche</string>
-  <string name="pocket_gesture_summary">Activer les notification en sortant l\'appareil de la poche</string>
+  <string name="pocket_gesture_summary">Le voyant des notifications clignote en sortie de poche</string>
   <string name="proximity_wake_title">Activation de proximité</string>
   <string name="proximity_wake_enable_title">Activation de proximité</string>
-  <string name="proximity_wake_enable_summary">Activer l\'appareil d\'un geste de la main</string>
+  <string name="proximity_wake_enable_summary">Réveiller l\'appareil par passage de main</string>
 </resources>
