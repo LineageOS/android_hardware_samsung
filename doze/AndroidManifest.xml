@@ -34,11 +34,14 @@
             android:label="@string/screen_gestures_panel_title"
             android:theme="@android:style/Theme.Material.Settings">
             <intent-filter>
-                <action android:name="com.cyanogenmod.action.LAUNCH_TOUCHSCREEN_GESTURE_SETTINGS" />
+                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
             </intent-filter>
             <meta-data
-                android:name="com.android.settings.title"
-                android:resource="@string/screen_gestures_panel_title"/>
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.device" />
+            <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_settings_gestures" />
         </activity>
 
     </application>
