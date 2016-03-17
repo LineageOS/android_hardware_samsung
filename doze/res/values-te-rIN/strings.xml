@@ -14,4 +14,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Gesture shortcuts -->
+  <string name="screen_gestures_panel_title">సైగలు</string>
+  <string name="ambient_display_title">యాంబియెంట్ డిస్‌ప్లే</string>
+  <string name="ambient_display_enable_title">యాంబియెంట్ డిస్‌ప్లే</string>
+  <string name="ambient_display_enable_summary">మీరు నోటిఫికేషన్లను అందుకున్నప్పుడు మేల్కొల్పు తెర</string>
+  <string name="hand_wave_gesture_title">చేయి ఊపడం</string>
+  <string name="hand_wave_gesture_summary">చేయి ఊపినప్పుడు పల్స్ నోటిఫికేషన్లు</string>
+  <string name="pocket_gesture_title">పాకెట్</string>
+  <string name="pocket_gesture_summary">పాకెట్ నుండి తొలిగించడంతో పల్స్ నోటిఫికేషన్లు</string>
+  <string name="proximity_wake_title">సామీప్య మేల్కొలుపు</string>
+  <string name="proximity_wake_enable_title">సామీప్య మేల్కొలుపు</string>
+  <string name="proximity_wake_enable_summary">చేయి ఊపినప్పుడు పరికరాన్ని మేల్కొలుపుము</string>
 </resources>

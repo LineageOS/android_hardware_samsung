@@ -14,4 +14,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Gesture shortcuts -->
+  <string name="screen_gestures_panel_title">சைகைகள்</string>
+  <string name="ambient_display_title">சூழல்சார் திரை</string>
+  <string name="ambient_display_enable_title">சூழல்சார் திரை</string>
+  <string name="ambient_display_enable_summary">அறிவிப்புகளை நீங்கள் பெறும்போது திரையை விழிப்பூட்டுக</string>
+  <string name="hand_wave_gesture_title">கை அசை</string>
+  <string name="hand_wave_gesture_summary">கை அசைவில் துடிப்பு அறிவிப்புகள்</string>
+  <string name="pocket_gesture_title">பாக்கெட்</string>
+  <string name="pocket_gesture_summary">பாக்கெட்டில் இருந்து நீக்கும்போது துடிப்பு அறிவிப்புகள்</string>
+  <string name="proximity_wake_title">அண்மை விழிப்பூட்டல்</string>
+  <string name="proximity_wake_enable_title">அண்மை விழிப்பூட்டல்</string>
+  <string name="proximity_wake_enable_summary">கை அசைவில் சாதனத்தை விழிப்பூட்டு</string>
 </resources>

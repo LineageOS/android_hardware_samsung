@@ -14,4 +14,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Gesture shortcuts -->
+  <string name="screen_gestures_panel_title">ভঙ্গিমা</string>
+  <string name="ambient_display_title">পৰিপাৰ্শ্বিক ডিচপ্লে</string>
+  <string name="ambient_display_enable_title">পৰিপাৰ্শ্বিক ডিচপ্লে</string>
+  <string name="ambient_display_enable_summary">আপুনি অধিসূচনা প্ৰাপ্ত কৰিলে স্ক্ৰীণ ৱেক কৰক</string>
+  <string name="hand_wave_gesture_title">হাত জোকাৰা</string>
+  <string name="hand_wave_gesture_summary">হাত জোকাৰিলে পালচ্‌ অধিসূচনা</string>
+  <string name="pocket_gesture_title">পকেট</string>
+  <string name="pocket_gesture_summary">পকেটৰ পৰা আঁতৰালে পালচ্‌ অধিসূচনা</string>
+  <string name="proximity_wake_title">নৈকট্য ৱেক</string>
+  <string name="proximity_wake_enable_title">নৈকট্য ৱেক</string>
+  <string name="proximity_wake_enable_summary">হাত জোকাৰিলে ডিভাইচটো ৱেক কৰক</string>
 </resources>

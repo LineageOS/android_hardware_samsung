@@ -14,4 +14,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Gesture shortcuts -->
+  <string name="screen_gestures_panel_title">જેસ્ચર્સ</string>
+  <string name="ambient_display_title">વ્યાપક ડિસ્પ્લે</string>
+  <string name="ambient_display_enable_title">વ્યાપક ડિસ્પ્લે</string>
+  <string name="ambient_display_enable_summary">જ્યારે તમે સૂચનાઓ પ્રાપ્ત કરો ત્યારે સ્ક્રીન જગાવો</string>
+  <string name="hand_wave_gesture_title">હાથ ફરકાવો</string>
+  <string name="hand_wave_gesture_summary">હાથ ફરકાવા પર પલ્સ સૂચનાઓ</string>
+  <string name="pocket_gesture_title">ગજવું</string>
+  <string name="pocket_gesture_summary">ગજવામાંથી બહાર કાઢવાથી પલ્સ સૂચનાઓ</string>
+  <string name="proximity_wake_title">પ્રૉક્સિમિટી જાગૃતિ</string>
+  <string name="proximity_wake_enable_title">પ્રૉક્સિમિટી જાગૃતિ</string>
+  <string name="proximity_wake_enable_summary">હાથ હલાવવાથી ડિવાઇસ જગાવો</string>
 </resources>

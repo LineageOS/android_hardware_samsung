@@ -14,4 +14,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Gesture shortcuts -->
+  <string name="screen_gestures_panel_title">ଅଙ୍ଗଭଙ୍ଗୀ୍ସ</string>
+  <string name="ambient_display_title">ଏମ୍ବିଏଣ୍ଟ ପ୍ରଦର୍ଶନ</string>
+  <string name="ambient_display_enable_title">ଏମ୍ବିଏଣ୍ଟ ପ୍ରଦର୍ଶନ</string>
+  <string name="ambient_display_enable_summary">ଆପଣ ସୂଚନାବଳି ପ୍ରାପ୍ତ କରିବା ସମୟରେ ସ୍କ୍ରିନ୍‍କୁ ଉଠାନ୍ତୁ</string>
+  <string name="hand_wave_gesture_title">ହ୍ୟାଣ୍ଡ ୱେଭ୍‍</string>
+  <string name="hand_wave_gesture_summary">ହ୍ୟାଣ୍ଡ ୱେଭ୍‍ରେ ପଲ୍ସ ସୂଚନାବଳି</string>
+  <string name="pocket_gesture_title">ପକେଟ୍‍</string>
+  <string name="pocket_gesture_summary">ପକେଟ୍‍ରୁ ଅପସାରଣ ସମୟରେ ପଲ୍ସ ସୂଚନାବଳି</string>
+  <string name="proximity_wake_title">ପ୍ରକ୍ସିମିଟି ୱେକ୍‍</string>
+  <string name="proximity_wake_enable_title">ପ୍ରକ୍ସିମିଟି ୱେକ୍‍</string>
+  <string name="proximity_wake_enable_summary">ହ୍ୟାଣ୍ଡ ୱେଭ୍‍ରେ ଡିଭାଇସ୍‍ ଉଠାନ୍ତୁ</string>
 </resources>
