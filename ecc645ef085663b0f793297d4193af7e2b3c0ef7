@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7faddb67_ed3ab6cb",
+        "filename": "exynos4/AdvancedDisplay/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5774
+      },
+      "writtenOn": "2016-03-18T20:01:19Z",
+      "side": 1,
+      "message": "Everything above this is not related to this commit",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "ecc645ef085663b0f793297d4193af7e2b3c0ef7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
