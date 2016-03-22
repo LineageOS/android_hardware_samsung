@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7faddb67_3791f453",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-03-22T16:23:12Z",
+      "side": 1,
+      "message": "30 ms?",
+      "range": {
+        "startLine": 15,
+        "startChar": 20,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "2d11c1080c2f461ff2e4fe0ed17e74db3d641dde",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7faddb67_1794f843",
+        "filename": "exynos/multimedia/openmax/component/video/dec/h264/SEC_OMX_H264dec.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-03-22T16:23:12Z",
+      "side": 1,
+      "message": "Code seems to suggest it waits for 30ms, not 100ms.",
+      "revId": "2d11c1080c2f461ff2e4fe0ed17e74db3d641dde",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
