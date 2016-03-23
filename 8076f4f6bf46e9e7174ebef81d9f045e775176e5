@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7faddb67_087db51b",
+        "filename": "exynos/multimedia/openmax/component/video/dec/h264/SEC_OMX_H264dec.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-03-23T16:16:35Z",
+      "side": 1,
+      "message": "Maybe you want a timeout so this cannot cause an infinite loop?",
+      "revId": "8076f4f6bf46e9e7174ebef81d9f045e775176e5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
