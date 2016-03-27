@@ -17,12 +17,12 @@
   <string name="screen_gestures_panel_title">Gestos</string>
   <string name="ambient_display_title">Tela ambiente</string>
   <string name="ambient_display_enable_title">Tela ambiente</string>
-  <string name="ambient_display_enable_summary">Ligar a tela quando receber notificações</string>
-  <string name="hand_wave_gesture_title">Agitar a mão</string>
-  <string name="hand_wave_gesture_summary">Pulsar notificações agitando a mão</string>
+  <string name="ambient_display_enable_summary">Ligar a tela ao receber notificações</string>
+  <string name="hand_wave_gesture_title">Acenar com a mão</string>
+  <string name="hand_wave_gesture_summary">Pulsar notificações ao acenar com a mão</string>
   <string name="pocket_gesture_title">Bolso</string>
-  <string name="pocket_gesture_summary">Pulsar notificações após remover do bolso</string>
-  <string name="proximity_wake_title">Acordar aproximando</string>
-  <string name="proximity_wake_enable_title">Acordar aproximando</string>
-  <string name="proximity_wake_enable_summary">Acordar dispositivo quando chacoalhar a mão</string>
+  <string name="pocket_gesture_summary">Pulsar notificações ao remover do bolso</string>
+  <string name="proximity_wake_title">Acordar por proximidade</string>
+  <string name="proximity_wake_enable_title">Acordar por proximidade</string>
+  <string name="proximity_wake_enable_summary">Acordar dispositivo ao acenar com a mão</string>
 </resources>

@@ -14,15 +14,4 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Gesture shortcuts -->
-  <string name="screen_gestures_panel_title">Gerakan</string>
-  <string name="ambient_display_title">Layar Ambient</string>
-  <string name="ambient_display_enable_title">Layar Ambient</string>
-  <string name="ambient_display_enable_summary">Bangunkan layar saat Anda menerima Pemberitahuan</string>
-  <string name="hand_wave_gesture_title">Guncang Tangan</string>
-  <string name="hand_wave_gesture_summary">Tampilkan pemberitahuan saat guncangan tangan</string>
-  <string name="pocket_gesture_title">Kantung</string>
-  <string name="pocket_gesture_summary">Tunjukkan pemberitahuan saat keluar dari kantung</string>
-  <string name="proximity_wake_title">Bangunkan melalui Proximitas</string>
-  <string name="proximity_wake_enable_title">Bagunkan melalui Proximitas</string>
-  <string name="proximity_wake_enable_summary">Nyalakan perangkat dengan guncang tangan</string>
 </resources>
