@@ -14,4 +14,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Gesture shortcuts -->
+  <string name="screen_gestures_panel_title">Gerakan</string>
+  <string name="ambient_display_title">Tampilan kala takaktif</string>
+  <string name="ambient_display_enable_title">Tampilan kala takaktif</string>
+  <string name="ambient_display_enable_summary">Hidupkan layar ketika menerima pemberitahuan</string>
+  <string name="hand_wave_gesture_title">Lambaian tangan</string>
+  <string name="hand_wave_gesture_summary">Pemberitahuan berkedip pada saat melambaikan tangan</string>
+  <string name="pocket_gesture_title">Saku</string>
+  <string name="pocket_gesture_summary">Pemberitahuan berkedip pada saat keluar dari saku</string>
+  <string name="proximity_wake_title">Bangunkan saat dekat</string>
+  <string name="proximity_wake_enable_title">Bangunkan saat dekat</string>
+  <string name="proximity_wake_enable_summary">Hidupkan perangkat dengan melambaikan tangan</string>
 </resources>
