@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5faad753_e1bfe6f8",
+        "filename": "exynos4/exynos4210/liblightsbln/lights.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2016-05-08T19:17:34Z",
+      "side": 1,
+      "message": "tabs instead of spaces",
+      "range": {
+        "startLine": 101,
+        "startChar": 3,
+        "endLine": 108,
+        "endChar": 15
+      },
+      "revId": "09742ed88c09b451e09da8d63e7da5b058777e65",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_21c65e9c",
+        "filename": "exynos4/exynos4210/liblightsbln/lights.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2016-05-08T19:17:34Z",
+      "side": 1,
+      "message": "change indent, using tab everywhere else",
+      "range": {
+        "startLine": 130,
+        "startChar": 7,
+        "endLine": 130,
+        "endChar": 8
+      },
+      "revId": "09742ed88c09b451e09da8d63e7da5b058777e65",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_41c11a80",
+        "filename": "exynos4/exynos4210/liblightsbln/lights.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2016-05-08T19:17:34Z",
+      "side": 1,
+      "message": "same",
+      "revId": "09742ed88c09b451e09da8d63e7da5b058777e65",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
