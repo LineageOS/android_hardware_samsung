@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5faad753_5c84a10c",
+        "filename": "exynos4/exynos4210/liblightsbln/lights.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2016-05-09T13:18:00Z",
+      "side": 1,
+      "message": "line too long",
+      "revId": "b5d6b293b48ac11ae621292acb943586e9a5f312",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_9c8a1919",
+        "filename": "exynos4/exynos4210/liblightsbln/lights.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2016-05-09T13:18:00Z",
+      "side": 1,
+      "message": "one tab missing",
+      "revId": "b5d6b293b48ac11ae621292acb943586e9a5f312",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_bc8d9532",
+        "filename": "exynos4/exynos4210/liblightsbln/lights.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2016-05-09T13:18:00Z",
+      "side": 1,
+      "message": "same",
+      "revId": "b5d6b293b48ac11ae621292acb943586e9a5f312",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
