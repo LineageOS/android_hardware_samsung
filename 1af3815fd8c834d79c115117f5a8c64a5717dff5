@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5faad753_5a4b2058",
+        "filename": "exynos/multimedia/openmax/component/video/enc/SEC_OMX_Venc.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2016-05-19T11:44:20Z",
+      "side": 1,
+      "message": "It\u0027s definitely doing something more than this. Switching the line below to outputUseBuffer-\u003enFlags |\u003d OMX_BUFFERFLAG_EOS; causes mediaserver to crash.",
+      "parentUuid": "5faad753_66cbe81d",
+      "revId": "1af3815fd8c834d79c115117f5a8c64a5717dff5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5faad753_2b5b792e",
         "filename": "exynos/multimedia/openmax/component/video/enc/SEC_OMX_Venc.c",
         "patchSetId": 1
