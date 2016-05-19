@@ -75,6 +75,47 @@
       "revId": "1af3815fd8c834d79c115117f5a8c64a5717dff5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_5a9320fb",
+        "filename": "exynos/multimedia/openmax/component/video/enc/SEC_OMX_Venc.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-05-19T16:49:59Z",
+      "side": 1,
+      "message": "Wait, I didn\u0027t read this carefully enough, outputUseBuffer points to the secDataBuffer belonging to OUTPUT_PORT_INDEX. These two lines set secDataBuffer[OUTPUT_PORT_INDEX].nFlags \u003d inputUseBuffer-\u003enFlags. I wonder why this is unconditionally setting output buffer flags in the input buffer function?",
+      "parentUuid": "5faad753_2b5b792e",
+      "range": {
+        "startLine": 870,
+        "startChar": 8,
+        "endLine": 871,
+        "endChar": 57
+      },
+      "revId": "1af3815fd8c834d79c115117f5a8c64a5717dff5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_1abfe861",
+        "filename": "exynos/multimedia/openmax/component/video/enc/SEC_OMX_Venc.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-05-19T16:49:59Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this actually be done here?",
+      "revId": "1af3815fd8c834d79c115117f5a8c64a5717dff5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
