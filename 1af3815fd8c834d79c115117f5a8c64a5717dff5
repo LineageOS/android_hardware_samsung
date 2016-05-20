@@ -116,6 +116,58 @@
       "revId": "1af3815fd8c834d79c115117f5a8c64a5717dff5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_300a058a",
+        "filename": "exynos/multimedia/openmax/component/video/enc/SEC_OMX_Venc.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2016-05-20T04:15:54Z",
+      "side": 1,
+      "message": "I don\u0027t think so - here outputUseBuffer-\u003edataValid !\u003d OMX_TRUE (which doesn\u0027t seem to make sense). Also see my comment below.",
+      "parentUuid": "5faad753_1abfe861",
+      "revId": "1af3815fd8c834d79c115117f5a8c64a5717dff5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_f0030d72",
+        "filename": "exynos/multimedia/openmax/component/video/enc/SEC_OMX_Venc.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2016-05-20T04:15:54Z",
+      "side": 1,
+      "message": "When SEC_Preprocessor_InputData returns OMX_FALSE (as it does in this case), SEC_Postprocess_OutputData isn\u0027t even called, so any changes to flags made wouldn\u0027t get run.",
+      "revId": "1af3815fd8c834d79c115117f5a8c64a5717dff5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_90fad972",
+        "filename": "exynos/multimedia/openmax/component/video/enc/SEC_OMX_Venc.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2016-05-20T04:15:54Z",
+      "side": 1,
+      "message": "here\u0027s the outputdata call",
+      "revId": "1af3815fd8c834d79c115117f5a8c64a5717dff5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
