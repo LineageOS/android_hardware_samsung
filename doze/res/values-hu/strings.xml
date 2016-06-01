@@ -19,9 +19,9 @@
   <string name="ambient_display_enable_title">Környezeti kijelző</string>
   <string name="ambient_display_enable_summary">Képernyő ébresztése értesítések fogadásakor</string>
   <string name="hand_wave_gesture_title">Lebegő simítás</string>
-  <string name="hand_wave_gesture_summary">Értesítések pulzálása lebegő simításnál</string>
+  <string name="hand_wave_gesture_summary">Értesítések felvillantása lebegő simításnál</string>
   <string name="pocket_gesture_title">Zseb</string>
-  <string name="pocket_gesture_summary">Értesítések pulzálása zsebből való kivétel után</string>
+  <string name="pocket_gesture_summary">Értesítések felvillantása zsebből való kivételkor</string>
   <string name="proximity_wake_title">Közelség ébresztés</string>
   <string name="proximity_wake_enable_title">Közelség ébresztés</string>
   <string name="proximity_wake_enable_summary">Készülék ébresztése lebegő simításra</string>
