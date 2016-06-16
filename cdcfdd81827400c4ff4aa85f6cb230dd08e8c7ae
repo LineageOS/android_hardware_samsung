@@ -16,6 +16,24 @@
       "revId": "cdcfdd81827400c4ff4aa85f6cb230dd08e8c7ae",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5faad753_1b57aacc",
+        "filename": "cmhw/org/cyanogenmod/hardware/VibratorHW.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-06-16T15:54:59Z",
+      "side": 1,
+      "message": "*grumble*",
+      "parentUuid": "5faad753_fb488e2d",
+      "revId": "cdcfdd81827400c4ff4aa85f6cb230dd08e8c7ae",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
