@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5faad753_3bb4e6d0",
+        "filename": "cmhw/org/cyanogenmod/hardware/VibratorHW.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-06-16T16:09:09Z",
+      "side": 1,
+      "message": "Parse exceptions can happen here, which will take down the system. I guess it hasn\u0027t been a problem yet though? We should patch this in a follow-up.",
+      "revId": "fd90084699ae8180e0a6b95383805f4ee4533194",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
