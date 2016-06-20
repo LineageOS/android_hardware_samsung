@@ -21,7 +21,7 @@
   <string name="hand_wave_gesture_title">Mahanje z roko</string>
   <string name="hand_wave_gesture_summary">Utripaj obvestila ob mahanju z roko</string>
   <string name="pocket_gesture_title">Žep</string>
-  <string name="pocket_gesture_summary">Utripaj obvestila ob izvlečenju iz žepa</string>
+  <string name="pocket_gesture_summary">Utripaj obvestila ob odstranitvi iz žepa</string>
   <string name="proximity_wake_title">Bujenje ob bližini</string>
   <string name="proximity_wake_enable_title">Bujenje ob bližini</string>
   <string name="proximity_wake_enable_summary">Zbudi napravo ob mahanju z roko</string>

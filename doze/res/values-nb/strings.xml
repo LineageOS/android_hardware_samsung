@@ -19,9 +19,9 @@
   <string name="ambient_display_enable_title">Ambient skjerm</string>
   <string name="ambient_display_enable_summary">Skru på skjermen når du mottar varsler</string>
   <string name="hand_wave_gesture_title">Håndvink</string>
-  <string name="hand_wave_gesture_summary">Vibrer varsler med håndvink</string>
+  <string name="hand_wave_gesture_summary">Pulseringsnotifikasjon ved håndvink</string>
   <string name="pocket_gesture_title">Lomme</string>
-  <string name="pocket_gesture_summary">Vibrer varsler når du tar telefonen opp av lommen</string>
+  <string name="pocket_gesture_summary">Pulseringsnotifikasjon når du tar telefonen opp av lommen</string>
   <string name="proximity_wake_title">Berøringsfri vekking</string>
   <string name="proximity_wake_enable_title">Berøringsfri vekking</string>
   <string name="proximity_wake_enable_summary">Vekk enheten med håndvink</string>
