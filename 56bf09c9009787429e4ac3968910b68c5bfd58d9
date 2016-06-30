@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_4bb656dc",
+        "filename": "cmhw/org/cyanogenmod/hardware/VibratorHW.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2016-06-30T14:24:02Z",
+      "side": 1,
+      "message": "Integer.parseInt can throw exception when it can\u0027t parse the int, resulting in system server crash. You should try/catch like in http://review.cyanogenmod.org/#/c/149502/2/cmhw/org/cyanogenmod/hardware/VibratorHW.java",
+      "revId": "56bf09c9009787429e4ac3968910b68c5bfd58d9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
