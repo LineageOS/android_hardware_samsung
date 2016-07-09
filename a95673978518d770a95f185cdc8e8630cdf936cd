@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fa7e38b_161e2fba",
+        "filename": "cmhw/org/cyanogenmod/hardware/DisplayModeControl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2016-07-09T22:25:02Z",
+      "side": 1,
+      "message": "Do you know a simple way to do so? It seems some devices don\u0027t support the Adaptive display mode, but I couldn\u0027t find a simple way to get the supported display modes from the kernel (other than adding a sysfs node which seems pretty troublesome).",
+      "parentUuid": "3fa7e38b_d62f37f4",
+      "revId": "a95673978518d770a95f185cdc8e8630cdf936cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa7e38b_7634434b",
         "filename": "cmhw/org/cyanogenmod/hardware/DisplayModeControl.java",
         "patchSetId": 13
