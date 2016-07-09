@@ -16,6 +16,41 @@
       "revId": "16fdf55618ddd69fc276257291cc1d1fa29b1027",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_16a94f7a",
+        "filename": "power/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-07-09T21:05:49Z",
+      "side": 1,
+      "message": "I\u0027m all for this too, it makes things less confusing.",
+      "parentUuid": "3fa7e38b_faad86ea",
+      "revId": "16fdf55618ddd69fc276257291cc1d1fa29b1027",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_f6ab5372",
+        "filename": "power/power.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-07-09T21:05:49Z",
+      "side": 1,
+      "message": "Do you need to export some data about the DT2W feature?",
+      "revId": "16fdf55618ddd69fc276257291cc1d1fa29b1027",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
