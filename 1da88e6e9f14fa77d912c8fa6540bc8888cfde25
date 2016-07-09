@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_1645cfb3",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/ScreenFragmentActivity.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-07-09T21:49:34Z",
+      "side": 1,
+      "message": "Does this need a readable check also?",
+      "revId": "1da88e6e9f14fa77d912c8fa6540bc8888cfde25",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
