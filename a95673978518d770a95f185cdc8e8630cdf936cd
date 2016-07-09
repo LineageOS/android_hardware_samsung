@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_d62f37f4",
+        "filename": "cmhw/org/cyanogenmod/hardware/DisplayModeControl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-07-09T21:44:35Z",
+      "side": 1,
+      "message": "No filtering needed here? All the devices are guaranteed to support all modes?",
+      "revId": "a95673978518d770a95f185cdc8e8630cdf936cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_7634434b",
+        "filename": "cmhw/org/cyanogenmod/hardware/DisplayModeControl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-07-09T21:44:35Z",
+      "side": 1,
+      "message": "Might need to check if curMode is in bounds of DISPLAY_MODES.",
+      "revId": "a95673978518d770a95f185cdc8e8630cdf936cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_9639bf42",
+        "filename": "cmhw/org/cyanogenmod/hardware/DisplayModeControl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-07-09T21:44:35Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "a95673978518d770a95f185cdc8e8630cdf936cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
