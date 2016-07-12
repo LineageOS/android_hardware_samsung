@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_42006135",
+        "filename": "cmhw/org/cyanogenmod/hardware/DisplayModeControl.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-07-12T00:39:27Z",
+      "side": 1,
+      "message": "I forget if it\u0027s safe to return null here.",
+      "revId": "8a137404775c2094dea78a1edb312a5fa20a3d24",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
