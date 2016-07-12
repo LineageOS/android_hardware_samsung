@@ -22,6 +22,30 @@
       "revId": "821446e368822dd0808b77c6eed26b9a7669582c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_a8f25705",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2016-07-12T12:38:32Z",
+      "side": 1,
+      "message": "Hmm, are you sure?\nAll it really does it read the current panel brightness, which looks pretty clear to me from the macro.\nI mean, I have no issues with this being a separate function, but it\u0027s only 5 lines and not really checking for \u0027doze\u0027 itself.",
+      "parentUuid": "3fa7e38b_022b4994",
+      "range": {
+        "startLine": 349,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 5
+      },
+      "revId": "821446e368822dd0808b77c6eed26b9a7669582c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "9dad4fe88897cd01a64c793a4081576d7396bce7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_08ee0b22",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2016-07-12T12:38:32Z",
+      "side": 0,
+      "message": "Yep.",
+      "parentUuid": "3fa7e38b_422141b4",
+      "revId": "9dad4fe88897cd01a64c793a4081576d7396bce7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
