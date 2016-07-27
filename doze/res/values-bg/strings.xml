@@ -19,9 +19,9 @@
   <string name="ambient_display_enable_title">Атмосферен екран</string>
   <string name="ambient_display_enable_summary">Събуждане на екрана при получаване на известие</string>
   <string name="hand_wave_gesture_title">Махане с ръка</string>
-  <string name="hand_wave_gesture_summary">Пулсиране на известията при махане с ръка</string>
+  <string name="hand_wave_gesture_summary">Показва известията при прекарване на ръка над екрана</string>
   <string name="pocket_gesture_title">Джоб</string>
-  <string name="pocket_gesture_summary">Пулсиране на известията при изваждане от джоб</string>
+  <string name="pocket_gesture_summary">Показва известията, когато извадите устройството от джоба си</string>
   <string name="proximity_wake_title">Събуждане при засичане на близки устройства</string>
   <string name="proximity_wake_enable_title">Събуждане при засичане на близки устройства</string>
   <string name="proximity_wake_enable_summary">Събуди устройство с махане с ръка</string>
