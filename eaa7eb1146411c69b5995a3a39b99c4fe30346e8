@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_be16dff0",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-08-02T03:11:32Z",
+      "side": 1,
+      "message": "Can\u0027t we do something nicer than explicitly including the Android.mk files? Something like include $(call all-makefiles-under, $(SOME_PATH)) and guarding the $(SOME_PATH)/Android.mk  or making $(SOME_PATH) some expansion of the platform?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "eaa7eb1146411c69b5995a3a39b99c4fe30346e8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_9e1be319",
+        "filename": "exynos4/exynos4.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-08-02T03:11:32Z",
+      "side": 1,
+      "message": "include $(EXYNOS4_ROOT)/$(TARGET_SOC).mk ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 37
+      },
+      "revId": "eaa7eb1146411c69b5995a3a39b99c4fe30346e8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa7e38b_5ed32b39",
+        "filename": "exynos4/exynos4210.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-08-02T03:11:32Z",
+      "side": 1,
+      "message": "See comment on the first instance of include */*/Android.mk",
+      "range": {
+        "startLine": 21,
+        "startChar": 38,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "eaa7eb1146411c69b5995a3a39b99c4fe30346e8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
