@@ -30,9 +30,9 @@
         </service>
 
         <activity
-            android:name=".TouchscreenGestureSettings"
+            android:name=".SamsungDozeActivity"
             android:label="@string/screen_gestures_panel_title"
-            android:theme="@android:style/Theme.Material.Settings">
+            android:theme="@style/SamsungDozeSettings">
             <intent-filter>
                 <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
             </intent-filter>
