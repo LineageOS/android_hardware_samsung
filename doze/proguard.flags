@@ -1,3 +1,9 @@
 -keep class com.cyanogenmod.settings.device.* {
   *;
 }
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keep class ** extends android.support.v14.preference.PreferenceFragment
