@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa4df85_9a1762a4",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3813,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-09-11T17:16:43Z",
+      "side": 1,
+      "message": "Doesn\u0027t this insert an extra \" character?",
+      "range": {
+        "startLine": 3813,
+        "startChar": 70,
+        "endLine": 3813,
+        "endChar": 71
+      },
+      "revId": "1936f5850bbe69244f785318ddfc91640306fe2f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
