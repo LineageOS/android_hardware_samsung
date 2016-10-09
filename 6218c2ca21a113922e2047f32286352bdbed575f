@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2e2bb8_5745ddb2",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3688,
+      "author": {
+        "id": 13873
+      },
+      "writtenOn": "2016-10-09T16:56:17Z",
+      "side": 1,
+      "message": "Missing p.writeInt32(-1); See line 3631",
+      "revId": "6218c2ca21a113922e2047f32286352bdbed575f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
