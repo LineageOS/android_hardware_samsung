@@ -20,8 +20,8 @@
         android:key="ambient_display_key"
         android:title="@string/ambient_display_title">
 
-        <SwitchPreference
-            android:key="ambient_display_enable"
+        <cyanogenmod.preference.SecureSettingSwitchPreference
+            android:key="doze_enabled"
             android:defaultValue="true"
             android:title="@string/ambient_display_enable_title"
             android:summary="@string/ambient_display_enable_summary" />
@@ -30,13 +30,15 @@
             android:key="gesture_hand_wave"
             android:defaultValue="false"
             android:title="@string/hand_wave_gesture_title"
-            android:summary="@string/hand_wave_gesture_summary" />
+            android:summary="@string/hand_wave_gesture_summary"
+            android:dependency="doze_enabled" />
 
         <SwitchPreference
             android:key="gesture_pocket"
             android:defaultValue="false"
             android:title="@string/pocket_gesture_title"
-            android:summary="@string/pocket_gesture_summary" />
+            android:summary="@string/pocket_gesture_summary"
+            android:dependency="doze_enabled" />
     </PreferenceCategory>
 
     <PreferenceCategory
