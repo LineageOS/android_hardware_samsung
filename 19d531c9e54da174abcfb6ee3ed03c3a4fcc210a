@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2e2bb8_64d022f9",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 15173
+      },
+      "writtenOn": "2016-10-14T11:39:28Z",
+      "side": 1,
+      "message": "This should really go first, because alpha OCD.",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "19d531c9e54da174abcfb6ee3ed03c3a4fcc210a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
