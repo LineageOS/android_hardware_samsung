@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2e2bb8_32b81c75",
+        "filename": "power/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6998
+      },
+      "writtenOn": "2016-10-16T07:02:31Z",
+      "side": 1,
+      "message": "You\u0027re overriding the LOCAL_CFLAGS above this by using :\u003d\n\nBoth should be +\u003d really. :\u003d does not belong in if(n)eq checks.",
+      "revId": "068ab609b94eae3c8bb19ae5d3f6917619fc56ef",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
