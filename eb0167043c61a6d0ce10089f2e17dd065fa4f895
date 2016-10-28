@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2e2bb8_c280e58e",
+        "filename": "exynos/multimedia/openmax/component/video/dec/SEC_OMX_Vdec.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-10-28T01:45:34Z",
+      "side": 1,
+      "message": "There was some trick you could use to still have the compiler inline this.",
+      "revId": "eb0167043c61a6d0ce10089f2e17dd065fa4f895",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff2e2bb8_a27de1b2",
+        "filename": "exynos/multimedia/utils/csc/exynos4/color_space_convertor.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-10-28T01:45:34Z",
+      "side": 1,
+      "message": "Don\u0027t need to change this line.",
+      "revId": "eb0167043c61a6d0ce10089f2e17dd065fa4f895",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
