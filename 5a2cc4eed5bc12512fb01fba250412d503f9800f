@@ -22,6 +22,30 @@
       "revId": "5a2cc4eed5bc12512fb01fba250412d503f9800f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff2e2bb8_7d409e36",
+        "filename": "exynos/multimedia/utils/csc/exynos4/csc_tiled_to_linear_crop_neon.s",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2016-10-28T02:29:07Z",
+      "side": 0,
+      "message": "I\u0027m not actually sure... I think at this point I was just trying to get it building. It looks like clang supports \u0027stmfdne\u0027, which might actually be the same instruction, so it\u0027s probably better if we switch to that.",
+      "parentUuid": "ff2e2bb8_024c8d9c",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 11
+      },
+      "revId": "5a2cc4eed5bc12512fb01fba250412d503f9800f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
