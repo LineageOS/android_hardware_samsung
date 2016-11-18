@@ -502,7 +502,7 @@ static int samsung_get_feature(struct power_module *module __unused,
     return -1;
 }
 
-static void samsung_set_feature(struct power_module *module, feature_t feature, int state)
+static void samsung_set_feature(struct power_module *module, feature_t feature, int state __unused)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
 
