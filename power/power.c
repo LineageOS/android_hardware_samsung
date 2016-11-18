@@ -23,6 +23,7 @@
 #include <fcntl.h>
 #include <malloc.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -124,11 +125,14 @@ static void sysfs_write(const char *path, char *s)
     close(fd);
 }
 
-static unsigned int read_panel_brightness() {
-    unsigned int i, ret = 0;
+static int read_panel_brightness() {
+    int ret = 0;
     int read_status;
     // brightness can range from 0 to 255, so max. 3 chars + '\0'
     char panel_brightness[4];
+    // for strtol
+    char *dummy;
+    const int base = 10;
 
     read_status = sysfs_read(PANEL_BRIGHTNESS, panel_brightness, sizeof(PANEL_BRIGHTNESS));
     if (read_status < 0) {
@@ -136,12 +140,7 @@ static unsigned int read_panel_brightness() {
         return -1;
     }
 
-    for (i = 0; i < (sizeof(panel_brightness) / sizeof(panel_brightness[0])); i++) {
-        if (isdigit(panel_brightness[i])) {
-            ret += (panel_brightness[i] - '0');
-        }
-    }
-
+    ret = strtol(panel_brightness, &dummy, base);
     ALOGV("%s: Panel brightness is: %d", __func__, ret);
 
     return ret;
