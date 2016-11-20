@@ -15,8 +15,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Gesture shortcuts -->
   <string name="screen_gestures_panel_title">Жестове</string>
-  <string name="ambient_display_title">Атмосферен екран</string>
-  <string name="ambient_display_enable_title">Атмосферен екран</string>
+  <string name="ambient_display_title">Активен дисплей</string>
+  <string name="ambient_display_enable_title">Активен дисплей</string>
   <string name="ambient_display_enable_summary">Събуждане на екрана при получаване на известие</string>
   <string name="hand_wave_gesture_title">Махане с ръка</string>
   <string name="hand_wave_gesture_summary">Показва известията при прекарване на ръка над екрана</string>

@@ -14,7 +14,4 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Gesture shortcuts -->
-  <string name="hand_wave_gesture_title">Mansvingo</string>
-  <string name="pocket_gesture_title">Poŝo</string>
-  <string name="proximity_wake_enable_title">Proksima veko</string>
 </resources>
