@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2e2bb8_ef381ba1",
+        "filename": "power/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2016-11-21T05:24:52Z",
+      "side": 1,
+      "message": "I think we should get rid of DT2W_PATH entirely and use TAP_TO_WAKE_NODE instead.",
+      "revId": "18dee18448eadfec8d78b37063c148065667cbb3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
