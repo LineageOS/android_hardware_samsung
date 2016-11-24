@@ -15,7 +15,7 @@
         android:targetSdkVersion="21"/>
 
     <application
-        android:label="SamsungDoze"
+        android:label="@string/device_settings_app_name"
         android:persistent="true">
 
         <receiver android:name="com.cyanogenmod.settings.device.BootCompletedReceiver">

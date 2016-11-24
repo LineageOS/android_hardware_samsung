@@ -18,7 +18,7 @@
 
     <PreferenceCategory
         android:key="ambient_display_key"
-        android:title="@string/ambient_display_title" >
+        android:title="@string/ambient_display_title">
 
         <SwitchPreference
             android:key="ambient_display_enable"
@@ -41,7 +41,7 @@
 
     <PreferenceCategory
         android:key="proximity_wake_key"
-        android:title="@string/proximity_wake_title" >
+        android:title="@string/proximity_wake_title">
 
         <SwitchPreference
             android:key="proximity_wake_enable"
