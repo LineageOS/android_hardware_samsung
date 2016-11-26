@@ -133,6 +133,11 @@ error:
     return -ENOMEM;
 }
 
+static int consumerir_get_num_carrier_freqs(UNUSED struct consumerir_device *dev)
+{
+    return ARRAY_SIZE(consumerir_freqs);
+}
+
 static int consumerir_get_carrier_freqs(struct consumerir_device *dev,
     size_t len, consumerir_freq_range_t *ranges)
 {
@@ -149,11 +154,6 @@ static int consumerir_close(hw_device_t *dev)
     close(fd);
     pthread_mutex_destroy(&g_mtx);
     return 0;
-}
-
-static int consumerir_get_num_carrier_freqs(UNUSED struct consumerir_device *dev)
-{
-    return ARRAY_SIZE(consumerir_freqs);
 }
 
 /*
