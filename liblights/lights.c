@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
- * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2015-2016 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,9 +31,7 @@
 
 #include <hardware/lights.h>
 
-#define PANEL_FILE "/sys/class/backlight/panel/brightness"
-#define BUTTON_FILE "/sys/class/sec/sec_touchkey/brightness"
-#define LED_BLINK "/sys/class/sec/led/led_blink"
+#include "samsung_lights.h"
 
 #define COLOR_MASK 0x00ffffff
 
@@ -116,7 +114,7 @@ static int set_light_backlight(struct light_device_t *dev __unused,
     int brightness = rgb_to_brightness(state);
 
     pthread_mutex_lock(&g_lock);
-    err = write_int(PANEL_FILE, brightness);
+    err = write_int(PANEL_BRIGHTNESS_NODE, brightness);
 
     pthread_mutex_unlock(&g_lock);
     return err;
@@ -130,7 +128,7 @@ static int set_light_buttons(struct light_device_t* dev __unused,
 
     pthread_mutex_lock(&g_lock);
 
-    err = write_int(BUTTON_FILE, on ? 1 : 0);
+    err = write_int(BUTTON_BRIGHTNESS_NODE, on ? 1 : 0);
 
     pthread_mutex_unlock(&g_lock);
 
@@ -179,7 +177,7 @@ static int write_leds(const struct led_config *led)
     blink[count+1] = '\0';
 
     pthread_mutex_lock(&g_lock);
-    err = write_str(LED_BLINK, blink);
+    err = write_str(LED_BLINK_NODE, blink);
     pthread_mutex_unlock(&g_lock);
 
     return err;
