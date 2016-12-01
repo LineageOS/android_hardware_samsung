@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_8509f7de",
+        "filename": "liblights/include/samsung_lights.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2016-12-01T14:28:42Z",
+      "side": 1,
+      "message": "I think this should be \u0027target\u0027 instead of \u0027board\u0027?",
+      "revId": "67b97339192258973ef529434222346af9185866",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
