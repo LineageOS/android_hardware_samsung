@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_3bc64469",
+        "filename": "liblights/include/samsung_lights.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-12-02T05:06:44Z",
+      "side": 1,
+      "message": "Why do you use const char * instead of #define?",
+      "range": {
+        "startLine": 27,
+        "startChar": 74,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "6354de522f1ccb1080d0b1945d9fc0dfccf17ac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_9ba038a8",
+        "filename": "liblights/lights.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2016-12-02T05:06:44Z",
+      "side": 1,
+      "message": "Please add a variable in Android.mk and if set uses it to set this define.",
+      "revId": "6354de522f1ccb1080d0b1945d9fc0dfccf17ac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
