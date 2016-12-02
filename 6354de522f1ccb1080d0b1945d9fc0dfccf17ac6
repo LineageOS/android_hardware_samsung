@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5f681702_d1b1f1e3",
+        "filename": "liblights/Android.mk",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2016-12-02T14:23:12Z",
+      "side": 1,
+      "message": "I disagree.\nWhile there really is no need to move it, all the Google modules use this kind of structure.\n\n(src_files --\u003e includes --\u003e shared artifacts --\u003e module name)",
+      "parentUuid": "5f681702_bbaff492",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "6354de522f1ccb1080d0b1945d9fc0dfccf17ac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f681702_3bc64469",
         "filename": "liblights/include/samsung_lights.h",
         "patchSetId": 9
@@ -82,6 +106,30 @@
       "writtenOn": "2016-12-02T05:25:13Z",
       "side": 1,
       "message": "This needs to be \u003csamsung_lights.h\u003e",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "6354de522f1ccb1080d0b1945d9fc0dfccf17ac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_b1b6f5d8",
+        "filename": "liblights/lights.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2016-12-02T14:23:12Z",
+      "side": 1,
+      "message": "No it doesn\u0027t.\nThe include path is added in the Android.mk file (it compiles fine for me).",
+      "parentUuid": "5f681702_1b942844",
       "range": {
         "startLine": 34,
         "startChar": 9,
