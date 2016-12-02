@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f681702_dbaab083",
+        "filename": "liblights/Android.mk",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-02T05:25:13Z",
+      "side": 1,
+      "message": "Don\u0027t need to move this.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "6354de522f1ccb1080d0b1945d9fc0dfccf17ac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_bbaff492",
+        "filename": "liblights/Android.mk",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-02T05:25:13Z",
+      "side": 1,
+      "message": "Don\u0027t need to move any of this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "6354de522f1ccb1080d0b1945d9fc0dfccf17ac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f681702_3bc64469",
         "filename": "liblights/include/samsung_lights.h",
         "patchSetId": 9
@@ -19,6 +65,46 @@
         "endLine": 27,
         "endChar": 76
       },
+      "revId": "6354de522f1ccb1080d0b1945d9fc0dfccf17ac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_1b942844",
+        "filename": "liblights/lights.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-02T05:25:13Z",
+      "side": 1,
+      "message": "This needs to be \u003csamsung_lights.h\u003e",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "6354de522f1ccb1080d0b1945d9fc0dfccf17ac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_fb904c51",
+        "filename": "liblights/lights.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-02T05:25:13Z",
+      "side": 1,
+      "message": "Why are you changing the spacing?",
       "revId": "6354de522f1ccb1080d0b1945d9fc0dfccf17ac6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
