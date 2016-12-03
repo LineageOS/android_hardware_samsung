@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_4eab73d5",
+        "filename": "ril/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-03T20:58:19Z",
+      "side": 1,
+      "message": "OCD nitpick: mdm9x25 before mdm9x35 because 2 \u003c 3",
+      "range": {
+        "startLine": 23,
+        "startChar": 30,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "b191844976c462e5411a4cdcea7c64e7efc7057a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
