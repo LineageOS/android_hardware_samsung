@@ -25,6 +25,7 @@
  * device tree.
  */
 #define PANEL_BRIGHTNESS_NODE "/sys/class/backlight/panel/brightness"
+#define PANEL_MAX_BRIGHTNESS_NODE "/sys/class/backlight/panel/max_brightness"
 #define BUTTON_BRIGHTNESS_NODE "/sys/class/sec/sec_touchkey/brightness"
 #define LED_BLINK_NODE "/sys/class/sec/led/led_blink"
 
