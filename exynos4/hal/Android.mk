@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+ifneq ($(BOARD_USES_SLSI),true)
+
 ifeq ($(TARGET_BOARD_PLATFORM),exynos4)
 
 common_exynos4_dirs := libgralloc_ump libhdmi libhwcomposer libhwconverter libsecion libUMP
@@ -34,4 +36,6 @@ ifeq ($(TARGET_SOC),exynos4210)
 else
   include $(call all-named-subdir-makefiles,$(exynos4x12_dirs))
 endif
+endif
+
 endif
