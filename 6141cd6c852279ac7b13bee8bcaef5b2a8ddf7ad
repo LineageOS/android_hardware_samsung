@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_0d8fb72a",
+        "filename": "liblights/lights.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2016-12-07T12:29:06Z",
+      "side": 1,
+      "message": "if max_brightness \u003e 0 \u0026\u0026 max_brightness \u003e 255? Seems a bit redundant to me.",
+      "revId": "6141cd6c852279ac7b13bee8bcaef5b2a8ddf7ad",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
