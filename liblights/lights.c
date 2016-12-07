@@ -30,6 +30,7 @@
 #include <sys/types.h>
 
 #include <hardware/lights.h>
+#include <liblights/samsung_lights_helper.h>
 
 #include "samsung_lights.h"
 
@@ -56,63 +57,6 @@ static int g_cur_led = -1;          // Presently showing LED of the above.
 void init_g_lock(void)
 {
     pthread_mutex_init(&g_lock, NULL);
-}
-
-static int read_int(char const *path)
-{
-    int fd, len;
-    int num_bytes = 10;
-    char buf[11];
-    int retval;
-
-    fd = open(path, O_RDONLY);
-    if (fd < 0) {
-        ALOGE("%s: failed to open %s\n", __func__, path);
-        goto fail;
-    }
-
-    len = read(fd, buf, num_bytes - 1);
-    if (len < 0) {
-        ALOGE("%s: failed to read from %s\n", __func__, path);
-        goto fail;
-    }
-
-    buf[len] = '\0';
-    close(fd);
-
-    // no endptr, decimal base
-    retval = strtol(buf, NULL, 10);
-    return retval == 0 ? -1 : retval;
-
-fail:
-    if (fd >= 0)
-        close(fd);
-    return -1;
-}
-
-static int write_int(char const *path, int value)
-{
-    int fd;
-    static int already_warned;
-
-    already_warned = 0;
-
-    ALOGV("write_int: path %s, value %d", path, value);
-    fd = open(path, O_RDWR);
-
-    if (fd >= 0) {
-        char buffer[20];
-        int bytes = sprintf(buffer, "%d\n", value);
-        int amt = write(fd, buffer, bytes);
-        close(fd);
-        return amt == -1 ? -errno : 0;
-    } else {
-        if (already_warned == 0) {
-            ALOGE("write_int failed to open %s\n", path);
-            already_warned = 1;
-        }
-        return -errno;
-    }
 }
 
 static int write_str(char const *path, const char* value)
@@ -165,7 +109,7 @@ static int set_light_backlight(struct light_device_t *dev __unused,
     }
 
     pthread_mutex_lock(&g_lock);
-    err = write_int(PANEL_BRIGHTNESS_NODE, brightness);
+    err = set_cur_panel_brightness(brightness);
     if (err == 0)
         g_backlight.cur_brightness = brightness;
 
@@ -181,7 +125,7 @@ static int set_light_buttons(struct light_device_t* dev __unused,
 
     pthread_mutex_lock(&g_lock);
 
-    err = write_int(BUTTON_BRIGHTNESS_NODE, on ? 1 : 0);
+    err = set_cur_button_brightness(on ? 1 : 0);
 
     pthread_mutex_unlock(&g_lock);
 
@@ -359,7 +303,7 @@ static int open_lights(const struct hw_module_t *module, char const *name,
     else
         return -EINVAL;
 
-    int max_brightness = read_int(PANEL_MAX_BRIGHTNESS_NODE);
+    int max_brightness = get_max_panel_brightness();
     if (max_brightness < 0) {
         ALOGE("%s: failed to read max panel brightness, fallback to 255!",
             __func__);
