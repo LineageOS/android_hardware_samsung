@@ -15,9 +15,15 @@
 # HAL module implementation stored in
 # hw/<POWERS_HARDWARE_MODULE_ID>.<ro.hardware>.so
 
+include $(CLEAR_VARS)
+
 LOCAL_PATH := $(call my-dir)
 
-include $(CLEAR_VARS)
+LOCAL_SRC_FILES := consumerir.c
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
+
+LOCAL_SHARED_LIBRARIES := liblog libcutils
 
 ifeq ($(IR_HAL_SUFFIX),)
 IR_HAL_SUFFIX := $(TARGET_BOARD_PLATFORM)
@@ -25,16 +31,6 @@ endif
 
 LOCAL_MODULE := consumerir.$(IR_HAL_SUFFIX)
 LOCAL_MODULE_RELATIVE_PATH := hw
-LOCAL_SRC_FILES := consumerir.c
-LOCAL_SHARED_LIBRARIES := liblog libcutils
 LOCAL_MODULE_TAGS := optional
-
-ifeq ($(BOARD_IR_HAS_ONE_FREQ_RANGE),true)
-LOCAL_CFLAGS += -DUSE_ONE_FREQ_RANGE
-endif
-
-ifeq ($(BOARD_USES_MS_IR_SIGNAL),true)
-LOCAL_CFLAGS += -DMS_IR_SIGNAL
-endif
 
 include $(BUILD_SHARED_LIBRARY)
