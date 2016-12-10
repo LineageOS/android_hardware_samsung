@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_e6924c9f",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-10T20:33:48Z",
+      "side": 1,
+      "message": "Normally you don\u0027t need to squish formatting changes into an unrelated patch.",
+      "revId": "1bf77699eca3953bc4c4784e6ec94d1aab433fa1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
