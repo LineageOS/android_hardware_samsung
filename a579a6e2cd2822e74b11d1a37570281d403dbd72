@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_52f13acd",
+        "filename": "consumerir/consumerir.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-11T18:40:15Z",
+      "side": 1,
+      "message": "It really should be \u003csamsung_consumerir.h\u003e ...",
+      "revId": "a579a6e2cd2822e74b11d1a37570281d403dbd72",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
