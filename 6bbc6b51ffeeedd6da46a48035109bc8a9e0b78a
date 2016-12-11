@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_d2ab8a86",
+        "filename": "power/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-11T18:41:51Z",
+      "side": 1,
+      "message": "Don\u0027t need this if you include using \u003c\u003e instead of \"\".",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "6bbc6b51ffeeedd6da46a48035109bc8a9e0b78a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_b2aece95",
+        "filename": "power/power.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-11T18:41:51Z",
+      "side": 1,
+      "message": "\u003clights_helper.h\u003e",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "6bbc6b51ffeeedd6da46a48035109bc8a9e0b78a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
