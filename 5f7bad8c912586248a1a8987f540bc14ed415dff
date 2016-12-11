@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f681702_529f7a5e",
+        "filename": "liblights/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-11T18:42:56Z",
+      "side": 1,
+      "message": "You can export $(LOCAL_PATH)/include, that way anyone who does include \u003clights_helper.h\u003e won\u0027t have to explicitly add the header path.",
+      "revId": "5f7bad8c912586248a1a8987f540bc14ed415dff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f681702_6473dde8",
         "filename": "liblights/Android.mk",
         "patchSetId": 2
