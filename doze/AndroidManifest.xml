@@ -31,17 +31,18 @@
 
         <activity
             android:name=".SamsungDozeActivity"
-            android:label="@string/screen_gestures_panel_title"
+            android:label="@string/ambient_display_title"
             android:theme="@style/SamsungDozeSettings">
             <intent-filter>
-                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
+                <action android:name="org.cyanogenmod.settings.device.DOZE_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <meta-data
-                android:name="com.android.settings.category"
-                android:value="com.android.settings.category.device" />
+                android:name="org.cyanogenmod.settings.summary.receiver"
+                android:value="com.cyanogenmod.settings.doze.DozeReceiver" />
             <meta-data
-                android:name="com.android.settings.icon"
-                android:resource="@drawable/ic_settings_gestures" />
+                android:name="org.cyanogenmod.settings.summary.key"
+                android:value="doze_device_settings" />
         </activity>
 
     </application>
