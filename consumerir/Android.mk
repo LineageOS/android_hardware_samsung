@@ -15,9 +15,9 @@
 # HAL module implementation stored in
 # hw/<POWERS_HARDWARE_MODULE_ID>.<ro.hardware>.so
 
-include $(CLEAR_VARS)
-
 LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := consumerir.c
 
