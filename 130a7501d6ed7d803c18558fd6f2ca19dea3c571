@@ -70,6 +70,30 @@
       "revId": "130a7501d6ed7d803c18558fd6f2ca19dea3c571",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_9509e032",
+        "filename": "liblights/include/liblights/samsung_lights_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2016-12-19T16:59:37Z",
+      "side": 1,
+      "message": "Oh, I see.\nHang on.",
+      "parentUuid": "5f681702_5518e87f",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "130a7501d6ed7d803c18558fd6f2ca19dea3c571",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
