@@ -22,6 +22,30 @@
       "revId": "130a7501d6ed7d803c18558fd6f2ca19dea3c571",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_151e706f",
+        "filename": "liblights/include/liblights/samsung_lights_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-12-19T16:57:16Z",
+      "side": 1,
+      "message": "I think defining the below as merely inline, and having extern inline get_cur_panel_brightness (and etc) in the lights_helper.c file should be what you want?",
+      "parentUuid": "5f681702_9520c0b2",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "130a7501d6ed7d803c18558fd6f2ca19dea3c571",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
