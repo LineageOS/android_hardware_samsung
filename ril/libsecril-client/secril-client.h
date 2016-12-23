@@ -118,6 +118,17 @@ int RegisterRequestCompleteHandler(HRilClient client, uint32_t id, RilOnComplete
 int RegisterErrorCallback(HRilClient client, RilOnError cb, void *data);
 
 /**
+ * Set audio mode.
+ */
+int SetAudioMode(HRilClient client, int mode, int mode2);
+
+/**
+ * Set sound clock mode.
+ * Return is 0 or error code.
+ */
+int SetSoundClockMode(HRilClient client, int mode);
+
+/**
  * Invoke OEM request. Request ID is RIL_REQUEST_OEM_HOOK_RAW.
  * Return is 0 or error code. For RIL_CLIENT_ERR_AGAIN caller should retry.
  */
