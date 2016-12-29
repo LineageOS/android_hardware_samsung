@@ -34,37 +34,15 @@
 #include <err.h>
 #include <stdint.h>
 
+/* must be provided by the device tree */
+#include <samsung_dtbh.h>
+
 #include "libfdt.h"
 #include "mincrypt/sha.h"
 #include "bootimg.h"
 
-#define DTBH_MAGIC         "DTBH"
-#define DTBH_VERSION       2
-#define DTBH_PLATFORM      "k3g"
-#define DTBH_SUBTYPE       "k3g_eur_open"
-/* Hardcoded entry */
-#define DTBH_PLATFORM_CODE 0x1e92
-#define DTBH_SUBTYPE_CODE  0x7d64f612
-
 struct dt_blob;
 
-/* DTBH_MAGIC + DTBH_VERSION + DTB counts */
-#define DT_HEADER_PHYS_SIZE 12
-
-/* Samsung K 3G EUR revision 10's dts:
- * model = "Samsung K 3G EUR revision 10 board based on EXYNOS5422";
- * model_info-chip = <5422>;
- * model_info-platform = "k3g";
- * model_info-subtype = "k3g_eur_open";
- * model_info-hw_rev = <10>;
- * model_info-hw_rev_end = <255>;
- * compatible = "samsung,K 3G EUR,r04", "samsung,exynos5422";
- */
-
-/*
- * keep the eight uint32_t entries first in this struct so we can memcpy them to the file
- */
-#define DT_ENTRY_PHYS_SIZE (sizeof(uint32_t) * 8)
 struct dt_entry {
     uint32_t chip;
     uint32_t platform;
