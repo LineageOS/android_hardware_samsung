@@ -2,18 +2,36 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := mkbootimg.c
-LOCAL_STATIC_LIBRARIES := libfdt libmincrypt
+LOCAL_SRC_FILES := dtbimg.c
+LOCAL_STATIC_LIBRARIES := libfdt
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/libfdt
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/libdtbimg
+
+LOCAL_MODULE := libdtbimg
+
+include $(BUILD_HOST_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := mkbootimg.c
+LOCAL_STATIC_LIBRARIES := libdtbimg libfdt libmincrypt
 
 LOCAL_MODULE := mkdtbhbootimg
 
 include $(BUILD_HOST_EXECUTABLE)
 
 include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := mkdtbimg.c
+LOCAL_STATIC_LIBRARIES := libdtbimg libfdt
+
+LOCAL_MODULE := mkdtbimg
+
+include $(BUILD_HOST_EXECUTABLE)
+
+include $(CLEAR_VARS)
 LOCAL_SRC_FILES := mkbootimg.c
-LOCAL_STATIC_LIBRARIES := libfdt libmincrypt libcutils libc
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/libfdt
+LOCAL_STATIC_LIBRARIES := libdtbimg libfdt libmincrypt libcutils libc
 LOCAL_MODULE := utility_mkdtbhbootimg
 LOCAL_MODULE_TAGS := eng
 LOCAL_MODULE_STEM := mkdtbhbootimg
