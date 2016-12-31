@@ -38,6 +38,15 @@
 
 #define MAX_INPUT_BRIGHTNESS 255
 
+enum component_mask_t {
+    COMPONENT_BACKLIGHT = 0x1,
+    COMPONENT_BUTTON_LIGHT = 0x2,
+    COMPONENT_LED = 0x4,
+};
+
+// Assume backlight is always supported
+static int hw_components = COMPONENT_BACKLIGHT;
+
 static pthread_once_t g_init = PTHREAD_ONCE_INIT;
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 
@@ -53,6 +62,14 @@ struct led_config {
 static struct backlight_config g_backlight; // For panel backlight
 static struct led_config g_leds[3]; // For battery, notifications, and attention.
 static int g_cur_led = -1;          // Presently showing LED of the above.
+
+void check_component_support()
+{
+    if (access(BUTTON_BRIGHTNESS_NODE, W_OK) == 0)
+        hw_components |= COMPONENT_BUTTON_LIGHT;
+    if (access(LED_BLINK_NODE, W_OK) == 0)
+        hw_components |= COMPONENT_LED;
+}
 
 void init_g_lock(void)
 {
@@ -287,21 +304,36 @@ static int set_light_leds_attention(struct light_device_t *dev __unused,
 static int open_lights(const struct hw_module_t *module, char const *name,
                         struct hw_device_t **device)
 {
+    int requested_component;
     int (*set_light)(struct light_device_t *dev,
         struct light_state_t const *state);
 
-    if (0 == strcmp(LIGHT_ID_BACKLIGHT, name))
+    check_component_support();
+
+    if (0 == strcmp(LIGHT_ID_BACKLIGHT, name)) {
+        requested_component = COMPONENT_BACKLIGHT;
         set_light = set_light_backlight;
-    else if (0 == strcmp(LIGHT_ID_BUTTONS, name))
+    } else if (0 == strcmp(LIGHT_ID_BUTTONS, name)) {
+        requested_component = COMPONENT_BUTTON_LIGHT;
         set_light = set_light_buttons;
-    else if (0 == strcmp(LIGHT_ID_BATTERY, name))
+    } else if (0 == strcmp(LIGHT_ID_BATTERY, name)) {
+        requested_component = COMPONENT_LED;
         set_light = set_light_leds_battery;
-    else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name))
+    } else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name)) {
+        requested_component = COMPONENT_LED;
         set_light = set_light_leds_notifications;
-    else if (0 == strcmp(LIGHT_ID_ATTENTION, name))
+    } else if (0 == strcmp(LIGHT_ID_ATTENTION, name)) {
+        requested_component = COMPONENT_LED;
         set_light = set_light_leds_attention;
-    else
+    } else {
         return -EINVAL;
+    }
+
+    if ((hw_components & requested_component) == 0) {
+        ALOGV("%s: component 0x%x not supported by device", __func__,
+            requested_component);
+        return -EINVAL;
+    }
 
     int max_brightness = get_max_panel_brightness();
     if (max_brightness < 0) {
