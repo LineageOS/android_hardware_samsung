@@ -35,6 +35,11 @@ include $(SAM_ROOT)/macloader/Android.mk
 include $(SAM_ROOT)/wifiloader/Android.mk
 endif
 
+# dtbTool for Exynos
+ifeq ($(TARGET_CUSTOM_DTBTOOL),dtbToolExynos)
+include $(SAM_ROOT)/exynos/dtbTool/Android.mk
+endif
+
 ifeq ($(BOARD_VENDOR),samsung)
 include $(SAM_ROOT)/AdvancedDisplay/Android.mk
 include $(SAM_ROOT)/consumerir/Android.mk
