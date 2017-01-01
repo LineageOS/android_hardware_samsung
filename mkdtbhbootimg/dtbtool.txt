@@ -1,0 +1,136 @@
+Copyright (c) 2012, The Linux Foundation. All rights reserved.
+
+Redistribution and use in source form and compiled forms (SGML, HTML,
+PDF, PostScript, RTF and so forth) with or without modification, are
+permitted provided that the following conditions are met:
+
+Redistributions in source form must retain the above copyright
+notice, this list of conditions and the following disclaimer as the
+first lines of this file unmodified.
+
+Redistributions in compiled form (transformed to other DTDs,
+converted to PDF, PostScript, RTF and other formats) must reproduce
+the above copyright notice, this list of conditions and the following
+disclaimer in the documentation and/or other materials provided with
+the distribution.
+
+THIS DOCUMENTATION IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE AND
+NON-INFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL THE FREEBSD
+DOCUMENTATION PROJECT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS DOCUMENTATION, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGE.
+
+June 2014, Ketut Putu Kumajaya
+Samsung Exynos DTBH device tree documentation.
+
+
+Android - Table of Device Tree
+==============================
+
+0) Document revision
+   v1.0 - Initial version (dng)
+
+1) Android boot image:
+----------------------
+1.1) Header:
+   1) Magic (8B)
+   2) kernel size (4B)
+   3) kernel addr (4B)
+   4) ramdisk size (4B)
+   5) ramdisk addr (4B)
+   6) 2ndary size (4B)
+   7) 2ndary addr (4B)
+   8) tags addr (4B)
+   9) page size (4B)
+  10) unused #1 (4B) (zero in standard Android)
+  11) unused #2 (4B) (zero in standard Android)
+  12) product name (16B)
+  13) kernel cmdline (512B)
+  14) id (8B)
+
+1.2) Layout:
+   A) header (as above - 1 page)
+   B) kernel (n pages)
+   C) ramdisk (m pages)
+   D) second stage (o pages)
+
+2) Exynos DTBH table of device tree
+--------------------------
+2.1) Changes:
+   i) use "unused #1, #2" members in existing boot image
+      header to point to new table of device tree
+      (#1 - size of Exynos DTBH table of DT)
+  ii) append table of device tree (described later)
+      after "D) second stage"
+
+2.2) Format:
+                                 size
+   x      +------------------+
+   |      | MAGIC ("DTBH")   |   4B
+   |      +------------------+
+ header   | VERSION          |   uint32 (version 2, 0x00000002)
+   |      +------------------+
+   |      | num of DTBs      |   uint32 (number of DTB entries, e.g. 5 entries, 0x00000005)
+   x      +------------------+
+   |      | chip #1          |   uint32 (e.g. ID for 5422, 0x0000152e)
+   |      +------------------+
+   |      | platform #1      |   uint32 (e.g. ID for k3g, 0x00001e92)
+   |      +------------------+
+ device   | subtype #1       |   uint32 (e.g. ID for k3g_eur_open, 0x7d64f612)
+  #1      +------------------+
+ entry    | hw_rev #1        |   uint32 (e.g. k3g rev 2, 0x00000002)
+   |      +------------------+
+   |      | hw_rev_end #1    |   uint32 (e.g. k3g rev_end 2, 0x00000002)
+   |      +------------------+
+   |      | offset #1        |   uint32 (byte offset from start/before MAGIC
+   |      +------------------+           to DTB entry, e.g. 0x00000800)
+   |      | size #1          |   uint32 (size in bytes of DTB blob
+   |      +------------------+           e.g. 110,592 bytes, 0x0001b000)
+   |      | space #1         |   uint32 (0x00000020)
+   x      +------------------+
+   .              .
+   .              .  (repeat)
+   .              .
+
+   x      +------------------+
+   |      | chip #Z          |   uint32 (e.g. ID for 5422, 0x0000152e)
+   |      +------------------+
+   |      | platform #Z      |   uint32 (e.g. ID for k3g, 0x00001e92)
+   |      +------------------+
+ device   | subtype #Z       |   uint32 (e.g. ID for k3g_eur_open, 0x7d64f612)
+  #1      +------------------+
+ entry    | hw_rev #Z        |   uint32 (e.g. k3g rev 10, 0x0000000A)
+   |      +------------------+
+   |      | hw_rev_end #Z    |   uint32 (e.g. k3g rev_end 255, 0x000000FF)
+   |      +------------------+
+   |      | offset #Z        |   uint32 (byte offset from start/before MAGIC
+   |      +------------------+           to DTB entry, e.g. 0x0006c800)
+   |      | size #Z          |   uint32 (size in bytes of DTB blob
+   |      +------------------+           e.g. 110,592 bytes, 0x0001b000)
+   |      | space #Z         |   uint32 (0x00000020)
+   x      +------------------+
+          | padding          |   variable length for next DTB to start on
+          +------------------+           page boundary
+          | DTB #1           |   variable (start is page aligned)
+          |                  |
+          |                  |
+          +------------------+
+          | padding          |   variable length for next DTB to start on
+          +------------------+           page boundary
+                  .
+                  .
+                  .
+
+          +------------------+
+          | DTB #Z (last)    |   variable (start is page aligned)
+          |                  |
+          |                  |
+          +------------------+
+
