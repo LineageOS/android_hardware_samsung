@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1a2d67_f3f7308b",
+        "filename": "exynos/dtbTool/dtbtool.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 16239
+      },
+      "writtenOn": "2017-01-01T11:13:01Z",
+      "side": 1,
+      "message": "let Device to Override this. Some devices have different values and cause error during build.",
+      "revId": "9351ec1f839c7948cae024e8cdafcefd1f8bc47a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a1a2d67_93eebcb3",
+        "filename": "exynos/dtbTool/dtbtool.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 16239
+      },
+      "writtenOn": "2017-01-01T11:13:01Z",
+      "side": 1,
+      "message": "this too !",
+      "revId": "9351ec1f839c7948cae024e8cdafcefd1f8bc47a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
