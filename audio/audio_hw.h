@@ -295,6 +295,8 @@ struct stream_out {
 #endif
 
     bool                         is_fastmixer_affinity_set;
+
+    int64_t                      last_write_time_us;
 };
 
 struct stream_in {
@@ -348,6 +350,8 @@ struct stream_in {
 
     struct audio_device*                dev;
     bool                                is_fastcapture_affinity_set;
+
+    int64_t                             last_read_time_us;
 };
 
 struct mixer_card {
