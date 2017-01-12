@@ -3435,7 +3435,13 @@ exit:
         // On the subsequent in_read(), we measure the elapsed time spent in
         // the recording thread. This is subtracted from the sleep estimate based on frames,
         // thereby accounting for fill in the alsa buffer during the interim.
+        memset(buffer, 0, bytes);
     }
+
+    if (bytes > 0) {
+        in->frames_read += bytes / audio_stream_in_frame_size(stream);
+    }
+
     return bytes;
 }
 
@@ -3444,6 +3450,35 @@ static uint32_t in_get_input_frames_lost(struct audio_stream_in *stream)
     (void)stream;
 
     return 0;
+}
+
+static int in_get_capture_position(const struct audio_stream_in *stream,
+                                   int64_t *frames, int64_t *time)
+{
+    if (stream == NULL || frames == NULL || time == NULL) {
+        return -EINVAL;
+    }
+
+    struct stream_in *in = (struct stream_in *)stream;
+    struct pcm_device *pcm_device;
+    int ret = -ENOSYS;
+
+    pcm_device = node_to_item(list_head(&in->pcm_dev_list),
+                              struct pcm_device, stream_list_node);
+
+    pthread_mutex_lock(&in->lock);
+    if (pcm_device->pcm) {
+        struct timespec timestamp;
+        unsigned int avail;
+        if (pcm_get_htimestamp(pcm_device->pcm, &avail, &timestamp) == 0) {
+            *frames = in->frames_read + avail;
+            *time = timestamp.tv_sec * 1000000000LL + timestamp.tv_nsec;
+            ret = 0;
+        }
+    }
+
+    pthread_mutex_unlock(&in->lock);
+    return ret;
 }
 
 static int add_remove_audio_effect(const struct audio_stream *stream,
@@ -4003,6 +4038,7 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
     in->stream.set_gain = in_set_gain;
     in->stream.read = in_read;
     in->stream.get_input_frames_lost = in_get_input_frames_lost;
+    in->stream.get_capture_position = in_get_capture_position;
 
     in->devices = devices;
     in->source = source;
@@ -4013,6 +4049,7 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
     if (config->sample_rate != CAPTURE_DEFAULT_SAMPLING_RATE)
         flags = flags & ~AUDIO_INPUT_FLAG_FAST;
     in->input_flags = flags;
+    // in->frames_read = 0;
     /* HW codec is limited to default channels. No need to update with
      * requested channels */
     in->config = pcm_profile->config;
