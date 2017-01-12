@@ -363,6 +363,8 @@ struct stream_in {
     bool                                is_fastcapture_affinity_set;
 
     int64_t                             last_read_time_us;
+    int64_t                             frames_read; /* total frames read, not cleared when
+                                                        entering standby */
 };
 
 struct mixer_card {
