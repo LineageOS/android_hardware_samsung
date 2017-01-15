@@ -18,6 +18,7 @@ package com.cyanogenmod.settings.device;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.android.settingslib.drawer.SettingsDrawerActivity;
 
@@ -30,5 +31,16 @@ public class SamsungDozeActivity extends SettingsDrawerActivity {
 
         getFragmentManager().beginTransaction().replace(R.id.content_frame,
                 new TouchscreenGestureSettings(), TAG).commit();
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 }
