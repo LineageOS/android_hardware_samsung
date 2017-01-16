@@ -119,6 +119,26 @@ static void sysfs_write(const char *path, char *s)
     close(fd);
 }
 
+static void boost(int32_t duration_us)
+{
+    int fd;
+
+    if (duration_us <= 0)
+        return;
+
+    fd = open(BOOST_PATH, O_WRONLY);
+    if (fd < 0) {
+        ALOGE("Error opening %s\n", BOOST_PATH);
+        return;
+    }
+
+    write(fd, "1", 1);
+    usleep(duration_us);
+    write(fd, "0", 1);
+
+    close(fd);
+}
+
 /**********************************************************
  *** POWER FUNCTIONS
  **********************************************************/
@@ -393,6 +413,11 @@ static void samsung_power_hint(struct power_module *module,
             ALOGV("%s: POWER_HINT_VSYNC", __func__);
             break;
         }
+#ifdef POWER_HINT_CPU_BOOST
+        case POWER_HINT_CPU_BOOST:
+            boost((*(int32_t *)data));
+            break;
+#endif
         case POWER_HINT_SET_PROFILE: {
             int profile = *((intptr_t *)data);
 
