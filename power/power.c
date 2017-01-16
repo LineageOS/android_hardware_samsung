@@ -44,7 +44,6 @@ struct samsung_power_module {
     struct power_module base;
     pthread_mutex_t lock;
     int boostpulse_fd;
-    int boostpulse_warned;
     char cpu0_hispeed_freq[10];
     char cpu0_max_freq[10];
     char cpu4_hispeed_freq[10];
@@ -59,7 +58,9 @@ enum power_profile_e {
     PROFILE_BALANCED,
     PROFILE_HIGH_PERFORMANCE
 };
+
 static enum power_profile_e current_power_profile = PROFILE_BALANCED;
+static bool boostpulse_warned = false;
 
 /**********************************************************
  *** HELPER FUNCTIONS
@@ -117,6 +118,26 @@ static void sysfs_write(const char *path, char *s)
     close(fd);
 }
 
+static void boost(int32_t duration_us)
+{
+    int fd;
+
+    if (duration_us <= 0)
+        return;
+
+    fd = open(BOOST_PATH, O_WRONLY);
+    if (fd < 0) {
+        ALOGE("Error opening %s\n", BOOST_PATH);
+        return;
+    }
+
+    write(fd, "1", 1);
+    usleep(duration_us);
+    write(fd, "0", 1);
+
+    close(fd);
+}
+
 /**********************************************************
  *** POWER FUNCTIONS
  **********************************************************/
@@ -129,10 +150,10 @@ static int boostpulse_open(struct samsung_power_module *samsung_pwr)
     if (samsung_pwr->boostpulse_fd < 0) {
         samsung_pwr->boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
         if (samsung_pwr->boostpulse_fd < 0) {
-            if (!samsung_pwr->boostpulse_warned) {
+            if (!boostpulse_warned) {
                 strerror_r(errno, errno_str, sizeof(errno_str));
                 ALOGE("Error opening %s: %s\n", BOOSTPULSE_PATH, errno_str);
-                samsung_pwr->boostpulse_warned = 1;
+                boostpulse_warned = true;
             }
         }
     }
@@ -364,9 +385,24 @@ static void samsung_power_hint(struct power_module *module,
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
     char errno_str[64];
     int len;
+    long boost_duration;
+
+    switch (current_power_profile) {
+        case PROFILE_BALANCED:
+            boost_duration = 60;
+            break;
+        case PROFILE_HIGH_PERFORMANCE:
+            boost_duration = 90;
+            break;
+        default:
+            break;
+    }
 
     switch (hint) {
         case POWER_HINT_INTERACTION: {
+#ifdef POWER_HINT_LAUNCH_BOOST
+        case POWER_HINT_LAUNCH_BOOST:
+#endif
             if (current_power_profile == PROFILE_POWER_SAVE) {
                 return;
             }
@@ -388,6 +424,10 @@ static void samsung_power_hint(struct power_module *module,
             ALOGV("%s: POWER_HINT_VSYNC", __func__);
             break;
         }
+#ifdef POWER_HINT_CPU_BOOST
+        case POWER_HINT_CPU_BOOST:
+            boost((*(int32_t *)data));
+#endif
         case POWER_HINT_SET_PROFILE: {
             int profile = *((intptr_t *)data);
 
@@ -452,5 +492,4 @@ struct samsung_power_module HAL_MODULE_INFO_SYM = {
 
     .lock = PTHREAD_MUTEX_INITIALIZER,
     .boostpulse_fd = -1,
-    .boostpulse_warned = 0,
 };
