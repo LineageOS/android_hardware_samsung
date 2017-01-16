@@ -329,7 +329,6 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
     struct stat sb;
-    char buf[80];
     char touchkey_node[2];
     int rc;
 
@@ -360,7 +359,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
              * (for example cmhw), which means we don't want them to be enabled when resuming
              * from suspend.
              */
-            if ((touchkey_node[0] - '0') == 0) {
+            if (touchkey_node[0] == '0') {
                 samsung_pwr->touchkey_blocked = true;
             } else {
                 samsung_pwr->touchkey_blocked = false;
