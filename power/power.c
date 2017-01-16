@@ -367,10 +367,6 @@ static void samsung_power_hint(struct power_module *module,
 
     switch (hint) {
         case POWER_HINT_INTERACTION: {
-            char errno_str[64];
-            ssize_t len;
-            int fd;
-
             if (current_power_profile == PROFILE_POWER_SAVE) {
                 return;
             }
@@ -389,7 +385,6 @@ static void samsung_power_hint(struct power_module *module,
             break;
         }
         case POWER_HINT_VSYNC: {
-
             ALOGV("%s: POWER_HINT_VSYNC", __func__);
             break;
         }
