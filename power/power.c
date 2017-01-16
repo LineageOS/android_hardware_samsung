@@ -56,7 +56,8 @@ struct samsung_power_module {
 enum power_profile_e {
     PROFILE_POWER_SAVE = 0,
     PROFILE_BALANCED,
-    PROFILE_HIGH_PERFORMANCE
+    PROFILE_HIGH_PERFORMANCE,
+    PROFILE_MAX
 };
 
 static enum power_profile_e current_power_profile = PROFILE_BALANCED;
@@ -160,10 +161,14 @@ static int boostpulse_open(struct samsung_power_module *samsung_pwr)
 }
 
 static void set_power_profile(struct samsung_power_module *samsung_pwr,
-                              enum power_profile_e profile)
+                              int profile)
 {
     int rc;
     struct stat sb;
+
+    if (profile < 0 || profile >= PROFILE_MAX) {
+        return;
+    }
 
     if (current_power_profile == profile) {
         return;
@@ -442,7 +447,7 @@ static int samsung_get_feature(struct power_module *module __unused,
                                feature_t feature)
 {
     if (feature == POWER_FEATURE_SUPPORTED_PROFILES) {
-        return 3;
+        return PROFILE_MAX;
     }
 
     return -1;
