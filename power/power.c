@@ -438,6 +438,15 @@ static void samsung_power_hint(struct power_module *module,
             set_power_profile(samsung_pwr, profile);
             break;
         }
+        case POWER_HINT_DISABLE_TOUCH:
+            ALOGV("%s: POWER_HINT_DISABLE_TOUCH", __func__);
+            if (data) {
+                sysfs_write(samsung_pwr->touchscreen_power_path, "0");
+                sysfs_write(samsung_pwr->touchkey_power_path, "0");
+            } else {
+                sysfs_write(samsung_pwr->touchscreen_power_path, "1");
+                sysfs_write(samsung_pwr->touchkey_power_path, "1");
+            }
         default:
             break;
     }
