@@ -453,6 +453,14 @@ static void samsung_power_hint(struct power_module *module,
             int profile = *((intptr_t *)data);
             set_power_profile(samsung_pwr, profile);
             break;
+        case POWER_HINT_DISABLE_TOUCH:
+            ALOGV("%s: POWER_HINT_DISABLE_TOUCH", __func__);
+            if (data) {
+                sysfs_write(samsung_pwr->touchscreen_power_path, "0");
+            } else {
+                sysfs_write(samsung_pwr->touchscreen_power_path, "1");
+            }
+            break;
         default:
             ALOGW("%s: Unknown power hint: %d", __func__, hint);
             break;
