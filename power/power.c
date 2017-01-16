@@ -292,11 +292,6 @@ static void init_touch_input_power_path(struct samsung_power_module *samsung_pwr
     }
 }
 
-/*
- * The init function performs power management setup actions at runtime
- * startup, such as to set default cpufreq parameters.  This is called only by
- * the Power HAL instance loaded by PowerManagerService.
- */
 static void samsung_power_init(struct power_module *module)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
@@ -305,29 +300,12 @@ static void samsung_power_init(struct power_module *module)
     init_touch_input_power_path(samsung_pwr);
 }
 
-/*
- * The setInteractive function performs power management actions upon the
- * system entering interactive state (that is, the system is awake and ready
- * for interaction, often with UI devices such as display and touchscreen
- * enabled) or non-interactive state (the system appears asleep, display
- * usually turned off).  The non-interactive state is usually entered after a
- * period of inactivity, in order to conserve battery power during such
- * inactive periods.
- *
- * Typical actions are to turn on or off devices and adjust cpufreq parameters.
- * This function may also call the appropriate interfaces to allow the kernel
- * to suspend the system to low-power sleep state when entering non-interactive
- * state, and to disallow low-power suspend when the system is in interactive
- * state.  When low-power suspend state is allowed, the kernel may suspend the
- * system whenever no wakelocks are held.
- *
- * on is non-zero when the system is transitioning to an interactive / awake
- * state, and zero when transitioning to a non-interactive / asleep state.
- *
- * This function is called to enter non-interactive state after turning off the
- * screen (if present), and called to enter interactive state prior to turning
- * on the screen.
- */
+/**********************************************************
+ *** API FUNCTIONS
+ ***
+ *** Refer to power.h for documentation.
+ **********************************************************/
+
 static void samsung_power_set_interactive(struct power_module *module, int on)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
@@ -379,42 +357,6 @@ out:
     ALOGV("power_set_interactive: %d done\n", on);
 }
 
-/*
- * The powerHint function is called to pass hints on power requirements, which
- * may result in adjustment of power/performance parameters of the cpufreq
- * governor and other controls.
- *
- * The possible hints are:
- *
- * POWER_HINT_VSYNC
- *
- *     Foreground app has started or stopped requesting a VSYNC pulse
- *     from SurfaceFlinger.  If the app has started requesting VSYNC
- *     then CPU and GPU load is expected soon, and it may be appropriate
- *     to raise speeds of CPU, memory bus, etc.  The data parameter is
- *     non-zero to indicate VSYNC pulse is now requested, or zero for
- *     VSYNC pulse no longer requested.
- *
- * POWER_HINT_INTERACTION
- *
- *     User is interacting with the device, for example, touchscreen
- *     events are incoming.  CPU and GPU load may be expected soon,
- *     and it may be appropriate to raise speeds of CPU, memory bus,
- *     etc.  The data parameter is unused.
- *
- * POWER_HINT_LOW_POWER
- *
- *     Low power mode is activated or deactivated. Low power mode
- *     is intended to save battery at the cost of performance. The data
- *     parameter is non-zero when low power mode is activated, and zero
- *     when deactivated.
- *
- * POWER_HINT_CPU_BOOST
- *
- *     An operation is happening where it would be ideal for the CPU to
- *     be boosted for a specific duration. The data parameter is an
- *     integer value of the boost duration in microseconds.
- */
 static void samsung_power_hint(struct power_module *module,
                                   power_hint_t hint,
                                   void *data)
