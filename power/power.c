@@ -2,7 +2,7 @@
  * Copyright (C) 2012 The Android Open Source Project
  * Copyright (C) 2014 The CyanogenMod Project
  * Copyright (C) 2014-2015 Andreas Schneider <asn@cryptomilk.org>
- * Copyright (C) 2014-2015 Christopher N. Hesse <raymanfx@gmail.com>
+ * Copyright (C) 2014-2017 Christopher N. Hesse <raymanfx@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -160,7 +160,7 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
             if (rc == 0) {
                 sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq);
             }
-            ALOGD("%s: set powersave mode", __func__);
+            ALOGV("%s: set powersave mode", __func__);
             break;
         case PROFILE_BALANCED:
             // Restore normal max freq
@@ -169,7 +169,7 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
             if (rc == 0) {
                 sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
             }
-            ALOGD("%s: set balanced mode", __func__);
+            ALOGV("%s: set balanced mode", __func__);
             break;
         case PROFILE_HIGH_PERFORMANCE:
             // Restore normal max freq
@@ -178,7 +178,7 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
             if (rc == 0) {
                 sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
             }
-            ALOGD("%s: set performance mode", __func__);
+            ALOGV("%s: set performance mode", __func__);
             break;
     }
 
