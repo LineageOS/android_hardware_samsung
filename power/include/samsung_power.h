@@ -24,6 +24,7 @@
  * symlink to the locations given here, or override this header in your
  * device tree.
  */
+#define BOOST_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/boost"
 #define BOOSTPULSE_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse"
 
 #define IO_IS_BUSY_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy"
