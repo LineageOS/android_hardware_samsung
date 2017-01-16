@@ -10,6 +10,7 @@ LOCAL_SRC_FILES := fdt.c \
     fdt_wip.c
 
 LOCAL_MODULE := libfdt
+LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_HOST_STATIC_LIBRARY)
 
@@ -23,5 +24,6 @@ LOCAL_SRC_FILES := fdt.c \
     fdt_wip.c
 
 LOCAL_MODULE := libfdt
+LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_STATIC_LIBRARY)
