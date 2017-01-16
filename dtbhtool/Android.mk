@@ -7,7 +7,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/libfdt
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/libdtbimg
 
 LOCAL_MODULE := libdtbimg
-LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_HOST_STATIC_LIBRARY)
 
@@ -17,14 +16,12 @@ LOCAL_SRC_FILES := mkbootimg.c
 LOCAL_STATIC_LIBRARIES := libdtbimg libfdt libmincrypt
 
 LOCAL_MODULE := mkdtbhbootimg
-LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_HOST_EXECUTABLE)
 
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := unpackbootimg.c
 LOCAL_MODULE := unpackdtbhbootimg
-LOCAL_MODULE_TAGS := optional
 include $(BUILD_HOST_EXECUTABLE)
 
 include $(CLEAR_VARS)
@@ -33,7 +30,6 @@ LOCAL_SRC_FILES := mkdtbimg.c
 LOCAL_STATIC_LIBRARIES := libdtbimg libfdt
 
 LOCAL_MODULE := dtbhtoolExynos
-LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_HOST_EXECUTABLE)
 
@@ -41,7 +37,7 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := mkbootimg.c
 LOCAL_STATIC_LIBRARIES := libdtbimg libfdt libmincrypt libcutils libc
 LOCAL_MODULE := utility_mkdtbhbootimg
-LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_TAGS := eng
 LOCAL_MODULE_STEM := mkdtbhbootimg
 LOCAL_MODULE_CLASS := UTILITY_EXECUTABLES
 LOCAL_UNSTRIPPED_PATH := $(PRODUCT_OUT)/symbols/utilities
@@ -53,7 +49,7 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := unpackbootimg.c
 LOCAL_STATIC_LIBRARIES := libcutils libc
 LOCAL_MODULE := utility_unpackdtbhbootimg
-LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_TAGS := eng
 LOCAL_MODULE_STEM := unpackdtbhbootimg
 LOCAL_MODULE_CLASS := UTILITY_EXECUTABLES
 LOCAL_UNSTRIPPED_PATH := $(PRODUCT_OUT)/symbols/utilities
