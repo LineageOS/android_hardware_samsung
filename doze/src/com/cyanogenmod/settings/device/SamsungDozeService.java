@@ -28,6 +28,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.UserHandle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -144,7 +145,8 @@ public class SamsungDozeService extends Service {
     }
 
     private void launchDozePulse() {
-        mContext.sendBroadcast(new Intent(DOZE_INTENT));
+        mContext.sendBroadcastAsUser(new Intent(DOZE_INTENT),
+                new UserHandle(UserHandle.USER_CURRENT));
     }
 
     private boolean isInteractive() {
