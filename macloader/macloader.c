@@ -180,7 +180,18 @@ int main() {
         strncasecmp(mac_addr_half, "c8:14:79", 9) == 0 ||
         strncasecmp(mac_addr_half, "f0:27:65", 9) == 0 ||
         strncasecmp(mac_addr_half, "fc:c2:de", 9) == 0 ||
-        strncasecmp(mac_addr_half, "fc:db:b3", 9) == 0) {
+        strncasecmp(mac_addr_half, "fc:db:b3", 9) == 0 ||
+        strncasecmp(mac_addr_half, "00:ae:fa", 9) == 0 ||
+        strncasecmp(mac_addr_half, "60:f1:89", 9) == 0 ||
+        strncasecmp(mac_addr_half, "90:b6:86", 9) == 0 ||
+        strncasecmp(mac_addr_half, "98:f1:70", 9) == 0 ||
+        strncasecmp(mac_addr_half, "a0:cc:2b", 9) == 0 ||
+        strncasecmp(mac_addr_half, "a4:08:ea", 9) == 0 ||
+        strncasecmp(mac_addr_half, "b0:72:bf", 9) == 0 ||
+        strncasecmp(mac_addr_half, "b8:d7:af", 9) == 0 ||
+        strncasecmp(mac_addr_half, "d0:e4:4a", 9) == 0 ||
+        strncasecmp(mac_addr_half, "d8:c4:6a", 9) == 0 ||
+        strncasecmp(mac_addr_half, "dc:ef:ca", 9) == 0) {
         type = MURATA;
     }
 
@@ -201,7 +212,18 @@ int main() {
         strncasecmp(mac_addr_half, "e8:50:8b", 9) == 0 ||
         strncasecmp(mac_addr_half, "ec:1f:72", 9) == 0 ||
         strncasecmp(mac_addr_half, "f0:25:b7", 9) == 0 ||
-        strncasecmp(mac_addr_half, "f4:09:d8", 9) == 0) {
+        strncasecmp(mac_addr_half, "f4:09:d8", 9) == 0 ||
+        strncasecmp(mac_addr_half, "2c:0e:3d", 9) == 0 ||
+        strncasecmp(mac_addr_half, "4c:66:41", 9) == 0 ||
+        strncasecmp(mac_addr_half, "54:88:0e", 9) == 0 ||
+        strncasecmp(mac_addr_half, "8c:f5:a3", 9) == 0 ||
+        strncasecmp(mac_addr_half, "ac:5f:3e", 9) == 0 ||
+        strncasecmp(mac_addr_half, "b4:79:a7", 9) == 0 ||
+        strncasecmp(mac_addr_half, "c0:97:27", 9) == 0 ||
+        strncasecmp(mac_addr_half, "c8:ba:94", 9) == 0 ||
+        strncasecmp(mac_addr_half, "d0:25:44", 9) == 0 ||
+        strncasecmp(mac_addr_half, "ec:9b:f3", 9) == 0 ||
+        strncasecmp(mac_addr_half, "f8:04:2e", 9) == 0) {
         type = SEMCO3RD;
     }
 
@@ -212,7 +234,8 @@ int main() {
     }
 
     /* wisol */
-    if (strncasecmp(mac_addr_half, "48:5A:3F", 9) == 0) {
+    if (strncasecmp(mac_addr_half, "48:5A:3F", 9) == 0 ||
+        strncasecmp(mac_addr_half, "70:2C:1F", 9) == 0) {
         type = WISOL;
     }
 
