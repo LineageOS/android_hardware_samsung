@@ -39,12 +39,6 @@
                 <action android:name="org.cyanogenmod.settings.device.DOZE_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <meta-data
-                android:name="org.cyanogenmod.settings.summary.receiver"
-                android:value="com.cyanogenmod.settings.doze.DozeReceiver" />
-            <meta-data
-                android:name="org.cyanogenmod.settings.summary.key"
-                android:value="doze_device_settings" />
         </activity>
 
     </application>
