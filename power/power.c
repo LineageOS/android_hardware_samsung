@@ -44,7 +44,6 @@ struct samsung_power_module {
     struct power_module base;
     pthread_mutex_t lock;
     int boostpulse_fd;
-    int boostpulse_warned;
     char cpu0_hispeed_freq[10];
     char cpu0_max_freq[10];
     char cpu4_hispeed_freq[10];
@@ -59,7 +58,9 @@ enum power_profile_e {
     PROFILE_BALANCED,
     PROFILE_HIGH_PERFORMANCE
 };
+
 static enum power_profile_e current_power_profile = PROFILE_BALANCED;
+static bool boostpulse_warned = false;
 
 /**********************************************************
  *** HELPER FUNCTIONS
@@ -129,10 +130,10 @@ static int boostpulse_open(struct samsung_power_module *samsung_pwr)
     if (samsung_pwr->boostpulse_fd < 0) {
         samsung_pwr->boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
         if (samsung_pwr->boostpulse_fd < 0) {
-            if (!samsung_pwr->boostpulse_warned) {
+            if (!boostpulse_warned) {
                 strerror_r(errno, errno_str, sizeof(errno_str));
                 ALOGE("Error opening %s: %s\n", BOOSTPULSE_PATH, errno_str);
-                samsung_pwr->boostpulse_warned = 1;
+                boostpulse_warned = true;
             }
         }
     }
@@ -452,5 +453,4 @@ struct samsung_power_module HAL_MODULE_INFO_SYM = {
 
     .lock = PTHREAD_MUTEX_INITIALIZER,
     .boostpulse_fd = -1,
-    .boostpulse_warned = 0,
 };
