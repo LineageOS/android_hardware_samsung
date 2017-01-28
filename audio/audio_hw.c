@@ -16,7 +16,7 @@
  */
 
 #define LOG_TAG "audio_hw_primary"
-/*#define LOG_NDEBUG 0*/
+#define LOG_NDEBUG 0
 /*#define VERY_VERY_VERBOSE_LOGGING*/
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
@@ -47,6 +47,7 @@
 #include <audio_effects/effect_ns.h>
 #include "audio_hw.h"
 #include "compress_offload.h"
+#include "samsung_voicecall.h"
 
 #include "sound/compress_params.h"
 
@@ -471,11 +472,11 @@ static struct audio_usecase *get_usecase_from_type(struct audio_device *adev,
 static int set_voice_volume_l(struct audio_device *adev, float volume)
 {
     int err = 0;
-    (void)volume;
 
     if (adev->mode == AUDIO_MODE_IN_CALL) {
-        /* TODO */
+        set_voice_volume_l_(adev, volume);
     }
+
     return err;
 }
 
@@ -2041,6 +2042,11 @@ static int start_input_stream(struct stream_in *in)
 #endif
 #endif
 
+    if (in->dev->in_call) {
+        ALOGV("%s: in_call, not handling PCMs", __func__);
+        goto skip_pcm_handling;
+    }
+
     /* Open the PCM device.
      * The HW is limited to support only the default pcm_profile settings.
      * As such a change in aux_channels will not have an effect.
@@ -2078,6 +2084,7 @@ static int start_input_stream(struct stream_in *in)
         }
     }
 
+skip_pcm_handling:
     /* force read and proc buffer reallocation in case of frame size or
      * channel count change */
     in->proc_buf_frames = 0;
@@ -2208,6 +2215,11 @@ static int out_open_pcm_devices(struct stream_out *out)
 
         if (out->flags & AUDIO_OUTPUT_FLAG_DEEP_BUFFER)
             pcm_device_id = pcm_device_deep_buffer.id;
+
+        if (out->dev->in_call) {
+            ALOGV("%s: in_call, not opening PCMs", __func__);
+            return ret;
+        }
 
         ALOGV("%s: Opening PCM device card_id(%d) device_id(%d)",
               __func__, pcm_device_card, pcm_device_id);
@@ -2347,14 +2359,12 @@ error_config:
     return ret;
 }
 
-static int stop_voice_call(struct audio_device *adev)
+int stop_voice_call(struct audio_device *adev)
 {
     struct audio_usecase *uc_info;
 
     ALOGV("%s: enter", __func__);
     adev->in_call = false;
-
-    /* TODO: implement voice call stop */
 
     uc_info = get_usecase_from_id(adev, USECASE_VOICE_CALL);
     if (uc_info == NULL) {
@@ -2362,6 +2372,8 @@ static int stop_voice_call(struct audio_device *adev)
               __func__, USECASE_VOICE_CALL);
         return -EINVAL;
     }
+
+    stop_voice_call_(adev);
 
     disable_snd_device(adev, uc_info, uc_info->out_snd_device, false);
     disable_snd_device(adev, uc_info, uc_info->in_snd_device, true);
@@ -2375,7 +2387,7 @@ static int stop_voice_call(struct audio_device *adev)
 }
 
 /* always called with adev lock held */
-static int start_voice_call(struct audio_device *adev)
+int start_voice_call(struct audio_device *adev)
 {
     struct audio_usecase *uc_info;
 
@@ -2395,8 +2407,7 @@ static int start_voice_call(struct audio_device *adev)
 
     select_devices(adev, USECASE_VOICE_CALL);
 
-
-    /* TODO: implement voice call start */
+    start_voice_call_(adev, uc_info);
 
     /* set cached volume */
     set_voice_volume_l(adev, adev->voice_volume);
@@ -4056,6 +4067,10 @@ static int adev_close(hw_device_t *device)
     free(adev->snd_dev_ref_cnt);
     free_mixer_list(adev);
     free(device);
+
+    /* close the RIL handle */
+    samsung_voicecall_deinit();
+
     return 0;
 }
 
@@ -4175,6 +4190,11 @@ static int adev_open(const hw_module_t *module, const char *name,
                 adev->sound_trigger_close_for_streaming = 0;
             }
         }
+    }
+
+    int vc_init = samsung_voicecall_init(adev);
+    if (vc_init < 0) {
+        ALOGE("%s: Failed to initialize voice call data", __func__);
     }
 
 
