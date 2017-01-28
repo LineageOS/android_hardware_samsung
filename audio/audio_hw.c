@@ -47,6 +47,7 @@
 #include <audio_effects/effect_ns.h>
 #include "audio_hw.h"
 #include "compress_offload.h"
+#include "samsung_voicecall.h"
 
 #include "sound/compress_params.h"
 
@@ -470,11 +471,11 @@ static struct audio_usecase *get_usecase_from_type(struct audio_device *adev,
 static int set_voice_volume_l(struct audio_device *adev, float volume)
 {
     int err = 0;
-    (void)volume;
 
     if (adev->mode == AUDIO_MODE_IN_CALL) {
-        /* TODO */
+        set_voice_volume_l_(adev, volume);
     }
+
     return err;
 }
 
@@ -2338,14 +2339,12 @@ error_config:
     return ret;
 }
 
-static int stop_voice_call(struct audio_device *adev)
+int stop_voice_call(struct audio_device *adev)
 {
     struct audio_usecase *uc_info;
 
     ALOGV("%s: enter", __func__);
     adev->in_call = false;
-
-    /* TODO: implement voice call stop */
 
     uc_info = get_usecase_from_id(adev, USECASE_VOICE_CALL);
     if (uc_info == NULL) {
@@ -2353,6 +2352,8 @@ static int stop_voice_call(struct audio_device *adev)
               __func__, USECASE_VOICE_CALL);
         return -EINVAL;
     }
+
+    stop_voice_call_(adev);
 
     disable_snd_device(adev, uc_info, uc_info->out_snd_device, false);
     disable_snd_device(adev, uc_info, uc_info->in_snd_device, true);
@@ -2366,7 +2367,7 @@ static int stop_voice_call(struct audio_device *adev)
 }
 
 /* always called with adev lock held */
-static int start_voice_call(struct audio_device *adev)
+int start_voice_call(struct audio_device *adev)
 {
     struct audio_usecase *uc_info;
 
@@ -2386,8 +2387,7 @@ static int start_voice_call(struct audio_device *adev)
 
     select_devices(adev, USECASE_VOICE_CALL);
 
-
-    /* TODO: implement voice call start */
+    start_voice_call_(adev, uc_info);
 
     /* set cached volume */
     set_voice_volume_l(adev, adev->voice_volume);
@@ -4329,6 +4329,11 @@ static int adev_open(const hw_module_t *module, const char *name,
                 adev->sound_trigger_close_for_streaming = 0;
             }
         }
+    }
+
+    int vc_init = samsung_voicecall_init(adev);
+    if (vc_init < 0) {
+        ALOGE("%s: Failed to initialize voice call data", __func__);
     }
 
 
