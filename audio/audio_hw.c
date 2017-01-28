@@ -41,6 +41,8 @@
 #include <cutils/sched_policy.h>
 #include <cutils/properties.h>
 
+#include <samsung_audio.h>
+
 #include <hardware/audio_effect.h>
 #include <system/thread_defs.h>
 #include <audio_effects/effect_aec.h>
@@ -69,7 +71,7 @@ static struct pcm_device_profile pcm_device_playback = {
         .avail_min = PLAYBACK_AVAILABLE_MIN,
     },
     .card = SOUND_CARD,
-    .id = 9,
+    .id = SOUND_PLAYBACK_DEVICE,
     .type = PCM_PLAYBACK,
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
                AUDIO_DEVICE_OUT_SPEAKER,
@@ -88,7 +90,7 @@ static struct pcm_device_profile pcm_device_capture = {
         .avail_min = 0,
     },
     .card = SOUND_CARD,
-    .id = 0,
+    .id = SOUND_CAPTURE_DEVICE,
     .type = PCM_CAPTURE,
     .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC,
 };
@@ -106,11 +108,12 @@ static struct pcm_device_profile pcm_device_capture_low_latency = {
         .avail_min = 0,
     },
     .card = SOUND_CARD,
-    .id = 0,
+    .id = SOUND_CAPTURE_DEVICE,
     .type = PCM_CAPTURE_LOW_LATENCY,
     .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC,
 };
 
+#ifdef SOUND_CAPTURE_LOOPBACK_AEC_DEVICE
 static struct pcm_device_profile pcm_device_capture_loopback_aec = {
     .config = {
         .channels = CAPTURE_DEFAULT_CHANNEL_COUNT,
@@ -124,10 +127,11 @@ static struct pcm_device_profile pcm_device_capture_loopback_aec = {
         .avail_min = 0,
     },
     .card = SOUND_CARD,
-    .id = 1,
+    .id = SOUND_CAPTURE_LOOPBACK_AEC_DEVICE,
     .type = PCM_CAPTURE,
     .devices = SND_DEVICE_IN_LOOPBACK_AEC,
 };
+#endif
 
 static struct pcm_device_profile pcm_device_playback_sco = {
     .config = {
@@ -142,7 +146,7 @@ static struct pcm_device_profile pcm_device_playback_sco = {
         .avail_min = SCO_AVAILABLE_MIN,
     },
     .card = SOUND_CARD,
-    .id = 2,
+    .id = SOUND_PLAYBACK_SCO_DEVICE,
     .type = PCM_PLAYBACK,
     .devices =
             AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
@@ -162,11 +166,12 @@ static struct pcm_device_profile pcm_device_capture_sco = {
         .avail_min = 0,
     },
     .card = SOUND_CARD,
-    .id = 2,
+    .id = SOUND_CAPTURE_SCO_DEVICE,
     .type = PCM_CAPTURE,
     .devices = AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET,
 };
 
+#ifdef SOUND_CAPTURE_HOTWORD_DEVICE
 static struct pcm_device_profile pcm_device_hotword_streaming = {
     .config = {
         .channels = 1,
@@ -180,10 +185,11 @@ static struct pcm_device_profile pcm_device_hotword_streaming = {
         .avail_min = 0,
     },
     .card = SOUND_CARD,
-    .id = 0,
+    .id = SOUND_CAPTURE_HOTWORD_DEVICE,
     .type = PCM_HOTWORD_STREAMING,
     .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC
 };
+#endif
 
 static struct pcm_device_profile * const pcm_devices[] = {
     &pcm_device_playback,
@@ -191,8 +197,12 @@ static struct pcm_device_profile * const pcm_devices[] = {
     &pcm_device_capture_low_latency,
     &pcm_device_playback_sco,
     &pcm_device_capture_sco,
+#ifdef SOUND_CAPTURE_LOOPBACK_AEC_DEVICE
     &pcm_device_capture_loopback_aec,
+#endif
+#ifdef SOUND_CAPTURE_HOTWORD_DEVICE
     &pcm_device_hotword_streaming,
+#endif
     NULL,
 };
 
