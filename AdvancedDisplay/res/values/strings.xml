@@ -37,6 +37,10 @@
     <string name="mdnie_scenario_navigation">Navigation</string>
     <string name="mdnie_scenario_gallery">Gallery</string>
     <string name="mdnie_scenario_vt">Visual telephony</string>
+    <string name="mdnie_scenario_browser">Browser</string>
+    <string name="mdnie_scenario_ebook">eBook</string>
+    <string name="mdnie_scenario_email">E-mail</string>
+    <string name="mdnie_scenario_tdmb">Digital television</string>
 
     <!-- Inverse mode names -->
     <string name="mdnie_inverse_normal">Normal</string>
