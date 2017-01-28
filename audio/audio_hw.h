@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-#ifndef NVIDIA_AUDIO_HW_H
-#define NVIDIA_AUDIO_HW_H
+#ifndef SAMSUNG_AUDIO_HW_H
+#define SAMSUNG_AUDIO_HW_H
 
 #include <cutils/list.h>
 #include <hardware/audio.h>
@@ -433,4 +433,4 @@ struct audio_device {
  * lock_inputs must be held in order to either close the input stream, or prevent closure.
  */
 
-#endif // NVIDIA_AUDIO_HW_H
+#endif // SAMSUNG_AUDIO_HW_H
