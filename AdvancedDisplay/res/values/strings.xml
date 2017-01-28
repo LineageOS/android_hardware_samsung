@@ -38,6 +38,10 @@
     <string name="mdnie_scenario_navigation">Navigation</string>
     <string name="mdnie_scenario_gallery">Gallery</string>
     <string name="mdnie_scenario_vt">VT</string>
+    <string name="mdnie_scenario_browser">Browser</string>
+    <string name="mdnie_scenario_ebook">eBook</string>
+    <string name="mdnie_scenario_email">E-Mail</string>
+    <string name="mdnie_scenario_tdmb">TDMB<string>
 
     <!-- Inverse mode names -->
     <string name="mdnie_inverse_normal">Normal</string>
