@@ -21,7 +21,8 @@ include $(CLEAR_VARS)
 LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
-	audio_hw.c
+	audio_hw.c \
+	compress_offload.c
 
 # TODO: remove resampler if possible when AudioFlinger supports downsampling from 48 to 8
 LOCAL_SHARED_LIBRARIES := \
