@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2017 Christopher N. Hesse <raymanfx@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,8 +36,6 @@
 #else
 #define OFFLOAD_FX_LIBRARY_PATH "/system/lib/soundfx/libnvvisualizer.so"
 #endif
-
-#define HTC_ACOUSTIC_LIBRARY_PATH "/vendor/lib/libhtcacoustic.so"
 
 #ifdef PREPROCESSING_ENABLED
 #include <audio_utils/echo_reference.h>
@@ -419,20 +418,10 @@ struct audio_device {
     volatile int32_t        echo_reference_generation;
 #endif
 
-    void*                   htc_acoustic_lib;
-    int                     (*htc_acoustic_init_rt5506)();
-    int                     (*htc_acoustic_set_rt5506_amp)(int, int);
-    int                     (*htc_acoustic_set_amp_mode)(int, int, int, int, bool);
-    int                     (*htc_acoustic_spk_reverse)(bool);
-
     void*                   sound_trigger_lib;
     int                     (*sound_trigger_open_for_streaming)();
     size_t                  (*sound_trigger_read_samples)(int, void*, size_t);
     int                     (*sound_trigger_close_for_streaming)(int);
-
-    int                     tfa9895_init;
-    int                     tfa9895_mode_change;
-    pthread_mutex_t         tfa9895_lock;
 
     int                     dummybuf_thread_timeout;
     int                     dummybuf_thread_cancel;
@@ -446,7 +435,7 @@ struct audio_device {
 
 /*
  * NOTE: when multiple mutexes have to be acquired, always take the
- * lock_inputs, stream_in, stream_out, audio_device, then tfa9895 mutex.
+ * lock_inputs, stream_in, stream_out, then audio_device mutex.
  * stream_in mutex must always be before stream_out mutex
  * if both have to be taken (see get_echo_reference(), put_echo_reference()...)
  * dummybuf_thread mutex is not related to the other mutexes with respect to order.
