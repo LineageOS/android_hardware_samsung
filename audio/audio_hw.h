@@ -120,9 +120,6 @@ enum {
 };
 
 
-#define MIXER_CARD 0
-#define SOUND_CARD 0
-
 /*
  * tinyAlsa library interprets period size as number of frames
  * one frame = channel_count * sizeof (pcm sample)
