@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2017 Christopher N. Hesse <raymanfx@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -880,9 +881,7 @@ static int select_devices(struct audio_device *adev,
 
     /* Disable current sound devices */
     if (usecase->out_snd_device != SND_DEVICE_NONE) {
-        pthread_mutex_lock(&adev->tfa9895_lock);
         disable_snd_device(adev, usecase, usecase->out_snd_device, false);
-        pthread_mutex_unlock(&adev->tfa9895_lock);
     }
 
     if (usecase->in_snd_device != SND_DEVICE_NONE) {
@@ -906,10 +905,6 @@ static int select_devices(struct audio_device *adev,
     usecase->in_snd_device = in_snd_device;
     usecase->out_snd_device = out_snd_device;
 
-    if (out_snd_device != SND_DEVICE_NONE)
-        if (usecase->devices & (AUDIO_DEVICE_OUT_WIRED_HEADSET | AUDIO_DEVICE_OUT_WIRED_HEADPHONE))
-            if (adev->htc_acoustic_set_rt5506_amp != NULL)
-                adev->htc_acoustic_set_rt5506_amp(adev->mode, usecase->devices);
     return 0;
 }
 
@@ -2935,24 +2930,6 @@ static int out_set_volume(struct audio_stream_out *stream, float left,
     return -ENOSYS;
 }
 
-static void *tfa9895_config_thread(void *context)
-{
-    ALOGV("%s: enter", __func__);
-    pthread_detach(pthread_self());
-    struct audio_device *adev = (struct audio_device *)context;
-    pthread_mutex_lock(&adev->tfa9895_lock);
-    adev->tfa9895_init =
-        adev->htc_acoustic_set_amp_mode(adev->mode, AUDIO_DEVICE_OUT_SPEAKER, 0, 0, false);
-    if (!adev->tfa9895_init) {
-        ALOGE("set_amp_mode failed, need to re-config again");
-        adev->tfa9895_mode_change |= 0x1;
-    }
-    ALOGI("@@##tfa9895_config_thread Done!! tfa9895_mode_change=%d", adev->tfa9895_mode_change);
-    pthread_mutex_unlock(&adev->tfa9895_lock);
-    dummybuf_thread_close(adev);
-    return NULL;
-}
-
 static int fast_set_affinity(pid_t tid) {
     cpu_set_t cpu_set;
     int cpu_num;
@@ -3135,75 +3112,6 @@ false_alarm:
                     out->echo_reference->write(out->echo_reference, &b);
                  }
 #endif
-                if (adev->tfa9895_mode_change == 0x1) {
-                    if (out->devices & AUDIO_DEVICE_OUT_SPEAKER) {
-                        pthread_mutex_lock(&adev->tfa9895_lock);
-                        data = (unsigned char *)
-                                calloc(pcm_frames_to_bytes(pcm_device->pcm, out->config.period_size),
-                                        sizeof(unsigned char));
-                        if (data) {
-                            int i;
-
-                            // reopen pcm with stop_threshold = INT_MAX/2
-                            memcpy(&config, &pcm_device->pcm_profile->config,
-                                    sizeof(struct pcm_config));
-                            config.stop_threshold = INT_MAX/2;
-
-                            if (pcm_device->pcm)
-                                pcm_close(pcm_device->pcm);
-
-                            for (i = 0; i < RETRY_NUMBER; i++) {
-                                pcm_device->pcm = pcm_open(pcm_device->pcm_profile->card,
-                                        pcm_device->pcm_profile->id,
-                                        PCM_OUT | PCM_MONOTONIC, &config);
-                                if (pcm_device->pcm != NULL && pcm_is_ready(pcm_device->pcm))
-                                    break;
-                                else
-                                    usleep(10000);
-                            }
-                            if (i >= RETRY_NUMBER)
-                                ALOGE("%s: failed to reopen pcm device", __func__);
-
-                            if (pcm_device->pcm) {
-                                for (i = out->config.period_count; i > 0; i--)
-                                    pcm_write(pcm_device->pcm, (void *)data,
-                                           pcm_frames_to_bytes(pcm_device->pcm,
-                                           out->config.period_size));
-                                /* TODO: Hold on 100 ms and wait i2s signal ready
-                                     before giving dsp related i2c commands */
-                                usleep(100000);
-                                adev->tfa9895_mode_change &= ~0x1;
-                                ALOGV("@@##checking - 2: tfa9895_config_thread: "
-                                    "adev->tfa9895_mode_change=%d", adev->tfa9895_mode_change);
-                                adev->tfa9895_init =
-                                        adev->htc_acoustic_set_amp_mode(
-                                                adev->mode, AUDIO_DEVICE_OUT_SPEAKER, 0, 0, false);
-                            }
-                            free(data);
-
-                            // reopen pcm with normal stop_threshold
-                            if (pcm_device->pcm)
-                                pcm_close(pcm_device->pcm);
-
-                            for (i = 0; i < RETRY_NUMBER; i++) {
-                                pcm_device->pcm = pcm_open(pcm_device->pcm_profile->card,
-                                        pcm_device->pcm_profile->id,
-                                        PCM_OUT | PCM_MONOTONIC, &pcm_device->pcm_profile->config);
-                                if (pcm_device->pcm != NULL && pcm_is_ready(pcm_device->pcm))
-                                    break;
-                                else
-                                    usleep(10000);
-                            }
-                            if (i >= RETRY_NUMBER) {
-                                ALOGE("%s: failed to reopen pcm device, error return", __func__);
-                                pthread_mutex_unlock(&adev->tfa9895_lock);
-                                pthread_mutex_unlock(&out->lock);
-                                return -1;
-                            }
-                        }
-                    }
-                    pthread_mutex_unlock(&adev->tfa9895_lock);
-                }
                 ALOGVV("%s: writing buffer (%d bytes) to pcm device", __func__, bytes);
                 if (pcm_device->resampler && pcm_device->res_buffer)
                     pcm_device->status =
@@ -4141,8 +4049,6 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
                 usecase = node_to_item(node, struct audio_usecase, adev_list_node);
                 if (usecase->type == PCM_PLAYBACK) {
                     select_devices(adev, usecase->id);
-                    if (adev->htc_acoustic_spk_reverse)
-                        adev->htc_acoustic_spk_reverse(adev->speaker_lr_swap);
                     break;
                 }
             }
@@ -4228,9 +4134,6 @@ static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
     if (adev->mode != mode) {
         ALOGI("%s mode = %d", __func__, mode);
         adev->mode = mode;
-        pthread_mutex_lock(&adev->tfa9895_lock);
-        adev->tfa9895_mode_change |= 0x1;
-        pthread_mutex_unlock(&adev->tfa9895_lock);
     }
     pthread_mutex_unlock(&adev->lock);
     return 0;
@@ -4683,29 +4586,6 @@ static int adev_open(const hw_module_t *module, const char *name,
         }
     }
 
-    if (access(HTC_ACOUSTIC_LIBRARY_PATH, R_OK) == 0) {
-        adev->htc_acoustic_lib = dlopen(HTC_ACOUSTIC_LIBRARY_PATH, RTLD_NOW);
-        if (adev->htc_acoustic_lib == NULL) {
-            ALOGE("%s: DLOPEN failed for %s", __func__, HTC_ACOUSTIC_LIBRARY_PATH);
-        } else {
-            ALOGV("%s: DLOPEN successful for %s", __func__, HTC_ACOUSTIC_LIBRARY_PATH);
-            adev->htc_acoustic_init_rt5506 =
-                        (int (*)())dlsym(adev->htc_acoustic_lib,
-                                                        "init_rt5506");
-            adev->htc_acoustic_set_rt5506_amp =
-                        (int (*)(int, int))dlsym(adev->htc_acoustic_lib,
-                                                        "set_rt5506_amp");
-            adev->htc_acoustic_set_amp_mode =
-                        (int (*)(int , int, int, int, bool))dlsym(adev->htc_acoustic_lib,
-                                                        "set_amp_mode");
-            adev->htc_acoustic_spk_reverse =
-                        (int (*)(bool))dlsym(adev->htc_acoustic_lib,
-                                                        "spk_reverse");
-            if (adev->htc_acoustic_spk_reverse)
-                adev->htc_acoustic_spk_reverse(adev->speaker_lr_swap);
-        }
-    }
-
     if (access(SOUND_TRIGGER_HAL_LIBRARY_PATH, R_OK) == 0) {
         adev->sound_trigger_lib = dlopen(SOUND_TRIGGER_HAL_LIBRARY_PATH, RTLD_NOW);
         if (adev->sound_trigger_lib == NULL) {
@@ -4736,9 +4616,6 @@ static int adev_open(const hw_module_t *module, const char *name,
 
     *device = &adev->device.common;
 
-    if (adev->htc_acoustic_init_rt5506 != NULL)
-        adev->htc_acoustic_init_rt5506();
-
     if (audio_device_ref_count == 0) {
         /* For HS GPIO initial config */
         adev->dummybuf_thread_devices = AUDIO_DEVICE_OUT_WIRED_HEADPHONE;
@@ -4754,31 +4631,6 @@ static int adev_open(const hw_module_t *module, const char *name,
             usleep(10000);
         }
         dummybuf_thread_close(adev);
-
-        /* For NXP DSP config */
-        if (adev->htc_acoustic_set_amp_mode) {
-            pthread_t th;
-            adev->dummybuf_thread_devices = AUDIO_DEVICE_OUT_SPEAKER;
-            dummybuf_thread_open(adev);
-            pthread_mutex_lock(&adev->dummybuf_thread_lock);
-            retry_count = RETRY_NUMBER;
-            while (retry_count-- > 0) {
-                if (adev->dummybuf_thread_active) {
-                    break;
-                }
-                pthread_mutex_unlock(&adev->dummybuf_thread_lock);
-                usleep(10000);
-                pthread_mutex_lock(&adev->dummybuf_thread_lock);
-            }
-            if (adev->dummybuf_thread_active) {
-                usleep(10000); /* tfa9895 spk amp need more than 1ms i2s signal before giving dsp related i2c commands*/
-                if (pthread_create(&th, NULL, tfa9895_config_thread, (void* )adev) != 0) {
-                    ALOGE("@@##THREAD_FADE_IN_UPPER_SPEAKER thread create fail");
-                }
-            }
-            pthread_mutex_unlock(&adev->dummybuf_thread_lock);
-            /* Then, dummybuf_thread_close() is called by tfa9895_config_thread() */
-        }
     }
     audio_device_ref_count++;
 
