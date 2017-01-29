@@ -50,9 +50,6 @@
 #include "sound/compress_params.h"
 
 #define MIXER_CTL_COMPRESS_PLAYBACK_VOLUME "Compress Playback Volume"
-#define MIXER_CTL_HEADPHONE_JACK_SWITCH "Headphone Jack Switch"
-#define MIXER_CTL_CODEC_VMIXER_CODEC_SWITCH "Codec VMixer Codec Switch"
-#define MIXER_CTL_SPK_VMIXER_SPK_SWITCH "SPK VMixer SPK Switch"
 
 /* TODO: the following PCM device profiles could be read from a config file */
 static struct pcm_device_profile pcm_device_playback = {
@@ -231,8 +228,6 @@ static const struct string_to_enum out_channels_name_to_enum_table[] = {
     STRING_TO_ENUM(AUDIO_CHANNEL_OUT_5POINT1),
     STRING_TO_ENUM(AUDIO_CHANNEL_OUT_7POINT1),
 };
-
-static void dummybuf_thread_close(struct audio_device *adev);
 
 static bool is_supported_format(audio_format_t format)
 {
@@ -4332,169 +4327,6 @@ static int adev_close(hw_device_t *device)
     return 0;
 }
 
-static void *dummybuf_thread(void *context)
-{
-    ALOGV("%s: enter", __func__);
-    pthread_detach(pthread_self());
-    struct audio_device *adev = (struct audio_device *)context;
-    struct pcm_config config;
-    struct mixer *mixer = NULL;
-    struct mixer_ctl *ctl;
-    unsigned char *data = NULL;
-    struct pcm *pcm = NULL;
-    struct pcm_device_profile *profile = NULL;
-    audio_devices_t dummybuf_thread_devices = adev->dummybuf_thread_devices;
-
-    pthread_mutex_lock(&adev->dummybuf_thread_lock);
-
-    memset(&config, 0, sizeof(struct pcm_config));
-
-    profile = &pcm_device_playback;
-
-    memcpy(&config, &profile->config, sizeof(struct pcm_config));
-    /* Use large value for stop_threshold so that automatic
-       trigger for stop is avoided, when this thread fails to write data */
-    config.stop_threshold = INT_MAX/2;
-    pcm = pcm_open(profile->card, profile->id,
-                   (PCM_OUT | PCM_MONOTONIC), &config);
-    if (pcm != NULL && !pcm_is_ready(pcm)) {
-        ALOGE("pcm_open: card=%d, id=%d is not ready", profile->card, profile->id);
-        pcm_close(pcm);
-        pcm = NULL;
-    } else {
-        ALOGV("pcm_open: card=%d, id=%d", profile->card, profile->id);
-    }
-
-    mixer = mixer_open(profile->card);
-    if (mixer) {
-        if (dummybuf_thread_devices == AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
-            ctl = mixer_get_ctl_by_name(mixer, MIXER_CTL_HEADPHONE_JACK_SWITCH);
-            if (ctl != NULL)
-                mixer_ctl_set_value(ctl, 0, 1);
-            else {
-                ALOGE("Invalid mixer control: name(%s): skip dummy thread", MIXER_CTL_HEADPHONE_JACK_SWITCH);
-                goto exit;
-            }
-
-            ctl = mixer_get_ctl_by_name(mixer, MIXER_CTL_CODEC_VMIXER_CODEC_SWITCH);
-            if (ctl != NULL)
-                mixer_ctl_set_value(ctl, 0, 1);
-            else {
-                ALOGE("Invalid mixer control: name(%s): skip dummy thread", MIXER_CTL_CODEC_VMIXER_CODEC_SWITCH);
-                goto exit;
-            }
-        } else {
-            ctl = mixer_get_ctl_by_name(mixer, MIXER_CTL_SPK_VMIXER_SPK_SWITCH);
-            if (ctl != NULL)
-                mixer_ctl_set_value(ctl, 0, 1);
-            else {
-                ALOGE("Invalid mixer control: name(%s): skip dummy thread", MIXER_CTL_SPK_VMIXER_SPK_SWITCH);
-                goto exit;
-            }
-        }
-    }
-
-    while (1) {
-        if (pcm) {
-            if (data == NULL)
-                data = (unsigned char *)calloc(DEEP_BUFFER_OUTPUT_PERIOD_SIZE * 8,
-                            sizeof(unsigned char));
-            if (data) {
-                pcm_write(pcm, (void *)data, DEEP_BUFFER_OUTPUT_PERIOD_SIZE * 8);
-                adev->dummybuf_thread_active = 1;
-            } else {
-                ALOGV("%s: cant open a buffer, retry to open it", __func__);
-            }
-        } else {
-            ALOGV("%s: cant open a output deep stream, retry to open it", __func__);
-            pcm = pcm_open(profile->card, profile->id,
-                   (PCM_OUT | PCM_MONOTONIC), &config);
-            if (pcm != NULL && !pcm_is_ready(pcm)) {
-                ALOGE("pcm_open: card=%d, id=%d is not ready", profile->card, profile->id);
-                pcm_close(pcm);
-                pcm = NULL;
-            } else {
-                ALOGV("pcm_open: card=%d, id=%d", profile->card, profile->id);
-            }
-        }
-
-        if (adev->dummybuf_thread_cancel || adev->dummybuf_thread_timeout-- <= 0) {
-            adev->dummybuf_thread_cancel = 0;
-            break;
-        }
-
-        pthread_mutex_unlock(&adev->dummybuf_thread_lock);
-        usleep(3000);
-        pthread_mutex_lock(&adev->dummybuf_thread_lock);
-    }
-
-exit:
-    adev->dummybuf_thread_active = 0;
-    if (mixer) {
-        if (dummybuf_thread_devices == AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
-            ctl = mixer_get_ctl_by_name(mixer, MIXER_CTL_HEADPHONE_JACK_SWITCH);
-            if (ctl != NULL)
-                mixer_ctl_set_value(ctl, 0, 0);
-            ctl = mixer_get_ctl_by_name(mixer, MIXER_CTL_CODEC_VMIXER_CODEC_SWITCH);
-            if (ctl != NULL)
-                mixer_ctl_set_value(ctl, 0, 0);
-        } else {
-            ctl = mixer_get_ctl_by_name(mixer, MIXER_CTL_SPK_VMIXER_SPK_SWITCH);
-            if (ctl != NULL)
-                mixer_ctl_set_value(ctl, 0, 0);
-        }
-        mixer_close(mixer);
-    }
-    if (pcm) {
-        pcm_close(pcm);
-        pcm = NULL;
-    }
-    pthread_mutex_unlock(&adev->dummybuf_thread_lock);
-
-    if (data)
-        free(data);
-
-    return NULL;
-}
-
-static void dummybuf_thread_open(struct audio_device *adev)
-{
-    adev->dummybuf_thread_timeout = 6000; /* in 18 sec */
-    adev->dummybuf_thread_cancel = 0;
-    adev->dummybuf_thread_active = 0;
-    pthread_mutex_init(&adev->dummybuf_thread_lock, (const pthread_mutexattr_t *) NULL);
-    if (!adev->dummybuf_thread)
-        pthread_create(&adev->dummybuf_thread, (const pthread_attr_t *) NULL, dummybuf_thread, adev);
-}
-
-static void dummybuf_thread_close(struct audio_device *adev)
-{
-    ALOGV("%s: enter", __func__);
-    int retry_cnt = 20;
-
-    if (adev->dummybuf_thread == 0)
-        return;
-
-    pthread_mutex_lock(&adev->dummybuf_thread_lock);
-    adev->dummybuf_thread_cancel = 1;
-    pthread_mutex_unlock(&adev->dummybuf_thread_lock);
-
-    while (retry_cnt > 0) {
-        pthread_mutex_lock(&adev->dummybuf_thread_lock);
-        if (adev->dummybuf_thread_active == 0) {
-            pthread_mutex_unlock(&adev->dummybuf_thread_lock);
-            break;
-        }
-        pthread_mutex_unlock(&adev->dummybuf_thread_lock);
-        retry_cnt--;
-        usleep(1000);
-    }
-
-    pthread_join(adev->dummybuf_thread, (void **) NULL);
-    pthread_mutex_destroy(&adev->dummybuf_thread_lock);
-    adev->dummybuf_thread = 0;
-}
-
 /* This returns true if the input parameter looks at all plausible as a low latency period size,
  * or false otherwise.  A return value of true doesn't mean the value is guaranteed to work,
  * just that it _might_ work.
@@ -4616,22 +4448,6 @@ static int adev_open(const hw_module_t *module, const char *name,
 
     *device = &adev->device.common;
 
-    if (audio_device_ref_count == 0) {
-        /* For HS GPIO initial config */
-        adev->dummybuf_thread_devices = AUDIO_DEVICE_OUT_WIRED_HEADPHONE;
-        dummybuf_thread_open(adev);
-        retry_count = RETRY_NUMBER;
-        while (retry_count-- > 0) {
-            pthread_mutex_lock(&adev->dummybuf_thread_lock);
-            if (adev->dummybuf_thread_active != 0) {
-                pthread_mutex_unlock(&adev->dummybuf_thread_lock);
-                break;
-            }
-            pthread_mutex_unlock(&adev->dummybuf_thread_lock);
-            usleep(10000);
-        }
-        dummybuf_thread_close(adev);
-    }
     audio_device_ref_count++;
 
     char value[PROPERTY_VALUE_MAX];

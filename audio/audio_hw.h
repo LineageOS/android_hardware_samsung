@@ -423,13 +423,6 @@ struct audio_device {
     size_t                  (*sound_trigger_read_samples)(int, void*, size_t);
     int                     (*sound_trigger_close_for_streaming)(int);
 
-    int                     dummybuf_thread_timeout;
-    int                     dummybuf_thread_cancel;
-    int                     dummybuf_thread_active;
-    audio_devices_t         dummybuf_thread_devices;
-    pthread_mutex_t         dummybuf_thread_lock;
-    pthread_t               dummybuf_thread;
-
     pthread_mutex_t         lock_inputs; /* see note below on mutex acquisition order */
 };
 
@@ -437,8 +430,6 @@ struct audio_device {
  * NOTE: when multiple mutexes have to be acquired, always take the
  * lock_inputs, stream_in, stream_out, then audio_device mutex.
  * stream_in mutex must always be before stream_out mutex
- * if both have to be taken (see get_echo_reference(), put_echo_reference()...)
- * dummybuf_thread mutex is not related to the other mutexes with respect to order.
  * lock_inputs must be held in order to either close the input stream, or prevent closure.
  */
 
