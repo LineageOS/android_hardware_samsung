@@ -387,7 +387,6 @@ struct audio_device {
     float                   voice_volume;
     bool                    mic_mute;
     bool                    bluetooth_nrec;
-    bool                    screen_off;
     int*                    snd_dev_ref_cnt;
     struct listnode         usecase_list;
     bool                    speaker_lr_swap;
