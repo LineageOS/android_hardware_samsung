@@ -3693,40 +3693,6 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
             adev->bluetooth_nrec = false;
     }
 
-    ret = str_parms_get_int(parms, "rotation", &val);
-    if (ret >= 0) {
-        bool reverse_speakers = false;
-        switch(val) {
-        /* FIXME: note that the code below assumes that the speakers are in the correct placement
-             relative to the user when the device is rotated 90deg from its default rotation. This
-             assumption is device-specific, not platform-specific like this code. */
-        case 270:
-            reverse_speakers = true;
-            break;
-        case 0:
-        case 90:
-        case 180:
-            break;
-        default:
-            ALOGE("%s: unexpected rotation of %d", __func__, val);
-        }
-        pthread_mutex_lock(&adev->lock);
-        if (adev->speaker_lr_swap != reverse_speakers) {
-            adev->speaker_lr_swap = reverse_speakers;
-            /* only update the selected device if there is active pcm playback */
-            struct audio_usecase *usecase;
-            struct listnode *node;
-            list_for_each(node, &adev->usecase_list) {
-                usecase = node_to_item(node, struct audio_usecase, adev_list_node);
-                if (usecase->type == PCM_PLAYBACK) {
-                    select_devices(adev, usecase->id);
-                    break;
-                }
-            }
-        }
-        pthread_mutex_unlock(&adev->lock);
-    }
-
     str_parms_destroy(parms);
 
     if (ret > 0)

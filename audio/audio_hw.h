@@ -394,7 +394,6 @@ struct audio_device {
     bool                    bluetooth_nrec;
     int*                    snd_dev_ref_cnt;
     struct listnode         usecase_list;
-    bool                    speaker_lr_swap;
     unsigned int            cur_hdmi_channels;
     int                     dualmic_config;
     bool                    ns_in_voice_rec;
