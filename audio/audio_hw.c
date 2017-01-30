@@ -4268,16 +4268,21 @@ static void adev_close_input_stream(struct audio_hw_device *dev,
     /* prevent concurrent out_set_parameters, or out_write from standby */
     pthread_mutex_lock(&adev->lock_inputs);
 
+    if (in->read_buf) {
+        free(in->read_buf);
+        in->read_buf = NULL;
+    }
+
+    if (in->resampler) {
+        release_resampler(in->resampler);
+        in->resampler = NULL;
+    }
+
 #ifdef PREPROCESSING_ENABLED
     int i;
 
     for (i=0; i<in->num_preprocessors; i++) {
         free(in->preprocessors[i].channel_configs);
-    }
-
-    if (in->read_buf) {
-        free(in->read_buf);
-        in->read_buf = NULL;
     }
 
     if (in->proc_buf_in) {
@@ -4295,10 +4300,6 @@ static void adev_close_input_stream(struct audio_hw_device *dev,
         in->ref_buf = NULL;
     }
 
-    if (in->resampler) {
-        release_resampler(in->resampler);
-        in->resampler = NULL;
-    }
 #endif
 
     in_standby_l(in);
