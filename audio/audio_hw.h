@@ -53,11 +53,6 @@ struct effect_info_s {
 #define SOUND_TRIGGER_HAL_LIBRARY_PATH "/system/lib/hw/sound_trigger.primary.flounder.so"
 #endif
 
-#define TTY_MODE_OFF    1
-#define TTY_MODE_FULL   2
-#define TTY_MODE_VCO    4
-#define TTY_MODE_HCO    8
-
 #define DUALMIC_CONFIG_NONE 0
 #define DUALMIC_CONFIG_1 1
 
@@ -81,9 +76,6 @@ enum {
     SND_DEVICE_OUT_HDMI,
     SND_DEVICE_OUT_SPEAKER_AND_HDMI,
     SND_DEVICE_OUT_BT_SCO,
-    SND_DEVICE_OUT_VOICE_TTY_FULL_HEADPHONES,
-    SND_DEVICE_OUT_VOICE_TTY_VCO_HEADPHONES,
-    SND_DEVICE_OUT_VOICE_TTY_HCO_HANDSET,
     SND_DEVICE_OUT_END,
 
     /*
@@ -105,9 +97,6 @@ enum {
     SND_DEVICE_IN_CAMCORDER_MIC,
     SND_DEVICE_IN_VOICE_DMIC_1,
     SND_DEVICE_IN_VOICE_SPEAKER_DMIC_1,
-    SND_DEVICE_IN_VOICE_TTY_FULL_HEADSET_MIC,
-    SND_DEVICE_IN_VOICE_TTY_VCO_HANDSET_MIC,
-    SND_DEVICE_IN_VOICE_TTY_HCO_HEADSET_MIC,
     SND_DEVICE_IN_VOICE_REC_HEADSET_MIC,
     SND_DEVICE_IN_VOICE_REC_MIC,
     SND_DEVICE_IN_VOICE_REC_DMIC_1,
@@ -397,7 +386,6 @@ struct audio_device {
     int                     in_call;
     float                   voice_volume;
     bool                    mic_mute;
-    int                     tty_mode;
     bool                    bluetooth_nrec;
     bool                    screen_off;
     int*                    snd_dev_ref_cnt;
