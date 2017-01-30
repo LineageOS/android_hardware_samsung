@@ -44,5 +44,11 @@
 #define SOUND_CAPTURE_HOTWORD_DEVICE 0
 */
 
+/*
+ * If the device has stereo speakers and the speakers are arranged on
+ * different sides of the device you can activate this feature by
+ * setting it to 1.
+ */
+#define SWAP_SPEAKER_ON_SCREEN_ROTATION 0
 
 #endif // SAMSUNG_AUDIO_H

@@ -3767,6 +3767,7 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
             adev->bluetooth_nrec = false;
     }
 
+#if SWAP_SPEAKER_ON_SCREEN_ROTATION
     ret = str_parms_get_int(parms, "rotation", &val);
     if (ret >= 0) {
         bool reverse_speakers = false;
@@ -3800,6 +3801,7 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
         }
         pthread_mutex_unlock(&adev->lock);
     }
+#endif /* SWAP_SPEAKER_ON_SCREEN_ROTATION */
 
     str_parms_destroy(parms);
 
