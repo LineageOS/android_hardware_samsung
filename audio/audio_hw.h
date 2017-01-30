@@ -391,7 +391,6 @@ struct audio_device {
     int                     in_call;
     float                   voice_volume;
     bool                    mic_mute;
-    int                     tty_mode;
     bool                    bluetooth_nrec;
     bool                    screen_off;
     int*                    snd_dev_ref_cnt;
