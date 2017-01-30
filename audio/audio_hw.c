@@ -72,6 +72,24 @@ static struct pcm_device_profile pcm_device_playback = {
                AUDIO_DEVICE_OUT_SPEAKER,
 };
 
+static struct pcm_device_profile pcm_device_deep_buffer = {
+    .config = {
+        .channels = PLAYBACK_DEFAULT_CHANNEL_COUNT,
+        .rate = DEEP_BUFFER_OUTPUT_SAMPLING_RATE,
+        .period_size = DEEP_BUFFER_OUTPUT_PERIOD_SIZE,
+        .period_count = DEEP_BUFFER_OUTPUT_PERIOD_COUNT,
+        .format = PCM_FORMAT_S16_LE,
+        .start_threshold = DEEP_BUFFER_OUTPUT_PERIOD_SIZE / 4,
+        .stop_threshold = INT_MAX,
+        .avail_min = DEEP_BUFFER_OUTPUT_PERIOD_SIZE / 4,
+    },
+    .card = SOUND_CARD,
+    .id = SOUND_DEEP_BUFFER_DEVICE,
+    .type = PCM_PLAYBACK,
+    .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
+               AUDIO_DEVICE_OUT_SPEAKER,
+};
+
 static struct pcm_device_profile pcm_device_capture = {
     .config = {
         .channels = CAPTURE_DEFAULT_CHANNEL_COUNT,
@@ -214,17 +232,6 @@ static const char * const use_case_table[AUDIO_USECASE_MAX] = {
 #define STRING_TO_ENUM(string) { #string, string }
 
 static unsigned int audio_device_ref_count;
-
-static struct pcm_config pcm_config_deep_buffer = {
-    .channels = 2,
-    .rate = DEEP_BUFFER_OUTPUT_SAMPLING_RATE,
-    .period_size = DEEP_BUFFER_OUTPUT_PERIOD_SIZE,
-    .period_count = DEEP_BUFFER_OUTPUT_PERIOD_COUNT,
-    .format = PCM_FORMAT_S16_LE,
-    .start_threshold = DEEP_BUFFER_OUTPUT_PERIOD_SIZE / 4,
-    .stop_threshold = INT_MAX,
-    .avail_min = DEEP_BUFFER_OUTPUT_PERIOD_SIZE / 4,
-};
 
 struct string_to_enum {
     const char *name;
@@ -2191,13 +2198,21 @@ static int out_open_pcm_devices(struct stream_out *out)
     struct pcm_device *pcm_device;
     struct listnode *node;
     int ret = 0;
+    int pcm_device_card;
+    int pcm_device_id;
 
     list_for_each(node, &out->pcm_dev_list) {
         pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
-        ALOGV("%s: Opening PCM device card_id(%d) device_id(%d)",
-              __func__, pcm_device->pcm_profile->card, pcm_device->pcm_profile->id);
+        pcm_device_card = pcm_device->pcm_profile->card;
+        pcm_device_id = pcm_device->pcm_profile->id;
 
-        pcm_device->pcm = pcm_open(pcm_device->pcm_profile->card, pcm_device->pcm_profile->id,
+        if (out->flags & AUDIO_OUTPUT_FLAG_DEEP_BUFFER)
+            pcm_device_id = pcm_device_deep_buffer.id;
+
+        ALOGV("%s: Opening PCM device card_id(%d) device_id(%d)",
+              __func__, pcm_device_card, pcm_device_id);
+
+        pcm_device->pcm = pcm_open(pcm_device_card, pcm_device_id,
                                PCM_OUT | PCM_MONOTONIC, &pcm_device->pcm_profile->config);
 
         if (pcm_device->pcm && !pcm_is_ready(pcm_device->pcm)) {
@@ -2213,7 +2228,7 @@ static int out_open_pcm_devices(struct stream_out *out)
         if (out->sample_rate != pcm_device->pcm_profile->config.rate) {
             ALOGV("%s: create_resampler(), pcm_device_card(%d), pcm_device_id(%d), \
                     out_rate(%d), device_rate(%d)",__func__,
-                    pcm_device->pcm_profile->card, pcm_device->pcm_profile->id,
+                    pcm_device_card, pcm_device_id,
                     out->sample_rate, pcm_device->pcm_profile->config.rate);
             ret = create_resampler(out->sample_rate,
                     pcm_device->pcm_profile->config.rate,
@@ -3586,7 +3601,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
                 config->offload_info.bit_rate);
     } else if (out->flags & (AUDIO_OUTPUT_FLAG_DEEP_BUFFER)) {
         out->usecase = USECASE_AUDIO_PLAYBACK_DEEP_BUFFER;
-        out->config = pcm_config_deep_buffer;
+        out->config = pcm_device_deep_buffer.config;
         out->sample_rate = out->config.rate;
         ALOGV("%s: use AUDIO_PLAYBACK_DEEP_BUFFER",__func__);
     } else {
