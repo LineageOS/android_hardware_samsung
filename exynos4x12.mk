@@ -19,7 +19,6 @@ ifeq ($(TARGET_SLSI_VARIANT),)
 include $(TARGET_HAL_PATH)/Android.mk
 include $(SAM_ROOT)/exynos/multimedia/Android.mk
 endif
-include $(SAM_ROOT)/exynos4/exynos4x12/Android.mk
 include $(SAM_ROOT)/exynos4/nfc/Android.mk
 
 endif
