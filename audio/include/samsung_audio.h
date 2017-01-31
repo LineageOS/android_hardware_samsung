@@ -51,4 +51,10 @@
  */
 #define SWAP_SPEAKER_ON_SCREEN_ROTATION 0
 
+/*
+ * You can that this to 1 if your kernel supports irq affinity for
+ * fast mode. See /proc/asound/irq_affinity
+ */
+#define SUPPORTS_IRQ_AFFINITY 0
+
 #endif // SAMSUNG_AUDIO_H
