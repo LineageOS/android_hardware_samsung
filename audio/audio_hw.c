@@ -2750,6 +2750,7 @@ static int out_set_volume(struct audio_stream_out *stream, float left,
     return -ENOSYS;
 }
 
+#if SUPPORTS_IRQ_AFFINITY
 static int fast_set_affinity(pid_t tid) {
     cpu_set_t cpu_set;
     int cpu_num;
@@ -2772,6 +2773,7 @@ static int fast_set_affinity(pid_t tid) {
     CPU_SET(cpu_num, &cpu_set);
     return sched_setaffinity(tid, sizeof(cpu_set), &cpu_set);
 }
+#endif
 
 static ssize_t out_write(struct audio_stream_out *stream, const void *buffer,
                          size_t bytes)
@@ -2795,6 +2797,7 @@ static ssize_t out_write(struct audio_stream_out *stream, const void *buffer,
 
     lock_output_stream(out);
 
+#if SUPPORTS_IRQ_AFFINITY
     if (out->usecase == USECASE_AUDIO_PLAYBACK && !out->is_fastmixer_affinity_set) {
         tid = gettid();
         err = fast_set_affinity(tid);
@@ -2803,6 +2806,7 @@ static ssize_t out_write(struct audio_stream_out *stream, const void *buffer,
         }
         out->is_fastmixer_affinity_set = true;
     }
+#endif
 
     if (out->standby) {
 #ifdef PREPROCESSING_ENABLED
@@ -3362,6 +3366,7 @@ static ssize_t in_read(struct audio_stream_in *stream, void *buffer,
     /* no need to acquire adev->lock_inputs because API contract prevents a close */
     lock_input_stream(in);
 
+#if SUPPORTS_IRQ_AFFINITY
     if (in->usecase == USECASE_AUDIO_CAPTURE && !in->is_fastcapture_affinity_set) {
         tid = gettid();
         err = fast_set_affinity(tid);
@@ -3370,6 +3375,7 @@ static ssize_t in_read(struct audio_stream_in *stream, void *buffer,
         }
         in->is_fastcapture_affinity_set = true;
     }
+#endif
 
     if (in->standby) {
         pthread_mutex_unlock(&in->lock);
