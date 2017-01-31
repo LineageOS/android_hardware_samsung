@@ -72,6 +72,7 @@ static struct pcm_device_profile pcm_device_playback = {
                AUDIO_DEVICE_OUT_SPEAKER,
 };
 
+#ifdef SOUND_DEEP_BUFFER_DEVICE
 static struct pcm_device_profile pcm_device_deep_buffer = {
     .config = {
         .channels = PLAYBACK_DEFAULT_CHANNEL_COUNT,
@@ -89,6 +90,7 @@ static struct pcm_device_profile pcm_device_deep_buffer = {
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
                AUDIO_DEVICE_OUT_SPEAKER,
 };
+#endif
 
 static struct pcm_device_profile pcm_device_capture = {
     .config = {
@@ -2206,8 +2208,10 @@ static int out_open_pcm_devices(struct stream_out *out)
         pcm_device_card = pcm_device->pcm_profile->card;
         pcm_device_id = pcm_device->pcm_profile->id;
 
+#ifdef SOUND_DEEP_BUFFER_DEVICE
         if (out->flags & AUDIO_OUTPUT_FLAG_DEEP_BUFFER)
             pcm_device_id = pcm_device_deep_buffer.id;
+#endif
 
         ALOGV("%s: Opening PCM device card_id(%d) device_id(%d)",
               __func__, pcm_device_card, pcm_device_id);
@@ -3599,11 +3603,13 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
         ALOGV("%s: offloaded output offload_info version %04x bit rate %d",
                 __func__, config->offload_info.version,
                 config->offload_info.bit_rate);
+#ifdef SOUND_DEEP_BUFFER_DEVICE
     } else if (out->flags & (AUDIO_OUTPUT_FLAG_DEEP_BUFFER)) {
         out->usecase = USECASE_AUDIO_PLAYBACK_DEEP_BUFFER;
         out->config = pcm_device_deep_buffer.config;
         out->sample_rate = out->config.rate;
         ALOGV("%s: use AUDIO_PLAYBACK_DEEP_BUFFER",__func__);
+#endif
     } else {
         out->usecase = USECASE_AUDIO_PLAYBACK;
         out->sample_rate = out->config.rate;
