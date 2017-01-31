@@ -53,7 +53,7 @@ int disable_snd_device(struct audio_device *adev,
                               struct audio_usecase *uc_info,
                               snd_device_t snd_device,
                               bool update_mixer);
-void enable_output_path_l(struct stream_out *out);
+int enable_output_path_l(struct stream_out *out);
 int disable_output_path_l(struct stream_out *out);
 
 /* must be called with out->lock locked */
@@ -268,8 +268,11 @@ ssize_t out_write_offload(struct audio_stream_out *stream, const void *buffer,
     if (out->offload_state == OFFLOAD_STATE_PAUSED_FLUSHED) {
         ALOGV("start offload write from pause state");
         pthread_mutex_lock(&adev->lock);
-        enable_output_path_l(out);
+        ret = enable_output_path_l(out);
         pthread_mutex_unlock(&adev->lock);
+        if (ret != 0) {
+            return ret;
+        }
     }
 
     if (out->send_new_metadata) {
