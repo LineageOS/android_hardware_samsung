@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_20d1b457",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-01-31T08:20:45Z",
+      "side": 1,
+      "message": "Can we not directly jump to error_config here?\nIf (ret !\u003d 0) \u003d\u003d true here, we don\u0027t need to stop the output stream.",
+      "revId": "9f5ace9d076d782715b7293608a5aa89a9af557d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
