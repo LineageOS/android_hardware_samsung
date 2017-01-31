@@ -274,11 +274,11 @@ static int get_snd_codec_id(audio_format_t format)
 static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_NONE] = "none",
     /* Playback sound devices */
-    [SND_DEVICE_OUT_HANDSET] = "handset",
+    [SND_DEVICE_OUT_EARPIECE] = "earpiece",
     [SND_DEVICE_OUT_SPEAKER] = "speaker",
     [SND_DEVICE_OUT_HEADPHONES] = "headphones",
     [SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES] = "speaker-and-headphones",
-    [SND_DEVICE_OUT_VOICE_HANDSET] = "voice-handset",
+    [SND_DEVICE_OUT_VOICE_EARPIECE] = "voice-earpiece",
     [SND_DEVICE_OUT_VOICE_SPEAKER] = "voice-speaker",
     [SND_DEVICE_OUT_VOICE_HEADPHONES] = "voice-headphones",
     [SND_DEVICE_OUT_HDMI] = "hdmi",
@@ -286,13 +286,13 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_OUT_BT_SCO] = "bt-sco-headset",
     [SND_DEVICE_OUT_VOICE_TTY_FULL_HEADPHONES] = "voice-tty-full-headphones",
     [SND_DEVICE_OUT_VOICE_TTY_VCO_HEADPHONES] = "voice-tty-vco-headphones",
-    [SND_DEVICE_OUT_VOICE_TTY_HCO_HANDSET] = "voice-tty-hco-handset",
+    [SND_DEVICE_OUT_VOICE_TTY_HCO_EARPIECE] = "voice-tty-hco-earpiece",
 
     /* Capture sound devices */
-    [SND_DEVICE_IN_HANDSET_MIC] = "handset-mic",
+    [SND_DEVICE_IN_EARPIECE_MIC] = "earpiece-mic",
     [SND_DEVICE_IN_SPEAKER_MIC] = "speaker-mic",
     [SND_DEVICE_IN_HEADSET_MIC] = "headset-mic",
-    [SND_DEVICE_IN_HANDSET_MIC_AEC] = "handset-mic",
+    [SND_DEVICE_IN_EARPIECE_MIC_AEC] = "earpiece-mic",
     [SND_DEVICE_IN_SPEAKER_MIC_AEC] = "voice-speaker-mic",
     [SND_DEVICE_IN_HEADSET_MIC_AEC] = "headset-mic",
     [SND_DEVICE_IN_VOICE_SPEAKER_MIC] = "voice-speaker-mic",
@@ -303,7 +303,7 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_IN_VOICE_DMIC_1] = "voice-dmic-1",
     [SND_DEVICE_IN_VOICE_SPEAKER_DMIC_1] = "voice-speaker-dmic-1",
     [SND_DEVICE_IN_VOICE_TTY_FULL_HEADSET_MIC] = "voice-tty-full-headset-mic",
-    [SND_DEVICE_IN_VOICE_TTY_VCO_HANDSET_MIC] = "voice-tty-vco-handset-mic",
+    [SND_DEVICE_IN_VOICE_TTY_VCO_EARPIECE_MIC] = "voice-tty-vco-earpiece-mic",
     [SND_DEVICE_IN_VOICE_TTY_HCO_HEADSET_MIC] = "voice-tty-hco-headset-mic",
     [SND_DEVICE_IN_VOICE_REC_HEADSET_MIC] = "voice-rec-headset-mic",
     [SND_DEVICE_IN_VOICE_REC_MIC] = "voice-rec-mic",
@@ -500,7 +500,7 @@ static snd_device_t get_output_snd_device(struct audio_device *adev, audio_devic
             else if (adev->tty_mode == TTY_MODE_VCO)
                 snd_device = SND_DEVICE_OUT_VOICE_TTY_VCO_HEADPHONES;
             else if (adev->tty_mode == TTY_MODE_HCO)
-                snd_device = SND_DEVICE_OUT_VOICE_TTY_HCO_HANDSET;
+                snd_device = SND_DEVICE_OUT_VOICE_TTY_HCO_EARPIECE;
             else
                 snd_device = SND_DEVICE_OUT_VOICE_HEADPHONES;
         } else if (devices & AUDIO_DEVICE_OUT_ALL_SCO) {
@@ -508,7 +508,7 @@ static snd_device_t get_output_snd_device(struct audio_device *adev, audio_devic
         } else if (devices & AUDIO_DEVICE_OUT_SPEAKER) {
             snd_device = SND_DEVICE_OUT_VOICE_SPEAKER;
         } else if (devices & AUDIO_DEVICE_OUT_EARPIECE) {
-            snd_device = SND_DEVICE_OUT_HANDSET;
+            snd_device = SND_DEVICE_OUT_EARPIECE;
         }
         if (snd_device != SND_DEVICE_NONE) {
             goto exit;
@@ -544,7 +544,7 @@ static snd_device_t get_output_snd_device(struct audio_device *adev, audio_devic
     } else if (devices & AUDIO_DEVICE_OUT_ALL_SCO) {
         snd_device = SND_DEVICE_OUT_BT_SCO;
     } else if (devices & AUDIO_DEVICE_OUT_EARPIECE) {
-        snd_device = SND_DEVICE_OUT_HANDSET;
+        snd_device = SND_DEVICE_OUT_EARPIECE;
     } else {
         ALOGE("%s: Unknown device(s) %#x", __func__, devices);
     }
@@ -591,7 +591,7 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
                     snd_device = SND_DEVICE_IN_VOICE_TTY_FULL_HEADSET_MIC;
                     break;
                 case TTY_MODE_VCO:
-                    snd_device = SND_DEVICE_IN_VOICE_TTY_VCO_HANDSET_MIC;
+                    snd_device = SND_DEVICE_IN_VOICE_TTY_VCO_EARPIECE_MIC;
                     break;
                 case TTY_MODE_HCO:
                     snd_device = SND_DEVICE_IN_VOICE_TTY_HCO_HEADSET_MIC;
@@ -604,7 +604,7 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
         }
         if (out_device & AUDIO_DEVICE_OUT_EARPIECE ||
                 out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
             snd_device = SND_DEVICE_IN_VOICE_HEADSET_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
@@ -643,7 +643,7 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
                     if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
                         snd_device = SND_DEVICE_IN_SPEAKER_MIC_AEC;
                     } else {
-                        snd_device = SND_DEVICE_IN_HANDSET_MIC_AEC;
+                        snd_device = SND_DEVICE_IN_EARPIECE_MIC_AEC;
                     }
                 } else if (in_device & AUDIO_DEVICE_IN_WIRED_HEADSET) {
                     snd_device = SND_DEVICE_IN_HEADSET_MIC_AEC;
@@ -664,7 +664,7 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
             !(in_device & AUDIO_DEVICE_IN_VOICE_CALL) &&
             !(in_device & AUDIO_DEVICE_IN_COMMUNICATION)) {
         if (in_device & AUDIO_DEVICE_IN_BUILTIN_MIC) {
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         } else if (in_device & AUDIO_DEVICE_IN_BACK_MIC) {
             snd_device = SND_DEVICE_IN_SPEAKER_MIC;
         } else if (in_device & AUDIO_DEVICE_IN_WIRED_HEADSET) {
@@ -675,24 +675,24 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
             snd_device = SND_DEVICE_IN_HDMI_MIC;
         } else {
             ALOGE("%s: Unknown input device(s) %#x", __func__, in_device);
-            ALOGW("%s: Using default handset-mic", __func__);
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            ALOGW("%s: Using default earpiece-mic", __func__);
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         }
     } else {
         if (out_device & AUDIO_DEVICE_OUT_EARPIECE) {
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
             snd_device = SND_DEVICE_IN_HEADSET_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_SPEAKER) {
             snd_device = SND_DEVICE_IN_SPEAKER_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET) {
             snd_device = SND_DEVICE_IN_BT_SCO_MIC;
         } else {
             ALOGE("%s: Unknown output device(s) %#x", __func__, out_device);
-            ALOGW("%s: Using default handset-mic", __func__);
-            snd_device = SND_DEVICE_IN_HANDSET_MIC;
+            ALOGW("%s: Using default earpiece-mic", __func__);
+            snd_device = SND_DEVICE_IN_EARPIECE_MIC;
         }
     }
 exit:
