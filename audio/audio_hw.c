@@ -356,6 +356,7 @@ static int mixer_init(struct audio_device *adev)
     char mixer_path[PATH_MAX];
     struct mixer_card *mixer_card;
     struct listnode *node;
+    int ret = 0;
 
     list_init(&adev->mixer_list);
 
@@ -369,6 +370,7 @@ static int mixer_init(struct audio_device *adev)
                     if (++retry_num > RETRY_NUMBER) {
                         ALOGE("%s unable to open the mixer for--card %d, aborting.",
                               __func__, card);
+                        ret = -ENODEV;
                         goto error;
                     }
                     usleep(RETRY_US);
@@ -380,9 +382,14 @@ static int mixer_init(struct audio_device *adev)
             if (!audio_route) {
                 ALOGE("%s: Failed to init audio route controls for card %d, aborting.",
                       __func__, card);
+                ret = -ENODEV;
                 goto error;
             }
             mixer_card = calloc(1, sizeof(struct mixer_card));
+            if (mixer_card == NULL) {
+                ret = -ENOMEM;
+                goto error;
+            }
             mixer_card->card = card;
             mixer_card->mixer = mixer;
             mixer_card->audio_route = audio_route;
@@ -394,7 +401,7 @@ static int mixer_init(struct audio_device *adev)
 
 error:
     free_mixer_list(adev);
-    return -ENODEV;
+    return ret;
 }
 
 static const char *get_snd_device_name(snd_device_t snd_device)
@@ -1178,6 +1185,9 @@ static int get_hw_echo_reference(struct stream_in *in)
         }
 
         ref_device = (struct pcm_device *)calloc(1, sizeof(struct pcm_device));
+        if (ref_device == NULL) {
+            return -ENOMEM;
+        }
         ref_device->pcm_profile = ref_pcm_profile;
 
         ALOGV("%s: ref_device rate:%d, ch:%d", __func__, ref_pcm_profile->config.rate, ref_pcm_profile->config.channels);
@@ -1932,6 +1942,10 @@ static int start_input_stream(struct stream_in *in)
     }
 
     uc_info = (struct audio_usecase *)calloc(1, sizeof(struct audio_usecase));
+    if (uc_info == NULL) {
+        ret = -ENOMEM;
+        goto error_config;
+    }
     uc_info->id = in->usecase;
     uc_info->type = PCM_CAPTURE;
     uc_info->stream = (struct audio_stream *)in;
@@ -1940,6 +1954,12 @@ static int start_input_stream(struct stream_in *in)
     uc_info->out_snd_device = SND_DEVICE_NONE;
 
     pcm_device = (struct pcm_device *)calloc(1, sizeof(struct pcm_device));
+    if (pcm_device == NULL) {
+        free(uc_info);
+        ret = -ENOMEM;
+        goto error_config;
+    }
+
     pcm_device->pcm_profile = pcm_profile;
     list_init(&in->pcm_dev_list);
     list_add_tail(&in->pcm_dev_list, &pcm_device->stream_list_node);
@@ -2119,6 +2139,9 @@ static int uc_select_pcm_devices(struct audio_usecase *usecase)
 
     while ((pcm_profile = get_pcm_device(usecase->type, devices)) != NULL) {
         pcm_device = calloc(1, sizeof(struct pcm_device));
+        if (pcm_device == NULL) {
+            return -ENOMEM;
+        }
         pcm_device->pcm_profile = pcm_profile;
         list_add_tail(&out->pcm_dev_list, &pcm_device->stream_list_node);
         mixer_card = uc_get_mixer_for_card(usecase, pcm_profile->card);
@@ -2234,12 +2257,16 @@ int disable_output_path_l(struct stream_out *out)
     return 0;
 }
 
-void enable_output_path_l(struct stream_out *out)
+int enable_output_path_l(struct stream_out *out)
 {
     struct audio_device *adev = out->dev;
     struct audio_usecase *uc_info;
 
     uc_info = (struct audio_usecase *)calloc(1, sizeof(struct audio_usecase));
+    if (uc_info == NULL) {
+        return -ENOMEM;
+    }
+
     uc_info->id = out->usecase;
     uc_info->type = PCM_PLAYBACK;
     uc_info->stream = (struct audio_stream *)out;
@@ -2250,6 +2277,8 @@ void enable_output_path_l(struct stream_out *out)
 
     list_add_tail(&adev->usecase_list, &uc_info->adev_list_node);
     select_devices(adev, out->usecase);
+
+    return 0;
 }
 
 static int stop_output_stream(struct stream_out *out)
@@ -2278,7 +2307,10 @@ static int start_output_stream(struct stream_out *out)
     ALOGV("%s: enter: usecase(%d: %s) devices(%#x) channels(%d)",
           __func__, out->usecase, use_case_table[out->usecase], out->devices, out->config.channels);
 
-    enable_output_path_l(out);
+    ret = enable_output_path_l(out);
+    if (ret != 0) {
+        goto error_config;
+    }
 
     if (out->usecase != USECASE_AUDIO_PLAYBACK_OFFLOAD) {
         out->compr = NULL;
@@ -2346,10 +2378,16 @@ static int stop_voice_call(struct audio_device *adev)
 static int start_voice_call(struct audio_device *adev)
 {
     struct audio_usecase *uc_info;
+    int ret = 0;
 
     ALOGV("%s: enter", __func__);
 
     uc_info = (struct audio_usecase *)calloc(1, sizeof(struct audio_usecase));
+    if (uc_info == NULL) {
+        ret = -ENOMEM;
+        goto exit;
+    }
+
     uc_info->id = USECASE_VOICE_CALL;
     uc_info->type = VOICE_CALL;
     uc_info->stream = (struct audio_stream *)adev->primary_output;
@@ -2370,8 +2408,9 @@ static int start_voice_call(struct audio_device *adev)
     set_voice_volume_l(adev, adev->voice_volume);
 
     adev->in_call = true;
+exit:
     ALOGV("%s: exit", __func__);
-    return 0;
+    return ret;
 }
 
 static int check_input_parameters(uint32_t sample_rate,
@@ -3569,13 +3608,17 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
 {
     struct audio_device *adev = (struct audio_device *)dev;
     struct stream_out *out;
-    int i, ret;
+    int i, ret = 0;
     struct pcm_device_profile *pcm_profile;
 
     ALOGV("%s: enter: sample_rate(%d) channel_mask(%#x) devices(%#x) flags(%#x)",
           __func__, config->sample_rate, config->channel_mask, devices, flags);
     *stream_out = NULL;
     out = (struct stream_out *)calloc(1, sizeof(struct stream_out));
+    if (out == NULL) {
+        ret = -ENOMEM;
+        goto error_config;
+    }
 
     if (devices == AUDIO_DEVICE_NONE)
         devices = AUDIO_DEVICE_OUT_SPEAKER;
@@ -3612,6 +3655,10 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
 
         out->compr_config.codec = (struct snd_codec *)
                                     calloc(1, sizeof(struct snd_codec));
+        if (out->compr_config.codec == NULL) {
+            ret = -ENOMEM;
+            goto error_open;
+        }
 
         out->usecase = USECASE_AUDIO_PLAYBACK_OFFLOAD;
         if (config->offload_info.channel_mask)
@@ -3718,6 +3765,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
 error_open:
     free(out);
     *stream_out = NULL;
+error_config:
     ALOGV("%s: exit: ret %d", __func__, ret);
     return ret;
 }
@@ -3962,6 +4010,9 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
         return -EINVAL;
 
     in = (struct stream_in *)calloc(1, sizeof(struct stream_in));
+    if (in == NULL) {
+        return -ENOMEM;
+    }
 
     in->stream.common.get_sample_rate = in_get_sample_rate;
     in->stream.common.set_sample_rate = in_set_sample_rate;
@@ -4109,7 +4160,12 @@ static int adev_open(const hw_module_t *module, const char *name,
     ALOGV("%s: enter", __func__);
     if (strcmp(name, AUDIO_HARDWARE_INTERFACE) != 0) return -EINVAL;
 
+    *device = NULL;
+
     adev = calloc(1, sizeof(struct audio_device));
+    if (adev == NULL) {
+        return -ENOMEM;
+    }
 
     adev->device.common.tag = HARDWARE_DEVICE_TAG;
     adev->device.common.version = AUDIO_DEVICE_API_VERSION_2_0;
@@ -4143,6 +4199,10 @@ static int adev_open(const hw_module_t *module, const char *name,
     adev->in_call = false;
     /* adev->cur_hdmi_channels = 0;  by calloc() */
     adev->snd_dev_ref_cnt = calloc(SND_DEVICE_MAX, sizeof(int));
+    if (adev->snd_dev_ref_cnt == NULL) {
+        free(adev);
+        return -ENOMEM;
+    }
 
     adev->dualmic_config = DUALMIC_CONFIG_NONE;
     adev->ns_in_voice_rec = false;
