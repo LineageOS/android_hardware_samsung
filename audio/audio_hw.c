@@ -299,8 +299,6 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_IN_CAMCORDER_MIC] = "camcorder-mic",
     [SND_DEVICE_IN_VOICE_REC_HEADSET_MIC] = "voice-rec-headset-mic",
     [SND_DEVICE_IN_VOICE_REC_MIC] = "voice-rec-mic",
-    [SND_DEVICE_IN_VOICE_REC_DMIC_1] = "voice-rec-dmic-1",
-    [SND_DEVICE_IN_VOICE_REC_DMIC_NS_1] = "voice-rec-dmic-ns-1",
     [SND_DEVICE_IN_LOOPBACK_AEC] = "loopback-aec",
 };
 
@@ -593,13 +591,6 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
         }
     } else if (source == AUDIO_SOURCE_VOICE_RECOGNITION) {
         if (in_device & AUDIO_DEVICE_IN_BUILTIN_MIC) {
-            if (adev->dualmic_config == DUALMIC_CONFIG_1) {
-                if (channel_mask == AUDIO_CHANNEL_IN_FRONT_BACK)
-                    snd_device = SND_DEVICE_IN_VOICE_REC_DMIC_1;
-                else if (adev->ns_in_voice_rec)
-                    snd_device = SND_DEVICE_IN_VOICE_REC_DMIC_NS_1;
-            }
-
             if (snd_device == SND_DEVICE_NONE) {
                 snd_device = SND_DEVICE_IN_VOICE_REC_MIC;
             }
@@ -4208,7 +4199,6 @@ static int adev_open(const hw_module_t *module, const char *name,
         return -ENOMEM;
     }
 
-    adev->dualmic_config = DUALMIC_CONFIG_NONE;
     adev->ns_in_voice_rec = false;
 
     list_init(&adev->usecase_list);
