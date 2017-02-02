@@ -502,11 +502,11 @@ static struct audio_usecase *get_usecase_from_type(struct audio_device *adev,
 static int set_voice_volume_l(struct audio_device *adev, float volume)
 {
     int err = 0;
-    (void)volume;
 
     if (adev->mode == AUDIO_MODE_IN_CALL) {
-        /* TODO */
+        set_voice_session_volume(adev->voice.session, volume);
     }
+
     return err;
 }
 
@@ -861,6 +861,7 @@ static int select_devices(struct audio_device *adev,
 
     if (usecase->type == VOICE_CALL) {
         out_snd_device = get_output_snd_device(adev, active_out->devices);
+        prepare_voice_session(adev->voice.session, active_out->devices);
         in_snd_device = get_input_snd_device(adev, active_out->devices);
         usecase->devices = active_out->devices;
     } else {
@@ -925,6 +926,11 @@ static int select_devices(struct audio_device *adev,
 
     /* Enable new sound devices */
     if (out_snd_device != SND_DEVICE_NONE) {
+        /* We need to update the audio path if we switch the out devices */
+        if (adev->voice.in_call) {
+            set_voice_session_audio_path(adev->voice.session);
+        }
+
         enable_snd_device(adev, usecase, out_snd_device, false);
     }
 
@@ -2079,6 +2085,11 @@ static int start_input_stream(struct stream_in *in)
 #endif
 #endif
 
+    if (in->dev->voice.in_call) {
+        ALOGV("%s: in_call, not handling PCMs", __func__);
+        goto skip_pcm_handling;
+    }
+
     /* Open the PCM device.
      * The HW is limited to support only the default pcm_profile settings.
      * As such a change in aux_channels will not have an effect.
@@ -2116,6 +2127,7 @@ static int start_input_stream(struct stream_in *in)
         }
     }
 
+skip_pcm_handling:
     /* force read and proc buffer reallocation in case of frame size or
      * channel count change */
     in->proc_buf_frames = 0;
@@ -2249,6 +2261,11 @@ static int out_open_pcm_devices(struct stream_out *out)
 
         if (out->flags & AUDIO_OUTPUT_FLAG_DEEP_BUFFER)
             pcm_device_id = pcm_device_deep_buffer.id;
+
+        if (out->dev->voice.in_call) {
+            ALOGV("%s: in_call, not opening PCMs", __func__);
+            return ret;
+        }
 
         ALOGV("%s: Opening PCM device card_id(%d) device_id(%d)",
               __func__, pcm_device_card, pcm_device_id);
@@ -2396,14 +2413,14 @@ error_config:
     return ret;
 }
 
-static int stop_voice_call(struct audio_device *adev)
+int stop_voice_call(struct audio_device *adev)
 {
     struct audio_usecase *uc_info;
 
     ALOGV("%s: enter", __func__);
     adev->voice.in_call = false;
 
-    /* TODO: implement voice call stop */
+    stop_voice_session(adev->voice.session);
 
     uc_info = get_usecase_from_id(adev, USECASE_VOICE_CALL);
     if (uc_info == NULL) {
@@ -2415,7 +2432,6 @@ static int stop_voice_call(struct audio_device *adev)
     disable_snd_device(adev, uc_info, uc_info->out_snd_device, false);
     disable_snd_device(adev, uc_info, uc_info->in_snd_device, true);
 
-    uc_release_pcm_devices(uc_info);
     list_remove(&uc_info->adev_list_node);
     free(uc_info);
 
@@ -2424,7 +2440,7 @@ static int stop_voice_call(struct audio_device *adev)
 }
 
 /* always called with adev lock held */
-static int start_voice_call(struct audio_device *adev)
+int start_voice_call(struct audio_device *adev)
 {
     struct audio_usecase *uc_info;
     int ret = 0;
@@ -2436,6 +2452,12 @@ static int start_voice_call(struct audio_device *adev)
         ret = -ENOMEM;
         goto exit;
     }
+    /*
+     * We set this early so that functions called after this is being set
+     * can use it. It is e.g. needed in select_devices() to inform the RILD
+     * which output device we use.
+     */
+    adev->voice.in_call = true;
 
     uc_info->id = USECASE_VOICE_CALL;
     uc_info->type = VOICE_CALL;
@@ -2444,19 +2466,19 @@ static int start_voice_call(struct audio_device *adev)
     uc_info->in_snd_device = SND_DEVICE_NONE;
     uc_info->out_snd_device = SND_DEVICE_NONE;
 
-    uc_select_pcm_devices(uc_info);
+    list_init(&uc_info->mixer_list);
+    list_add_tail(&uc_info->mixer_list,
+                  &adev_get_mixer_for_card(adev, SOUND_CARD)->uc_list_node[uc_info->id]);
 
     list_add_tail(&adev->usecase_list, &uc_info->adev_list_node);
 
     select_devices(adev, USECASE_VOICE_CALL);
 
-
-    /* TODO: implement voice call start */
+    start_voice_session(adev->voice.session);
 
     /* set cached volume */
     set_voice_volume_l(adev, adev->voice.volume);
 
-    adev->voice.in_call = true;
 exit:
     ALOGV("%s: exit", __func__);
     return ret;
@@ -4317,7 +4339,7 @@ static int adev_open(const hw_module_t *module, const char *name,
         }
     }
 
-    adev->voice.session = voice_session_init();
+    adev->voice.session = voice_session_init(adev);
     if (adev->voice.session == NULL) {
         ALOGE("%s: Failed to initialize voice session data", __func__);
 
