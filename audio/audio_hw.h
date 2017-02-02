@@ -355,6 +355,7 @@ struct mixer_card {
     int                 card;
     struct mixer*       mixer;
     struct audio_route* audio_route;
+    struct timespec     dsp_poweroff_time;
 };
 
 struct audio_usecase {
