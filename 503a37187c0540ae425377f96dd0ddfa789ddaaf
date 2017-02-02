@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_c33788e2",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 3695,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-02T07:25:31Z",
+      "side": 1,
+      "message": "This could probably be made a property (ro.audio.speaker_orientation or something?) pretty easily",
+      "revId": "503a37187c0540ae425377f96dd0ddfa789ddaaf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
