@@ -16,6 +16,29 @@
       "revId": "b70c75a6655b158d76f90835c1c4044e84de5ff4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_e63f3a24",
+        "filename": "mkbootimg.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2017-02-02T16:29:14Z",
+      "side": 1,
+      "message": "Are you sure you want to use colors here?",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 53
+      },
+      "revId": "b70c75a6655b158d76f90835c1c4044e84de5ff4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
