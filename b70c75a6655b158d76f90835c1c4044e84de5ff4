@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_c023fe03",
+        "filename": "mkbootimg.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-02T05:27:26Z",
+      "side": 1,
+      "message": "should this be ifneq? i\u0027ve never seen ifeq ($(BUILD_TINY_ANDROID), true) before.",
+      "revId": "b70c75a6655b158d76f90835c1c4044e84de5ff4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
