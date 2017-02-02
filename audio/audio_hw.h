@@ -349,14 +349,6 @@ struct stream_in {
                                                         entering standby */
 };
 
-struct mixer_card {
-    struct listnode     adev_list_node;
-    struct listnode     uc_list_node[AUDIO_USECASE_MAX];
-    int                 card;
-    struct mixer*       mixer;
-    struct audio_route* audio_route;
-};
-
 struct audio_usecase {
     struct listnode         adev_list_node;
     audio_usecase_t         id;
@@ -365,14 +357,17 @@ struct audio_usecase {
     snd_device_t            out_snd_device;
     snd_device_t            in_snd_device;
     struct audio_stream*    stream;
-    struct listnode         mixer_list;
 };
 
 
 struct audio_device {
     struct audio_hw_device  device;
     pthread_mutex_t         lock; /* see note below on mutex acquisition order */
-    struct listnode         mixer_list;
+
+    struct {
+        struct audio_route  *audio_route;
+    } mixer;
+
     audio_mode_t            mode;
     struct stream_in*       active_input;
     struct stream_out*      primary_output;
