@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_46c04650",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-02T15:35:20Z",
+      "side": 1,
+      "message": "We should stick with either #if or #ifdef.\nThe code is already using #ifdef right now.",
+      "revId": "1369e7b977b72c1067ca93d3d30cea25d26314b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_a6f132cf",
+        "filename": "audio/include/samsung_audio.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-02T15:35:20Z",
+      "side": 1,
+      "message": "\"shutdown\", \"fully\"",
+      "revId": "1369e7b977b72c1067ca93d3d30cea25d26314b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
