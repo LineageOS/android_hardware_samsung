@@ -48,6 +48,7 @@
 #include <audio_effects/effect_ns.h>
 #include "audio_hw.h"
 #include "compress_offload.h"
+#include "voice.h"
 
 #include "sound/compress_params.h"
 
@@ -4059,9 +4060,12 @@ static int adev_close(hw_device_t *device)
 
     audio_route_free(adev->mixer.audio_route);
 
+    voice_session_deinit(adev->voice.session);
+
     audio_device_ref_count--;
     free(adev->snd_dev_ref_cnt);
     free(device);
+
     return 0;
 }
 
@@ -4198,6 +4202,16 @@ static int adev_open(const hw_module_t *module, const char *name,
         }
     }
 
+    adev->voice.session = voice_session_init();
+    if (adev->voice.session == NULL) {
+        ALOGE("%s: Failed to initialize voice session data", __func__);
+
+        free(adev->snd_dev_ref_cnt);
+        free(adev);
+
+        *device = NULL;
+        return -EINVAL;
+    }
 
     *device = &adev->device.common;
 
