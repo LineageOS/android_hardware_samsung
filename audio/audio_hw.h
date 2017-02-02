@@ -373,6 +373,7 @@ struct voice_data {
     bool  in_call;
     float volume;
     bool  bluetooth_nrec;
+    void  *session;
 };
 
 struct audio_device {
