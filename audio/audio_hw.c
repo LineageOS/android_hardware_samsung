@@ -185,6 +185,92 @@ static struct pcm_device_profile pcm_device_capture_sco = {
     .devices = AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET,
 };
 
+#ifdef SOUND_PLAYBACK_VOICE_DEVICE
+static struct pcm_device_profile pcm_device_playback_voice = {
+    .config = {
+        .channels = VOICE_DEFAULT_CHANNEL_COUNT,
+        .rate = VOICE_SAMPLING_RATE,
+        .period_size = VOICE_DEFAULT_PERIOD_SIZE,
+        .period_count = VOICE_DEFAULT_PERIOD_COUNT,
+        .format = PCM_FORMAT_S16_LE,
+        .start_threshold = CAPTURE_START_THRESHOLD,
+        .stop_threshold = 0,
+        .silence_threshold = 0,
+        .avail_min = 0,
+    },
+    .card = SOUND_CARD,
+    .id = SOUND_PLAYBACK_VOICE_DEVICE,
+    .type = VOICE_CALL,
+    .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|
+               AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
+               AUDIO_DEVICE_OUT_SPEAKER|
+               AUDIO_DEVICE_OUT_EARPIECE,
+};
+
+static struct pcm_device_profile pcm_device_playback_voice_wideband = {
+    .config = {
+        .channels = VOICE_DEFAULT_CHANNEL_COUNT,
+        .rate = VOICE_SAMPLING_RATE_WIDEBAND,
+        .period_size = VOICE_DEFAULT_PERIOD_SIZE,
+        .period_count = VOICE_DEFAULT_PERIOD_COUNT,
+        .format = PCM_FORMAT_S16_LE,
+        .start_threshold = CAPTURE_START_THRESHOLD,
+        .stop_threshold = 0,
+        .silence_threshold = 0,
+        .avail_min = 0,
+    },
+    .card = SOUND_CARD,
+    .id = SOUND_PLAYBACK_VOICE_DEVICE,
+    .type = VOICE_CALL,
+    .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|
+               AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
+               AUDIO_DEVICE_OUT_SPEAKER|
+               AUDIO_DEVICE_OUT_EARPIECE,
+};
+#endif /* SOUND_PLAYBACK_VOICE_DEVICE */
+
+#ifdef SOUND_CAPTURE_VOICE_DEVICE
+static struct pcm_device_profile pcm_device_capture_voice = {
+    .config = {
+        .channels = VOICE_DEFAULT_CHANNEL_COUNT,
+        .rate = VOICE_SAMPLING_RATE,
+        .period_size = VOICE_DEFAULT_PERIOD_SIZE,
+        .period_count = VOICE_DEFAULT_PERIOD_COUNT,
+        .format = PCM_FORMAT_S16_LE,
+        .start_threshold = CAPTURE_START_THRESHOLD,
+        .stop_threshold = 0,
+        .silence_threshold = 0,
+        .avail_min = 0,
+    },
+    .card = SOUND_CARD,
+    .id = SOUND_CAPTURE_VOICE_DEVICE,
+    .type = VOICE_CALL,
+    .devices = AUDIO_DEVICE_IN_BUILTIN_MIC |
+               AUDIO_DEVICE_IN_WIRED_HEADSET |
+               AUDIO_DEVICE_IN_BACK_MIC,
+};
+
+static struct pcm_device_profile pcm_device_capture_voice_wideband = {
+    .config = {
+        .channels = VOICE_DEFAULT_CHANNEL_COUNT,
+        .rate = VOICE_SAMPLING_RATE_WIDEBAND,
+        .period_size = VOICE_DEFAULT_PERIOD_SIZE,
+        .period_count = VOICE_DEFAULT_PERIOD_COUNT,
+        .format = PCM_FORMAT_S16_LE,
+        .start_threshold = CAPTURE_START_THRESHOLD,
+        .stop_threshold = 0,
+        .silence_threshold = 0,
+        .avail_min = 0,
+    },
+    .card = SOUND_CARD,
+    .id = SOUND_CAPTURE_VOICE_DEVICE,
+    .type = VOICE_CALL,
+    .devices = AUDIO_DEVICE_IN_BUILTIN_MIC |
+               AUDIO_DEVICE_IN_WIRED_HEADSET |
+               AUDIO_DEVICE_IN_BACK_MIC,
+};
+#endif /* SOUND_CAPTURE_VOICE_DEVICE */
+
 #ifdef SOUND_CAPTURE_HOTWORD_DEVICE
 static struct pcm_device_profile pcm_device_hotword_streaming = {
     .config = {
@@ -211,6 +297,14 @@ static struct pcm_device_profile * const pcm_devices[] = {
     &pcm_device_capture_low_latency,
     &pcm_device_playback_sco,
     &pcm_device_capture_sco,
+#ifdef SOUND_PLAYBACK_VOICE_DEVICE
+    &pcm_device_playback_voice,
+    &pcm_device_playback_voice_wideband,
+#endif /* SOUND_PLAYBACK_VOICE_DEVICE */
+#ifdef SOUND_CAPTURE_VOICE_DEVICE
+    &pcm_device_capture_voice,
+    &pcm_device_capture_voice_wideband,
+#endif /* SOUND_CAPTURE_VOICE_DEVICE */
 #ifdef SOUND_CAPTURE_LOOPBACK_AEC_DEVICE
     &pcm_device_capture_loopback_aec,
 #endif
