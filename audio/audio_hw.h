@@ -366,6 +366,7 @@ struct audio_device {
 
     struct {
         struct audio_route  *audio_route;
+        struct timespec     dsp_poweroff_time;
     } mixer;
 
     audio_mode_t            mode;
