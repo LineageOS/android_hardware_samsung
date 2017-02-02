@@ -377,10 +377,14 @@ struct audio_device {
     audio_mode_t            mode;
     struct stream_in*       active_input;
     struct stream_out*      primary_output;
-    bool                    in_call;
-    float                   voice_volume;
     bool                    mic_mute;
-    bool                    bluetooth_nrec;
+
+    struct {
+        bool                in_call;
+        float               volume;
+        bool                bluetooth_nrec;
+    } voice;
+
     int*                    snd_dev_ref_cnt;
     struct listnode         usecase_list;
     bool                    speaker_lr_swap;
