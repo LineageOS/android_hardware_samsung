@@ -22,7 +22,8 @@ LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
 	audio_hw.c \
-	compress_offload.c
+	compress_offload.c \
+	ril_interface.c
 
 # TODO: remove resampler if possible when AudioFlinger supports downsampling from 48 to 8
 LOCAL_SHARED_LIBRARIES := \
@@ -32,13 +33,15 @@ LOCAL_SHARED_LIBRARIES := \
 	libtinyalsa \
 	libtinycompress \
 	libaudioroute \
-	libdl
+	libdl \
+	libsecril-client
 
 
 LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/include \
 	external/tinyalsa/include \
 	external/tinycompress/include \
+	hardware/samsung/ril/libsecril-client \
 	$(call include-path-for, audio-utils) \
 	$(call include-path-for, audio-route) \
 	$(call include-path-for, audio-effects)
