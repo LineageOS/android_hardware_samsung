@@ -302,104 +302,6 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_IN_LOOPBACK_AEC] = "loopback-aec",
 };
 
-static struct mixer_card *adev_get_mixer_for_card(struct audio_device *adev, int card)
-{
-    struct mixer_card *mixer_card;
-    struct listnode *node;
-
-    list_for_each(node, &adev->mixer_list) {
-        mixer_card = node_to_item(node, struct mixer_card, adev_list_node);
-        if (mixer_card->card == card)
-            return mixer_card;
-    }
-    return NULL;
-}
-
-static struct mixer_card *uc_get_mixer_for_card(struct audio_usecase *usecase, int card)
-{
-    struct mixer_card *mixer_card;
-    struct listnode *node;
-
-    list_for_each(node, &usecase->mixer_list) {
-        mixer_card = node_to_item(node, struct mixer_card, uc_list_node[usecase->id]);
-        if (mixer_card->card == card)
-            return mixer_card;
-    }
-    return NULL;
-}
-
-static void free_mixer_list(struct audio_device *adev)
-{
-    struct mixer_card *mixer_card;
-    struct listnode *node;
-    struct listnode *next;
-
-    list_for_each_safe(node, next, &adev->mixer_list) {
-        mixer_card = node_to_item(node, struct mixer_card, adev_list_node);
-        list_remove(node);
-        audio_route_free(mixer_card->audio_route);
-        free(mixer_card);
-    }
-}
-
-static int mixer_init(struct audio_device *adev)
-{
-    int i;
-    int card;
-    int retry_num;
-    struct mixer *mixer;
-    struct audio_route *audio_route;
-    char mixer_path[PATH_MAX];
-    struct mixer_card *mixer_card;
-    struct listnode *node;
-    int ret = 0;
-
-    list_init(&adev->mixer_list);
-
-    for (i = 0; pcm_devices[i] != NULL; i++) {
-        card = pcm_devices[i]->card;
-        if (adev_get_mixer_for_card(adev, card) == NULL) {
-            retry_num = 0;
-            do {
-                mixer = mixer_open(card);
-                if (mixer == NULL) {
-                    if (++retry_num > RETRY_NUMBER) {
-                        ALOGE("%s unable to open the mixer for--card %d, aborting.",
-                              __func__, card);
-                        ret = -ENODEV;
-                        goto error;
-                    }
-                    usleep(RETRY_US);
-                }
-            } while (mixer == NULL);
-
-            sprintf(mixer_path, "/system/etc/mixer_paths_%d.xml", card);
-            audio_route = audio_route_init(card, mixer_path);
-            if (!audio_route) {
-                ALOGE("%s: Failed to init audio route controls for card %d, aborting.",
-                      __func__, card);
-                ret = -ENODEV;
-                goto error;
-            }
-            mixer_card = calloc(1, sizeof(struct mixer_card));
-            if (mixer_card == NULL) {
-                ret = -ENOMEM;
-                goto error;
-            }
-            mixer_card->card = card;
-            mixer_card->mixer = mixer;
-            mixer_card->audio_route = audio_route;
-            list_add_tail(&adev->mixer_list, &mixer_card->adev_list_node);
-        }
-    }
-
-    return 0;
-
-error:
-    free_mixer_list(adev);
-    return ret;
-}
-
 static const char *get_snd_device_name(snd_device_t snd_device)
 {
     const char *name = NULL;
@@ -699,8 +601,6 @@ static int enable_snd_device(struct audio_device *adev,
                              snd_device_t snd_device,
                              bool update_mixer)
 {
-    struct mixer_card *mixer_card;
-    struct listnode *node;
     const char *snd_device_name = get_snd_device_name(snd_device);
 
     if (snd_device_name == NULL)
@@ -722,11 +622,9 @@ static int enable_snd_device(struct audio_device *adev,
     ALOGV("%s: snd_device(%d: %s)", __func__,
           snd_device, snd_device_name);
 
-    list_for_each(node, &uc_info->mixer_list) {
-        mixer_card = node_to_item(node, struct mixer_card, uc_list_node[uc_info->id]);
-        audio_route_apply_path(mixer_card->audio_route, snd_device_name);
-        if (update_mixer)
-            audio_route_update_mixer(mixer_card->audio_route);
+    audio_route_apply_path(adev->mixer.audio_route, snd_device_name);
+    if (update_mixer) {
+        audio_route_update_mixer(adev->mixer.audio_route);
     }
 
     return 0;
@@ -737,8 +635,6 @@ int disable_snd_device(struct audio_device *adev,
                               snd_device_t snd_device,
                               bool update_mixer)
 {
-    struct mixer_card *mixer_card;
-    struct listnode *node;
     const char *snd_device_name = get_snd_device_name(snd_device);
 
     if (snd_device_name == NULL)
@@ -759,11 +655,9 @@ int disable_snd_device(struct audio_device *adev,
     if (adev->snd_dev_ref_cnt[snd_device] == 0) {
         ALOGV("%s: snd_device(%d: %s)", __func__,
               snd_device, snd_device_name);
-        list_for_each(node, &uc_info->mixer_list) {
-            mixer_card = node_to_item(node, struct mixer_card, uc_list_node[uc_info->id]);
-            audio_route_reset_path(mixer_card->audio_route, snd_device_name);
-            if (update_mixer)
-                audio_route_update_mixer(mixer_card->audio_route);
+        audio_route_reset_path(adev->mixer.audio_route, snd_device_name);
+        if (update_mixer) {
+            audio_route_update_mixer(adev->mixer.audio_route);
         }
     }
     return 0;
@@ -779,7 +673,6 @@ static int select_devices(struct audio_device *adev,
     struct listnode *node;
     struct stream_in *active_input = NULL;
     struct stream_out *active_out;
-    struct mixer_card *mixer_card;
 
     ALOGV("%s: usecase(%d)", __func__, uc_id);
 
@@ -871,10 +764,7 @@ static int select_devices(struct audio_device *adev,
         enable_snd_device(adev, usecase, in_snd_device, false);
     }
 
-    list_for_each(node, &usecase->mixer_list) {
-         mixer_card = node_to_item(node, struct mixer_card, uc_list_node[usecase->id]);
-         audio_route_update_mixer(mixer_card->audio_route);
-    }
+    audio_route_update_mixer(adev->mixer.audio_route);
 
     usecase->in_snd_device = in_snd_device;
     usecase->out_snd_device = out_snd_device;
@@ -1953,11 +1843,6 @@ static int start_input_stream(struct stream_in *in)
     list_init(&in->pcm_dev_list);
     list_add_tail(&in->pcm_dev_list, &pcm_device->stream_list_node);
 
-    list_init(&uc_info->mixer_list);
-    list_add_tail(&uc_info->mixer_list,
-                  &adev_get_mixer_for_card(adev,
-                                       pcm_device->pcm_profile->card)->uc_list_node[uc_info->id]);
-
     list_add_tail(&adev->usecase_list, &uc_info->adev_list_node);
 
     select_devices(adev, in->usecase);
@@ -2109,7 +1994,6 @@ static int uc_release_pcm_devices(struct audio_usecase *usecase)
         list_remove(node);
         free(pcm_device);
     }
-    list_init(&usecase->mixer_list);
 
     return 0;
 }
@@ -2120,10 +2004,8 @@ static int uc_select_pcm_devices(struct audio_usecase *usecase)
     struct stream_out *out = (struct stream_out *)usecase->stream;
     struct pcm_device *pcm_device;
     struct pcm_device_profile *pcm_profile;
-    struct mixer_card *mixer_card;
     audio_devices_t devices = usecase->devices;
 
-    list_init(&usecase->mixer_list);
     list_init(&out->pcm_dev_list);
 
     while ((pcm_profile = get_pcm_device(usecase->type, devices)) != NULL) {
@@ -2133,11 +2015,6 @@ static int uc_select_pcm_devices(struct audio_usecase *usecase)
         }
         pcm_device->pcm_profile = pcm_profile;
         list_add_tail(&out->pcm_dev_list, &pcm_device->stream_list_node);
-        mixer_card = uc_get_mixer_for_card(usecase, pcm_profile->card);
-        if (mixer_card == NULL) {
-            mixer_card = adev_get_mixer_for_card(out->dev, pcm_profile->card);
-            list_add_tail(&usecase->mixer_list, &mixer_card->uc_list_node[usecase->id]);
-        }
         devices &= ~pcm_profile->devices;
     }
 
@@ -4121,9 +3998,11 @@ static int adev_dump(const audio_hw_device_t *device, int fd)
 static int adev_close(hw_device_t *device)
 {
     struct audio_device *adev = (struct audio_device *)device;
+
+    audio_route_free(adev->mixer.audio_route);
+
     audio_device_ref_count--;
     free(adev->snd_dev_ref_cnt);
-    free_mixer_list(adev);
     free(device);
     return 0;
 }
@@ -4203,10 +4082,13 @@ static int adev_open(const hw_module_t *module, const char *name,
 
     list_init(&adev->usecase_list);
 
-    if (mixer_init(adev) != 0) {
+    adev->mixer.audio_route = audio_route_init(MIXER_CARD, NULL);
+    if (adev->mixer.audio_route == NULL) {
+        ALOGE("%s: Failed to init mixer, aborting.", __func__);
+
         free(adev->snd_dev_ref_cnt);
         free(adev);
-        ALOGE("%s: Failed to init, aborting.", __func__);
+
         *device = NULL;
         return -EINVAL;
     }
