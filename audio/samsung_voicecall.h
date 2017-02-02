@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-#ifndef VOICE_CALL_H
-#define VOICE_CALL_H
+#ifndef SAMSUNG_VOICECALL_H
+#define SAMSUNG_VOICECALL_H
 
 #include "ril_interface.h"
 
-struct voice_call {
-    struct ril_handle ril;
-
-    struct pcm *pcm_voice_rx;
+struct samsung_call {
+	struct ril_handle ril;
+	struct pcm *pcm_voice_rx;
     struct pcm *pcm_voice_tx;
-
     bool wb_amr;
     bool two_mic_control;
     bool two_mic_disabled;
-
     /* from uc_info */
     audio_devices_t out_device;
 };
 
-struct voice_call *voice_call_init(struct audio_device *adev);
-void voice_call_deinit(struct voice_call *s);
+int start_voice_call_(struct audio_device *adev, struct audio_usecase *uc_info);
 
-void voice_call_set_volume(struct voice_call *vc, float volume);
-int voice_call_start(struct voice_call *vc, struct audio_usecase *uc_info);
-void voice_call_stop(struct voice_call *vc);
+void stop_voice_call_(struct audio_device *adev);
 
-#endif /* VOICE_CALL_H */
+void set_voice_volume_l_(struct audio_device *adev, float volume);
+
+int samsung_voicecall_init(struct audio_device *adev);
+
+void samsung_voicecall_deinit();
+
+#endif // SAMSUNG_VOICECALL_H
