@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
  * Copyright (C) 2017 Christopher N. Hesse <raymanfx@gmail.com>
+ * Copyright (C) 2017 Andreas Schneider <asn@cryptomilk.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -242,6 +243,35 @@ static const struct string_to_enum out_channels_name_to_enum_table[] = {
     STRING_TO_ENUM(AUDIO_CHANNEL_OUT_5POINT1),
     STRING_TO_ENUM(AUDIO_CHANNEL_OUT_7POINT1),
 };
+
+struct timespec time_spec_diff(struct timespec time1, struct timespec time0) {
+    struct timespec ret;
+    int xsec = 0;
+    int sign = 1;
+
+    if (time0.tv_nsec > time1.tv_nsec) {
+        xsec = (int) ((time0.tv_nsec - time1.tv_nsec) / (1E9 + 1));
+        time0.tv_nsec -= (long int) (1E9 * xsec);
+        time0.tv_sec += xsec;
+    }
+
+    if ((time1.tv_nsec - time0.tv_nsec) > 1E9) {
+        xsec = (int) ((time1.tv_nsec - time0.tv_nsec) / 1E9);
+        time0.tv_nsec += (long int) (1E9 * xsec);
+        time0.tv_sec -= xsec;
+    }
+
+    ret.tv_sec = time1.tv_sec - time0.tv_sec;
+    ret.tv_nsec = time1.tv_nsec - time0.tv_nsec;
+
+    if (time1.tv_sec < time0.tv_sec) {
+        sign = -1;
+    }
+
+    ret.tv_sec = ret.tv_sec * sign;
+
+    return ret;
+}
 
 static bool is_supported_format(audio_format_t format)
 {
@@ -602,6 +632,10 @@ static int enable_snd_device(struct audio_device *adev,
                              bool update_mixer)
 {
     const char *snd_device_name = get_snd_device_name(snd_device);
+#if DSP_POWEROFF_DELAY
+    struct timespec activation_time;
+    struct timespec elapsed_time;
+#endif /* DSP_POWEROFF_DELAY */
 
     if (snd_device_name == NULL)
         return -EINVAL;
@@ -621,6 +655,21 @@ static int enable_snd_device(struct audio_device *adev,
 
     ALOGV("%s: snd_device(%d: %s)", __func__,
           snd_device, snd_device_name);
+
+#if DSP_POWEROFF_DELAY
+    clock_gettime(CLOCK_MONOTONIC, &activation_time);
+
+    elapsed_time = time_spec_diff(adev->mixer.dsp_poweroff_time,
+                                  activation_time);
+    if (elapsed_time.tv_sec == 0) {
+        long elapsed_usec = elapsed_time.tv_nsec / 1000;
+
+        if (elapsed_usec < DSP_POWEROFF_DELAY) {
+            usleep(DSP_POWEROFF_DELAY - elapsed_usec);
+        }
+    }
+    update_mixer = true;
+#endif /* DSP_POWEROFF_DELAY */
 
     audio_route_apply_path(adev->mixer.audio_route, snd_device_name);
     if (update_mixer) {
@@ -655,10 +704,18 @@ int disable_snd_device(struct audio_device *adev,
     if (adev->snd_dev_ref_cnt[snd_device] == 0) {
         ALOGV("%s: snd_device(%d: %s)", __func__,
               snd_device, snd_device_name);
+
+#if DSP_POWEROFF_DELAY
+        update_mixer = true;
+#endif /* DSP_POWEROFF_DELAY */
+
         audio_route_reset_path(adev->mixer.audio_route, snd_device_name);
         if (update_mixer) {
             audio_route_update_mixer(adev->mixer.audio_route);
         }
+#if DSP_POWEROFF_DELAY
+        clock_gettime(CLOCK_MONOTONIC, &adev->mixer.dsp_poweroff_time);
+#endif /* DSP_POWEROFF_DELAY */
     }
     return 0;
 }
@@ -4089,6 +4146,9 @@ static int adev_open(const hw_module_t *module, const char *name,
         *device = NULL;
         return -EINVAL;
     }
+
+    /* Do not sleep on first enable_snd_device() */
+    adev->mixer.dsp_poweroff_time.tv_sec = 1;
 
     if (access(OFFLOAD_FX_LIBRARY_PATH, R_OK) == 0) {
         adev->offload_fx_lib = dlopen(OFFLOAD_FX_LIBRARY_PATH, RTLD_NOW);
