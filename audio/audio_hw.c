@@ -871,7 +871,7 @@ static int select_devices(struct audio_device *adev,
          * be switched to new device when select_devices() is called for voice call
          * usecase.
          */
-        if (adev->in_call) {
+        if (adev->voice.in_call) {
             vc_usecase = get_usecase_from_id(adev, USECASE_VOICE_CALL);
             if (usecase == NULL) {
                 ALOGE("%s: Could not find the voice call usecase", __func__);
@@ -2403,7 +2403,7 @@ static int stop_voice_call(struct audio_device *adev)
     struct audio_usecase *uc_info;
 
     ALOGV("%s: enter", __func__);
-    adev->in_call = false;
+    adev->voice.in_call = false;
 
     /* TODO: implement voice call stop */
 
@@ -2456,9 +2456,9 @@ static int start_voice_call(struct audio_device *adev)
     /* TODO: implement voice call start */
 
     /* set cached volume */
-    set_voice_volume_l(adev, adev->voice_volume);
+    set_voice_volume_l(adev, adev->voice.volume);
 
-    adev->in_call = true;
+    adev->voice.in_call = true;
 exit:
     ALOGV("%s: exit", __func__);
     return ret;
@@ -2693,16 +2693,17 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                 }
             }
 
-            if ((adev->mode == AUDIO_MODE_IN_CALL) && !adev->in_call &&
+            if ((adev->mode == AUDIO_MODE_IN_CALL) && !adev->voice.in_call &&
                     (out == adev->primary_output)) {
                 start_voice_call(adev);
-            } else if ((adev->mode == AUDIO_MODE_IN_CALL) && adev->in_call &&
+            } else if ((adev->mode == AUDIO_MODE_IN_CALL) &&
+                       adev->voice.in_call &&
                        (out == adev->primary_output)) {
                 select_devices(adev, USECASE_VOICE_CALL);
             }
         }
 
-        if ((adev->mode == AUDIO_MODE_NORMAL) && adev->in_call &&
+        if ((adev->mode == AUDIO_MODE_NORMAL) && adev->voice.in_call &&
                 (out == adev->primary_output)) {
             stop_voice_call(adev);
         }
@@ -3867,9 +3868,9 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
          * But it is currently not supported.
          */
         if (strcmp(value, AUDIO_PARAMETER_VALUE_ON) == 0)
-            adev->bluetooth_nrec = true;
+            adev->voice.bluetooth_nrec = true;
         else
-            adev->bluetooth_nrec = false;
+            adev->voice.bluetooth_nrec = false;
     }
 
 #if SWAP_SPEAKER_ON_SCREEN_ROTATION
@@ -3939,8 +3940,8 @@ static int adev_set_voice_volume(struct audio_hw_device *dev, float volume)
     struct audio_device *adev = (struct audio_device *)dev;
     pthread_mutex_lock(&adev->lock);
     /* cache volume */
-    adev->voice_volume = volume;
-    ret = set_voice_volume_l(adev, adev->voice_volume);
+    adev->voice.volume = volume;
+    ret = set_voice_volume_l(adev, adev->voice.volume);
     pthread_mutex_unlock(&adev->lock);
     return ret;
 }
@@ -4251,9 +4252,11 @@ static int adev_open(const hw_module_t *module, const char *name,
     adev->mode = AUDIO_MODE_NORMAL;
     adev->active_input = NULL;
     adev->primary_output = NULL;
-    adev->voice_volume = 1.0f;
-    adev->bluetooth_nrec = true;
-    adev->in_call = false;
+
+    adev->voice.volume = 1.0f;
+    adev->voice.bluetooth_nrec = true;
+    adev->voice.in_call = false;
+
     /* adev->cur_hdmi_channels = 0;  by calloc() */
     adev->snd_dev_ref_cnt = calloc(SND_DEVICE_MAX, sizeof(int));
     if (adev->snd_dev_ref_cnt == NULL) {
