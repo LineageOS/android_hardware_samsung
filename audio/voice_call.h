@@ -33,7 +33,11 @@ struct voice_call {
     audio_devices_t out_device;
 };
 
-struct voice_call *voice_call_init(void);
+struct voice_call *voice_call_init(struct audio_device *adev);
 void voice_call_deinit(struct voice_call *s);
+
+void voice_call_set_volume(struct voice_call *vc, float volume);
+int voice_call_start(struct voice_call *vc, struct audio_usecase *uc_info);
+void voice_call_stop(struct voice_call *vc);
 
 #endif /* VOICE_CALL_H */
