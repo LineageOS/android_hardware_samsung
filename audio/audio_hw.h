@@ -376,7 +376,7 @@ struct audio_device {
     audio_mode_t            mode;
     struct stream_in*       active_input;
     struct stream_out*      primary_output;
-    int                     in_call;
+    bool                    in_call;
     float                   voice_volume;
     bool                    mic_mute;
     bool                    bluetooth_nrec;
