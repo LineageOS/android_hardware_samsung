@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cyanogenmod.settings.device"
-    android:sharedUserId="android.uid.system" >
+    android:sharedUserId="android.uid.system">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
-    <application android:label="@string/app_name">
+    <application
+        android:label="@string/app_name">
+        <receiver android:name="com.cyanogenmod.settings.device.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
         <activity
-            android:name="com.cyanogenmod.settings.device.DisplaySettings"
-            android:launchMode="singleTop"
-            android:icon="@drawable/ic_settings_advanced_display"
-            android:hardwareAccelerated="true"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name=".AdvancedDisplayActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Main"
-            android:excludeFromRecents="true" >
+            android:theme="@style/AdvancedDisplay">
             <intent-filter>
                 <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
             </intent-filter>
@@ -26,14 +28,5 @@
                 android:name="com.android.settings.category"
                 android:value="com.android.settings.category.device" />
         </activity>
-
-        <receiver android:name=".Startup">
-            <intent-filter android:priority="100">
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <activity android:name=".ScreenFragmentActivity" />
-
     </application>
 </manifest>
