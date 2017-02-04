@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2016 The CyanogenMod Project
+                   2017 The LineageOS Project
 
-     Licensed under the Apache License, Version 2.0 (the "License"
+     Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
 
@@ -14,16 +15,8 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
-    <style name="Theme.Main" parent="@android:style/Theme.Material.Light.DarkActionBar">
-        <item name="android:colorPrimary">@color/theme_primary</item>
-        <item name="android:colorPrimaryDark">@color/theme_primary_dark</item>
-        <item name="android:colorAccent">@color/theme_accent</item>
-        <!-- Redefine the ActionBar style for contentInsetStart -->
-        <item name="android:actionBarStyle">@style/Theme.ActionBar.SubSettings</item>
-    </style>
-
-    <style name="Theme.ActionBar.SubSettings" parent="@android:style/Widget.Material.Light.ActionBar.Solid">
-        <item name="android:contentInsetStart">@dimen/actionbar_subsettings_contentInsetStart</item>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <style name="AdvancedDisplay" parent="@android:style/Theme.Material.Settings">
+        <item name="preferenceTheme">@android:style/Theme.Material.Settings</item>
     </style>
 </resources>
