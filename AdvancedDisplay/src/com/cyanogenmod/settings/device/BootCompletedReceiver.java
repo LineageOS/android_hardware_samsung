@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 The CyanogenMod Project
+ *               2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +20,13 @@ package com.cyanogenmod.settings.device;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
-public class Startup extends BroadcastReceiver {
+public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
-    public void onReceive(final Context context, final Intent bootintent) {
+    public void onReceive(final Context context, final Intent intent) {
         mDNIeScenario.restore(context);
         mDNIeNegative.restore(context);
-        ScreenFragmentActivity.restore(context);
     }
 }

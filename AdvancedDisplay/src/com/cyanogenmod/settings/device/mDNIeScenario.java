@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 The CyanogenMod Project
+ *               2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +18,12 @@
 package com.cyanogenmod.settings.device;
 
 import android.content.Context;
-
 import android.content.SharedPreferences;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.Preference.OnPreferenceChangeListener;
+import android.support.v7.preference.PreferenceManager;
 import android.util.AttributeSet;
-import android.preference.Preference;
-import android.preference.ListPreference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceManager;
 
 import org.cyanogenmod.internal.util.FileUtils;
 
@@ -52,12 +52,11 @@ public class mDNIeScenario extends ListPreference implements OnPreferenceChangeL
         }
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        FileUtils.writeLine(FILE, sharedPrefs.getString(DisplaySettings.KEY_MDNIE_SCENARIO, "0"));
+        FileUtils.writeLine(FILE, sharedPrefs.getString(Constants.KEY_MDNIE_SCENARIO, "0"));
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         FileUtils.writeLine(FILE, (String) newValue);
         return true;
     }
-
 }
