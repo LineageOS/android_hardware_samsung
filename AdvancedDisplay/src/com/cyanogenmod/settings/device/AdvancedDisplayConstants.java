@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The CyanogenMod Project
+ * Copyright (c) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.cyanogenmod.settings.device;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
-public class Startup extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(final Context context, final Intent bootintent) {
-        mDNIeScenario.restore(context);
-        mDNIeNegative.restore(context);
-        ScreenFragmentActivity.restore(context);
-    }
+public class AdvancedDisplayConstants {
+    public static final String KEY_MDNIE_SCENARIO = "mdnie_scenario";
+    public static final String KEY_MDNIE_NEGATIVE = "mdnie_negative";
 }
