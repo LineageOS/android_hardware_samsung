@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The CyanogenMod Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.cyanogenmod.settings.device;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.os.Bundle;
 
-public class Startup extends BroadcastReceiver {
+import com.android.settingslib.drawer.SettingsDrawerActivity;
 
-    @Override
-    public void onReceive(final Context context, final Intent bootintent) {
-        mDNIeScenario.restore(context);
-        mDNIeNegative.restore(context);
-        ScreenFragmentActivity.restore(context);
+public class AdvancedDisplayActivity extends SettingsDrawerActivity {
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        getFragmentManager().beginTransaction().replace(R.id.content_frame,
+                new AdvancedDisplayFragment()).commit();
     }
 }
