@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a288981_e85a8f4f",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-02-05T13:13:43Z",
+      "side": 1,
+      "message": "Please no",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 7
+      },
+      "revId": "d6337fea46a8f153fb98260304b208729d2e7c6f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_c857d325",
+        "filename": "fingerprint/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-02-05T13:13:43Z",
+      "side": 1,
+      "message": "Can\u0027t we just use $(TARGET_BOOTLOADER_BOARD_NAME) like we do in the lights hal to avoid conflicting with devices like klte that compile their own fingerprint hal?",
+      "range": {
+        "startLine": 12,
+        "startChar": 30,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "d6337fea46a8f153fb98260304b208729d2e7c6f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
