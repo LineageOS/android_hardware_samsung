@@ -35,6 +35,11 @@ include $(SAM_ROOT)/macloader/Android.mk
 include $(SAM_ROOT)/wifiloader/Android.mk
 endif
 
+# Samsung BAUTH Fingerprint
+ifeq ($(BOARD_HAVE_SAMSUNG_BAUTH_FP),true)
+include $(SAM_ROOT)/fingerprint/Android.mk
+endif
+
 ifeq ($(BOARD_VENDOR),samsung)
 include $(SAM_ROOT)/AdvancedDisplay/Android.mk
 include $(SAM_ROOT)/audio/Android.mk
