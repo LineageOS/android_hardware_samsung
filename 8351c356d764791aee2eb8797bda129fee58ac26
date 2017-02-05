@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a288981_08c4bb90",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2017-02-05T08:26:27Z",
+      "side": 1,
+      "message": "I will try non previleged module later",
+      "parentUuid": "7a288981_7d9543e3",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a288981_dd7317e6",
         "filename": "AdvancedDisplay/Android.mk",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-02-05T05:19:31Z",
       "side": 1,
       "message": "I don\u0027t see RecyclerViews being used in the app",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_28cf77b2",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2017-02-05T08:26:27Z",
+      "side": 1,
+      "message": "The hamburger menu ( I think ) needs it\nOtherwise the app crash",
+      "parentUuid": "7a288981_dd7317e6",
       "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -110,6 +146,24 @@
     },
     {
       "key": {
+        "uuid": "7a288981_a85127da",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2017-02-05T08:26:27Z",
+      "side": 1,
+      "message": "I just copied it from Asus makefile, I don\u0027t think it\u0027s needed",
+      "parentUuid": "7a288981_fd8813c8",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a288981_1d499f8b",
         "filename": "AdvancedDisplay/AndroidManifest.xml",
         "patchSetId": 5
@@ -121,6 +175,24 @@
       "writtenOn": "2017-02-05T05:19:31Z",
       "side": 1,
       "message": "Does this app have backup-able settings? Never actually used this, not sure if it works either.",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_885e6be8",
+        "filename": "AdvancedDisplay/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2017-02-05T08:26:27Z",
+      "side": 1,
+      "message": "Maybe it can backup the scenario ( I don\u0027t really know )",
+      "parentUuid": "7a288981_1d499f8b",
       "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -155,6 +227,24 @@
       "writtenOn": "2017-02-05T05:19:31Z",
       "side": 1,
       "message": "This isn\u0027t CMActions...\n\nAlso, I think we can theme the activity instead. The application theme can probably be left alone.",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_08727b7c",
+        "filename": "AdvancedDisplay/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2017-02-05T08:26:27Z",
+      "side": 1,
+      "message": "Ok I will change this",
+      "parentUuid": "7a288981_9d7d8fb4",
       "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -201,6 +291,24 @@
         "endLine": 29,
         "endChar": 19
       },
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_88054bc4",
+        "filename": "AdvancedDisplay/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2017-02-05T08:26:27Z",
+      "side": 1,
+      "message": "Yea it\u0027s unused",
+      "parentUuid": "7a288981_5d4f2793",
       "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
