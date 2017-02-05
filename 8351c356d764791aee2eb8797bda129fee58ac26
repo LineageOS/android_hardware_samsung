@@ -1,0 +1,460 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a288981_7d9543e3",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Is there a reason to make it a privileged app?",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_dd7317e6",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "I don\u0027t see RecyclerViews being used in the app",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_fd76d3d7",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "I don\u0027t see RecyclerViews being used in the app",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_5d9a8715",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Maybe change this for consistency?\n\n LOCAL_AAPT_FLAGS :\u003d \\\n     --auto-add-overlay \\\n     ...",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_bd804b8c",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "I don\u0027t see RecyclerViews being used in the app",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_fd8813c8",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is actually needed",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 5
+      },
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_1d499f8b",
+        "filename": "AdvancedDisplay/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Does this app have backup-able settings? Never actually used this, not sure if it works either.",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_fd5db349",
+        "filename": "AdvancedDisplay/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure we should make this app persistent. Is there a reason for this change?",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_9d7d8fb4",
+        "filename": "AdvancedDisplay/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "This isn\u0027t CMActions...\n\nAlso, I think we can theme the activity instead. The application theme can probably be left alone.",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_bd572b26",
+        "filename": "AdvancedDisplay/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Maybe add a newline above this. Also, moving the receiver from line 30 to line 13 seems like a pretty arbitrary change.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_5d4f2793",
+        "filename": "AdvancedDisplay/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "What is this \u003cactivity\u003e...\u003c/activity\u003e tag for? I don\u0027t think it references anything?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_dd5af74f",
+        "filename": "AdvancedDisplay/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "This seems like a pretty arbitrary change.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 76
+      },
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_dd8557ae",
+        "filename": "AdvancedDisplay/res/values/styles.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "This isn\u0027t CMActions...",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_1d72bfe5",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/AdvancedDisplayConstants.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Could probably drop the \u0027public\u0027 access modifier to make them package-private instead.\n\nAlso, maybe you\u0027ll want to rename this class to Constants.java, to effectively get rid of the \u003e100 char issues I see in a few files?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 1
+      },
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_3db69b8b",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/AdvancedDisplayFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Why is there a CyanogenMod copyright here?",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_5dc167e3",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/AdvancedDisplayFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Would be good to add a \u0027final\u0027 keyword here.",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_7dbc236d",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/AdvancedDisplayFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "100 chars",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 112
+      },
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_1dbbdf73",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/BootCompletedReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Can probably simply this to:\n\n /*\n * Copyright (C) 2012 The CyanogenMod Project\n *               2017 The LineageOS Project",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_ddac3738",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/BootCompletedReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Why drop the \u0027final\u0027 keyword?",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_fdaff329",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/BootCompletedReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure of the usefulness of this log.",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_9da6af52",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/mDNIeNegative.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Can probably simply this to:\n\n /*\n  * Copyright (C) 2012 The CyanogenMod Project\n  *               2017 The LineageOS Project",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 43
+      },
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_7d63031b",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/mDNIeNegative.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "100 chars",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_5d6847f5",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/mDNIeScenario.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "Can probably simply this to:\n\n /*\n  * Copyright (C) 2012 The CyanogenMod Project\n  *               2017 The LineageOS Project",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 43
+      },
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_3d6d7b05",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/mDNIeScenario.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-05T05:19:31Z",
+      "side": 1,
+      "message": "100 chars",
+      "revId": "8351c356d764791aee2eb8797bda129fee58ac26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
