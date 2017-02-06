@@ -32,11 +32,23 @@
         <!-- Empty path -->
     </path>
 
+    <path name="voice-earpiece-wb">
+        <!-- Empty path -->
+    </path>
+
     <path name="voice-speaker">
         <!-- Empty path -->
     </path>
 
+    <path name="voice-speaker-wb">
+        <!-- Empty path -->
+    </path>
+
     <path name="voice-headphones">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-headphones-wb">
         <!-- Empty path -->
     </path>
 
@@ -73,12 +85,26 @@
         <!-- Empty path -->
     </path>
 
+    <path name="voice-earpiece-mic-wb">
+        <!-- Should be builtin and back mic -->
+        <!-- Empty path -->
+    </path>
+
     <path name="voice-speaker-mic">
         <!-- Should be builtin and back mic -->
         <!-- Empty path -->
     </path>
 
+    <path name="voice-speaker-mic-wb">
+        <!-- Should be builtin and back mic -->
+        <!-- Empty path -->
+    </path>
+
     <path name="voice-headset-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-headset-mic-wb">
         <!-- Empty path -->
     </path>
 
