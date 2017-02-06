@@ -59,21 +59,22 @@ static void set_voice_session_audio_path(struct voice_session *session)
     enum _AudioPath device_type;
 
     switch(session->out_device) {
-        case AUDIO_DEVICE_OUT_SPEAKER:
+        case SND_DEVICE_OUT_VOICE_SPEAKER:
             device_type = SOUND_AUDIO_PATH_SPEAKER;
             break;
-        case AUDIO_DEVICE_OUT_EARPIECE:
+        case SND_DEVICE_OUT_VOICE_EARPIECE:
             device_type = SOUND_AUDIO_PATH_HANDSET;
             break;
-        case AUDIO_DEVICE_OUT_WIRED_HEADSET:
+#if 0
+        /* TODO -> SUPPORT HEADSET */
+        case SND_DEVICE_OUT_VOICE_HEADSET:
             device_type = SOUND_AUDIO_PATH_HEADSET;
             break;
-        case AUDIO_DEVICE_OUT_WIRED_HEADPHONE:
+#endif
+        case SND_DEVICE_OUT_VOICE_HEADPHONES:
             device_type = SOUND_AUDIO_PATH_HEADPHONE;
             break;
-        case AUDIO_DEVICE_OUT_BLUETOOTH_SCO:
-        case AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET:
-        case AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT:
+        case SND_DEVICE_OUT_BT_SCO:
             device_type = SOUND_AUDIO_PATH_BLUETOOTH;
             break;
         default:
@@ -88,11 +89,37 @@ static void set_voice_session_audio_path(struct voice_session *session)
 }
 
 /*
+ * This decides based on the output device, if we enable
+ * two mic control
+ */
+void prepare_voice_session(struct voice_session *session,
+                           snd_device_t out_snd_device)
+{
+    session->out_device = out_snd_device;
+
+    /*
+     * AUDIO_DEVICE_NONE: Assume default which is earpiece
+     */
+    switch (session->out_device) {
+    case SND_DEVICE_OUT_VOICE_EARPIECE:
+    case SND_DEVICE_OUT_VOICE_SPEAKER:
+        session->two_mic_control = true;
+        break;
+    default:
+        session->two_mic_control = false;
+        break;
+    }
+
+    if (session->two_mic_disabled) {
+        session->two_mic_control = false;
+    }
+}
+
+/*
  * This function must be called with hw device mutex locked, OK to hold other
  * mutexes
  */
-int start_voice_session(struct voice_session *session,
-                        struct audio_usecase *uc_info)
+int start_voice_session(struct voice_session *session)
 {
 #if defined(SOUND_CAPTURE_VOICE_DEVICE) && defined(SOUND_CAPTURE_VOICE_DEVICE)
     struct pcm_config *voice_config;
@@ -144,23 +171,7 @@ int start_voice_session(struct voice_session *session,
     pcm_start(session->pcm_voice_rx);
     pcm_start(session->pcm_voice_tx);
 
-    session->out_device = uc_info->out_snd_device;
-
     /* TODO: handle SCO */
-
-    switch (session->out_device) {
-        case AUDIO_DEVICE_OUT_EARPIECE:
-        case AUDIO_DEVICE_OUT_SPEAKER:
-            session->two_mic_control = true;
-            break;
-        default:
-            session->two_mic_control = false;
-            break;
-    }
-
-    if (session->two_mic_disabled) {
-        session->two_mic_control = false;
-    }
 
     if (session->two_mic_control) {
         ALOGV("%s: enabling two mic control", __func__);
@@ -204,7 +215,7 @@ void stop_voice_session(struct voice_session *session)
 
     /* TODO: handle SCO */
 
-    session->out_device = AUDIO_DEVICE_NONE;
+    session->out_device = SND_DEVICE_NONE;
 
     ALOGV("%s: Successfully closed %d active PCMs", __func__, status);
 #endif /* SOUND_CAPTURE_VOICE_DEVICE && SOUND_CAPTURE_VOICE_DEVICE */
@@ -215,20 +226,17 @@ void set_voice_session_volume(struct voice_session *session, float volume)
     enum _SoundType sound_type;
 
     switch (session->out_device) {
-        case AUDIO_DEVICE_OUT_EARPIECE:
+        case SND_DEVICE_OUT_VOICE_EARPIECE:
             sound_type = SOUND_TYPE_VOICE;
             break;
-        case AUDIO_DEVICE_OUT_SPEAKER:
+        case SND_DEVICE_OUT_VOICE_SPEAKER:
             sound_type = SOUND_TYPE_SPEAKER;
             break;
-        case AUDIO_DEVICE_OUT_WIRED_HEADSET:
-        case AUDIO_DEVICE_OUT_WIRED_HEADPHONE:
+        /* TODO - ADD HEADSET */
+        case SND_DEVICE_OUT_VOICE_HEADPHONES:
             sound_type = SOUND_TYPE_HEADSET;
             break;
-        case AUDIO_DEVICE_OUT_BLUETOOTH_SCO:
-        case AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET:
-        case AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT:
-        case AUDIO_DEVICE_OUT_ALL_SCO:
+        case SND_DEVICE_OUT_BT_SCO:
             sound_type = SOUND_TYPE_BTVOICE;
             break;
         default:

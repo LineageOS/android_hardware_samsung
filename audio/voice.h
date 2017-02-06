@@ -33,8 +33,9 @@ struct voice_session {
     audio_devices_t out_device;
 };
 
-int start_voice_session(struct voice_session *session,
-                        struct audio_usecase *uc_info);
+void prepare_voice_session(struct voice_session *session,
+                           snd_device_t out_snd_device);
+int start_voice_session(struct voice_session *session);
 void stop_voice_session(struct voice_session *session);
 void set_voice_session_volume(struct voice_session *session, float volume);
 
