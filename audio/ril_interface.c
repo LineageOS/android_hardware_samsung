@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 The CyanogenMod Project
+ * Copyright (C) 2017 Andreas Schneider <asn@cryptomilk.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +15,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "audio_hw_primary"
+#define LOG_TAG "audio_hw_ril"
 /*#define LOG_NDEBUG 0*/
 
 #include <errno.h>
@@ -31,28 +32,42 @@
 #define VOLUME_STEPS_PROPERTY "ro.config.vc_call_vol_steps"
 
 /* Audio WB AMR callback */
-void (*_audio_set_wb_amr_callback)(void *, int);
-void *callback_data = NULL;
-
-void ril_register_set_wb_amr_callback(void *function, void *data)
-{
-    _audio_set_wb_amr_callback = function;
-    callback_data = data;
-}
+/*
+ * TODO:
+ * struct audio_device {
+ *     HRilClient client;
+ *     void *data
+ * }
+ * static struct audio_device _audio_devices[64];
+ *
+ * When registering a call back we should store it in the array and when
+ * the callback is triggered find the data pointer based on the client
+ * passed in.
+ */
+static ril_wb_amr_callback _wb_amr_callback;
+static void *_wb_amr_data = NULL;
 
 /* This is the callback function that the RIL uses to
 set the wideband AMR state */
-static int ril_set_wb_amr_callback(void *ril_client __unused,
-                                   const void *data,
-                                   size_t datalen __unused)
+static int ril_internal_wb_amr_callback(HRilClient client __unused,
+                                        const void *data,
+                                        size_t datalen)
 {
-    int enable = ((int *)data)[0];
+    int enable = 0;
 
-    if (callback_data == NULL || _audio_set_wb_amr_callback == NULL) {
+    if (_wb_amr_data == NULL || _wb_amr_callback == NULL) {
         return -1;
     }
 
-    _audio_set_wb_amr_callback(callback_data, enable);
+    if (datalen != 1) {
+        return -1;
+    }
+
+    if (*((int *)data) != 0) {
+        enable = 1;
+    }
+
+    _wb_amr_callback(_wb_amr_data, enable);
 
     return 0;
 }
@@ -95,11 +110,6 @@ int ril_open(struct ril_handle *ril)
         return -1;
     }
 
-    /* register the wideband AMR callback */
-    RegisterUnsolicitedHandler(ril->client,
-                               RIL_UNSOL_SNDMGR_WB_AMR_REPORT,
-                               (RilOnUnsolicited)ril_set_wb_amr_callback);
-
     property_get(VOLUME_STEPS_PROPERTY, property, VOLUME_STEPS_DEFAULT);
     ril->volume_steps_max = atoi(property);
 
@@ -134,6 +144,37 @@ int ril_close(struct ril_handle *ril)
         return -1;
     }
     ril->client = NULL;
+
+    return 0;
+}
+
+int ril_set_wb_amr_callback(struct ril_handle *ril,
+                            ril_wb_amr_callback fn,
+                            void *data)
+{
+    int rc;
+
+    if (fn == NULL || data == NULL) {
+        return -1;
+    }
+
+    _wb_amr_callback = fn;
+    _wb_amr_data = data;
+
+    ALOGV("%s: RegisterUnsolicitedHandler(%d, %p)",
+          __func__,
+          RIL_UNSOL_SNDMGR_WB_AMR_REPORT,
+          ril_set_wb_amr_callback);
+
+    /* register the wideband AMR callback */
+    rc = RegisterUnsolicitedHandler(ril->client,
+                                    RIL_UNSOL_SNDMGR_WB_AMR_REPORT,
+                                    (RilOnUnsolicited)ril_internal_wb_amr_callback);
+    if (rc != RIL_CLIENT_ERR_SUCCESS) {
+        ALOGE("%s: Failed to register WB_AMR callback", __func__);
+        ril_close(ril);
+        return -1;
+    }
 
     return 0;
 }
