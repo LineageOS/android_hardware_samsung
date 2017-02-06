@@ -38,6 +38,7 @@ int start_voice_session(struct voice_session *session,
 void stop_voice_session(struct voice_session *session);
 void set_voice_session_volume(struct voice_session *session, float volume);
 bool voice_session_uses_twomic(struct voice_session *session);
+bool voice_session_uses_wideband(struct voice_session *session);
 
 struct voice_session *voice_session_init(struct audio_device *adev);
 void voice_session_deinit(struct voice_session *s);

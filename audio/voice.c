@@ -251,6 +251,15 @@ bool voice_session_uses_twomic(struct voice_session *session)
     return false;
 }
 
+bool voice_session_uses_wideband(struct voice_session *session)
+{
+    if (session->wb_amr) {
+        return true;
+    }
+
+    return false;
+}
+
 static void wb_amr_callback(void *data, int enable)
 {
     struct audio_device *adev = (struct audio_device *)data;
