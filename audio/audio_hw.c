@@ -968,6 +968,11 @@ static int select_devices(struct audio_device *adev,
 
     /* Enable new sound devices */
     if (out_snd_device != SND_DEVICE_NONE) {
+        /* We need to update the audio path if we switch the out devices */
+        if (adev->voice.in_call) {
+            set_voice_session_audio_path(adev->voice.session);
+        }
+
         enable_snd_device(adev, usecase, out_snd_device, false);
     }
 
@@ -2490,6 +2495,7 @@ int start_voice_call(struct audio_device *adev)
         ret = -ENOMEM;
         goto exit;
     }
+    adev->voice.in_call = true;
 
     uc_info->id = USECASE_VOICE_CALL;
     uc_info->type = VOICE_CALL;
@@ -2511,7 +2517,6 @@ int start_voice_call(struct audio_device *adev)
     /* set cached volume */
     set_voice_volume_l(adev, adev->voice.volume);
 
-    adev->voice.in_call = true;
 exit:
     ALOGV("%s: exit", __func__);
     return ret;
