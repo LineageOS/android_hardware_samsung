@@ -246,6 +246,19 @@ void set_voice_session_volume(struct voice_session *session, float volume)
     ril_set_call_volume(&session->ril, sound_type, volume);
 }
 
+bool voice_session_uses_twomic(struct voice_session *session)
+{
+    if (session->two_mic_disabled) {
+        return false;
+    }
+
+    if (session->two_mic_control) {
+        return true;
+    }
+
+    return false;
+}
+
 static void wb_amr_callback(void *data, int enable)
 {
     struct audio_device *adev = (struct audio_device *)data;
