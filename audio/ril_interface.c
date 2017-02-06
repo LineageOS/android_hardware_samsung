@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "audio_hw_primary"
+#define LOG_TAG "audio_hw_ril"
 /*#define LOG_NDEBUG 0*/
 
 #include <errno.h>
@@ -96,6 +96,10 @@ int ril_open(struct ril_handle *ril)
     }
 
     /* register the wideband AMR callback */
+    ALOGV("%s: RegisterUnsolicitedHandler(%d, %p)",
+          __func__,
+          RIL_UNSOL_SNDMGR_WB_AMR_REPORT,
+          ril_set_wb_amr_callback);
     RegisterUnsolicitedHandler(ril->client,
                                RIL_UNSOL_SNDMGR_WB_AMR_REPORT,
                                (RilOnUnsolicited)ril_set_wb_amr_callback);
