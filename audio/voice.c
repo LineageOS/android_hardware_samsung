@@ -88,11 +88,36 @@ static void set_voice_session_audio_path(struct voice_session *session)
 }
 
 /*
+ * This decides based on the output device, if we enable
+ * two mic control
+ */
+void prepare_voice_session(struct voice_session *session,
+                           audio_devices_t active_out_devices)
+{
+    ALOGV("%s: active_out_devices: 0x%x", __func__, active_out_devices);
+
+    session->out_device = active_out_devices;
+
+    switch (session->out_device) {
+    case AUDIO_DEVICE_OUT_EARPIECE:
+    case AUDIO_DEVICE_OUT_SPEAKER:
+        session->two_mic_control = true;
+        break;
+    default:
+        session->two_mic_control = false;
+        break;
+    }
+
+    if (session->two_mic_disabled) {
+        session->two_mic_control = false;
+    }
+}
+
+/*
  * This function must be called with hw device mutex locked, OK to hold other
  * mutexes
  */
-int start_voice_session(struct voice_session *session,
-                        struct audio_usecase *uc_info)
+int start_voice_session(struct voice_session *session)
 {
 #if defined(SOUND_CAPTURE_VOICE_DEVICE) && defined(SOUND_CAPTURE_VOICE_DEVICE)
     struct pcm_config *voice_config;
@@ -146,23 +171,7 @@ int start_voice_session(struct voice_session *session,
     pcm_start(session->pcm_voice_rx);
     pcm_start(session->pcm_voice_tx);
 
-    session->out_device = uc_info->out_snd_device;
-
     /* TODO: handle SCO */
-
-    switch (session->out_device) {
-        case AUDIO_DEVICE_OUT_EARPIECE:
-        case AUDIO_DEVICE_OUT_SPEAKER:
-            session->two_mic_control = true;
-            break;
-        default:
-            session->two_mic_control = false;
-            break;
-    }
-
-    if (session->two_mic_disabled) {
-        session->two_mic_control = false;
-    }
 
     if (session->two_mic_control) {
         ALOGV("%s: enabling two mic control", __func__);
