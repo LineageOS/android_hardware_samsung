@@ -310,8 +310,11 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_OUT_HEADPHONES] = "headphones",
     [SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES] = "speaker-and-headphones",
     [SND_DEVICE_OUT_VOICE_EARPIECE] = "voice-earpiece",
+    [SND_DEVICE_OUT_VOICE_EARPIECE_WB] = "voice-earpiece-wb",
     [SND_DEVICE_OUT_VOICE_SPEAKER] = "voice-speaker",
+    [SND_DEVICE_OUT_VOICE_SPEAKER_WB] = "voice-speaker-wb",
     [SND_DEVICE_OUT_VOICE_HEADPHONES] = "voice-headphones",
+    [SND_DEVICE_OUT_VOICE_HEADPHONES_WB] = "voice-headphones-wb",
     [SND_DEVICE_OUT_HDMI] = "hdmi",
     [SND_DEVICE_OUT_SPEAKER_AND_HDMI] = "speaker-and-hdmi",
     [SND_DEVICE_OUT_BT_SCO] = "bt-sco-headset",
@@ -325,8 +328,11 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_IN_HEADSET_MIC_AEC] = "headset-mic",
     [SND_DEVICE_IN_VOICE_MIC] = "voice-mic",
     [SND_DEVICE_IN_VOICE_EARPIECE_MIC] = "voice-earpiece-mic",
+    [SND_DEVICE_IN_VOICE_EARPIECE_MIC_WB] = "voice-earpiece-mic-wb",
     [SND_DEVICE_IN_VOICE_SPEAKER_MIC] = "voice-speaker-mic",
+    [SND_DEVICE_IN_VOICE_SPEAKER_MIC_WB] = "voice-speaker-mic-wb",
     [SND_DEVICE_IN_VOICE_HEADSET_MIC] = "voice-headset-mic",
+    [SND_DEVICE_IN_VOICE_HEADSET_MIC_WB] = "voice-headset-mic-wb",
     [SND_DEVICE_IN_HDMI_MIC] = "hdmi-mic",
     [SND_DEVICE_IN_BT_SCO_MIC] = "bt-sco-mic",
     [SND_DEVICE_IN_CAMCORDER_MIC] = "camcorder-mic",
@@ -530,13 +536,27 @@ static snd_device_t get_output_snd_device(struct audio_device *adev, audio_devic
         if (devices & AUDIO_DEVICE_OUT_WIRED_HEADPHONE ||
             devices & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
             snd_device = SND_DEVICE_OUT_VOICE_HEADPHONES;
-        } else if (devices & AUDIO_DEVICE_OUT_ALL_SCO) {
-            snd_device = SND_DEVICE_OUT_BT_SCO;
         } else if (devices & AUDIO_DEVICE_OUT_SPEAKER) {
             snd_device = SND_DEVICE_OUT_VOICE_SPEAKER;
         } else if (devices & AUDIO_DEVICE_OUT_EARPIECE) {
-            snd_device = SND_DEVICE_OUT_EARPIECE;
+            snd_device = SND_DEVICE_OUT_VOICE_EARPIECE;
         }
+
+        if (voice_session_uses_wideband(adev->voice.session)) {
+            if (devices & AUDIO_DEVICE_OUT_WIRED_HEADPHONE ||
+                devices & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
+                snd_device = SND_DEVICE_OUT_VOICE_HEADPHONES_WB;
+            } else if (devices & AUDIO_DEVICE_OUT_SPEAKER) {
+                snd_device = SND_DEVICE_OUT_VOICE_SPEAKER_WB;
+            } else if (devices & AUDIO_DEVICE_OUT_EARPIECE) {
+                snd_device = SND_DEVICE_OUT_VOICE_EARPIECE_WB;
+            }
+        }
+
+        if (devices & AUDIO_DEVICE_OUT_ALL_SCO) {
+            snd_device = SND_DEVICE_OUT_BT_SCO;
+        }
+
         if (snd_device != SND_DEVICE_NONE) {
             goto exit;
         }
@@ -624,6 +644,21 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
                 snd_device = SND_DEVICE_IN_VOICE_EARPIECE_MIC;
             } else if (out_device & AUDIO_DEVICE_OUT_SPEAKER) {
                 snd_device = SND_DEVICE_IN_VOICE_SPEAKER_MIC;
+            }
+        }
+
+        if (voice_session_uses_wideband(adev->voice.session)) {
+            if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
+                snd_device = SND_DEVICE_IN_VOICE_HEADSET_MIC_WB;
+            }
+
+            if (voice_session_uses_twomic(adev->voice.session)) {
+                if (out_device & AUDIO_DEVICE_OUT_EARPIECE ||
+                    out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
+                    snd_device = SND_DEVICE_IN_VOICE_EARPIECE_MIC_WB;
+                } else if (out_device & AUDIO_DEVICE_OUT_SPEAKER) {
+                    snd_device = SND_DEVICE_IN_VOICE_SPEAKER_MIC_WB;
+                }
             }
         }
     } else if (source == AUDIO_SOURCE_CAMCORDER) {
