@@ -4080,7 +4080,7 @@ static int adev_set_mic_mute(struct audio_hw_device *dev, bool state)
     adev->mic_mute = state;
 
     if (adev->mode == AUDIO_MODE_IN_CALL) {
-        /* TODO */
+        set_voice_session_mic_mute(adev->voice.session, state);
     }
 
     pthread_mutex_unlock(&adev->lock);
