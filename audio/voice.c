@@ -60,9 +60,11 @@ static void voice_session_set_audio_path(struct voice_session *session)
 
     switch(session->out_device) {
         case SND_DEVICE_OUT_VOICE_SPEAKER:
+        case SND_DEVICE_OUT_VOICE_SPEAKER_WIDEBAND:
             device_type = SOUND_AUDIO_PATH_SPEAKER;
             break;
         case SND_DEVICE_OUT_VOICE_EARPIECE:
+        case SND_DEVICE_OUT_VOICE_EARPIECE_WIDEBAND:
             device_type = SOUND_AUDIO_PATH_HANDSET;
             break;
 #if 0
@@ -72,6 +74,7 @@ static void voice_session_set_audio_path(struct voice_session *session)
             break;
 #endif
         case SND_DEVICE_OUT_VOICE_HEADPHONES:
+        case SND_DEVICE_OUT_VOICE_HEADPHONES_WIDEBAND:
             device_type = SOUND_AUDIO_PATH_HEADPHONE;
             break;
         case SND_DEVICE_OUT_BT_SCO:
@@ -102,7 +105,9 @@ void prepare_voice_session(struct voice_session *session,
      */
     switch (session->out_device) {
     case SND_DEVICE_OUT_VOICE_EARPIECE:
+    case SND_DEVICE_OUT_VOICE_EARPIECE_WIDEBAND:
     case SND_DEVICE_OUT_VOICE_SPEAKER:
+    case SND_DEVICE_OUT_VOICE_SPEAKER_WIDEBAND:
         session->two_mic_control = true;
         break;
     default:
@@ -227,13 +232,16 @@ void set_voice_session_volume(struct voice_session *session, float volume)
 
     switch (session->out_device) {
         case SND_DEVICE_OUT_VOICE_EARPIECE:
+        case SND_DEVICE_OUT_VOICE_EARPIECE_WIDEBAND:
             sound_type = SOUND_TYPE_VOICE;
             break;
         case SND_DEVICE_OUT_VOICE_SPEAKER:
+        case SND_DEVICE_OUT_VOICE_SPEAKER_WIDEBAND:
             sound_type = SOUND_TYPE_SPEAKER;
             break;
         /* TODO - ADD HEADSET */
         case SND_DEVICE_OUT_VOICE_HEADPHONES:
+        case SND_DEVICE_OUT_VOICE_HEADPHONES_WIDEBAND:
             sound_type = SOUND_TYPE_HEADSET;
             break;
         case SND_DEVICE_OUT_BT_SCO:
@@ -253,6 +261,11 @@ bool voice_session_uses_twomic(struct voice_session *session)
     }
 
     return session->two_mic_control;
+}
+
+bool voice_session_uses_wideband(struct voice_session *session)
+{
+    return session->wb_amr;
 }
 
 static void voice_session_wb_amr_callback(void *data, int enable)
