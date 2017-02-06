@@ -304,21 +304,6 @@ struct voice_session *voice_session_init(struct audio_device *adev)
         return NULL;
     }
 
-    ret = property_get("audio_hal.force_voice_config", voice_config, "");
-    if (ret > 0) {
-        if ((strncmp(voice_config, "narrow", 6)) == 0)
-            session->wb_amr = false;
-        else if ((strncmp(voice_config, "wide", 4)) == 0)
-            session->wb_amr = true;
-        ALOGV("%s: Forcing voice config: %s", __func__, voice_config);
-    } else {
-        /* register callback for wideband AMR setting */
-        ril_register_set_wb_amr_callback(voice_session_wb_amr_callback,
-                                         (void *)adev);
-
-        ALOGV("%s: Registered WB_AMR callback", __func__);
-    }
-
     /* Two mic control */
     ret = property_get_bool("audio_hal.disable_two_mic", false);
     if (ret > 0) {
@@ -330,6 +315,28 @@ struct voice_session *voice_session_init(struct audio_device *adev)
     if (ret != 0) {
         free(session);
         return NULL;
+    }
+
+    ret = property_get("audio_hal.force_voice_config", voice_config, "");
+    if (ret > 0) {
+        if ((strncmp(voice_config, "narrow", 6)) == 0)
+            session->wb_amr = false;
+        else if ((strncmp(voice_config, "wide", 4)) == 0)
+            session->wb_amr = true;
+        ALOGV("%s: Forcing voice config: %s", __func__, voice_config);
+    } else {
+        int count = 0;
+        /* register callback for wideband AMR setting */
+        ret = ril_set_wb_amr_callback(&session->ril,
+                                      voice_session_wb_amr_callback,
+                                      (void *)adev);
+        if (ret != 0) {
+            ALOGE("%s: Failed to register WB_AMR callback", __func__);
+            free(session);
+            return NULL;
+        }
+
+        ALOGV("%s: Registered WB_AMR callback", __func__);
     }
 
     return session;
