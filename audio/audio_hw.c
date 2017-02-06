@@ -751,6 +751,7 @@ static int select_devices(struct audio_device *adev,
 
     if (usecase->type == VOICE_CALL) {
         out_snd_device = get_output_snd_device(adev, active_out->devices);
+        prepare_voice_session(adev->voice.session, out_snd_device);
         in_snd_device = get_input_snd_device(adev, active_out->devices);
         usecase->devices = active_out->devices;
     } else {
@@ -2336,7 +2337,7 @@ int start_voice_call(struct audio_device *adev)
 
     select_devices(adev, USECASE_VOICE_CALL);
 
-    start_voice_session(adev->voice.session, uc_info);
+    start_voice_session(adev->voice.session);
 
     /* set cached volume */
     set_voice_volume_l(adev, adev->voice.volume);
