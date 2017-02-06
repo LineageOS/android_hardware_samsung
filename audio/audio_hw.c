@@ -856,6 +856,11 @@ static int select_devices(struct audio_device *adev,
 
     /* Enable new sound devices */
     if (out_snd_device != SND_DEVICE_NONE) {
+        /* We need to update the audio path if we switch the out devices */
+        if (adev->voice.in_call) {
+            set_voice_session_audio_path(adev->voice.session);
+        }
+
         enable_snd_device(adev, usecase, out_snd_device, false);
     }
 
