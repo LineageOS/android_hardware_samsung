@@ -1431,7 +1431,7 @@ dispatchImsGsmSms(Parcel &p, RequestInfo *pRI, uint8_t retry, int32_t messageRef
 #endif
     return;
 invalid:
-    ALOGE("dispatchImsGsmSms invalid block");
+    RLOGE("dispatchImsGsmSms invalid block");
     invalidCommandBlock(pRI);
     return;
 }
@@ -1466,7 +1466,7 @@ dispatchImsSms(Parcel &p, RequestInfo *pRI) {
     } else if (RADIO_TECH_3GPP2 == format) {
         dispatchImsCdmaSms(p, pRI, retry, messageRef);
     } else {
-        ALOGE("requestImsSendSMS invalid format value =%d", format);
+        RLOGE("requestImsSendSMS invalid format value =%d", format);
     }
 
     return;
