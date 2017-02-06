@@ -54,7 +54,7 @@ static struct pcm_config pcm_config_voicecall_wideband = {
 int start_voice_call(struct audio_device *adev);
 int stop_voice_call(struct audio_device *adev);
 
-static void set_voice_session_audio_path(struct voice_session *session)
+void set_voice_session_audio_path(struct voice_session *session)
 {
     enum _AudioPath device_type;
 
@@ -181,7 +181,6 @@ int start_voice_session(struct voice_session *session)
         ril_set_two_mic_control(&session->ril, AUDIENCE, TWO_MIC_SOLUTION_OFF);
     }
 
-    set_voice_session_audio_path(session);
     ril_set_call_clock_sync(&session->ril, SOUND_CLOCK_START);
 #endif /* SOUND_PLAYBACK_VOICE_DEVICE && SOUND_CAPTURE_VOICE_DEVICE */
 
