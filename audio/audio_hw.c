@@ -2418,7 +2418,6 @@ static int stop_voice_call(struct audio_device *adev)
     disable_snd_device(adev, uc_info, uc_info->out_snd_device, false);
     disable_snd_device(adev, uc_info, uc_info->in_snd_device, true);
 
-    uc_release_pcm_devices(uc_info);
     list_remove(&uc_info->adev_list_node);
     free(uc_info);
 
@@ -2447,7 +2446,9 @@ static int start_voice_call(struct audio_device *adev)
     uc_info->in_snd_device = SND_DEVICE_NONE;
     uc_info->out_snd_device = SND_DEVICE_NONE;
 
-    uc_select_pcm_devices(uc_info);
+    list_init(&uc_info->mixer_list);
+    list_add_tail(&uc_info->mixer_list,
+                  &adev_get_mixer_for_card(adev, SOUND_CARD)->uc_list_node[uc_info->id]);
 
     list_add_tail(&adev->usecase_list, &uc_info->adev_list_node);
 
