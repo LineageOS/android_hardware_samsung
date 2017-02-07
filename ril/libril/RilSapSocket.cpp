@@ -21,6 +21,7 @@
 #include "RilSapSocket.h"
 #include "pb_decode.h"
 #include "pb_encode.h"
+#undef LOG_TAG
 #define LOG_TAG "RIL_UIM_SOCKET"
 #include <utils/Log.h>
 #include <arpa/inet.h>
@@ -344,15 +345,20 @@ void RilSapSocket::sendResponse(MsgHeader* hdr) {
     if ((success = pb_get_encoded_size(&encoded_size, MsgHeader_fields,
         hdr)) && encoded_size <= INT32_MAX && commandFd != -1) {
         buffer_size = encoded_size + sizeof(uint32_t);
-        uint8_t buffer[buffer_size];
+        uint8_t* buffer = (uint8_t*)malloc(buffer_size);
+        if (!buffer) {
+            RLOGE("sendResponse: OOM");
+            pthread_mutex_unlock(&write_lock);
+            return;
+        }
         written_size = htonl((uint32_t) encoded_size);
         ostream = pb_ostream_from_buffer(buffer, buffer_size);
         pb_write(&ostream, (uint8_t *)&written_size, sizeof(written_size));
         success = pb_encode(&ostream, MsgHeader_fields, hdr);
 
         if (success) {
-            RLOGD("Size: %d (0x%x) Size as written: 0x%x", encoded_size, encoded_size,
-        written_size);
+            RLOGD("Size: %zu (0x%zx) Size as written: 0x%x", encoded_size,
+                    encoded_size, written_size);
             log_hex("onRequestComplete", &buffer[sizeof(written_size)], encoded_size);
             RLOGI("[%d] < SAP RESPONSE type: %d. id: %d. error: %d",
         hdr->token, hdr->type, hdr->id,hdr->error );
@@ -363,12 +369,13 @@ void RilSapSocket::sendResponse(MsgHeader* hdr) {
                 RLOGD("Write successful");
             }
         } else {
-            RLOGE("Error while encoding response of type %d id %d buffer_size: %d: %s.",
-            hdr->type, hdr->id, buffer_size, PB_GET_ERROR(&ostream));
+            RLOGE("Error while encoding response of type %d id %d buffer_size: %zu: %s.",
+                    hdr->type, hdr->id, buffer_size, PB_GET_ERROR(&ostream));
         }
+        free(buffer);
     } else {
-    RLOGE("Not sending response type %d: encoded_size: %u. commandFd: %d. encoded size result: %d",
-        hdr->type, encoded_size, commandFd, success);
+        RLOGE("Not sending response type %d: encoded_size: %zu. commandFd: %d. encoded size result:\
+                %d", hdr->type, encoded_size, commandFd, success);
     }
 
     pthread_mutex_unlock(&write_lock);
@@ -437,7 +444,11 @@ void RilSapSocket::sendDisconnect() {
    if ((success = pb_get_encoded_size(&encoded_size, RIL_SIM_SAP_DISCONNECT_REQ_fields,
         &disconnectReq)) && encoded_size <= INT32_MAX) {
         buffer_size = encoded_size + sizeof(uint32_t);
-        uint8_t buffer[buffer_size];
+        uint8_t* buffer = (uint8_t*)malloc(buffer_size);
+        if (!buffer) {
+            RLOGE("sendDisconnect: OOM");
+            return;
+        }
         written_size = htonl((uint32_t) encoded_size);
         ostream = pb_ostream_from_buffer(buffer, buffer_size);
         pb_write(&ostream, (uint8_t *)&written_size, sizeof(written_size));
@@ -469,6 +480,7 @@ void RilSapSocket::sendDisconnect() {
         else {
             RLOGE("Encode failed in send disconnect!");
         }
+        free(buffer);
     }
 }
 
