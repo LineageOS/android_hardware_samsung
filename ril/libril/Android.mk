@@ -22,6 +22,10 @@ LOCAL_SHARED_LIBRARIES := \
 LOCAL_STATIC_LIBRARIES := \
     libprotobuf-c-nano-enable_malloc \
 
+ifeq ($(SIM_COUNT), 2)
+    LOCAL_CFLAGS += -DANDROID_SIM_COUNT_2
+endif
+
 ifneq ($(filter xmm6262 xmm6360,$(BOARD_MODEM_TYPE)),)
 LOCAL_CFLAGS := -DMODEM_TYPE_XMM6262
 endif
@@ -42,9 +46,11 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../include
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/../include
 
 LOCAL_MODULE:= libril
+LOCAL_CLANG := true
 LOCAL_SANITIZE := integer
 
 include $(BUILD_SHARED_LIBRARY)
+
 
 # For RdoServD which needs a static library
 # =========================================
@@ -60,11 +66,13 @@ LOCAL_STATIC_LIBRARIES := \
     librilutils_static \
     libprotobuf-c-nano-enable_malloc
 
+LOCAL_CFLAGS :=
+
 ifneq ($(filter xmm6262 xmm6360,$(BOARD_MODEM_TYPE)),)
-LOCAL_CFLAGS := -DMODEM_TYPE_XMM6262
+LOCAL_CFLAGS += -DMODEM_TYPE_XMM6262
 endif
 ifeq ($(BOARD_MODEM_TYPE),xmm6260)
-LOCAL_CFLAGS := -DMODEM_TYPE_XMM6260
+LOCAL_CFLAGS += -DMODEM_TYPE_XMM6260
 endif
 
 LOCAL_MODULE:= libril_static
