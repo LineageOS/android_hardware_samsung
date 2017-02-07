@@ -234,8 +234,8 @@ int main() {
     }
 
     /* wisol */
-    if (strncasecmp(mac_addr_half, "48:5A:3F", 9) == 0 ||
-        strncasecmp(mac_addr_half, "70:2C:1F", 9) == 0) {
+    if (strncasecmp(mac_addr_half, "48:5a:3f", 9) == 0 ||
+        strncasecmp(mac_addr_half, "70:2c:1f", 9) == 0) {
         type = WISOL;
     }
 
