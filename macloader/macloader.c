@@ -40,7 +40,16 @@
 #endif
 
 #define MACADDR_PATH "/efs/wifi/.mac.info"
+
+/* Nougat have a different dhd PLATFORM_PATH, to make this compatible
+ * we can use "BOARD_USES_NOUGAT_CID_PATH := true" for N kernel sources
+ */
+
+#ifdef BOARD_USES_NOUGAT_CID_PATH
+#define CID_PATH "/data/misc/conn/.cid.info"
+#else
 #define CID_PATH "/data/.cid.info"
+#endif
 
 enum Type {
     NONE,
