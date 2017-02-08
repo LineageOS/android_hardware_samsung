@@ -17,6 +17,8 @@ LOCAL_SRC_FILES := \
 LOCAL_SHARED_LIBRARIES := \
     liblog libutils
 
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
+
 LOCAL_MODULE := macloader
 LOCAL_MODULE_TAGS := optional
 
