@@ -89,7 +89,8 @@ static int ril_connect_if_required(struct ril_handle *ril)
 
     rc = Connect_RILD(ril->client);
     if (rc != RIL_CLIENT_ERR_SUCCESS) {
-        ALOGE("Connect_RILD() failed");
+        ALOGE("FATAL: Failed to connect to RILD: %s",
+              strerror(errno));
         return -1;
     }
 
