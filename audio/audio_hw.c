@@ -3086,27 +3086,38 @@ static int out_get_presentation_position(const struct audio_stream_out *stream,
     } else {
         /* FIXME: which device to read from? */
         if (!list_empty(&out->pcm_dev_list)) {
+            struct pcm_device *pcm_device;
+            struct listnode *node;
             unsigned int avail;
-            struct pcm_device *pcm_device = node_to_item(list_head(&out->pcm_dev_list),
-                                                   struct pcm_device, stream_list_node);
 
-            if (pcm_get_htimestamp(pcm_device->pcm, &avail, timestamp) == 0) {
-                size_t kernel_buffer_size = out->config.period_size * out->config.period_count;
-                int64_t signed_frames = out->written - kernel_buffer_size + avail;
-                /* This adjustment accounts for buffering after app processor.
-                   It is based on estimated DSP latency per use case, rather than exact. */
-                signed_frames -=
-                    (render_latency(out->usecase) * out->sample_rate / 1000000LL);
+            list_for_each(node, &out->pcm_dev_list) {
+                pcm_device = node_to_item(node,
+                                          struct pcm_device,
+                                          stream_list_node);
 
-                /* It would be unusual for this value to be negative, but check just in case ... */
-                if (signed_frames >= 0) {
-                    *frames = signed_frames;
-                    ret = 0;
+                if (pcm_device->pcm != NULL) {
+                    if (pcm_get_htimestamp(pcm_device->pcm, &avail, timestamp) == 0) {
+                        size_t kernel_buffer_size = out->config.period_size * out->config.period_count;
+                        int64_t signed_frames = out->written - kernel_buffer_size + avail;
+                        /* This adjustment accounts for buffering after app processor.
+                           It is based on estimated DSP latency per use case, rather than exact. */
+                        signed_frames -=
+                            (render_latency(out->usecase) * out->sample_rate / 1000000LL);
+
+                        /* It would be unusual for this value to be negative, but check just in case ... */
+                        if (signed_frames >= 0) {
+                            *frames = signed_frames;
+                            ret = 0;
+                            goto done;
+                        }
+                        ret = -1;
+                    }
                 }
             }
         }
     }
 
+done:
     pthread_mutex_unlock(&out->lock);
 
     return ret;
