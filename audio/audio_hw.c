@@ -69,7 +69,7 @@ static struct pcm_device_profile pcm_device_playback = {
     .id = SOUND_PLAYBACK_DEVICE,
     .type = PCM_PLAYBACK,
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
-               AUDIO_DEVICE_OUT_SPEAKER,
+               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE,
 };
 
 static struct pcm_device_profile pcm_device_deep_buffer = {
@@ -87,7 +87,7 @@ static struct pcm_device_profile pcm_device_deep_buffer = {
     .id = SOUND_DEEP_BUFFER_DEVICE,
     .type = PCM_PLAYBACK,
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
-               AUDIO_DEVICE_OUT_SPEAKER,
+               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE,
 };
 
 static struct pcm_device_profile pcm_device_capture = {
