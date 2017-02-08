@@ -31,16 +31,7 @@
 
 #include <cutils/log.h>
 
-#ifndef WIFI_DRIVER_NVRAM_PATH
-#define WIFI_DRIVER_NVRAM_PATH		NULL
-#endif
-
-#ifndef WIFI_DRIVER_NVRAM_PATH_PARAM
-#define WIFI_DRIVER_NVRAM_PATH_PARAM "/sys/module/wlan/parameters/nvram_path"
-#endif
-
-#define MACADDR_PATH "/efs/wifi/.mac.info"
-#define CID_PATH "/data/.cid.info"
+#include <samsung_macloader.h>
 
 enum Type {
     NONE,
