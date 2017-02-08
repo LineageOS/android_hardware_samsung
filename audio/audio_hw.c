@@ -161,9 +161,7 @@ static struct pcm_device_profile pcm_device_playback_sco = {
     .card = SOUND_CARD,
     .id = SOUND_PLAYBACK_SCO_DEVICE,
     .type = PCM_PLAYBACK,
-    .devices =
-            AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
-            AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
+    .devices = AUDIO_DEVICE_OUT_ALL_SCO,
 };
 
 static struct pcm_device_profile pcm_device_capture_sco = {
@@ -181,7 +179,7 @@ static struct pcm_device_profile pcm_device_capture_sco = {
     .card = SOUND_CARD,
     .id = SOUND_CAPTURE_SCO_DEVICE,
     .type = PCM_CAPTURE,
-    .devices = AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET,
+    .devices = AUDIO_DEVICE_IN_ALL_SCO,
 };
 
 #ifdef SOUND_CAPTURE_HOTWORD_DEVICE
@@ -634,7 +632,7 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
             snd_device = SND_DEVICE_IN_SPEAKER_MIC;
         } else if (in_device & AUDIO_DEVICE_IN_WIRED_HEADSET) {
             snd_device = SND_DEVICE_IN_HEADSET_MIC;
-        } else if (in_device & AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET) {
+        } else if (in_device & AUDIO_DEVICE_IN_ALL_SCO) {
             snd_device = SND_DEVICE_IN_BT_SCO_MIC ;
         } else if (in_device & AUDIO_DEVICE_IN_AUX_DIGITAL) {
             snd_device = SND_DEVICE_IN_HDMI_MIC;
@@ -652,7 +650,7 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
             snd_device = SND_DEVICE_IN_SPEAKER_MIC;
         } else if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADPHONE) {
             snd_device = SND_DEVICE_IN_EARPIECE_MIC;
-        } else if (out_device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET) {
+        } else if (out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
             snd_device = SND_DEVICE_IN_BT_SCO_MIC;
         } else {
             ALOGE("%s: Unknown output device(s) %#x", __func__, out_device);
