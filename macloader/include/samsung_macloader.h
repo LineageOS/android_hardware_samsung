@@ -26,7 +26,7 @@
  */
 
 /* NVRAM calibration, NULL if calibration unneeded */
-#define WIFI_DRIVER_NVRAM_PATH NULL
+#define WIFI_DRIVER_NVRAM_PATH "/system/etc/wifi/nvram_net.txt"
 
 /* NVRAM calibration parameters */
 #define WIFI_DRIVER_NVRAM_PATH_PARAM "/sys/module/wlan/parameters/nvram_path"
