@@ -634,8 +634,6 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
         snd_device = SND_DEVICE_IN_VOICE_MIC;
         if (out_device & AUDIO_DEVICE_OUT_WIRED_HEADSET) {
             snd_device = SND_DEVICE_IN_VOICE_HEADSET_MIC;
-        } else if (out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-            snd_device = SND_DEVICE_IN_BT_SCO_MIC;
         }
 
         if (voice_session_uses_twomic(adev->voice.session)) {
@@ -659,6 +657,17 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
                 } else if (out_device & AUDIO_DEVICE_OUT_SPEAKER) {
                     snd_device = SND_DEVICE_IN_VOICE_SPEAKER_MIC_WB;
                 }
+            }
+        }
+
+        /* BT SCO */
+        if (out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
+            snd_device = SND_DEVICE_IN_VOICE_MIC;
+
+            if (out_device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET) {
+                snd_device = SND_DEVICE_IN_BT_SCO_MIC;
+            } else if (voice_session_uses_twomic(adev->voice.session)) {
+                snd_device = SND_DEVICE_IN_VOICE_EARPIECE_MIC;
             }
         }
     } else if (source == AUDIO_SOURCE_CAMCORDER) {
@@ -2726,6 +2735,11 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
         }
 #endif
         if (val != 0) {
+            bool bt_sco_active = false;
+
+            if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
+                bt_sco_active = true;
+            }
             out->devices = val;
 
             if (!out->standby) {
@@ -2758,6 +2772,10 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
             } else if ((adev->mode == AUDIO_MODE_IN_CALL) &&
                        adev->voice.in_call &&
                        (out == adev->primary_output)) {
+                /* Turn on bluetooth if needed */
+                if ((out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && !bt_sco_active) {
+                    start_voice_session_bt_sco(adev->voice.session);
+                }
                 select_devices(adev, USECASE_VOICE_CALL);
             }
         }
@@ -3933,6 +3951,9 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
 
     parms = str_parms_create_str(kvpairs);
 
+    /******************************************************
+     *** BT SCO
+     ******************************************************/
     ret = str_parms_get_str(parms, AUDIO_PARAMETER_KEY_BT_NREC, value, sizeof(value));
     if (ret >= 0) {
         /* When set to false, HAL should disable EC and NS
@@ -3942,6 +3963,21 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
             adev->voice.bluetooth_nrec = true;
         else
             adev->voice.bluetooth_nrec = false;
+    }
+
+    ret = str_parms_get_str(parms,
+                            AUDIO_PARAMETER_KEY_BT_SCO_WB,
+                            value,
+                            sizeof(value));
+    if (ret >= 0) {
+        /* TODO: Add support in voice calls */
+        if (strcmp(value, AUDIO_PARAMETER_VALUE_ON) == 0) {
+            adev->voice.bluetooth_wb = true;
+            ALOGI("%s: Implement support for BT SCO wideband calls!!!",
+                  __func__);
+        } else {
+            adev->voice.bluetooth_wb = false;
+        }
     }
 
     ret = str_parms_get_str(parms, "screen_state", value, sizeof(value));
