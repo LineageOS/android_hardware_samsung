@@ -50,6 +50,14 @@ static struct pcm_config pcm_config_voicecall_wideband = {
     .format = PCM_FORMAT_S16_LE,
 };
 
+struct pcm_config pcm_config_voice_sco = {
+    .channels = 1,
+    .rate = SCO_DEFAULT_SAMPLING_RATE,
+    .period_size = SCO_PERIOD_SIZE,
+    .period_count = SCO_PERIOD_COUNT,
+    .format = PCM_FORMAT_S16_LE,
+};
+
 /* Prototypes */
 int start_voice_call(struct audio_device *adev);
 int stop_voice_call(struct audio_device *adev);
@@ -114,6 +122,70 @@ void prepare_voice_session(struct voice_session *session,
 }
 
 /*
+ * This must be called with the hw device mutex locked, OK to hold other
+ * mutexes.
+ */
+static void stop_voice_session_bt_sco(struct voice_session *session) {
+    ALOGV("%s: Closing SCO PCMs", __func__);
+
+    if (session->pcm_sco_rx != NULL) {
+        pcm_stop(session->pcm_sco_rx);
+        pcm_close(session->pcm_sco_rx);
+        session->pcm_sco_rx = NULL;
+    }
+
+    if (session->pcm_sco_tx != NULL) {
+        pcm_stop(session->pcm_sco_tx);
+        pcm_close(session->pcm_sco_tx);
+        session->pcm_sco_tx = NULL;
+    }
+}
+
+/* must be called with the hw device mutex locked, OK to hold other mutexes */
+void start_voice_session_bt_sco(struct voice_session *session)
+{
+    if (session->pcm_sco_rx != NULL || session->pcm_sco_tx != NULL) {
+        ALOGW("%s: SCO PCMs already open!\n", __func__);
+        return;
+    }
+
+    ALOGV("%s: Opening SCO PCMs", __func__);
+
+    /* TODO: Add wideband support */
+
+    session->pcm_sco_rx = pcm_open(SOUND_CARD,
+                                   SOUND_PLAYBACK_SCO_DEVICE,
+                                   PCM_OUT|PCM_MONOTONIC,
+                                   &pcm_config_voice_sco);
+    if (session->pcm_sco_rx != NULL && !pcm_is_ready(session->pcm_sco_rx)) {
+        ALOGE("%s: cannot open PCM SCO RX stream: %s",
+              __func__, pcm_get_error(session->pcm_sco_rx));
+        goto err_sco_rx;
+    }
+
+    session->pcm_sco_tx = pcm_open(SOUND_CARD,
+                                   SOUND_CAPTURE_SCO_DEVICE,
+                                   PCM_IN|PCM_MONOTONIC,
+                                   &pcm_config_voice_sco);
+    if (session->pcm_sco_tx && !pcm_is_ready(session->pcm_sco_tx)) {
+        ALOGE("%s: cannot open PCM SCO TX stream: %s",
+              __func__, pcm_get_error(session->pcm_sco_tx));
+        goto err_sco_tx;
+    }
+
+    pcm_start(session->pcm_sco_rx);
+    pcm_start(session->pcm_sco_tx);
+
+    return;
+
+err_sco_tx:
+    pcm_close(session->pcm_sco_tx);
+    session->pcm_sco_tx = NULL;
+err_sco_rx:
+    pcm_close(session->pcm_sco_rx);
+    session->pcm_sco_rx = NULL;
+}
+/*
  * This function must be called with hw device mutex locked, OK to hold other
  * mutexes
  */
@@ -170,7 +242,9 @@ int start_voice_session(struct voice_session *session)
     pcm_start(session->pcm_voice_rx);
     pcm_start(session->pcm_voice_tx);
 
-    /* TODO: handle SCO */
+    if (session->out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
+        start_voice_session_bt_sco(session);
+    }
 
     if (session->two_mic_control) {
         ALOGV("%s: enabling two mic control", __func__);
@@ -209,7 +283,10 @@ void stop_voice_session(struct voice_session *session)
         status++;
     }
 
-    /* TODO: handle SCO */
+    if (session->out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
+        stop_voice_session_bt_sco(session);
+    }
+
 
     session->out_device = AUDIO_DEVICE_NONE;
 
