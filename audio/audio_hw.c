@@ -3874,6 +3874,14 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
             adev->voice.bluetooth_nrec = false;
     }
 
+    ret = str_parms_get_str(parms, "screen_state", value, sizeof(value));
+    if (ret >= 0) {
+        if (strcmp(value, AUDIO_PARAMETER_VALUE_ON) == 0)
+            adev->screen_off = false;
+        else
+            adev->screen_off = true;
+    }
+
 #if SWAP_SPEAKER_ON_SCREEN_ROTATION
     ret = str_parms_get_int(parms, "rotation", &val);
     if (ret >= 0) {
