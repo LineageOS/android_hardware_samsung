@@ -221,7 +221,8 @@ int main() {
     /* semco */
     if (strncasecmp(mac_addr_half, "4c:66:41", 9) == 0 ||
         strncasecmp(mac_addr_half, "51:f6:6b", 9) == 0 ||
-        strncasecmp(mac_addr_half, "ec:9b:f3", 9) == 0) {
+        strncasecmp(mac_addr_half, "ec:9b:f3", 9) == 0 ||
+        strncasecmp(mac_addr_half, "d8:c4:e9", 9) == 0) {
         type = SEMCO;
     }
 
