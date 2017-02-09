@@ -25,6 +25,9 @@ struct voice_session {
     struct pcm *pcm_voice_rx;
     struct pcm *pcm_voice_tx;
 
+    struct pcm *pcm_sco_rx;
+    struct pcm *pcm_sco_tx;
+
     bool wb_amr;
     bool two_mic_control;
     bool two_mic_disabled;
