@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a288981_c5820e52",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-02-09T17:55:57Z",
+      "side": 1,
+      "message": "Do you look for a match?\n\ncmp \u003d strncasecmp(macaddr_half, macaddr, strlen(macaddr));\nif (cmp \u003d\u003d 0) {\n   ...\n}",
+      "revId": "5a11f3ba658cca8ef72436a076f8d56ea828e446",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
