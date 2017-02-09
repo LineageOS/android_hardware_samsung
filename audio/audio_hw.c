@@ -388,7 +388,6 @@ static int mixer_init(struct audio_device *adev)
     struct audio_route *audio_route;
     char mixer_path[PATH_MAX];
     struct mixer_card *mixer_card;
-    struct listnode *node;
     int ret = 0;
 
     list_init(&adev->mixer_list);
@@ -739,10 +738,9 @@ exit:
     return snd_device;
 }
 
+#if 0
 static int set_hdmi_channels(struct audio_device *adev,  int channel_count)
 {
-    struct mixer_ctl *ctl;
-    const char *mixer_ctl_name = "";
     (void)adev;
     (void)channel_count;
     /* TODO */
@@ -753,12 +751,12 @@ static int set_hdmi_channels(struct audio_device *adev,  int channel_count)
 static int edid_get_max_channels(struct audio_device *adev)
 {
     int max_channels = 2;
-    struct mixer_ctl *ctl;
     (void)adev;
 
     /* TODO */
     return max_channels;
 }
+#endif
 
 /* Delay in Us */
 static int64_t render_latency(audio_usecase_t usecase)
@@ -1638,8 +1636,6 @@ static void in_update_aux_channels(struct stream_in *in,
 static ssize_t read_and_process_frames(struct stream_in *in, void* buffer, ssize_t frames)
 {
     ssize_t frames_wr = 0;
-    audio_buffer_t in_buf;
-    audio_buffer_t out_buf;
     size_t src_channels = in->config.channels;
     size_t dst_channels = audio_channel_count_from_in_mask(in->main_channels);
     int i;
@@ -1647,6 +1643,8 @@ static ssize_t read_and_process_frames(struct stream_in *in, void* buffer, ssize
     struct pcm_device *pcm_device;
     bool has_additional_channels = (dst_channels != src_channels) ? true : false;
 #ifdef PREPROCESSING_ENABLED
+    audio_buffer_t in_buf;
+    audio_buffer_t out_buf;
     bool has_processing = (in->num_preprocessors != 0) ? true : false;
 #endif
 
@@ -2391,7 +2389,6 @@ int enable_output_path_l(struct stream_out *out)
 static int stop_output_stream(struct stream_out *out)
 {
     int ret = 0;
-    struct audio_device *adev = out->dev;
     bool do_disable = true;
 
     ALOGV("%s: enter: usecase(%d: %s)", __func__,
@@ -2623,7 +2620,6 @@ static int out_set_format(struct audio_stream *stream, audio_format_t format)
 
 static int do_out_standby_l(struct stream_out *out)
 {
-    struct audio_device *adev = out->dev;
     int status = 0;
 
     out->standby = true;
@@ -2688,7 +2684,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
 {
     struct stream_out *out = (struct stream_out *)stream;
     struct audio_device *adev = out->dev;
-    struct audio_usecase *usecase;
     struct listnode *node;
     struct str_parms *parms;
     char value[32];
@@ -2696,7 +2691,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
     struct audio_usecase *uc_info;
     bool do_standby = false;
     struct pcm_device *pcm_device;
-    struct pcm_device_profile *pcm_profile;
 #ifdef PREPROCESSING_ENABLED
     struct stream_in *in = NULL;    /* if non-NULL, then force input to standby */
 #endif
@@ -2845,7 +2839,6 @@ static int out_set_volume(struct audio_stream_out *stream, float left,
                           float right)
 {
     struct stream_out *out = (struct stream_out *)stream;
-    struct audio_device *adev = out->dev;
 
     if (out->usecase == USECASE_AUDIO_PLAYBACK_MULTI_CH) {
         /* only take left channel into account: the API is for stereo anyway */
@@ -2893,21 +2886,19 @@ static ssize_t out_write(struct audio_stream_out *stream, const void *buffer,
     struct listnode *node;
     size_t frame_size = audio_stream_out_frame_size(stream);
     size_t frames_wr = 0, frames_rq = 0;
-    unsigned char *data = NULL;
-    struct pcm_config config;
 #ifdef PREPROCESSING_ENABLED
     size_t in_frames = bytes / frame_size;
     size_t out_frames = in_frames;
     struct stream_in *in = NULL;
 #endif
-    pid_t tid;
-    int err;
 
     lock_output_stream(out);
 
 #if SUPPORTS_IRQ_AFFINITY
     if (out->usecase == USECASE_AUDIO_PLAYBACK && !out->is_fastmixer_affinity_set) {
-        tid = gettid();
+        pid_t tid = gettid();
+        int err;
+
         err = fast_set_affinity(tid);
         if (err < 0) {
             ALOGW("Couldn't set affinity for tid %d; error %d", tid, err);
@@ -2956,7 +2947,9 @@ static ssize_t out_write(struct audio_stream_out *stream, const void *buffer,
         }
 #endif
     }
+#ifdef PREPROCESSING_ENABLED
 false_alarm:
+#endif
 
     if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD) {
         ret = out_write_offload(stream, buffer, bytes);
@@ -3118,7 +3111,6 @@ static int out_get_presentation_position(const struct audio_stream_out *stream,
 {
     struct stream_out *out = (struct stream_out *)stream;
     int ret = -1;
-    unsigned long dsp_frames;
 
     lock_output_stream(out);
 
@@ -3378,14 +3370,11 @@ static int in_set_parameters(struct audio_stream *stream, const char *kvpairs)
     struct stream_in *in = (struct stream_in *)stream;
     struct audio_device *adev = in->dev;
     struct str_parms *parms;
-    char *str;
     char value[32];
     int ret, val = 0;
     struct audio_usecase *uc_info;
     bool do_standby = false;
-    struct listnode *node;
     struct pcm_device *pcm_device;
-    struct pcm_device_profile *pcm_profile;
 
     ALOGV("%s: enter: kvpairs=%s", __func__, kvpairs);
     parms = str_parms_create_str(kvpairs);
@@ -3486,15 +3475,15 @@ static ssize_t in_read(struct audio_stream_in *stream, void *buffer,
     int read_and_process_successful = false;
 
     size_t frames_rq = bytes / audio_stream_in_frame_size(stream);
-    pid_t tid;
-    int err;
 
     /* no need to acquire adev->lock_inputs because API contract prevents a close */
     lock_input_stream(in);
 
 #if SUPPORTS_IRQ_AFFINITY
     if (in->usecase == USECASE_AUDIO_CAPTURE && !in->is_fastcapture_affinity_set) {
-        tid = gettid();
+        pid_t tid = gettid();
+        int err;
+
         err = fast_set_affinity(tid);
         if (err < 0) {
             ALOGW("Couldn't set affinity for tid %d; error %d", tid, err);
@@ -3740,7 +3729,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
 {
     struct audio_device *adev = (struct audio_device *)dev;
     struct stream_out *out;
-    int i, ret = 0;
+    int ret = 0;
     struct pcm_device_profile *pcm_profile;
 
     ALOGV("%s: enter: sample_rate(%d) channel_mask(%#x) devices(%#x) flags(%#x)",
@@ -3906,7 +3895,6 @@ static void adev_close_output_stream(struct audio_hw_device *dev,
                                      struct audio_stream_out *stream)
 {
     struct stream_out *out = (struct stream_out *)stream;
-    struct audio_device *adev = out->dev;
     (void)dev;
 
     ALOGV("%s: enter", __func__);
@@ -3927,9 +3915,10 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
 {
     struct audio_device *adev = (struct audio_device *)dev;
     struct str_parms *parms;
-    char *str;
     char value[32];
+#if SWAP_SPEAKER_ON_SCREEN_ROTATION
     int val;
+#endif
     int ret;
 
     ALOGV("%s: enter: %s", __func__, kvpairs);
@@ -4297,7 +4286,6 @@ static int adev_open(const hw_module_t *module, const char *name,
                      hw_device_t **device)
 {
     struct audio_device *adev;
-    int retry_count = 0;
 
     ALOGV("%s: enter", __func__);
     if (strcmp(name, AUDIO_HARDWARE_INTERFACE) != 0) return -EINVAL;
