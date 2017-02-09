@@ -34,15 +34,7 @@
 
 #include <samsung_macloader.h>
 
-enum Type {
-    NONE,
-    MURATA,
-    SEMCOSH,
-    SEMCOVE,
-    SEMCO3RD,
-    SEMCO,
-    WISOL
-};
+#include "macaddr_mappings.h"
 
 static int wifi_change_nvram_calibration(const char *nvram_file,
                                          const char *type)
@@ -120,6 +112,29 @@ out:
     return ret;
 }
 
+static int classify_macaddr_half(char const *macaddr_half)
+{
+    int type = NONE;
+    unsigned int i, j;
+    char *macaddr;
+
+    for (i = 0; i < TYPE_MAX; i++) {
+        for (j = 0; j < all_ranges[i]->size; j++) {
+            macaddr = all_ranges[i]->macaddrs[j];
+            if (strncasecmp(macaddr_half, macaddr, strlen(macaddr)) == 0) {
+                type = all_ranges[i]->type;
+                goto exit;
+            }
+        }
+    }
+
+exit:
+    if (type != NONE) {
+        ALOGV("Found CID type: %d", type);
+    }
+    return type;
+}
+
 int main() {
     FILE* file;
     FILE* cidfile;
@@ -146,91 +161,7 @@ int main() {
         return -1;
     }
 
-    /* murata
-       ref: http://hwaddress.com/?q=ACT */
-    if (strncasecmp(mac_addr_half, "00:0e:6d", 9) == 0 ||
-        strncasecmp(mac_addr_half, "00:13:e0", 9) == 0 ||
-        strncasecmp(mac_addr_half, "00:21:e8", 9) == 0 ||
-        strncasecmp(mac_addr_half, "00:26:e8", 9) == 0 ||
-        strncasecmp(mac_addr_half, "00:37:6d", 9) == 0 ||
-        strncasecmp(mac_addr_half, "00:60:57", 9) == 0 ||
-        strncasecmp(mac_addr_half, "00:ae:fa", 9) == 0 ||
-        strncasecmp(mac_addr_half, "04:46:65", 9) == 0 ||
-        strncasecmp(mac_addr_half, "10:5f:06", 9) == 0 ||
-        strncasecmp(mac_addr_half, "10:a5:d0", 9) == 0 ||
-        strncasecmp(mac_addr_half, "10:d5:42", 9) == 0 ||
-        strncasecmp(mac_addr_half, "14:7d:c5", 9) == 0 ||
-        strncasecmp(mac_addr_half, "1c:99:4c", 9) == 0 ||
-        strncasecmp(mac_addr_half, "20:02:af", 9) == 0 ||
-        strncasecmp(mac_addr_half, "40:f3:08", 9) == 0 ||
-        strncasecmp(mac_addr_half, "44:a7:cf", 9) == 0 ||
-        strncasecmp(mac_addr_half, "5c:da:d4", 9) == 0 ||
-        strncasecmp(mac_addr_half, "5c:f8:a1", 9) == 0 ||
-        strncasecmp(mac_addr_half, "60:21:c0", 9) == 0 ||
-        strncasecmp(mac_addr_half, "60:f1:89", 9) == 0 ||
-        strncasecmp(mac_addr_half, "78:4b:87", 9) == 0 ||
-        strncasecmp(mac_addr_half, "78:52:1a", 9) == 0 ||
-        strncasecmp(mac_addr_half, "88:30:8a", 9) == 0 ||
-        strncasecmp(mac_addr_half, "90:b6:86", 9) == 0 ||
-        strncasecmp(mac_addr_half, "98:f1:70", 9) == 0 ||
-        strncasecmp(mac_addr_half, "a0:cc:2b", 9) == 0 ||
-        strncasecmp(mac_addr_half, "a4:08:ea", 9) == 0 ||
-        strncasecmp(mac_addr_half, "b0:72:bf", 9) == 0 ||
-        strncasecmp(mac_addr_half, "b8:d7:af", 9) == 0 ||
-        strncasecmp(mac_addr_half, "c8:14:79", 9) == 0 ||
-        strncasecmp(mac_addr_half, "d0:e4:4a", 9) == 0 ||
-        strncasecmp(mac_addr_half, "d8:c4:6a", 9) == 0 ||
-        strncasecmp(mac_addr_half, "dc:ef:ca", 9) == 0 ||
-        strncasecmp(mac_addr_half, "f0:27:65", 9) == 0 ||
-        strncasecmp(mac_addr_half, "fc:c2:de", 9) == 0 ||
-        strncasecmp(mac_addr_half, "fc:db:b3", 9) == 0) {
-        type = MURATA;
-    }
-
-    /* semcosh */
-    if (strncasecmp(mac_addr_half, "34:23:ba", 9) == 0 ||
-        strncasecmp(mac_addr_half, "38:aa:3c", 9) == 0 ||
-        strncasecmp(mac_addr_half, "5c:0a:5b", 9) == 0 ||
-        strncasecmp(mac_addr_half, "88:32:9b", 9) == 0 ||
-        strncasecmp(mac_addr_half, "90:18:7c", 9) == 0 ||
-        strncasecmp(mac_addr_half, "cc:3a:61", 9) == 0) {
-        type = SEMCOSH;
-    }
-
-    /* semco3rd */
-    if (strncasecmp(mac_addr_half, "2c:0e:3d", 9) == 0 ||
-        strncasecmp(mac_addr_half, "54:88:0e", 9) == 0 ||
-        strncasecmp(mac_addr_half, "84:38:38", 9) == 0 ||
-        strncasecmp(mac_addr_half, "8c:f5:a3", 9) == 0 ||
-        strncasecmp(mac_addr_half, "ac:36:13", 9) == 0 ||
-        strncasecmp(mac_addr_half, "ac:5f:3e", 9) == 0 ||
-        strncasecmp(mac_addr_half, "b4:79:a7", 9) == 0 ||
-        strncasecmp(mac_addr_half, "c0:97:27", 9) == 0 ||
-        strncasecmp(mac_addr_half, "c0:bd:d1", 9) == 0 ||
-        strncasecmp(mac_addr_half, "c8:ba:94", 9) == 0 ||
-        strncasecmp(mac_addr_half, "d0:25:44", 9) == 0 ||
-        strncasecmp(mac_addr_half, "e8:50:8b", 9) == 0 ||
-        strncasecmp(mac_addr_half, "ec:1f:72", 9) == 0 ||
-        strncasecmp(mac_addr_half, "ec:9b:f3", 9) == 0 ||
-        strncasecmp(mac_addr_half, "f0:25:b7", 9) == 0 ||
-        strncasecmp(mac_addr_half, "f4:09:d8", 9) == 0 ||
-        strncasecmp(mac_addr_half, "f8:04:2e", 9) == 0) {
-        type = SEMCO3RD;
-    }
-
-    /* semco */
-    if (strncasecmp(mac_addr_half, "4c:66:41", 9) == 0 ||
-        strncasecmp(mac_addr_half, "51:f6:6b", 9) == 0 ||
-        strncasecmp(mac_addr_half, "ec:9b:f3", 9) == 0 ||
-        strncasecmp(mac_addr_half, "d8:c4:e9", 9) == 0) {
-        type = SEMCO;
-    }
-
-    /* wisol */
-    if (strncasecmp(mac_addr_half, "48:5a:3f", 9) == 0 ||
-        strncasecmp(mac_addr_half, "70:2c:1f", 9) == 0) {
-        type = WISOL;
-    }
+    type = classify_macaddr_half(mac_addr_half);
 
     if (type != NONE) {
         const char *nvram_file;
@@ -238,17 +169,7 @@ int main() {
         struct passwd *pwd;
         int fd;
 
-        /* open cid file */
-        cidfile = fopen(CID_PATH, "w");
-        if(cidfile == 0) {
-            fprintf(stderr, "open(%s) failed\n", CID_PATH);
-            ALOGE("Can't open %s\n", CID_PATH);
-            return -1;
-        }
-
         switch(type) {
-            case NONE:
-                return -1;
             case MURATA:
                 type_str = "murata";
                 break;
@@ -260,16 +181,30 @@ int main() {
                 break;
             case SEMCO3RD:
                 type_str = "semco3rd";
-            break;
+                break;
             case SEMCO:
                 type_str = "semco";
                 break;
             case WISOL:
                 type_str = "wisol";
-            break;
+                break;
+            default:
+                ALOGE("Unknown CID type: %d", type);
+                return 1;
         }
 
         ALOGI("Settting wifi type to %s in %s\n", type_str, CID_PATH);
+
+        /* open cid file */
+        cidfile = fopen(CID_PATH, "w");
+        if (cidfile == NULL) {
+            fprintf(stderr,
+                    "open(%s) failed: %s\n",
+                    CID_PATH,
+                    strerror(errno));
+            ALOGE("Can't open %s: %s\n", CID_PATH, strerror(errno));
+            return -1;
+        }
 
         ret = fputs(type_str, cidfile);
         if (ret != 0) {
