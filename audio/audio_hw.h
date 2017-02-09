@@ -387,6 +387,7 @@ struct audio_device {
     struct stream_in*       active_input;
     struct stream_out*      primary_output;
     bool                    mic_mute;
+    bool                    screen_off;
 
     struct {
         bool                in_call;
