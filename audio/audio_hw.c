@@ -3927,6 +3927,9 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
 
     parms = str_parms_create_str(kvpairs);
 
+    /******************************************************
+     *** BT SCO
+     ******************************************************/
     ret = str_parms_get_str(parms, AUDIO_PARAMETER_KEY_BT_NREC, value, sizeof(value));
     if (ret >= 0) {
         /* When set to false, HAL should disable EC and NS
@@ -3936,6 +3939,21 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
             adev->voice.bluetooth_nrec = true;
         else
             adev->voice.bluetooth_nrec = false;
+    }
+
+    ret = str_parms_get_str(parms,
+                            AUDIO_PARAMETER_KEY_BT_SCO_WB,
+                            value,
+                            sizeof(value));
+    if (ret >= 0) {
+        /* TODO: Add support in voice calls */
+        if (strcmp(value, AUDIO_PARAMETER_VALUE_ON) == 0) {
+            adev->voice.bluetooth_wb = true;
+            ALOGI("%s: Implement support for BT SCO wideband calls!!!",
+                  __func__);
+        } else {
+            adev->voice.bluetooth_wb = false;
+        }
     }
 
     ret = str_parms_get_str(parms, "screen_state", value, sizeof(value));
