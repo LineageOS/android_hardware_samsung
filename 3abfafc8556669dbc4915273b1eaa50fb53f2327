@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_2d6d4d05",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-02-10T11:40:38Z",
+      "side": 1,
+      "message": "Please change to RANGE_ENTRY_LEN + 1",
+      "range": {
+        "startLine": 148,
+        "startChar": 23,
+        "endLine": 148,
+        "endChar": 25
+      },
+      "revId": "3abfafc8556669dbc4915273b1eaa50fb53f2327",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_0d7291e5",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-02-10T11:40:38Z",
+      "side": 1,
+      "message": "Please use RANGE_ENTRY_LEN",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 32
+      },
+      "revId": "3abfafc8556669dbc4915273b1eaa50fb53f2327",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
