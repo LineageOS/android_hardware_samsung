@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "5a2585a7_ed94e545",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T09:23:49Z",
+      "side": 1,
+      "message": "Not my code.",
+      "parentUuid": "5a2585a7_8d30c1e9",
+      "range": {
+        "startLine": 178,
+        "startChar": 8,
+        "endLine": 178,
+        "endChar": 9
+      },
+      "revId": "62e39328a9bb7d668b0d2facb6f70db74b783fde",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2585a7_ad337df5",
         "filename": "macloader/macloader.c",
         "patchSetId": 4
@@ -82,6 +106,30 @@
       "writtenOn": "2017-02-10T07:00:10Z",
       "side": 1,
       "message": "fclose(cidfile);",
+      "range": {
+        "startLine": 207,
+        "startChar": 22,
+        "endLine": 207,
+        "endChar": 23
+      },
+      "revId": "62e39328a9bb7d668b0d2facb6f70db74b783fde",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_cd912954",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T09:23:49Z",
+      "side": 1,
+      "message": "Again, not part of this commit, but I agree.",
+      "parentUuid": "5a2585a7_ad337df5",
       "range": {
         "startLine": 207,
         "startChar": 22,
