@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a288981_c518ce86",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 15173
+      },
+      "writtenOn": "2017-02-10T04:26:55Z",
+      "side": 1,
+      "message": "Alphabets",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 18
+      },
+      "revId": "62e39328a9bb7d668b0d2facb6f70db74b783fde",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
