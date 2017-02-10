@@ -617,9 +617,9 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
     source = (active_input == NULL) ?
                                 AUDIO_SOURCE_DEFAULT : active_input->source;
 
-    in_device = ((active_input == NULL) ?
-                                    AUDIO_DEVICE_NONE : active_input->devices)
-                                & ~AUDIO_DEVICE_BIT_IN;
+    in_device = (active_input == NULL) ?
+                    AUDIO_DEVICE_NONE :
+                    (active_input->devices & ~AUDIO_DEVICE_BIT_IN);
     channel_mask = (active_input == NULL) ?
                                 AUDIO_CHANNEL_IN_MONO : active_input->main_channels;
 
