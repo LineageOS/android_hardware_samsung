@@ -393,6 +393,7 @@ struct audio_device {
         bool                in_call;
         float               volume;
         bool                bluetooth_nrec;
+        bool                bluetooth_wb;
         void                *session;
     } voice;
 
