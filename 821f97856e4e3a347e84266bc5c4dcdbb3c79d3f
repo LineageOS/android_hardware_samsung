@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_10eceac6",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 17
+      },
+      "lineNbr": 2427,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T15:29:10Z",
+      "side": 1,
+      "message": "Move this to line 2409 where the original comment was.\nIf for whatever reason the use case is not found, we still want to terminate the voice session.",
+      "revId": "821f97856e4e3a347e84266bc5c4dcdbb3c79d3f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_d0cd425f",
+        "filename": "audio/include/samsung_audio.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T15:29:10Z",
+      "side": 1,
+      "message": "Define these by default (the values are fine).\nWiFi-only tablets etc. are not affected by this.",
+      "revId": "821f97856e4e3a347e84266bc5c4dcdbb3c79d3f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_f0d03ef9",
+        "filename": "audio/voice.c",
+        "patchSetId": 17
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T15:29:10Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to ifdef this.\nOn WiFi-only tablets etc we will never fall into the voice session use case.",
+      "revId": "821f97856e4e3a347e84266bc5c4dcdbb3c79d3f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
