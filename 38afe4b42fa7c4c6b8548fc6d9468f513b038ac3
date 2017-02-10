@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5a2585a7_33ddb043",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T20:39:58Z",
+      "side": 1,
+      "message": "Well, you either need to implement support for it or remove SND_DEVICE_IN_BT_SCO_MIC_WB from the capture devices in audio_hw.h.\nThose arrays must be in sync.",
+      "parentUuid": "5a2585a7_90733a15",
+      "revId": "38afe4b42fa7c4c6b8548fc6d9468f513b038ac3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2585a7_3035a646",
         "filename": "audio/audio_hw.c",
         "patchSetId": 16
