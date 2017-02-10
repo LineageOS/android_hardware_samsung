@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_90ee9ab3",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T15:39:37Z",
+      "side": 1,
+      "message": "SND_DEVICE_OUT_BT_SCO_WB is missing (same as for the header change).",
+      "revId": "38afe4b42fa7c4c6b8548fc6d9468f513b038ac3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_d0f42289",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T15:39:37Z",
+      "side": 1,
+      "message": "SND_DEVICE_IN_BT_SCO_MIC_WB is missing here.",
+      "revId": "38afe4b42fa7c4c6b8548fc6d9468f513b038ac3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_3035a646",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T15:39:37Z",
+      "side": 1,
+      "message": "Instead of all this fiddling with IF-cases above, I\u0027d prefer to have a single if condition along these lines that checks for voice_session_uses_wideband, then switches the snd_device and assigns the appropriate WB route if necessary.",
+      "revId": "38afe4b42fa7c4c6b8548fc6d9468f513b038ac3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_1003ca74",
+        "filename": "audio/audio_hw.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T15:39:37Z",
+      "side": 1,
+      "message": "SND_DEVICE_OUT_BT_SCO_WB is missing, you already have the input route for it.",
+      "revId": "38afe4b42fa7c4c6b8548fc6d9468f513b038ac3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
