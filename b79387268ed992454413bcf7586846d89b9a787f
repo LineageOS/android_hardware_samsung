@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a2585a7_8d4561b5",
+        "filename": "macloader/macloader.c",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-02-10T11:06:34Z",
+      "side": 1,
+      "message": "If we null terminate, then we can use strcasecmp(). This way we do not overflow at least ;)",
+      "range": {
+        "startLine": 129,
+        "startChar": 16,
+        "endLine": 129,
+        "endChar": 27
+      },
+      "revId": "b79387268ed992454413bcf7586846d89b9a787f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2585a7_ed3e2529",
         "filename": "macloader/macloader.c",
         "patchSetId": 10
