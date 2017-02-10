@@ -34,6 +34,24 @@
       "revId": "b4e0b96b68e750048961fb0d9cf44f23b4d46056",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_7337b8b1",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 14
+      },
+      "lineNbr": 2498,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-10T19:39:34Z",
+      "side": 1,
+      "message": "You are right, I missed that :)",
+      "parentUuid": "5a2585a7_f0539e6a",
+      "revId": "b4e0b96b68e750048961fb0d9cf44f23b4d46056",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
