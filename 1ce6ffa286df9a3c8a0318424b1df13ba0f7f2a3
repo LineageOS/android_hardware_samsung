@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_824d2875",
+        "filename": "AdvancedDisplay/src/com/cyanogenmod/settings/device/Utils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2017-02-11T23:10:36Z",
+      "side": 1,
+      "message": "Probably better to just get rid of the Utils class and use FileUtils.isFileWritable() directly.",
+      "revId": "1ce6ffa286df9a3c8a0318424b1df13ba0f7f2a3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
