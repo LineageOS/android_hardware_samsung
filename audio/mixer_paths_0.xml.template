@@ -85,22 +85,26 @@
 
     <!-- Two mic -->
     <path name="voice-earpiece-mic">
-        <!-- Should be builtin and back mic -->
+        <!-- Should be main mic and back mic -->
+        <!-- Capture channel set to main mic -->
         <!-- Empty path -->
     </path>
 
     <path name="voice-earpiece-mic-wb">
-        <!-- Should be builtin and back mic -->
+        <!-- Should be main mic and back mic -->
+        <!-- Capture channel set to main mic -->
         <!-- Empty path -->
     </path>
 
     <path name="voice-speaker-mic">
-        <!-- Should be builtin and back mic -->
+        <!-- Should be main mic and back mic -->
+        <!-- Capture channel set to back mic -->
         <!-- Empty path -->
     </path>
 
     <path name="voice-speaker-mic-wb">
-        <!-- Should be builtin and back mic -->
+        <!-- Should be main mic and back mic -->
+        <!-- Capture channel set to back mic -->
         <!-- Empty path -->
     </path>
 
