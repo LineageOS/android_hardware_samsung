@@ -3084,6 +3084,12 @@ static int out_get_presentation_position(const struct audio_stream_out *stream,
     if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD) {
         ret = out_get_presentation_offload_position(out, frames, timestamp);
     } else {
+        if (out->dev->voice.in_call) {
+            ALOGVV("%s: in_call, do not handle PCMs", __func__);
+            ret = 0;
+            goto done;
+        }
+
         /* FIXME: which device to read from? */
         if (!list_empty(&out->pcm_dev_list)) {
             struct pcm_device *pcm_device;
