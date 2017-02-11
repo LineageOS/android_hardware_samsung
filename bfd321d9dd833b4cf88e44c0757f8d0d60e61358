@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_4199826d",
+        "filename": "audio/mixer_paths_0.xml.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-11T10:38:19Z",
+      "side": 1,
+      "message": "Is this the way Samsung does it on stock?\nThe only benefit I can see from using the back mic here is echo cancellation, which can only be done by using the prebuilt NXP blobs.\nSome people might not have those available for their devices, so I believe there should be a notice here (big fat warning actually).",
+      "revId": "bfd321d9dd833b4cf88e44c0757f8d0d60e61358",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_219e7657",
+        "filename": "audio/mixer_paths_0.xml.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-11T10:38:19Z",
+      "side": 1,
+      "message": "same",
+      "revId": "bfd321d9dd833b4cf88e44c0757f8d0d60e61358",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
