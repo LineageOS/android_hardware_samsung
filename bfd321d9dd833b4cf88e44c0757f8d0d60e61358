@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a2585a7_a1738614",
+        "filename": "audio/mixer_paths_0.xml.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-02-11T12:28:54Z",
+      "side": 1,
+      "message": "Yes, this is how it is done on Stock and I think the modem does the echo cancellation here. That\u0027s why it load special firmware and sets the \"DSP4 XM fxxx:x\". That\u0027s why I added support in audio_route for \u003cparam .../\u003e",
+      "parentUuid": "5a2585a7_4199826d",
+      "revId": "bfd321d9dd833b4cf88e44c0757f8d0d60e61358",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2585a7_219e7657",
         "filename": "audio/mixer_paths_0.xml.template",
         "patchSetId": 4
