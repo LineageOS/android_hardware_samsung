@@ -5634,7 +5634,9 @@ void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
                                 size_t datalen)
 #endif
 {
+#if !defined(RIL_UNSOL_SNDMGR_WB_AMR_REPORT) || !defined(RIL_UNSOL_SNDMGR_CLOCK_CTRL)
     int unsolResponseIndex;
+#endif
     int ret;
     int64_t timeReceived = 0;
     bool shouldScheduleTimeout = false;
@@ -5654,26 +5656,48 @@ void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
         return;
     }
 
+#if !defined(RIL_UNSOL_SNDMGR_WB_AMR_REPORT) && !defined(RIL_UNSOL_SNDMGR_CLOCK_CTRL)
     unsolResponseIndex = unsolResponse - RIL_UNSOL_RESPONSE_BASE;
+#endif
     pRI = s_unsolResponses;
 
     /* Hack to include Samsung responses */
     if (unsolResponse > RIL_VENDOR_COMMANDS_OFFSET + RIL_UNSOL_RESPONSE_BASE) {
+#if !defined(RIL_UNSOL_SNDMGR_WB_AMR_REPORT) && !defined(RIL_UNSOL_SNDMGR_CLOCK_CTRL)
         unsolResponseIndex -= RIL_VENDOR_COMMANDS_OFFSET;
+#endif
         pRI = s_unsolResponses_v;
 
+#if !defined(RIL_UNSOL_SNDMGR_WB_AMR_REPORT) && !defined(RIL_UNSOL_SNDMGR_CLOCK_CTRL)
         RLOGD("SAMSUNG: unsolResponse=%d, unsolResponseIndex=%d", unsolResponse, unsolResponseIndex);
+#else
+        RLOGD("SAMSUNG: unsolResponse=%d", unsolResponse);
+#endif
     }
 
     pRI_elements = pRI == s_unsolResponses
             ? (int32_t)NUM_ELEMS(s_unsolResponses) : (int32_t)NUM_ELEMS(s_unsolResponses_v);
 
+#if !defined(RIL_UNSOL_SNDMGR_WB_AMR_REPORT) && !defined(RIL_UNSOL_SNDMGR_CLOCK_CTRL)
     if (unsolResponseIndex >= 0 && unsolResponseIndex < pRI_elements) {
         pRI = &pRI[unsolResponseIndex];
     } else {
         RLOGE("unsolResponseIndex out of bounds: %d, using %s response array", unsolResponseIndex,
                 pRI == s_unsolResponses ? "AOSP" : "Samsung");
     }
+#else
+    int pRI_index;
+    for (pRI_index = 0; pRI_index < pRI_elements; pRI_index++) {
+        if (pRI[pRI_index].requestNumber == unsolResponse) {
+            pRI = &pRI[pRI_index];
+        }
+    }
+
+    if (pRI == NULL) {
+        RLOGE("could not map unsolResponse=%d to %s response array", unsolResponse,
+                pRI == s_unsolResponses ? "AOSP" : "Samsung");
+    }
+#endif
 
     if (pRI == NULL || pRI->responseFunction == NULL) {
         RLOGE("unsupported unsolicited response code %d", unsolResponse);
