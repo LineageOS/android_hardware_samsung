@@ -2710,7 +2710,11 @@ static int responseDataCallListV6(Parcel &p, void *response, size_t responselen)
         writeStringToParcel(p, p_cur[i].ifname);
         writeStringToParcel(p, p_cur[i].addresses);
         writeStringToParcel(p, p_cur[i].dnses);
+#if defined(MODEM_TYPE_XMM6262) || defined(MODEM_TYPE_XMM6260)
+        writeStringToParcel(p, p_cur[i].addresses);
+#else
         writeStringToParcel(p, p_cur[i].gateways);
+#endif
         appendPrintBuf("%s[status=%d,retry=%d,cid=%d,%s,%s,%s,%s,%s,%s],", printBuf,
             p_cur[i].status,
             p_cur[i].suggestedRetryTime,
@@ -2720,7 +2724,12 @@ static int responseDataCallListV6(Parcel &p, void *response, size_t responselen)
             (char*)p_cur[i].ifname,
             (char*)p_cur[i].addresses,
             (char*)p_cur[i].dnses,
-            (char*)p_cur[i].gateways);
+#if defined(MODEM_TYPE_XMM6262) || defined(MODEM_TYPE_XMM6260)
+            (char*)p_cur[i].addresses
+#else
+            (char*)p_cur[i].gateways
+#endif
+            );
     }
     removeLastChar;
     closeResponse;
