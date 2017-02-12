@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_8cd0ba54",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2604,
+      "author": {
+        "id": 13873
+      },
+      "writtenOn": "2017-02-12T18:48:28Z",
+      "side": 0,
+      "message": "Reverting this line fixed data on i9100",
+      "revId": "928ddca2ec603ee6fad24f00d18fa638abaf36d2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
