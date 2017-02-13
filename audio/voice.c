@@ -202,12 +202,12 @@ int start_voice_session(struct voice_session *session)
 
     ALOGV("%s: Opening voice PCMs", __func__);
 
-    if (session->wb_amr) {
-        ALOGV("%s: pcm_config wideband", __func__);
-        voice_config = &pcm_config_voicecall_wideband;
-    } else {
+    if (session->wb_amr == 0) {
         ALOGV("%s: pcm_config narrowband", __func__);
         voice_config = &pcm_config_voicecall;
+    } else {
+        ALOGV("%s: pcm_config wideband", __func__);
+        voice_config = &pcm_config_voicecall_wideband;
     }
 
     /* Open modem PCM channels */
@@ -341,10 +341,10 @@ bool voice_session_uses_twomic(struct voice_session *session)
 
 bool voice_session_uses_wideband(struct voice_session *session)
 {
-    return session->wb_amr;
+    return session->wb_amr > 0;
 }
 
-static void voice_session_wb_amr_callback(void *data, int enable)
+static void voice_session_wb_amr_callback(void *data, int wb_amr)
 {
     struct audio_device *adev = (struct audio_device *)data;
     struct voice_session *session =
@@ -352,14 +352,16 @@ static void voice_session_wb_amr_callback(void *data, int enable)
 
     pthread_mutex_lock(&adev->lock);
 
-    if (session->wb_amr != enable) {
-        session->wb_amr = enable;
+    if (session->wb_amr != wb_amr) {
+        session->wb_amr = wb_amr;
+
+        /* TODO Handle 1 and 2 */
 
         /* reopen the modem PCMs at the new rate */
         if (adev->voice.in_call) {
             ALOGV("%s: %s wide band voice call",
                   __func__,
-                  enable ? "Enable" : "Disable");
+                  wb_amr > 0 ? "Enable" : "Disable");
 
             stop_voice_call(adev);
             start_voice_call(adev);
@@ -396,9 +398,9 @@ struct voice_session *voice_session_init(struct audio_device *adev)
     ret = property_get("audio_hal.force_voice_config", voice_config, "");
     if (ret > 0) {
         if ((strncmp(voice_config, "narrow", 6)) == 0)
-            session->wb_amr = false;
+            session->wb_amr = 0;
         else if ((strncmp(voice_config, "wide", 4)) == 0)
-            session->wb_amr = true;
+            session->wb_amr = 1;
         ALOGV("%s: Forcing voice config: %s", __func__, voice_config);
     } else {
         /* register callback for wideband AMR setting */
