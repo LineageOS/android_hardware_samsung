@@ -248,7 +248,6 @@ static const struct string_to_enum out_channels_name_to_enum_table[] = {
 struct timespec time_spec_diff(struct timespec time1, struct timespec time0) {
     struct timespec ret;
     int xsec = 0;
-    int sign = 1;
 
     if (time0.tv_nsec > time1.tv_nsec) {
         xsec = (int) ((time0.tv_nsec - time1.tv_nsec) / (1E9 + 1));
@@ -263,13 +262,14 @@ struct timespec time_spec_diff(struct timespec time1, struct timespec time0) {
     }
 
     ret.tv_sec = time1.tv_sec - time0.tv_sec;
-    ret.tv_nsec = time1.tv_nsec - time0.tv_nsec;
-
     if (time1.tv_sec < time0.tv_sec) {
-        sign = -1;
+        ret.tv_sec *= -1;
     }
 
-    ret.tv_sec = ret.tv_sec * sign;
+    ret.tv_nsec = time1.tv_nsec - time0.tv_nsec;
+    if (time1.tv_nsec < time0.tv_nsec) {
+        ret.tv_nsec *= -1;
+    }
 
     return ret;
 }
