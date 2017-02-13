@@ -53,7 +53,7 @@ static int ril_internal_wb_amr_callback(HRilClient client __unused,
                                         const void *data,
                                         size_t datalen)
 {
-    int enable = 0;
+    int wb_amr_type = 0;
 
     if (_wb_amr_data == NULL || _wb_amr_callback == NULL) {
         return -1;
@@ -63,11 +63,9 @@ static int ril_internal_wb_amr_callback(HRilClient client __unused,
         return -1;
     }
 
-    if (*((int *)data) != 0) {
-        enable = 1;
-    }
+    wb_amr_type = *((int *)data);
 
-    _wb_amr_callback(_wb_amr_data, enable);
+    _wb_amr_callback(_wb_amr_data, wb_amr_type);
 
     return 0;
 }

@@ -20,7 +20,15 @@
 #include <samsung_audio.h>
 #include <secril-client.h>
 
-typedef void (*ril_wb_amr_callback)(void *data, int enable);
+/**
+ * @brief The callback to change to wideband which should
+ * be implemented by the audio HAL.
+ *
+ * @param[in]  data          User data poiner
+ * @param[in]  wb_amr_type   0 = disable WB, 1 = enable WB,
+ *                           2 = WB (and probably NS)
+ */
+typedef void (*ril_wb_amr_callback)(void *data, int wb_amr_type);
 
 struct ril_handle
 {
