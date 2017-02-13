@@ -63,9 +63,7 @@ static int ril_internal_wb_amr_callback(HRilClient client __unused,
         return -1;
     }
 
-    if (*((int *)data) != 0) {
-        enable = 1;
-    }
+    enable = *((int *)data);
 
     _wb_amr_callback(_wb_amr_data, enable);
 

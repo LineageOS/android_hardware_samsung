@@ -20,6 +20,14 @@
 #include <telephony/ril.h>
 #include <secril-client.h>
 
+/**
+ * @brief The callback to change to wideband which should
+ * be implemented by the audio HAL.
+ *
+ * @param[in]  data     User data poiner
+ * @param[in]  enable   0 = disable WB, 1 = enable WB,
+ *                      2 = WB (and probably NS)
+ */
 typedef void (*ril_wb_amr_callback)(void *data, int enable);
 
 struct ril_handle
