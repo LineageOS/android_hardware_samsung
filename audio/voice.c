@@ -65,6 +65,7 @@ int stop_voice_call(struct audio_device *adev);
 void set_voice_session_audio_path(struct voice_session *session)
 {
     enum _AudioPath device_type;
+    int rc;
 
     switch(session->out_device) {
         case AUDIO_DEVICE_OUT_SPEAKER:
@@ -92,7 +93,8 @@ void set_voice_session_audio_path(struct voice_session *session)
 
     ALOGV("%s: ril_set_call_audio_path(%d)", __func__, device_type);
 
-    ril_set_call_audio_path(&session->ril, device_type);
+    rc = ril_set_call_audio_path(&session->ril, device_type);
+    ALOGE_IF(rc != 0, "Failed to set audio path: (%d)", rc);
 }
 
 /*
