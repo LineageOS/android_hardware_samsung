@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_efe3b003",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2711,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-02-13T05:46:45Z",
+      "side": 1,
+      "message": "addresses is set here.\n\nYou set it twice now!",
+      "range": {
+        "startLine": 2711,
+        "startChar": 49,
+        "endLine": 2711,
+        "endChar": 51
+      },
+      "revId": "5b75c5763c96714af841f9ae4d0606228fb1615a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
