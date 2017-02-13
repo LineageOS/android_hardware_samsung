@@ -202,7 +202,8 @@ int start_voice_session(struct voice_session *session)
 
     ALOGV("%s: Opening voice PCMs", __func__);
 
-    if (session->wb_amr) {
+    /* TODO: Handle wb_amr=2 */
+    if (session->wb_amr_type >= 1) {
         ALOGV("%s: pcm_config wideband", __func__);
         voice_config = &pcm_config_voicecall_wideband;
     } else {
@@ -341,10 +342,10 @@ bool voice_session_uses_twomic(struct voice_session *session)
 
 bool voice_session_uses_wideband(struct voice_session *session)
 {
-    return session->wb_amr;
+    return session->wb_amr_type >= 1;
 }
 
-static void voice_session_wb_amr_callback(void *data, int enable)
+static void voice_session_wb_amr_callback(void *data, int wb_amr_type)
 {
     struct audio_device *adev = (struct audio_device *)data;
     struct voice_session *session =
@@ -352,14 +353,17 @@ static void voice_session_wb_amr_callback(void *data, int enable)
 
     pthread_mutex_lock(&adev->lock);
 
-    if (session->wb_amr != enable) {
-        session->wb_amr = enable;
+    if (session->wb_amr_type != wb_amr_type) {
+        session->wb_amr_type = wb_amr_type;
 
         /* reopen the modem PCMs at the new rate */
         if (adev->voice.in_call) {
-            ALOGV("%s: %s wide band voice call",
+            ALOGV("%s: %s wide band voice call (WB_AMR=%d)",
                   __func__,
-                  enable ? "Enable" : "Disable");
+                  wb_amr_type > 0 ? "Enable" : "Disable",
+                  wb_amr_type);
+
+            /* TODO Handle wb_amr_type=2 */
 
             stop_voice_call(adev);
             start_voice_call(adev);
@@ -396,9 +400,9 @@ struct voice_session *voice_session_init(struct audio_device *adev)
     ret = property_get("audio_hal.force_voice_config", voice_config, "");
     if (ret > 0) {
         if ((strncmp(voice_config, "narrow", 6)) == 0)
-            session->wb_amr = false;
+            session->wb_amr_type = 0;
         else if ((strncmp(voice_config, "wide", 4)) == 0)
-            session->wb_amr = true;
+            session->wb_amr_type = 1;
         ALOGV("%s: Forcing voice config: %s", __func__, voice_config);
     } else {
         if (RIL_UNSOL_SNDMGR_WB_AMR_REPORT > 0) {
