@@ -263,13 +263,20 @@ struct timespec time_spec_diff(struct timespec time1, struct timespec time0) {
     }
 
     ret.tv_sec = time1.tv_sec - time0.tv_sec;
-    ret.tv_nsec = time1.tv_nsec - time0.tv_nsec;
-
     if (time1.tv_sec < time0.tv_sec) {
         sign = -1;
+    } else {
+        sign = 1;
     }
+    ret.tv_sec *= sign;
 
-    ret.tv_sec = ret.tv_sec * sign;
+    ret.tv_nsec = time1.tv_nsec - time0.tv_nsec;
+    if (time1.tv_nsec < time0.tv_nsec) {
+        sign = -1;
+    } else {
+        sign = 1;
+    }
+    ret.tv_nsec *= sign;
 
     return ret;
 }
