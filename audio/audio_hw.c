@@ -225,6 +225,7 @@ static const char * const use_case_table[AUDIO_USECASE_MAX] = {
     [USECASE_AUDIO_PLAYBACK] = "playback",
     [USECASE_AUDIO_PLAYBACK_MULTI_CH] = "playback multi-channel",
     [USECASE_AUDIO_PLAYBACK_OFFLOAD] = "compress-offload-playback",
+    [USECASE_AUDIO_PLAYBACK_DEEP_BUFFER] = "playback deep-buffer",
     [USECASE_AUDIO_CAPTURE] = "capture",
     [USECASE_AUDIO_CAPTURE_HOTWORD] = "capture-hotword",
     [USECASE_VOICE_CALL] = "voice-call",
