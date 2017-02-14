@@ -2375,6 +2375,11 @@ int enable_output_path_l(struct stream_out *out)
     struct audio_device *adev = out->dev;
     struct audio_usecase *uc_info;
 
+    if (adev->voice.in_call) {
+        ALOGV("%s: in_call, not enabling output path", __func__);
+        return 0;
+    }
+
     uc_info = (struct audio_usecase *)calloc(1, sizeof(struct audio_usecase));
     if (uc_info == NULL) {
         return -ENOMEM;
@@ -2418,6 +2423,12 @@ static int start_output_stream(struct stream_out *out)
 
     ALOGV("%s: enter: usecase(%d: %s) devices(%#x) channels(%d)",
           __func__, out->usecase, use_case_table[out->usecase], out->devices, out->config.channels);
+
+    if (out->dev->voice.in_call) {
+        ALOGV("%s: in_call, routing must go through out_set_parameters",
+              __func__);
+        return ret;
+    }
 
     ret = enable_output_path_l(out);
     if (ret != 0) {
