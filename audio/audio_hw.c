@@ -2744,9 +2744,13 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
 #endif
         if (val != 0) {
             bool bt_sco_active = false;
+            bool devices_changed = false;
 
             if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
                 bt_sco_active = true;
+            }
+            if ((int)out->devices != val) {
+                devices_changed = true;
             }
             out->devices = val;
 
@@ -2770,7 +2774,10 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                 else {
                     if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD)
                         out_set_offload_parameters(adev, uc_info);
-                    select_devices(adev, out->usecase);
+
+                    if (devices_changed) {
+                        select_devices(adev, out->usecase);
+                    }
                 }
             }
 
