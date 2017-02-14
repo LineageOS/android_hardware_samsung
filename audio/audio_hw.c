@@ -2738,11 +2738,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
         }
 #endif
         if (val != 0) {
-            bool bt_sco_active = false;
-
-            if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
-                bt_sco_active = true;
-            }
             out->devices = val;
 
             if (!out->standby) {
@@ -2775,11 +2770,13 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
             } else if ((adev->mode == AUDIO_MODE_IN_CALL) &&
                        adev->voice.in_call &&
                        (out == adev->primary_output)) {
-                /* Turn on bluetooth if needed */
-                if ((out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && !bt_sco_active) {
-                    start_voice_session_bt_sco(adev->voice.session);
-                }
-                select_devices(adev, USECASE_VOICE_CALL);
+                    /*
+                     * When we select different devices we need to restart the
+                     * voice call. The modem closes the stream on its end and
+                     * we do not get any output.
+                     */
+                    stop_voice_call(adev);
+                    start_voice_call(adev);
             }
         }
 
