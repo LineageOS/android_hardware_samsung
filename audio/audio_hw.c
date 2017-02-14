@@ -2708,12 +2708,20 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
     struct stream_in *in = NULL;    /* if non-NULL, then force input to standby */
 #endif
 
-    ALOGV("%s: enter: usecase(%d: %s) kvpairs: %s out->devices(%d) adev->mode(%d)",
-          __func__, out->usecase, use_case_table[out->usecase], kvpairs, out->devices, adev->mode);
+    ALOGV("%s: enter: usecase(%d: %s) kvpairs: %s out->devices(%#x) "
+          "adev->mode(%#x)",
+          __func__, out->usecase, use_case_table[out->usecase], kvpairs,
+          out->devices, adev->mode);
+
     parms = str_parms_create_str(kvpairs);
     ret = str_parms_get_str(parms, AUDIO_PARAMETER_STREAM_ROUTING, value, sizeof(value));
     if (ret >= 0) {
         val = atoi(value);
+
+        ALOGV("%s: routing: usecase(%d: %s) devices=(%#x) adev->mode(%#x)",
+              __func__, out->usecase, use_case_table[out->usecase], val,
+              adev->mode);
+
         pthread_mutex_lock(&adev->lock_inputs);
         lock_output_stream(out);
         pthread_mutex_lock(&adev->lock);
