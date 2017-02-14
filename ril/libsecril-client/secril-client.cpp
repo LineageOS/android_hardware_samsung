@@ -84,7 +84,7 @@ namespace android {
 #define OEM_SND_TYPE_BTVOICE        0x41 // BT(0x40) + Voice(0x01)
 
 #ifdef SAMSUNG_NEXT_GEN_MODEM
-#define OEM_SND_AUDIO_PATH_HANDSET            0x01
+#define OEM_SND_AUDIO_PATH_EARPIECE           0x01
 #define OEM_SND_AUDIO_PATH_HEADSET            0x02
 #define OEM_SND_AUDIO_PATH_HFK                0x06
 #define OEM_SND_AUDIO_PATH_BLUETOOTH          0x04
@@ -97,7 +97,7 @@ namespace android {
 #define OEM_SND_AUDIO_PATH_BT_WB              0x0C
 #define OEM_SND_AUDIO_PATH_BT_WB_NSEC_OFF     0x0D
 #else
-#define OEM_SND_AUDIO_PATH_HANDSET      0x01
+#define OEM_SND_AUDIO_PATH_EARPIECE     0x01
 #define OEM_SND_AUDIO_PATH_HEADSET      0x02
 #define OEM_SND_AUDIO_PATH_HFK                0x03
 #define OEM_SND_AUDIO_PATH_BLUETOOTH    0x04
@@ -1146,7 +1146,7 @@ static bool isValidSoundType(SoundType type) {
 
 
 static bool isValidAudioPath(AudioPath path) {
-    return (path >= SOUND_AUDIO_PATH_HANDSET && path <= OEM_SND_AUDIO_PATH_BT_WB_NSEC_OFF);
+    return (path >= SOUND_AUDIO_PATH_EARPIECE && path <= OEM_SND_AUDIO_PATH_BT_WB_NSEC_OFF);
 }
 
 
@@ -1185,8 +1185,8 @@ static char ConvertSoundType(SoundType type) {
 
 static char ConvertAudioPath(AudioPath path) {
     switch (path) {
-        case SOUND_AUDIO_PATH_HANDSET:
-            return OEM_SND_AUDIO_PATH_HANDSET;
+        case SOUND_AUDIO_PATH_EARPIECE:
+            return OEM_SND_AUDIO_PATH_EARPIECE;
         case SOUND_AUDIO_PATH_HEADSET:
             return OEM_SND_AUDIO_PATH_HEADSET;
         case SOUND_AUDIO_PATH_SPEAKER:
@@ -1209,7 +1209,7 @@ static char ConvertAudioPath(AudioPath path) {
             return OEM_SND_AUDIO_PATH_BT_WB_NSEC_OFF;
 
         default:
-            return OEM_SND_AUDIO_PATH_HANDSET;
+            return OEM_SND_AUDIO_PATH_EARPIECE;
     }
 }
 
