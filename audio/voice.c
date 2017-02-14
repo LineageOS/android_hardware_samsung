@@ -363,8 +363,12 @@ static void voice_session_wb_amr_callback(void *data, int wb_amr)
                   __func__,
                   wb_amr > 0 ? "Enable" : "Disable");
 
+#ifdef VOICE_CALL_RESTART_ON_SELECT_DEVICES
             stop_voice_call(adev);
             start_voice_call(adev);
+#else /* VOICE_CALL_RESTART_ON_SELECT_DEVICES */
+            select_devices(adev, USECASE_VOICE_CALL);
+#endif /* VOICE_CALL_RESTART_ON_SELECT_DEVICES */
         }
     }
 
