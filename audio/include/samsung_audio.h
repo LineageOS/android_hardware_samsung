@@ -72,4 +72,10 @@
  */
 /* #define DSP_POWEROFF_DELAY 0 */
 
+/*
+ * Some modems needs a complete restart of the voice_call when a different
+ * device is selected. For example switching from earpiece to speaker.
+ */
+/* #define VOICE_CALL_RESTART_ON_SELECT_DEVICES 1 */
+
 #endif // SAMSUNG_AUDIO_H

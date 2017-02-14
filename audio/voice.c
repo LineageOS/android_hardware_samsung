@@ -364,6 +364,10 @@ static void voice_session_wb_amr_callback(void *data, int wb_amr)
 
             /* TODO Handle wb_amr == 2 */
 
+            /*
+             * We need stop the PCM and start with the
+             * wide band pcm_config.
+             */
             stop_voice_call(adev);
             start_voice_call(adev);
         }
