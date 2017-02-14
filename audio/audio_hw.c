@@ -2785,8 +2785,15 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                 /* Turn on bluetooth if needed */
                 if ((out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && !bt_sco_active) {
                     start_voice_session_bt_sco(adev->voice.session);
+                    select_devices(adev, USECASE_VOICE_CALL);
+                } else {
+#ifdef VOICE_CALL_RESTART_ON_SELECT_DEVICES
+                    stop_voice_call(adev);
+                    start_voice_call(adev);
+#else /* VOICE_CALL_RESTART_ON_SELECT_DEVICES */
+                    select_devices(adev, USECASE_VOICE_CALL);
+#endif /* VOICE_CALL_RESTART_ON_SELECT_DEVICES */
                 }
-                select_devices(adev, USECASE_VOICE_CALL);
             }
         }
 
