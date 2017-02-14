@@ -363,6 +363,10 @@ static void voice_session_wb_amr_callback(void *data, int wb_amr)
                   __func__,
                   wb_amr > 0 ? "Enable" : "Disable");
 
+            /*
+             * We need stop the PCM and start with the
+             * wide band pcm_config.
+             */
             stop_voice_call(adev);
             start_voice_call(adev);
         }
