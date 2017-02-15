@@ -29,7 +29,7 @@
 #define WIFI_DRIVER_NVRAM_PATH "/system/etc/wifi/nvram_net.txt"
 
 /* NVRAM calibration parameters */
-#define WIFI_DRIVER_NVRAM_PATH_PARAM "/sys/module/wlan/parameters/nvram_path"
+#define WIFI_DRIVER_NVRAM_PATH_PARAM "/sys/module/dhd/parameters/nvram_path"
 
 /* Physical address (MAC) */
 #define MACADDR_PATH "/efs/wifi/.mac.info"
