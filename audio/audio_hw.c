@@ -262,8 +262,8 @@ struct timespec time_spec_diff(struct timespec time1, struct timespec time0) {
         time0.tv_sec -= xsec;
     }
 
-    ret.tv_sec = abs(time1.tv_sec - time0.tv_sec);
-    ret.tv_nsec = abs(time1.tv_nsec - time0.tv_nsec);
+    ret.tv_sec = labs(time1.tv_sec - time0.tv_sec);
+    ret.tv_nsec = labs(time1.tv_nsec - time0.tv_nsec);
 
     return ret;
 }
