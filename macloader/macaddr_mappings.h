@@ -85,12 +85,16 @@ static const struct company_range murata_ranges = {
 static const struct company_range semcosh_ranges = {
     .type = SEMCOSH,
     .macaddrs = {
+        "14:49:e0",
         "34:23:ba",
         "38:aa:3c",
+        "40:0e:85",
         "5c:0a:5b",
         "88:32:9b",
         "90:18:7c",
-        "cc:3a:61"
+        "bc:8c:cd",
+        "cc:3a:61",
+        "d0:22:be"
     }
 };
 
