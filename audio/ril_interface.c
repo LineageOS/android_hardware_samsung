@@ -149,6 +149,7 @@ int ril_close(struct ril_handle *ril)
     return 0;
 }
 
+#ifdef RIL_UNSOL_SNDMGR_WB_AMR_REPORT
 int ril_set_wb_amr_callback(struct ril_handle *ril,
                             ril_wb_amr_callback fn,
                             void *data)
@@ -179,6 +180,7 @@ int ril_set_wb_amr_callback(struct ril_handle *ril,
 
     return 0;
 }
+#endif
 
 int ril_set_call_volume(struct ril_handle *ril,
                         enum _SoundType sound_type,

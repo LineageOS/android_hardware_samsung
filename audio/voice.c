@@ -401,6 +401,7 @@ struct voice_session *voice_session_init(struct audio_device *adev)
             session->wb_amr = true;
         ALOGV("%s: Forcing voice config: %s", __func__, voice_config);
     } else {
+#ifdef RIL_UNSOL_SNDMGR_WB_AMR_REPORT
         /* register callback for wideband AMR setting */
         ret = ril_set_wb_amr_callback(&session->ril,
                                       voice_session_wb_amr_callback,
@@ -412,6 +413,9 @@ struct voice_session *voice_session_init(struct audio_device *adev)
         }
 
         ALOGV("%s: Registered WB_AMR callback", __func__);
+#else
+        ALOGV("%s: WB_AMR callback not supported", __func__);
+#endif
     }
 
     return session;
