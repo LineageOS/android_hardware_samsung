@@ -98,32 +98,6 @@ void set_voice_session_audio_path(struct voice_session *session)
 }
 
 /*
- * This decides based on the output device, if we enable
- * two mic control
- */
-void prepare_voice_session(struct voice_session *session,
-                           audio_devices_t active_out_devices)
-{
-    ALOGV("%s: active_out_devices: 0x%x", __func__, active_out_devices);
-
-    session->out_device = active_out_devices;
-
-    switch (session->out_device) {
-    case AUDIO_DEVICE_OUT_EARPIECE:
-    case AUDIO_DEVICE_OUT_SPEAKER:
-        session->two_mic_control = true;
-        break;
-    default:
-        session->two_mic_control = false;
-        break;
-    }
-
-    if (session->two_mic_disabled) {
-        session->two_mic_control = false;
-    }
-}
-
-/*
  * This must be called with the hw device mutex locked, OK to hold other
  * mutexes.
  */
@@ -187,6 +161,31 @@ err_sco_rx:
     pcm_close(session->pcm_sco_rx);
     session->pcm_sco_rx = NULL;
 }
+
+/*
+ * This decides based on the output device, if we enable
+ * two mic control
+ */
+static void prepare_voice_session(struct voice_session *session,
+                           audio_devices_t active_out_devices)
+{
+    ALOGV("%s: active_out_devices: 0x%x", __func__, active_out_devices);
+
+    switch (session->out_device) {
+    case AUDIO_DEVICE_OUT_EARPIECE:
+    case AUDIO_DEVICE_OUT_SPEAKER:
+        session->two_mic_control = true;
+        break;
+    default:
+        session->two_mic_control = false;
+        break;
+    }
+
+    if (session->two_mic_disabled) {
+        session->two_mic_control = false;
+    }
+}
+
 /*
  * This function must be called with hw device mutex locked, OK to hold other
  * mutexes
@@ -194,6 +193,8 @@ err_sco_rx:
 int start_voice_session(struct voice_session *session)
 {
     struct pcm_config *voice_config;
+
+    prepare_voice_session();
 
     if (session->pcm_voice_rx != NULL || session->pcm_voice_tx != NULL) {
         ALOGW("%s: Voice PCMs already open!\n", __func__);
