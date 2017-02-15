@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_10ececc6",
+        "filename": "audio/ril_interface.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-15T07:37:54Z",
+      "side": 1,
+      "message": "wb_amr_type",
+      "revId": "d51cbb8a7ab50fcdc89c8c3259717600161ac06f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_70dd6814",
+        "filename": "audio/voice.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-15T07:37:54Z",
+      "side": 1,
+      "message": "There is no reason to swap these if conditional blocks; only confuses git blame and such in the future.\nMove them back please.",
+      "revId": "d51cbb8a7ab50fcdc89c8c3259717600161ac06f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_50e264d6",
+        "filename": "audio/voice.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-15T07:37:54Z",
+      "side": 1,
+      "message": "Instead of returning bool, why not adjust to the change and report the type here?\n\nint voice_session_wideband_type(...)",
+      "revId": "d51cbb8a7ab50fcdc89c8c3259717600161ac06f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_30e7f0e6",
+        "filename": "audio/voice.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-15T07:37:54Z",
+      "side": 1,
+      "message": "Should probably rename this to wb_amr_type.",
+      "revId": "d51cbb8a7ab50fcdc89c8c3259717600161ac06f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
