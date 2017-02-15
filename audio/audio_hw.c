@@ -905,48 +905,48 @@ static int select_devices(struct audio_device *adev,
     }
     active_out = (struct stream_out *)usecase->stream;
 
+
+    /*
+     * If the voice call is active, use the sound devices of voice call usecase
+     * so that it would not result any device switch. All the usecases will
+     * be switched to new device when select_devices() is called for voice call
+     * usecase.
+     */
+    if (usecase->type != VOICE_CALL && adev->voice.in_call) {
+        vc_usecase = get_usecase_from_id(adev, USECASE_VOICE_CALL);
+        if (vc_usecase == NULL) {
+            ALOGE("%s: Could not find the voice call usecase", __func__);
+        } else {
+            in_snd_device = vc_usecase->in_snd_device;
+            out_snd_device = vc_usecase->out_snd_device;
+        }
+    }
+
     if (usecase->type == VOICE_CALL) {
-        out_snd_device = get_output_snd_device(adev, active_out->devices);
-        prepare_voice_session(adev->voice.session, active_out->devices);
-        in_snd_device = get_input_snd_device(adev, active_out->devices);
         usecase->devices = active_out->devices;
-    } else {
-        /*
-         * If the voice call is active, use the sound devices of voice call usecase
-         * so that it would not result any device switch. All the usecases will
-         * be switched to new device when select_devices() is called for voice call
-         * usecase.
-         */
-        if (adev->voice.in_call) {
-            vc_usecase = get_usecase_from_id(adev, USECASE_VOICE_CALL);
-            if (usecase == NULL) {
-                ALOGE("%s: Could not find the voice call usecase", __func__);
-            } else {
-                in_snd_device = vc_usecase->in_snd_device;
-                out_snd_device = vc_usecase->out_snd_device;
+        prepare_voice_session(adev->voice.session, active_out->devices);
+        out_snd_device = get_output_snd_device(adev, active_out->devices);
+        in_snd_device = get_input_snd_device(adev, active_out->devices);
+    } else if (usecase->type == PCM_PLAYBACK) {
+        usecase->devices = active_out->devices;
+        in_snd_device = SND_DEVICE_NONE;
+        if (out_snd_device == SND_DEVICE_NONE) {
+            out_snd_device = get_output_snd_device(adev, active_out->devices);
+            if (active_out == adev->primary_output &&
+                    active_input &&
+                    active_input->source == AUDIO_SOURCE_VOICE_COMMUNICATION) {
+                select_devices(adev, active_input->usecase);
             }
         }
-        if (usecase->type == PCM_PLAYBACK) {
-            usecase->devices = active_out->devices;
-            in_snd_device = SND_DEVICE_NONE;
-            if (out_snd_device == SND_DEVICE_NONE) {
-                out_snd_device = get_output_snd_device(adev, active_out->devices);
-                if (active_out == adev->primary_output &&
-                        active_input &&
-                        active_input->source == AUDIO_SOURCE_VOICE_COMMUNICATION) {
-                    select_devices(adev, active_input->usecase);
-                }
-            }
-        } else if (usecase->type == PCM_CAPTURE) {
-            usecase->devices = ((struct stream_in *)usecase->stream)->devices;
-            out_snd_device = SND_DEVICE_NONE;
-            if (in_snd_device == SND_DEVICE_NONE) {
-                if (active_input->source == AUDIO_SOURCE_VOICE_COMMUNICATION &&
-                        adev->primary_output && !adev->primary_output->standby) {
-                    in_snd_device = get_input_snd_device(adev, adev->primary_output->devices);
-                } else {
-                    in_snd_device = get_input_snd_device(adev, AUDIO_DEVICE_NONE);
-                }
+    } else if (usecase->type == PCM_CAPTURE) {
+        usecase->devices = ((struct stream_in *)usecase->stream)->devices;
+        out_snd_device = SND_DEVICE_NONE;
+        if (in_snd_device == SND_DEVICE_NONE) {
+            if (active_input->source == AUDIO_SOURCE_VOICE_COMMUNICATION &&
+                    adev->primary_output && !adev->primary_output->standby) {
+                in_snd_device = get_input_snd_device(adev, adev->primary_output->devices);
+            } else {
+                in_snd_device = get_input_snd_device(adev, AUDIO_DEVICE_NONE);
             }
         }
     }
