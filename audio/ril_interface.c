@@ -31,6 +31,7 @@
 #define VOLUME_STEPS_DEFAULT  "5"
 #define VOLUME_STEPS_PROPERTY "ro.config.vc_call_vol_steps"
 
+#ifdef RIL_UNSOL_SNDMGR_WB_AMR_REPORT
 /* Audio WB AMR callback */
 /*
  * TODO:
@@ -71,6 +72,7 @@ static int ril_internal_wb_amr_callback(HRilClient client __unused,
 
     return 0;
 }
+#endif
 
 static int ril_connect_if_required(struct ril_handle *ril)
 {
@@ -149,6 +151,7 @@ int ril_close(struct ril_handle *ril)
     return 0;
 }
 
+#ifdef RIL_UNSOL_SNDMGR_WB_AMR_REPORT
 int ril_set_wb_amr_callback(struct ril_handle *ril,
                             ril_wb_amr_callback fn,
                             void *data)
@@ -179,6 +182,7 @@ int ril_set_wb_amr_callback(struct ril_handle *ril,
 
     return 0;
 }
+#endif
 
 int ril_set_call_volume(struct ril_handle *ril,
                         enum _SoundType sound_type,

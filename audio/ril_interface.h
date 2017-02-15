@@ -50,8 +50,10 @@ int ril_set_two_mic_control(struct ril_handle *ril,
                             enum __TwoMicSolDevice device,
                             enum __TwoMicSolReport report);
 
+#ifdef RIL_UNSOL_SNDMGR_WB_AMR_REPORT
 int ril_set_wb_amr_callback(struct ril_handle *ril,
                             ril_wb_amr_callback fn,
                             void *data);
+#endif
 
 #endif
