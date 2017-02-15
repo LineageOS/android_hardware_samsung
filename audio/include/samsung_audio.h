@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include <telephony/ril.h>
+
 #ifndef SAMSUNG_AUDIO_H
 #define SAMSUNG_AUDIO_H
 
@@ -42,6 +44,15 @@
 /* Voice calls */
 #define SOUND_PLAYBACK_VOICE_DEVICE 1
 #define SOUND_CAPTURE_VOICE_DEVICE 1
+
+/* Wideband AMR callback */
+#ifndef RIL_UNSOL_SNDMGR_WB_AMR_REPORT
+#ifdef RIL_UNSOL_WB_AMR_STATE
+#define RIL_UNSOL_SNDMGR_WB_AMR_REPORT RIL_UNSOL_WB_AMR_STATE
+#else
+#define RIL_UNSOL_SNDMGR_WB_AMR_REPORT 0
+#endif
+#endif
 
 /* Unusupported
 #define SOUND_CAPTURE_LOOPBACK_AEC_DEVICE 1

@@ -17,7 +17,7 @@
 #ifndef RIL_INTERFACE_H
 #define RIL_INTERFACE_H
 
-#include <telephony/ril.h>
+#include <samsung_audio.h>
 #include <secril-client.h>
 
 typedef void (*ril_wb_amr_callback)(void *data, int enable);
