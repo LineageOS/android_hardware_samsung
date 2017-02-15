@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fa5d592f_d0509460",
+        "filename": "audio/voice.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-15T08:51:33Z",
+      "side": 1,
+      "message": "What is the benefit of keeping it as bool?\nIf we switch to using a type, the functions need to advertise this accordingly, otherwise the code will be confusing.",
+      "parentUuid": "fa5d592f_90ee9cb3",
+      "revId": "d51cbb8a7ab50fcdc89c8c3259717600161ac06f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_30e7f0e6",
         "filename": "audio/voice.h",
         "patchSetId": 11
