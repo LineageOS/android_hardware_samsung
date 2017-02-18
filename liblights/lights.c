@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
  * Copyright (C) 2015-2016 The CyanogenMod Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +43,12 @@ enum component_mask_t {
     COMPONENT_BACKLIGHT = 0x1,
     COMPONENT_BUTTON_LIGHT = 0x2,
     COMPONENT_LED = 0x4,
+};
+
+enum light_t {
+    TYPE_BATTERY = 0,
+    TYPE_NOTIFICATION = 1,
+    TYPE_ATTENTION = 2,
 };
 
 // Assume backlight is always supported
@@ -197,10 +204,20 @@ static int write_leds(const struct led_config *led)
     return err;
 }
 
+static int calibrate_color(int color, int brightness)
+{
+    int red = ((color >> 16) & 0xFF) * LED_ADJUSTMENT_R;
+    int green = ((color >> 8) & 0xFF) * LED_ADJUSTMENT_G;
+    int blue = (color & 0xFF) * LED_ADJUSTMENT_B;
+
+    return (((red * brightness) / 255) << 16) + (((green * brightness) / 255) << 8) + ((blue * brightness) / 255);
+}
+
 static int set_light_leds(struct light_state_t const *state, int type)
 {
     struct led_config *led;
     int err = 0;
+    int adjusted_brightness;
 
     ALOGV("%s: type=%d, color=0x%010x, fM=%d, fOnMS=%d, fOffMs=%d.", __func__,
           type, state->color,state->flashMode, state->flashOnMS, state->flashOffMS);
@@ -230,7 +247,23 @@ static int set_light_leds(struct light_state_t const *state, int type)
         return -EINVAL;
     }
 
-    led->color = state->color & COLOR_MASK;
+    switch (type) {
+    case TYPE_BATTERY:
+        adjusted_brightness = LED_BRIGHTNESS_BATTERY;
+        break;
+    case TYPE_NOTIFICATION:
+        adjusted_brightness = LED_BRIGHTNESS_NOTIFICATION;
+        break;
+    case TYPE_ATTENTION:
+        adjusted_brightness = LED_BRIGHTNESS_ATTENTION;
+        break;
+    default:
+        adjusted_brightness = 255;
+    }
+
+
+
+    led->color = calibrate_color(state->color & COLOR_MASK, adjusted_brightness);
 
     if (led->color > 0) {
         /* This LED is lit. */
@@ -266,13 +299,13 @@ switched:
 static int set_light_leds_battery(struct light_device_t *dev __unused,
                                   struct light_state_t const *state)
 {
-    return set_light_leds(state, 0);
+    return set_light_leds(state, TYPE_BATTERY);
 }
 
 static int set_light_leds_notifications(struct light_device_t *dev __unused,
                                         struct light_state_t const *state)
 {
-    return set_light_leds(state, 1);
+    return set_light_leds(state, TYPE_NOTIFICATION);
 }
 
 static int set_light_leds_attention(struct light_device_t *dev __unused,
@@ -298,7 +331,7 @@ static int set_light_leds_attention(struct light_device_t *dev __unused,
         break;
     }
 
-    return set_light_leds(&fixed, 2);
+    return set_light_leds(&fixed, TYPE_ATTENTION);
 }
 
 static int open_lights(const struct hw_module_t *module, char const *name,
