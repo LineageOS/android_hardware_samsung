@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa5d592f_db48acce",
+        "filename": "liblights/include/samsung_lights.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-19T10:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa5d592f_fbc6d048",
+      "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_bbc0582b",
         "filename": "liblights/include/samsung_lights.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-02-19T10:46:30Z",
       "side": 1,
       "message": "All of these should be 255 since this is the default header.",
+      "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_bb45f8b4",
+        "filename": "liblights/include/samsung_lights.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-19T10:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa5d592f_bbc0582b",
       "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fa5d592f_9b1234b3",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-19T10:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa5d592f_1ba3e49f",
+      "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_9bb6b4db",
         "filename": "liblights/lights.c",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-02-19T10:46:30Z",
       "side": 1,
       "message": "TYPE_BATTERY",
+      "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_7b1780a4",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-19T10:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa5d592f_9bb6b4db",
       "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fa5d592f_5b0cbc94",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-19T10:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa5d592f_7bbb00c5",
+      "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_5bb03cdd",
         "filename": "liblights/lights.c",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-02-19T10:46:30Z",
       "side": 1,
       "message": "TYPE_ATTENTION",
+      "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_3b1108ad",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-19T10:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa5d592f_5bb03cdd",
       "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fa5d592f_1b264417",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-19T10:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa5d592f_bba9787d",
+      "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_3bb588cd",
         "filename": "liblights/lights.c",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-02-19T10:46:30Z",
       "side": 1,
       "message": "We could take the display brightness into account to automatically scale the brightness (if we wanted to)..\nI\u0027m not sure if this is desirable, but this just came to my mind.",
+      "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_fb225000",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-02-19T10:54:27Z",
+      "side": 1,
+      "message": "That does sound neat, but is probably something we could leave for a follow-up patch. I\u0027ll whip something up...",
+      "parentUuid": "fa5d592f_3bb588cd",
       "revId": "cfc0b34c8b37126c7235b46c8ea82f23ef49ecd4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
