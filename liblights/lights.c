@@ -206,9 +206,12 @@ static int write_leds(const struct led_config *led)
 
 static int calibrate_color(int color, int brightness)
 {
-    int red = ((color >> 16) & 0xFF) * LED_ADJUSTMENT_R;
-    int green = ((color >> 8) & 0xFF) * LED_ADJUSTMENT_G;
-    int blue = (color & 0xFF) * LED_ADJUSTMENT_B;
+    const float dimming = (float)g_backlight.cur_brightness / (float)g_backlight.max_brightness;
+
+    ALOGV("%s: dimming LEDs with factor: %f", __func__, dimming);
+    int red = ((color >> 16) & 0xFF) * LED_ADJUSTMENT_R * dimming;
+    int green = ((color >> 8) & 0xFF) * LED_ADJUSTMENT_G * dimming;
+    int blue = (color & 0xFF) * LED_ADJUSTMENT_B * dimming;
 
     return (((red * brightness) / 255) << 16) + (((green * brightness) / 255) << 8) + ((blue * brightness) / 255);
 }
