@@ -32,7 +32,15 @@
     {RIL_REQUEST_SWITCH_WAITING_OR_HOLDING_AND_ACTIVE, dispatchVoid, responseVoid},
     {RIL_REQUEST_CONFERENCE, dispatchVoid, responseVoid},
     {RIL_REQUEST_UDUB, dispatchVoid, responseVoid},
+#ifndef EXYNOS4_ENHANCEMENTS
     {RIL_REQUEST_LAST_CALL_FAIL_CAUSE, dispatchVoid, responseFailCause},
+#else
+    /*
+     * Exynos4 devices send an extra int for LAST_CALL_FAIL_CAUSE
+     * which causes responseFailCause to think it's a string and crash.
+     */
+    {RIL_REQUEST_LAST_CALL_FAIL_CAUSE, dispatchVoid, responseInts},
+#endif
     {RIL_REQUEST_SIGNAL_STRENGTH, dispatchVoid, responseRilSignalStrength},
     {RIL_REQUEST_VOICE_REGISTRATION_STATE, dispatchVoid, responseStrings},
     {RIL_REQUEST_DATA_REGISTRATION_STATE, dispatchVoid, responseStrings},
