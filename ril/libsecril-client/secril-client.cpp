@@ -59,6 +59,7 @@ namespace android {
 #define REQ_SET_TWO_MIC_CTRL        108
 #define REQ_SET_DHA_CTRL        109
 #define REQ_SET_LOOPBACK            110
+#define REQ_SET_AUDIO_MODE      112
 
 // OEM request function ID
 #define OEM_FUNC_SOUND          0x08
@@ -70,6 +71,7 @@ namespace android {
 #define OEM_SND_SET_VIDEO_CALL_CTRL 0x07
 #define OEM_SND_SET_LOOPBACK_CTRL 0x08
 #define OEM_SND_SET_VOICE_RECORDING_CTRL  0x09
+#define OEM_SND_SET_AUDIO_MODE      0x0A // FIXME!!!
 #define OEM_SND_SET_CLOCK_CTRL      0x0A
 #define OEM_SND_SET_MUTE        0x0B
 #define OEM_SND_GET_MUTE        0x0C
@@ -1049,6 +1051,51 @@ int SetLoopbackTest(HRilClient client, LoopbackMode mode, AudioPath path) {
     return ret;
 }
 
+/**
+ * Set Audio mode.
+ */
+extern "C"
+int SetAudioMode(HRilClient client, AudioMode mode, AudioPath path) {
+    RilClientPrv *client_prv;
+    int ret;
+    char data[6] = {0,};
+
+    if (client == NULL || client->prv == NULL) {
+        RLOGE("%s: Invalid client %p", __FUNCTION__, client);
+        return RIL_CLIENT_ERR_INVAL;
+    }
+
+    client_prv = (RilClientPrv *)(client->prv);
+
+    if (client_prv->sock < 0 ) {
+        RLOGE("%s: Not connected.", __FUNCTION__);
+        return RIL_CLIENT_ERR_CONNECT;
+    }
+
+    if (mode < MODE_OFF || mode > MODE_ON) {
+        RLOGE("%s: Invalid audio mode %d.", __FUNCTION__, mode);
+        return RIL_CLIENT_ERR_INVAL;
+    }
+
+    RLOGV("%s: Audio mode setting: %d", __FUNCTION__, mode);
+
+    // Make raw data
+    data[0] = OEM_FUNC_SOUND;
+    data[1] = OEM_SND_SET_AUDIO_MODE;
+    data[2] = 0x00;     // data length
+    data[3] = 0x06;     // data length
+    data[4] = mode; // Audio Mode
+    data[5] = ConvertAudioPath(path); // Audio path
+
+    RegisterRequestCompleteHandler(client, REQ_SET_AUDIO_MODE, NULL);
+
+    ret = SendOemRequestHookRaw(client, REQ_SET_AUDIO_MODE, data, sizeof(data));
+    if (ret != RIL_CLIENT_ERR_SUCCESS) {
+        RegisterRequestCompleteHandler(client, REQ_SET_AUDIO_MODE, NULL);
+    }
+
+    return ret;
+}
 
 /**
  * @fn  int InvokeOemRequestHookRaw(HRilClient client, char *data, size_t len)

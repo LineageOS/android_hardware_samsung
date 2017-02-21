@@ -237,6 +237,13 @@ typedef enum __LoopbackPath {
     LOUDSPEAKER
 } LoopbackPath;
 
+/**
+ * AudioMode parameters.
+ */
+typedef enum __AudioMode {
+    MODE_OFF,
+    MODE_ON
+} AudioMode;
 
 /**
  * Set in-call volume.
@@ -288,6 +295,11 @@ int SetDhaSolution(HRilClient client, DhaSolMode mode, DhaSolSelect select, char
  * Set Loopback Test Mode and Path
  */
 int SetLoopbackTest(HRilClient client, LoopbackMode mode, AudioPath path);
+
+/**
+ * Set Audio mode
+ */
+int SetAudioMode(HRilClient client, AudioMode mode, AudioPath path);
 
 #ifdef __cplusplus
 };
