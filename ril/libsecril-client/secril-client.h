@@ -75,13 +75,12 @@ int Connect_RILD(HRilClient client);
  */
 int Connect_QRILD(HRilClient client);
 
-#if defined(SEC_PRODUCT_FEATURE_RIL_CALL_DUALMODE_CDMAGSM)
 /**
  * Connect to RIL deamon. One client task starts.
  * Return is 0 or error code.
  */
 int Connect_RILD_Second(HRilClient client);
-#endif
+
 /**
  * check whether RILD is connected
  * Returns 0 or 1

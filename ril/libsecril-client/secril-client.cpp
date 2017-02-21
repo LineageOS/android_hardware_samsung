@@ -36,9 +36,7 @@ namespace android {
 #define RILD_PORT               7777
 #define MULTI_CLIENT_SOCKET_NAME "Multiclient"
 #define MULTI_CLIENT_Q_SOCKET_NAME "QMulticlient"
-#if defined(SEC_PRODUCT_FEATURE_RIL_CALL_DUALMODE_CDMAGSM)
 #define MULTI_CLIENT_SOCKET_NAME_2 "Multiclient2"
-#endif
 
 #define MAX_COMMAND_BYTES       (8 * 1024)
 #define REQ_POOL_SIZE           32
@@ -470,7 +468,6 @@ int Connect_QRILD(HRilClient client) {
     return RIL_CLIENT_ERR_SUCCESS;
 }
 
-#if defined(SEC_PRODUCT_FEATURE_RIL_CALL_DUALMODE_CDMAGSM)    // mook_120209 Enable multiclient
 /**
  * @fn    int Connect_RILD_Second(void)
  *
@@ -534,7 +531,6 @@ int Connect_RILD_Second(HRilClient client)    {
 
     return RIL_CLIENT_ERR_SUCCESS;
 }
-#endif
 
 /**
  * @fn  int isConnected_RILD(HRilClient client)
