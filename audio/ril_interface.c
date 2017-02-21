@@ -256,3 +256,19 @@ int ril_set_two_mic_control(struct ril_handle *ril,
 
     return rc;
 }
+
+int ril_set_audio_mode(struct ril_handle *ril,
+                       enum __AudioMode mode,
+                       enum _AudioPath path)
+{
+    int rc;
+
+    rc = ril_connect_if_required(ril);
+    if (rc != 0) {
+        return 0;
+    }
+
+    rc = SetAudioMode(ril->client, mode, path);
+
+    return rc;
+}
