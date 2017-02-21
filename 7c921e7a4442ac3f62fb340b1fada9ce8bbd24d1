@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_0d6f1f94",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-21T21:59:31Z",
+      "side": 1,
+      "message": "WTF is this and where do these values come from?\nNeither Hopper 4 nor IDA Pro 6.8 are able to extract these fields for any function we use them in (byte val in the data struct).",
+      "revId": "7c921e7a4442ac3f62fb340b1fada9ce8bbd24d1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
