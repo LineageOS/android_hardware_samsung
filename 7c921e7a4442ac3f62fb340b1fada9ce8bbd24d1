@@ -16,6 +16,24 @@
       "revId": "7c921e7a4442ac3f62fb340b1fada9ce8bbd24d1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_0dc71f47",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2017-02-22T00:16:31Z",
+      "side": 1,
+      "message": "Are you sure about this? Its ID(0x0A) is the same as OEM_SND_SET_CLOCK_CTRL??",
+      "parentUuid": "fa5d592f_0d6f1f94",
+      "revId": "7c921e7a4442ac3f62fb340b1fada9ce8bbd24d1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
