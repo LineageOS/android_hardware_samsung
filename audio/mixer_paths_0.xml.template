@@ -32,6 +32,10 @@
         <!-- Empty path -->
     </path>
 
+    <path name="headset">
+        <!-- Empty path -->
+    </path>
+
     <path name="voice-earpiece">
         <!-- Empty path -->
     </path>
@@ -53,6 +57,14 @@
     </path>
 
     <path name="voice-headphones-wb">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-headset">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-headset-wb">
         <!-- Empty path -->
     </path>
 
