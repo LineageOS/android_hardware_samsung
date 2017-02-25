@@ -34,6 +34,10 @@
 #include "audio_hw.h"
 #include "voice.h"
 
+#ifdef AUDIENCE_EARSMART_IC
+#include "audience.h"
+#endif
+
 static struct pcm_config pcm_config_voicecall = {
     .channels = 2,
     .rate = 8000,
@@ -249,6 +253,11 @@ int start_voice_session(struct voice_session *session)
         start_voice_session_bt_sco(session);
     }
 
+#ifdef AUDIENCE_EARSMART_IC
+    ALOGV("%s: Enabling Audience IC", __func__);
+    es_start_voice_session(session);
+#endif
+
     if (session->two_mic_control) {
         ALOGV("%s: enabling two mic control", __func__);
         ril_set_two_mic_control(&session->ril, AUDIENCE, TWO_MIC_SOLUTION_ON);
@@ -290,6 +299,10 @@ void stop_voice_session(struct voice_session *session)
         stop_voice_session_bt_sco(session);
     }
 
+#ifdef AUDIENCE_EARSMART_IC
+    ALOGV("%s: Disabling Audience IC", __func__);
+    es_stop_voice_session();
+#endif
 
     session->out_device = AUDIO_DEVICE_NONE;
 
