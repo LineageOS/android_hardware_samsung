@@ -186,12 +186,16 @@ int ril_set_call_volume(struct ril_handle *ril,
 
     rc = ril_connect_if_required(ril);
     if (rc != 0) {
+        ALOGE("%s: Failed to connect to RIL (%s)", __func__, strerror(rc));
         return 0;
     }
 
     rc = SetCallVolume(ril->client,
                        sound_type,
                        (int)(volume * ril->volume_steps_max));
+    if (rc != 0) {
+        ALOGE("%s: SetCallVolume() failed, rc=%d", __func__, rc);
+    }
 
     return rc;
 }
@@ -202,10 +206,14 @@ int ril_set_call_audio_path(struct ril_handle *ril, enum _AudioPath path)
 
     rc = ril_connect_if_required(ril);
     if (rc != 0) {
+        ALOGE("%s: Failed to connect to RIL (%s)", __func__, strerror(rc));
         return 0;
     }
 
     rc = SetCallAudioPath(ril->client, path);
+    if (rc != 0) {
+        ALOGE("%s: SetCallAudioPath() failed, rc=%d", __func__, rc);
+    }
 
     return rc;
 }
@@ -217,10 +225,14 @@ int ril_set_call_clock_sync(struct ril_handle *ril,
 
     rc = ril_connect_if_required(ril);
     if (rc != 0) {
+        ALOGE("%s: Failed to connect to RIL (%s)", __func__, strerror(rc));
         return 0;
     }
 
     rc = SetCallClockSync(ril->client, condition);
+    if (rc != 0) {
+        ALOGE("%s: SetCallClockSync() failed, rc=%d", __func__, rc);
+    }
 
     return rc;
 }
@@ -231,10 +243,14 @@ int ril_set_mute(struct ril_handle *ril, enum _MuteCondition condition)
 
     rc = ril_connect_if_required(ril);
     if (rc != 0) {
+        ALOGE("%s: Failed to connect to RIL (%s)", __func__, strerror(rc));
         return 0;
     }
 
     rc = SetMute(ril->client, condition);
+    if (rc != 0) {
+        ALOGE("%s: SetMute() failed, rc=%d", __func__, rc);
+    }
 
     return rc;
 }
@@ -247,10 +263,14 @@ int ril_set_two_mic_control(struct ril_handle *ril,
 
     rc = ril_connect_if_required(ril);
     if (rc != 0) {
+        ALOGE("%s: Failed to connect to RIL (%s)", __func__, strerror(rc));
         return 0;
     }
 
     rc = SetTwoMicControl(ril->client, device, report);
+    if (rc != 0) {
+        ALOGE("%s: SetTwoMicControl() failed, rc=%d", __func__, rc);
+    }
 
     return rc;
 }
