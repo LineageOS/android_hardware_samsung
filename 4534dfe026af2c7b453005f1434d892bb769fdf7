@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa5d592f_c90fb1e0",
+        "filename": "audio/audience.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-25T21:06:44Z",
+      "side": 1,
+      "message": "actually -1 is the correct one: http://man7.org/linux/man-pages/man2/write.2.html",
+      "parentUuid": "fa5d592f_0938299f",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "4534dfe026af2c7b453005f1434d892bb769fdf7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_e93cb595",
         "filename": "audio/audience.c",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fa5d592f_a9147df5",
+        "filename": "audio/audience.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-25T21:06:44Z",
+      "side": 1,
+      "message": "This is what the kernel driver wants (long), so I wanted to stay consistent to that.",
+      "parentUuid": "fa5d592f_e93cb595",
+      "range": {
+        "startLine": 67,
+        "startChar": 30,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "4534dfe026af2c7b453005f1434d892bb769fdf7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5d592f_c941f10c",
         "filename": "audio/audience.c",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-25T20:14:59Z",
       "side": 1,
       "message": "Switch statement to handle the multiple cases?",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "4534dfe026af2c7b453005f1434d892bb769fdf7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_89f9b9ca",
+        "filename": "audio/audience.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-25T21:06:44Z",
+      "side": 1,
+      "message": "Also possible, but this is shorter and cleaner to me?\nOtherwise I\u0027d need an if condition to separate wb from nb and then have one switch statement per condition block.",
+      "parentUuid": "fa5d592f_c941f10c",
       "range": {
         "startLine": 156,
         "startChar": 4,
