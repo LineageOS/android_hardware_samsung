@@ -140,6 +140,30 @@
       "revId": "4534dfe026af2c7b453005f1434d892bb769fdf7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_29008da9",
+        "filename": "audio/audience.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-02-25T21:15:15Z",
+      "side": 1,
+      "message": "Oh wait, you mean handle the multiple wb_amr_type values?\nWe don\u0027t know what those mean, only that 0 is narrow band, \u003e0 is wide band.",
+      "parentUuid": "fa5d592f_89f9b9ca",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "4534dfe026af2c7b453005f1434d892bb769fdf7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
