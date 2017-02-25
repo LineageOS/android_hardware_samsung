@@ -34,6 +34,10 @@
 #include "audio_hw.h"
 #include "voice.h"
 
+#ifdef AUDIENCE_EARSMART_IC
+#include "audience.h"
+#endif
+
 static struct pcm_config pcm_config_voicecall = {
     .channels = 2,
     .rate = 8000,
@@ -128,6 +132,11 @@ void prepare_voice_session(struct voice_session *session,
  * mutexes.
  */
 static void stop_voice_session_bt_sco(struct voice_session *session) {
+#ifdef AUDIENCE_EARSMART_IC
+    ALOGV("%s: Disabling Audience IC", __func__);
+    es_stop_voice_session();
+#endif
+
     ALOGV("%s: Closing SCO PCMs", __func__);
 
     if (session->pcm_sco_rx != NULL) {
@@ -146,6 +155,11 @@ static void stop_voice_session_bt_sco(struct voice_session *session) {
 /* must be called with the hw device mutex locked, OK to hold other mutexes */
 void start_voice_session_bt_sco(struct voice_session *session)
 {
+#ifdef AUDIENCE_EARSMART_IC
+    ALOGV("%s: Enabling Audience IC", __func__);
+    es_start_voice_session(session);
+#endif
+
     if (session->pcm_sco_rx != NULL || session->pcm_sco_tx != NULL) {
         ALOGW("%s: SCO PCMs already open!\n", __func__);
         return;
@@ -194,6 +208,11 @@ err_sco_rx:
 int start_voice_session(struct voice_session *session)
 {
     struct pcm_config *voice_config;
+
+#ifdef AUDIENCE_EARSMART_IC
+    ALOGV("%s: Enabling Audience IC", __func__);
+    es_start_voice_session(session);
+#endif
 
     if (session->pcm_voice_rx != NULL || session->pcm_voice_tx != NULL) {
         ALOGW("%s: Voice PCMs already open!\n", __func__);
@@ -269,6 +288,11 @@ int start_voice_session(struct voice_session *session)
 void stop_voice_session(struct voice_session *session)
 {
     int status = 0;
+
+#ifdef AUDIENCE_EARSMART_IC
+    ALOGV("%s: Disabling Audience IC", __func__);
+    es_stop_voice_session();
+#endif
 
     ALOGV("%s: Closing active PCMs", __func__);
 
