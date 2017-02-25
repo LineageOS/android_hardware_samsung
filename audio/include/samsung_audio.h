@@ -83,4 +83,12 @@
  */
 /* #define DSP_POWEROFF_DELAY 0 */
 
+/*
+ * Some device variants (often T-Mobile) have a separate voice processing IC
+ * (Audience EarSmart xxx).
+ * This hooks into the voice call session and enables, configures and disables
+ * this extra firmware so RX/TX streams can be routed by the driver.
+ */
+/* #define AUDIENCE_EARSMART_IC */
+
 #endif // SAMSUNG_AUDIO_H

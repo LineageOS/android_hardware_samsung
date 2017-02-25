@@ -21,6 +21,7 @@ include $(CLEAR_VARS)
 LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
+	audience.c \
 	audio_hw.c \
 	compress_offload.c \
 	ril_interface.c \
