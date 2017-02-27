@@ -2459,14 +2459,14 @@ error_config:
     return ret;
 }
 
-int stop_voice_call(struct audio_device *adev)
+int stop_voice_call(struct audio_device *adev, bool reset)
 {
     struct audio_usecase *uc_info;
 
     ALOGV("%s: enter", __func__);
     adev->voice.in_call = false;
 
-    stop_voice_session(adev->voice.session);
+    stop_voice_session(adev->voice.session, reset);
 
     uc_info = get_usecase_from_id(adev, USECASE_VOICE_CALL);
     if (uc_info == NULL) {
@@ -2785,7 +2785,7 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                      * voice call. The modem closes the stream on its end and
                      * we do not get any output.
                      */
-                    stop_voice_call(adev);
+                    stop_voice_call(adev, false);
                     start_voice_call(adev);
                 }
             }
@@ -2793,7 +2793,7 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
 
         if ((adev->mode == AUDIO_MODE_NORMAL) && adev->voice.in_call &&
                 (out == adev->primary_output)) {
-            stop_voice_call(adev);
+            stop_voice_call(adev, true);
         }
         pthread_mutex_unlock(&adev->lock);
         pthread_mutex_unlock(&out->lock);

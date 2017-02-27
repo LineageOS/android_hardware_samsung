@@ -60,7 +60,7 @@ struct pcm_config pcm_config_voice_sco = {
 
 /* Prototypes */
 int start_voice_call(struct audio_device *adev);
-int stop_voice_call(struct audio_device *adev);
+int stop_voice_call(struct audio_device *adev, bool reset);
 
 void set_voice_session_audio_path(struct voice_session *session)
 {
@@ -266,7 +266,7 @@ int start_voice_session(struct voice_session *session)
  * This function must be called with hw device mutex locked, OK to hold other
  * mutexes
  */
-void stop_voice_session(struct voice_session *session)
+void stop_voice_session(struct voice_session *session, bool reset)
 {
     int status = 0;
 
@@ -292,6 +292,9 @@ void stop_voice_session(struct voice_session *session)
 
 
     session->out_device = AUDIO_DEVICE_NONE;
+    if (reset) {
+        session->wb_amr_type = 0;
+    }
 
     ALOGV("%s: Successfully closed %d active PCMs", __func__, status);
 }
@@ -369,7 +372,7 @@ static void voice_session_wb_amr_callback(void *data, int wb_amr_type)
              * We need stop the PCM and start with the
              * wide band pcm_config.
              */
-            stop_voice_call(adev);
+            stop_voice_call(adev, false);
             start_voice_call(adev);
         }
     }
