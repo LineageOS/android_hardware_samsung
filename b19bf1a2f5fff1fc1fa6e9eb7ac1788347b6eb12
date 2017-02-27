@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_6f2205bb",
+        "filename": "audio/mixer_paths_0.xml.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-02-27T09:54:27Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "revId": "b19bf1a2f5fff1fc1fa6e9eb7ac1788347b6eb12",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_4f2f41a2",
+        "filename": "audio/mixer_paths_0.xml.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-02-27T09:54:27Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "revId": "b19bf1a2f5fff1fc1fa6e9eb7ac1788347b6eb12",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
