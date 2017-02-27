@@ -292,6 +292,7 @@ void stop_voice_session(struct voice_session *session)
 
 
     session->out_device = AUDIO_DEVICE_NONE;
+    session->wb_amr_type = 0;
 
     ALOGV("%s: Successfully closed %d active PCMs", __func__, status);
 }
@@ -354,8 +355,6 @@ static void voice_session_wb_amr_callback(void *data, int wb_amr_type)
     pthread_mutex_lock(&adev->lock);
 
     if (session->wb_amr_type != wb_amr_type) {
-        session->wb_amr_type = wb_amr_type;
-
         /* reopen the modem PCMs at the new rate */
         if (adev->voice.in_call) {
             ALOGV("%s: %s wide band voice call (WB_AMR=%d)",
@@ -370,6 +369,7 @@ static void voice_session_wb_amr_callback(void *data, int wb_amr_type)
              * wide band pcm_config.
              */
             stop_voice_call(adev);
+            session->wb_amr_type = wb_amr_type;
             start_voice_call(adev);
         }
     }
