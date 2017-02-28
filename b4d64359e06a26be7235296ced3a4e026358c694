@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_80ace6ee",
+        "filename": "audio/ril_interface.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-02-28T06:14:44Z",
+      "side": 1,
+      "message": "If this fails it has errno set. Please print strerror(errno) in the log message!",
+      "range": {
+        "startLine": 187,
+        "startChar": 9,
+        "endLine": 187,
+        "endChar": 32
+      },
+      "revId": "b4d64359e06a26be7235296ced3a4e026358c694",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
