@@ -16,7 +16,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Erweiterte Display-Einstellungen</string>
+  <string name="app_name">Erweiterte Anzeige-Einstellungen</string>
   <!-- Screen Preference -->
   <string name="category_screen_title">Bildschirm</string>
   <string name="screen_colors_title">Farben</string>
