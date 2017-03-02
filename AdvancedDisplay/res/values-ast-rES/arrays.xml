@@ -15,20 +15,4 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>CyanogenMod (por defeutu)</item>
-    <item>IU</item>
-    <item>Videu</item>
-    <item>Videu caldiu</item>
-    <item>Videu fríu</item>
-    <item>Cámara</item>
-    <item>Navegación</item>
-    <item>Galería</item>
-    <item>Videollamada</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>Normal</item>
-    <item>Invertíu</item>
-  </string-array>
-</resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"></resources>
