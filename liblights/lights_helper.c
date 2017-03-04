@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+#define LOG_TAG "SamsungLightsHelper"
+/* #define LOG_NDEBUG 0 */
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
