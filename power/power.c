@@ -40,6 +40,8 @@
 
 #include "samsung_power.h"
 
+#define ARRAY_SIZE(a) sizeof(a) / sizeof(a[0])
+
 struct samsung_power_module {
     struct power_module base;
     pthread_mutex_t lock;
@@ -50,7 +52,6 @@ struct samsung_power_module {
     char cpu4_max_freq[10];
     char* touchscreen_power_path;
     char* touchkey_power_path;
-    bool touchkey_blocked;
 };
 
 enum power_profile_e {
@@ -323,6 +324,9 @@ static void samsung_power_init(struct power_module *module)
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
 
     init_cpufreqs(samsung_pwr);
+
+    boostpulse_open(samsung_pwr);
+
     init_touch_input_power_path(samsung_pwr);
 }
 
@@ -336,15 +340,22 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
     struct stat sb;
-    char touchkey_node[2];
+    int panel_brightness;
+    char button_state[2];
     int rc;
+    static bool touchkeys_blocked = false;
 
     ALOGV("power_set_interactive: %d", on);
 
-    // Get panel backlight brightness from lights HAL
-    // Do not disable any input devices if the screen is on but we are in a non-interactive state
+    /*
+     * Do not disable any input devices if the screen is on but we are in a non-interactive
+     * state.
+     */
     if (!on) {
-        if (get_cur_panel_brightness() > 0) {
+        panel_brightness = get_cur_panel_brightness();
+        if (panel_brightness < 0) {
+            ALOGE("%s: Failed to read panel brightness", __func__);
+        } else if (panel_brightness > 0) {
             ALOGV("%s: Moving to non-interactive state, but screen is still on,"
                   " not disabling input devices", __func__);
             goto out;
@@ -353,28 +364,31 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
 
     sysfs_write(samsung_pwr->touchscreen_power_path, on ? "1" : "0");
 
-    rc = stat(samsung_pwr->touchkey_power_path, &sb);
-    if (rc < 0) {
+    /* Bail out if the device does not have touchkeys */
+    if (samsung_pwr->touchkey_power_path == NULL) {
         goto out;
     }
 
     if (!on) {
-        if (sysfs_read(samsung_pwr->touchkey_power_path, touchkey_node,
-                       sizeof(touchkey_node)) == 0) {
-            /*
-             * If touchkey_node is 0, the keys have been disabled by another component
-             * (for example cmhw), which means we don't want them to be enabled when resuming
-             * from suspend.
-             */
-            if (touchkey_node[0] == '0') {
-                samsung_pwr->touchkey_blocked = true;
-            } else {
-                samsung_pwr->touchkey_blocked = false;
-                sysfs_write(samsung_pwr->touchkey_power_path, "0");
-            }
+        rc = sysfs_read(samsung_pwr->touchkey_power_path, button_state, ARRAY_SIZE(button_state));
+        if (rc < 0) {
+            ALOGE("%s: Failed to read touchkey state", __func__);
+            goto out;
         }
-    } else if (!samsung_pwr->touchkey_blocked) {
-        sysfs_write(samsung_pwr->touchkey_power_path, "1");
+        /*
+         * If button_state is 0, the keys have been disabled by another component
+         * (for example cmhw), which means we don't want them to be enabled when resuming
+         * from suspend.
+         */
+        if (button_state[0] == '0') {
+            touchkeys_blocked = true;
+        } else {
+            touchkeys_blocked = false;
+        }
+    }
+
+    if (!touchkeys_blocked) {
+        sysfs_write(samsung_pwr->touchkey_power_path, on ? "1" : "0");
     }
 
 out:
