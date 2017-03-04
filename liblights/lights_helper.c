@@ -28,38 +28,44 @@
  * Reads an Integer from a file.
  *
  * @param path The absolute path string.
- * @return The Integer with decimal base, -1 on error.
+ * @return The Integer with decimal base, -1 or errno on error.
  */
 int read_int(char const *path)
 {
     int fd, len;
     int num_bytes = 10;
     char buf[11];
-    int retval;
+    int ret;
 
     fd = open(path, O_RDONLY);
     if (fd < 0) {
-        ALOGE("%s: failed to open %s", __func__, path);
-        goto fail;
+        ret = errno;
+        ALOGE("%s: failed to open %s (%s)", __func__, path, strerror(errno));
+        goto exit;
     }
 
     len = read(fd, buf, num_bytes - 1);
     if (len < 0) {
-        ALOGE("%s: failed to read from %s", __func__, path);
-        goto fail;
+        ret = errno;
+        ALOGE("%s: failed to read from %s (%s)", __func__, path, strerror(errno));
+        goto exit;
     }
 
     buf[len] = '\0';
-    close(fd);
 
-    // no endptr, decimal base
-    retval = strtol(buf, NULL, 10);
-    return retval == 0 ? -1 : retval;
+    // decimal base
+    char *endptr = NULL;
+    ret = strtol(buf, &endptr, 10);
+    if (ret == 0 && endptr == NULL) {
+        ret = -1;
+        ALOGE("%s: failed to extract number from string %s", __func__, buf);
+        goto exit;
+    }
 
-fail:
+exit:
     if (fd >= 0)
         close(fd);
-    return -1;
+    return ret;
 }
 
 /*
@@ -67,38 +73,40 @@ fail:
  *
  * @param path The absolute path string.
  * @param value The Integer value to be written.
- * @return 0 on success, -1 or errno on error.
+ * @return 0 on success, errno on error.
  */
 int write_int(char const *path, const int value)
 {
-    int fd;
-    static int already_warned;
+    int fd, len;
+    int ret = 0;
 
-    already_warned = 0;
-
-    ALOGV("write_int: path %s, value %d", path, value);
-    fd = open(path, O_RDWR);
-
-    if (fd >= 0) {
-        char buffer[20];
-        int bytes = sprintf(buffer, "%d", value);
-        int amt = write(fd, buffer, bytes);
-        close(fd);
-        return amt == -1 ? -errno : 0;
-    } else {
-        if (already_warned == 0) {
-            ALOGE("write_int failed to open %s", path);
-            already_warned = 1;
-        }
-        return -errno;
+    fd = open(path, O_WRONLY);
+    if (fd < 0) {
+        ret = errno;
+        ALOGE("%s: failed to open %s (%s)", __func__, path, strerror(errno));
+        goto exit;
     }
+
+    char buffer[20];
+    int bytes = sprintf(buffer, "%d", value);
+    len = write(fd, buffer, bytes);
+    if (len < 0) {
+        ret = errno;
+        ALOGE("%s: failed to write to %s (%s)", __func__, path, strerror(errno));
+        goto exit;
+    }
+
+exit:
+    if (fd >= 0)
+        close(fd);
+    return ret;
 }
 
 /*
  * Set the current button brightness via sysfs.
  *
  * @param brightness The brightness value.
- * @return 0 on success, -1 or errno on error.
+ * @return 0 on success, errno on error.
  */
 inline int set_cur_button_brightness(const int brightness)
 {
@@ -129,7 +137,7 @@ inline int get_max_panel_brightness()
  * Set the current panel brightness via sysfs.
  *
  * @param brightness The (scaled) brightness value.
- * @return 0 on success, -1 or errno on error.
+ * @return 0 on success, errno on error.
  */
 inline int set_cur_panel_brightness(const int brightness)
 {
@@ -140,7 +148,7 @@ inline int set_cur_panel_brightness(const int brightness)
  * Set the maximum panel brightness via sysfs.
  *
  * @param brightness The brightness value.
- * @return 0 on success, -1 or errno on error.
+ * @return 0 on success, errno on error.
  */
 inline int set_max_panel_brightness(const int brightness)
 {
