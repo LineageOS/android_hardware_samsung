@@ -31,7 +31,9 @@
 
 #define CPU0_HISPEED_FREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq"
 #define CPU0_MAX_FREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
+#define CPU0_MIN_FREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq"
 #define CPU4_HISPEED_FREQ_PATH "/sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq"
 #define CPU4_MAX_FREQ_PATH "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq"
+#define CPU4_MIN_FREQ_PATH "/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq"
 
 #endif // SAMSUNG_POWER_H
