@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_3a667f52",
+        "filename": "power/power.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2017-03-04T14:48:28Z",
+      "side": 1,
+      "message": "Typo.",
+      "range": {
+        "startLine": 442,
+        "startChar": 23,
+        "endLine": 442,
+        "endChar": 43
+      },
+      "revId": "7f0c8a89e3367c36c438de15e23bde0ce3bedacb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
