@@ -77,7 +77,7 @@ static int sysfs_read(char *path, char *s, int num_bytes)
     fd = open(path, O_RDONLY);
     if (fd < 0) {
         strerror_r(errno, errno_str, sizeof(errno_str));
-        ALOGE("Error opening %s: %s\n", path, errno_str);
+        ALOGE("Error opening %s: %s", path, errno_str);
 
         return -1;
     }
@@ -85,7 +85,7 @@ static int sysfs_read(char *path, char *s, int num_bytes)
     len = read(fd, s, num_bytes - 1);
     if (len < 0) {
         strerror_r(errno, errno_str, sizeof(errno_str));
-        ALOGE("Error reading from %s: %s\n", path, errno_str);
+        ALOGE("Error reading from %s: %s", path, errno_str);
 
         ret = -1;
     } else {
@@ -106,14 +106,14 @@ static void sysfs_write(const char *path, char *s)
     fd = open(path, O_WRONLY);
     if (fd < 0) {
         strerror_r(errno, errno_str, sizeof(errno_str));
-        ALOGE("Error opening %s: %s\n", path, errno_str);
+        ALOGE("Error opening %s: %s", path, errno_str);
         return;
     }
 
     len = write(fd, s, strlen(s));
     if (len < 0) {
         strerror_r(errno, errno_str, sizeof(errno_str));
-        ALOGE("Error writing to %s: %s\n", path, errno_str);
+        ALOGE("Error writing to %s: %s", path, errno_str);
     }
 
     close(fd);
@@ -128,7 +128,7 @@ static void boost(int32_t duration_us)
 
     fd = open(BOOST_PATH, O_WRONLY);
     if (fd < 0) {
-        ALOGE("Error opening %s\n", BOOST_PATH);
+        ALOGE("Error opening %s", BOOST_PATH);
         return;
     }
 
@@ -153,7 +153,7 @@ static int boostpulse_open(struct samsung_power_module *samsung_pwr)
         if (samsung_pwr->boostpulse_fd < 0) {
             if (!boostpulse_warned) {
                 strerror_r(errno, errno_str, sizeof(errno_str));
-                ALOGE("Error opening %s: %s\n", BOOSTPULSE_PATH, errno_str);
+                ALOGE("Error opening %s: %s", BOOSTPULSE_PATH, errno_str);
                 boostpulse_warned = true;
             }
         }
@@ -237,7 +237,7 @@ static void find_input_nodes(struct samsung_power_module *samsung_pwr, char *dir
             node_path = malloc(node_pathsize);
             if (path == NULL || node_path == NULL) {
                 strerror_r(errno, errno_str, sizeof(errno_str));
-                ALOGE("Out of memory: %s\n", errno_str);
+                ALOGE("Out of memory: %s", errno_str);
                 return;
             }
 
@@ -247,11 +247,11 @@ static void find_input_nodes(struct samsung_power_module *samsung_pwr, char *dir
             snprintf(node_path, node_pathsize, "%s/%s", dir, "enabled");
 
             if (strncmp(file_content, "sec_touchkey", 12) == 0) {
-                ALOGV("%s: found touchkey path: %s\n", __func__, node_path);
+                ALOGV("%s: found touchkey path: %s", __func__, node_path);
                 samsung_pwr->touchkey_power_path = malloc(node_pathsize);
                 if (samsung_pwr->touchkey_power_path == NULL) {
                     strerror_r(errno, errno_str, sizeof(errno_str));
-                    ALOGE("Out of memory: %s\n", errno_str);
+                    ALOGE("Out of memory: %s", errno_str);
                     return;
                 }
                 snprintf(samsung_pwr->touchkey_power_path, node_pathsize,
@@ -259,11 +259,11 @@ static void find_input_nodes(struct samsung_power_module *samsung_pwr, char *dir
             }
 
             if (strncmp(file_content, "sec_touchscreen", 15) == 0) {
-                ALOGV("%s: found touchscreen path: %s\n", __func__, node_path);
+                ALOGV("%s: found touchscreen path: %s", __func__, node_path);
                 samsung_pwr->touchscreen_power_path = malloc(node_pathsize);
                 if (samsung_pwr->touchscreen_power_path == NULL) {
                     strerror_r(errno, errno_str, sizeof(errno_str));
-                    ALOGE("Out of memory: %s\n", errno_str);
+                    ALOGE("Out of memory: %s", errno_str);
                     return;
                 }
                 snprintf(samsung_pwr->touchscreen_power_path, node_pathsize,
@@ -292,8 +292,8 @@ static void init_cpufreqs(struct samsung_power_module *samsung_pwr)
                sizeof(samsung_pwr->cpu0_hispeed_freq));
     sysfs_read(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_max_freq,
                sizeof(samsung_pwr->cpu0_max_freq));
-    ALOGV("%s: CPU 0 hispeed freq: %s\n", __func__, samsung_pwr->cpu0_hispeed_freq);
-    ALOGV("%s: CPU 0 max freq: %s\n", __func__, samsung_pwr->cpu0_max_freq);
+    ALOGV("%s: CPU 0 hispeed freq: %s", __func__, samsung_pwr->cpu0_hispeed_freq);
+    ALOGV("%s: CPU 0 max freq: %s", __func__, samsung_pwr->cpu0_max_freq);
 
     rc = stat(CPU4_HISPEED_FREQ_PATH, &sb);
     if (rc == 0) {
@@ -301,8 +301,8 @@ static void init_cpufreqs(struct samsung_power_module *samsung_pwr)
                    sizeof(samsung_pwr->cpu4_hispeed_freq));
         sysfs_read(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq,
                    sizeof(samsung_pwr->cpu4_max_freq));
-        ALOGV("%s: CPU 4 hispeed freq: %s\n", __func__, samsung_pwr->cpu4_hispeed_freq);
-        ALOGV("%s: CPU 4 max freq: %s\n", __func__, samsung_pwr->cpu4_max_freq);
+        ALOGV("%s: CPU 4 hispeed freq: %s", __func__, samsung_pwr->cpu4_hispeed_freq);
+        ALOGV("%s: CPU 4 max freq: %s", __func__, samsung_pwr->cpu4_max_freq);
     }
 }
 
@@ -339,14 +339,14 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     char touchkey_node[2];
     int rc;
 
-    ALOGV("power_set_interactive: %d\n", on);
+    ALOGV("power_set_interactive: %d", on);
 
     // Get panel backlight brightness from lights HAL
     // Do not disable any input devices if the screen is on but we are in a non-interactive state
     if (!on) {
         if (get_cur_panel_brightness() > 0) {
             ALOGV("%s: Moving to non-interactive state, but screen is still on,"
-                  " not disabling input devices\n", __func__);
+                  " not disabling input devices", __func__);
             goto out;
         }
     }
@@ -379,7 +379,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
 
 out:
     sysfs_write(IO_IS_BUSY_PATH, on ? "1" : "0");
-    ALOGV("power_set_interactive: %d done\n", on);
+    ALOGV("power_set_interactive: %d done", on);
 }
 
 static void samsung_power_hint(struct power_module *module,
@@ -403,7 +403,7 @@ static void samsung_power_hint(struct power_module *module,
 
                 if (len < 0) {
                     strerror_r(errno, errno_str, sizeof(errno_str));
-                    ALOGE("Error writing to %s: %s\n", BOOSTPULSE_PATH, errno_str);
+                    ALOGE("Error writing to %s: %s", BOOSTPULSE_PATH, errno_str);
                 }
             }
 
