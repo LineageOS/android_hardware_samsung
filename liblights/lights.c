@@ -99,7 +99,7 @@ static int write_str(char const *path, const char* value)
         return amt == -1 ? -errno : 0;
     } else {
         if (already_warned == 0) {
-            ALOGE("write_str failed to open %s\n", path);
+            ALOGE("write_str failed to open %s", path);
             already_warned = 1;
         }
         return -errno;
@@ -128,7 +128,7 @@ static int set_light_backlight(struct light_device_t *dev __unused,
     if (max_brightness > MAX_INPUT_BRIGHTNESS) {
         int old_brightness = brightness;
         brightness = brightness * max_brightness / MAX_INPUT_BRIGHTNESS;
-        ALOGV("%s: scaling brightness %d => %d\n", __func__,
+        ALOGV("%s: scaling brightness %d => %d", __func__,
             old_brightness, brightness);
     }
 
@@ -190,12 +190,8 @@ static int write_leds(const struct led_config *led)
         return -EINVAL;
     }
 
-    ALOGV("%s: color=0x%08x, delay_on=%d, delay_off=%d, blink=\"%s\".",
+    ALOGV("%s: color=0x%08x, delay_on=%d, delay_off=%d, blink=%s",
           __func__, led->color, led->delay_on, led->delay_off, blink);
-
-    /* Add '\n' here to make the above log message clean. */
-    blink[count]   = '\n';
-    blink[count+1] = '\0';
 
     pthread_mutex_lock(&g_lock);
     err = write_str(LED_BLINK_NODE, blink);

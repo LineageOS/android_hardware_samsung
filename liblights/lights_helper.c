@@ -39,13 +39,13 @@ int read_int(char const *path)
 
     fd = open(path, O_RDONLY);
     if (fd < 0) {
-        ALOGE("%s: failed to open %s\n", __func__, path);
+        ALOGE("%s: failed to open %s", __func__, path);
         goto fail;
     }
 
     len = read(fd, buf, num_bytes - 1);
     if (len < 0) {
-        ALOGE("%s: failed to read from %s\n", __func__, path);
+        ALOGE("%s: failed to read from %s", __func__, path);
         goto fail;
     }
 
@@ -81,13 +81,13 @@ int write_int(char const *path, const int value)
 
     if (fd >= 0) {
         char buffer[20];
-        int bytes = sprintf(buffer, "%d\n", value);
+        int bytes = sprintf(buffer, "%d", value);
         int amt = write(fd, buffer, bytes);
         close(fd);
         return amt == -1 ? -errno : 0;
     } else {
         if (already_warned == 0) {
-            ALOGE("write_int failed to open %s\n", path);
+            ALOGE("write_int failed to open %s", path);
             already_warned = 1;
         }
         return -errno;
