@@ -327,6 +327,8 @@ static void samsung_power_init(struct power_module *module)
 
     boostpulse_open(samsung_pwr);
 
+    samsung_pwr->touchscreen_power_path = NULL;
+    samsung_pwr->touchkey_power_path = NULL;
     init_touch_input_power_path(samsung_pwr);
 }
 
