@@ -16,6 +16,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">Visualización avanzada</string>
   <!-- Screen Preference -->
+  <string name="category_screen_title">Pantalla</string>
+  <string name="screen_colors_title">Colores</string>
   <!-- mDNIe -->
+  <string name="mdnie_scenario_title_head">Escenariu</string>
+  <string name="mdnie_scenario_summary_head">Afita l\'escenariu mDNIe</string>
+  <string name="mdnie_negative_title_head">Mou negativu</string>
+  <string name="mdnie_negative_summary_head">Des/habilita los colores invertíos</string>
 </resources>
