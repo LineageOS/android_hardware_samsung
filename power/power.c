@@ -408,12 +408,14 @@ static void samsung_power_hint(struct power_module *module,
     char errno_str[64];
     int len;
 
+    /* Bail out if low-power mode is active */
+    if (current_power_profile == PROFILE_POWER_SAVE && hint != POWER_HINT_SET_PROFILE) {
+        ALOGW("%s: PROFILE_POWER_SAVE active, ignoring hint %d", __func__, hint);
+        return;
+    }
+
     switch (hint) {
         case POWER_HINT_INTERACTION: {
-            if (current_power_profile == PROFILE_POWER_SAVE) {
-                return;
-            }
-
             ALOGV("%s: POWER_HINT_INTERACTION", __func__);
             send_boostpulse(samsung_pwr->boostpulse_fd);
             break;
