@@ -209,6 +209,9 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
             }
             ALOGV("%s: set performance mode", __func__);
             break;
+        default:
+            ALOGW("%s: Unknown power profile: %d", __func__, profile);
+            return;
     }
 
     current_power_profile = profile;
@@ -415,29 +418,29 @@ static void samsung_power_hint(struct power_module *module,
     }
 
     switch (hint) {
-        case POWER_HINT_INTERACTION: {
+        case POWER_HINT_VSYNC:
+            ALOGV("%s: POWER_HINT_VSYNC", __func__);
+            break;
+        case POWER_HINT_INTERACTION:
             ALOGV("%s: POWER_HINT_INTERACTION", __func__);
             send_boostpulse(samsung_pwr->boostpulse_fd);
             break;
-        }
-        case POWER_HINT_VSYNC: {
-            ALOGV("%s: POWER_HINT_VSYNC", __func__);
+        case POWER_HINT_LOW_POWER:
+            ALOGV("%s: POWER_HINT_LOW_POWER", __func__);
+            set_power_profile(samsung_pwr, PROFILE_POWER_SAVE);
             break;
-        }
-#ifdef POWER_HINT_CPU_BOOST
+        case POWER_HINT_LAUNCH:
         case POWER_HINT_CPU_BOOST:
+            ALOGV("%s: POWER_HINT_LAUNCH | POWER_HINT_CPU_BOOST", __func__);
             boost((*(int32_t *)data));
             break;
-#endif
-        case POWER_HINT_SET_PROFILE: {
-            int profile = *((intptr_t *)data);
-
+        case POWER_HINT_SET_PROFILE:
             ALOGV("%s: POWER_HINT_SET_PROFILE", __func__);
-
+            int profile = *((intptr_t *)data);
             set_power_profile(samsung_pwr, profile);
             break;
-        }
         default:
+            ALOGW("%s: Unknown power hint: %d", __func__, hint);
             break;
     }
 }
