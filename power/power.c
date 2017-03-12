@@ -40,6 +40,15 @@
 
 #include "samsung_power.h"
 
+#define BOOST_PATH             CPU0_INTERACTIVE_PATH "/boost"
+#define BOOSTPULSE_PATH        CPU0_INTERACTIVE_PATH "/boostpulse"
+#define IO_IS_BUSY_PATH        CPU0_INTERACTIVE_PATH "/io_is_busy"
+#define CPU0_HISPEED_FREQ_PATH CPU0_INTERACTIVE_PATH "/hispeed_freq"
+#define CPU4_HISPEED_FREQ_PATH CPU4_INTERACTIVE_PATH "/hispeed_freq"
+
+#define CPU0_MAX_FREQ_PATH     CPU0_SYSFS_PATH "/cpufreq/scaling_max_freq"
+#define CPU4_MAX_FREQ_PATH     CPU4_SYSFS_PATH "/cpufreq/scaling_max_freq"
+
 #define ARRAY_SIZE(a) sizeof(a) / sizeof(a[0])
 
 struct samsung_power_module {
