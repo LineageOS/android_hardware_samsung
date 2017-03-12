@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_bcf17997",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-03-12T15:31:08Z",
+      "side": 1,
+      "message": "wat, why is this under the interactive path?",
+      "revId": "0e8ddf49f213532140bdb9b282b85a3cb1bd793a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
