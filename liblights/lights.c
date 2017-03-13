@@ -122,10 +122,10 @@ static int set_light_backlight(struct light_device_t *dev __unused,
     int max_brightness = g_backlight.max_brightness;
 
     /*
-     * If our max panel brightness is > 255, apply linear scaling across the
-     * accepted range.
+     * If max panel brightness is not the default (255),
+     * apply linear scaling across the accepted range.
      */
-    if (max_brightness > MAX_INPUT_BRIGHTNESS) {
+    if (max_brightness != MAX_INPUT_BRIGHTNESS) {
         int old_brightness = brightness;
         brightness = brightness * max_brightness / MAX_INPUT_BRIGHTNESS;
         ALOGV("%s: scaling brightness %d => %d", __func__,
