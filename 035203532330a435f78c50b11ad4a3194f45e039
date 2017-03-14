@@ -16,6 +16,24 @@
       "revId": "035203532330a435f78c50b11ad4a3194f45e039",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_92821951",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 2320,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-03-14T16:51:42Z",
+      "side": 0,
+      "message": "At least with the current implementation we have a different PCM device for voice calls. Till now this was always the case. At least with wolfson/cirruslogic chipsets. This was it can at least open it and play the sound. Well you wont hear any output. The old HAL dealt with it the same way. We could ifdef it but enable by default ...",
+      "parentUuid": "ba57610f_d233f1f4",
+      "revId": "035203532330a435f78c50b11ad4a3194f45e039",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
