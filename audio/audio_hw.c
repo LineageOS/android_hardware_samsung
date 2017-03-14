@@ -2370,7 +2370,10 @@ int disable_output_path_l(struct stream_out *out)
              __func__, out->usecase);
         return -EINVAL;
     }
-    disable_snd_device(adev, uc_info, uc_info->out_snd_device, true);
+
+    if (!out->dev->voice.in_call) {
+        disable_snd_device(adev, uc_info, uc_info->out_snd_device, true);
+    }
     uc_release_pcm_devices(uc_info);
     list_remove(&uc_info->adev_list_node);
     free(uc_info);
@@ -2397,7 +2400,10 @@ int enable_output_path_l(struct stream_out *out)
     uc_select_pcm_devices(uc_info);
 
     list_add_tail(&adev->usecase_list, &uc_info->adev_list_node);
-    select_devices(adev, out->usecase);
+
+    if (!out->dev->voice.in_call) {
+        select_devices(adev, out->usecase);
+    }
 
     return 0;
 }
@@ -2773,7 +2779,28 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                 else {
                     if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD)
                         out_set_offload_parameters(adev, uc_info);
-                    select_devices(adev, out->usecase);
+
+                    /*
+                     * Make sure we do not do any refcounting while in a call!
+                     */
+                    if (adev->mode == AUDIO_MODE_IN_CALL &&
+                        !adev->voice.in_call) {
+                        /*
+                         * If we are starting a voice call, stop playback, do
+                         * not enable a device.
+                         */
+                        if (uc_info->out_snd_device != SND_DEVICE_NONE) {
+                            disable_snd_device(adev, uc_info,
+                                               uc_info->out_snd_device, true);
+                        }
+                    } else if (adev->mode != AUDIO_MODE_IN_CALL &&
+                               !adev->voice.in_call) {
+                        /*
+                         * Do not change devices while in a call, [stop|start]_voice_call
+                         * will do that for us.
+                         */
+                        select_devices(adev, out->usecase);
+                    }
                 }
             }
 
