@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_d233f1f4",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 2320,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-03-14T15:21:58Z",
+      "side": 0,
+      "message": "Removing this can cause problems for devices that have their playback and voicecall routes on the same devices, no?\nIf voice call is active, i.e. the ALSA device is already opened, we can\u0027t open it again..",
+      "revId": "035203532330a435f78c50b11ad4a3194f45e039",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
