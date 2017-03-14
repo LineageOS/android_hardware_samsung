@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <linux/videodev2.h>
+#include "videodev2.h"
 
 #define JPEG_DEC_NODE        "/dev/video11"
 #define JPEG_ENC_NODE        "/dev/video12"
