@@ -49,6 +49,7 @@
 #include "secion.h"
 #include "s5p_fimc.h"
 #include "exynos_mem.h"
+#include "graphics.h"
 static pthread_mutex_t s_map_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t sMapLock = PTHREAD_MUTEX_INITIALIZER;
 
