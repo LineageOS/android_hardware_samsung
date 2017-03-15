@@ -62,6 +62,15 @@ struct pcm_config pcm_config_voice_sco = {
     .format = PCM_FORMAT_S16_LE,
 };
 
+/* SCO WB and NB uses 8kHz for now, 16kHz it's on TO DO*/
+struct pcm_config pcm_config_voice_sco_wb = {
+    .channels = 1,
+    .rate = SCO_DEFAULT_SAMPLING_RATE,
+    .period_size = SCO_PERIOD_SIZE,
+    .period_count = SCO_PERIOD_COUNT,
+    .format = PCM_FORMAT_S16_LE,
+};
+
 /* Prototypes */
 int start_voice_call(struct audio_device *adev);
 int stop_voice_call(struct audio_device *adev);
@@ -150,6 +159,8 @@ static void stop_voice_session_bt_sco(struct voice_session *session) {
 /* must be called with the hw device mutex locked, OK to hold other mutexes */
 void start_voice_session_bt_sco(struct voice_session *session)
 {
+    struct pcm_config *voice_sco_config;
+
     if (session->pcm_sco_rx != NULL || session->pcm_sco_tx != NULL) {
         ALOGW("%s: SCO PCMs already open!\n", __func__);
         return;
@@ -157,12 +168,18 @@ void start_voice_session_bt_sco(struct voice_session *session)
 
     ALOGV("%s: Opening SCO PCMs", __func__);
 
-    /* TODO: Add wideband support */
+    if (session->wb_amr_type >= 1) {
+        ALOGV("%s: pcm_config wideband", __func__);
+        voice_sco_config = &pcm_config_voice_sco_wb;
+    } else {
+        ALOGV("%s: pcm_config narrowband", __func__);
+        voice_sco_config = &pcm_config_voice_sco;
+    }
 
     session->pcm_sco_rx = pcm_open(SOUND_CARD,
                                    SOUND_PLAYBACK_SCO_DEVICE,
                                    PCM_OUT|PCM_MONOTONIC,
-                                   &pcm_config_voice_sco);
+                                   voice_sco_config);
     if (session->pcm_sco_rx != NULL && !pcm_is_ready(session->pcm_sco_rx)) {
         ALOGE("%s: cannot open PCM SCO RX stream: %s",
               __func__, pcm_get_error(session->pcm_sco_rx));
@@ -172,7 +189,7 @@ void start_voice_session_bt_sco(struct voice_session *session)
     session->pcm_sco_tx = pcm_open(SOUND_CARD,
                                    SOUND_CAPTURE_SCO_DEVICE,
                                    PCM_IN|PCM_MONOTONIC,
-                                   &pcm_config_voice_sco);
+                                   voice_sco_config);
     if (session->pcm_sco_tx && !pcm_is_ready(session->pcm_sco_tx)) {
         ALOGE("%s: cannot open PCM SCO TX stream: %s",
               __func__, pcm_get_error(session->pcm_sco_tx));
