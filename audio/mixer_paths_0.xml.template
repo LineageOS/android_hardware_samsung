@@ -68,6 +68,10 @@
         <!-- Empty path -->
     </path>
 
+    <path name="bt-sco-headset-wb">
+        <!-- Empty path -->
+    </path>
+
     <!-- ########## Capture ########## -->
 
     <path name="earpiece-mic">
@@ -121,6 +125,10 @@
     </path>
 
     <path name="bt-sco-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="bt-sco-mic-wb">
         <!-- Empty path -->
     </path>
 
