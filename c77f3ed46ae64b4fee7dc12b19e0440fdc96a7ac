@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_14c4d190",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-03-17T09:44:46Z",
+      "side": 1,
+      "message": "Indention of this bracket is still wrong.\nAlso, won\u0027t this be overriden by the code below?",
+      "revId": "c77f3ed46ae64b4fee7dc12b19e0440fdc96a7ac",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_d4bd1904",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-03-17T09:44:46Z",
+      "side": 1,
+      "message": "Looks like you should assign the BT_SCO_MIC_WB route here, otherwise it will always be overriden..?",
+      "revId": "c77f3ed46ae64b4fee7dc12b19e0440fdc96a7ac",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
