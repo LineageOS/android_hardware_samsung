@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_74654d44",
+        "filename": "audio/mixer_paths_0.xml.template",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 9760
+      },
+      "writtenOn": "2017-03-17T12:10:55Z",
+      "side": 1,
+      "message": "Extra whitespaces",
+      "revId": "ba3af7a7d240e2c0428b05cb0afc8fcf795130d4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
