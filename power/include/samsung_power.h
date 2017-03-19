@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,14 @@
  */
 
 #define CPU0_SYSFS_PATH "/sys/devices/system/cpu/cpu0"
-#define CPU4_SYSFS_PATH "/sys/devices/system/cpu/cpu4"
 #define CPU0_INTERACTIVE_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive"
+
+/* CPU4 Paths.- 
+ *
+ * Do not define these if your device does not have CPU4 nodes
+*/
+
+#define CPU4_SYSFS_PATH "/sys/devices/system/cpu/cpu4"
 #define CPU4_INTERACTIVE_PATH "/sys/devices/system/cpu/cpu4/cpufreq/interactive"
 
 #endif // SAMSUNG_POWER_H
