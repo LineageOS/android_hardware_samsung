@@ -44,10 +44,12 @@
 #define BOOSTPULSE_PATH        CPU0_INTERACTIVE_PATH "/boostpulse"
 #define IO_IS_BUSY_PATH        CPU0_INTERACTIVE_PATH "/io_is_busy"
 #define CPU0_HISPEED_FREQ_PATH CPU0_INTERACTIVE_PATH "/hispeed_freq"
-#define CPU4_HISPEED_FREQ_PATH CPU4_INTERACTIVE_PATH "/hispeed_freq"
-
 #define CPU0_MAX_FREQ_PATH     CPU0_SYSFS_PATH "/cpufreq/scaling_max_freq"
+
+#ifdef CPU4_SYSFS_PATH
+#define CPU4_HISPEED_FREQ_PATH CPU4_INTERACTIVE_PATH "/hispeed_freq"
 #define CPU4_MAX_FREQ_PATH     CPU4_SYSFS_PATH "/cpufreq/scaling_max_freq"
+#endif
 
 #define ARRAY_SIZE(a) sizeof(a) / sizeof(a[0])
 
@@ -57,8 +59,10 @@ struct samsung_power_module {
     int boostpulse_fd;
     char cpu0_hispeed_freq[10];
     char cpu0_max_freq[10];
+#ifdef CPU4_SYSFS_PATH
     char cpu4_hispeed_freq[10];
     char cpu4_max_freq[10];
+#endif
     char* touchscreen_power_path;
     char* touchkey_power_path;
 };
@@ -194,28 +198,25 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
         case PROFILE_POWER_SAVE:
             // Limit to hispeed freq
             sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_hispeed_freq);
-            rc = stat(CPU4_MAX_FREQ_PATH, &sb);
-            if (rc == 0) {
-                sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq);
-            }
+#ifdef CPU4_SYSFS_PATH
+            sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq);
+#endif
             ALOGV("%s: set powersave mode", __func__);
             break;
         case PROFILE_BALANCED:
             // Restore normal max freq
             sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_max_freq);
-            rc = stat(CPU4_MAX_FREQ_PATH, &sb);
-            if (rc == 0) {
-                sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
-            }
+#ifdef CPU4_SYSFS_PATH
+            sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
+#endif
             ALOGV("%s: set balanced mode", __func__);
             break;
         case PROFILE_HIGH_PERFORMANCE:
             // Restore normal max freq
             sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_max_freq);
-            rc = stat(CPU4_MAX_FREQ_PATH, &sb);
-            if (rc == 0) {
-                sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
-            }
+#ifdef CPU4_SYSFS_PATH
+            sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
+#endif
             ALOGV("%s: set performance mode", __func__);
             break;
         default:
@@ -310,15 +311,14 @@ static void init_cpufreqs(struct samsung_power_module *samsung_pwr)
     ALOGV("%s: CPU 0 hispeed freq: %s", __func__, samsung_pwr->cpu0_hispeed_freq);
     ALOGV("%s: CPU 0 max freq: %s", __func__, samsung_pwr->cpu0_max_freq);
 
-    rc = stat(CPU4_HISPEED_FREQ_PATH, &sb);
-    if (rc == 0) {
-        sysfs_read(CPU4_HISPEED_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq,
-                   sizeof(samsung_pwr->cpu4_hispeed_freq));
-        sysfs_read(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq,
-                   sizeof(samsung_pwr->cpu4_max_freq));
-        ALOGV("%s: CPU 4 hispeed freq: %s", __func__, samsung_pwr->cpu4_hispeed_freq);
-        ALOGV("%s: CPU 4 max freq: %s", __func__, samsung_pwr->cpu4_max_freq);
-    }
+#ifdef CPU4_SYSFS_PATH
+    sysfs_read(CPU4_HISPEED_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq,
+               sizeof(samsung_pwr->cpu4_hispeed_freq));
+    sysfs_read(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq,
+               sizeof(samsung_pwr->cpu4_max_freq));
+    ALOGV("%s: CPU 4 hispeed freq: %s", __func__, samsung_pwr->cpu4_hispeed_freq);
+    ALOGV("%s: CPU 4 max freq: %s", __func__, samsung_pwr->cpu4_max_freq);
+#endif
 }
 
 static void init_touch_input_power_path(struct samsung_power_module *samsung_pwr)
