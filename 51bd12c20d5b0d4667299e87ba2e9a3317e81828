@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_89366702",
+        "filename": "power/power.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 15776
+      },
+      "writtenOn": "2017-03-20T16:08:58Z",
+      "side": 0,
+      "message": "+1 but reviewers should be aware of this change",
+      "revId": "51bd12c20d5b0d4667299e87ba2e9a3317e81828",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
