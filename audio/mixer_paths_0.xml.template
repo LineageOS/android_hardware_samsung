@@ -56,6 +56,14 @@
         <!-- Empty path -->
     </path>
 
+    <path name="voice-bt-sco-headset">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-bt-sco-headset-wb">
+        <!-- Empty path -->
+    </path>
+
     <path name="hdmi">
         <!-- Empty path -->
     </path>
@@ -65,10 +73,6 @@
     </path>
 
     <path name="bt-sco-headset">
-        <!-- Empty path -->
-    </path>
-
-    <path name="bt-sco-headset-wb">
         <!-- Empty path -->
     </path>
 
@@ -120,15 +124,19 @@
         <!-- Empty path -->
     </path>
 
+    <path name="voice-bt-sco-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-bt-sco-mic-wb">
+        <!-- Empty path -->
+    </path>
+
     <path name="hdmi-mic">
         <!-- Empty path -->
     </path>
 
     <path name="bt-sco-mic">
-        <!-- Empty path -->
-    </path>
-
-    <path name="bt-sco-mic-wb">
         <!-- Empty path -->
     </path>
 
