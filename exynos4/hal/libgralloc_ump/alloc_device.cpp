@@ -447,7 +447,7 @@ static int gralloc_alloc_framebuffer(alloc_device_t* dev, size_t size, int usage
 }
 
 static int alloc_device_alloc(alloc_device_t* dev, int w, int h, int format,
-                              int usage, buffer_handle_t* pHandle, int* pStride)
+                              int usage, buffer_handle_t* pHandle, int* pStride, int* pVstride)
 {
     int l_usage = usage;
     int bpp = 0;
@@ -459,6 +459,7 @@ static int alloc_device_alloc(alloc_device_t* dev, int w, int h, int format,
 
     size_t size = 0;
     size_t stride = 0;
+    size_t vstride = 0;
     size_t stride_raw = 0;
 
     if (format == HAL_PIXEL_FORMAT_YCbCr_420_SP ||

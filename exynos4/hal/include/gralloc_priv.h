@@ -138,7 +138,7 @@ struct private_handle_t {
     unsigned int yaddr;
     unsigned int uoffset;
     unsigned int voffset;
-    
+
     /* Following members are for ION memory only */
     int     ion_client;
 
