@@ -26,7 +26,7 @@ LOCAL_SRC_FILES := libedid.c
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH) \
-	$(LOCAL_PATH)/../../../include
+	$(LOCAL_PATH)/../../include
 
 LOCAL_MODULE := libedid
 include $(BUILD_SHARED_LIBRARY)
