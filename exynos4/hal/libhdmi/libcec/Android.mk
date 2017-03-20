@@ -21,25 +21,13 @@ LOCAL_MODULE_TAGS := eng
 
 LOCAL_PRELINK_MODULE := false
 LOCAL_SHARED_LIBRARIES := liblog
-LOCAL_SRC_FILES := libddc.c
+LOCAL_SRC_FILES := libcec.c
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH) \
-	$(LOCAL_PATH)/../../../include
+	$(LOCAL_PATH)/../../include
 
-ifeq ($(BOARD_HDMI_DDC_CH), DDC_CH_I2C_7)
-LOCAL_CFLAGS  += -DDDC_CH_I2C_7
-endif
-
-ifeq ($(BOARD_HDMI_DDC_CH), DDC_CH_I2C_1)
-LOCAL_CFLAGS  += -DDDC_CH_I2C_1
-endif
-
-ifeq ($(BOARD_HDMI_DDC_CH), DDC_CH_I2C_2)
-LOCAL_CFLAGS  += -DDDC_CH_I2C_2
-endif
-
-LOCAL_MODULE := libddc
+LOCAL_MODULE := libcec
 include $(BUILD_SHARED_LIBRARY)
 
 endif
