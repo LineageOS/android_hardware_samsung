@@ -1506,7 +1506,7 @@ static void exynos4_config_handle(private_handle_t *handle,
     }
 
     cfg.state = cfg.S3C_FB_WIN_STATE_BUFFER;
-    cfg.fd = -1;//handle->share_fd;
+    cfg.phys_addr = handle->paddr;
     cfg.x = x;
     cfg.y = y;
     cfg.w = w;
