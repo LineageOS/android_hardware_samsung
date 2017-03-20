@@ -19,7 +19,7 @@
 
 #include <linux/fb.h>
 
-#include "videodev2.h"
+#include <linux/videodev2.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,6 +36,20 @@ extern "C" {
 #define TVOUT_DEV_G1    "/dev/video17"
 
 #define HPD_DEV         "/dev/HPD"
+
+#define VIDIOC_HDCP_ENABLE		_IOWR('V', 100, unsigned int)
+#define VIDIOC_HDCP_STATUS		_IOR('V', 101, unsigned int)
+#define VIDIOC_HDCP_PROT_STATUS		_IOR('V', 102, unsigned int)
+#define VIDIOC_INIT_AUDIO		_IOR('V', 103, unsigned int)
+#define VIDIOC_AV_MUTE			_IOR('V', 104, unsigned int)
+#define VIDIOC_G_AVMUTE			_IOR('V', 105, unsigned int)
+#define VIDIOC_SET_VSYNC_INT		_IOR('V', 106, unsigned int)
+#define VIDIOC_WAITFORVSYNC		_IOR('V', 107, unsigned int)
+#define VIDIOC_G_VP_BUFF_INFO		_IOR('V', 108, unsigned int)
+#define VIDIOC_S_VP_BUFF_INFO		_IOR('V', 109, unsigned int)
+#define VIDIOC_S_AUDIO_CHANNEL		_IOR('V', 110, unsigned int)
+#define VIDIOC_S_Q_COLOR_RANGE		_IOR('V', 111, unsigned int)
+
 
 /* ------------- Output -----------------*/
 /* type */
