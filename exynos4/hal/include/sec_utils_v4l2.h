@@ -47,7 +47,7 @@
 extern "C" {
 #endif
 
-#include "videodev2.h"
+#include <linux/videodev2.h>
 
 #ifdef __cplusplus
 }

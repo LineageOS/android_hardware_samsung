@@ -18,7 +18,7 @@
 #define __S5P_TVOUT_H__
 
 #include <linux/fb.h>
-#include "videodev2.h"
+#include <linux/videodev2.h>
 
 #ifdef __cplusplus
 extern "C" {

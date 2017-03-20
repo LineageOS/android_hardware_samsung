@@ -31,7 +31,10 @@ LOCAL_SHARED_LIBRARIES := liblog libcutils libUMP libGLESv1_CM libsecion
 # Include the UMP header files
 LOCAL_C_INCLUDES += \
     bionic/libc/include \
-    $(LOCAL_PATH)/../include
+    $(LOCAL_PATH)/../include \
+	$(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
+
+LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 LOCAL_SRC_FILES := \
 	gralloc_module.cpp \

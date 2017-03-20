@@ -20,7 +20,7 @@
 #ifndef _S5P_FIMC_H_
 #define _S5P_FIMC_H_
 
-#include "videodev2.h"
+#include <linux/videodev2.h>
 #include "SecBuffer.h"
 
 /*
