@@ -2238,7 +2238,7 @@ static int exynos4_open(const struct hw_module_t *module, const char *name,
         for (size_t j = 0; j < NUM_FIMC_DST_BUFS; j++)
             dev->fimc[i].dst_buf_fence[j] = -1;
 
-    dev->vsync_fd = open("/sys/devices/platform/exynos4-fb.0/vsync", O_RDONLY);
+    dev->vsync_fd = open("/sys/devices/platform/samsung-pd.2/s3cfb.0/vsync_time", O_RDONLY);
     if (dev->vsync_fd < 0) {
         ALOGE("failed to open vsync attribute");
         ret = dev->vsync_fd;
