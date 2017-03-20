@@ -12,6 +12,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(filter-out exynos4,$(TARGET_BOARD_PLATFORM)),)
-include $(all-subdir-makefiles)
+ifeq ($(BOARD_USES_HDMI),true)
+
+LOCAL_PATH:= $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_TAGS := eng
+
+LOCAL_PRELINK_MODULE := false
+LOCAL_SHARED_LIBRARIES := liblog
+LOCAL_SRC_FILES := libddc.c
+
+LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH) \
+	$(LOCAL_PATH)/../../include
+
+ifeq ($(BOARD_HDMI_DDC_CH), DDC_CH_I2C_7)
+LOCAL_CFLAGS  += -DDDC_CH_I2C_7
+endif
+
+ifeq ($(BOARD_HDMI_DDC_CH), DDC_CH_I2C_1)
+LOCAL_CFLAGS  += -DDDC_CH_I2C_1
+endif
+
+ifeq ($(BOARD_HDMI_DDC_CH), DDC_CH_I2C_2)
+LOCAL_CFLAGS  += -DDDC_CH_I2C_2
+endif
+
+LOCAL_MODULE := libddc
+include $(BUILD_SHARED_LIBRARY)
+
 endif
