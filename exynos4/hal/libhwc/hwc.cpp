@@ -180,10 +180,10 @@ static void dump_config(s3c_fb_win_config &c)
 {
     ALOGV("\tstate = %u", c.state);
     if (c.state == c.S3C_FB_WIN_STATE_BUFFER) {
-        ALOGV("\t\tfd = %d, offset = %u, stride = %u, "
+        ALOGV("\t\tfd = %d, phys_addr = 0x%x, offset = %u, stride = %u, "
                 "x = %d, y = %d, w = %u, h = %u, "
                 "format = %u, blending = %u",
-                c.fd, c.offset, c.stride,
+                c.fd, c.phys_addr, c.offset, c.stride,
                 c.x, c.y, c.w, c.h,
                 c.format, c.blending);
     }
@@ -1517,7 +1517,10 @@ static void exynos4_config_handle(private_handle_t *handle,
                 crop);
         h -= crop;
     }
-
+    ALOGV("handle info: ump_id: %d, ump_mem_handle: 0x%x, paddr: 0x%x, ion_client %d, yaddr 0x%x, uoffset 0x%x, voffset 0x%x",
+            handle->ump_id, handle->ump_mem_handle,
+            handle->paddr, handle->ion_client,
+            handle->yaddr, handle->uoffset, handle->voffset);
     cfg.state = cfg.S3C_FB_WIN_STATE_BUFFER;
     cfg.phys_addr = handle->paddr;
     cfg.x = x;
@@ -1706,6 +1709,7 @@ static int exynos4_set_fimd(exynos4_hwc_composer_device_1_t *pdev,
         }
     }
     close(fence);
+    ALOGV("====== set finished =======");
 
     return err;
 }
