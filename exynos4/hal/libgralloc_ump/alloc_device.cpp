@@ -60,7 +60,7 @@
 #include <sys/ioctl.h>
 #include "format.h"
 
-#include "videodev2.h"
+#include <linux/videodev2.h>
 #include "s5p_fimc.h"
 
 #ifdef SAMSUNG_EXYNOS4x12
@@ -447,7 +447,7 @@ static int gralloc_alloc_framebuffer(alloc_device_t* dev, size_t size, int usage
 }
 
 static int alloc_device_alloc(alloc_device_t* dev, int w, int h, int format,
-                              int usage, buffer_handle_t* pHandle, int* pStride, int* pVstride)
+                              int usage, buffer_handle_t* pHandle, int* pStride)
 {
     int l_usage = usage;
     int bpp = 0;
