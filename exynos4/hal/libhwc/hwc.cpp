@@ -1002,6 +1002,8 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
 {
     ALOGV("preparing %u layers for FIMD", contents->numHwLayers);
 
+    size_t max_hw_overlays = property_get_int32("debug.hwc.max_hw_overlays", NUM_HW_WINDOWS);
+
     memset(pdev->bufs.fimc_map, 0, sizeof(pdev->bufs.fimc_map));
 
     bool force_fb = pdev->force_gpu;
@@ -1069,12 +1071,12 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
             fb_rect.right = pdev->xres - 1;
             fb_rect.bottom = pdev->yres - 1;
             pixels_left = MAX_PIXELS - pdev->xres * pdev->yres;
-            windows_left = NUM_HW_WINDOWS - 1;
+            windows_left = min(max_hw_overlays, NUM_HW_WINDOWS-1);
             rects.push_back(fb_rect);
         }
         else {
             pixels_left = MAX_PIXELS;
-            windows_left = NUM_HW_WINDOWS;
+            windows_left = max_hw_overlays;
         }
 
         changed = false;
