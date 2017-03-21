@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#define LOG_NDEBUG 0
 #include <errno.h>
 #include <fcntl.h>
 #include <math.h>
@@ -1040,6 +1041,7 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
             first_fb = i;
             fb_needed = true;
         }
+        ALOGV("\tlayer %u: render to framebuffer", i);
         last_fb = i;
         layer.compositionType = HWC_FRAMEBUFFER;
 
@@ -1104,9 +1106,13 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
             size_t pixels_needed = WIDTH(layer.displayFrame) *
                     HEIGHT(layer.displayFrame);
             bool can_compose = windows_left && pixels_needed <= pixels_left;
+            ALOGV("can%s compose layer %u: %u windows left, %d pixels left",
+                    can_compose?"":"n't", i, windows_left, pixels_left - pixels_needed);
             bool fimc_required = exynos4_requires_fimc(layer, handle->format);
-            if (fimc_required)
+            if (fimc_required) {
                 can_compose = can_compose && !fimc_used;
+                ALOGV("can%s compose layer %u: fimc required.", can_compose ? "" : "n't", i);
+            }
 
             // hwc_rect_t right and bottom values are normally exclusive;
             // the intersection logic is simpler if we make them inclusive
@@ -1115,8 +1121,10 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
 
             // no more than 2 layers can overlap on a given pixel
             for (size_t j = 0; can_compose && j < overlaps.size(); j++) {
-                if (intersect(visible_rect, overlaps.itemAt(j)))
+                if (intersect(visible_rect, overlaps.itemAt(j))) {
+                    ALOGV("can't compose layer %u: overlaps!", i);
                     can_compose = false;
+                }
             }
 
             if (!can_compose) {
@@ -1561,6 +1569,7 @@ static int exynos4_post_fimd(exynos4_hwc_composer_device_1_t *pdev,
                     private_handle_t::dynamicCast(layer.handle);
 
             if (pdata->fimc_map[i].mode == exynos4_fimc_map_t::FIMC_M2M) {
+                ALOGV("layer %u gets fimc", i);
                 int fimc_idx = pdata->fimc_map[i].idx;
                 exynos4_fimc_data_t &fimc = pdev->fimc[fimc_idx];
 
@@ -1591,6 +1600,7 @@ static int exynos4_post_fimd(exynos4_hwc_composer_device_1_t *pdev,
                         layer.displayFrame, layer.blending, fence, config[i],
                         pdev);
             } else {
+                ALOGV("layer %u goes straight to overlay", i);
                 exynos4_config_overlay(&layer, config[i], pdev);
             }
         }
