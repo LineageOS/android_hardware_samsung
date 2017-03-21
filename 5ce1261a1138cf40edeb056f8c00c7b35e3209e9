@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_ef9e0363",
+        "filename": "power/include/samsung_power.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-03-21T06:36:10Z",
+      "side": 1,
+      "message": "All the changes in this file appear to be no-ops.",
+      "revId": "5ce1261a1138cf40edeb056f8c00c7b35e3209e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
