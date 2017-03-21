@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//#define LOG_NDEBUG 0
 #include <errno.h>
 #include <fcntl.h>
 #include <math.h>
@@ -179,10 +180,10 @@ static void dump_config(s3c_fb_win_config &c)
 {
     ALOGV("\tstate = %u", c.state);
     if (c.state == c.S3C_FB_WIN_STATE_BUFFER) {
-        ALOGV("\t\tfd = %d, offset = %u, stride = %u, "
+        ALOGV("\t\tfd = %d, phys_addr = 0x%x, offset = %u, stride = %u, "
                 "x = %d, y = %d, w = %u, h = %u, "
                 "format = %u, blending = %u",
-                c.fd, c.offset, c.stride,
+                c.fd, c.phys_addr, c.offset, c.stride,
                 c.x, c.y, c.w, c.h,
                 c.format, c.blending);
     }
@@ -1040,6 +1041,7 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
             first_fb = i;
             fb_needed = true;
         }
+        ALOGV("\tlayer %u: render to framebuffer", i);
         last_fb = i;
         layer.compositionType = HWC_FRAMEBUFFER;
 
@@ -1104,9 +1106,13 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
             size_t pixels_needed = WIDTH(layer.displayFrame) *
                     HEIGHT(layer.displayFrame);
             bool can_compose = windows_left && pixels_needed <= pixels_left;
+            ALOGV("can%s compose layer %u: %u windows left, %d pixels left",
+                    can_compose?"":"n't", i, windows_left, pixels_left - pixels_needed);
             bool fimc_required = exynos4_requires_fimc(layer, handle->format);
-            if (fimc_required)
+            if (fimc_required) {
                 can_compose = can_compose && !fimc_used;
+                ALOGV("can%s compose layer %u: fimc required.", can_compose ? "" : "n't", i);
+            }
 
             // hwc_rect_t right and bottom values are normally exclusive;
             // the intersection logic is simpler if we make them inclusive
@@ -1115,8 +1121,10 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
 
             // no more than 2 layers can overlap on a given pixel
             for (size_t j = 0; can_compose && j < overlaps.size(); j++) {
-                if (intersect(visible_rect, overlaps.itemAt(j)))
+                if (intersect(visible_rect, overlaps.itemAt(j))) {
+                    ALOGV("can't compose layer %u: overlaps!", i);
                     can_compose = false;
+                }
             }
 
             if (!can_compose) {
@@ -1509,7 +1517,10 @@ static void exynos4_config_handle(private_handle_t *handle,
                 crop);
         h -= crop;
     }
-
+    ALOGV("handle info: ump_id: %d, ump_mem_handle: 0x%x, paddr: 0x%x, ion_client %d, yaddr 0x%x, uoffset 0x%x, voffset 0x%x",
+            handle->ump_id, handle->ump_mem_handle,
+            handle->paddr, handle->ion_client,
+            handle->yaddr, handle->uoffset, handle->voffset);
     cfg.state = cfg.S3C_FB_WIN_STATE_BUFFER;
     cfg.phys_addr = handle->paddr;
     cfg.x = x;
@@ -1561,6 +1572,7 @@ static int exynos4_post_fimd(exynos4_hwc_composer_device_1_t *pdev,
                     private_handle_t::dynamicCast(layer.handle);
 
             if (pdata->fimc_map[i].mode == exynos4_fimc_map_t::FIMC_M2M) {
+                ALOGV("layer %u gets fimc", i);
                 int fimc_idx = pdata->fimc_map[i].idx;
                 exynos4_fimc_data_t &fimc = pdev->fimc[fimc_idx];
 
@@ -1591,6 +1603,7 @@ static int exynos4_post_fimd(exynos4_hwc_composer_device_1_t *pdev,
                         layer.displayFrame, layer.blending, fence, config[i],
                         pdev);
             } else {
+                ALOGV("layer %u goes straight to overlay", i);
                 exynos4_config_overlay(&layer, config[i], pdev);
             }
         }
@@ -1696,6 +1709,7 @@ static int exynos4_set_fimd(exynos4_hwc_composer_device_1_t *pdev,
         }
     }
     close(fence);
+    ALOGV("====== set finished =======");
 
     return err;
 }
