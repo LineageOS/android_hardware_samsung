@@ -114,7 +114,6 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
     ALOGD_IF(debug_level > 0, "%s size=%d usage=0x%x format=0x%x\n", __func__, size, usage, format);
 
     size = round_up_to_page_size(size);
-
     if (usage & GRALLOC_USAGE_HW_ION) {
         ALOGD_IF(debug_level > 0, "%s usage = GRALLOC_USAGE_HW_ION", __func__);
 
@@ -234,7 +233,7 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
         ALOGD_IF(debug_level > 0, "%s hnd=%x paddr=%x yaddr=%x offset=%x", __func__, hnd, current_address, gReservedMemSize, buffer_offset);
         return 0;
     }
-
+    usage |= GRALLOC_USAGE_HW_FIMC1;
     if (usage & GRALLOC_USAGE_HW_FIMC1) {
         ALOGD_IF(debug_level > 0, "%s usage = GRALLOC_USAGE_HW_FIMC1", __func__);
 
@@ -438,7 +437,6 @@ static int gralloc_alloc_framebuffer(alloc_device_t* dev, size_t size, int usage
                                      buffer_handle_t* pHandle, int w, int h,
                                      int format, int bpp, int stride)
 {
-   
     private_module_t* m = reinterpret_cast<private_module_t*>(dev->common.module);
     pthread_mutex_lock(&m->lock);
     int err = gralloc_alloc_framebuffer_locked(dev, size, usage, pHandle, w, h, format, bpp, stride);
