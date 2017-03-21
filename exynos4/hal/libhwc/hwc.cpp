@@ -1133,6 +1133,9 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
                 break;
             }
 
+            if (fb_needed && i > first_fb)
+                last_fb = max(i, last_fb);
+
             for (size_t j = 0; j < rects.size(); j++) {
                 const hwc_rect_t &other_rect = rects.itemAt(j);
                 if (intersect(visible_rect, other_rect))
@@ -1155,7 +1158,7 @@ static int exynos4_prepare_fimd(exynos4_hwc_composer_device_1_t *pdev,
     for (size_t i = 0; i < contents->numHwLayers; i++) {
         hwc_layer_1_t &layer = contents->hwLayers[i];
 
-        if (fb_needed && i == first_fb) {
+        if (fb_needed && i >= first_fb) {
             ALOGV("assigning framebuffer to window %u\n",
                     nextWindow);
             nextWindow++;
