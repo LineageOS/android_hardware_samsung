@@ -58,7 +58,7 @@
 
 const size_t NUM_HW_WINDOWS = 5;
 const size_t NO_FB_NEEDED = NUM_HW_WINDOWS + 1;
-const size_t MAX_PIXELS = 480 * 800 * 2;
+const size_t MAX_PIXELS = 9000 * 720 * 2;
 const size_t FIMC_W_ALIGNMENT = 16;
 const size_t FIMC_H_ALIGNMENT = 16;
 const size_t FIMC_DST_CROP_W_ALIGNMENT_RGB888 = 32;
