@@ -142,6 +142,7 @@ struct private_handle_t {
 
     /* Following members are for ION memory only */
     int     ion_client;
+    void   *ion_memory;
 
     uint64_t backing_store;
     uint64_t producer_usage;

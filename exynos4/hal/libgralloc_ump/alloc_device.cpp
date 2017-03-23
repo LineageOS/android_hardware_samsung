@@ -345,6 +345,7 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
                     hnd->uoffset = ((EXYNOS4_ALIGN(hnd->width, 16) * EXYNOS4_ALIGN(hnd->height, 16)));
                     hnd->voffset = ((EXYNOS4_ALIGN((hnd->width / 2), 16) * EXYNOS4_ALIGN((hnd->height / 2), 16)));
                     hnd->paddr = ion_paddr;
+                    hnd->ion_memory = ion_map(ion_fd, size, 0);
 
                     ALOGD_IF(debug_level > 0, "%s hnd->format=0x%x hnd->uoffset=%d hnd->voffset=%d hnd->paddr=%x hnd->bpp=%d", __func__, hnd->format, hnd->uoffset, hnd->voffset, hnd->paddr, hnd->bpp);
                     return 0;
@@ -657,6 +658,8 @@ static int alloc_device_free(alloc_device_t* dev, buffer_handle_t handle)
     }
 
     if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_ION) {
+        if (hnd->ion_memory > 0)
+            munmap(hnd->ion_memory, hnd->size);
         ion_free(hnd->fd);
     }
 
