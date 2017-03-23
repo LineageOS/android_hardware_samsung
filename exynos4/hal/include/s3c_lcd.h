@@ -17,6 +17,8 @@
 #ifndef _S3CFB_LCD_
 #define _S3CFB_LCD_
 
+#define S3C_FB_MAX_WIN	(5)
+
 /*
  * S T R U C T U R E S  F O R  C U S T O M  I O C T L S
  *
@@ -51,6 +53,57 @@ typedef struct {
     unsigned int lcd_offset_x;
     unsigned int lcd_offset_y;
 } s3c_fb_next_info_t;
+
+enum s3c_fb_pixel_format {
+	S3C_FB_PIXEL_FORMAT_RGBA_8888 = 0,
+	S3C_FB_PIXEL_FORMAT_RGB_888 = 1,
+	S3C_FB_PIXEL_FORMAT_BGRA_8888 = 2,
+	S3C_FB_PIXEL_FORMAT_RGB_565 = 3,
+	S3C_FB_PIXEL_FORMAT_RGBX_8888 = 4,
+	S3C_FB_PIXEL_FORMAT_RGBA_5551 = 5,
+	S3C_FB_PIXEL_FORMAT_RGBA_4444 = 6,
+	S3C_FB_PIXEL_FORMAT_MAX = 7,
+};
+
+enum s3c_fb_blending {
+	S3C_FB_BLENDING_NONE = 0,
+	S3C_FB_BLENDING_PREMULT = 1,
+	S3C_FB_BLENDING_COVERAGE = 2,
+	S3C_FB_BLENDING_MAX = 3,
+};
+
+struct s3c_fb_win_config {
+	enum {
+		S3C_FB_WIN_STATE_DISABLED = 0,
+		S3C_FB_WIN_STATE_COLOR,
+		S3C_FB_WIN_STATE_BUFFER,
+	} state;
+
+	union {
+		__u32 color;
+		struct {
+			int	fd;
+			__u32	phys_addr;
+			__u32	virt_addr;
+			__u32	offset;
+			__u32	stride;
+			enum s3c_fb_pixel_format format;
+			enum s3c_fb_blending blending;
+			int	fence_fd;
+			int     plane_alpha;
+		};
+	};
+
+	int	x;
+	int	y;
+	__u32	w;
+	__u32	h;
+};
+
+struct s3c_fb_win_config_data {
+	int	fence;
+	struct s3c_fb_win_config config[S3C_FB_MAX_WIN];
+};
 
 #ifdef BOARD_USE_V4L2_ION
 struct s3c_fb_user_ion_client {
@@ -97,6 +150,17 @@ struct s3c_fb_user_ion_client {
 #define S3CFB_SET_INITIAL_CONFIG    _IO  ('F', 314)
 #define S3CFB_SUPPORT_FENCE         _IOW ('F', 315, unsigned int)
 
+
+/* IOCTL commands from drivers/video/samsung_extdisp/s3cfb_extdsp.h */
+struct s3cfb_extdsp_time_stamp {
+	unsigned int		phys_addr;
+	struct timeval		time_marker;
+};
+
+#define S3CFB_EXTDSP_SET_WIN_ADDR       _IOW('F', 308, unsigned long)
+#define S3CFB_EXTDSP_GET_LOCKED_BUFFER  _IOW('F', 322, unsigned int)
+#define S3CFB_EXTDSP_PUT_TIME_STAMP		_IOW('F', 323, \
+						struct s3cfb_extdsp_time_stamp)
 
 /***************** LCD frame buffer *****************/
 #define FB0_NAME    "/dev/fb0"
