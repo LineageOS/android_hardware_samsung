@@ -28,6 +28,10 @@
 */
 #define MIN(x, y)       ((x < y) ? x : y)
 
+#define FIMC_ADDR_Y             0
+#define FIMC_ADDR_CB            1
+#define FIMC_ADDR_CR            2
+
 /*
  * P I X E L   F O R M A T   G U I D E
  *
