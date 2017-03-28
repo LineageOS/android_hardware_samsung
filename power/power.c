@@ -192,10 +192,15 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
 
     switch (profile) {
         case PROFILE_POWER_SAVE:
+            // Grab value set by init.*.rc
+            sysfs_read(CPU0_HISPEED_FREQ_PATH, samsung_pwr->cpu0_hispeed_freq,
+                       sizeof(samsung_pwr->cpu0_hispeed_freq));
             // Limit to hispeed freq
             sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_hispeed_freq);
             rc = stat(CPU4_MAX_FREQ_PATH, &sb);
             if (rc == 0) {
+                sysfs_read(CPU4_HISPEED_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq,
+                           sizeof(samsung_pwr->cpu4_hispeed_freq));
                 sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq);
             }
             ALOGV("%s: set powersave mode", __func__);
