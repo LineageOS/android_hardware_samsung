@@ -125,6 +125,8 @@ static long es_device_to_route(struct voice_session *session)
             break;
         default:
             /* if output device isn't supported, use earpiece by default */
+            ALOGE("%s: unknown output device: %d, defaulting to earpiece", __func__,
+                    session->out_device);
             nb_route = Call_CT_NB;
             wb_route = Call_CT_WB;
             break;
