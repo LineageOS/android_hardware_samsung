@@ -38,7 +38,7 @@ static int write_int(char const *path, const int value)
     int fd;
 
     ALOGV("write_int: path %s, value %d", path, value);
-    fd = open(path, O_RDWR);
+    fd = open(path, O_WRONLY);
 
     if (fd >= 0) {
         char buffer[20];
