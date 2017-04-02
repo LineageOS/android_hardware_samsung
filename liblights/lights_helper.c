@@ -33,41 +33,40 @@
  * @param path The absolute path string.
  * @return The Integer with decimal base, -1 or errno on error.
  */
-int read_int(char const *path)
+static int read_int(char const *path)
 {
     int fd, len;
-    int num_bytes = 10;
-    char buf[11];
-    int ret;
+    int ret = 0;
+    const int INT_MAX_STRLEN = 10;
+    char buffer[INT_MAX_STRLEN+1];
 
     fd = open(path, O_RDONLY);
     if (fd < 0) {
-        ret = errno;
+        ret = -errno;
         ALOGE("%s: failed to open %s (%s)", __func__, path, strerror(errno));
         goto exit;
     }
 
-    len = read(fd, buf, num_bytes - 1);
+    len = read(fd, buffer, INT_MAX_STRLEN-1);
     if (len < 0) {
-        ret = errno;
+        ret = -errno;
         ALOGE("%s: failed to read from %s (%s)", __func__, path, strerror(errno));
         goto exit;
     }
 
-    buf[len] = '\0';
+    buffer[len] = '\0';
 
-    // decimal base
+    /* now parse the integer from buffer */
     char *endptr = NULL;
-    ret = strtol(buf, &endptr, 10);
+    ret = (int) strtol(buffer, &endptr, 10);
     if (ret == 0 && endptr == NULL) {
         ret = -1;
-        ALOGE("%s: failed to extract number from string %s", __func__, buf);
+        ALOGE("%s: failed to extract number from string %s", __func__, buffer);
         goto exit;
     }
 
 exit:
-    if (fd >= 0)
-        close(fd);
+    close(fd);
     return ret;
 }
 
@@ -78,30 +77,30 @@ exit:
  * @param value The Integer value to be written.
  * @return 0 on success, errno on error.
  */
-int write_int(char const *path, const int value)
+static int write_int(char const *path, const int value)
 {
-    int fd, len;
+    int fd, len, num_bytes;
     int ret = 0;
+    const int INT_MAX_STRLEN = 10;
+    char buffer[INT_MAX_STRLEN+1];
 
     fd = open(path, O_WRONLY);
     if (fd < 0) {
-        ret = errno;
+        ret = -errno;
         ALOGE("%s: failed to open %s (%s)", __func__, path, strerror(errno));
         goto exit;
     }
 
-    char buffer[20];
-    int bytes = sprintf(buffer, "%d", value);
-    len = write(fd, buffer, bytes);
+    num_bytes = sprintf(buffer, "%d", value);
+    len = write(fd, buffer, num_bytes);
     if (len < 0) {
-        ret = errno;
+        ret = -errno;
         ALOGE("%s: failed to write to %s (%s)", __func__, path, strerror(errno));
         goto exit;
     }
 
 exit:
-    if (fd >= 0)
-        close(fd);
+    close(fd);
     return ret;
 }
 
