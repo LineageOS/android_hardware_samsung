@@ -31,25 +31,32 @@
  *
  * @param path The absolute path string.
  * @param value The Integer value to be written.
- * @return 0 on success, -1 or errno on error.
+ * @return 0 on success, errno on error.
  */
 static int write_int(char const *path, const int value)
 {
-    int fd;
+    int fd, len, num_bytes;
+    int ret = 0;
+    char buffer[20];
 
-    ALOGV("write_int: path %s, value %d", path, value);
     fd = open(path, O_WRONLY);
-
-    if (fd >= 0) {
-        char buffer[20];
-        int bytes = sprintf(buffer, "%d\n", value);
-        int amt = write(fd, buffer, bytes);
-        close(fd);
-        return amt == -1 ? -errno : 0;
-    } else {
-        ALOGE("write_int failed to open %s\n", path);
-        return -errno;
+    if (fd < 0) {
+        ret = errno;
+        ALOGE("%s: failed to open %s (%s)", __func__, path, strerror(errno));
+        goto exit;
     }
+
+    num_bytes = sprintf(buffer, "%d", value);
+    len = write(fd, buffer, num_bytes);
+    if (len < 0) {
+        ret = errno;
+        ALOGE("%s: failed to write to %s (%s)", __func__, path, strerror(errno));
+        goto exit;
+    }
+
+exit:
+    close(fd);
+    return ret;
 }
 
 /*
