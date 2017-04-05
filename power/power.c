@@ -329,7 +329,6 @@ static void init_cpufreqs(struct samsung_power_module *samsung_pwr)
 static void init_touch_input_power_path(struct samsung_power_module *samsung_pwr)
 {
     char dir[1024];
-    char errno_str[64];
     uint32_t i;
 
     for (i = 0; i < 20; i++) {
@@ -422,7 +421,6 @@ static void samsung_power_hint(struct power_module *module,
                                   void *data)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
-    char errno_str[64];
     int len;
 
     /* Bail out if low-power mode is active */
