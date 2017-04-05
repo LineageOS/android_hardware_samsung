@@ -31,7 +31,7 @@
  * Reads an Integer from a file.
  *
  * @param path The absolute path string.
- * @return The Integer with decimal base, -1 or errno on error.
+ * @return The Integer with decimal base, -1 or -errno on error.
  */
 static int read_int(char const *path)
 {
@@ -66,7 +66,8 @@ static int read_int(char const *path)
     }
 
 exit:
-    close(fd);
+    if (fd >= 0)
+        close(fd);
     return ret;
 }
 
@@ -75,7 +76,7 @@ exit:
  *
  * @param path The absolute path string.
  * @param value The Integer value to be written.
- * @return 0 on success, errno on error.
+ * @return 0 on success, -errno on error.
  */
 static int write_int(char const *path, const int value)
 {
@@ -100,7 +101,8 @@ static int write_int(char const *path, const int value)
     }
 
 exit:
-    close(fd);
+    if (fd >= 0)
+        close(fd);
     return ret;
 }
 
