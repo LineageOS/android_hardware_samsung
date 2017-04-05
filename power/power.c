@@ -439,11 +439,14 @@ static void samsung_power_hint(struct power_module *module,
             break;
         case POWER_HINT_LOW_POWER:
             ALOGV("%s: POWER_HINT_LOW_POWER", __func__);
-            set_power_profile(samsung_pwr, PROFILE_POWER_SAVE);
+            set_power_profile(samsung_pwr, data ? PROFILE_POWER_SAVE : PROFILE_BALANCED);
             break;
         case POWER_HINT_LAUNCH:
+            ALOGV("%s: POWER_HINT_LAUNCH", __func__);
+            send_boostpulse(samsung_pwr->boostpulse_fd);
+            break;
         case POWER_HINT_CPU_BOOST:
-            ALOGV("%s: POWER_HINT_LAUNCH | POWER_HINT_CPU_BOOST", __func__);
+            ALOGV("%s: POWER_HINT_CPU_BOOST", __func__);
             boost((*(int32_t *)data));
             break;
         case POWER_HINT_SET_PROFILE:
@@ -453,11 +456,7 @@ static void samsung_power_hint(struct power_module *module,
             break;
         case POWER_HINT_DISABLE_TOUCH:
             ALOGV("%s: POWER_HINT_DISABLE_TOUCH", __func__);
-            if (data) {
-                sysfs_write(samsung_pwr->touchscreen_power_path, "0");
-            } else {
-                sysfs_write(samsung_pwr->touchscreen_power_path, "1");
-            }
+            sysfs_write(samsung_pwr->touchscreen_power_path, data ? "0" : "1");
             break;
         default:
             ALOGW("%s: Unknown power hint: %d", __func__, hint);
