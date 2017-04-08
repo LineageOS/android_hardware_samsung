@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a51691d_55a6d6c2",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2017-04-08T08:53:09Z",
+      "side": 1,
+      "message": "Should be current_power_profile.",
+      "range": {
+        "startLine": 442,
+        "startChar": 71,
+        "endLine": 442,
+        "endChar": 87
+      },
+      "revId": "3fa2b6951e9f03e84230f9ae3b4e1bc5139a746f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
