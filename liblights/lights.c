@@ -354,6 +354,9 @@ static int open_lights(const struct hw_module_t *module, char const *name,
     } else if (0 == strcmp(LIGHT_ID_ATTENTION, name)) {
         requested_component = COMPONENT_LED;
         set_light = set_light_leds_attention;
+    } else if (0 == strcmp(LIGHT_ID_BACKNOTIFICATIONS, name)) {
+        requested_component = COMPONENT_LED;
+        set_light = set_light_backnotifications;
     } else {
         return -EINVAL;
     }
