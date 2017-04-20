@@ -16,6 +16,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">Ekran i përparuar</string>
   <!-- Screen Preference -->
+  <string name="category_screen_title">Ekrani</string>
+  <string name="screen_colors_title">Ngjyrat</string>
   <!-- mDNIe -->
+  <string name="mdnie_scenario_title_head">Skenari</string>
+  <string name="mdnie_scenario_summary_head">Vendos skenarin mDNIe</string>
+  <string name="mdnie_negative_title_head">Profili negativ</string>
+  <string name="mdnie_negative_summary_head">Aktivizo/çaktivizo ngjyrat inverse</string>
 </resources>
