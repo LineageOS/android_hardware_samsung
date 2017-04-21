@@ -76,7 +76,7 @@ static enum power_profile_e current_power_profile = PROFILE_BALANCED;
  *** HELPER FUNCTIONS
  **********************************************************/
 
-static int sysfs_read(char *path, char *s, int num_bytes)
+int sysfs_read(char *path, char *s, int num_bytes)
 {
     char errno_str[64];
     int len;
@@ -106,7 +106,7 @@ static int sysfs_read(char *path, char *s, int num_bytes)
     return ret;
 }
 
-static void sysfs_write(const char *path, char *s)
+void sysfs_write(const char *path, char *s)
 {
     char errno_str[64];
     int len;
@@ -412,6 +412,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     }
 
 out:
+    samsung_power_set_interactive_ext(on);
     sysfs_write(IO_IS_BUSY_PATH, on ? "1" : "0");
     ALOGV("power_set_interactive: %d done", on);
 }

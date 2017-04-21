@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,5 +30,13 @@
 #define CPU4_SYSFS_PATH "/sys/devices/system/cpu/cpu4"
 #define CPU0_INTERACTIVE_PATH "/sys/devices/system/cpu/cpu0/cpufreq/interactive"
 #define CPU4_INTERACTIVE_PATH "/sys/devices/system/cpu/cpu4/cpufreq/interactive"
+
+extern int sysfs_read(char *path, char *s, int num_bytes)
+extern void sysfs_write(const char *path, char *s)
+
+static inline void samsung_power_set_interactive_ext(int on __unused)
+{
+    return;
+}
 
 #endif // SAMSUNG_POWER_H
