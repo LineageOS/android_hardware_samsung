@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,5 +35,11 @@ static const char* CPU_INTERACTIVE_PATHS[2] = {
     "/sys/devices/system/cpu/cpu0/cpufreq/interactive",
     "/sys/devices/system/cpu/cpu4/cpufreq/interactive"
 };
+
+/*
+ * Hook for devices to perform target specific operations at the end of
+ * samsung_power_set_interactive().
+ */
+//#define SAMSUNG_INTERACTIVE_HOOK(on) power_interactive_hook(on)
 
 #endif // SAMSUNG_POWER_H

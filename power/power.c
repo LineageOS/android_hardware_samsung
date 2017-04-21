@@ -469,6 +469,10 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
 out:
     cpu_interactive_write(IO_IS_BUSY_PATH, on ? ON : OFF);
 
+#ifdef SAMSUNG_INTERACTIVE_HOOK
+    SAMSUNG_INTERACTIVE_HOOK(on);
+#endif
+
     ALOGV("power_set_interactive: %d done", on);
 }
 
