@@ -356,6 +356,10 @@ static void samsung_power_init(struct power_module *module)
  *** Refer to power.h for documentation.
  **********************************************************/
 
+#ifdef SET_INTERACTIVE_EXT
+extern void samsung_power_set_interactive_ext(int on);
+#endif
+
 static void samsung_power_set_interactive(struct power_module *module, int on)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
@@ -412,6 +416,9 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     }
 
 out:
+#ifdef SET_INTERACTIVE_EXT
+    samsung_power_set_interactive_ext(on);
+#endif
     sysfs_write(IO_IS_BUSY_PATH, on ? "1" : "0");
     ALOGV("power_set_interactive: %d done", on);
 }
