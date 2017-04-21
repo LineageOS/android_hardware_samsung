@@ -415,6 +415,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     }
 
 out:
+    samsung_power_set_interactive_ext(on);
     sysfs_write(IO_IS_BUSY_PATH, on ? "1" : "0");
     ALOGV("power_set_interactive: %d done", on);
 }
