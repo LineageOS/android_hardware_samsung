@@ -59,6 +59,7 @@ struct samsung_power_module {
     char cpu0_max_freq[10];
     char cpu4_hispeed_freq[10];
     char cpu4_max_freq[10];
+    char* spen_power_path;
     char* touchscreen_power_path;
     char* touchkey_power_path;
 };
@@ -266,6 +267,18 @@ static void find_input_nodes(struct samsung_power_module *samsung_pwr, char *dir
 
             snprintf(node_path, node_pathsize, "%s/%s", dir, "enabled");
 
+            if (strncmp(file_content, "sec_e-pen", 9) == 0) {
+                ALOGV("%s: found spen path: %s", __func__, node_path);
+                samsung_pwr->spen_power_path = malloc(node_pathsize);
+                if (samsung_pwr->spen_power_path == NULL) {
+                    strerror_r(errno, errno_str, sizeof(errno_str));
+                    ALOGE("Out of memory: %s", errno_str);
+                    return;
+                }
+                snprintf(samsung_pwr->spen_power_path, node_pathsize,
+                         "%s", node_path);
+            }
+
             if (strncmp(file_content, "sec_touchkey", 12) == 0) {
                 ALOGV("%s: found touchkey path: %s", __func__, node_path);
                 samsung_pwr->touchkey_power_path = malloc(node_pathsize);
@@ -345,6 +358,7 @@ static void samsung_power_init(struct power_module *module)
 
     boostpulse_open(samsung_pwr);
 
+    samsung_pwr->spen_power_path = NULL;
     samsung_pwr->touchscreen_power_path = NULL;
     samsung_pwr->touchkey_power_path = NULL;
     init_touch_input_power_path(samsung_pwr);
@@ -384,6 +398,11 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
                   " not disabling input devices", __func__);
             goto out;
         }
+    }
+
+    /* Disable s-pen if device has an s-pen */
+    if (samsung_pwr->spen_power_path) {
+        sysfs_write(samsung_pwr->spen_power_path, on ? "1" : "0");
     }
 
     sysfs_write(samsung_pwr->touchscreen_power_path, on ? "1" : "0");
