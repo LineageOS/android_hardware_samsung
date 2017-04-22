@@ -382,7 +382,10 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
         }
     }
 
-    sysfs_write(samsung_pwr->touchscreen_power_path, on ? "1" : "0");
+    /* Sanity check the touchscreen path */
+    if (samsung_pwr->touchscreen_power_path) {
+        sysfs_write(samsung_pwr->touchscreen_power_path, on ? "1" : "0");
+    }
 
     /* Bail out if the device does not have touchkeys */
     if (samsung_pwr->touchkey_power_path == NULL) {
