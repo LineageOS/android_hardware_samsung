@@ -427,7 +427,8 @@ static void samsung_power_hint(struct power_module *module,
     int len;
 
     /* Bail out if low-power mode is active */
-    if (current_power_profile == PROFILE_POWER_SAVE && hint != POWER_HINT_SET_PROFILE) {
+    if (current_power_profile == PROFILE_POWER_SAVE && hint != POWER_HINT_LOW_POWER
+            && hint != POWER_HINT_SET_PROFILE) {
         ALOGW("%s: PROFILE_POWER_SAVE active, ignoring hint %d", __func__, hint);
         return;
     }
