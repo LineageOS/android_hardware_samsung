@@ -24,7 +24,8 @@
  * dtb_path: path to the compiled device tree blobs
  * pagesize: board pagesize
  * _sz: size of the resulting dt image
+ * level: path depth level
  */
-void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz);
+void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz, int level);
 
 #endif // _DTBIMG_H_

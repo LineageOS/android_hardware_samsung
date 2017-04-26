@@ -108,7 +108,7 @@ oops:
     return 0;
 }
 
-void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz)
+void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz, int level)
 {
     const unsigned pagemask = pagesize - 1;
     struct dt_entry *new_entries;
@@ -144,98 +144,111 @@ void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz)
         err(1, "failed to open '%s'", dtb_path);
 
     while ((de = readdir(dir)) != NULL) {
-        namlen = strlen(de->d_name);
-        if (namlen < 4 || strcmp(&de->d_name[namlen - 4], ".dtb"))
-            continue;
+        if (de->d_type == DT_DIR) {
+            char name[PATH_MAX];
+            if (de->d_name[0] == '.')
+                continue;
 
-        snprintf(fname, sizeof(fname), "%s/%s", dtb_path, de->d_name);
+            snprintf(name, sizeof(name), "%s%s%s",
+                      dtb_path,
+                     (dtb_path[strlen(dtb_path) - 1] == '/' ? "" : "/"),
+                     de->d_name);
+            load_dtbh_block(name, pagesize, _sz, level + 1);
+        } else if (de->d_type == DT_REG) {
+            namlen = strlen(de->d_name);
+            if (namlen < 4 || strcmp(&de->d_name[namlen - 4], ".dtb"))
+                continue;
 
-        dtb = load_file(fname, &dtb_sz);
-        if (dtb == NULL)
-            err(1, "failed to read dtb '%s'", fname);
+            snprintf(fname, sizeof(fname), "%s/%s", dtb_path, de->d_name);
 
-        if (fdt_check_header(dtb) != 0) {
-            warnx("'%s' is not a valid dtb, skipping", fname);
-            free(dtb);
-            continue;
+            dtb = load_file(fname, &dtb_sz);
+            if (dtb == NULL)
+                err(1, "failed to read dtb '%s'", fname);
+
+            if (fdt_check_header(dtb) != 0) {
+                warnx("'%s' is not a valid dtb, skipping", fname);
+                free(dtb);
+                continue;
+            }
+
+            offset = fdt_path_offset(dtb, "/");
+            prop_chip = fdt_getprop(dtb, offset, "model_info-chip", &len);
+            if (len % (sizeof(uint32_t)) != 0) {
+                warnx("model_info-chip of %s is of invalid size, skipping", fname);
+                free(dtb);
+                continue;
+            }
+
+            prop_platform = fdt_getprop(dtb, offset, "model_info-platform", &len);
+            if (strcmp((char *)&prop_platform[0], DTBH_PLATFORM)) {
+                warnx("model_info-platform of %s is invalid, skipping", fname);
+                free(dtb);
+                continue;
+            }
+
+            prop_subtype = fdt_getprop(dtb, offset, "model_info-subtype", &len);
+                if (strcmp((char *)&prop_subtype[0], DTBH_SUBTYPE)) {
+                warnx("model_info-subtype of %s is invalid, skipping", fname);
+                free(dtb);
+                continue;
+            }
+
+            prop_hw_rev = fdt_getprop(dtb, offset, "model_info-hw_rev", &len);
+            if (len % (sizeof(uint32_t)) != 0) {
+                warnx("model_info-hw_rev of %s is of invalid size, skipping", fname);
+                free(dtb);
+                continue;
+            }
+
+            prop_hw_rev_end = fdt_getprop(dtb, offset, "model_info-hw_rev_end", &len);
+            if (len % (sizeof(uint32_t)) != 0) {
+                warnx("model_info-hw_rev_end of %s is of invalid size, skipping", fname);
+                free(dtb);
+                continue;
+            }
+
+            blob = calloc(1, sizeof(struct dt_blob));
+            if (blob == NULL)
+                err(1, "failed to allocate memory");
+
+            blob->payload = dtb;
+            blob->size = dtb_sz;
+            if (blob_list == NULL) {
+                blob_list = blob;
+                last_blob = blob;
+            } else {
+                last_blob->next = blob;
+                last_blob = blob;
+            }
+
+            blob_sz += (blob->size + pagemask) & ~pagemask;
+            new_count = entry_count + 1;
+            new_entries = realloc(entries, new_count * sizeof(struct dt_entry));
+            if (new_entries == NULL)
+                err(1, "failed to allocate memory");
+
+            entries = new_entries;
+            entry = &entries[entry_count];
+            memset(entry, 0, sizeof(*entry));
+            entry->chip = ntohl(prop_chip[0]);
+            entry->platform = DTBH_PLATFORM_CODE;
+            entry->subtype = DTBH_SUBTYPE_CODE;
+            entry->hw_rev = ntohl(prop_hw_rev[0]);
+            entry->hw_rev_end = ntohl(prop_hw_rev_end[0]);
+            entry->space = 0x20; /* space delimiter */
+            entry->blob = blob;
+
+            entry_count++;
+
+            hdr_sz += entry_count * DT_ENTRY_PHYS_SIZE;
         }
-
-        offset = fdt_path_offset(dtb, "/");
-        prop_chip = fdt_getprop(dtb, offset, "model_info-chip", &len);
-        if (len % (sizeof(uint32_t)) != 0) {
-            warnx("model_info-chip of %s is of invalid size, skipping", fname);
-            free(dtb);
-            continue;
-        }
-
-        prop_platform = fdt_getprop(dtb, offset, "model_info-platform", &len);
-        if (strcmp((char *)&prop_platform[0], DTBH_PLATFORM)) {
-            warnx("model_info-platform of %s is invalid, skipping", fname);
-            free(dtb);
-            continue;
-        }
-
-        prop_subtype = fdt_getprop(dtb, offset, "model_info-subtype", &len);
-        if (strcmp((char *)&prop_subtype[0], DTBH_SUBTYPE)) {
-            warnx("model_info-subtype of %s is invalid, skipping", fname);
-            free(dtb);
-            continue;
-        }
-
-        prop_hw_rev = fdt_getprop(dtb, offset, "model_info-hw_rev", &len);
-        if (len % (sizeof(uint32_t)) != 0) {
-            warnx("model_info-hw_rev of %s is of invalid size, skipping", fname);
-            free(dtb);
-            continue;
-        }
-
-        prop_hw_rev_end = fdt_getprop(dtb, offset, "model_info-hw_rev_end", &len);
-        if (len % (sizeof(uint32_t)) != 0) {
-            warnx("model_info-hw_rev_end of %s is of invalid size, skipping", fname);
-            free(dtb);
-            continue;
-        }
-
-        blob = calloc(1, sizeof(struct dt_blob));
-        if (blob == NULL)
-            err(1, "failed to allocate memory");
-
-        blob->payload = dtb;
-        blob->size = dtb_sz;
-        if (blob_list == NULL) {
-            blob_list = blob;
-            last_blob = blob;
-        } else {
-            last_blob->next = blob;
-            last_blob = blob;
-        }
-
-        blob_sz += (blob->size + pagemask) & ~pagemask;
-        new_count = entry_count + 1;
-        new_entries = realloc(entries, new_count * sizeof(struct dt_entry));
-        if (new_entries == NULL)
-            err(1, "failed to allocate memory");
-
-        entries = new_entries;
-        entry = &entries[entry_count];
-        memset(entry, 0, sizeof(*entry));
-        entry->chip = ntohl(prop_chip[0]);
-        entry->platform = DTBH_PLATFORM_CODE;
-        entry->subtype = DTBH_SUBTYPE_CODE;
-        entry->hw_rev = ntohl(prop_hw_rev[0]);
-        entry->hw_rev_end = ntohl(prop_hw_rev_end[0]);
-        entry->space = 0x20; /* space delimiter */
-        entry->blob = blob;
-
-        entry_count++;
-
-        hdr_sz += entry_count * DT_ENTRY_PHYS_SIZE;
     }
 
     closedir(dir);
 
     if (entry_count == 0) {
-        warnx("unable to locate any dtbs in the given path");
+        if (level == 0)
+            warnx("unable to locate any dtbs in the given path");
         return NULL;
     }
 

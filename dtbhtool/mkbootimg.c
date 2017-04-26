@@ -257,7 +257,7 @@ int main(int argc, char **argv)
     }
 
     if (dt_dir) {
-        dt_data = load_dtbh_block(dt_dir, pagesize, &hdr.dt_size);
+        dt_data = load_dtbh_block(dt_dir, pagesize, &hdr.dt_size, 0);
         if (dt_data == 0) {
             fprintf(stderr, "error: could not load device tree blobs '%s'\n", dt_dir);
             return 1;
