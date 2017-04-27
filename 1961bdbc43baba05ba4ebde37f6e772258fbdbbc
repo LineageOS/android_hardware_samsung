@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_1df883e4",
+        "filename": "AdvancedDisplay/res/values-en-rAU/arrays.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-04-27T11:52:01Z",
+      "side": 1,
+      "message": "CyanogenMod?",
+      "revId": "1961bdbc43baba05ba4ebde37f6e772258fbdbbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
