@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="mdnie_scenario_entries">
-    <item>సయనోజెన్ మోడ్ (స్వయంసిద్ధం)</item>
+    <item>LineageOS (default)</item>
     <item>UI</item>
     <item>వీడియో</item>
     <item>వీడియో వేడి</item>

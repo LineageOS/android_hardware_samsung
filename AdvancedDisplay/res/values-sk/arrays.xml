@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="mdnie_scenario_entries">
-    <item>CyanogenMod (predvolené)</item>
+    <item>LineageOS (predvolené)</item>
     <item>Používateľské rozhranie</item>
     <item>Video</item>
     <item>Teplé video</item>

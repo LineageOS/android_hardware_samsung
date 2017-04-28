@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="mdnie_scenario_entries">
-    <item>ସାଇନୋଜେନ୍‍ ମୋଡ୍‍ (ଡିଫଲ୍ଟ)</item>
+    <item>LineageOS (default)</item>
     <item>UI</item>
     <item>ଭିଡିଓ</item>
     <item>ଭିଡିଓ ୱାର୍ମ୍‍</item>

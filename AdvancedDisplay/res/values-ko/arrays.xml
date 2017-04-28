@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="mdnie_scenario_entries">
-    <item>CyanogenMod (기본값)</item>
+    <item>LineageOS (default)</item>
     <item>UI</item>
     <item>비디오</item>
     <item>비디오 (따뜻한 색)</item>
