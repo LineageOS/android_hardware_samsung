@@ -153,7 +153,8 @@ static bool supports_fimg(const hwc_layer_1_t &layer)
 
     return format_is_supported_by_fimg(handle->format) &&
            handle->stride <= max_w &&
-           handle->height <= max_h;
+           handle->height <= max_h &&
+           !is_scaled(layer);
 }
 
 static bool supports_fimc(const hwc_layer_1_t &layer)
