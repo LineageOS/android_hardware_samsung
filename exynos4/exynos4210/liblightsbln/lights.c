@@ -85,12 +85,8 @@ static int set_light_backlight(struct light_device_t *dev, struct light_state_t 
 /** Set buttons backlight **/
 static int set_light_buttons(struct light_device_t* dev, struct light_state_t const* state)
 {
-	int err = 0;
 	pthread_mutex_lock (&g_lock);
-	if(is_lit(state))
-		err = write_int(BUTTON_FILE, 1);
-	else
-		err = write_int(BUTTON_FILE, 0);
+	int err = write_int(BUTTON_FILE, rgb_to_brightness(state));
 	pthread_mutex_unlock (&g_lock);
 	return err;
 }
