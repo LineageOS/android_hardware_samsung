@@ -229,11 +229,14 @@ set_light_buttons(struct light_device_t* dev,
     return 0;
 #else
     int err = 0;
-    int brightness = rgb_to_brightness(state);
 
     pthread_mutex_lock(&g_lock);
-    ALOGD("set_light_buttons: %d\n", brightness > 0 ? 1 : 2);
-    err = write_int(BUTTON_FILE, brightness > 0 ? 1 : 2);
+    int brightness = rgb_to_brightness(state);
+#ifndef VAR_TOUCHKEY_BRIGHTNESS
+    brightness = brightness > 0 ? 1 : 0;
+#endif
+    ALOGD("set_light_buttons: %d\n", brightness);
+    err = write_int(BUTTON_FILE, brightness);
     pthread_mutex_unlock(&g_lock);
 
     return err;
