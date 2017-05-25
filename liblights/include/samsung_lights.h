@@ -30,6 +30,9 @@
 #define BUTTON_BRIGHTNESS_NODE "/sys/class/sec/sec_touchkey/brightness"
 #define LED_BLINK_NODE "/sys/class/sec/led/led_blink"
 
+// Set to 1 to enable variable button brightness
+#define VAR_BUTTON_BRIGHTNESS 0
+
 /*
  * Brightness adjustment factors
  *
