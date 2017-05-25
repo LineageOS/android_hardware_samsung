@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
- * Copyright (C) 2015 Christopher N. Hesse <raymanfx@gmail.com>
+ * Copyright (C) 2015-2017 Christopher N. Hesse <raymanfx@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,12 +84,28 @@ done:
 
 int main(void)
 {
-    unsigned int revision = 0;
-    char ro_revision[PROP_VALUE_MAX];
+    unsigned int revision;
+    char hardware_revision[PROP_VALUE_MAX];
+    const char *properties[] = {"hw.revision", "ro.cbd.dt_revision", "ril.cbd.dt_revision"};
 
-    parse_hardware_revision(&revision);
-    snprintf(ro_revision, PROP_VALUE_MAX, "%d", revision);
-    property_set("hw.revision", ro_revision);
+    // try to read the revision from the kernel cmdline
+    revision = property_get_int32("ro.boot.hw_rev", 0);
+
+    // if the property was not exported, try to parse /proc/cpuinfo
+    if (revision == 0) {
+        parse_hardware_revision(&revision);
+    }
+
+    snprintf(hardware_revision, PROP_VALUE_MAX, "%d", revision);
+
+    // set all the properties
+    const int array_length = sizeof(properties) / sizeof(properties[0]);
+    for (int i = 0; i < array_length; i++) {
+        property_set(properties[i], hardware_revision);
+    }
+
+    // indicate that we are done
+    property_set("ro.modemloader.done", "1");
 
     return 0;
 }
