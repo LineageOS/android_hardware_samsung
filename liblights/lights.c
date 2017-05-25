@@ -145,12 +145,13 @@ static int set_light_buttons(struct light_device_t* dev __unused,
                              struct light_state_t const* state)
 {
     int err = 0;
-    int on = (state->color & COLOR_MASK);
-
     pthread_mutex_lock(&g_lock);
+    int brightness = (state->color & COLOR_MASK) ? 1 : 0;
 
-    err = set_cur_button_brightness(on ? 1 : 0);
-
+#ifdef VAR_BUTTON_BRIGHTNESS
+    brightness = rgb_to_brightness(state);
+#endif
+    err = set_cur_button_brightness(brightness);
     pthread_mutex_unlock(&g_lock);
 
     return err;
