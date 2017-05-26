@@ -43,6 +43,7 @@ enum component_mask_t {
     COMPONENT_BACKLIGHT = 0x1,
     COMPONENT_BUTTON_LIGHT = 0x2,
     COMPONENT_LED = 0x4,
+    COMPONENT_BLN = 0x8,
 };
 
 enum light_t {
@@ -76,6 +77,10 @@ void check_component_support()
         hw_components |= COMPONENT_BUTTON_LIGHT;
     if (access(LED_BLINK_NODE, W_OK) == 0)
         hw_components |= COMPONENT_LED;
+#ifdef LED_BLN_NODE
+    if (access(LED_BLN_NODE, W_OK) == 0)
+        hw_components |= COMPONENT_BLN;
+#endif
 }
 
 void init_g_lock(void)
@@ -293,6 +298,19 @@ switched:
     return err;
 }
 
+#ifdef LED_BLN_NODE
+static int set_light_bln_notifications(struct light_device_t *dev __unused,
+                                  struct light_state_t const *state)
+{
+    int err = 0;
+
+    pthread_mutex_lock(&g_lock);
+    err = write_str(LED_BLN_NODE, state->color & COLOR_MASK ? "1" : "0");
+    pthread_mutex_unlock(&g_lock);
+
+    return err;
+}
+#endif
 static int set_light_leds_battery(struct light_device_t *dev __unused,
                                   struct light_state_t const *state)
 {
@@ -352,6 +370,12 @@ static int open_lights(const struct hw_module_t *module, char const *name,
     } else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name)) {
         requested_component = COMPONENT_LED;
         set_light = set_light_leds_notifications;
+#ifdef LED_BLN_NODE
+        if (hw_components & COMPONENT_BLN) {
+            requested_component = COMPONENT_BLN;
+            set_light = set_light_bln_notifications;
+        }
+#endif
     } else if (0 == strcmp(LIGHT_ID_ATTENTION, name)) {
         requested_component = COMPONENT_LED;
         set_light = set_light_leds_attention;
