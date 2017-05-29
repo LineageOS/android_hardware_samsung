@@ -42,7 +42,8 @@
 
 #define BOOST_PATH             CPU0_INTERACTIVE_PATH "/boost"
 #define BOOSTPULSE_PATH        CPU0_INTERACTIVE_PATH "/boostpulse"
-#define IO_IS_BUSY_PATH        CPU0_INTERACTIVE_PATH "/io_is_busy"
+#define CPU0_IO_IS_BUSY_PATH   CPU0_INTERACTIVE_PATH "/io_is_busy"
+#define CPU4_IO_IS_BUSY_PATH   CPU4_INTERACTIVE_PATH "/io_is_busy"
 #define CPU0_HISPEED_FREQ_PATH CPU0_INTERACTIVE_PATH "/hispeed_freq"
 #define CPU4_HISPEED_FREQ_PATH CPU4_INTERACTIVE_PATH "/hispeed_freq"
 
@@ -415,7 +416,12 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     }
 
 out:
-    sysfs_write(IO_IS_BUSY_PATH, on ? "1" : "0");
+    sysfs_write(CPU0_IO_IS_BUSY_PATH, on ? "1" : "0");
+    rc = stat(CPU4_IO_IS_BUSY_PATH, &sb);
+    if (rc == 0) {
+        sysfs_write(CPU4_IO_IS_BUSY_PATH, on ? "1" : "0");
+    }
+
     ALOGV("power_set_interactive: %d done", on);
 }
 
