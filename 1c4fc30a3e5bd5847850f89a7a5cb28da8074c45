@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa82b9bf_ceda6017",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-05-30T10:46:39Z",
+      "side": 1,
+      "message": "COLOR_MASK \u003d 0x00ffffff, do state-\u003ecolor \u0026 COLOR_MASK here",
+      "range": {
+        "startLine": 327,
+        "startChar": 23,
+        "endLine": 327,
+        "endChar": 33
+      },
+      "revId": "1c4fc30a3e5bd5847850f89a7a5cb28da8074c45",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_eed724ec",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-05-30T10:46:39Z",
+      "side": 1,
+      "message": "write_str(LED_BLN_NODE, is_lit(state) ? \"1\" : \"0\")?",
+      "range": {
+        "startLine": 336,
+        "startChar": 14,
+        "endLine": 336,
+        "endChar": 23
+      },
+      "revId": "1c4fc30a3e5bd5847850f89a7a5cb28da8074c45",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa82b9bf_ae091c97",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-05-30T10:46:39Z",
+      "side": 1,
+      "message": "Move the ifdefs and endifs all the way to the left. Also, if we add everyone who is using the liblights hal on this patch, and have them add a \"\" as the node instead, that should fail on the access(LED_BLN_NODE, W_OK) check, which would prevent the BLN bit from being set, meaning we wouldn\u0027t need all these ifdefs",
+      "revId": "1c4fc30a3e5bd5847850f89a7a5cb28da8074c45",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
