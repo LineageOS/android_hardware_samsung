@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (default)</item>
+    <item>LineageOS (padrão)</item>
     <item>IU</item>
     <item>Vídeo</item>
     <item>Vídeo quente</item>
