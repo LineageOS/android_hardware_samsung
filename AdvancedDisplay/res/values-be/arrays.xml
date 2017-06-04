@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="mdnie_scenario_entries">
-    <item>CyanogenMod (па змаўчанні)</item>
+    <item>LineageOS (default)</item>
     <item>Рэжым UIitem</item>
     <item>Фільм</item>
     <item>Фільм — цёплыя таны</item>

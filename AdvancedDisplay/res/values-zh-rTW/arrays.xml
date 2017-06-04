@@ -17,7 +17,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="mdnie_scenario_entries">
-    <item>CyanogenMod (預設)</item>
+    <item>LineageOS (預設)</item>
     <item>使用者介面</item>
     <item>影片</item>
     <item>影片 (暖色)</item>
