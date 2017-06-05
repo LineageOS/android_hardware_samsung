@@ -921,13 +921,8 @@ static int select_devices(struct audio_device *adev,
      * usecase.
      */
     if (usecase->type != VOICE_CALL && adev->voice.in_call) {
-        vc_usecase = get_usecase_from_id(adev, USECASE_VOICE_CALL);
-        if (vc_usecase == NULL) {
-            ALOGE("%s: Could not find the voice call usecase", __func__);
-        } else {
-            in_snd_device = vc_usecase->in_snd_device;
-            out_snd_device = vc_usecase->out_snd_device;
-        }
+        // Prevent sound device switching
+        return 0;
     }
 
     if (usecase->type == VOICE_CALL) {
