@@ -925,8 +925,8 @@ static int select_devices(struct audio_device *adev,
         if (vc_usecase == NULL) {
             ALOGE("%s: Could not find the voice call usecase", __func__);
         } else {
-            in_snd_device = vc_usecase->in_snd_device;
-            out_snd_device = vc_usecase->out_snd_device;
+            // bail out
+            return 0;
         }
     }
 
@@ -2494,8 +2494,9 @@ int stop_voice_call(struct audio_device *adev)
 }
 
 /* always called with adev lock held */
-int start_voice_call(struct audio_device *adev)
+int start_voice_call(struct audio_device *adev, struct audio_stream *stream)
 {
+    struct stream_out *out = (struct stream_out *)stream;
     struct audio_usecase *uc_info;
     int ret = 0;
 
@@ -2515,8 +2516,8 @@ int start_voice_call(struct audio_device *adev)
 
     uc_info->id = USECASE_VOICE_CALL;
     uc_info->type = VOICE_CALL;
-    uc_info->stream = (struct audio_stream *)adev->primary_output;
-    uc_info->devices = adev->primary_output->devices;
+    uc_info->stream = stream;
+    uc_info->devices = out->devices;
     uc_info->in_snd_device = SND_DEVICE_NONE;
     uc_info->out_snd_device = SND_DEVICE_NONE;
 
@@ -2746,11 +2747,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
         }
 #endif
         if (val != 0) {
-            bool bt_sco_active = false;
-
-            if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
-                bt_sco_active = true;
-            }
             out->devices = val;
 
             if (!out->standby) {
@@ -2777,30 +2773,23 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                 }
             }
 
-            if ((adev->mode == AUDIO_MODE_IN_CALL) && !adev->voice.in_call &&
-                    (out == adev->primary_output)) {
-                start_voice_call(adev);
-            } else if ((adev->mode == AUDIO_MODE_IN_CALL) &&
-                       adev->voice.in_call &&
-                       (out == adev->primary_output)) {
-                /* Turn on bluetooth if needed */
-                if ((out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && !bt_sco_active) {
-                    select_devices(adev, USECASE_VOICE_CALL);
-                    start_voice_session_bt_sco(adev->voice.session);
+            if (adev->mode == AUDIO_MODE_IN_CALL) {
+                if (!adev->voice.in_call) {
+                    start_voice_call(adev, stream);
                 } else {
+                    select_devices(adev, USECASE_VOICE_CALL);
                     /*
                      * When we select different devices we need to restart the
                      * voice call. The modem closes the stream on its end and
                      * we do not get any output.
                      */
                     stop_voice_call(adev);
-                    start_voice_call(adev);
+                    start_voice_call(adev, stream);
                 }
             }
         }
 
-        if ((adev->mode == AUDIO_MODE_NORMAL) && adev->voice.in_call &&
-                (out == adev->primary_output)) {
+        if ((adev->mode == AUDIO_MODE_NORMAL) && adev->voice.in_call) {
             stop_voice_call(adev);
         }
         pthread_mutex_unlock(&adev->lock);
