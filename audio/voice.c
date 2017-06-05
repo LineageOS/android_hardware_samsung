@@ -139,7 +139,7 @@ void prepare_voice_session(struct voice_session *session,
  * This must be called with the hw device mutex locked, OK to hold other
  * mutexes.
  */
-static void stop_voice_session_bt_sco(struct voice_session *session) {
+void stop_voice_session_bt_sco(struct voice_session *session) {
     ALOGV("%s: Closing SCO PCMs", __func__);
 
     if (session->pcm_sco_rx != NULL) {

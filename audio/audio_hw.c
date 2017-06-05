@@ -2784,9 +2784,12 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                        adev->voice.in_call &&
                        (out == adev->primary_output)) {
                 /* Turn on bluetooth if needed */
-                if ((out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && !bt_sco_active) {
-                    select_devices(adev, USECASE_VOICE_CALL);
-                    start_voice_session_bt_sco(adev->voice.session);
+                if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
+                    if (!bt_sco_active) {
+                        start_voice_session_bt_sco(adev->voice.session);
+                    } else {
+                        stop_voice_session_bt_sco(adev->voice.session);
+                    }
                 } else {
                     /*
                      * When we select different devices we need to restart the
