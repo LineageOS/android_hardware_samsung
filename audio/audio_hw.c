@@ -2489,8 +2489,9 @@ int stop_voice_call(struct audio_device *adev)
 }
 
 /* always called with adev lock held */
-int start_voice_call(struct audio_device *adev)
+int start_voice_call(struct audio_device *adev, struct audio_stream *stream)
 {
+    struct stream_out *out = (struct stream_out *)stream;
     struct audio_usecase *uc_info;
     int ret = 0;
 
@@ -2510,8 +2511,8 @@ int start_voice_call(struct audio_device *adev)
 
     uc_info->id = USECASE_VOICE_CALL;
     uc_info->type = VOICE_CALL;
-    uc_info->stream = (struct audio_stream *)adev->primary_output;
-    uc_info->devices = adev->primary_output->devices;
+    uc_info->stream = stream;
+    uc_info->devices = out->devices;
     uc_info->in_snd_device = SND_DEVICE_NONE;
     uc_info->out_snd_device = SND_DEVICE_NONE;
 
@@ -2774,7 +2775,7 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
 
             if ((adev->mode == AUDIO_MODE_IN_CALL) && !adev->voice.in_call &&
                     (out == adev->primary_output)) {
-                start_voice_call(adev);
+                start_voice_call(adev, stream);
             } else if ((adev->mode == AUDIO_MODE_IN_CALL) &&
                        adev->voice.in_call &&
                        (out == adev->primary_output)) {
@@ -2789,7 +2790,7 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                      * we do not get any output.
                      */
                     stop_voice_call(adev);
-                    start_voice_call(adev);
+                    start_voice_call(adev, stream);
                 }
             }
         }
