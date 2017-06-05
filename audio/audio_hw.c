@@ -925,8 +925,10 @@ static int select_devices(struct audio_device *adev,
         if (vc_usecase == NULL) {
             ALOGE("%s: Could not find the voice call usecase", __func__);
         } else {
+            ALOGI("%s: Voice call is active, not changing sound devices", __func__);
             in_snd_device = vc_usecase->in_snd_device;
             out_snd_device = vc_usecase->out_snd_device;
+            return 0;
         }
     }
 
