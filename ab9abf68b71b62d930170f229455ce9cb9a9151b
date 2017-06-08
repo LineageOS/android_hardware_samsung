@@ -22,6 +22,30 @@
       "revId": "ab9abf68b71b62d930170f229455ce9cb9a9151b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_a39b70c8",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-06-08T10:36:06Z",
+      "side": 0,
+      "message": "Watch out for the condition chain.\nThe call will be restarted in case of a device change (which is the case for BT calls).\nThe BT PCM streams are opened in start_voice_call() already, so the usecase of switching to BT headset is covered there.",
+      "parentUuid": "da87b5cf_a374d09c",
+      "range": {
+        "startLine": 2789,
+        "startChar": 20,
+        "endLine": 2789,
+        "endChar": 68
+      },
+      "revId": "ab9abf68b71b62d930170f229455ce9cb9a9151b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
