@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_a374d09c",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2017-06-08T09:49:14Z",
+      "side": 0,
+      "message": "This code is there because you can be in a phone call and turn on your bluetooth headset.\n\nHow do you activate the bt voice call now?",
+      "range": {
+        "startLine": 2789,
+        "startChar": 20,
+        "endLine": 2789,
+        "endChar": 68
+      },
+      "revId": "ab9abf68b71b62d930170f229455ce9cb9a9151b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
