@@ -199,6 +199,10 @@ static int write_leds(const struct led_config *led)
     ALOGV("%s: color=0x%08x, delay_on=%d, delay_off=%d, blink=%s",
           __func__, led->color, led->delay_on, led->delay_off, blink);
 
+    /* Add '\n' here to make the above log message clean. */
+    blink[count]   = '\n';
+    blink[count+1] = '\0';
+
     pthread_mutex_lock(&g_lock);
     err = write_str(LED_BLINK_NODE, blink);
     pthread_mutex_unlock(&g_lock);
