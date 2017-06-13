@@ -3,6 +3,7 @@
  * Copyright (C) 2012 The Android Open Source Project, for the samsung_slsi/exynos5 code
  * Copyright (C) 2013 Paul Kocialkowski, for the V4L2 code
  * Copyright (C) 2017 The NamelessRom Project, for making it work
+ * Copyright (C) 2017 The LineageOS Project, for making it work better
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -456,7 +457,6 @@ void determineBandwidthSupport(hwc_context_t *ctx, hwc_display_contents_1_t *con
                         }
 
                         if (can_compose) {
-                            can_compose = can_compose && !fimg_used;
                             fimg_used = true;
                         }
 
