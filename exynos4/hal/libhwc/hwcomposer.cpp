@@ -18,6 +18,8 @@
  * limitations under the License.
  */
 
+#include <utils/String8.h>
+
 #include "hwcomposer.h"
 #include "hwcomposer_vsync.h"
 
@@ -1311,6 +1313,15 @@ static int hwc_getDisplayAttributes(struct hwc_composer_device_1* dev, int disp,
     return 0;
 }
 
+static void hwc_dump(struct hwc_composer_device_1* dev, char *buff, int buff_len)
+{
+    struct hwc_context_t *ctx = (hwc_context_t *)dev;
+    android::String8 tmp("");
+    tmp.appendFormat("Exynos HWC: force_fb=%d force_gpu=%d bypass_count=%d\n", ctx->force_fb, ctx->force_gpu,
+            ctx->bypass_count);
+    strlcpy(buff, tmp.string(), buff_len);
+}
+
 /*****************************************************************************/
 
 static int hwc_device_open(const struct hw_module_t* module, const char* name,
@@ -1355,7 +1366,7 @@ static int hwc_device_open(const struct hw_module_t* module, const char* name,
         dev->device.blank = hwc_blank;
         dev->device.query = hwc_query;
         dev->device.registerProcs = hwc_registerProcs;
-        //dev->device.dump
+        dev->device.dump = hwc_dump;
         dev->device.getDisplayConfigs = hwc_getDisplayConfigs;
         dev->device.getDisplayAttributes = hwc_getDisplayAttributes;
 
