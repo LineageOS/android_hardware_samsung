@@ -511,6 +511,13 @@ void determineBandwidthSupport(hwc_context_t *ctx, hwc_display_contents_1_t *con
             windows_left--;
         }
 
+        if (ctx->fb_needed && yuv_layer > -1) {
+            contents->hwLayers[yuv_layer].compositionType = HWC_FRAMEBUFFER;
+            ctx->first_fb = min((size_t)yuv_layer, ctx->first_fb);
+            ctx->last_fb = max((size_t)yuv_layer, ctx->last_fb);
+            changed = true;
+        }
+
         if (changed) {
             for (size_t i = ctx->first_fb; i < ctx->last_fb; i++) {
                 if (contents->hwLayers[i].compositionType != HWC_FRAMEBUFFER) {
