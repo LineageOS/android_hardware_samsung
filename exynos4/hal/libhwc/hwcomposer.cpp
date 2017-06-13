@@ -194,13 +194,23 @@ static enum gsc_map_t::mode layer_requires_process(hwc_layer_1_t &layer)
 
     switch(mode) {
     case gsc_map_t::NONE:
-        if (is_scaled(layer) || is_transformed(layer) || !is_x_aligned(layer)) {
+        if (!is_scaled(layer) && !is_transformed(layer) && is_x_aligned(layer)) {
             ALOGV("%s: direct render -> fimg because is_scaled(%d) is_transformed(%d) is_x_aligned(%d)",
                     __FUNCTION__, is_scaled(layer), is_transformed(layer), is_x_aligned(layer));
             mode = gsc_map_t::FIMG;
+        } else if (is_scaled(layer) || is_transformed(layer)) {
+            ALOGV("%s: use fimc because is_scaled(%d) is_transformed(%d)", __FUNCTION__, is_scaled(layer), is_transformed(layer));
+            mode = gsc_map_t::FIMC;
         }
         break;
-
+    case gsc_map_t::FIMG:
+        // FIMG doesn't handle scaled layers
+        // TODO does this also apply to !is_x_aligned?
+        if (is_scaled(layer) && !is_transformed(layer)) {
+            ALOGV("%s: use fimc because is_scaled(%d) is_transformed(%d)", __FUNCTION__, is_scaled(layer), is_transformed(layer));
+            mode = gsc_map_t::FIMC;
+        }
+        break;
     default:
         break;
     }
