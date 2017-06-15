@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_40936cfa",
+        "filename": "liblights/lights.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-06-15T04:45:54Z",
+      "side": 1,
+      "message": "don\u0027t indent ifdef/endif",
+      "revId": "cbca8852b4f3443f6d510b01a6b3e8b51e5734f4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_6090f0ec",
+        "filename": "liblights/lights.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-06-15T04:45:54Z",
+      "side": 1,
+      "message": "keep indentation style consistent (spaces not tabs)",
+      "revId": "cbca8852b4f3443f6d510b01a6b3e8b51e5734f4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
