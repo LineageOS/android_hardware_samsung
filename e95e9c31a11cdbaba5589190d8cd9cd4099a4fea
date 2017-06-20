@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_b5094f2e",
+        "filename": "liblights/lights.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3132
+      },
+      "writtenOn": "2017-06-20T07:44:40Z",
+      "side": 1,
+      "message": "Why don\u0027t you simply add \\n here?",
+      "range": {
+        "startLine": 188,
+        "startChar": 34,
+        "endLine": 188,
+        "endChar": 36
+      },
+      "revId": "e95e9c31a11cdbaba5589190d8cd9cd4099a4fea",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_d50e5334",
+        "filename": "liblights/lights.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3132
+      },
+      "writtenOn": "2017-06-20T07:44:40Z",
+      "side": 1,
+      "message": "You don\u0027t need to print this if you already print them out separately.",
+      "range": {
+        "startLine": 199,
+        "startChar": 56,
+        "endLine": 199,
+        "endChar": 64
+      },
+      "revId": "e95e9c31a11cdbaba5589190d8cd9cd4099a4fea",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
