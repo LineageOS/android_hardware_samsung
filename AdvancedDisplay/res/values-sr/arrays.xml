@@ -17,15 +17,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (default)</item>
-    <item>Кориснички интерфејс</item>
-    <item>Видео</item>
-    <item>Видео топло</item>
-    <item>Видео хладно</item>
+    <item>LineageOS (подразумевано)</item>
+    <item>Интерфејс</item>
+    <item>Филм</item>
+    <item>Филм — топли тонови</item>
+    <item>Филм — хладни тонови</item>
     <item>Камера</item>
     <item>Навигација</item>
     <item>Галерија</item>
-    <item>ВТ</item>
+    <item>VT</item>
   </string-array>
   <string-array name="mdnie_negative_entries">
     <item>Нормално</item>
