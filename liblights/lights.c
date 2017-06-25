@@ -205,6 +205,9 @@ static int write_leds(const struct led_config *led)
 
     pthread_mutex_lock(&g_lock);
     err = write_str(LED_BLINK_NODE, blink);
+    if (hw_components & COMPONENT_BLN) {
+        err = write_str(LED_BLN_NODE, led->delay_on ? "1" : "0");
+    }
     pthread_mutex_unlock(&g_lock);
 
     return err;
@@ -267,9 +270,11 @@ static int set_light_leds(struct light_state_t const *state, int type)
         adjusted_brightness = 255;
     }
 
-
-
-    led->color = calibrate_color(state->color & COLOR_MASK, adjusted_brightness);
+     if (hw_components & COMPONENT_BLN) {
+        led->color = state->flashMode == LIGHT_FLASH_NONE ? 0 : adjusted_brightness;
+    } else {
+        led->color = calibrate_color(state->color & COLOR_MASK, adjusted_brightness);
+    }
 
     if (led->color > 0) {
         /* This LED is lit. */
@@ -302,19 +307,6 @@ switched:
     return err;
 }
 
-#ifdef LED_BLN_NODE
-static int set_light_bln_notifications(struct light_device_t *dev __unused,
-                                  struct light_state_t const *state)
-{
-    int err = 0;
-
-    pthread_mutex_lock(&g_lock);
-    err = write_str(LED_BLN_NODE, state->color & COLOR_MASK ? "1" : "0");
-    pthread_mutex_unlock(&g_lock);
-
-    return err;
-}
-#endif
 static int set_light_leds_battery(struct light_device_t *dev __unused,
                                   struct light_state_t const *state)
 {
@@ -374,12 +366,6 @@ static int open_lights(const struct hw_module_t *module, char const *name,
     } else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name)) {
         requested_component = COMPONENT_LED;
         set_light = set_light_leds_notifications;
-#ifdef LED_BLN_NODE
-        if (hw_components & COMPONENT_BLN) {
-            requested_component = COMPONENT_BLN;
-            set_light = set_light_bln_notifications;
-        }
-#endif
     } else if (0 == strcmp(LIGHT_ID_ATTENTION, name)) {
         requested_component = COMPONENT_LED;
         set_light = set_light_leds_attention;
