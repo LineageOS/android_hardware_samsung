@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(TARGET_AUDIOHAL_VARIANT),samsung)
+ifneq ($(filter samsung samsung_audience,$(TARGET_AUDIOHAL_VARIANT),)
 
 LOCAL_PATH := $(call my-dir)
 
@@ -51,6 +51,13 @@ LOCAL_C_INCLUDES += \
 LOCAL_CFLAGS := -Werror -Wall
 #LOCAL_CFLAGS += -DPREPROCESSING_ENABLED
 #LOCAL_CFLAGS += -DHW_AEC_LOOPBACK
+
+ifeq ($(TARGET_AUDIOHAL_VARIANT), samsung_audience)
+LOCAL_SRC_FILES += audience.c
+LOCAL_CFLAGS += -DAUDIENCE_EARSMART_IC
+LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
+LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+endif
 
 LOCAL_MODULE := audio.primary.$(TARGET_BOOTLOADER_BOARD_NAME)
 
