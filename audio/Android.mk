@@ -46,11 +46,14 @@ LOCAL_C_INCLUDES += \
 	hardware/samsung/ril/libsecril-client \
 	$(call include-path-for, audio-utils) \
 	$(call include-path-for, audio-route) \
-	$(call include-path-for, audio-effects)
+	$(call include-path-for, audio-effects) \
+	$(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
 
 LOCAL_CFLAGS := -Werror -Wall
 #LOCAL_CFLAGS += -DPREPROCESSING_ENABLED
 #LOCAL_CFLAGS += -DHW_AEC_LOOPBACK
+
+LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 LOCAL_MODULE := audio.primary.$(TARGET_BOOTLOADER_BOARD_NAME)
 

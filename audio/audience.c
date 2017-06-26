@@ -22,7 +22,10 @@
 #include <fcntl.h>
 
 #include <cutils/log.h>
-#include <audience-routes.h>
+
+#ifdef AUDIENCE_EARSMART_IC
+#include <linux/audience-routes.h>
+#endif
 
 #include "audience.h"
 
