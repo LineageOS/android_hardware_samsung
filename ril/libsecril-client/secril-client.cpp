@@ -928,8 +928,6 @@ int SetTwoMicControl(HRilClient client, TwoMicSolDevice device, TwoMicSolReport 
     int ret;
     char data[6] = {0,};
 
-    RLOGV(" + %s", __FUNCTION__);
-
     if (client == NULL || client->prv == NULL) {
         RLOGE("%s: Invalid client %p", __FUNCTION__, client);
         return RIL_CLIENT_ERR_INVAL;
@@ -1088,6 +1086,8 @@ static int SendOemRequestHookRaw(HRilClient client, int req_id, char *data, size
     RilClientPrv *client_prv;
     int maxfd = -1;
 
+    unsigned int check_req_id = req_id;
+
     client_prv = (RilClientPrv *)(client->prv);
 
     // Allocate a token.
@@ -1126,11 +1126,25 @@ static int SendOemRequestHookRaw(HRilClient client, int req_id, char *data, size
         goto error;
     }
 
+    // check if the handler for specified event is NULL and deregister token
+    // to prevent token pool overflow
+
+    if(!FindReqHandler(client_prv, token, &check_req_id)) {
+        FreeToken(&(client_prv->token_pool), token);
+        ClearReqHistory(client_prv, token);
+    }
+
     return RIL_CLIENT_ERR_SUCCESS;
 
 error:
     FreeToken(&(client_prv->token_pool), token);
     ClearReqHistory(client_prv, token);
+
+    if (ret == -EPIPE) {
+        close(client_prv->sock);
+        client_prv->sock = -1;
+        client_prv->b_connect = 0;
+    }
 
     return RIL_CLIENT_ERR_UNKNOWN;
 }
@@ -1556,6 +1570,8 @@ static int blockingWrite(int fd, const void *buffer, size_t len) {
     const uint8_t *toWrite;
     ssize_t written = 0;
 
+    int err = 0;
+
     if (buffer == NULL)
         return -1;
 
@@ -1572,13 +1588,13 @@ static int blockingWrite(int fd, const void *buffer, size_t len) {
         }
         else {
             RLOGE ("RIL Response: unexpected error on write errno:%d", errno);
-            printf("RIL Response: unexpected error on write errno:%d\n", errno);
+            err = errno;
             close(fd);
-            return -1;
+            return -errno;
         }
     }
 
-    return 0;
+    return err;
 }
 
 } // namespace android
