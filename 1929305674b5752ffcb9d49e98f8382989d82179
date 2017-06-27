@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_a8b0048c",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-06-27T16:04:05Z",
+      "side": 1,
+      "message": "remove the empty line",
+      "revId": "1929305674b5752ffcb9d49e98f8382989d82179",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_28bdd468",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-06-27T16:04:05Z",
+      "side": 1,
+      "message": "Remove the empty line here",
+      "revId": "1929305674b5752ffcb9d49e98f8382989d82179",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_08bc9068",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-06-27T16:04:05Z",
+      "side": 1,
+      "message": "useless",
+      "revId": "1929305674b5752ffcb9d49e98f8382989d82179",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_48c298ea",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-06-27T16:04:05Z",
+      "side": 1,
+      "message": "this has zero effect, you\u0027re already returning -errno",
+      "revId": "1929305674b5752ffcb9d49e98f8382989d82179",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_e8b60c8a",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-06-27T16:04:05Z",
+      "side": 1,
+      "message": "useless",
+      "revId": "1929305674b5752ffcb9d49e98f8382989d82179",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}

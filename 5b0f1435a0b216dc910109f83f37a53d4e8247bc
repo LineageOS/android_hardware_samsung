@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_8890a0ed",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-06-27T16:04:05Z",
+      "side": 0,
+      "message": "Don\u0027t remove this for no reason.",
+      "revId": "5b0f1435a0b216dc910109f83f37a53d4e8247bc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
