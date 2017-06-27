@@ -43,12 +43,14 @@
 #define BOOST_PATH             CPU0_INTERACTIVE_PATH "/boost"
 #define BOOSTPULSE_PATH        CPU0_INTERACTIVE_PATH "/boostpulse"
 #define CPU0_IO_IS_BUSY_PATH   CPU0_INTERACTIVE_PATH "/io_is_busy"
-#define CPU4_IO_IS_BUSY_PATH   CPU4_INTERACTIVE_PATH "/io_is_busy"
 #define CPU0_HISPEED_FREQ_PATH CPU0_INTERACTIVE_PATH "/hispeed_freq"
-#define CPU4_HISPEED_FREQ_PATH CPU4_INTERACTIVE_PATH "/hispeed_freq"
-
 #define CPU0_MAX_FREQ_PATH     CPU0_SYSFS_PATH "/cpufreq/scaling_max_freq"
+
+#ifdef CPU4_SYSFS_PATH
+#define CPU4_HISPEED_FREQ_PATH CPU4_INTERACTIVE_PATH "/hispeed_freq"
 #define CPU4_MAX_FREQ_PATH     CPU4_SYSFS_PATH "/cpufreq/scaling_max_freq"
+#define CPU4_IO_IS_BUSY_PATH   CPU4_INTERACTIVE_PATH "/io_is_busy"
+#endif
 
 #define ARRAY_SIZE(a) sizeof(a) / sizeof(a[0])
 
@@ -198,30 +200,27 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
                        sizeof(samsung_pwr->cpu0_hispeed_freq));
             // Limit to hispeed freq
             sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_hispeed_freq);
-            rc = stat(CPU4_MAX_FREQ_PATH, &sb);
-            if (rc == 0) {
-                sysfs_read(CPU4_HISPEED_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq,
-                           sizeof(samsung_pwr->cpu4_hispeed_freq));
-                sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq);
-            }
+#ifdef CPU4_SYSFS_PATH
+            sysfs_read(CPU4_HISPEED_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq,
+                        sizeof(samsung_pwr->cpu4_hispeed_freq));
+            sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq);
+#endif
             ALOGV("%s: set powersave mode", __func__);
             break;
         case PROFILE_BALANCED:
             // Restore normal max freq
             sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_max_freq);
-            rc = stat(CPU4_MAX_FREQ_PATH, &sb);
-            if (rc == 0) {
-                sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
-            }
+#ifdef CPU4_SYSFS_PATH
+            sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
+#endif
             ALOGV("%s: set balanced mode", __func__);
             break;
         case PROFILE_HIGH_PERFORMANCE:
             // Restore normal max freq
             sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_max_freq);
-            rc = stat(CPU4_MAX_FREQ_PATH, &sb);
-            if (rc == 0) {
-                sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
-            }
+#ifdef CPU4_SYSFS_PATH
+            sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
+#endif
             ALOGV("%s: set performance mode", __func__);
             break;
         default:
@@ -316,15 +315,14 @@ static void init_cpufreqs(struct samsung_power_module *samsung_pwr)
     ALOGV("%s: CPU 0 hispeed freq: %s", __func__, samsung_pwr->cpu0_hispeed_freq);
     ALOGV("%s: CPU 0 max freq: %s", __func__, samsung_pwr->cpu0_max_freq);
 
-    rc = stat(CPU4_HISPEED_FREQ_PATH, &sb);
-    if (rc == 0) {
-        sysfs_read(CPU4_HISPEED_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq,
-                   sizeof(samsung_pwr->cpu4_hispeed_freq));
-        sysfs_read(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq,
-                   sizeof(samsung_pwr->cpu4_max_freq));
-        ALOGV("%s: CPU 4 hispeed freq: %s", __func__, samsung_pwr->cpu4_hispeed_freq);
-        ALOGV("%s: CPU 4 max freq: %s", __func__, samsung_pwr->cpu4_max_freq);
-    }
+#ifdef CPU4_SYSFS_PATH
+    sysfs_read(CPU4_HISPEED_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq,
+                sizeof(samsung_pwr->cpu4_hispeed_freq));
+    sysfs_read(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq,
+                sizeof(samsung_pwr->cpu4_max_freq));
+    ALOGV("%s: CPU 4 hispeed freq: %s", __func__, samsung_pwr->cpu4_hispeed_freq);
+    ALOGV("%s: CPU 4 max freq: %s", __func__, samsung_pwr->cpu4_max_freq);
+#endif
 }
 
 static void init_touch_input_power_path(struct samsung_power_module *samsung_pwr)
@@ -417,10 +415,9 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
 
 out:
     sysfs_write(CPU0_IO_IS_BUSY_PATH, on ? "1" : "0");
-    rc = stat(CPU4_IO_IS_BUSY_PATH, &sb);
-    if (rc == 0) {
-        sysfs_write(CPU4_IO_IS_BUSY_PATH, on ? "1" : "0");
-    }
+#ifdef CPU4_SYSFS_PATH
+    sysfs_write(CPU4_IO_IS_BUSY_PATH, on ? "1" : "0");
+#endif
 
     ALOGV("power_set_interactive: %d done", on);
 }
