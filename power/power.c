@@ -28,7 +28,6 @@
 #include <unistd.h>
 
 #include <sys/types.h>
-#include <sys/stat.h>
 
 #define LOG_TAG "SamsungPowerHAL"
 /* #define LOG_NDEBUG 0 */
@@ -40,26 +39,25 @@
 
 #include "samsung_power.h"
 
-#define BOOST_PATH             CPU0_INTERACTIVE_PATH "/boost"
-#define BOOSTPULSE_PATH        CPU0_INTERACTIVE_PATH "/boostpulse"
-#define CPU0_IO_IS_BUSY_PATH   CPU0_INTERACTIVE_PATH "/io_is_busy"
-#define CPU4_IO_IS_BUSY_PATH   CPU4_INTERACTIVE_PATH "/io_is_busy"
-#define CPU0_HISPEED_FREQ_PATH CPU0_INTERACTIVE_PATH "/hispeed_freq"
-#define CPU4_HISPEED_FREQ_PATH CPU4_INTERACTIVE_PATH "/hispeed_freq"
+#define BOOST_PATH        "/boost"
+#define BOOSTPULSE_PATH   "/boostpulse"
 
-#define CPU0_MAX_FREQ_PATH     CPU0_SYSFS_PATH "/cpufreq/scaling_max_freq"
-#define CPU4_MAX_FREQ_PATH     CPU4_SYSFS_PATH "/cpufreq/scaling_max_freq"
+#define IO_IS_BUSY_PATH   "/io_is_busy"
+#define HISPEED_FREQ_PATH "/hispeed_freq"
 
-#define ARRAY_SIZE(a) sizeof(a) / sizeof(a[0])
+#define MAX_FREQ_PATH     "/cpufreq/scaling_max_freq"
+
+#define CLUSTER_COUNT     ARRAY_SIZE(CPU_SYSFS_PATHS)
+#define PARAM_MAXLEN      10
+
+#define ARRAY_SIZE(a)     sizeof(a) / sizeof(a[0])
 
 struct samsung_power_module {
     struct power_module base;
     pthread_mutex_t lock;
     int boostpulse_fd;
-    char cpu0_hispeed_freq[10];
-    char cpu0_max_freq[10];
-    char cpu4_hispeed_freq[10];
-    char cpu4_max_freq[10];
+    char hispeed_freqs[CLUSTER_COUNT][PARAM_MAXLEN];
+    char max_freqs[CLUSTER_COUNT][PARAM_MAXLEN];
     char* touchscreen_power_path;
     char* touchkey_power_path;
 };
@@ -134,16 +132,60 @@ static void sysfs_write(const char *path, char *s)
     close(fd);
 }
 
+static void cpu_sysfs_read(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
+{
+    char path[PATH_MAX];
+
+    for (unsigned int i = 0; i < ARRAY_SIZE(CPU_SYSFS_PATHS); i++) {
+        sprintf(path, "%s%s", CPU_SYSFS_PATHS[i], param);
+        sysfs_read(path, s[i], PARAM_MAXLEN);
+    }
+}
+
+static void cpu_sysfs_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
+{
+    char path[PATH_MAX];
+
+    for (unsigned int i = 0; i < ARRAY_SIZE(CPU_SYSFS_PATHS); i++) {
+        sprintf(path, "%s%s", CPU_SYSFS_PATHS[i], param);
+        sysfs_write(path, s[i]);
+    }
+}
+
+static void cpu_interactive_read(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
+{
+    char path[PATH_MAX];
+
+    for (unsigned int i = 0; i < ARRAY_SIZE(CPU_INTERACTIVE_PATHS); i++) {
+        sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[i], param);
+        sysfs_read(path, s[i], PARAM_MAXLEN);
+    }
+}
+
+static void cpu_interactive_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
+{
+    char path[PATH_MAX];
+
+    for (unsigned int i = 0; i < ARRAY_SIZE(CPU_INTERACTIVE_PATHS); i++) {
+        sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[i], param);
+        sysfs_write(path, s[i]);
+    }
+}
+
 static void boost(int32_t duration_us)
 {
     int fd;
+    char path[PATH_MAX];
 
     if (duration_us <= 0)
         return;
 
-    fd = open(BOOST_PATH, O_WRONLY);
+    // the boost node is only valid for the LITTLE cluster
+    sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[0], BOOST_PATH);
+
+    fd = open(path, O_WRONLY);
     if (fd < 0) {
-        ALOGE("Error opening %s", BOOST_PATH);
+        ALOGE("Error opening %s", path);
         return;
     }
 
@@ -156,9 +198,14 @@ static void boost(int32_t duration_us)
 
 static void boostpulse_open(struct samsung_power_module *samsung_pwr)
 {
-    samsung_pwr->boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
+    char path[PATH_MAX];
+
+    // the boostpulse node is only valid for the LITTLE cluster
+    sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[0], BOOSTPULSE_PATH);
+
+    samsung_pwr->boostpulse_fd = open(path, O_WRONLY);
     if (samsung_pwr->boostpulse_fd < 0) {
-        ALOGE("Error opening %s: %s\n", BOOSTPULSE_PATH, strerror(errno));
+        ALOGE("Error opening %s: %s\n", path, strerror(errno));
     }
 }
 
@@ -172,7 +219,8 @@ static void send_boostpulse(int boostpulse_fd)
 
     len = write(boostpulse_fd, "1", 1);
     if (len < 0) {
-        ALOGE("Error writing to %s: %s", BOOSTPULSE_PATH, strerror(errno));
+        ALOGE("Error writing to %s%s: %s", CPU_INTERACTIVE_PATHS[0], BOOSTPULSE_PATH,
+                strerror(errno));
     }
 }
 
@@ -184,7 +232,6 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
                               int profile)
 {
     int rc;
-    struct stat sb;
 
     if (profile < 0 || profile >= PROFILE_MAX) {
         return;
@@ -199,34 +246,19 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
     switch (profile) {
         case PROFILE_POWER_SAVE:
             // Grab value set by init.*.rc
-            sysfs_read(CPU0_HISPEED_FREQ_PATH, samsung_pwr->cpu0_hispeed_freq,
-                       sizeof(samsung_pwr->cpu0_hispeed_freq));
+            cpu_interactive_read(HISPEED_FREQ_PATH, samsung_pwr->hispeed_freqs);
             // Limit to hispeed freq
-            sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_hispeed_freq);
-            rc = stat(CPU4_MAX_FREQ_PATH, &sb);
-            if (rc == 0) {
-                sysfs_read(CPU4_HISPEED_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq,
-                           sizeof(samsung_pwr->cpu4_hispeed_freq));
-                sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq);
-            }
+            cpu_sysfs_write(MAX_FREQ_PATH, samsung_pwr->hispeed_freqs);
             ALOGV("%s: set powersave mode", __func__);
             break;
         case PROFILE_BALANCED:
             // Restore normal max freq
-            sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_max_freq);
-            rc = stat(CPU4_MAX_FREQ_PATH, &sb);
-            if (rc == 0) {
-                sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
-            }
+            cpu_sysfs_write(MAX_FREQ_PATH, samsung_pwr->max_freqs);
             ALOGV("%s: set balanced mode", __func__);
             break;
         case PROFILE_HIGH_PERFORMANCE:
             // Restore normal max freq
-            sysfs_write(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_max_freq);
-            rc = stat(CPU4_MAX_FREQ_PATH, &sb);
-            if (rc == 0) {
-                sysfs_write(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq);
-            }
+            cpu_sysfs_write(MAX_FREQ_PATH, samsung_pwr->max_freqs);
             ALOGV("%s: set performance mode", __func__);
             break;
         default:
@@ -311,25 +343,8 @@ static void find_input_nodes(struct samsung_power_module *samsung_pwr, char *dir
 
 static void init_cpufreqs(struct samsung_power_module *samsung_pwr)
 {
-    int rc;
-    struct stat sb;
-
-    sysfs_read(CPU0_HISPEED_FREQ_PATH, samsung_pwr->cpu0_hispeed_freq,
-               sizeof(samsung_pwr->cpu0_hispeed_freq));
-    sysfs_read(CPU0_MAX_FREQ_PATH, samsung_pwr->cpu0_max_freq,
-               sizeof(samsung_pwr->cpu0_max_freq));
-    ALOGV("%s: CPU 0 hispeed freq: %s", __func__, samsung_pwr->cpu0_hispeed_freq);
-    ALOGV("%s: CPU 0 max freq: %s", __func__, samsung_pwr->cpu0_max_freq);
-
-    rc = stat(CPU4_HISPEED_FREQ_PATH, &sb);
-    if (rc == 0) {
-        sysfs_read(CPU4_HISPEED_FREQ_PATH, samsung_pwr->cpu4_hispeed_freq,
-                   sizeof(samsung_pwr->cpu4_hispeed_freq));
-        sysfs_read(CPU4_MAX_FREQ_PATH, samsung_pwr->cpu4_max_freq,
-                   sizeof(samsung_pwr->cpu4_max_freq));
-        ALOGV("%s: CPU 4 hispeed freq: %s", __func__, samsung_pwr->cpu4_hispeed_freq);
-        ALOGV("%s: CPU 4 max freq: %s", __func__, samsung_pwr->cpu4_max_freq);
-    }
+    cpu_interactive_read(HISPEED_FREQ_PATH, samsung_pwr->hispeed_freqs);
+    cpu_sysfs_read(MAX_FREQ_PATH, samsung_pwr->max_freqs);
 }
 
 static void init_touch_input_power_path(struct samsung_power_module *samsung_pwr)
@@ -376,11 +391,12 @@ static void samsung_power_init(struct power_module *module)
 static void samsung_power_set_interactive(struct power_module *module, int on)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
-    struct stat sb;
     int panel_brightness;
     char button_state[2];
     int rc;
     static bool touchkeys_blocked = false;
+    char ON[CLUSTER_COUNT][PARAM_MAXLEN]  = {"1", "1"};
+    char OFF[CLUSTER_COUNT][PARAM_MAXLEN] = {"0", "0"};
 
     ALOGV("power_set_interactive: %d", on);
 
@@ -432,11 +448,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     }
 
 out:
-    sysfs_write(CPU0_IO_IS_BUSY_PATH, on ? "1" : "0");
-    rc = stat(CPU4_IO_IS_BUSY_PATH, &sb);
-    if (rc == 0) {
-        sysfs_write(CPU4_IO_IS_BUSY_PATH, on ? "1" : "0");
-    }
+    cpu_interactive_write(IO_IS_BUSY_PATH, on ? ON : OFF);
 
     ALOGV("power_set_interactive: %d done", on);
 }
