@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_992554c4",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 9760
+      },
+      "writtenOn": "2017-06-29T03:42:24Z",
+      "side": 1,
+      "message": "This is not true.\nExynos 5420 interactive path is\n/sys/devices/system/cpu/cpufreq/interactive\nBOOST_PATH \u003d /sys/devices/system/cpu/cpufreq/interactive/boost",
+      "revId": "311968bed26f91ee4eeceb7174d76ce1c0812b46",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_b92298b7",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 9760
+      },
+      "writtenOn": "2017-06-29T03:42:24Z",
+      "side": 1,
+      "message": "This is not true.\nExynos 5420 interactive path is\n/sys/devices/system/cpu/cpufreq/interactive\nBOOSTPULSE_PATH \u003d /sys/devices/system/cpu/cpufreq/interactive/boostpulse",
+      "revId": "311968bed26f91ee4eeceb7174d76ce1c0812b46",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
