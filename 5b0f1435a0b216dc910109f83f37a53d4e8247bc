@@ -16,6 +16,24 @@
       "revId": "5b0f1435a0b216dc910109f83f37a53d4e8247bc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_c85b0853",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 17868
+      },
+      "writtenOn": "2017-06-29T02:35:11Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "da87b5cf_8890a0ed",
+      "revId": "5b0f1435a0b216dc910109f83f37a53d4e8247bc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
