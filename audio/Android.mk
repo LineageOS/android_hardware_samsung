@@ -54,6 +54,16 @@ LOCAL_CFLAGS := -Werror -Wall
 #LOCAL_CFLAGS += -DPREPROCESSING_ENABLED
 #LOCAL_CFLAGS += -DHW_AEC_LOOPBACK
 
+# TODO: find another way to prevent audio-HAL to call SetCallClockSync
+ifeq ($(RIL_SET_CALL_CLOCK_SYNC_WORKAROUND),true)
+LOCAL_CFLAGS += -DRIL_SET_CALL_CLOCK_SYNC_WORKAROUND
+endif
+
+# TODO: find another way to prevent audio-HAL to call SetTwoMicControl
+ifeq ($(RIL_SET_TWO_MIC_CONTROL_WORKAROUND),true)
+LOCAL_CFLAGS += -DRIL_SET_TWO_MIC_CONTROL_WORKAROUND
+endif
+
 LOCAL_MODULE := audio.primary.$(TARGET_BOOTLOADER_BOARD_NAME)
 
 LOCAL_MODULE_RELATIVE_PATH := hw

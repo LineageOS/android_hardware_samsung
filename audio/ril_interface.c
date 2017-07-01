@@ -202,7 +202,7 @@ int ril_set_call_volume(struct ril_handle *ril,
 
 int ril_set_call_audio_path(struct ril_handle *ril, enum _AudioPath path)
 {
-    int rc;
+    int rc = 0;
 
     rc = ril_connect_if_required(ril);
     if (rc != 0) {
@@ -218,11 +218,17 @@ int ril_set_call_audio_path(struct ril_handle *ril, enum _AudioPath path)
     return rc;
 }
 
+#ifndef RIL_SET_CALL_CLOCK_SYNC_WORKAROUND
 int ril_set_call_clock_sync(struct ril_handle *ril,
                             enum _SoundClockCondition condition)
+#else
+int ril_set_call_clock_sync(struct ril_handle __unused *ril,
+                            enum _SoundClockCondition __unused condition)
+#endif
 {
-    int rc;
+    int rc = 0;
 
+#ifndef RIL_SET_CALL_CLOCK_SYNC_WORKAROUND
     rc = ril_connect_if_required(ril);
     if (rc != 0) {
         ALOGE("%s: Failed to connect to RIL (%s)", __func__, strerror(rc));
@@ -233,6 +239,9 @@ int ril_set_call_clock_sync(struct ril_handle *ril,
     if (rc != 0) {
         ALOGE("%s: SetCallClockSync() failed, rc=%d", __func__, rc);
     }
+#else
+    RLOGE("%s: workaround \"%s\" enabled", __func__, "RIL_SET_CALL_CLOCK_SYNC_WORKAROUND");
+#endif
 
     return rc;
 }
@@ -255,12 +264,19 @@ int ril_set_mute(struct ril_handle *ril, enum _MuteCondition condition)
     return rc;
 }
 
+#ifndef RIL_SET_TWO_MIC_CONTROL_WORKAROUND
 int ril_set_two_mic_control(struct ril_handle *ril,
                             enum __TwoMicSolDevice device,
                             enum __TwoMicSolReport report)
+#else
+int ril_set_two_mic_control(struct ril_handle __unused *ril,
+                            enum __TwoMicSolDevice __unused device,
+                            enum __TwoMicSolReport __unused report)
+#endif
 {
-    int rc;
+    int rc = 0;
 
+#ifndef RIL_SET_TWO_MIC_CONTROL_WORKAROUND
     rc = ril_connect_if_required(ril);
     if (rc != 0) {
         ALOGE("%s: Failed to connect to RIL (%s)", __func__, strerror(rc));
@@ -271,6 +287,9 @@ int ril_set_two_mic_control(struct ril_handle *ril,
     if (rc != 0) {
         ALOGE("%s: SetTwoMicControl() failed, rc=%d", __func__, rc);
     }
+#else
+    RLOGE("%s: workaround \"%s\" enabled", __func__, "RIL_SET_TWO_MIC_CONTROL_WORKAROUND");
+#endif
 
     return rc;
 }
