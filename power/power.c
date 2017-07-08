@@ -99,7 +99,12 @@ static int sysfs_read(char *path, char *s, int num_bytes)
 
         ret = -1;
     } else {
-        s[len] = '\0';
+        // do not store newlines, but terminate the string instead
+        if (s[len-1] == '\n') {
+            s[len-1] = '\0';
+        } else {
+            s[len] = '\0';
+        }
     }
 
     close(fd);
