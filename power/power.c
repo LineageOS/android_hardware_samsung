@@ -55,6 +55,7 @@
 struct samsung_power_module {
     struct power_module base;
     pthread_mutex_t lock;
+    int boost_fd;
     int boostpulse_fd;
     char hispeed_freqs[CLUSTER_COUNT][PARAM_MAXLEN];
     char max_freqs[CLUSTER_COUNT][PARAM_MAXLEN];
@@ -172,41 +173,22 @@ static void cpu_interactive_write(const char *param, char s[CLUSTER_COUNT][PARAM
     }
 }
 
-static void boost(int32_t duration_us)
+static void send_boost(int boost_fd, int32_t duration_us)
 {
-    int fd;
-    char path[PATH_MAX];
+    int len;
 
-    if (duration_us <= 0)
-        return;
-
-    // the boost node is only valid for the LITTLE cluster
-    sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[0], BOOST_PATH);
-
-    fd = open(path, O_WRONLY);
-    if (fd < 0) {
-        ALOGE("Error opening %s", path);
+    if (boost_fd < 0) {
         return;
     }
 
-    write(fd, "1", 1);
+    len = write(boost_fd, "1", 1);
+    if (len < 0) {
+        ALOGE("Error writing to %s%s: %s", CPU_INTERACTIVE_PATHS[0], BOOST_PATH, strerror(errno));
+        return;
+    }
+
     usleep(duration_us);
-    write(fd, "0", 1);
-
-    close(fd);
-}
-
-static void boostpulse_open(struct samsung_power_module *samsung_pwr)
-{
-    char path[PATH_MAX];
-
-    // the boostpulse node is only valid for the LITTLE cluster
-    sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[0], BOOSTPULSE_PATH);
-
-    samsung_pwr->boostpulse_fd = open(path, O_WRONLY);
-    if (samsung_pwr->boostpulse_fd < 0) {
-        ALOGE("Error opening %s: %s\n", path, strerror(errno));
-    }
+    len = write(boost_fd, "0", 1);
 }
 
 static void send_boostpulse(int boostpulse_fd)
@@ -358,12 +340,40 @@ static void init_touch_input_power_path(struct samsung_power_module *samsung_pwr
     }
 }
 
+static void boost_open(struct samsung_power_module *samsung_pwr)
+{
+    char path[PATH_MAX];
+
+    // the boost node is only valid for the LITTLE cluster
+    sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[0], BOOST_PATH);
+
+    samsung_pwr->boost_fd = open(path, O_WRONLY);
+    if (samsung_pwr->boost_fd < 0) {
+        ALOGE("Error opening %s: %s\n", path, strerror(errno));
+    }
+}
+
+static void boostpulse_open(struct samsung_power_module *samsung_pwr)
+{
+    char path[PATH_MAX];
+
+    // the boostpulse node is only valid for the LITTLE cluster
+    sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[0], BOOSTPULSE_PATH);
+
+    samsung_pwr->boostpulse_fd = open(path, O_WRONLY);
+    if (samsung_pwr->boostpulse_fd < 0) {
+        ALOGE("Error opening %s: %s\n", path, strerror(errno));
+    }
+}
+
 static void samsung_power_init(struct power_module *module)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
 
     init_cpufreqs(samsung_pwr);
 
+    // keep interactive boost fds opened
+    boost_open(samsung_pwr);
     boostpulse_open(samsung_pwr);
 
     samsung_pwr->touchscreen_power_path = NULL;
@@ -494,7 +504,8 @@ static void samsung_power_hint(struct power_module *module,
             break;
         case POWER_HINT_CPU_BOOST:
             ALOGV("%s: POWER_HINT_CPU_BOOST", __func__);
-            boost((*(int32_t *)data));
+            int32_t duration_us = *((int32_t *)data);
+            send_boost(samsung_pwr->boost_fd, duration_us);
             break;
         case POWER_HINT_SET_PROFILE:
             ALOGV("%s: POWER_HINT_SET_PROFILE", __func__);
