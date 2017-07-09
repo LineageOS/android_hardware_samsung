@@ -356,19 +356,11 @@ static void samsung_power_init(struct power_module *module)
     init_touch_input_power_path(samsung_pwr);
 
     ALOGI("Initialized settings:");
-    char max_freqs[PATH_MAX];
-    sprintf(max_freqs, "max_freqs: cluster[0]: %s", samsung_pwr->max_freqs[0]);
-    for (unsigned int i = 1; i < CLUSTER_COUNT; i++) {
-        sprintf(max_freqs, "%s, %s[%d]: %s", max_freqs, "cluster", i, samsung_pwr->max_freqs[i]);
-    }
-    ALOGI("%s", max_freqs);
-    char hispeed_freqs[PATH_MAX];
-    sprintf(hispeed_freqs, "hispeed_freqs: %s", samsung_pwr->hispeed_freqs[0]);
-    for (unsigned int i = 1; i < CLUSTER_COUNT; i++) {
-        sprintf(hispeed_freqs, "%s, %s[%d]: %s", hispeed_freqs, "cluster", i, samsung_pwr->hispeed_freqs[i]);
-    }
-    ALOGI("%s", hispeed_freqs);
-    ALOGI("boost_fd: %d, boostpulse_fd: %d", samsung_pwr->boost_fd, samsung_pwr->boostpulse_fd);
+    ALOGI("max_freqs: cluster[0]: %s, cluster[1]: %s", samsung_pwr->cpu0_max_freq,
+            samsung_pwr->cpu4_max_freq);
+    ALOGI("hispeed_freqs: cluster[0]: %s, cluster[1]: %s", samsung_pwr->cpu0_hispeed_freq,
+            samsung_pwr->cpu4_hispeed_freq);
+    ALOGI("boostpulse_fd: %d", samsung_pwr->boostpulse_fd);
     ALOGI("touchscreen_power_path: %s",
             samsung_pwr->touchscreen_power_path ? samsung_pwr->touchscreen_power_path : "NULL");
     ALOGI("touchkey_power_path: %s",
