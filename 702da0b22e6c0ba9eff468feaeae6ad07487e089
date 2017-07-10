@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee22a82a_dbc16460",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 17485
+      },
+      "writtenOn": "2017-07-10T05:33:30Z",
+      "side": 1,
+      "message": "Why did you remove the check on duration length?",
+      "revId": "702da0b22e6c0ba9eff468feaeae6ad07487e089",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
