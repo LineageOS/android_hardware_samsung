@@ -16,6 +16,24 @@
       "revId": "702da0b22e6c0ba9eff468feaeae6ad07487e089",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18144d51_a7f4efe3",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-07-10T15:07:19Z",
+      "side": 1,
+      "message": "https://github.com/LineageOS/android_hardware_libhardware/blob/cm-14.1/include/hardware/power.h#L274\n\nThe duration length is guaranteed to be \u003e 0.",
+      "parentUuid": "ee22a82a_dbc16460",
+      "revId": "702da0b22e6c0ba9eff468feaeae6ad07487e089",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
