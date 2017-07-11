@@ -34,6 +34,24 @@
       "revId": "702da0b22e6c0ba9eff468feaeae6ad07487e089",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eed390c1_591c6cf5",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 17485
+      },
+      "writtenOn": "2017-07-11T06:06:29Z",
+      "side": 1,
+      "message": "it\u0027s guaranted by who? by the caller?\nusleep() takes an unsigned int (as it obviously should be)\nif caller has some error and pass in some way a negative number the int-uint conversion blocks the thread for a very long time.\nI would reintroduce the check just to be safe (why deleting it anyway? to avoid a few opcodes?) or use proper unsigned type as parameter to function.",
+      "parentUuid": "18144d51_a7f4efe3",
+      "revId": "702da0b22e6c0ba9eff468feaeae6ad07487e089",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
