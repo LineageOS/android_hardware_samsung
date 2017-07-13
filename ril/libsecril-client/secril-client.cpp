@@ -1088,6 +1088,8 @@ static int SendOemRequestHookRaw(HRilClient client, int req_id, char *data, size
     RilClientPrv *client_prv;
     int maxfd = -1;
 
+    unsigned int check_req_id = req_id;
+
     client_prv = (RilClientPrv *)(client->prv);
 
     // Allocate a token.
@@ -1124,6 +1126,13 @@ static int SendOemRequestHookRaw(HRilClient client, int req_id, char *data, size
     if (ret < 0) {
         RLOGE("%s: send request data failed. (%d)", __FUNCTION__, ret);
         goto error;
+    }
+
+    // check if the handler for specified event is NULL and deregister token
+    // to prevent token pool overflow
+    if(!FindReqHandler(client_prv, token, &check_req_id)) {
+        FreeToken(&(client_prv->token_pool), token);
+        ClearReqHistory(client_prv, token);
     }
 
     return RIL_CLIENT_ERR_SUCCESS;
