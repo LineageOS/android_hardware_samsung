@@ -1141,6 +1141,12 @@ error:
     FreeToken(&(client_prv->token_pool), token);
     ClearReqHistory(client_prv, token);
 
+    if (ret == -EPIPE || ret == -EBADFD) {
+        close(client_prv->sock);
+        client_prv->sock = -1;
+        client_prv->b_connect = 0;
+    }
+
     return RIL_CLIENT_ERR_UNKNOWN;
 }
 
@@ -1297,6 +1303,23 @@ static void * RxReaderFunc(void *param) {
                     client_prv->sock = -1;
                     client_prv->b_connect = 0;
                 }
+            }
+        } else {
+            RLOGE("%s: select() returned %d\n", __FUNCTION__, -errno);
+
+            if (client_prv->sock > 0) {
+                close(client_prv->sock);
+                client_prv->sock = -1;
+                client_prv->b_connect = 0;
+            }
+
+            if (client_prv->p_rs)
+                record_stream_free(client_prv->p_rs);
+
+            // EOS
+            if (client_prv->err_cb) {
+                client_prv->err_cb(client_prv->err_cb_data, RIL_CLIENT_ERR_CONNECT);
+                return NULL;
             }
         }
     }
