@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f644e576_1f6e79a1",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-07-24T01:40:13Z",
+      "side": 1,
+      "message": "Move this up to line 1307",
+      "revId": "dd29d657e1a50de1e27d51139449a277ac5aeef0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfb3ebd4_8a4588b6",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-07-24T01:40:13Z",
+      "side": 1,
+      "message": "is this break unnecessary?",
+      "revId": "dd29d657e1a50de1e27d51139449a277ac5aeef0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
