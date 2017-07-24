@@ -52,6 +52,23 @@
       "revId": "702da0b22e6c0ba9eff468feaeae6ad07487e089",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3422358_37dc9918",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-07-24T01:33:26Z",
+      "side": 1,
+      "message": "Isn\u0027t the correct check here if (len !\u003d 1) ?",
+      "revId": "702da0b22e6c0ba9eff468feaeae6ad07487e089",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
