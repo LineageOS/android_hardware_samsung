@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "054c2bb8_7c8cc9bf",
+        "filename": "ril/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 9760
+      },
+      "writtenOn": "2017-07-25T12:59:52Z",
+      "side": 1,
+      "message": "Checked.\nFirst compiled this - https://github.com/LineageOS/android_frameworks_opt_telephony/blob/cm-14.1/Android.mk#L31\n\nThen it is processed our /hardware/samsund...\nTherefore, we do not receive our class.\n\nThe device tree is a priority.",
+      "parentUuid": "c585f6f2_ebe48e1f",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f6f6f3f_fb176ac4",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
