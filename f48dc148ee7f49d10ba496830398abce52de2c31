@@ -1,0 +1,288 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77451579_682d37dd",
+        "filename": "ril/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "this is long, rayman said an opt-out is fine anyways, so maybe:\nifneq ($(BOARD_PROVIDES_RILJ),true)?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41ce48a0_1ab2b7bc",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "I don\u0027t think customization is the right term here",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 20
+      },
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fee1d1fc_e4720f74",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "Since they\u0027re all call details, maybe just make one comment right after the `if (mSamsungNextGenModem)` part?",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "daee6425_1e67fda5",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "Same here maybe?",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44031594_f1e19172",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "No space before the colon",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d7f9d03_65c0ead0",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "No space before the colon",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef197989_06646b86",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "No space before the colon",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92bcb935_286302ac",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "No space before the colon",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eaa4a59b_c336357d",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "Maybe add a newline before this line",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2ae0a4c_48e95d00",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "This seems like an odd placing for a comment, but maybe that\u0027s just me",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6da4a5a0_a3206b71",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "Sorry, maybe my positioning was unclear. After we write the new response code, we do need to rewind the parcel, otherwise how will superclass know to rewind it? It will try to read an int to determine the response code, but there won\u0027t be one.",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec1ba57b_df592e7d",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "Space after //, to be consistent",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50cc1e14_27d8d351",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "Does this ever happen?",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1299a21b_c75bd228",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "Why handle this in a separate switch? You can just consolidate them into one switch, i don\u0027t get the point of making a new switch for this",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d3f8112_9fd6c95a",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "Space after `(String)` please",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e691dd41_bf497d79",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:03:20Z",
+      "side": 1,
+      "message": "The comma in this comment is inconsistent with your other comments",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
