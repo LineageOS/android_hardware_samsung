@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "9d456f85_b8e9a9e6",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 9760
+      },
+      "writtenOn": "2017-07-25T12:22:03Z",
+      "side": 1,
+      "message": "error: incompatible types: boolean cannot be converted to int",
+      "parentUuid": "ed387ae7_0a347c8b",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e100b7_128c740d",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
@@ -82,6 +100,24 @@
       "writtenOn": "2017-07-25T08:43:27Z",
       "side": 1,
       "message": "line length",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8a5d434_d932aa5f",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 9760
+      },
+      "writtenOn": "2017-07-25T12:22:03Z",
+      "side": 1,
+      "message": "error: incompatible types: boolean cannot be converted to int",
+      "parentUuid": "e5e100b7_128c740d",
       "revId": "471cac21aae911c498b803c4272ff45ce862b692",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
