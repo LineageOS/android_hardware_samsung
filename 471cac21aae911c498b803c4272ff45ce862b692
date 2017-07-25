@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f6f6f3f_fb176ac4",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-07-25T08:52:59Z",
+      "side": 1,
+      "message": "95% of this is identical to the current SlteRIL classes that are floating around these days.\nI don\u0027t think we should warrant individual people\u0027s work only now, otherwise we\u0027d need to add at least 5 more people here.",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed387ae7_0a347c8b",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "f9594bb1_f9af2f99",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-07-25T08:52:59Z",
+      "side": 1,
+      "message": "two whitespaces after \"\u003d\"",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11bdbb18_4f96da06",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
@@ -64,6 +98,23 @@
       "writtenOn": "2017-07-25T08:43:27Z",
       "side": 1,
       "message": "line length",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ec88ae3_d1be103c",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-07-25T08:52:59Z",
+      "side": 1,
+      "message": "\"remapped\"",
       "revId": "471cac21aae911c498b803c4272ff45ce862b692",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
