@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed387ae7_0a347c8b",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2017-07-25T08:43:27Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5e100b7_128c740d",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2017-07-25T08:43:27Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11bdbb18_4f96da06",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2017-07-25T08:43:27Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e06ba5b_c735fbe2",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2017-07-25T08:43:27Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
