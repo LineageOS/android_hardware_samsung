@@ -190,9 +190,6 @@ int main() {
         case SEMCOSH:
             type_str = "semcosh";
             break;
-        case SEMCOVE:
-            type_str = "semcove";
-            break;
         case SEMCO3RD:
             type_str = "semco3rd";
             break;

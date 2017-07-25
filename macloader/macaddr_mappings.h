@@ -24,7 +24,6 @@ enum Type {
     NONE,
     MURATA,
     SEMCOSH,
-    SEMCOVE,
     SEMCO3RD,
     SEMCO,
     WISOL,
