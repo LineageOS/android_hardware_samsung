@@ -139,6 +139,23 @@
     },
     {
       "key": {
+        "uuid": "da6b1436_52ab0de9",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T11:48:47Z",
+      "side": 1,
+      "message": "Don\u0027t we need to rewind the parcel again here?",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ec88ae3_d1be103c",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
