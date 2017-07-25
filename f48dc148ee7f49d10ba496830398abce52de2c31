@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c78fe08e_fa5577d5",
+        "filename": "ril/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2017-07-25T19:08:26Z",
+      "side": 1,
+      "message": "or ifeq to false, rather. my bad",
+      "parentUuid": "71b170f8_556314e9",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ce48a0_1ab2b7bc",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 4
