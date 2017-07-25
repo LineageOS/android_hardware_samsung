@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9fd8edc5_a0359832",
+        "filename": "ril/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-07-25T08:54:47Z",
+      "side": 1,
+      "message": "Imo we should still allow devices to opt-out.\n\nifneq ($(BOARD_RIL_CLASS),)\nBOARD_RIL_CLASS :\u003d $(RIL_PATH)/rilj\n\n[...]\n\nendif",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f6f6f3f_fb176ac4",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
