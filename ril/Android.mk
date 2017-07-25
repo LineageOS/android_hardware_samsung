@@ -22,6 +22,23 @@ ifeq ($(BOARD_VENDOR),samsung)
 ifeq ($(BOARD_PROVIDES_LIBRIL),true)
 ifneq ($(filter m7450 mdm9x35 ss333 tss310 xmm6260 xmm6262 xmm6360 xmm7260,$(BOARD_MODEM_TYPE)),)
 include $(RIL_PATH)/libril/Android.mk
+
+# RIL.java overwrite
+BOARD_RIL_CLASS := $(RIL_PATH)/rilj
+
+ifneq ($(filter m7450 mdm9x35 ss333 tss310 xmm7260,$(BOARD_MODEM_TYPE)),)
+ADDITIONAL_BUILD_PROPERTIES += \
+    ro.ril.samsung_nextgen_modem=true
+endif
+
+ifeq ($(BOARD_MODEM_NEEDS_VIDEO_CALL_FIELD), true)
+ADDITIONAL_BUILD_PROPERTIES += \
+    ro.ril.needs_videocall_field=true
+endif
+
+ADDITIONAL_BUILD_PROPERTIES += \
+    ro.telephony.ril_class=SamsungExynosRIL
+
 endif
 endif
 
