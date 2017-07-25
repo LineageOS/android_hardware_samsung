@@ -64,7 +64,6 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../include
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/../include
 
 LOCAL_MODULE:= libril
-LOCAL_CLANG := true
 LOCAL_SANITIZE := integer
 
 include $(BUILD_SHARED_LIBRARY)
