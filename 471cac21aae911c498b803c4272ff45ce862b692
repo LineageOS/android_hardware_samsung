@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7e12f95b_90c8e751",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f6f6f3f_fb176ac4",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed387ae7_0a347c8b",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
@@ -100,6 +118,42 @@
       "writtenOn": "2017-07-25T12:22:03Z",
       "side": 1,
       "message": "error: incompatible types: boolean cannot be converted to int",
+      "parentUuid": "ed387ae7_0a347c8b",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31822883_3473d485",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d456f85_b8e9a9e6",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "326dac70_33935d42",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "ed387ae7_0a347c8b",
       "revId": "471cac21aae911c498b803c4272ff45ce862b692",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
@@ -142,6 +196,42 @@
     },
     {
       "key": {
+        "uuid": "f50727a9_99feb151",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e100b7_128c740d",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7e18715_c5f54801",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8a5d434_d932aa5f",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9594bb1_f9af2f99",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
@@ -153,6 +243,24 @@
       "writtenOn": "2017-07-25T08:52:59Z",
       "side": 1,
       "message": "two whitespaces after \"\u003d\"",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fe59462_465b8825",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9594bb1_f9af2f99",
       "revId": "471cac21aae911c498b803c4272ff45ce862b692",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -176,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "429cd277_9f7a3d1e",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11bdbb18_4f96da06",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e06ba5b_c735fbe2",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
@@ -187,6 +313,24 @@
       "writtenOn": "2017-07-25T08:43:27Z",
       "side": 1,
       "message": "line length",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "445151bc_0646183a",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e06ba5b_c735fbe2",
       "revId": "471cac21aae911c498b803c4272ff45ce862b692",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -210,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "72e4a2dd_050b0efb",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4db1df00_ab8c09e5",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6b1436_52ab0de9",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
@@ -227,6 +389,24 @@
     },
     {
       "key": {
+        "uuid": "4284f0de_e8208f2b",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "We don\u0027t need to rewind it again...",
+      "parentUuid": "da6b1436_52ab0de9",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ec88ae3_d1be103c",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 2
@@ -238,6 +418,24 @@
       "writtenOn": "2017-07-25T08:52:59Z",
       "side": 1,
       "message": "\"remapped\"",
+      "revId": "471cac21aae911c498b803c4272ff45ce862b692",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c2ef448_1cc90756",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-25T17:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec88ae3_d1be103c",
       "revId": "471cac21aae911c498b803c4272ff45ce862b692",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
