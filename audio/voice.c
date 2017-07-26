@@ -62,10 +62,9 @@ struct pcm_config pcm_config_voice_sco = {
     .format = PCM_FORMAT_S16_LE,
 };
 
-/* SCO WB and NB uses 8kHz for now, 16kHz it's on TO DO*/
 struct pcm_config pcm_config_voice_sco_wb = {
     .channels = 1,
-    .rate = SCO_DEFAULT_SAMPLING_RATE,
+    .rate = SCO_WB_SAMPLING_RATE,
     .period_size = SCO_PERIOD_SIZE,
     .period_count = SCO_PERIOD_COUNT,
     .format = PCM_FORMAT_S16_LE,
