@@ -73,6 +73,57 @@
     },
     {
       "key": {
+        "uuid": "39b12f99_2740ed39",
+        "filename": "ril/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-07-27T17:23:53Z",
+      "side": 1,
+      "message": "IMO - remove this here and have people set it in the device tree.",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4169e100_8ea594c9",
+        "filename": "ril/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-07-27T17:23:53Z",
+      "side": 1,
+      "message": "Let devices set this in their device trees to be consistent with other properties.",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d2939ed_a95f79c8",
+        "filename": "ril/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-07-27T17:23:53Z",
+      "side": 1,
+      "message": "This flag makes no sense.\nIf a device wants to have that field, it should set the property, not this flag which then in turn sets the property.",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ce48a0_1ab2b7bc",
         "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
         "patchSetId": 4
