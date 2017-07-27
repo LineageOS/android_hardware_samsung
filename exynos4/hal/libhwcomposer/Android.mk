@@ -21,14 +21,11 @@ include $(CLEAR_VARS)
 LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_SHARED_LIBRARIES := liblog libcutils libEGL \
-			  libGLESv1_CM
-
-ifeq ($(BOARD_USE_V4L2_ION),true)
-LOCAL_SHARED_LIBRARIES += libion
-endif
+			  libGLESv1_CM libhardware libhardware_legacy
 
 LOCAL_C_INCLUDES := \
-	$(LOCAL_PATH)/../include
+    bionic/libc/include \
+	$(TARGET_HAL_PATH)/include
 
 LOCAL_SRC_FILES := SecHWCLog.cpp SecHWCUtils.cpp SecHWC.cpp
 
@@ -40,6 +37,10 @@ endif
 
 ifeq ($(TARGET_SOC),exynos4x12)
 LOCAL_CFLAGS += -DSAMSUNG_EXYNOS4x12
+endif
+
+ifeq ($(BOARD_USE_SYSFS_VSYNC_NOTIFICATION),true)
+LOCAL_CFLAGS += -DSYSFS_VSYNC_NOTIFICATION
 endif
 
 ifeq ($(BOARD_USES_HDMI),true)
@@ -73,14 +74,6 @@ endif
 ifeq ($(BOARD_HDMI_STD),STD_1080P)
 LOCAL_CFLAGS  += -DSTD_1080P
 endif
-endif
-
-ifeq ($(BOARD_USE_V4L2),true)
-LOCAL_CFLAGS += -DBOARD_USE_V4L2
-endif
-
-ifeq ($(BOARD_USE_V4L2_ION),true)
-LOCAL_CFLAGS += -DBOARD_USE_V4L2_ION
 endif
 
 LOCAL_MODULE := hwcomposer.$(TARGET_BOARD_PLATFORM)

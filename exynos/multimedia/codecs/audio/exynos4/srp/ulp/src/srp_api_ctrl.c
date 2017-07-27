@@ -16,11 +16,11 @@
 #define LOG_TAG "libsrpapi"
 #include <cutils/log.h>
 
-/* Disable LOGD message */
-#ifdef LOGD
-#undef LOGD
+/* Disable ALOGD message */
+#ifdef ALOGD
+#undef ALOGD
 #endif
-#define LOGD(...)
+#define ALOGD(...)
 
 static int srp_ctrl = -1;
 static int srp_ctrl_cnt = 0;
@@ -42,11 +42,11 @@ static int SRP_Ctrl_Open(void)
     if (srp_ctrl_cnt == 0) {
         srp_ctrl = open(SRP_CTRL_DEV_NAME, O_RDWR | O_NDELAY);
         if (srp_ctrl < 0) {
-            LOGE("%s: Failed open device file %d", __func__, srp_ctrl);
+            ALOGE("%s: Failed open device file %d", __func__, srp_ctrl);
             return -1;
         }
         srp_ctrl_cnt++;
-        LOGV("%s: Device is opened[%d]: cnt %d", __func__, srp_ctrl, srp_ctrl_cnt);
+        ALOGV("%s: Device is opened[%d]: cnt %d", __func__, srp_ctrl, srp_ctrl_cnt);
     }
 
     return srp_ctrl;
@@ -59,11 +59,11 @@ static int SRP_Ctrl_Close(void)
     if (srp_ctrl_cnt == 1) {
         ret = close(srp_ctrl);
         if (ret < 0) {
-            LOGE("%s: Failed closen device file %d", __func__, srp_ctrl);
+            ALOGE("%s: Failed closen device file %d", __func__, srp_ctrl);
             return -1;
         }
         srp_ctrl_cnt--;
-        LOGV("%s: Device is closed[%d]: cnt %d", __func__, srp_ctrl, srp_ctrl_cnt);
+        ALOGV("%s: Device is closed[%d]: cnt %d", __func__, srp_ctrl, srp_ctrl_cnt);
         srp_ctrl = -1;
     }
 
@@ -86,13 +86,13 @@ static int SRP_Check_AltFirmware(void)
         ioctl(srp_ctrl, SRP_CTRL_ALTFW_STATE, &alt_fw_loaded);
 
         if (!alt_fw_loaded) {    /* Not loaded yet? */
-            LOGE("Try to download alternate RP firmware");
+            ALOGE("Try to download alternate RP firmware");
             temp_buff = (unsigned long *)malloc(256*1024);    /* temp buffer */
 
             for (alt_fw_set = 0; alt_fw_set < 6; alt_fw_set++) {
                 sprintf(alt_fw_name, "%s_text.bin", srp_alt_fw_name_pre[alt_fw_set]);
                 if (fp = fopen(alt_fw_name, "rb")) {
-                    LOGE("RP Alt-Firmware Loading: %s", alt_fw_name);
+                    ALOGE("RP Alt-Firmware Loading: %s", alt_fw_name);
                     fread(temp_buff, 64*1024, 1, fp);
                     close(fp);
                     alt_fw_text_ok = 1;
@@ -102,7 +102,7 @@ static int SRP_Check_AltFirmware(void)
 
                 sprintf(alt_fw_name, "%s_data.bin", srp_alt_fw_name_pre[alt_fw_set]);
                 if (fp = fopen(alt_fw_name, "rb")) {
-                    LOGE("RP Alt-Firmware Loading: %s", alt_fw_name);
+                    ALOGE("RP Alt-Firmware Loading: %s", alt_fw_name);
                     fread(&temp_buff[64*1024/4], 96*1024, 1, fp);
                     close(fp);
                     alt_fw_data_ok = 1;
@@ -131,7 +131,7 @@ int SRP_Ctrl_Set_Effect(int effect)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return -1;
     }
 
@@ -149,7 +149,7 @@ int SRP_Ctrl_Enable_Effect(int on)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return -1;
     }
 
@@ -166,7 +166,7 @@ int SRP_Ctrl_Set_Effect_Def(unsigned long effect_def)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return -1;
     }
 
@@ -183,7 +183,7 @@ int SRP_Ctrl_Set_Effect_EQ_User(unsigned long eq_user)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return -1;
     }
 
@@ -200,13 +200,13 @@ int SRP_Ctrl_Set_Pcm_Dump(int on)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return -1;
     }
 
     ioctl(srp_ctrl, SRP_CTRL_PCM_DUMP_OP, on);
 
-    LOGV("dump_op: %d", on);
+    ALOGV("dump_op: %d", on);
 
     SRP_Ctrl_Close();
 
@@ -220,13 +220,13 @@ int SRP_Ctrl_Get_Pcm_Dump_State(void)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return -1;
     }
 
     ioctl(srp_ctrl, SRP_CTRL_IS_PCM_DUMP, &srp_dump_stat);
 
-    LOGV("srp_dump_stat: %d", srp_dump_stat);
+    ALOGV("srp_dump_stat: %d", srp_dump_stat);
 
     SRP_Ctrl_Close();
 
@@ -240,7 +240,7 @@ int SRP_Ctrl_Set_Gain(float value)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return -1;
     }
 
@@ -259,13 +259,13 @@ int SRP_Ctrl_Get_Running_Stat(void)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return -1;
     }
 
     ioctl(srp_ctrl, SRP_CTRL_IS_RUNNING, &srp_running_stat);
 
-    LOGV("srp_running_stat: %d", srp_running_stat);
+    ALOGV("srp_running_stat: %d", srp_running_stat);
 
     SRP_Ctrl_Close();
 
@@ -279,13 +279,13 @@ int SRP_Ctrl_Get_Open_Stat(void)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return -1;
     }
 
     ioctl(srp_ctrl, SRP_CTRL_IS_OPENED, &srp_open_stat);
 
-    LOGV("srp_open_stat: %d", srp_open_stat);
+    ALOGV("srp_open_stat: %d", srp_open_stat);
 
     SRP_Ctrl_Close();
 
@@ -301,7 +301,7 @@ short *SRP_Ctrl_Get_Pcm(void)
 
     ret = SRP_Ctrl_Open();
     if (ret < 0) {
-        LOGE("%s: SRP_Ctrl_Open error", __func__);
+        ALOGE("%s: SRP_Ctrl_Open error", __func__);
         return NULL;
     }
 

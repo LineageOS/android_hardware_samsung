@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2012 The CyanogenMod Project <http://www.cyanogenmod.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,13 +28,17 @@
 #include <cutils/atomic.h>
 
 #include <EGL/egl.h>
+#include <fcntl.h>
+#include <hardware_legacy/uevent.h>
+#include <sys/prctl.h>
+#include <sys/resource.h>
 
 #include "SecHWCUtils.h"
 
 #include "gralloc_priv.h"
-#ifdef HWC_HWOVERLAY
+
 #include <GLES/gl.h>
-#endif
+
 #if defined(BOARD_USES_HDMI)
 #include "SecHdmiClient.h"
 #include "SecTVOutService.h"
@@ -63,7 +68,7 @@ static struct hw_module_methods_t hwc_module_methods = {
 hwc_module_t HAL_MODULE_INFO_SYM = {
     common: {
         tag: HARDWARE_MODULE_TAG,
-        version_major: 1,
+        version_major: 2,
         version_minor: 0,
         id: HWC_HARDWARE_MODULE_ID,
         name: "Samsung S5PC21X hwcomposer module",
@@ -74,8 +79,8 @@ hwc_module_t HAL_MODULE_INFO_SYM = {
 
 /*****************************************************************************/
 
-static void dump_layer(hwc_layer_t const* l) {
-    LOGD("\ttype=%d, flags=%08x, handle=%p, tr=%02x, blend=%04x, "
+static void dump_layer(hwc_layer_1_t const* l) {
+    SEC_HWC_Log(HWC_LOG_DEBUG,"\ttype=%d, flags=%08x, handle=%p, tr=%02x, blend=%04x, "
             "{%d,%d,%d,%d}, {%d,%d,%d,%d}",
             l->compositionType, l->flags, l->handle, l->transform, l->blending,
             l->sourceCrop.left,
@@ -88,7 +93,7 @@ static void dump_layer(hwc_layer_t const* l) {
             l->displayFrame.bottom);
 }
 
-void calculate_rect(struct hwc_win_info_t *win, hwc_layer_t *cur,
+void calculate_rect(struct hwc_win_info_t *win, hwc_layer_1_t *cur,
         sec_rect *rect)
 {
     rect->x = cur->displayFrame.left;
@@ -118,7 +123,7 @@ void calculate_rect(struct hwc_win_info_t *win, hwc_layer_t *cur,
     }
 }
 
-static int set_src_dst_img_rect(hwc_layer_t *cur,
+static int set_src_dst_img_rect(hwc_layer_1_t *cur,
         struct hwc_win_info_t *win,
         struct sec_img *src_img,
         struct sec_img *dst_img,
@@ -194,62 +199,62 @@ static int set_src_dst_img_rect(hwc_layer_t *cur,
         src_rect->x =
             (0 - cur->displayFrame.left)
             *(src_img->w)
-            /(cur->displayFrame.right - cur->displayFrame.left + 1);
-        if (cur->displayFrame.right + 1 > win->lcd_info.xres) {
+            /(cur->displayFrame.right - cur->displayFrame.left);
+        if (cur->displayFrame.right > win->lcd_info.xres) {
             src_rect->w =
-                (cur->sourceCrop.right - cur->sourceCrop.left + 1) -
+                (cur->sourceCrop.right - cur->sourceCrop.left) -
                 src_rect->x -
                 (cur->displayFrame.right - win->lcd_info.xres)
                 *(src_img->w)
-                /(cur->displayFrame.right - cur->displayFrame.left + 1);
+                /(cur->displayFrame.right - cur->displayFrame.left);
         } else {
             src_rect->w =
-                (cur->sourceCrop.right - cur->sourceCrop.left + 1) -
+                (cur->sourceCrop.right - cur->sourceCrop.left) -
                 src_rect->x;
         }
     } else {
         src_rect->x = cur->sourceCrop.left;
-        if (cur->displayFrame.right + 1 > win->lcd_info.xres) {
+        if (cur->displayFrame.right > win->lcd_info.xres) {
             src_rect->w =
-                (cur->sourceCrop.right - cur->sourceCrop.left + 1) -
+                (cur->sourceCrop.right - cur->sourceCrop.left) -
                 src_rect->x -
                 (cur->displayFrame.right - win->lcd_info.xres)
                 *(src_img->w)
-                /(cur->displayFrame.right - cur->displayFrame.left + 1);
+                /(cur->displayFrame.right - cur->displayFrame.left);
         } else {
             src_rect->w =
-                (cur->sourceCrop.right - cur->sourceCrop.left + 1);
+                (cur->sourceCrop.right - cur->sourceCrop.left);
         }
     }
     if (cur->displayFrame.top < 0) {
         src_rect->y =
             (0 - cur->displayFrame.top)
             *(src_img->h)
-            /(cur->displayFrame.bottom - cur->displayFrame.top + 1);
-        if (cur->displayFrame.bottom + 1 > win->lcd_info.yres) {
+            /(cur->displayFrame.bottom - cur->displayFrame.top);
+        if (cur->displayFrame.bottom > win->lcd_info.yres) {
             src_rect->h =
-                (cur->sourceCrop.bottom - cur->sourceCrop.top + 1) -
+                (cur->sourceCrop.bottom - cur->sourceCrop.top) -
                 src_rect->y -
                 (cur->displayFrame.bottom - win->lcd_info.yres)
                 *(src_img->h)
-                /(cur->displayFrame.bottom - cur->displayFrame.top + 1);
+                /(cur->displayFrame.bottom - cur->displayFrame.top);
         } else {
             src_rect->h =
-                (cur->sourceCrop.bottom - cur->sourceCrop.top + 1) -
+                (cur->sourceCrop.bottom - cur->sourceCrop.top) -
                 src_rect->y;
         }
     } else {
         src_rect->y = cur->sourceCrop.top;
-        if (cur->displayFrame.bottom + 1 > win->lcd_info.yres) {
+        if (cur->displayFrame.bottom > win->lcd_info.yres) {
             src_rect->h =
-                (cur->sourceCrop.bottom - cur->sourceCrop.top + 1) -
+                (cur->sourceCrop.bottom - cur->sourceCrop.top) -
                 src_rect->y -
                 (cur->displayFrame.bottom - win->lcd_info.yres)
                 *(src_img->h)
-                /(cur->displayFrame.bottom - cur->displayFrame.top + 1);
+                /(cur->displayFrame.bottom - cur->displayFrame.top);
         } else {
             src_rect->h =
-                (cur->sourceCrop.bottom - cur->sourceCrop.top + 1);
+                (cur->sourceCrop.bottom - cur->sourceCrop.top);
         }
     }
 
@@ -301,7 +306,7 @@ static int set_src_dst_img_rect(hwc_layer_t *cur,
     return 0;
 }
 
-static int get_hwc_compos_decision(hwc_layer_t* cur, int iter, int win_cnt)
+static int get_hwc_compos_decision(hwc_layer_1_t* cur, int iter, int win_cnt)
 {
     if(cur->flags & HWC_SKIP_LAYER  || !cur->handle) {
         SEC_HWC_Log(HWC_LOG_DEBUG, "%s::is_skip_layer  %d  cur->handle %x ",
@@ -351,36 +356,6 @@ static int get_hwc_compos_decision(hwc_layer_t* cur, int iter, int win_cnt)
         }
     }
 
-#ifdef SUB_TITLES_HWC
-    else if ((win_cnt > 0) &&
-            (prev_handle->usage & GRALLOC_USAGE_EXTERNAL_DISP)) {
-        switch (prev_handle->format) {
-        case HAL_PIXEL_FORMAT_RGBA_8888:
-        case HAL_PIXEL_FORMAT_RGBX_8888:
-        case HAL_PIXEL_FORMAT_BGRA_8888:
-        case HAL_PIXEL_FORMAT_RGB_888:
-        case HAL_PIXEL_FORMAT_RGB_565:
-        case HAL_PIXEL_FORMAT_RGBA_5551:
-        case HAL_PIXEL_FORMAT_RGBA_4444:
-            compositionType = HWC_OVERLAY;
-            break;
-        default:
-            compositionType = HWC_FRAMEBUFFER;
-            break;
-        }
-
-        SEC_HWC_Log(HWC_LOG_DEBUG, "2nd iter###%s:: compositionType %d bpp %d"
-                " format %x src[%d %d %d %d] dst[%d %d %d %d] srcImg[%d %d]",
-                __func__, compositionType, prev_handle->bpp,
-                prev_handle->format,
-                cur->sourceCrop.left, cur->sourceCrop.right,
-                cur->sourceCrop.top, cur->sourceCrop.bottom,
-                cur->displayFrame.left, cur->displayFrame.right,
-                cur->displayFrame.top, cur->displayFrame.bottom,
-                prev_handle->width, prev_handle->height);
-    }
-#endif
-
     SEC_HWC_Log(HWC_LOG_DEBUG,
             "%s::compositionType(%d)=>0:FB,1:OVERLAY \r\n"
             "   format(0x%x),magic(0x%x),flags(%d),size(%d),offset(%d)"
@@ -404,7 +379,7 @@ static void reset_win_rect_info(hwc_win_info_t *win)
 }
 
 
-static int assign_overlay_window(struct hwc_context_t *ctx, hwc_layer_t *cur,
+static int assign_overlay_window(struct hwc_context_t *ctx, hwc_layer_1_t *cur,
         int win_idx, int layer_idx)
 {
     struct hwc_win_info_t   *win;
@@ -453,13 +428,142 @@ static int assign_overlay_window(struct hwc_context_t *ctx, hwc_layer_t *cur,
     return 0;
 }
 
-static int hwc_prepare(hwc_composer_device_t *dev, hwc_layer_list_t* list)
+#ifdef SKIP_DUMMY_UI_LAY_DRAWING
+static void get_hwc_ui_lay_skipdraw_decision(struct hwc_context_t* ctx,
+                               hwc_display_contents_1_t* list)
 {
+    private_handle_t *prev_handle;
+    hwc_layer_1_t* cur;
+    int num_of_fb_lay_skip = 0;
+    int fb_lay_tot = ctx->num_of_fb_layer + ctx->num_of_fb_lay_skip;
+
+    if (fb_lay_tot > NUM_OF_DUMMY_WIN)
+        return;
+
+    if (fb_lay_tot < 1) {
+#ifdef GL_WA_OVLY_ALL
+        ctx->ui_skip_frame_cnt++;
+        if (ctx->ui_skip_frame_cnt >= THRES_FOR_SWAP) {
+            ctx->ui_skip_frame_cnt = 0;
+            ctx->num_of_fb_layer_prev = 1;
+        }
+#endif
+        return;
+    }
+
+    if (ctx->fb_lay_skip_initialized) {
+        for (int cnt = 0; cnt < fb_lay_tot; cnt++) {
+            cur = &list->hwLayers[ctx->win_virt[cnt].layer_index];
+            if (ctx->win_virt[cnt].layer_prev_buf == (uint32_t)cur->handle)
+                num_of_fb_lay_skip++;
+        }
+#ifdef GL_WA_OVLY_ALL
+        if (ctx->ui_skip_frame_cnt >= THRES_FOR_SWAP)
+            num_of_fb_lay_skip = 0;
+#endif
+        if (num_of_fb_lay_skip != fb_lay_tot) {
+            ctx->num_of_fb_layer = fb_lay_tot;
+            ctx->num_of_fb_lay_skip = 0;
+#ifdef GL_WA_OVLY_ALL
+            ctx->ui_skip_frame_cnt = 0;
+#endif
+            for (int cnt = 0; cnt < fb_lay_tot; cnt++) {
+                cur = &list->hwLayers[ctx->win_virt[cnt].layer_index];
+                ctx->win_virt[cnt].layer_prev_buf = (uint32_t)cur->handle;
+                cur->compositionType = HWC_FRAMEBUFFER;
+                ctx->win_virt[cnt].status = HWC_WIN_FREE;
+            }
+        } else {
+            ctx->num_of_fb_layer = 0;
+            ctx->num_of_fb_lay_skip = fb_lay_tot;
+#ifdef GL_WA_OVLY_ALL
+            ctx->ui_skip_frame_cnt++;
+#endif
+            for (int cnt = 0; cnt < fb_lay_tot; cnt++) {
+                cur = &list->hwLayers[ctx->win_virt[cnt].layer_index];
+                cur->compositionType = HWC_OVERLAY;
+                ctx->win_virt[cnt].status = HWC_WIN_RESERVED;
+            }
+        }
+    } else {
+        ctx->num_of_fb_lay_skip = 0;
+        for (int i = 0; i < list->numHwLayers ; i++) {
+            if(num_of_fb_lay_skip >= NUM_OF_DUMMY_WIN)
+                break;
+
+            cur = &list->hwLayers[i];
+            if (cur->handle) {
+                prev_handle = (private_handle_t *)(cur->handle);
+
+                switch (prev_handle->format) {
+                case HAL_PIXEL_FORMAT_RGBA_8888:
+                case HAL_PIXEL_FORMAT_BGRA_8888:
+                case HAL_PIXEL_FORMAT_RGBX_8888:
+                case HAL_PIXEL_FORMAT_RGB_565:
+                    cur->compositionType = HWC_FRAMEBUFFER;
+                    ctx->win_virt[num_of_fb_lay_skip].layer_prev_buf =
+                        (uint32_t)cur->handle;
+                    ctx->win_virt[num_of_fb_lay_skip].layer_index = i;
+                    ctx->win_virt[num_of_fb_lay_skip].status = HWC_WIN_FREE;
+                    num_of_fb_lay_skip++;
+                    break;
+                default:
+                    break;
+                }
+            } else {
+                cur->compositionType = HWC_FRAMEBUFFER;
+            }
+        }
+
+        if (num_of_fb_lay_skip == fb_lay_tot)
+            ctx->fb_lay_skip_initialized = 1;
+    }
+
+    return;
+
+}
+#endif
+
+static int hwc_prepare(hwc_composer_device_1_t *dev, size_t numDisplays, hwc_display_contents_1_t** displays)
+{
+
     struct hwc_context_t* ctx = (struct hwc_context_t*)dev;
     int overlay_win_cnt = 0;
     int compositionType = 0;
     int ret;
 
+    // Compat
+    hwc_display_contents_1_t* list = NULL;
+    if (numDisplays > 0) {
+        list = displays[0];
+    }
+
+#if defined(BOARD_USES_HDMI)
+    android::SecHdmiClient *mHdmiClient = android::SecHdmiClient::getInstance();
+    int hdmi_cable_status = (int)mHdmiClient->getHdmiCableStatus();
+
+    ctx->hdmi_cable_status = hdmi_cable_status;
+#endif
+        
+#ifdef SKIP_DUMMY_UI_LAY_DRAWING
+    if ((list && (!(list->flags & HWC_GEOMETRY_CHANGED))) &&
+	(ctx->num_of_hwc_layer > 0)) {
+      get_hwc_ui_lay_skipdraw_decision(ctx, list);
+      return 0;
+    }
+    ctx->fb_lay_skip_initialized = 0;
+    ctx->num_of_fb_lay_skip = 0;
+#ifdef GL_WA_OVLY_ALL
+    ctx->ui_skip_frame_cnt = 0;
+#endif
+        
+    for (int i = 0; i < NUM_OF_DUMMY_WIN; i++) {
+        ctx->win_virt[i].layer_prev_buf = 0;
+        ctx->win_virt[i].layer_index = -1;
+        ctx->win_virt[i].status = HWC_WIN_FREE;
+    }
+#endif
+        
     //if geometry is not changed, there is no need to do any work here
     if (!list || (!(list->flags & HWC_GEOMETRY_CHANGED)))
         return 0;
@@ -473,9 +577,27 @@ static int hwc_prepare(hwc_composer_device_t *dev, hwc_layer_list_t* list)
     ctx->num_of_hwc_layer = 0;
     ctx->num_of_fb_layer = 0;
     ctx->num_2d_blit_layer = 0;
+    ctx->num_of_ext_disp_video_layer = 0;
+
+    for (int i = 0; i < list->numHwLayers; i++) {
+        hwc_layer_1_t *cur = &list->hwLayers[i];
+        private_handle_t *prev_handle = NULL;
+        if (cur->handle) {
+            prev_handle = (private_handle_t *)(cur->handle);
+            SEC_HWC_Log(HWC_LOG_DEBUG, "prev_handle->usage = %d", prev_handle->usage);
+            if (prev_handle->usage & GRALLOC_USAGE_EXTERNAL_DISP) {
+                ctx->num_of_ext_disp_layer++;
+                if ((prev_handle->usage & GRALLOC_USAGE_EXTERNAL_DISP) ||
+                    check_yuv_format((unsigned int)prev_handle->format) == 1) {
+                    ctx->num_of_ext_disp_video_layer++;
+                }
+            }
+        }
+    }
 
     for (int i = 0; i < list->numHwLayers ; i++) {
-        hwc_layer_t* cur = &list->hwLayers[i];
+        hwc_layer_1_t* cur = &list->hwLayers[i];
+        private_handle_t *prev_handle = (private_handle_t *)(cur->handle);
 
         if (overlay_win_cnt < NUM_OF_WIN) {
             compositionType = get_hwc_compos_decision(cur, 0, overlay_win_cnt);
@@ -486,7 +608,7 @@ static int hwc_prepare(hwc_composer_device_t *dev, hwc_layer_list_t* list)
             } else {
                 ret = assign_overlay_window(ctx, cur, overlay_win_cnt, i);
                 if (ret != 0) {
-                    LOGE("assign_overlay_window fail, change to frambuffer");
+                    SEC_HWC_Log(HWC_LOG_ERROR, "assign_overlay_window fail, change to frambuffer");
                     cur->compositionType = HWC_FRAMEBUFFER;
                     ctx->num_of_fb_layer++;
                     continue;
@@ -501,32 +623,29 @@ static int hwc_prepare(hwc_composer_device_t *dev, hwc_layer_list_t* list)
             cur->compositionType = HWC_FRAMEBUFFER;
             ctx->num_of_fb_layer++;
         }
-    }
-
-#ifdef SUB_TITLES_HWC
-    for (int i = 0; i < list->numHwLayers ; i++) {
-        if (overlay_win_cnt < NUM_OF_WIN) {
-            hwc_layer_t* cur = &list->hwLayers[i];
-            if (get_hwc_compos_decision(cur, 1, overlay_win_cnt) == HWC_OVERLAY) {
-                ret = assign_overlay_window(ctx, cur, overlay_win_cnt, i);
-                if (ret == 0) {
-                    cur->compositionType = HWC_OVERLAY;
-                    cur->hints = HWC_HINT_CLEAR_FB;
-                    overlay_win_cnt++;
-                    ctx->num_of_hwc_layer++;
-                    ctx->num_of_fb_layer--;
-                    ctx->num_2d_blit_layer = 1;
-                }
+#if defined(BOARD_USES_HDMI)
+        SEC_HWC_Log(HWC_LOG_DEBUG, "ext disp vid = %d, cable status = %d, composition type = %d",
+                ctx->num_of_ext_disp_video_layer, ctx->hdmi_cable_status, compositionType);
+        if (ctx->num_of_ext_disp_video_layer >= 2) {
+            if ((ctx->hdmi_cable_status) &&
+                    (compositionType == HWC_OVERLAY) &&
+                    (prev_handle->usage & GRALLOC_USAGE_EXTERNAL_DISP)) {
+                cur->compositionType = HWC_FRAMEBUFFER;
+                ctx->num_of_hwc_layer--;
+                overlay_win_cnt--;
+                ctx->num_of_fb_layer++;
+                cur->hints = 0;
             }
         }
-        else
-            break;
-    }
 #endif
+    }
 
 #if defined(BOARD_USES_HDMI)
-    android::SecHdmiClient *mHdmiClient = android::SecHdmiClient::getInstance();
+    mHdmiClient = android::SecHdmiClient::getInstance();
     mHdmiClient->setHdmiHwcLayer(ctx->num_of_hwc_layer);
+    if (ctx->num_of_ext_disp_video_layer > 1) {
+        mHdmiClient->setExtDispLayerNum(0);
+    }
 #endif
 
     if (list->numHwLayers != (ctx->num_of_fb_layer + ctx->num_of_hwc_layer))
@@ -546,23 +665,21 @@ static int hwc_prepare(hwc_composer_device_t *dev, hwc_layer_list_t* list)
     return 0;
 }
 
-static int hwc_set(hwc_composer_device_t *dev,
-                   hwc_display_t dpy,
-                   hwc_surface_t sur,
-                   hwc_layer_list_t* list)
+static int hwc_set(hwc_composer_device_1_t *dev,
+                   size_t numDisplays,
+                   hwc_display_contents_1_t** displays)
 {
     struct hwc_context_t *ctx = (struct hwc_context_t *)dev;
     int skipped_window_mask = 0;
-    hwc_layer_t* cur;
+    hwc_layer_1_t* cur;
     struct hwc_win_info_t   *win;
     int ret;
     int pmem_phyaddr;
-    static int egl_check;
-    int egl_run = 0;
     struct sec_img src_img;
     struct sec_img dst_img;
     struct sec_rect src_work_rect;
     struct sec_rect dst_work_rect;
+    bool need_swap_buffers = ctx->num_of_fb_layer > 0;
 
     memset(&src_img, 0, sizeof(src_img));
     memset(&dst_img, 0, sizeof(dst_img));
@@ -574,6 +691,9 @@ static int hwc_set(hwc_composer_device_t *dev,
     int rotVal = 0;
 #endif
 
+    // Only support one display
+    hwc_display_contents_1_t* list = displays[0];
+
     if (!list) {
         //turn off the all windows
         for (int i = 0; i < NUM_OF_WIN; i++) {
@@ -582,13 +702,44 @@ static int hwc_set(hwc_composer_device_t *dev,
             ctx->win[i].status = HWC_WIN_FREE;
         }
         ctx->num_of_hwc_layer = 0;
+        need_swap_buffers = true;
 
-        if (sur == NULL && dpy == NULL)
+        if (list->sur == NULL && list->dpy == NULL) {
+#ifdef SKIP_DUMMY_UI_LAY_DRAWING
+            ctx->fb_lay_skip_initialized = 0;
+#endif
             return HWC_EGL_ERROR;
+        }
     }
 
     if(ctx->num_of_hwc_layer > NUM_OF_WIN)
         ctx->num_of_hwc_layer = NUM_OF_WIN;
+
+    /*
+     * H/W composer documentation states:
+     * There is an implicit layer containing opaque black
+     * pixels behind all the layers in the list.
+     * It is the responsibility of the hwcomposer module to make
+     * sure black pixels are output (or blended from).
+     *
+     * Since we're using a blitter, we need to erase the frame-buffer when
+     * switching to all-overlay mode.
+     *
+     */
+    if (ctx->num_of_hwc_layer &&
+        ctx->num_of_fb_layer==0 && ctx->num_of_fb_layer_prev) {
+#ifdef SKIP_DUMMY_UI_LAY_DRAWING
+        if (ctx->num_of_fb_lay_skip == 0)
+#endif
+        {
+            glDisable(GL_SCISSOR_TEST);
+            glClearColor(0, 0, 0, 0);
+            glClear(GL_COLOR_BUFFER_BIT);
+            glEnable(GL_SCISSOR_TEST);
+            need_swap_buffers = true;
+        }
+    }
+    ctx->num_of_fb_layer_prev = ctx->num_of_fb_layer;
 
     //compose hardware layers here
     for (int i = 0; i < ctx->num_of_hwc_layer - ctx->num_2d_blit_layer; i++) {
@@ -603,7 +754,7 @@ static int hwc_set(hwc_composer_device_t *dev,
                      * double buffered (2 or more) this buffer is already rendered.
                      * It is the redundant src buffer for FIMC rendering.
                      */
-                    LOGD("SKIP FIMC rendering for Layer%d", win->layer_index);
+
 #if defined(BOARD_USES_HDMI)
                     skip_hdmi_rendering = 1;
 #endif
@@ -646,33 +797,6 @@ static int hwc_set(hwc_composer_device_t *dev,
         }
     }
 
-#ifdef SUB_TITLES_HWC
-    if (ctx->num_2d_blit_layer) {
-        g2d_rect srcRect;
-        g2d_rect dstRect;
-
-        win = &ctx->win[ctx->num_of_hwc_layer - 1];
-        cur = &list->hwLayers[win->layer_index];
-        set_src_dst_g2d_rect(cur, win, &srcRect, &dstRect);
-        ret = runG2d(ctx, &srcRect,  &dstRect,
-                        cur->transform);
-         if (ret < 0) {
-            SEC_HWC_Log(HWC_LOG_ERROR, "%s::runG2d fail : ret=%d\n",
-                    __func__, ret);
-                   skipped_window_mask |= (1 << (ctx->num_of_hwc_layer - 1));
-                   goto g2d_error;
-         }
-
-         window_pan_display(win);
-
-         win->buf_index = (win->buf_index + 1) % NUM_OF_WIN_BUF;
-         if (win->power_state == 0)
-             window_show(win);
-    }
-
-g2d_error:
-#endif
-
     if (skipped_window_mask) {
         //turn off the free windows
         for (int i = 0; i < NUM_OF_WIN; i++) {
@@ -683,7 +807,7 @@ g2d_error:
         }
     }
 
-    if (0 < ctx->num_of_fb_layer) {
+    if (need_swap_buffers) {
 #ifdef CHECK_EGL_FPS
         check_fps();
 #endif
@@ -691,17 +815,7 @@ g2d_error:
         unsigned char pixels[4];
         glReadPixels(0, 0, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 #endif
-        egl_check = 1;
-        egl_run = 1;
-    } else {
-        if (egl_check == 1) {
-            egl_check = 0;
-            egl_run = 1;
-        }
-    }
-
-    if (egl_run == 1) {
-        EGLBoolean sucess = eglSwapBuffers((EGLDisplay)dpy, (EGLSurface)sur);
+        EGLBoolean sucess = eglSwapBuffers((EGLDisplay)list->dpy, (EGLSurface)list->sur);
         if (!sucess)
             return HWC_EGL_ERROR;
     }
@@ -732,14 +846,14 @@ g2d_error:
     // To support S3D video playback (automatic TV mode change to 3D mode)
     if (ctx->num_of_hwc_layer == 1) {
         if (src_img.usage != prev_usage)
-            mHdmiClient->setHdmiResolution(DEFAULT_HDMI_RESOLUTION_VALUE);    // V4L2_STD_1080P_60
+            mHdmiClient->setHdmiResolution(DEFAULT_HDMI_RESOLUTION_VALUE, android::SecHdmiClient::HDMI_2D);    // V4L2_STD_1080P_60
 
         if ((src_img.usage & GRALLOC_USAGE_PRIVATE_SBS_LR) ||
             (src_img.usage & GRALLOC_USAGE_PRIVATE_SBS_RL))
-            mHdmiClient->setHdmiResolution(7209601);    // V4L2_STD_TVOUT_720P_60_SBS_HALF
+            mHdmiClient->setHdmiResolution(DEFAULT_HDMI_S3D_SBS_RESOLUTION_VALUE, android::SecHdmiClient::HDMI_S3D_SBS);    // V4L2_STD_TVOUT_720P_60_SBS_HALF
         else if ((src_img.usage & GRALLOC_USAGE_PRIVATE_TB_LR) ||
             (src_img.usage & GRALLOC_USAGE_PRIVATE_TB_RL))
-            mHdmiClient->setHdmiResolution(1080924);    // V4L2_STD_TVOUT_1080P_24_TB
+            mHdmiClient->setHdmiResolution(DEFAULT_HDMI_S3D_TB_RESOLUTION_VALUE, android::SecHdmiClient::HDMI_S3D_TB);    // V4L2_STD_TVOUT_1080P_24_TB
 
         prev_usage = src_img.usage;
     } else {
@@ -747,7 +861,7 @@ g2d_error:
             (prev_usage & GRALLOC_USAGE_PRIVATE_SBS_RL) ||
             (prev_usage & GRALLOC_USAGE_PRIVATE_TB_LR) ||
             (prev_usage & GRALLOC_USAGE_PRIVATE_TB_RL))
-            mHdmiClient->setHdmiResolution(DEFAULT_HDMI_RESOLUTION_VALUE);    // V4L2_STD_1080P_60
+            mHdmiClient->setHdmiResolution(DEFAULT_HDMI_RESOLUTION_VALUE, android::SecHdmiClient::HDMI_2D);    // V4L2_STD_1080P_60
 
         prev_usage = 0;
     }
@@ -756,8 +870,7 @@ g2d_error:
         if ((src_img.format == HAL_PIXEL_FORMAT_CUSTOM_YCbCr_420_SP_TILED)||
                 (src_img.format == HAL_PIXEL_FORMAT_CUSTOM_YCrCb_420_SP)) {
             ADDRS * addr = (ADDRS *)(src_img.base);
-
-            mHdmiClient->blit2Hdmi(src_img.w, src_img.h,
+            mHdmiClient->blit2Hdmi(src_work_rect.w, src_work_rect.h,
                                     src_img.format,
                                     (unsigned int)addr->addr_y, (unsigned int)addr->addr_cbcr, (unsigned int)addr->addr_cbcr,
                                     0, 0,
@@ -767,7 +880,7 @@ g2d_error:
                     (src_img.format == HAL_PIXEL_FORMAT_YCrCb_420_SP) ||
                     (src_img.format == HAL_PIXEL_FORMAT_YCbCr_420_P) ||
                     (src_img.format == HAL_PIXEL_FORMAT_YV12)) {
-            mHdmiClient->blit2Hdmi(src_img.w, src_img.h,
+            mHdmiClient->blit2Hdmi(src_work_rect.w, src_work_rect.h,
                                     src_img.format,
                                     (unsigned int)ctx->fimc.params.src.buf_addr_phy_rgb_y,
                                     (unsigned int)ctx->fimc.params.src.buf_addr_phy_cb,
@@ -776,11 +889,133 @@ g2d_error:
                                     android::SecHdmiClient::HDMI_MODE_VIDEO,
                                     ctx->num_of_hwc_layer);
         } else {
-            LOGE("%s: Unsupported format = %d", __func__, src_img.format);
+            SEC_HWC_Log(HWC_LOG_ERROR, "%s: Unsupported format = %d", __func__, src_img.format);
         }
     }
 #endif
+
     return 0;
+}
+
+static void hwc_registerProcs(struct hwc_composer_device_1* dev,
+        hwc_procs_t const* procs)
+{
+    struct hwc_context_t* ctx = (struct hwc_context_t*)dev;
+    ctx->procs = const_cast<hwc_procs_t *>(procs);
+}
+
+static int hwc_query(struct hwc_composer_device_1* dev,
+        int what, int* value)
+{
+    struct hwc_context_t* ctx = (struct hwc_context_t*)dev;
+
+    switch (what) {
+    case HWC_BACKGROUND_LAYER_SUPPORTED:
+        // we don't support the background layer yet
+        value[0] = 0;
+        break;
+    case HWC_VSYNC_PERIOD:
+        // vsync period in nanosecond
+        value[0] = 1000000000.0 / 57;
+        break;
+    default:
+        // unsupported query
+        return -EINVAL;
+    }
+    return 0;
+}
+
+static int hwc_eventControl(struct hwc_composer_device_1* dev, int dpy,
+        int event, int enabled)
+{
+    struct hwc_context_t* ctx = (struct hwc_context_t*)dev;
+
+    switch (event) {
+    case HWC_EVENT_VSYNC:
+        int val = !!enabled;
+        int err = ioctl(ctx->global_lcd_win.fd, S3CFB_SET_VSYNC_INT, &val);
+        if (err < 0)
+            return -errno;
+        
+        return 0;
+    }
+    return -EINVAL;
+}
+
+#ifdef SYSFS_VSYNC_NOTIFICATION
+static void *hwc_vsync_sysfs_loop(void *data)
+{
+    static char buf[4096];
+    int vsync_timestamp_fd;
+    fd_set exceptfds;
+    int res;
+    int64_t timestamp = 0;
+    hwc_context_t * ctx = (hwc_context_t *)(data);
+
+    vsync_timestamp_fd = open("/sys/devices/platform/samsung-pd.2/s3cfb.0/vsync_time", O_RDONLY);
+    char thread_name[64] = "hwcVsyncThread";
+    prctl(PR_SET_NAME, (unsigned long) &thread_name, 0, 0, 0);
+    setpriority(PRIO_PROCESS, 0, -20);
+    memset(buf, 0, sizeof(buf));
+    
+    SEC_HWC_Log(HWC_LOG_DEBUG,"Using sysfs mechanism for VSYNC notification");
+
+    FD_ZERO(&exceptfds);
+    FD_SET(vsync_timestamp_fd, &exceptfds);
+    do {
+        ssize_t len = read(vsync_timestamp_fd, buf, sizeof(buf));
+        timestamp = strtoull(buf, NULL, 0);
+        if(ctx->procs)
+            ctx->procs->vsync(ctx->procs, 0, timestamp);
+        select(vsync_timestamp_fd + 1, NULL, NULL, &exceptfds, NULL);
+        lseek(vsync_timestamp_fd, 0, SEEK_SET);
+    } while (1);
+
+    return NULL;
+}
+#endif
+
+void handle_vsync_uevent(hwc_context_t *ctx, const char *buff, int len)
+{
+    uint64_t timestamp = 0;
+    const char *s = buff;
+
+    if(!ctx->procs || !ctx->procs->vsync)
+       return;
+
+    s += strlen(s) + 1;
+
+    while(*s) {
+        if (!strncmp(s, "VSYNC=", strlen("VSYNC=")))
+            timestamp = strtoull(s + strlen("VSYNC="), NULL, 0);
+
+        s += strlen(s) + 1;
+        if (s - buff >= len)
+            break;
+    }
+
+    ctx->procs->vsync(ctx->procs, 0, timestamp);
+}
+
+static void *hwc_vsync_thread(void *data)
+{
+    hwc_context_t *ctx = (hwc_context_t *)(data);
+    char uevent_desc[4096];
+
+    memset(uevent_desc, 0, sizeof(uevent_desc));
+    setpriority(PRIO_PROCESS, 0, HAL_PRIORITY_URGENT_DISPLAY);
+    uevent_init();
+
+    while(true) {
+
+        int len = uevent_next_event(uevent_desc, sizeof(uevent_desc) - 2);
+
+        bool vsync = !strcmp(uevent_desc, "change@/devices/platform/samsung-pd.2/s3cfb.0");
+        if(vsync)
+            handle_vsync_uevent(ctx, uevent_desc, len);
+    }
+
+    return NULL;
 }
 
 static int hwc_device_close(struct hw_device_t *dev)
@@ -793,23 +1028,12 @@ static int hwc_device_close(struct hw_device_t *dev)
             SEC_HWC_Log(HWC_LOG_ERROR, "%s::destroyFimc fail", __func__);
             ret = -1;
         }
-#ifdef SUB_TITLES_HWC
-        if (destroyG2d(&ctx->g2d) < 0) {
-            SEC_HWC_Log(HWC_LOG_ERROR, "%s::destroyG2d() fail", __func__);
-            ret = -1;
-        }
-#endif
-        if (destroyMem(&ctx->s3c_mem) < 0) {
-            SEC_HWC_Log(HWC_LOG_ERROR, "%s::destroyMem fail", __func__);
+
+        if (window_close(&ctx->global_lcd_win) < 0) {
+            SEC_HWC_Log(HWC_LOG_ERROR, "%s::window_close() fail", __func__);
             ret = -1;
         }
 
-#ifdef USE_HW_PMEM
-        if (destroyPmem(&ctx->sec_pmem) < 0) {
-            SEC_HWC_Log(HWC_LOG_ERROR, "%s::destroyPmem fail", __func__);
-            ret = -1;
-        }
-#endif
         for (i = 0; i < NUM_OF_WIN; i++) {
             if (window_close(&ctx->win[i]) < 0)
                 SEC_HWC_Log(HWC_LOG_DEBUG, "%s::window_close() fail", __func__);
@@ -820,10 +1044,26 @@ static int hwc_device_close(struct hw_device_t *dev)
     return ret;
 }
 
+static int hwc_blank(struct hwc_composer_device_1 *dev, int dpy, int blank)
+{
+    struct hwc_context_t* ctx = (struct hwc_context_t*)dev;
+    if (blank) {
+        // release our resources, the screen is turning off
+        // in our case, there is nothing to do.
+        ctx->num_of_fb_layer_prev = 0;
+        return 0;
+    }
+    else {
+        // No need to unblank, will unblank on set()
+        return 0;
+    }
+}
+
 static int hwc_device_open(const struct hw_module_t* module, const char* name,
         struct hw_device_t** device)
 {
     int status = 0;
+    int err    = 0;
     struct hwc_win_info_t   *win;
 
     if (strcmp(name, HWC_HARDWARE_COMPOSER))
@@ -836,33 +1076,39 @@ static int hwc_device_open(const struct hw_module_t* module, const char* name,
     memset(dev, 0, sizeof(*dev));
 
     /* initialize the procs */
-    dev->device.common.tag = HARDWARE_DEVICE_TAG;
-    dev->device.common.version = 0;
-    dev->device.common.module = const_cast<hw_module_t*>(module);
-    dev->device.common.close = hwc_device_close;
-
-    dev->device.prepare = hwc_prepare;
-    dev->device.set = hwc_set;
-
+    dev->device.common.tag           = HARDWARE_DEVICE_TAG;
+    dev->device.common.version       = HWC_DEVICE_API_VERSION_1_0;
+    dev->device.common.module        = const_cast<hw_module_t*>(module);
+    dev->device.common.close         = hwc_device_close;
+    dev->device.prepare              = hwc_prepare;
+    dev->device.set                  = hwc_set;
+    dev->device.eventControl         = hwc_eventControl;
+    dev->device.blank                = hwc_blank;
+    dev->device.query                = hwc_query;
+    dev->device.registerProcs        = hwc_registerProcs;
     *device = &dev->device.common;
 
     //initializing
     memset(&(dev->fimc),    0, sizeof(s5p_fimc_t));
-    memset(&(dev->s3c_mem), 0, sizeof(struct s3c_mem_t));
-#ifdef USE_HW_PMEM
-    memset(&(dev->sec_pmem),    0, sizeof(sec_pmem_t));
-#endif
-     /* open WIN0 & WIN1 here */
-     for (int i = 0; i < NUM_OF_WIN; i++) {
+
+    /* open WIN0 & WIN1 here */
+    for (int i = 0; i < NUM_OF_WIN; i++) {
         if (window_open(&(dev->win[i]), i)  < 0) {
             SEC_HWC_Log(HWC_LOG_ERROR,
                     "%s:: Failed to open window %d device ", __func__, i);
-             status = -EINVAL;
-             goto err;
+            status = -EINVAL;
+            goto err;
         }
-     }
+    }
 
-    if (window_get_global_lcd_info(dev->win[0].fd, &dev->lcd_info) < 0) {
+    /* open window 2, used to query global LCD info */
+    if (window_open(&dev->global_lcd_win, 2) < 0) {
+        SEC_HWC_Log(HWC_LOG_ERROR, "%s:: Failed to open window 2 device ", __func__);
+        status = -EINVAL;
+        goto err;
+    }
+
+    if (window_get_global_lcd_info(dev) < 0) {
         SEC_HWC_Log(HWC_LOG_ERROR,
                 "%s::window_get_global_lcd_info is failed : %s",
                 __func__, strerror(errno));
@@ -902,18 +1148,6 @@ static int hwc_device_open(const struct hw_module_t* module, const char* name,
 
     }
 
-#ifdef USE_HW_PMEM
-    if (createPmem(&dev->sec_pmem, PMEM_SIZE) < 0) {
-        SEC_HWC_Log(HWC_LOG_ERROR, "%s::initPmem(%d) fail", __func__, PMEM_SIZE);
-    }
-#endif
-
-    if (createMem(&dev->s3c_mem, 0, 0) < 0) {
-        SEC_HWC_Log(HWC_LOG_ERROR, "%s::createMem() fail (size=0)", __func__);
-        status = -EINVAL;
-        goto err;
-    }
-
     //create PP
     if (createFimc(&dev->fimc) < 0) {
         SEC_HWC_Log(HWC_LOG_ERROR, "%s::creatFimc() fail", __func__);
@@ -921,10 +1155,20 @@ static int hwc_device_open(const struct hw_module_t* module, const char* name,
         goto err;
     }
 
-#ifdef SUB_TITLES_HWC
-   if (createG2d(&dev->g2d) < 0) {
-        SEC_HWC_Log(HWC_LOG_ERROR, "%s::createG2d() fail", __func__);
-        status = -EINVAL;
+#ifndef SYSFS_VSYNC_NOTIFICATION
+    err = pthread_create(&dev->vsync_thread, NULL, hwc_vsync_thread, dev);
+    if (err) {
+        ALOGE("%s::pthread_create() failed : %s", __func__, strerror(err));
+        status = -err;
+        goto err;
+    }
+#endif
+
+#ifdef SYSFS_VSYNC_NOTIFICATION
+    err = pthread_create(&dev->vsync_thread, NULL, hwc_vsync_sysfs_loop, dev);
+    if (err) {
+        SEC_HWC_Log(HWC_LOG_ERROR, "%s::pthread_create() failed : %s", __func__, strerror(err));
+        status = -err;
         goto err;
     }
 #endif
@@ -936,17 +1180,9 @@ static int hwc_device_open(const struct hw_module_t* module, const char* name,
 err:
     if (destroyFimc(&dev->fimc) < 0)
         SEC_HWC_Log(HWC_LOG_ERROR, "%s::destroyFimc() fail", __func__);
-#ifdef SUB_TITLES_HWC
-     if (destroyG2d(&dev->g2d) < 0)
-        SEC_HWC_Log(HWC_LOG_ERROR, "%s::destroyG2d() fail", __func__);
-#endif
-    if (destroyMem(&dev->s3c_mem) < 0)
-        SEC_HWC_Log(HWC_LOG_ERROR, "%s::destroyMem() fail", __func__);
 
-#ifdef USE_HW_PMEM
-    if (destroyPmem(&dev->sec_pmem) < 0)
-        SEC_HWC_Log(HWC_LOG_ERROR, "%s::destroyPmem() fail", __func__);
-#endif
+    if (window_close(&dev->global_lcd_win) < 0)
+        SEC_HWC_Log(HWC_LOG_ERROR, "%s::window_close() fail", __func__);
 
     for (int i = 0; i < NUM_OF_WIN; i++) {
         if (window_close(&dev->win[i]) < 0)

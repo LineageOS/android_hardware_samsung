@@ -1,0 +1,160 @@
+<mixer>
+    <!-- ########## Initial mixer settings ########## -->
+
+    <!-- Disable Speaker -->
+    <ctl name="SPK Switch" value="0" />
+
+    <!--
+    #######################################################
+    ### AUDIO ROUTING
+    #######################################################
+    -->
+
+    <path name="none">
+        <!-- Empty path -->
+    </path>
+
+    <!-- ########## Playback ########## -->
+
+    <path name="earpiece">
+        <!-- Empty path -->
+    </path>
+
+    <path name="speaker">
+        <!-- Empty path -->
+    </path>
+
+    <path name="headphones">
+        <!-- Empty path -->
+    </path>
+
+    <path name="speaker-and-headphones">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-earpiece">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-earpiece-wb">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-speaker">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-speaker-wb">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-headphones">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-headphones-wb">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-bt-sco-headset">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-bt-sco-headset-wb">
+        <!-- Empty path -->
+    </path>
+
+    <path name="hdmi">
+        <!-- Empty path -->
+    </path>
+
+    <path name="speaker-and-hdmi">
+        <!-- Empty path -->
+    </path>
+
+    <path name="bt-sco-headset">
+        <!-- Empty path -->
+    </path>
+
+    <!-- ########## Capture ########## -->
+
+    <path name="earpiece-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="speaker-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-mic">
+        <!-- Configure builtin mic only -->
+        <!-- Empty path -->
+    </path>
+
+    <!-- Two mic -->
+    <path name="voice-earpiece-mic">
+        <!-- Should be main mic and back mic -->
+        <!-- Capture channel set to main mic -->
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-earpiece-mic-wb">
+        <!-- Should be main mic and back mic -->
+        <!-- Capture channel set to main mic -->
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-speaker-mic">
+        <!-- Should be main mic and back mic -->
+        <!-- Capture channel set to back mic -->
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-speaker-mic-wb">
+        <!-- Should be main mic and back mic -->
+        <!-- Capture channel set to back mic -->
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-headset-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-headset-mic-wb">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-bt-sco-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-bt-sco-mic-wb">
+        <!-- Empty path -->
+    </path>
+
+    <path name="hdmi-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="bt-sco-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-rec-headset-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="voice-rec-mic">
+        <!-- Empty path -->
+    </path>
+
+    <path name="camcorder-mic">
+        <!-- Should be builtin and back mic -->
+        <!-- Empty path -->
+    </path>
+
+    <path name="loopback-aec">
+        <!-- Empty path -->
+    </path>
+
+</mixer>

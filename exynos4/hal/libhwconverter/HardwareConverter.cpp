@@ -68,7 +68,7 @@ bool HardwareConverter::convert(
     if (!handle_fimc->setSrcParams(width, height, src_crop_x, src_crop_y,
                                    &src_crop_width, &src_crop_height,
                                    src_har_format)) {
-        LOGE("%s:: setSrcParms() failed", __func__);
+        ALOGE("%s:: setSrcParms() failed", __func__);
         return false;
     }
 
@@ -76,19 +76,19 @@ bool HardwareConverter::convert(
                                  (unsigned int)src_addr_array[1],
                                  (unsigned int)src_addr_array[1],
                                  src_har_format)) {
-        LOGE("%s:: setSrcPhyAddr() failed", __func__);
+        ALOGE("%s:: setSrcPhyAddr() failed", __func__);
         return false;
     }
 
     if (!handle_fimc->setRotVal(rotate_value)) {
-        LOGE("%s:: setRotVal() failed", __func__);
+        ALOGE("%s:: setRotVal() failed", __func__);
         return false;
     }
 
     if (!handle_fimc->setDstParams(width, height, dst_crop_x, dst_crop_y,
                                    &dst_crop_width, &dst_crop_height,
                                    dst_har_format)) {
-        LOGE("%s:: setDstParams() failed", __func__);
+        ALOGE("%s:: setDstParams() failed", __func__);
         return false;
     }
 
@@ -97,7 +97,7 @@ bool HardwareConverter::convert(
         if (!handle_fimc->setDstAddr((unsigned int)(dst_addr_array[0]),
                                      (unsigned int)(dst_addr_array[1]),
                                      (unsigned int)(dst_addr_array[1]))) {
-            LOGE("%s:: setDstPhyAddr() failed", __func__);
+            ALOGE("%s:: setDstPhyAddr() failed", __func__);
             return false;
         }
         break;
@@ -106,14 +106,14 @@ bool HardwareConverter::convert(
         if (!handle_fimc->setDstAddr((unsigned int)(dst_addr_array[0]),
                                      (unsigned int)(dst_addr_array[1]),
                                      (unsigned int)(dst_addr_array[2]))) {
-            LOGE("%s:: setDstPhyAddr() failed", __func__);
+            ALOGE("%s:: setDstPhyAddr() failed", __func__);
             return false;
         }
         break;
     }
 
     if (!handle_fimc->draw(0, 0)) {
-        LOGE("%s:: handleOneShot() failed", __func__);
+        ALOGE("%s:: handleOneShot() failed", __func__);
         return false;
     }
 

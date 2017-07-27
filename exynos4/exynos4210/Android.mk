@@ -15,7 +15,12 @@
 #
 
 ifeq ($(TARGET_BOARD_PLATFORM),exynos4)
-exynos4210_dirs := liblights
+
+	ifeq ($(BOARD_HAS_BLN),true)
+		exynos4210_dirs := liblightsbln
+	else
+		exynos4210_dirs := liblights
+	endif
 
 include $(call all-named-subdir-makefiles,$(exynos4210_dirs))
 

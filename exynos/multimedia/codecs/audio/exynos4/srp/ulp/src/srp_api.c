@@ -15,11 +15,11 @@
 #define LOG_TAG "libsrpapi"
 #include <cutils/log.h>
 
-/* Disable LOGD message */
-#ifdef LOGD
-#undef LOGD
+/* Disable ALOGD message */
+#ifdef ALOGD
+#undef ALOGD
 #endif
-#define LOGD(...)
+#define ALOGD(...)
 
 //#define _USE_WBUF_            /* Buffering before writing srp-rp device */
 //#define _DUMP_TO_FILE_
@@ -48,11 +48,11 @@ static int WriteBuff_Init(void)
         wbuf_size = srp_ibuf_size * WBUF_LEN_MUL;
         wbuf_pos = 0;
         wbuf = (unsigned char *)malloc(wbuf_size);
-        LOGD("%s: WriteBuffer %dbytes allocated", __func__, wbuf_size);
+        ALOGD("%s: WriteBuffer %dbytes allocated", __func__, wbuf_size);
         return 0;
     }
 
-    LOGE("%s: WriteBuffer already allocated", __func__);
+    ALOGE("%s: WriteBuffer already allocated", __func__);
     return -1;
 }
 
@@ -64,7 +64,7 @@ static int WriteBuff_Deinit(void)
         return 0;
     }
 
-    LOGE("%s: WriteBuffer is not ready", __func__);
+    ALOGE("%s: WriteBuffer is not ready", __func__);
     return -1;
 }
 
@@ -76,7 +76,7 @@ static int WriteBuff_Write(unsigned char *buff, int size_byte)
         memcpy(&wbuf[wbuf_pos], buff, size_byte);
         wbuf_pos += size_byte;
     } else {
-        LOGE("%s: WriteBuffer is filled [%d], ignoring write [%d]", __func__, wbuf_pos, size_byte);
+        ALOGE("%s: WriteBuffer is filled [%d], ignoring write [%d]", __func__, wbuf_pos, size_byte);
         return -1;    /* Insufficient buffer */
     }
 
@@ -109,7 +109,7 @@ int SRP_Create(int block_mode)
         return srp_dev;
     }
 
-    LOGE("%s: Device is not ready", __func__);
+    ALOGE("%s: Device is not ready", __func__);
     return -1;    /* device alreay opened */
 }
 
@@ -134,11 +134,11 @@ int SRP_Init(unsigned int ibuf_size)
             }
         }
 
-        LOGD("%s: Dump MP3 to %s", __func__, outname);
+        ALOGD("%s: Dump MP3 to %s", __func__, outname);
         if (fp_dump = fopen(outname, "wb"))
-            LOGD("%s: Success to open %s", __func__, outname);
+            ALOGD("%s: Success to open %s", __func__, outname);
         else
-            LOGD("%s: Fail to open %s", __func__, outname);
+            ALOGD("%s: Fail to open %s", __func__, outname);
 #endif
 
 #ifdef _USE_WBUF_
@@ -149,7 +149,7 @@ int SRP_Init(unsigned int ibuf_size)
 #endif
     }
 
-    LOGE("%s: Device is not ready", __func__);
+    ALOGE("%s: Device is not ready", __func__);
     return -1;  /* device is not created */
 }
 
@@ -163,17 +163,17 @@ int SRP_Decode(void *buff, int size_byte)
     if (srp_dev != -1) {
         /* Check wbuf before writing buff */
         while (wbuf_pos >= srp_ibuf_size) { /* Write_Buffer filled? (IBUF Size)*/
-            LOGD("%s: Write Buffer is full, Send data to RP", __func__);
+            ALOGD("%s: Write Buffer is full, Send data to RP", __func__);
 
             ret = write(srp_dev, wbuf, srp_ibuf_size); /* Write Buffer to RP Driver */
             if (ret == -1) { /* Fail? */
                 ioctl(srp_dev, SRP_ERROR_STATE, &val);
                 if (!val) {    /* Write error? */
-                    LOGE("%s: IBUF write fail", __func__);
+                    ALOGE("%s: IBUF write fail", __func__);
                     return -1;
                 } else {       /* Write OK, but RP decode error? */
                     err_code = val;
-                    LOGE("%s: RP decode error [0x%05X]", __func__, err_code);
+                    ALOGE("%s: RP decode error [0x%05X]", __func__, err_code);
                 }
             }
 #ifdef _DUMP_TO_FILE_
@@ -187,11 +187,11 @@ int SRP_Decode(void *buff, int size_byte)
         if (ret == -1)
             return -1;  /* Buffering error */
 
-        LOGD("%s: Write Buffer remain [%d]", __func__, wbuf_pos);
+        ALOGD("%s: Write Buffer remain [%d]", __func__, wbuf_pos);
         return err_code;  /* Write Success */
     }
 
-    LOGE("%s: Device is not ready", __func__);
+    ALOGE("%s: Device is not ready", __func__);
     return -1;  /* device is not created */
 }
 
@@ -212,10 +212,10 @@ int SRP_Send_EOS(void)
             if (ret == -1) {  /* Fail? */
                 ret = ioctl(srp_dev, SRP_ERROR_STATE, &val);
                 if (!val) {   /* Write error? */
-                    LOGE("%s: IBUF write fail", __func__);
+                    ALOGE("%s: IBUF write fail", __func__);
                     return -1;
                 } else {      /* RP decoe error? */
-                    LOGE("%s: RP decode error [0x%05X]", __func__, val);
+                    ALOGE("%s: RP decode error [0x%05X]", __func__, val);
                     return -1;
                 }
             } else {          /* Success? */
@@ -244,17 +244,17 @@ int SRP_Decode(void *buff, int size_byte)
     int err_code = 0;
 
     if (srp_dev != -1) {
-        LOGD("%s: Send data to RP (%d bytes)", __func__, size_byte);
+        ALOGD("%s: Send data to RP (%d bytes)", __func__, size_byte);
 
         ret = write(srp_dev, buff, size_byte);  /* Write Buffer to RP Driver */
         if (ret == -1) {  /* Fail? */
             ioctl(srp_dev, SRP_ERROR_STATE, &val);
             if (!val) {   /* Write error? */
-                LOGE("%s: IBUF write fail", __func__);
+                ALOGE("%s: IBUF write fail", __func__);
                 return -1;
             } else {      /* Write OK, but RP decode error? */
                 err_code = val;
-                LOGE("%s: RP decode error [0x%05X]", __func__, err_code);
+                ALOGE("%s: RP decode error [0x%05X]", __func__, err_code);
             }
         }
 #ifdef _DUMP_TO_FILE_
@@ -265,7 +265,7 @@ int SRP_Decode(void *buff, int size_byte)
         return err_code; /* Write Success */
     }
 
-    LOGE("%s: Device is not ready", __func__);
+    ALOGE("%s: Device is not ready", __func__);
     return -1; /* device is not created */
 }
 
@@ -348,7 +348,7 @@ int SRP_Deinit(void)
         return ioctl(srp_dev, SRP_DEINIT); /* Deinialize */
     }
 
-    LOGE("%s: Device is not ready", __func__);
+    ALOGE("%s: Device is not ready", __func__);
     return -1;    /* device is not created */
 }
 
@@ -365,17 +365,17 @@ int SRP_Terminate(void)
         }
     }
 
-    LOGE("%s: Device is not ready", __func__);
+    ALOGE("%s: Device is not ready", __func__);
     return -1; /* device is not created or close error*/
 }
 
 int SRP_IsOpen(void)
 {
     if (srp_dev == -1) {
-        LOGD("%s: Device is not opened", __func__);
+        ALOGD("%s: Device is not opened", __func__);
         return 0;
     }
 
-    LOGD("%s: Device is opened", __func__);
+    ALOGD("%s: Device is opened", __func__);
     return 1;
 }

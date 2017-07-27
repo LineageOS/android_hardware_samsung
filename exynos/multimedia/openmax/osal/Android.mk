@@ -31,7 +31,6 @@ LOCAL_SHARED_LIBRARIES := libcutils libutils \
 	libui \
 	libhardware \
 	libandroid_runtime \
-	libsurfaceflinger_client \
 	libbinder \
 	libmedia
 

@@ -37,7 +37,6 @@
 
 static pthread_once_t g_init = PTHREAD_ONCE_INIT;
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
-static int g_enable_touchlight = -1;
 
 char const*const PANEL_FILE
         = "/sys/class/backlight/panel/brightness";
@@ -55,23 +54,6 @@ void init_globals(void)
 {
     // init the mutex
     pthread_mutex_init(&g_lock, NULL);
-}
-
-void
-load_settings()
-{
-    FILE* fp = fopen("/data/.disable_touchlight", "r");
-    if (!fp) {
-        g_enable_touchlight = 1;
-    } else {
-        g_enable_touchlight = (int)(fgetc(fp));
-        if (g_enable_touchlight == '1')
-            g_enable_touchlight = 1;
-        else
-            g_enable_touchlight = 0;
-
-        fclose(fp);
-    }
 }
 
 #ifdef LED_NOTIFICATION
@@ -95,7 +77,7 @@ write_int(char const* path, int value)
         return amt == -1 ? -errno : 0;
     } else {
         if (already_warned == 0) {
-            LOGE("write_int failed to open %s\n", path);
+            ALOGE("write_int failed to open %s\n", path);
             already_warned = 1;
         }
         return -errno;
@@ -108,7 +90,7 @@ static int write_str(char const *path, char const *str)
     int fd;
     static int already_warned = 0;
 
-    LOGV("write_str: path=\"%s\", str=\"%s\".", path, str);
+    ALOGV("write_str: path=\"%s\", str=\"%s\".", path, str);
     fd = open(path, O_RDWR);
 
     if (fd >= 0) {
@@ -117,7 +99,7 @@ static int write_str(char const *path, char const *str)
         return amt == -1 ? -errno : 0;
     } else {
         if (already_warned == 0) {
-            LOGE("write_str failed to open %s\n", path);
+            ALOGE("write_str failed to open %s\n", path);
             already_warned = 1;
         }
         return -errno;
@@ -168,7 +150,7 @@ static void comp_led_states(struct led_state *red, struct led_state *blue,
         delay_off = state->flashOffMS;
         break;
     default:
-        LOGI("Unsuported flashMode %d, default to NONE.", state->flashMode);
+        ALOGI("Unsuported flashMode %d, default to NONE.", state->flashMode);
     case LIGHT_FLASH_NONE:
         delay_on = delay_off = 0;
         break;
@@ -182,7 +164,7 @@ static void comp_led_states(struct led_state *red, struct led_state *blue,
     blue->delay_on  = delay_on;
     blue->delay_off = delay_off;
 
-    LOGV("comp_led_states: red=(%u, %d, %d), blue=(%u, %d, %d).",
+    ALOGV("comp_led_states: red=(%u, %d, %d), blue=(%u, %d, %d).",
          red->enabled, red->delay_on, red->delay_off, blue->enabled,
             blue->delay_on, blue->delay_off);
 }
@@ -234,24 +216,9 @@ set_light_backlight(struct light_device_t* dev,
 
     pthread_mutex_lock(&g_lock);
     err = write_int(PANEL_FILE, brightness);
-
-#ifndef EXYNOS4210_TABLET
-    if (!s_previous_brightness && (brightness > 0)) {
-        err = write_int(BUTTON_FILE, brightness > 0 ? 1 : 2);
-        s_previous_brightness = brightness;
-    }
-#endif
-
     pthread_mutex_unlock(&g_lock);
 
     return err;
-}
-
-static int
-set_light_keyboard(struct light_device_t* dev,
-        struct light_state_t const* state)
-{
-    return 0;
 }
 
 static int
@@ -261,14 +228,12 @@ set_light_buttons(struct light_device_t* dev,
 #ifdef EXYNOS4210_TABLET
     return 0;
 #else
-
-    load_settings();
-
     int err = 0;
+    int brightness = rgb_to_brightness(state);
 
     pthread_mutex_lock(&g_lock);
-    LOGD("set_light_button on=%d\n", g_enable_touchlight ? 1 : 0);
-    err = write_int(BUTTON_FILE, g_enable_touchlight ? 1 : 0);
+    ALOGD("set_light_buttons: %d\n", brightness > 0 ? 1 : 2);
+    err = write_int(BUTTON_FILE, brightness > 0 ? 1 : 2);
     pthread_mutex_unlock(&g_lock);
 
     return err;
@@ -282,7 +247,7 @@ set_light_battery(struct light_device_t* dev,
    int res = 0;
 
 #ifdef LED_NOTIFICATION
-    LOGD("set_light_battery: color=%#010x, fM=%u, fOnMS=%d, fOffMs=%d.",
+    ALOGD("set_light_battery: color=%#010x, fM=%u, fOnMS=%d, fOffMs=%d.",
           state->color, state->flashMode, state->flashOnMS, state->flashOffMS);
 
     pthread_mutex_lock(&g_lock);
@@ -305,7 +270,7 @@ set_light_notification(struct light_device_t* dev,
     int res = 0;
 
 #ifdef LED_NOTIFICATION
-     LOGD("set_light_notification: color=%#010x, fM=%u, fOnMS=%d, fOffMs=%d.",
+     ALOGD("set_light_notification: color=%#010x, fM=%u, fOnMS=%d, fOffMs=%d.",
          state->color, state->flashMode, state->flashOnMS, state->flashOffMS);
 
     pthread_mutex_lock(&g_lock);
@@ -319,13 +284,6 @@ set_light_notification(struct light_device_t* dev,
 #endif // LED_NOTIFICATION
 
     return res;
-}
-
-static int
-set_light_attention(struct light_device_t* dev,
-        struct light_state_t const* state)
-{
-    return 0;
 }
 
 static int
@@ -348,9 +306,6 @@ static int open_lights(const struct hw_module_t* module, char const* name,
     if (0 == strcmp(LIGHT_ID_BACKLIGHT, name)) {
         set_light = set_light_backlight;
     }
-    else if (0 == strcmp(LIGHT_ID_KEYBOARD, name)) {
-        set_light = set_light_keyboard;
-    }
     else if (0 == strcmp(LIGHT_ID_BUTTONS, name)) {
         set_light = set_light_buttons;
     }
@@ -359,9 +314,6 @@ static int open_lights(const struct hw_module_t* module, char const* name,
     }
     else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name)) {
         set_light = set_light_notification;
-    }
-    else if (0 == strcmp(LIGHT_ID_ATTENTION, name)) {
-        set_light = set_light_attention;
     }
     else {
         return -EINVAL;
@@ -387,7 +339,7 @@ static struct hw_module_methods_t lights_module_methods = {
     .open =  open_lights,
 };
 
-const struct hw_module_t HAL_MODULE_INFO_SYM = {
+struct hw_module_t HAL_MODULE_INFO_SYM = {
     .tag = HARDWARE_MODULE_TAG,
     .version_major = 1,
     .version_minor = 0,

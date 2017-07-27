@@ -36,7 +36,8 @@
 #include <utils/RefBase.h>
 #include <hardware/camera.h>
 #include <videodev2.h>
-#include <videodev2_samsung.h>
+#include <videodev2_exynos_camera.h>
+#include <videodev2_exynos_media.h>
 #include "sec_utils_v4l2.h"
 
 #include "SecBuffer.h"

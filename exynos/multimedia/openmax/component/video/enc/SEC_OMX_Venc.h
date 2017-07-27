@@ -92,6 +92,7 @@ typedef struct _SEC_OMX_VIDEOENC_COMPONENT
     OMX_BOOL IntraRefreshVOP;
     OMX_VIDEO_CONTROLRATETYPE eControlRate[ALL_PORT_NUM];
     OMX_VIDEO_PARAM_QUANTIZATIONTYPE quantization;
+    OMX_VIDEO_PARAM_INTRAREFRESHTYPE intraRefresh;
     OMX_BOOL bFirstFrame;
     MFC_ENC_INPUT_BUFFER MFCEncInputBuffer[MFC_INPUT_BUFFER_NUM_MAX];
     OMX_U32  indexInputBuffer;
@@ -154,7 +155,7 @@ OMX_ERRORTYPE SEC_OMX_VideoEncodeGetExtensionIndex(
 OMX_ERRORTYPE SEC_OMX_VideoEncodeComponentInit(OMX_IN OMX_HANDLETYPE hComponent);
 OMX_ERRORTYPE SEC_OMX_VideoEncodeComponentDeinit(OMX_IN OMX_HANDLETYPE hComponent);
 OMX_BOOL SEC_Check_BufferProcess_State(SEC_OMX_BASECOMPONENT *pSECComponent);
-inline void SEC_UpdateFrameSize(OMX_COMPONENTTYPE *pOMXComponent);
+void SEC_UpdateFrameSize(OMX_COMPONENTTYPE *pOMXComponent);
 
 #ifdef __cplusplus
 }

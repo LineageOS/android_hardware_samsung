@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Screen -->
+    <PreferenceCategory
+            android:title="@string/screen_colors_title">
+
+        <!-- mDNIe Scenario modes -->
+        <com.cyanogenmod.settings.device.mDNIeScenario
+                android:key="mdnie_scenario"
+                android:title="@string/mdnie_scenario_title_head"
+                android:summary="@string/mdnie_scenario_summary_head"
+                android:entries="@array/mdnie_scenario_entries"
+                android:entryValues="@array/mdnie_scenario_entries_values"
+                android:defaultValue="0" />
+
+        <!-- mDNIe Negative mode -->
+        <com.cyanogenmod.settings.device.mDNIeNegative
+                android:key="mdnie_negative"
+                android:title="@string/mdnie_negative_title_head"
+                android:summary="@string/mdnie_negative_summary_head"
+                android:entries="@array/mdnie_negative_entries"
+                android:entryValues="@array/mdnie_negative_entries_values"
+                android:defaultValue="0" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

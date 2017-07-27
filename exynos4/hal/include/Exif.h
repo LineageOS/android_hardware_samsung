@@ -20,11 +20,12 @@
 #include <math.h>
 
 #define EXIF_LOG2(x)                    (log((double)(x)) / log(2.0))
-#define APEX_FNUM_TO_APERTURE(x)        ((int)(EXIF_LOG2((double)(x)) * 2 + 0.5))
+#define APEX_FNUM_TO_APERTURE(x)        ((int)(EXIF_LOG2((double)(x)) * 200.0 + 0.5))
 #define APEX_EXPOSURE_TO_SHUTTER(x)     ((x) >= 1 ?                                 \
-                                        (int)(-(EXIF_LOG2((double)(x)) + 0.5)) :    \
-                                        (int)(-(EXIF_LOG2((double)(x)) - 0.5)))
-#define APEX_ISO_TO_FILMSENSITIVITY(x)  ((int)(EXIF_LOG2((x) / 3.125) + 0.5))
+                                        (int)(-(EXIF_LOG2((double)(x)) * 100.0 + 0.5)) :    \
+                                        (int)(-(EXIF_LOG2((double)(x)) * 100.0 - 0.5)))
+#define APEX_ISO_TO_FILMSENSITIVITY(x)  ((int)(EXIF_LOG2((x) / 3.125) * 100.0 + 0.5))
+#define APEX_SHUTTER_TO_EXPOSURE(x)     ((int)((pow(2.0, (double)(x) / 100.0)) + 0.5))
 
 #define NUM_SIZE                    2
 #define IFD_SIZE                    12
@@ -147,15 +148,15 @@ typedef enum {
 #define EXIF_DEF_USERCOMMENTS   "User comments"
 
 #define EXIF_DEF_YCBCR_POSITIONING  1   /* centered */
-#define EXIF_DEF_FNUMBER_NUM        26  /* 2.6 */
-#define EXIF_DEF_FNUMBER_DEN        10
+#define EXIF_DEF_FNUMBER_NUM        265  /* 2.65 */
+#define EXIF_DEF_FNUMBER_DEN        100
 #define EXIF_DEF_EXPOSURE_PROGRAM   3   /* aperture priority */
 #define EXIF_DEF_FOCAL_LEN_NUM      278 /* 2.78mm */
 #define EXIF_DEF_FOCAL_LEN_DEN      100
 #define EXIF_DEF_FLASH              0   /* O: off, 1: on*/
 #define EXIF_DEF_COLOR_SPACE        1
 #define EXIF_DEF_EXPOSURE_MODE      EXIF_EXPOSURE_AUTO
-#define EXIF_DEF_APEX_DEN           10
+#define EXIF_DEF_APEX_DEN           100
 
 #define EXIF_DEF_COMPRESSION        6
 #define EXIF_DEF_RESOLUTION_NUM     72

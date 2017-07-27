@@ -93,7 +93,7 @@ static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
 #define FBIO_WAITFORVSYNC       _IOW('F', 0x20, __u32)
 #define S3CFB_SET_VSYNC_INT     _IOW('F', 206, unsigned int)
         if (ioctl(m->framebuffer->fd, FBIOPAN_DISPLAY, &m->info) == -1) {
-            LOGE("FBIOPAN_DISPLAY failed");
+            ALOGE("FBIOPAN_DISPLAY failed");
             m->base.unlock(&m->base, buffer);
             return 0;
         }
@@ -102,7 +102,7 @@ static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
             /* enable VSYNC */
             interrupt = 1;
             if (ioctl(m->framebuffer->fd, S3CFB_SET_VSYNC_INT, &interrupt) < 0) {
-                LOGE("S3CFB_SET_VSYNC_INT enable failed");
+                ALOGE("S3CFB_SET_VSYNC_INT enable failed");
                 return 0;
             }
             /* wait for VSYNC */
@@ -113,7 +113,7 @@ static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
             int crtc;
             crtc = 0;
             if (ioctl(m->framebuffer->fd, FBIO_WAITFORVSYNC, &crtc) < 0) {
-                LOGE("FBIO_WAITFORVSYNC failed");
+                ALOGE("FBIO_WAITFORVSYNC failed");
 #ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
                 gralloc_mali_vsync_report(MALI_VSYNC_EVENT_END_WAIT);
 #endif
@@ -125,16 +125,17 @@ static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
             // disable VSYNC
             interrupt = 0;
             if (ioctl(m->framebuffer->fd, S3CFB_SET_VSYNC_INT, &interrupt) < 0) {
-                LOGE("S3CFB_SET_VSYNC_INT disable failed");
+                ALOGE("S3CFB_SET_VSYNC_INT disable failed");
                 return 0;
             }
+        }
 #else
         /*Standard Android way*/
 #ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
         gralloc_mali_vsync_report(MALI_VSYNC_EVENT_BEGIN_WAIT);
 #endif
         if (ioctl(m->framebuffer->fd, FBIOPUT_VSCREENINFO, &m->info) == -1) {
-            LOGE("FBIOPUT_VSCREENINFO failed");
+            ALOGE("FBIOPUT_VSCREENINFO failed");
 #ifdef MALI_VSYNC_EVENT_REPORT_ENABLE
             gralloc_mali_vsync_report(MALI_VSYNC_EVENT_END_WAIT);
 #endif
@@ -145,7 +146,7 @@ static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
         gralloc_mali_vsync_report(MALI_VSYNC_EVENT_END_WAIT);
 #endif
 #endif
-        }
+
         m->currentBuffer = buffer;
     } else {
         /*
@@ -246,14 +247,14 @@ int init_frame_buffer_locked(struct private_module_t* module)
     if (ioctl(fd, FBIOPUT_VSCREENINFO, &info) == -1) {
         info.yres_virtual = info.yres;
         flags &= ~PAGE_FLIP;
-        LOGW("FBIOPUT_VSCREENINFO failed, page flipping not supported");
+        ALOGW("FBIOPUT_VSCREENINFO failed, page flipping not supported");
     }
 
     if (info.yres_virtual < info.yres * 2) {
         // we need at least 2 for page-flipping
         info.yres_virtual = info.yres;
         flags &= ~PAGE_FLIP;
-        LOGW("page flipping not supported (yres_virtual=%d, requested=%d)",
+        ALOGW("page flipping not supported (yres_virtual=%d, requested=%d)",
                 info.yres_virtual, info.yres * 2);
     }
 
@@ -262,8 +263,8 @@ int init_frame_buffer_locked(struct private_module_t* module)
 
     int refreshRate = 1000000000000000LLU /
     (
-        uint64_t( info.upper_margin + info.lower_margin + info.yres )
-        * ( info.left_margin  + info.right_margin + info.xres )
+        uint64_t( info.upper_margin + info.lower_margin + info.vsync_len + info.yres )
+        * ( info.left_margin  + info.right_margin + info.hsync_len + info.xres )
         * info.pixclock
     );
 
@@ -280,7 +281,7 @@ int init_frame_buffer_locked(struct private_module_t* module)
     float ydpi = (info.yres * 25.4f) / info.height;
     float fps  = refreshRate / 1000.0f;
 
-    LOGI("using (fd=%d)\n"
+    ALOGI("using (fd=%d)\n"
          "id           = %s\n"
          "xres         = %d px\n"
          "yres         = %d px\n"
@@ -301,7 +302,7 @@ int init_frame_buffer_locked(struct private_module_t* module)
          info.green.offset, info.green.length,
          info.blue.offset, info.blue.length);
 
-    LOGI("width        = %d mm (%f dpi)\n"
+    ALOGI("width        = %d mm (%f dpi)\n"
          "height       = %d mm (%f dpi)\n"
          "refresh rate = %.2f Hz\n",
          info.width,  xdpi,
@@ -321,7 +322,7 @@ int init_frame_buffer_locked(struct private_module_t* module)
     module->ydpi = ydpi;
     module->fps = fps;
 
-    char value[32];
+    char value[PROPERTY_VALUE_MAX];
     property_get("debug.gralloc.vsync", value, "1");
     module->enableVSync = atoi(value);
     /*
@@ -330,7 +331,7 @@ int init_frame_buffer_locked(struct private_module_t* module)
     size_t fbSize = round_up_to_page_size(finfo.line_length * info.yres_virtual);
     void* vaddr = mmap(0, fbSize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
     if (vaddr == MAP_FAILED) {
-        LOGE("Error mapping the framebuffer (%s)", strerror(errno));
+        ALOGE("Error mapping the framebuffer (%s)", strerror(errno));
         return -errno;
     }
 
@@ -355,13 +356,13 @@ int enableScreen(struct framebuffer_device_t* dev, int enable)
 
     if (enable == 1) {
         if (ioctl(m->framebuffer->fd, FBIOBLANK, FB_BLANK_UNBLANK) < 0) {
-            LOGE("%s: FBIOBLANK failed : (%d:%s)",
+            ALOGE("%s: FBIOBLANK failed : (%d:%s)",
                     __func__, m->framebuffer->fd, strerror(errno));
             return -EINVAL;
         }
     } else if (enable == 0) {
         if (ioctl(m->framebuffer->fd, FBIOBLANK, FB_BLANK_POWERDOWN) < 0) {
-            LOGE("%s: FBIOBLANK failed : (%d:%s)",
+            ALOGE("%s: FBIOBLANK failed : (%d:%s)",
                     __func__, m->framebuffer->fd, strerror(errno));
             return -EINVAL;
         }
@@ -418,18 +419,28 @@ int framebuffer_device_open(hw_module_t const* module, const char* name, hw_devi
 
     alloc_device_t* gralloc_device;
     status = gralloc_open(module, &gralloc_device);
-    if (status < 0)
-        return status;
-
-    private_module_t* m = (private_module_t*)module;
-    status = init_frame_buffer(m);
     if (status < 0) {
-        gralloc_close(gralloc_device);
+        ALOGE("Fail to Open gralloc device");
         return status;
     }
 
     /* initialize our state here */
-    framebuffer_device_t *dev = new framebuffer_device_t;
+    framebuffer_device_t *dev = (framebuffer_device_t *)malloc(sizeof(framebuffer_device_t));
+    if (dev == NULL) {
+        ALOGE("Failed to allocate memory for dev");
+        gralloc_close(gralloc_device);
+        return status;
+    }    
+
+    private_module_t* m = (private_module_t*)module;
+    status = init_frame_buffer(m);
+    if (status < 0) {
+        ALOGE("Fail to init framebuffer");
+        free(dev);
+        gralloc_close(gralloc_device);
+        return status;
+    }
+
     memset(dev, 0, sizeof(*dev));
 
     /* initialize the procs */

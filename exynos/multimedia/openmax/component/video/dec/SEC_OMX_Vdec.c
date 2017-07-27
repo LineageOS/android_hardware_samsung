@@ -48,7 +48,7 @@
 #include "SEC_OSAL_Log.h"
 
 
-inline void SEC_UpdateFrameSize(OMX_COMPONENTTYPE *pOMXComponent)
+void SEC_UpdateFrameSize(OMX_COMPONENTTYPE *pOMXComponent)
 {
     SEC_OMX_BASECOMPONENT *pSECComponent = (SEC_OMX_BASECOMPONENT *)pOMXComponent->pComponentPrivate;
     SEC_OMX_BASEPORT      *secInputPort = &pSECComponent->pSECPort[INPUT_PORT_INDEX];
@@ -703,8 +703,7 @@ OMX_BOOL SEC_Preprocessor_InputData(OMX_COMPONENTTYPE *pOMXComponent)
         } else {
             previousFrameEOF = OMX_FALSE;
         }
-        if ((pSECComponent->bUseFlagEOF == OMX_TRUE) &&
-           !(inputUseBuffer->nFlags & OMX_BUFFERFLAG_CODECCONFIG)) {
+        if (pSECComponent->bUseFlagEOF == OMX_TRUE) {
             flagEOF = OMX_TRUE;
             checkedSize = checkInputStreamLen;
         } else {

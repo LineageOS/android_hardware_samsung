@@ -41,7 +41,7 @@ int fb_open(int win)
 
     fp = open(node, O_RDWR);
     if (fp < 0)
-        LOGE("%s: fb[%d] open failed", __func__, win);
+        ALOGE("%s: fb[%d] open failed", __func__, win);
 
     return fp;
 }
@@ -51,7 +51,7 @@ int fb_close(int fp)
     if (fp)
         close(fp);
     else
-        LOGE("%s: fb is not allocated %d", __func__, fp);
+        ALOGE("%s: fb is not allocated %d", __func__, fp);
 
     return 0;
 }
@@ -62,7 +62,7 @@ int get_fscreeninfo(int fp, struct fb_fix_screeninfo *fix)
 
     ret = ioctl(fp, FBIOGET_FSCREENINFO, fix);
     if (ret)
-        LOGE("%s: FBIOGET_FSCREENINFO failed", __func__);
+        ALOGE("%s: FBIOGET_FSCREENINFO failed", __func__);
 
     return ret;
 }
@@ -73,7 +73,7 @@ int get_vscreeninfo(int fp, struct fb_var_screeninfo *var)
 
     ret = ioctl(fp, FBIOGET_VSCREENINFO, var);
     if (ret)
-        LOGE("%s:: FBIOGET_VSCREENINFO failed", __func__);
+        ALOGE("%s:: FBIOGET_VSCREENINFO failed", __func__);
 
     return ret;
 }
@@ -84,7 +84,7 @@ int put_vscreeninfo(int fp, struct fb_var_screeninfo *var)
 
     ret = ioctl(fp, FBIOPUT_VSCREENINFO, var);
     if (ret)
-        LOGE("%s:: FBIOPUT_VSCREENINFO failed", __func__);
+        ALOGE("%s:: FBIOPUT_VSCREENINFO failed", __func__);
 
     return ret;
 }
@@ -102,7 +102,7 @@ char *fb_mmap(__u32 size, int fp)
     buffer = (char *)mmap(0, size, PROT_READ | PROT_WRITE,
                   MAP_SHARED, fp, 0);
     if (!buffer) {
-        LOGE("%s:: mmap failed", __func__);
+        ALOGE("%s:: mmap failed", __func__);
         return NULL;
     }
 
@@ -115,7 +115,7 @@ int fb_ioctl(int fp, __u32 cmd, void *arg)
 
     ret = ioctl(fp, cmd, arg);
     if (ret < 0)
-        LOGE("%s:: ioctl (%d) failed", __func__, cmd);
+        ALOGE("%s:: ioctl (%d) failed", __func__, cmd);
 
     return ret;
 }
@@ -126,7 +126,7 @@ int fb_on(int fp)
 
     ret = ioctl(fp, FBIOBLANK, FB_BLANK_UNBLANK);
     if (ret)
-        LOGE("%s:: FBIOBLANK failed", __func__);
+        ALOGE("%s:: FBIOBLANK failed", __func__);
 
     return ret;
 }
@@ -137,7 +137,7 @@ int fb_off(int fp)
 
     ret = ioctl(fp, FBIOBLANK, FB_BLANK_POWERDOWN);
     if (ret)
-        LOGE("%s:: FBIOBLANK failed", __func__);
+        ALOGE("%s:: FBIOBLANK failed", __func__);
 
     return ret;
 }
@@ -152,7 +152,7 @@ int fb_off_all()
             return -1;
 
         if (ioctl(fp, FBIOBLANK, FB_BLANK_POWERDOWN) < 0)
-            LOGE("%s:: FBIOBLANK failed", __func__);
+            ALOGE("%s:: FBIOBLANK failed", __func__);
 
         fb_off(fp);
         fb_close(fp);

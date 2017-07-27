@@ -26,10 +26,6 @@ include $(SEC_OMX_COMPONENT)/video/enc/Android.mk
 include $(SEC_OMX_COMPONENT)/video/enc/h264/Android.mk
 include $(SEC_OMX_COMPONENT)/video/enc/mpeg4/Android.mk
 
-ifeq ($(filter-out exynos5,$(TARGET_BOARD_PLATFORM)),)
-include $(SEC_OMX_COMPONENT)/video/dec/vp8/Android.mk
-endif
-
 ifeq ($(BOARD_USE_ALP_AUDIO), true)
 include $(SEC_OMX_COMPONENT)/audio/dec/Android.mk
 include $(SEC_OMX_COMPONENT)/audio/dec/mp3/Android.mk

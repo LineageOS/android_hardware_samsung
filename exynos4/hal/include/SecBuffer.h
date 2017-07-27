@@ -47,7 +47,9 @@
 //! Buffer information
 struct SecBuffer
 {
+#ifdef __cplusplus
 public:
+#endif
     //! Buffer type
     enum BUFFER_TYPE
     {
@@ -82,6 +84,7 @@ public:
         unsigned int extS[3];
     } size;
 
+#ifdef __cplusplus
     //! Constructor
     SecBuffer()
     {
@@ -153,6 +156,7 @@ public:
 
         return type;
     }
+#endif
 };
 
 #endif //__SEC_BUFFER_H__

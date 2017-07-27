@@ -51,31 +51,31 @@ void *SsbSipMfcEncOpen(void)
     int mapped_size;
     struct mfc_common_args CommonArg;
 
-    LOGI("[%s] MFC Library Ver %d.%02d",__func__, MFC_LIB_VER_MAJOR, MFC_LIB_VER_MINOR);
+    ALOGI("[%s] MFC Library Ver %d.%02d",__func__, MFC_LIB_VER_MAJOR, MFC_LIB_VER_MINOR);
 
 #if 0
     if ((codecType != MPEG4_ENC) &&
         (codecType != H264_ENC) &&
         (codecType != H263_ENC)) {
-        LOGE("SsbSipMfcEncOpen] Undefined codec type");
+        ALOGE("SsbSipMfcEncOpen] Undefined codec type");
         return NULL;
     }
 #endif
 
     if (access(mfc_dev_name, F_OK) != 0) {
-        LOGE("SsbSipMfcEncOpen] MFC device node not exists");
+        ALOGE("SsbSipMfcEncOpen] MFC device node not exists");
         return NULL;
     }
 
     hMFCOpen = open(mfc_dev_name, O_RDWR | O_NDELAY);
     if (hMFCOpen < 0) {
-        LOGE("SsbSipMfcEncOpen] MFC Open failure");
+        ALOGE("SsbSipMfcEncOpen] MFC Open failure");
         return NULL;
     }
 
     pCTX = (_MFCLIB *)malloc(sizeof(_MFCLIB));
     if (pCTX == NULL) {
-        LOGE("SsbSipMfcEncOpen] malloc failed.");
+        ALOGE("SsbSipMfcEncOpen] malloc failed.");
         close(hMFCOpen);
         return NULL;
     }
@@ -83,7 +83,7 @@ void *SsbSipMfcEncOpen(void)
 
     mapped_size = ioctl(hMFCOpen, IOCTL_MFC_GET_MMAP_SIZE, &CommonArg);
     if ((mapped_size < 0) || (CommonArg.ret_code != MFC_OK)) {
-        LOGE("SsbSipMfcEncOpen] IOCTL_MFC_GET_MMAP_SIZE failed");
+        ALOGE("SsbSipMfcEncOpen] IOCTL_MFC_GET_MMAP_SIZE failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -91,7 +91,7 @@ void *SsbSipMfcEncOpen(void)
 
     mapped_addr = (unsigned int)mmap(0, mapped_size, PROT_READ | PROT_WRITE, MAP_SHARED, hMFCOpen, 0);
     if (!mapped_addr) {
-        LOGE("SsbSipMfcEncOpen] FIMV5.x driver address mapping failed");
+        ALOGE("SsbSipMfcEncOpen] FIMV5.x driver address mapping failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -116,31 +116,31 @@ void *SsbSipMfcEncOpenExt(void *value)
     int err;
     struct mfc_common_args CommonArg;
 
-    LOGI("[%s] MFC Library Ver %d.%02d",__func__, MFC_LIB_VER_MAJOR, MFC_LIB_VER_MINOR);
+    ALOGI("[%s] MFC Library Ver %d.%02d",__func__, MFC_LIB_VER_MAJOR, MFC_LIB_VER_MINOR);
 
 #if 0
     if ((codecType != MPEG4_ENC) &&
         (codecType != H264_ENC) &&
         (codecType != H263_ENC)) {
-        LOGE("SsbSipMfcEncOpen] Undefined codec type");
+        ALOGE("SsbSipMfcEncOpen] Undefined codec type");
         return NULL;
     }
 #endif
 
     if (access(mfc_dev_name, F_OK) != 0) {
-        LOGE("SsbSipMfcEncOpenExt] MFC device node not exists");
+        ALOGE("SsbSipMfcEncOpenExt] MFC device node not exists");
         return NULL;
     }
 
     hMFCOpen = open(mfc_dev_name, O_RDWR | O_NDELAY);
     if (hMFCOpen < 0) {
-        LOGE("SsbSipMfcEncOpenExt] MFC Open failure");
+        ALOGE("SsbSipMfcEncOpenExt] MFC Open failure");
         return NULL;
     }
 
     pCTX = (_MFCLIB *)malloc(sizeof(_MFCLIB));
     if (pCTX == NULL) {
-        LOGE("SsbSipMfcEncOpenExt] malloc failed.");
+        ALOGE("SsbSipMfcEncOpenExt] malloc failed.");
         close(hMFCOpen);
         return NULL;
     }
@@ -150,7 +150,7 @@ void *SsbSipMfcEncOpenExt(void *value)
 
     err = ioctl(hMFCOpen, IOCTL_MFC_SET_BUF_CACHE, &CommonArg);
     if ((err < 0) || (CommonArg.ret_code != MFC_OK)) {
-        LOGE("SsbSipMfcEncOpenExt] IOCTL_MFC_SET_BUF_CACHE failed");
+        ALOGE("SsbSipMfcEncOpenExt] IOCTL_MFC_SET_BUF_CACHE failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -158,7 +158,7 @@ void *SsbSipMfcEncOpenExt(void *value)
 
     mapped_size = ioctl(hMFCOpen, IOCTL_MFC_GET_MMAP_SIZE, &CommonArg);
     if ((mapped_size < 0) || (CommonArg.ret_code != MFC_OK)) {
-        LOGE("SsbSipMfcEncOpenExt] IOCTL_MFC_GET_MMAP_SIZE failed");
+        ALOGE("SsbSipMfcEncOpenExt] IOCTL_MFC_GET_MMAP_SIZE failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -166,7 +166,7 @@ void *SsbSipMfcEncOpenExt(void *value)
 
     mapped_addr = (unsigned int)mmap(0, mapped_size, PROT_READ | PROT_WRITE, MAP_SHARED, hMFCOpen, 0);
     if (!mapped_addr) {
-        LOGE("SsbSipMfcEncOpenExt] FIMV5.x driver address mapping failed");
+        ALOGE("SsbSipMfcEncOpenExt] FIMV5.x driver address mapping failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -208,17 +208,17 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
             if (h264_arg->codecType == H264_ENC) {
                 pCTX->codecType = H264_ENC;
             } else {
-                LOGE("SsbSipMfcEncInit] Undefined codec type");
+                ALOGE("SsbSipMfcEncInit] Undefined codec type");
                 return MFC_RET_INVALID_PARAM;
             }
         }
     }
 
-    LOGI("SsbSipMfcEncInit] Encode Init start");
+    ALOGI("SsbSipMfcEncInit] Encode Init start");
 
     switch (pCTX->codecType) {
     case MPEG4_ENC:
-        LOGI("SsbSipMfcEncInit] MPEG4 Encode");
+        ALOGI("SsbSipMfcEncInit] MPEG4 Encode");
         mpeg4_arg = (SSBSIP_MFC_ENC_MPEG4_PARAM *)param;
 
         pCTX->width = mpeg4_arg->SourceWidth;
@@ -226,7 +226,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         break;
 
     case H263_ENC:
-        LOGI("SsbSipMfcEncInit] H263 Encode");
+        ALOGI("SsbSipMfcEncInit] H263 Encode");
         h263_arg = (SSBSIP_MFC_ENC_H263_PARAM *)param;
 
         pCTX->width = h263_arg->SourceWidth;
@@ -234,7 +234,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         break;
 
     case H264_ENC:
-        LOGI("SsbSipMfcEncInit] H264 Encode");
+        ALOGI("SsbSipMfcEncInit] H264 Encode");
         h264_arg = (SSBSIP_MFC_ENC_H264_PARAM *)param;
 
         pCTX->width = h264_arg->SourceWidth;
@@ -263,7 +263,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         /* rate control*/
         EncArg.args.enc_init.cmn.in_rc_fr_en = mpeg4_arg->EnableFRMRateControl;
         if ((mpeg4_arg->QSCodeMin > 31) || (mpeg4_arg->QSCodeMax > 31)) {
-            LOGE("SsbSipMfcEncInit] No such Min/Max QP is supported");
+            ALOGE("SsbSipMfcEncInit] No such Min/Max QP is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_rc_qbound_min = mpeg4_arg->QSCodeMin;
@@ -273,7 +273,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         /* pad control */
         EncArg.args.enc_init.cmn.in_pad_ctrl_on = mpeg4_arg->PadControlOn;
         if ((mpeg4_arg->LumaPadVal > 255) || (mpeg4_arg->CbPadVal > 255) || (mpeg4_arg->CrPadVal > 255)) {
-            LOGE("SsbSipMfcEncInit] No such Pad value is supported");
+            ALOGE("SsbSipMfcEncInit] No such Pad value is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_y_pad_val = mpeg4_arg->LumaPadVal;
@@ -285,7 +285,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
 
         EncArg.args.enc_init.cmn.in_rc_bitrate = mpeg4_arg->Bitrate;
         if ((mpeg4_arg->FrameQp > 31) || (mpeg4_arg->FrameQp_P > 31)) {
-            LOGE("SsbSipMfcEncInit] No such FrameQp is supported");
+            ALOGE("SsbSipMfcEncInit] No such FrameQp is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_vop_quant = mpeg4_arg->FrameQp;
@@ -296,13 +296,13 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         EncArg.args.enc_init.codec.mpeg4.in_level = mpeg4_arg->LevelIDC;
 
         if (mpeg4_arg->FrameQp_B > 31) {
-            LOGE("SsbSipMfcEncInit] No such FrameQp is supported");
+            ALOGE("SsbSipMfcEncInit] No such FrameQp is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.codec.mpeg4.in_vop_quant_b = mpeg4_arg->FrameQp_B;
 
         if (mpeg4_arg->NumberBFrames > 2) {
-            LOGE("SsbSipMfcEncInit] No such BframeNum is supported");
+            ALOGE("SsbSipMfcEncInit] No such BframeNum is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.codec.mpeg4.in_bframenum = mpeg4_arg->NumberBFrames;
@@ -331,7 +331,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         /* rate control*/
         EncArg.args.enc_init.cmn.in_rc_fr_en = h263_arg->EnableFRMRateControl;
         if ((h263_arg->QSCodeMin > 31) || (h263_arg->QSCodeMax > 31)) {
-            LOGE("SsbSipMfcEncInit] No such Min/Max QP is supported");
+            ALOGE("SsbSipMfcEncInit] No such Min/Max QP is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_rc_qbound_min = h263_arg->QSCodeMin;
@@ -341,7 +341,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         /* pad control */
         EncArg.args.enc_init.cmn.in_pad_ctrl_on = h263_arg->PadControlOn;
         if ((h263_arg->LumaPadVal > 255) || (h263_arg->CbPadVal > 255) || (h263_arg->CrPadVal > 255)) {
-            LOGE("SsbSipMfcEncInit] No such Pad value is supported");
+            ALOGE("SsbSipMfcEncInit] No such Pad value is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_y_pad_val = h263_arg->LumaPadVal;
@@ -353,7 +353,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
 
         EncArg.args.enc_init.cmn.in_rc_bitrate = h263_arg->Bitrate;
         if ((h263_arg->FrameQp > 31) || (h263_arg->FrameQp_P > 31)) {
-            LOGE("SsbSipMfcEncInit] No such FrameQp is supported");
+            ALOGE("SsbSipMfcEncInit] No such FrameQp is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_vop_quant = h263_arg->FrameQp;
@@ -377,7 +377,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
             (h264_arg->SliceMode == 2)||(h264_arg->SliceMode == 4)) {
             EncArg.args.enc_init.cmn.in_ms_mode = h264_arg->SliceMode;
         } else {
-            LOGE("SsbSipMfcEncInit] No such slice mode is supported");
+            ALOGE("SsbSipMfcEncInit] No such slice mode is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_ms_arg = h264_arg->SliceArgument;
@@ -386,7 +386,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         /* pad control */
         EncArg.args.enc_init.cmn.in_pad_ctrl_on = h264_arg->PadControlOn;
         if ((h264_arg->LumaPadVal > 255) || (h264_arg->CbPadVal > 255) || (h264_arg->CrPadVal > 255)) {
-            LOGE("SsbSipMfcEncInit] No such Pad value is supported");
+            ALOGE("SsbSipMfcEncInit] No such Pad value is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_y_pad_val = h264_arg->LumaPadVal;
@@ -400,14 +400,14 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         EncArg.args.enc_init.cmn.in_rc_fr_en = h264_arg->EnableFRMRateControl;
         EncArg.args.enc_init.cmn.in_rc_bitrate = h264_arg->Bitrate;
         if ((h264_arg->FrameQp > 51) || (h264_arg->FrameQp_P > 51)) {
-            LOGE("SsbSipMfcEncInit] No such FrameQp is supported");
+            ALOGE("SsbSipMfcEncInit] No such FrameQp is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_vop_quant = h264_arg->FrameQp;
         EncArg.args.enc_init.cmn.in_vop_quant_p = h264_arg->FrameQp_P;
 
         if ((h264_arg->QSCodeMin > 51) || (h264_arg->QSCodeMax > 51)) {
-            LOGE("SsbSipMfcEncInit] No such Min/Max QP is supported");
+            ALOGE("SsbSipMfcEncInit] No such Min/Max QP is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.cmn.in_rc_qbound_min = h264_arg->QSCodeMin;
@@ -420,13 +420,13 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         EncArg.args.enc_init.codec.h264.in_level = h264_arg->LevelIDC;
 
         if (h264_arg->FrameQp_B > 51) {
-            LOGE("SsbSipMfcEncInit] No such FrameQp is supported");
+            ALOGE("SsbSipMfcEncInit] No such FrameQp is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.codec.h264.in_vop_quant_b = h264_arg->FrameQp_B;
 
         if (h264_arg->NumberBFrames > 2) {
-            LOGE("SsbSipMfcEncInit] No such BframeNum is supported");
+            ALOGE("SsbSipMfcEncInit] No such BframeNum is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.codec.h264.in_bframenum = h264_arg->NumberBFrames;
@@ -434,7 +434,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         EncArg.args.enc_init.codec.h264.in_interlace_mode = h264_arg->PictureInterlace;
 
         if ((h264_arg->NumberRefForPframes > 2)||(h264_arg->NumberReferenceFrames >2)) {
-            LOGE("SsbSipMfcEncInit] No such ref Num is supported");
+            ALOGE("SsbSipMfcEncInit] No such ref Num is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.codec.h264.in_reference_num = h264_arg->NumberReferenceFrames;
@@ -450,7 +450,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
 
         EncArg.args.enc_init.codec.h264.in_deblock_dis = h264_arg->LoopFilterDisable;
         if ((abs(h264_arg->LoopFilterAlphaC0Offset) > 6) || (abs(h264_arg->LoopFilterBetaOffset) > 6)) {
-            LOGE("SsbSipMfcEncInit] No such AlphaC0Offset or BetaOffset is supported");
+            ALOGE("SsbSipMfcEncInit] No such AlphaC0Offset or BetaOffset is supported");
             return MFC_RET_INVALID_PARAM;
         }
         EncArg.args.enc_init.codec.h264.in_deblock_alpha_c0 = h264_arg->LoopFilterAlphaC0Offset;
@@ -466,7 +466,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
         break;
 
     default:
-        LOGE("SsbSipMfcEncInit] No such codec type is supported");
+        ALOGE("SsbSipMfcEncInit] No such codec type is supported");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -474,7 +474,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncInit(void *openHandle, void *param)
 
     ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_ENC_INIT, &EncArg);
     if (EncArg.ret_code != MFC_OK) {
-        LOGE("SsbSipMfcEncInit] IOCTL_MFC_ENC_INIT failed");
+        ALOGE("SsbSipMfcEncInit] IOCTL_MFC_ENC_INIT failed");
         return MFC_RET_ENC_INIT_FAIL;
     }
 
@@ -498,7 +498,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncExe(void *openHandle)
     struct mfc_common_args EncArg;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcEncExe] openHandle is NULL");
+        ALOGE("SsbSipMfcEncExe] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -524,7 +524,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncExe(void *openHandle)
 
     ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_ENC_EXE, &EncArg);
     if (EncArg.ret_code != MFC_OK) {
-        LOGE("SsbSipMfcEncExe] IOCTL_MFC_ENC_EXE failed(ret : %d)", EncArg.ret_code);
+        ALOGE("SsbSipMfcEncExe] IOCTL_MFC_ENC_EXE failed(ret : %d)", EncArg.ret_code);
         return MFC_RET_ENC_EXE_ERR;
     }
 
@@ -535,7 +535,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncExe(void *openHandle)
     pCTX->outframetagtop = EncArg.args.enc_exe.out_frametag_top;
     pCTX->outframetagbottom = EncArg.args.enc_exe.out_frametag_bottom;
 
-    LOGV("SsbSipMfcEncExe] Encode success ==================");
+    ALOGV("SsbSipMfcEncExe] Encode success ==================");
 
     return MFC_RET_OK;
 }
@@ -547,7 +547,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncClose(void *openHandle)
     struct mfc_common_args free_arg;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcEncClose] openHandle is NULL");
+        ALOGE("SsbSipMfcEncClose] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -586,7 +586,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncGetInBuf(void *openHandle, SSBSIP_MFC_ENC_INPU
     int aligned_y_size, aligned_c_size;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcEncGetInBuf] openHandle is NULL");
+        ALOGE("SsbSipMfcEncGetInBuf] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -606,7 +606,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncGetInBuf(void *openHandle, SSBSIP_MFC_ENC_INPU
     user_addr_arg.args.mem_alloc.mapped_addr = pCTX->mapped_addr;
     ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_GET_IN_BUF, &user_addr_arg);
     if (ret_code < 0) {
-        LOGE("SsbSipMfcEncGetInBuf] IOCTL_MFC_GET_IN_BUF failed");
+        ALOGE("SsbSipMfcEncGetInBuf] IOCTL_MFC_GET_IN_BUF failed");
         return MFC_RET_ENC_GET_INBUF_FAIL;
     }
 
@@ -616,7 +616,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncGetInBuf(void *openHandle, SSBSIP_MFC_ENC_INPU
     real_addr_arg.args.real_addr.key = user_addr_arg.args.mem_alloc.offset;
     ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_GET_REAL_ADDR, &real_addr_arg);
     if (ret_code  < 0) {
-        LOGE("SsbSipMfcEncGetInBuf] IOCTL_MFC_GET_REAL_ADDR failed");
+        ALOGE("SsbSipMfcEncGetInBuf] IOCTL_MFC_GET_REAL_ADDR failed");
         return MFC_RET_ENC_GET_INBUF_FAIL;
     }
     pCTX->phyFrmBuf.luma = real_addr_arg.args.real_addr.addr;
@@ -643,11 +643,11 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncSetInBuf(void *openHandle, SSBSIP_MFC_ENC_INPU
     int aligned_y_size, aligned_c_size;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcEncSetInBuf] openHandle is NULL");
+        ALOGE("SsbSipMfcEncSetInBuf] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
-    LOGV("SsbSipMfcEncSetInBuf] input_info->YPhyAddr & input_info->CPhyAddr should be 64KB aligned");
+    ALOGV("SsbSipMfcEncSetInBuf] input_info->YPhyAddr & input_info->CPhyAddr should be 64KB aligned");
 
     pCTX  = (_MFCLIB *) openHandle;
 
@@ -673,7 +673,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncGetOutBuf(void *openHandle, SSBSIP_MFC_ENC_OUT
     _MFCLIB *pCTX;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcEncGetOutBuf] openHandle is NULL");
+        ALOGE("SsbSipMfcEncGetOutBuf] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -705,7 +705,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncSetOutBuf(void *openHandle, void *phyOutbuf, v
     _MFCLIB *pCTX;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcEncSetOutBuf] openHandle is NULL");
+        ALOGE("SsbSipMfcEncSetOutBuf] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -731,12 +731,12 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncSetConfig(void *openHandle, SSBSIP_MFC_ENC_CON
 #endif
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcEncSetConfig] openHandle is NULL");
+        ALOGE("SsbSipMfcEncSetConfig] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
     if (value == NULL) {
-        LOGE("SsbSipMfcEncSetConfig] value is NULL");
+        ALOGE("SsbSipMfcEncSetConfig] value is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -787,7 +787,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncSetConfig(void *openHandle, SSBSIP_MFC_ENC_CON
         EncArg.args.config.args.basic.values[1] = 0;
         break;
     default:
-        LOGE("SsbSipMfcEncSetConfig] not supported type");
+        ALOGE("SsbSipMfcEncSetConfig] not supported type");
         return MFC_RET_ENC_SET_CONF_FAIL;
     }
 #else
@@ -816,7 +816,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncSetConfig(void *openHandle, SSBSIP_MFC_ENC_CON
 
     ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_SET_CONFIG, &EncArg);
     if (EncArg.ret_code != MFC_OK) {
-        LOGE("SsbSipMfcEncSetConfig] IOCTL_MFC_SET_CONFIG failed(ret : %d)", EncArg.ret_code);
+        ALOGE("SsbSipMfcEncSetConfig] IOCTL_MFC_SET_CONFIG failed(ret : %d)", EncArg.ret_code);
         return MFC_RET_ENC_SET_CONF_FAIL;
     }
 
@@ -834,11 +834,11 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncGetConfig(void *openHandle, SSBSIP_MFC_ENC_CON
     pCTX = (_MFCLIB *)openHandle;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcEncGetConfig] openHandle is NULL");
+        ALOGE("SsbSipMfcEncGetConfig] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
     if (value == NULL) {
-        LOGE("SsbSipMfcEncGetConfig] value is NULL");
+        ALOGE("SsbSipMfcEncGetConfig] value is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -853,7 +853,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcEncGetConfig(void *openHandle, SSBSIP_MFC_ENC_CON
         break;
 #endif
     default:
-        LOGE("SsbSipMfcEncGetConfig] No such conf_type is supported.");
+        ALOGE("SsbSipMfcEncGetConfig] No such conf_type is supported.");
         return MFC_RET_INVALID_PARAM;
     }
 

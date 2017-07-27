@@ -35,7 +35,6 @@
 #include <sys/poll.h>
 #include <sys/stat.h>
 
-#include <linux/android_pmem.h>
 #include <utils/threads.h>
 #include <utils/StopWatch.h>
 
@@ -46,7 +45,7 @@
 namespace android
 {
 
-#define NUMBER_FIMG_LIST           (1)  // kcoolsw : because of pmem
+#define NUMBER_FIMG_LIST           (1)
 #define GET_RECT_SIZE(rect)        ((rect->full_w) * (rect->h) * (rect->bytes_per_pixel))
 #define GET_REAL_SIZE(rect)        ((rect->full_w) * (rect->h) * (rect->bytes_per_pixel))
 #define GET_START_ADDR(rect)       (rect->virt_addr + ((rect->y * rect->full_w) * rect->bytes_per_pixel))

@@ -66,11 +66,11 @@ static unsigned int get_yuv_size(enum jpeg_frame_format out_format,
         break;
 
     default:
-        LOGV("get_yuv_size return fmt(%d)\n", out_format);
+        ALOGV("get_yuv_size return fmt(%d)\n", out_format);
         return(0);
     }
 
-    LOGV("get_yuv_size width(%d) height(%d)\n", width, height);
+    ALOGV("get_yuv_size width(%d) height(%d)\n", width, height);
 
     switch (out_format) {
     case YUV_422 :
@@ -114,13 +114,13 @@ int api_jpeg_decode_init()
     jpeg_ctx->jpeg_fd = open(JPEG_DRIVER_NAME, O_RDWR);
 
     if (jpeg_ctx->jpeg_fd < 0) {
-        LOGE("JPEG driver open failed\n");
+        ALOGE("JPEG driver open failed\n");
         return -1;
     }
 
 #ifdef S5P_VMEM
     mem_fp = s5p_vmem_open();
-    LOGV("s5p_vmem_open\n");
+    ALOGV("s5p_vmem_open\n");
 #else
     jpeg_ctx->args.mmapped_addr = (char *) mmap(0,
                         JPEG_TOTAL_BUF_SIZE,
@@ -129,10 +129,10 @@ int api_jpeg_decode_init()
                         jpeg_ctx->jpeg_fd, 0);
 
     if (jpeg_ctx->args.mmapped_addr == NULL) {
-        LOGE("JPEG mmap failed\n");
+        ALOGE("JPEG mmap failed\n");
         return -1;
     }
-    LOGV("api_jpeg_decode_init jpeg_ctx->args.mmapped_addr 0x%08x\n",
+    ALOGV("api_jpeg_decode_init jpeg_ctx->args.mmapped_addr 0x%08x\n",
                                                 jpeg_ctx->args.mmapped_addr);
 #endif /* S5P_VMEM */
 
@@ -145,13 +145,13 @@ int api_jpeg_encode_init()
     jpeg_ctx->jpeg_fd = open(JPEG_DRIVER_NAME, O_RDWR);
 
     if (jpeg_ctx->jpeg_fd < 0) {
-        LOGE("JPEG driver open failed %d\n", jpeg_ctx->jpeg_fd);
+        ALOGE("JPEG driver open failed %d\n", jpeg_ctx->jpeg_fd);
         return -1;
     }
 
 #ifdef S5P_VMEM
     mem_fp = s5p_vmem_open();
-    LOGI("s5p_vmem_open\n");
+    ALOGI("s5p_vmem_open\n");
 #else
 
     jpeg_ctx->args.mmapped_addr = (char *) mmap(0,
@@ -161,10 +161,10 @@ int api_jpeg_encode_init()
             jpeg_ctx->jpeg_fd, 0);
 
     if (jpeg_ctx->args.mmapped_addr == NULL) {
-        LOGE("JPEG mmap failed\n");
+        ALOGE("JPEG mmap failed\n");
         return -1;
     }
-    LOGV("api_jpeg_encode_init jpeg_ctx->args.mmapped_addr 0x%08x\n",
+    ALOGV("api_jpeg_encode_init jpeg_ctx->args.mmapped_addr 0x%08x\n",
                                                 jpeg_ctx->args.mmapped_addr);
 #endif /* S5P_VMEM */
     return jpeg_ctx->jpeg_fd;
@@ -214,7 +214,7 @@ int api_jpeg_encode_deinit(int dev_fd)
 void *api_jpeg_get_decode_in_buf(int dev_fd, unsigned int size)
 {
     if (size < 0 || size > MAX_JPEG_RES) {
-        LOGE("Invalid decode input buffer size\r\n");
+        ALOGE("Invalid decode input buffer size\r\n");
         return NULL;
     }
 #ifdef S5P_VMEM
@@ -246,7 +246,7 @@ void *api_jpeg_get_encode_in_buf(int dev_fd, unsigned int size)
                                 jpeg_ctx->args.mmapped_addr);
 #endif
 
-    LOGV("api_jpeg_get_encode_in_buf: 0x%x\n",
+    ALOGV("api_jpeg_get_encode_in_buf: 0x%x\n",
                         jpeg_ctx->args.in_buf);
 
     return (void *)(jpeg_ctx->args.in_buf);
@@ -266,7 +266,7 @@ void *api_jpeg_get_decode_out_buf(int dev_fd)
                                 jpeg_ctx->args.mmapped_addr);
 #endif /* S5P_VMEM */
     /*
-    LOGV("api_jpeg_get_decode_out_buf: 0x%x\n",
+    ALOGV("api_jpeg_get_decode_out_buf: 0x%x\n",
                         jpeg_ctx->args.out_buf);
     */
     return (void *)(jpeg_ctx->args.out_buf);
@@ -286,7 +286,7 @@ void *api_jpeg_get_encode_out_buf(int dev_fd)
                                 jpeg_ctx->args.mmapped_addr);
 #endif /* S5P_VMEM */
 
-    LOGV("api_jpeg_get_encode_out_buf: 0x%x\n",
+    ALOGV("api_jpeg_get_encode_out_buf: 0x%x\n",
                         jpeg_ctx->args.out_buf);
 
     return (void *)(jpeg_ctx->args.out_buf);
@@ -312,7 +312,7 @@ enum jpeg_ret_type api_jpeg_decode_exe(int dev_fd,
     arg = &(jpeg_ctx->args);
 
     ioctl(jpeg_ctx->jpeg_fd, IOCTL_JPEG_DEC_EXE, arg->dec_param);
-    LOGV("api_jpeg_decode_exe dec_param->out_fmt :%d \
+    ALOGV("api_jpeg_decode_exe dec_param->out_fmt :%d \
                         dec_param->width : %d dec_param->height : %d\n",
                         arg->dec_param->out_fmt,
                         arg->dec_param->width,
@@ -335,7 +335,7 @@ enum jpeg_ret_type api_jpeg_encode_exe(int dev_fd,
     // check MCU validation width & height & sampling mode
     if (check_input_size(jpeg_ctx->args.enc_param->width,
                                 jpeg_ctx->args.enc_param->height) < 0) {
-        LOGV("width/height doesn't match with MCU\r\n");
+        ALOGV("width/height doesn't match with MCU\r\n");
         return JPEG_FAIL;
     }
 

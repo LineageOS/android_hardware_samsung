@@ -166,10 +166,10 @@ LOOP_HEIGHT_256_GET_TILED_END:
     pld         [r12]
     cmp         r10, #0
     pld         [r12, #32]
-    stmnefd     sp!, {r9-r12, r14}      @ backup registers
+    stmfdne     sp!, {r9-r12, r14}      @ backup registers
     rsbne       r10, r10, #64
     blne        MEMCOPY_UNDER_64
-    ldmnefd     sp!, {r9-r12, r14}      @ restore registers
+    ldmfdne     sp!, {r9-r12, r14}      @ restore registers
     bne         LOOP_HEIGHT_256_LEFT_256_64
     vld1.8      {q0, q1}, [r11]!        @ load {nv12t_src+tiled_offset+temp1, 64}
     vld1.8      {q2, q3}, [r11]
@@ -216,11 +216,11 @@ LOOP_HEIGHT_256_LEFT_192:
     pld         [r11, #32]
     cmp         r10, #0
     pld         [r12]
-    stmnefd     sp!, {r9-r12, r14}      @ backup registers
+    stmfdne     sp!, {r9-r12, r14}      @ backup registers
     pld         [r12, #32]
     rsbne       r10, r10, #64
     blne        MEMCOPY_UNDER_64
-    ldmnefd     sp!, {r9-r12, r14}      @ restore registers
+    ldmfdne     sp!, {r9-r12, r14}      @ restore registers
     bne         LOOP_HEIGHT_256_LEFT_192_64
     vld1.8      {q0, q1}, [r11]!        @ load {nv12t_src+tiled_offset+2048+temp1, 64}
     vld1.8      {q2, q3}, [r11]
@@ -261,11 +261,11 @@ LOOP_HEIGHT_256_LEFT_128:
     pld         [r11, #32]
     cmp         r10, #0
     pld         [r12]
-    stmnefd     sp!, {r9-r12, r14}      @ backup registers
+    stmfdne     sp!, {r9-r12, r14}      @ backup registers
     pld         [r12, #32]
     rsbne       r10, r10, #64
     blne        MEMCOPY_UNDER_64
-    ldmnefd     sp!, {r9-r12, r14}      @ restore registers
+    ldmfdne     sp!, {r9-r12, r14}      @ restore registers
     bne         LOOP_HEIGHT_256_LEFT_128_64
     vld1.8      {q0, q1}, [r11]!        @ load {nv12t_src+tiled_offset1+temp1, 64}
     vld1.8      {q2, q3}, [r11]
@@ -293,11 +293,11 @@ LOOP_HEIGHT_256_LEFT_64:
     add         r11, r11, r10
     cmp         r10, #0
     pld         [r11]
-    stmnefd     sp!, {r9-r12, r14}      @ backup registers
+    stmfdne     sp!, {r9-r12, r14}      @ backup registers
     pld         [r11, #32]
     rsbne       r10, r10, #64
     blne        MEMCOPY_UNDER_64
-    ldmnefd     sp!, {r9-r12, r14}      @ restore registers
+    ldmfdne     sp!, {r9-r12, r14}      @ restore registers
     bne         LOOP_HEIGHT_256_LEFT_64_64
     vld1.8      {q0, q1}, [r11]!        @ load {nv12t_src+tiled_offset1+temp1, 64}
     vld1.8      {q2, q3}, [r11]

@@ -48,7 +48,7 @@ SecHdmiClient * SecHdmiClient::getInstance(void)
 
 void SecHdmiClient::setHdmiCableStatus(int status)
 {
-    //LOGD("%s HDMI status: %d\n", __func__, status);
+    //ALOGD("%s HDMI status: %d\n", __func__, status);
 
     if (g_SecTVOutService != 0)
         g_SecTVOutService->setHdmiCableStatus(status);
@@ -56,7 +56,7 @@ void SecHdmiClient::setHdmiCableStatus(int status)
 
 void SecHdmiClient::setHdmiMode(int mode)
 {
-    //LOGD("%s HDMI Mode: %d\n", __func__, mode);
+    //ALOGD("%s HDMI Mode: %d\n", __func__, mode);
 
     if (g_SecTVOutService != 0)
         g_SecTVOutService->setHdmiMode(mode);
@@ -64,7 +64,7 @@ void SecHdmiClient::setHdmiMode(int mode)
 
 void SecHdmiClient::setHdmiResolution(int resolution)
 {
-    //LOGD("%s HDMI Resolution: %d\n", __func__, resolution);
+    //ALOGD("%s HDMI Resolution: %d\n", __func__, resolution);
 
     if (g_SecTVOutService != 0)
         g_SecTVOutService->setHdmiResolution(resolution);
@@ -72,7 +72,7 @@ void SecHdmiClient::setHdmiResolution(int resolution)
 
 void SecHdmiClient::setHdmiHdcp(int enHdcp)
 {
-    //LOGD("%s HDMI HDCP: %d\n", __func__, enHdcp);
+    //ALOGD("%s HDMI HDCP: %d\n", __func__, enHdcp);
 
     if (g_SecTVOutService != 0)
         g_SecTVOutService->setHdmiHdcp(enHdcp);
@@ -80,7 +80,7 @@ void SecHdmiClient::setHdmiHdcp(int enHdcp)
 
 void SecHdmiClient::setHdmiRotate(int rotVal, uint32_t hwcLayer)
 {
-    //LOGD("%s HDMI ROTATE: %d\n", __func__, rotVal);
+    //ALOGD("%s HDMI ROTATE: %d\n", __func__, rotVal);
 
     if (g_SecTVOutService != 0)
         g_SecTVOutService->setHdmiRotate(rotVal, hwcLayer);
@@ -88,7 +88,7 @@ void SecHdmiClient::setHdmiRotate(int rotVal, uint32_t hwcLayer)
 
 void SecHdmiClient::setHdmiHwcLayer(uint32_t hwcLayer)
 {
-    //LOGD("%s HDMI HWCLAYER: %d\n", __func__, hwcLayer);
+    //ALOGD("%s HDMI HWCLAYER: %d\n", __func__, hwcLayer);
 
     if (g_SecTVOutService != 0)
         g_SecTVOutService->setHdmiHwcLayer(hwcLayer);
@@ -96,7 +96,7 @@ void SecHdmiClient::setHdmiHwcLayer(uint32_t hwcLayer)
 
 void SecHdmiClient::setHdmiEnable(uint32_t enable)
 {
-    //LOGD("%s HDMI ENABLE: %d\n", __func__, enable);
+    //ALOGD("%s HDMI ENABLE: %d\n", __func__, enable);
 
     if (g_SecTVOutService != 0)
         mEnable = enable;
@@ -128,7 +128,7 @@ sp<ISecTVOut> SecHdmiClient::m_getSecTVOutService(void)
         for(getSvcTimes = 0; getSvcTimes < GETSERVICETIMEOUT; getSvcTimes++) {
             binder = sm->getService(String16("SecTVOutService"));
             if (binder == 0) {
-                LOGW("SecTVOutService not published, waiting...");
+                ALOGW("SecTVOutService not published, waiting...");
                 usleep(500000); // 0.5 s
             } else {
                 break;
@@ -139,7 +139,7 @@ sp<ISecTVOut> SecHdmiClient::m_getSecTVOutService(void)
             sc = interface_cast<ISecTVOut>(binder);
             g_SecTVOutService = sc;
         } else {
-            LOGW("Failed to get SecTVOutService... SecHdmiClient will get it later..");
+            ALOGW("Failed to get SecTVOutService... SecHdmiClient will get it later..");
         }
     }
     return g_SecTVOutService;
