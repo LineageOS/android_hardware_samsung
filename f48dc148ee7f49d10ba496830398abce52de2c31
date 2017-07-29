@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ac9b61bf_93d83bc2",
+        "filename": "ril/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-29T05:02:44Z",
+      "side": 1,
+      "message": "I agree...",
+      "parentUuid": "39b12f99_2740ed39",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4169e100_8ea594c9",
         "filename": "ril/Android.mk",
         "patchSetId": 4
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "6f2960f2_d38a43b4",
+        "filename": "ril/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-29T05:02:44Z",
+      "side": 1,
+      "message": "imo, this property should stay in this makefile...",
+      "parentUuid": "4169e100_8ea594c9",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d2939ed_a95f79c8",
         "filename": "ril/Android.mk",
         "patchSetId": 4
@@ -118,6 +154,24 @@
       "writtenOn": "2017-07-27T17:23:53Z",
       "side": 1,
       "message": "This flag makes no sense.\nIf a device wants to have that field, it should set the property, not this flag which then in turn sets the property.",
+      "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48846816_5e654fdd",
+        "filename": "ril/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-07-29T05:02:44Z",
+      "side": 1,
+      "message": "this flag already exists...\nhttps://github.com/LineageOS/android_hardware_samsung/commit/6d6daf94bc6c81af7ec0a451df803360838d1dbb\nit conditions the libril code...\nimo, this property should stay in this makefile...",
+      "parentUuid": "2d2939ed_a95f79c8",
       "revId": "f48dc148ee7f49d10ba496830398abce52de2c31",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
