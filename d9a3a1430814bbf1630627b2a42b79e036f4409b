@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21830666_ddbd468c",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-07-30T18:36:45Z",
+      "side": 1,
+      "message": "If this isn\u0027t meant to override something in the parent class, no need to make it public. You can also call \"acceptCall\" something like \"acceptCallInternal\" instead.",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 10
+      },
+      "revId": "d9a3a1430814bbf1630627b2a42b79e036f4409b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e56ef446_1c961a18",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-07-30T18:36:45Z",
+      "side": 1,
+      "message": "Doesn\u0027t need to be public.",
+      "range": {
+        "startLine": 269,
+        "startChar": 4,
+        "endLine": 269,
+        "endChar": 10
+      },
+      "revId": "d9a3a1430814bbf1630627b2a42b79e036f4409b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "797eb594_5e9b06f9",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-07-30T18:36:45Z",
+      "side": 1,
+      "message": "Would it be better to name this something more descriptive? \"processUnsolicitedParent\", or something?",
+      "range": {
+        "startLine": 270,
+        "startChar": 4,
+        "endLine": 270,
+        "endChar": 27
+      },
+      "revId": "d9a3a1430814bbf1630627b2a42b79e036f4409b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53318520_9a9ba20d",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-07-30T18:36:45Z",
+      "side": 1,
+      "message": "Probably better practice to have a boolean field for whether \"newResponse\" is used or not, rather than dual purposing it here.",
+      "range": {
+        "startLine": 270,
+        "startChar": 70,
+        "endLine": 270,
+        "endChar": 81
+      },
+      "revId": "d9a3a1430814bbf1630627b2a42b79e036f4409b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
