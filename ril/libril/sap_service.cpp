@@ -914,7 +914,7 @@ void sap::processUnsolResponse(MsgHeader *rsp, RilSapSocket *sapSocket) {
     processResponse(rsp, sapSocket, MsgType_UNSOL_RESPONSE);
 }
 
-void sap::registerService(RIL_RadioFunctions *callbacks) {
+void sap::registerService(const RIL_RadioFunctions *callbacks) {
     using namespace android::hardware;
     int simCount = 1;
     const char *serviceNames[] = {
