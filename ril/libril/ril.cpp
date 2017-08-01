@@ -490,10 +490,10 @@ RIL_register (const RIL_RadioFunctions *callbacks) {
 }
 
 extern "C" void
-RIL_register_socket (RIL_RadioFunctions *(*Init)(const struct RIL_Env *, int, char **),
+RIL_register_socket (const RIL_RadioFunctions *(*Init)(const struct RIL_Env *, int, char **),
         RIL_SOCKET_TYPE socketType, int argc, char **argv) {
 
-    RIL_RadioFunctions* UimFuncs = NULL;
+    const RIL_RadioFunctions* UimFuncs = NULL;
 
     if(Init) {
         UimFuncs = Init(&RilSapSocket::uimRilEnv, argc, argv);
