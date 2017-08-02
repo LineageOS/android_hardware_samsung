@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2015      Andreas Schneider <asn@cryptomilk.org>
+ * Copyright (c) 2017      Christopher N. Hesse <raymanfx@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +19,45 @@
 #define LOG_NDEBUG 0
 
 #include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <cutils/log.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
 
 #define DEFERRED_INITCALLS "/proc/deferred_initcalls"
+#define WIFI_MODULE "/system/lib/modules/wlan.ko"
+
+#define finit_module(fd, params, flags) syscall(__NR_finit_module, fd, params, flags)
 
 int main(void)
 {
     char buf[8] = { '\0' };
     FILE *fp;
     size_t r;
+    int fd;
+    struct stat st;
+
+    if (stat(WIFI_MODULE, &st) == 0) {
+        ALOGD("Loading WiFi kernel module: %s", WIFI_MODULE);
+        fd = open(WIFI_MODULE, O_RDONLY);
+        if (fd == -1) {
+            ALOGE("Failed to open %s - error: %s",
+                WIFI_MODULE,
+                strerror(errno));
+            return -errno;
+        }
+
+        // load the .ko image
+        if (finit_module(fd, "", 0) != 0) {
+            ALOGE("Failed to load module %s", WIFI_MODULE);
+            close(fd);
+            return -1;
+        }
+        close(fd);
+    }
 
     ALOGD("Trigger initcall of deferred modules\n");
 
