@@ -32,6 +32,7 @@ LOCAL_SHARED_LIBRARIES := \
 	liblog \
 	libcutils \
 	libaudioutils \
+	libhardware \
 	libtinyalsa \
 	libtinycompress \
 	libaudioroute \
@@ -43,6 +44,7 @@ LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/include \
 	external/tinyalsa/include \
 	external/tinycompress/include \
+	hardware/libhardware/include \
 	hardware/samsung/ril/libsecril-client \
 	$(call include-path-for, audio-utils) \
 	$(call include-path-for, audio-route) \
