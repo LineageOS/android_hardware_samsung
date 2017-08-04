@@ -47,6 +47,7 @@
 #include <audio_effects/effect_aec.h>
 #include <audio_effects/effect_ns.h>
 #include "audio_hw.h"
+#include "amplifier.h"
 #include "compress_offload.h"
 #include "voice.h"
 
@@ -863,10 +864,16 @@ int disable_snd_device(struct audio_device *adev,
         ALOGE("%s: device ref cnt is already 0", __func__);
         return -EINVAL;
     }
+
+#ifdef TFA_AMPLIFIER
+    speaker_amp_disable(snd_device);
+#endif
+
     adev->snd_dev_ref_cnt[snd_device]--;
     if (adev->snd_dev_ref_cnt[snd_device] == 0) {
         ALOGV("%s: snd_device(%d: %s)", __func__,
               snd_device, snd_device_name);
+
         list_for_each(node, &uc_info->mixer_list) {
             mixer_card = node_to_item(node, struct mixer_card, uc_list_node[uc_info->id]);
 #ifdef DSP_POWEROFF_DELAY
@@ -991,6 +998,10 @@ static int select_devices(struct audio_device *adev,
     if (in_snd_device != SND_DEVICE_NONE) {
         enable_snd_device(adev, usecase, in_snd_device, false);
     }
+
+#ifdef TFA_AMPLIFIER
+    speaker_amp_set_mode();
+#endif
 
     list_for_each(node, &usecase->mixer_list) {
          mixer_card = node_to_item(node, struct mixer_card, uc_list_node[usecase->id]);
@@ -2459,6 +2470,12 @@ static int start_output_stream(struct stream_out *out)
         if (adev->offload_fx_start_output != NULL)
             adev->offload_fx_start_output(out->handle);
     }
+
+#ifdef TFA_AMPLIFIER
+    /* Handle amplifier state */
+    speaker_amp_enable();
+#endif
+
     ALOGV("%s: exit", __func__);
     return 0;
 error_open:
@@ -2774,6 +2791,9 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                     if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD)
                         out_set_offload_parameters(adev, uc_info);
                     select_devices(adev, out->usecase);
+#ifdef TFA_AMPLIFIER
+                    speaker_amp_update();
+#endif
                 }
             }
 
@@ -2795,6 +2815,9 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                      */
                     stop_voice_call(adev);
                     start_voice_call(adev);
+#ifdef TFA_AMPLIFIER
+                    speaker_amp_update();
+#endif
                 }
             }
         }
@@ -4322,6 +4345,12 @@ static int adev_close(hw_device_t *device)
     audio_device_ref_count--;
     free(adev->snd_dev_ref_cnt);
     free_mixer_list(adev);
+
+#ifdef TFA_AMPLIFIER
+    /* De-Initialize the amplifier if present */
+    speaker_amp_device_close();
+#endif
+
     free(device);
 
     return 0;
@@ -4482,6 +4511,11 @@ static int adev_open(const hw_module_t *module, const char *name,
             pcm_device_capture_low_latency.config.period_size = trial;
         }
     }
+
+#ifdef TFA_AMPLIFIER
+    /* Initialize the amplifier if present */
+    speaker_amp_device_open(adev);
+#endif
 
     ALOGV("%s: exit", __func__);
     return 0;
