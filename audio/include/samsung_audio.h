@@ -91,4 +91,13 @@
  */
 /* #define AUDIENCE_EARSMART_IC */
 
+/*
+ * Some device variants have an external NXP TFA amplifier chip.
+ * The code might be shareable with other possible amplifier implementations
+ * (e.g. Maxim), but for now it is only tested with a TFA9896.
+ * This hooks into the speaker usecases and handles the i2c device state by
+ * hooking into the stock library which exposes the whole interface.
+ */
+/* #define TFA_AMPLIFIER */
+
 #endif // SAMSUNG_AUDIO_H
