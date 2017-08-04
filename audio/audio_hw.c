@@ -17,7 +17,7 @@
  */
 
 #define LOG_TAG "audio_hw_primary"
-/*#define LOG_NDEBUG 0*/
+#define LOG_NDEBUG 0
 /*#define VERY_VERY_VERBOSE_LOGGING*/
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
@@ -47,6 +47,7 @@
 #include <audio_effects/effect_aec.h>
 #include <audio_effects/effect_ns.h>
 #include "audio_hw.h"
+#include "amplifier.h"
 #include "compress_offload.h"
 #include "voice.h"
 
@@ -851,6 +852,11 @@ int disable_snd_device(struct audio_device *adev,
 
     if (snd_device_name == NULL)
         return -EINVAL;
+
+    if (adev->amplifier_state == AMPLIFIER_ONLINE) {
+        speaker_amp_disable(adev->amplifier_device);
+        adev->amplifier_state = AMPLIFIER_OFFLINE;
+    }
 
     if (snd_device == SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES) {
         ALOGV("Request to disable combo device: disable individual devices\n");
@@ -2459,6 +2465,15 @@ static int start_output_stream(struct stream_out *out)
         if (adev->offload_fx_start_output != NULL)
             adev->offload_fx_start_output(out->handle);
     }
+
+    /* Handle amplifier state */
+    if (adev->amplifier_state == AMPLIFIER_OFFLINE) {
+        if (out->devices & AUDIO_DEVICE_OUT_SPEAKER) {
+            speaker_amp_enable(adev->amplifier_device);
+            adev->amplifier_state = AMPLIFIER_ONLINE;
+        }
+    }
+
     ALOGV("%s: exit", __func__);
     return 0;
 error_open:
@@ -4322,6 +4337,10 @@ static int adev_close(hw_device_t *device)
     audio_device_ref_count--;
     free(adev->snd_dev_ref_cnt);
     free_mixer_list(adev);
+
+    /* De-Initialize the amplifier if present */
+    speaker_amp_device_close(adev);
+
     free(device);
 
     return 0;
@@ -4482,6 +4501,9 @@ static int adev_open(const hw_module_t *module, const char *name,
             pcm_device_capture_low_latency.config.period_size = trial;
         }
     }
+
+    /* Initialize the amplifier if present */
+    speaker_amp_device_open(adev);
 
     ALOGV("%s: exit", __func__);
     return 0;

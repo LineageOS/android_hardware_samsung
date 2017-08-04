@@ -27,6 +27,9 @@
 #include <audio_utils/resampler.h>
 #include <audio_route/audio_route.h>
 
+/* Amplifier types */
+#include "amplifier.h"
+
 /* Retry for delay in FW loading*/
 #define RETRY_NUMBER 10
 #define RETRY_US 500000
@@ -426,6 +429,10 @@ struct audio_device {
     int                     (*sound_trigger_open_for_streaming)();
     size_t                  (*sound_trigger_read_samples)(int, void*, size_t);
     int                     (*sound_trigger_close_for_streaming)(int);
+
+    amplifier_device_t*     amplifier_device;
+    /* -1 = no amplifier, 0 = offline, 1 = online */
+    amplifier_state_t       amplifier_state;
 
     pthread_mutex_t         lock_inputs; /* see note below on mutex acquisition order */
 };
