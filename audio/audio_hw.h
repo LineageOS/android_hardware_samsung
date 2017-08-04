@@ -427,6 +427,9 @@ struct audio_device {
     size_t                  (*sound_trigger_read_samples)(int, void*, size_t);
     int                     (*sound_trigger_close_for_streaming)(int);
 
+    /* -1 = no amplifier, 0 = offline, 1 = online */
+    int                     amplifier_state;
+
     pthread_mutex_t         lock_inputs; /* see note below on mutex acquisition order */
 };
 

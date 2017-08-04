@@ -17,7 +17,7 @@
  */
 
 #define LOG_TAG "audio_hw_primary"
-/*#define LOG_NDEBUG 0*/
+#define LOG_NDEBUG 0
 /*#define VERY_VERY_VERBOSE_LOGGING*/
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
@@ -47,6 +47,7 @@
 #include <audio_effects/effect_aec.h>
 #include <audio_effects/effect_ns.h>
 #include "audio_hw.h"
+#include "amplifier.h"
 #include "compress_offload.h"
 #include "voice.h"
 
@@ -967,6 +968,25 @@ static int select_devices(struct audio_device *adev,
     ALOGV("%s: out_snd_device(%d: %s) in_snd_device(%d: %s)", __func__,
           out_snd_device, get_snd_device_display_name(out_snd_device),
           in_snd_device,  get_snd_device_display_name(in_snd_device));
+
+    /* Handle amplifier state */
+    if (adev->amplifier_state >= 0) {
+        if (out_snd_device == SND_DEVICE_OUT_SPEAKER ||
+            out_snd_device == SND_DEVICE_OUT_VOICE_SPEAKER ||
+            out_snd_device == SND_DEVICE_OUT_VOICE_SPEAKER_WB ||
+            out_snd_device == SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES ||
+            out_snd_device == SND_DEVICE_OUT_SPEAKER_AND_HDMI) {
+            if (adev->amplifier_state != 1) {
+                speaker_amp_enable(0);
+                adev->amplifier_state = 1;
+            }
+        } else {
+            if (adev->amplifier_state != 0) {
+                speaker_amp_disable();
+                adev->amplifier_state = 0;
+            }
+        }
+    }
 
 
     /* Disable current sound devices */
@@ -4480,6 +4500,14 @@ static int adev_open(const hw_module_t *module, const char *name,
                     PLAYBACK_STOP_THRESHOLD(trial, PLAYBACK_PERIOD_COUNT);
 
             pcm_device_capture_low_latency.config.period_size = trial;
+        }
+    }
+
+    /* Initialize the amplifier if present */
+    adev->amplifier_state = -1;
+    if (load_amplifier_lib() == 0) {
+        if (speaker_amp_device_open() == 0) {
+            adev->amplifier_state = 0;
         }
     }
 
