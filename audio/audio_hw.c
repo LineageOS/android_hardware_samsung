@@ -47,6 +47,7 @@
 #include <audio_effects/effect_aec.h>
 #include <audio_effects/effect_ns.h>
 #include "audio_hw.h"
+#include "amplifier.h"
 #include "compress_offload.h"
 #include "voice.h"
 
@@ -4481,6 +4482,11 @@ static int adev_open(const hw_module_t *module, const char *name,
 
             pcm_device_capture_low_latency.config.period_size = trial;
         }
+    }
+
+    /* Initialize the amplifier if present */
+    if (load_amplifier_lib() == 0) {
+        speaker_amp_device_open();
     }
 
     ALOGV("%s: exit", __func__);
