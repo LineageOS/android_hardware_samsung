@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e2c631c_0f0a0c26",
+        "filename": "audio/amplifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2017-08-10T17:22:28Z",
+      "side": 1,
+      "message": "you could just do #define TFA_AMPLIFIER_LIBRARY_PATH \"libtfa98xx.so\"\nit\u0027ll automatically peek proper lib based on arch",
+      "revId": "cbf176f3ac82d8825cbee142cf4fc351d37af888",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
