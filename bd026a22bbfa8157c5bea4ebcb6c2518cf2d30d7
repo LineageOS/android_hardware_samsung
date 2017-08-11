@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7f6f74_be07a607",
+        "filename": "liblights/lights.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-08-11T03:08:46Z",
+      "side": 1,
+      "message": "tabs",
+      "revId": "bd026a22bbfa8157c5bea4ebcb6c2518cf2d30d7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
