@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9074dfc_636481aa",
+        "filename": "liblights/lights.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-08-11T03:08:13Z",
+      "side": 1,
+      "message": "Why the ifdef here but not below?",
+      "revId": "1ede739c77a4731cc84a7896447932d263c01543",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
