@@ -21,6 +21,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <utils/Log.h>
+#include <android/log.h>
 #include <pthread.h>
 #include "secril-client.h"
 #include <hardware_legacy/power.h> // For wakelock
