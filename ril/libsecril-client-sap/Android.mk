@@ -11,7 +11,8 @@ LOCAL_SHARED_LIBRARIES := \
     libutils \
     libbinder \
     libcutils \
-    libhardware_legacy
+    libhardware_legacy \
+    liblog
 
 LOCAL_CFLAGS := 
 
