@@ -15,6 +15,8 @@ LOCAL_SHARED_LIBRARIES := \
 
 LOCAL_CFLAGS := 
 
+LOCAL_STATIC_LIBRARIES := libbase
+
 LOCAL_MODULE:= libsecril-client-sap
 LOCAL_PRELINK_MODULE := false
 
