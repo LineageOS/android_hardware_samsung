@@ -3,7 +3,6 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := dtbimg.c
 LOCAL_STATIC_LIBRARIES := libfdt
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/libfdt
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/libdtbimg
 
 LOCAL_MODULE := libdtbimg
@@ -56,5 +55,3 @@ LOCAL_FORCE_STATIC_EXECUTABLE := true
 include $(BUILD_EXECUTABLE)
 
 $(call dist-for-goals,dist_files,$(LOCAL_BUILT_MODULE))
-
-include $(LOCAL_PATH)/libfdt/Android.mk
