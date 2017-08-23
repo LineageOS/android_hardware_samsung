@@ -11,9 +11,12 @@ LOCAL_SHARED_LIBRARIES := \
     libutils \
     libbinder \
     libcutils \
-    libhardware_legacy
+    libhardware_legacy \
+    liblog
 
 LOCAL_CFLAGS := 
+
+LOCAL_STATIC_LIBRARIES := libbase
 
 LOCAL_MODULE:= libsecril-client-sap
 LOCAL_PRELINK_MODULE := false

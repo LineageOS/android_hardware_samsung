@@ -11,9 +11,12 @@ LOCAL_SHARED_LIBRARIES := \
     libutils \
     libbinder \
     libcutils \
-    libhardware_legacy
+    libhardware_legacy \
+    liblog
 
 LOCAL_CFLAGS := 
+
+LOCAL_STATIC_LIBRARIES := libbase
 
 ifeq ($(TARGET_BOARD_PLATFORM),exynos4)
 LOCAL_CFLAGS += -DRIL_CALL_AUDIO_PATH_EXTRAVOLUME
