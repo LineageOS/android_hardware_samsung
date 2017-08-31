@@ -180,7 +180,7 @@ int createIONMem(struct secion_param *param, size_t size, unsigned int flags)
     }
 
 fail:
-    if(param->memory > 0) munmap(param->memory, size);
+    if(param->memory != NULL) munmap(param->memory, size);
     if(param->buffer > 0) ion_free(param->buffer);
     param->buffer = -1;
     param->size = 0;
