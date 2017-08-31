@@ -229,7 +229,7 @@ int fimc_v4l2_query_buf(int fd, SecBuffer *secBuf, enum v4l2_buf_type type, enum
     secBuf->size.s = buf.length;
 
     if ((secBuf->virt.p = (char *)mmap(0, buf.length,
-            PROT_READ | PROT_WRITE, MAP_SHARED, fd, buf.m.offset)) < 0) {
+            PROT_READ | PROT_WRITE, MAP_SHARED, fd, buf.m.offset)) < (char *)0) {
             ALOGE("%s::mmap failed", __func__);
         return -1;
     }
