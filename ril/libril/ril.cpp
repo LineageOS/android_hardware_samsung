@@ -5518,18 +5518,6 @@ wakeTimeoutCallback (void *param) {
 static int
 decodeVoiceRadioTechnology (RIL_RadioState radioState) {
     switch (radioState) {
-        case RADIO_STATE_SIM_NOT_READY:
-        case RADIO_STATE_SIM_LOCKED_OR_ABSENT:
-        case RADIO_STATE_SIM_READY:
-            return RADIO_TECH_UMTS;
-
-        case RADIO_STATE_RUIM_NOT_READY:
-        case RADIO_STATE_RUIM_READY:
-        case RADIO_STATE_RUIM_LOCKED_OR_ABSENT:
-        case RADIO_STATE_NV_NOT_READY:
-        case RADIO_STATE_NV_READY:
-            return RADIO_TECH_1xRTT;
-
         default:
             RLOGD("decodeVoiceRadioTechnology: Invoked with incorrect RadioState");
             return -1;
@@ -5539,18 +5527,6 @@ decodeVoiceRadioTechnology (RIL_RadioState radioState) {
 static int
 decodeCdmaSubscriptionSource (RIL_RadioState radioState) {
     switch (radioState) {
-        case RADIO_STATE_SIM_NOT_READY:
-        case RADIO_STATE_SIM_LOCKED_OR_ABSENT:
-        case RADIO_STATE_SIM_READY:
-        case RADIO_STATE_RUIM_NOT_READY:
-        case RADIO_STATE_RUIM_READY:
-        case RADIO_STATE_RUIM_LOCKED_OR_ABSENT:
-            return CDMA_SUBSCRIPTION_SOURCE_RUIM_SIM;
-
-        case RADIO_STATE_NV_NOT_READY:
-        case RADIO_STATE_NV_READY:
-            return CDMA_SUBSCRIPTION_SOURCE_NV;
-
         default:
             RLOGD("decodeCdmaSubscriptionSource: Invoked with incorrect RadioState");
             return -1;
@@ -5560,16 +5536,6 @@ decodeCdmaSubscriptionSource (RIL_RadioState radioState) {
 static int
 decodeSimStatus (RIL_RadioState radioState) {
    switch (radioState) {
-       case RADIO_STATE_SIM_NOT_READY:
-       case RADIO_STATE_RUIM_NOT_READY:
-       case RADIO_STATE_NV_NOT_READY:
-       case RADIO_STATE_NV_READY:
-           return -1;
-       case RADIO_STATE_SIM_LOCKED_OR_ABSENT:
-       case RADIO_STATE_SIM_READY:
-       case RADIO_STATE_RUIM_READY:
-       case RADIO_STATE_RUIM_LOCKED_OR_ABSENT:
-           return radioState;
        default:
            RLOGD("decodeSimStatus: Invoked with incorrect RadioState");
            return -1;
@@ -5955,14 +5921,6 @@ radioStateToString(RIL_RadioState s) {
     switch(s) {
         case RADIO_STATE_OFF: return "RADIO_OFF";
         case RADIO_STATE_UNAVAILABLE: return "RADIO_UNAVAILABLE";
-        case RADIO_STATE_SIM_NOT_READY: return "RADIO_SIM_NOT_READY";
-        case RADIO_STATE_SIM_LOCKED_OR_ABSENT: return "RADIO_SIM_LOCKED_OR_ABSENT";
-        case RADIO_STATE_SIM_READY: return "RADIO_SIM_READY";
-        case RADIO_STATE_RUIM_NOT_READY:return"RADIO_RUIM_NOT_READY";
-        case RADIO_STATE_RUIM_READY:return"RADIO_RUIM_READY";
-        case RADIO_STATE_RUIM_LOCKED_OR_ABSENT:return"RADIO_RUIM_LOCKED_OR_ABSENT";
-        case RADIO_STATE_NV_NOT_READY:return"RADIO_NV_NOT_READY";
-        case RADIO_STATE_NV_READY:return"RADIO_NV_READY";
         case RADIO_STATE_ON:return"RADIO_ON";
         default: return "<unknown state>";
     }
