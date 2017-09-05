@@ -14,7 +14,7 @@ LOCAL_CFLAGS :=
 LOCAL_ARM_MODE := arm
 
 LOCAL_STATIC_LIBRARIES := libsecosal libsecbasecomponent
-LOCAL_SHARED_LIBRARIES := libc libdl libcutils libutils \
+LOCAL_SHARED_LIBRARIES := libc libdl libcutils libutils liblog \
 	libSEC_OMX_Resourcemanager
 
 LOCAL_C_INCLUDES := $(SEC_OMX_INC)/khronos \
