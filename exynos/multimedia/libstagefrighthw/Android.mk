@@ -14,6 +14,7 @@ LOCAL_SHARED_LIBRARIES :=    \
         libutils             \
         libcutils            \
         libui                \
+	liblog               \
         libdl                \
 	libstagefright_foundation
 
