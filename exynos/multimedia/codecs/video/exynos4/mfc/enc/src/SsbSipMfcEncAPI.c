@@ -30,6 +30,8 @@
 #include "SsbSipMfcApi.h"
 
 #include <utils/Log.h>
+#include <android/log.h>
+
 /* #define LOG_NDEBUG 0 */
 #undef  LOG_TAG
 #define LOG_TAG "MFC_ENC_APP"
