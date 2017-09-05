@@ -30,7 +30,7 @@ LOCAL_ARM_MODE := arm
 
 LOCAL_STATIC_LIBRARIES := libSEC_OMX_Vdec libsecosal libsecbasecomponent \
 	libseccscapi
-LOCAL_SHARED_LIBRARIES := libc libdl libcutils libutils libui \
+LOCAL_SHARED_LIBRARIES := libc libdl libcutils libutils libui liblog \
 	libSEC_OMX_Resourcemanager
 
 ifeq ($(TARGET_SOC),exynos4x12)
