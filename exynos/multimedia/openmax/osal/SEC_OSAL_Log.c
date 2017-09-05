@@ -25,6 +25,7 @@
  */
 
 #include <utils/Log.h>
+#include <android/log.h>
 
 #include "SEC_OSAL_Log.h"
 
