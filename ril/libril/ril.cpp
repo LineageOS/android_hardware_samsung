@@ -206,11 +206,6 @@ char * RIL_getServiceName() {
     return ril_service_name;
 }
 
-extern "C"
-void RIL_setServiceName(const char * s) {
-    strncpy(ril_service_name, s, MAX_SERVICE_NAME_LENGTH);
-}
-
 RequestInfo *
 addRequestToList(int serial, int slotId, int request) {
     RequestInfo *pRI;
