@@ -16,6 +16,24 @@
       "revId": "0231cc5d3dc6a3312c45d66eef36ea8c0f1e073e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c839161a_8e69cabc",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1784,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2017-09-14T16:57:13Z",
+      "side": 1,
+      "message": "The legend lives!",
+      "parentUuid": "dac4761b_8a7c4e43",
+      "revId": "0231cc5d3dc6a3312c45d66eef36ea8c0f1e073e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
