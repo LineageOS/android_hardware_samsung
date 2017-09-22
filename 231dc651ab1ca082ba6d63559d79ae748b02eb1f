@@ -16,6 +16,24 @@
       "revId": "231dc651ab1ca082ba6d63559d79ae748b02eb1f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a1f07b5_c3c9535a",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 4351,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2017-09-22T04:48:33Z",
+      "side": 0,
+      "message": "Look at the very top.\nThe amplifier additions require this to be a global var.",
+      "parentUuid": "f0d63aeb_7c0817f0",
+      "revId": "231dc651ab1ca082ba6d63559d79ae748b02eb1f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
