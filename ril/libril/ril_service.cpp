@@ -3266,7 +3266,9 @@ int radio::getSignalStrengthResponse(int slotId,
         populateResponseInfo(responseInfo, serial, responseType, e);
         SignalStrength signalStrength = {};
         if (response == NULL || (responseLen != sizeof(RIL_SignalStrength_v10)
-                && responseLen != sizeof(RIL_SignalStrength_v8))) {
+                && responseLen != sizeof(RIL_SignalStrength_v8)
+                && responseLen != sizeof(RIL_SignalStrength_v6)
+                && responseLen != sizeof(RIL_SignalStrength_v5))) {
             RLOGE("getSignalStrengthResponse: Invalid response");
             if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
         } else {
@@ -6691,6 +6693,70 @@ int radio::nitzTimeReceivedInd(int slotId,
     return 0;
 }
 
+void convertRilSignalStrengthToHalV5(void *response, size_t responseLen,
+        SignalStrength& signalStrength) {
+    RIL_SignalStrength_v5 *rilSignalStrength = (RIL_SignalStrength_v5 *) response;
+
+    signalStrength.gw.signalStrength = rilSignalStrength->GW_SignalStrength.signalStrength;
+    signalStrength.gw.bitErrorRate = rilSignalStrength->GW_SignalStrength.bitErrorRate;
+    signalStrength.cdma.dbm = rilSignalStrength->CDMA_SignalStrength.dbm;
+    signalStrength.cdma.ecio = rilSignalStrength->CDMA_SignalStrength.ecio;
+    signalStrength.evdo.dbm = rilSignalStrength->EVDO_SignalStrength.dbm;
+    signalStrength.evdo.ecio = rilSignalStrength->EVDO_SignalStrength.ecio;
+    signalStrength.evdo.signalNoiseRatio =
+            rilSignalStrength->EVDO_SignalStrength.signalNoiseRatio;
+    signalStrength.lte.signalStrength = 99;
+    signalStrength.lte.rsrp = INT_MAX;
+    signalStrength.lte.rsrq = INT_MAX;
+    signalStrength.lte.rssnr = INT_MAX;
+    signalStrength.lte.cqi = INT_MAX;
+    signalStrength.lte.timingAdvance = INT_MAX;
+    signalStrength.tdScdma.rscp = INT_MAX;
+}
+
+void convertRilSignalStrengthToHalV6(void *response, size_t responseLen,
+        SignalStrength& signalStrength) {
+    RIL_SignalStrength_v6 *rilSignalStrength = (RIL_SignalStrength_v6 *) response;
+
+    // Fixup LTE for backwards compatibility
+    // signalStrength: -1 -> 99
+    if (rilSignalStrength->LTE_SignalStrength.signalStrength == -1) {
+        rilSignalStrength->LTE_SignalStrength.signalStrength = 99;
+    }
+    // rsrp: -1 -> INT_MAX all other negative value to positive.
+    // So remap here
+    if (rilSignalStrength->LTE_SignalStrength.rsrp == -1) {
+        rilSignalStrength->LTE_SignalStrength.rsrp = INT_MAX;
+    } else if (rilSignalStrength->LTE_SignalStrength.rsrp < -1) {
+        rilSignalStrength->LTE_SignalStrength.rsrp = -rilSignalStrength->LTE_SignalStrength.rsrp;
+    }
+    // rsrq: -1 -> INT_MAX
+    if (rilSignalStrength->LTE_SignalStrength.rsrq == -1) {
+        rilSignalStrength->LTE_SignalStrength.rsrq = INT_MAX;
+    }
+    // Not remapping rssnr is already using INT_MAX
+    // cqi: -1 -> INT_MAX
+    if (rilSignalStrength->LTE_SignalStrength.cqi == -1) {
+        rilSignalStrength->LTE_SignalStrength.cqi = INT_MAX;
+    }
+
+    signalStrength.gw.signalStrength = rilSignalStrength->GW_SignalStrength.signalStrength;
+    signalStrength.gw.bitErrorRate = rilSignalStrength->GW_SignalStrength.bitErrorRate;
+    signalStrength.cdma.dbm = rilSignalStrength->CDMA_SignalStrength.dbm;
+    signalStrength.cdma.ecio = rilSignalStrength->CDMA_SignalStrength.ecio;
+    signalStrength.evdo.dbm = rilSignalStrength->EVDO_SignalStrength.dbm;
+    signalStrength.evdo.ecio = rilSignalStrength->EVDO_SignalStrength.ecio;
+    signalStrength.evdo.signalNoiseRatio =
+            rilSignalStrength->EVDO_SignalStrength.signalNoiseRatio;
+    signalStrength.lte.signalStrength = rilSignalStrength->LTE_SignalStrength.signalStrength;
+    signalStrength.lte.rsrp = rilSignalStrength->LTE_SignalStrength.rsrp;
+    signalStrength.lte.rsrq = rilSignalStrength->LTE_SignalStrength.rsrq;
+    signalStrength.lte.rssnr = rilSignalStrength->LTE_SignalStrength.rssnr;
+    signalStrength.lte.cqi = rilSignalStrength->LTE_SignalStrength.cqi;
+    signalStrength.lte.timingAdvance = INT_MAX;
+    signalStrength.tdScdma.rscp = INT_MAX;
+}
+
 void convertRilSignalStrengthToHalV8(void *response, size_t responseLen,
         SignalStrength& signalStrength) {
     RIL_SignalStrength_v8 *rilSignalStrength = (RIL_SignalStrength_v8 *) response;
@@ -6779,7 +6845,11 @@ void convertRilSignalStrengthToHalV10(void *response, size_t responseLen,
 
 void convertRilSignalStrengthToHal(void *response, size_t responseLen,
         SignalStrength& signalStrength) {
-    if (responseLen == sizeof(RIL_SignalStrength_v8)) {
+    if (responseLen == sizeof(RIL_SignalStrength_v5)) {
+        convertRilSignalStrengthToHalV5(response, responseLen, signalStrength);
+    } else if (responseLen == sizeof(RIL_SignalStrength_v6)) {
+        convertRilSignalStrengthToHalV6(response, responseLen, signalStrength);
+    } else if (responseLen == sizeof(RIL_SignalStrength_v8)) {
         convertRilSignalStrengthToHalV8(response, responseLen, signalStrength);
     } else {
         convertRilSignalStrengthToHalV10(response, responseLen, signalStrength);
