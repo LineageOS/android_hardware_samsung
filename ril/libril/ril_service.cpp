@@ -7053,7 +7053,11 @@ void convertRilDataCallToHal(RIL_Data_Call_Response_v6 *dcResponse,
     dcResult.ifname = convertCharPtrToHidlString(dcResponse->ifname);
     dcResult.addresses = convertCharPtrToHidlString(dcResponse->addresses);
     dcResult.dnses = convertCharPtrToHidlString(dcResponse->dnses);
+#if defined(MODEM_TYPE_XMM6262) || defined(MODEM_TYPE_XMM6260)
+    dcResult.gateways = convertCharPtrToHidlString(dcResponse->addresses);
+#else
     dcResult.gateways = convertCharPtrToHidlString(dcResponse->gateways);
+#endif
     dcResult.pcscf = hidl_string();
     dcResult.mtu = 0;
 }
