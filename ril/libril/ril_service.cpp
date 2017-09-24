@@ -3015,7 +3015,7 @@ int radio::getCurrentCallsResponse(int slotId,
                 RIL_Call *p_cur = ((RIL_Call **) response)[i];
                 /* each call info */
                 calls[i].state = (CallState) p_cur->state;
-                calls[i].index = p_cur->index;
+                calls[i].index = p_cur->index & 0xff;
                 calls[i].toa = p_cur->toa;
                 calls[i].isMpty = p_cur->isMpty;
                 calls[i].isMT = p_cur->isMT;
