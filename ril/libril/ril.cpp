@@ -203,10 +203,12 @@ static UserCallbackInfo * internalRequestTimedCallback
 /** Index == requestNumber */
 static CommandInfo s_commands[] = {
 #include "ril_commands.h"
+#include <telephony/ril_commands_vendor.h>
 };
 
 static UnsolResponseInfo s_unsolResponses[] = {
 #include "ril_unsol_commands.h"
+#include <telephony/ril_unsol_commands_vendor.h>
 };
 
 char * RIL_getServiceName() {
