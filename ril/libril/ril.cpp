@@ -209,6 +209,14 @@ static UnsolResponseInfo s_unsolResponses[] = {
 #include "ril_unsol_commands.h"
 };
 
+static CommandInfo s_commands_v[] = {
+#include <telephony/ril_commands_vendor.h>
+};
+
+static UnsolResponseInfo s_unsolResponses_v[] = {
+#include <telephony/ril_unsol_commands_vendor.h>
+};
+
 char * RIL_getServiceName() {
     return ril_service_name;
 }
@@ -248,6 +256,18 @@ addRequestToList(int serial, int slotId, int request) {
 #endif
 #endif
 
+    CommandInfo *pCI = NULL;
+    if (request > RIL_OEM_REQUEST_BASE) {
+        int index = request - RIL_OEM_REQUEST_BASE;
+        RLOGD("processCommandBuffer: samsung request=%d, index=%d",
+                request, index);
+        if (index < (int32_t)NUM_ELEMS(s_commands_v))
+            pCI = &(s_commands_v[index]);
+    } else {
+        if (request < (int32_t)NUM_ELEMS(s_commands))
+            pCI = &(s_commands[request]);
+    }
+
     pRI = (RequestInfo *)calloc(1, sizeof(RequestInfo));
     if (pRI == NULL) {
         RLOGE("Memory allocation failed for request %s", requestToString(request));
@@ -255,7 +275,7 @@ addRequestToList(int serial, int slotId, int request) {
     }
 
     pRI->token = serial;
-    pRI->pCI = &(s_commands[request]);
+    pRI->pCI = pCI;
     pRI->socket_id = socket_id;
 
     ret = pthread_mutex_lock(pendingRequestsMutexHook);
@@ -469,8 +489,17 @@ RIL_register (const RIL_RadioFunctions *callbacks) {
         assert(i == s_commands[i].requestNumber);
     }
 
+    for (int i = 0; i < (int)NUM_ELEMS(s_commands_v); i++) {
+        assert(i + RIL_OEM_REQUEST_BASE == s_commands[i].requestNumber);
+    }
+
     for (int i = 0; i < (int)NUM_ELEMS(s_unsolResponses); i++) {
         assert(i + RIL_UNSOL_RESPONSE_BASE
+                == s_unsolResponses[i].requestNumber);
+    }
+
+    for (int i = 0; i < (int)NUM_ELEMS(s_unsolResponses_v); i++) {
+        assert(i + SAMSUNG_UNSOL_RESPONSE_BASE
                 == s_unsolResponses[i].requestNumber);
     }
 
@@ -752,7 +781,8 @@ void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
     int ret;
     bool shouldScheduleTimeout = false;
     RIL_SOCKET_ID soc_id = RIL_SOCKET_1;
-
+    UnsolResponseInfo *pRI = NULL;
+    int32_t pRI_elements;
 #if defined(ANDROID_MULTI_SIM)
     soc_id = socket_id;
 #endif
@@ -765,9 +795,40 @@ void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
     }
 
     unsolResponseIndex = unsolResponse - RIL_UNSOL_RESPONSE_BASE;
+    pRI = s_unsolResponses;
+    pRI_elements = (int32_t)NUM_ELEMS(s_unsolResponses);
 
-    if ((unsolResponseIndex < 0)
-        || (unsolResponseIndex >= (int32_t)NUM_ELEMS(s_unsolResponses))) {
+    /* Hack to include Samsung responses */
+    if (unsolResponse > SAMSUNG_UNSOL_RESPONSE_BASE) {
+        pRI = s_unsolResponses_v;
+        pRI_elements = (int32_t)NUM_ELEMS(s_unsolResponses_v);
+
+        /*
+         * Some of the vendor response codes cannot be found by calculating their index anymore,
+         * because they have an even higher offset and are not ordered in the array.
+         * Example: RIL_UNSOL_SNDMGR_WB_AMR_REPORT = 20017, but it's at index 33 in the vendor
+         * response array.
+         * Thus, look through all the vendor URIs (Unsol Response Info) and pick the correct index.
+         * This has a cost of O(N).
+         */
+        int pRI_index;
+        for (pRI_index = 0; pRI_index < pRI_elements; pRI_index++) {
+            if (pRI[pRI_index].requestNumber == unsolResponse) {
+                unsolResponseIndex = pRI_index;
+            }
+        }
+
+        RLOGD("SAMSUNG: unsolResponse=%d, unsolResponseIndex=%d", unsolResponse, unsolResponseIndex);
+    }
+
+    if (unsolResponseIndex >= 0 && unsolResponseIndex < pRI_elements) {
+        pRI = &pRI[unsolResponseIndex];
+    } else {
+        RLOGE("could not map unsolResponse=%d to %s response array (index=%d)", unsolResponse,
+                pRI == s_unsolResponses ? "AOSP" : "Samsung", unsolResponseIndex);
+    }
+
+    if (pRI == NULL || pRI->responseFunction == NULL) {
         RLOGE("unsupported unsolicited response code %d", unsolResponse);
         return;
     }
@@ -775,7 +836,7 @@ void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
     // Grab a wake lock if needed for this reponse,
     // as we exit we'll either release it immediately
     // or set a timer to release it later.
-    switch (s_unsolResponses[unsolResponseIndex].wakeType) {
+    switch (pRI->wakeType) {
         case WAKE_PARTIAL:
             grabPartialWakeLock();
             shouldScheduleTimeout = true;
@@ -792,7 +853,7 @@ void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
 
     int responseType;
     if (s_callbacks.version >= 13
-                && s_unsolResponses[unsolResponseIndex].wakeType == WAKE_PARTIAL) {
+                && pRI->wakeType == WAKE_PARTIAL) {
         responseType = RESPONSE_UNSOLICITED_ACK_EXP;
     } else {
         responseType = RESPONSE_UNSOLICITED;
@@ -802,7 +863,7 @@ void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
     int rwlockRet = pthread_rwlock_rdlock(radioServiceRwlockPtr);
     assert(rwlockRet == 0);
 
-    ret = s_unsolResponses[unsolResponseIndex].responseFunction(
+    ret = pRI->responseFunction(
             (int) soc_id, responseType, 0, RIL_E_SUCCESS, const_cast<void*>(data),
             datalen);
 
