@@ -118,6 +118,19 @@ inline int set_cur_button_brightness(const int brightness)
 }
 
 /*
+ * Set the current keyboard brightness via sysfs.
+ *
+ * @param brightness The brightness value.
+ * @return 0 on success, errno on error.
+ */
+#ifdef KEYBOARD_NODE
+inline int set_cur_keyboard_brightness(const int brightness)
+{
+    return write_int(KEYBOARD_NODE, brightness);
+}
+#endif
+
+/*
  * Read the current panel brightness from sysfs.
  *
  * @return The brightness as Integer, -1 on error.
