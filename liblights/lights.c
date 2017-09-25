@@ -44,6 +44,7 @@ enum component_mask_t {
     COMPONENT_BUTTON_LIGHT = 0x2,
     COMPONENT_LED = 0x4,
     COMPONENT_BLN = 0x8,
+    COMPONENT_KEYBOARD = 0x10,
 };
 
 enum light_t {
@@ -80,6 +81,10 @@ void check_component_support()
 #ifdef LED_BLN_NODE
     if (access(LED_BLN_NODE, W_OK) == 0)
         hw_components |= COMPONENT_BLN;
+#endif
+#ifdef KEYBOARD_NODE
+    if (access(KEYBOARD_NODE, W_OK) == 0)
+        hw_components |= COMPONENT_KEYBOARD;
 #endif
 }
 
@@ -161,6 +166,20 @@ static int set_light_buttons(struct light_device_t* dev __unused,
 
     return err;
 }
+
+#ifdef KEYBOARD_NODE
+static int set_light_keyboard(struct light_device_t* dev __unused,
+                              struct light_state_t const* state)
+{
+    int err = 0;
+
+    pthread_mutex_lock(&g_lock);
+    err = write_str(KEYBOARD_NODE, state->color & COLOR_MASK ? "1" : "0");
+    pthread_mutex_unlock(&g_lock);
+
+    return err;
+}
+#endif
 
 static int close_lights(struct light_device_t *dev)
 {
@@ -368,6 +387,11 @@ static int open_lights(const struct hw_module_t *module, char const *name,
     } else if (0 == strcmp(LIGHT_ID_BUTTONS, name)) {
         requested_component = COMPONENT_BUTTON_LIGHT;
         set_light = set_light_buttons;
+#ifdef KEYBOARD_NODE
+    } else if (0 == strcmp(LIGHT_ID_KEYBOARD), name)) {
+        requested_component = COMPONENT_KEYBOARD;
+        set_light = set_light_keyboard;
+#endif
     } else if (0 == strcmp(LIGHT_ID_BATTERY, name)) {
         requested_component = COMPONENT_LED;
         set_light = set_light_leds_battery;
