@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45c4029c_d004202a",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3705,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-09-27T10:36:37Z",
+      "side": 1,
+      "message": "spaces not tabs",
+      "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af956572_a65cf75c",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3714,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-09-27T10:36:37Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be mqanelements - 1? otherwise the logic in the default case is changed",
+      "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24745735_2339113c",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3721,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-09-27T10:36:37Z",
+      "side": 1,
+      "message": "why change this?",
+      "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8eb7b6f3_78eef926",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4353,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-09-27T10:36:37Z",
+      "side": 1,
+      "message": "spaces not tabs",
+      "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70c5bee2_21239021",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4369,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-09-27T10:36:37Z",
+      "side": 1,
+      "message": "why change this?",
+      "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
