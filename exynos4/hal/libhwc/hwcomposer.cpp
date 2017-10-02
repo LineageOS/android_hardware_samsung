@@ -464,6 +464,10 @@ void determineBandwidthSupport(hwc_context_t *ctx, hwc_display_contents_1_t *con
                         }
 
                         if (can_compose) {
+#ifndef NO_FIMG
+                            if (!ctx->multi_fimg)
+#endif
+                                can_compose = can_compose && !fimg_used;
                             fimg_used = true;
                         }
 
@@ -1322,8 +1326,9 @@ static void hwc_dump(struct hwc_composer_device_1* dev, char *buff, int buff_len
 {
     struct hwc_context_t *ctx = (hwc_context_t *)dev;
     android::String8 tmp("");
-    tmp.appendFormat("Exynos HWC: force_fb=%d force_gpu=%d bypass_count=%d\n", ctx->force_fb, ctx->force_gpu,
-            ctx->bypass_count);
+    tmp.appendFormat("Exynos HWC: force_fb=%d force_gpu=%d bypass_count=%d multi_fimg=%d\n", ctx->force_fb, ctx->force_gpu,
+            ctx->bypass_count, ctx->multi_fimg);
+    ctx->multi_fimg = property_get_int32("persist.sys.hwc.multi_fimg", 0);
     strlcpy(buff, tmp.string(), buff_len);
 }
 
@@ -1382,6 +1387,9 @@ static int hwc_device_open(const struct hw_module_t* module, const char* name,
         char value[PROPERTY_VALUE_MAX];
         property_get("debug.hwc.force_gpu", value, "0");
         dev->force_gpu = atoi(value);
+
+        property_get("persist.sys.hwc.multi_fimg", value, "0");
+        dev->multi_fimg = atoi(value);
 
         // Init Vsync
         init_vsync_thread(dev);
