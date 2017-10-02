@@ -400,7 +400,12 @@ void determineBandwidthSupport(hwc_context_t *ctx, hwc_display_contents_1_t *con
         }
 
         changed = false;
+#ifdef NO_FIMG
+        // disable HW composition using FIMG
+        fimg_used = true;
+#else
         fimg_used = false;
+#endif
         fimc_used = false;
         yuv_layer = -1;
         rgb_over_yuv_layer = 0;
