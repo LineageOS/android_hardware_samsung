@@ -108,6 +108,7 @@ struct gsc_map_t {
 struct hwc_win_info_t {
     sec_rect                    rect_info;
     buffer_handle_t             dst_buf[NUM_OF_WIN_BUF];
+    private_handle_t           *src_buf;
     int                         dst_buf_fence[NUM_OF_WIN_BUF];
     size_t                      current_buf;
 
@@ -136,6 +137,7 @@ struct hwc_context_t {
     bool                      multi_fimg; // enable multiple fimg layers
     int                       bypass_count;
 
+    struct s3c_fb_win_config  win_cfg;
     struct hwc_win_info_t     win[NUM_HW_WINDOWS];
 
     // V4L2 info of FIMC device

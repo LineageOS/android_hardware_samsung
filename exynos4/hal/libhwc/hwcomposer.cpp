@@ -117,9 +117,9 @@ static bool format_is_supported_by_fimc(int format)
 static enum gsc_map_t::mode format_requires_process(int format)
 {
     switch (format) {
-    case HAL_PIXEL_FORMAT_RGBA_8888: //format is supported by fimg so there's no need to check
+    case HAL_PIXEL_FORMAT_RGBA_8888: //format is supported by fimd so there's no need to check
     case HAL_PIXEL_FORMAT_RGBX_8888:
-        return gsc_map_t::FIMG;
+        return gsc_map_t::NONE;
 
     default:
         if (is_yuv_format(format))
@@ -187,16 +187,28 @@ static bool is_x_aligned(const hwc_layer_1_t &layer)
             (layer.displayFrame.right % pixel_alignment) == 0;
 }
 
+static bool is_contiguous(const hwc_layer_1_t &layer)
+{
+    private_handle_t *handle = private_handle_t::dynamicCast(layer.handle);
+    ALOGV("%s: handle %p, flags=0x%x, usage=0x%x, paddr=0x%x", __func__, handle,
+            handle->flags, handle->usage, handle->paddr);
+
+    if (handle->paddr != 0) {
+        return true;
+    }
+    return false;
+}
+
 static enum gsc_map_t::mode layer_requires_process(hwc_layer_1_t &layer)
 {
     private_handle_t *handle = private_handle_t::dynamicCast(layer.handle);
     enum gsc_map_t::mode mode;
- 
+
     mode = format_requires_process(handle->format);
 
     switch(mode) {
     case gsc_map_t::NONE:
-        if (is_scaled(layer) || is_transformed(layer) || !is_x_aligned(layer)) {
+        if (is_scaled(layer) || is_transformed(layer) || !is_x_aligned(layer) || !is_contiguous(layer)) {
             ALOGV("%s: direct render -> fimg because is_scaled(%d) is_transformed(%d) is_x_aligned(%d)",
                     __FUNCTION__, is_scaled(layer), is_transformed(layer), is_x_aligned(layer));
             mode = gsc_map_t::FIMG;
@@ -309,6 +321,7 @@ void determineSupportedOverlays(hwc_context_t *ctx, hwc_display_contents_1_t *co
 
     for (size_t i = 0; i < NUM_HW_WINDOWS; i++) {
         ctx->win[i].layer_index = -1;
+        ctx->win[i].src_buf = NULL;
     }
 
     ctx->fb_needed = false;
@@ -482,7 +495,7 @@ void determineBandwidthSupport(hwc_context_t *ctx, hwc_display_contents_1_t *con
  
                     default:
                         ALOGV("%s: layer %u: mode=%d", __FUNCTION__, i, mode);
-                        can_compose = false;
+                        can_compose = true;
                         break;
                 };
 
@@ -552,6 +565,7 @@ void assignWindows(hwc_context_t *ctx, hwc_display_contents_1_t *contents)
             if (layer.compositionType == HWC_OVERLAY) {
                 private_handle_t *handle = private_handle_t::dynamicCast(layer.handle);
 
+                ctx->win[nextWindow].src_buf = handle;
                 layer.hints = HWC_HINT_CLEAR_FB;
 
                 mode = layer_requires_process(layer);
@@ -922,7 +936,7 @@ static void config_overlay(hwc_context_t *ctx, hwc_layer_1_t &layer, s3c_fb_win_
     } else if (layer.compositionType == HWC_OVERLAY) {
         ALOGV("%s RGB overlay", __FUNCTION__);
         config_handle(ctx, layer, cfg);
-        cfg.format = S3C_FB_PIXEL_FORMAT_BGRA_8888;
+        cfg.format = S3C_FB_PIXEL_FORMAT_RGBA_8888;
 
         cfg.phys_addr = hnd->paddr;
 
@@ -1070,6 +1084,8 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
     if (wincfg_err < 0) {
         ALOGE("%s S3CFB_WIN_CONFIG failed: %s", __FUNCTION__, strerror(errno));
     }
+
+    memcpy(&ctx->win_cfg, config, sizeof(*config));
 
     return win_data.fence;
 }
@@ -1324,10 +1340,29 @@ static int hwc_getDisplayAttributes(struct hwc_composer_device_1* dev, int disp,
 
 static void hwc_dump(struct hwc_composer_device_1* dev, char *buff, int buff_len)
 {
+    const char *modes[] = {
+        "NONE",
+        "FIMG",
+        "FIMC",
+        "MAX",
+    };
+
     struct hwc_context_t *ctx = (hwc_context_t *)dev;
     android::String8 tmp("");
     tmp.appendFormat("Exynos HWC: force_fb=%d force_gpu=%d bypass_count=%d multi_fimg=%d\n", ctx->force_fb, ctx->force_gpu,
             ctx->bypass_count, ctx->multi_fimg);
+    tmp.appendFormat("win | mode | layer_index |    paddr    |\n");
+    //                3-- | 4--- | 11--------- | 0x100000000 |
+    for (int i = 0; i < NUM_HW_WINDOWS; i++) {
+        struct hwc_win_info_t *win = &ctx->win[i];
+        if (win->src_buf)
+            tmp.appendFormat("  %d | %4s |          % 2d | 0x%09x |\n", i, modes[win->gsc.mode],
+                    win->layer_index, win->src_buf->paddr);
+        else
+            tmp.appendFormat("  %d | %4s |          % 2d | 0x%09x |\n", i, modes[win->gsc.mode],
+                    win->layer_index, 0xdead);
+
+    }
     ctx->multi_fimg = property_get_int32("persist.sys.hwc.multi_fimg", 0);
     strlcpy(buff, tmp.string(), buff_len);
 }
