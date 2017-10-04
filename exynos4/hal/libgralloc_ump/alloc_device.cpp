@@ -236,69 +236,51 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
         return 0;
     }
 
-    if (usage & GRALLOC_USAGE_HW_ION) {
-        ALOGD_IF(debug_level > 0, "%s usage = GRALLOC_USAGE_HW_ION", __func__);
+	// if not using FIMC, use ION.
+	ALOGD_IF(debug_level > 0, "%s: using ION.", __func__);
 
-        if (!ion_dev_open) {
-            ALOGE("%s ERROR, failed to open ion", __func__);
-            return -1;
-        }
+	if (!ion_dev_open) {
+		ALOGE("%s ERROR, failed to open ion", __func__);
+		return -1;
+	}
 
-        m = reinterpret_cast<private_module_t*>(dev->common.module);
+	m = reinterpret_cast<private_module_t*>(dev->common.module);
 
-        if (usage < 0 || usage & GRALLOC_USAGE_HWC_HWOVERLAY )
-        {
-            if ((format == HAL_PIXEL_FORMAT_RGBA_8888) || (format == HAL_PIXEL_FORMAT_RGB_565)) {
-                priv_alloc_flag |= (private_handle_t::PRIV_FLAGS_USES_ION | private_handle_t::PRIV_FLAGS_USES_HDMI);
-            } else {
-                priv_alloc_flag |= private_handle_t::PRIV_FLAGS_USES_ION;
-            }
-        } else {
-            priv_alloc_flag |= private_handle_t::PRIV_FLAGS_USES_ION;
-        }
+	if (usage < 0 || usage & GRALLOC_USAGE_HWC_HWOVERLAY )
+	{
+		if ((format == HAL_PIXEL_FORMAT_RGBA_8888) || (format == HAL_PIXEL_FORMAT_RGB_565)) {
+			priv_alloc_flag |= (private_handle_t::PRIV_FLAGS_USES_ION | private_handle_t::PRIV_FLAGS_USES_HDMI);
+		} else {
+			priv_alloc_flag |= private_handle_t::PRIV_FLAGS_USES_ION;
+		}
+	} else {
+		priv_alloc_flag |= private_handle_t::PRIV_FLAGS_USES_ION;
+	}
 
-        if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
-            priv_alloc_flag |= private_handle_t::PRIV_FLAGS_NONE_CACHED;
-            ion_flags = ION_EXYNOS_NONCACHE_MASK | ION_HEAP_EXYNOS_CONTIG_MASK;
-        } else {
-            ion_flags = ION_HEAP_EXYNOS_CONTIG_MASK;
-        }
+	if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
+		priv_alloc_flag |= private_handle_t::PRIV_FLAGS_NONE_CACHED;
+		ion_flags = ION_EXYNOS_NONCACHE_MASK | ION_HEAP_EXYNOS_CONTIG_MASK;
+	} else {
+		ion_flags = ION_HEAP_EXYNOS_CONTIG_MASK;
+	}
 
-        ion_fd = ion_alloc(m->ion_client, size, 0, ion_flags);
-        if (ion_fd < 0) {
-            ALOGE("%s Failed to ion_alloc", __func__);
-            return -1;
-        }
+	ion_fd = ion_alloc(m->ion_client, size, 0, ion_flags);
+	if (ion_fd < 0) {
+		ALOGE("%s Failed to ion_alloc", __func__);
+		return -1;
+	}
 
-        ion_paddr = ion_getphys(m->ion_client, ion_fd);
+	ion_paddr = ion_getphys(m->ion_client, ion_fd);
 
-/* TODO: #ifdef SAMSUNG_EXYNOS_CACHE_UMP here...*/
-        if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
-            ALOGD_IF(debug_level > 0, "%s FIMC1 none", __func__);
-            ump_mem_handle = ump_ref_drv_ion_import(ion_fd, UMP_REF_DRV_CONSTRAINT_NONE);
-        } else {
-            ALOGD_IF(debug_level > 0, "%s FIMC1 cached", __func__);
-            ump_mem_handle = ump_ref_drv_ion_import(ion_fd, UMP_REF_DRV_CONSTRAINT_USE_CACHE);
-            ump_cpu_msync_now((ump_handle)ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE, NULL, 0);
-        }
-
-    } else {
-
-#ifdef SAMSUNG_EXYNOS_CACHE_UMP
-        if ((usage & GRALLOC_USAGE_SW_READ_MASK) == GRALLOC_USAGE_SW_READ_OFTEN) {
-            ALOGD_IF(debug_level > 0, "%s UMP cached", __func__);
-            ump_mem_handle = ump_ref_drv_allocate(size, UMP_REF_DRV_CONSTRAINT_USE_CACHE);
-            ump_cpu_msync_now((ump_handle)ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE, NULL, 0);
-        } else {
-            ALOGD_IF(debug_level > 0, "%s UMP none", __func__);
-            ump_mem_handle = ump_ref_drv_allocate(size, UMP_REF_DRV_CONSTRAINT_NONE);
-        }
-#else
-        else
-            ump_mem_handle = ump_ref_drv_allocate(size, UMP_REF_DRV_CONSTRAINT_NONE);
-#endif
-
-    }
+	/* TODO: #ifdef SAMSUNG_EXYNOS_CACHE_UMP here...*/
+	if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
+		ALOGD_IF(debug_level > 0, "%s FIMC1 none", __func__);
+		ump_mem_handle = ump_ref_drv_ion_import(ion_fd, UMP_REF_DRV_CONSTRAINT_NONE);
+	} else {
+		ALOGD_IF(debug_level > 0, "%s FIMC1 cached", __func__);
+		ump_mem_handle = ump_ref_drv_ion_import(ion_fd, UMP_REF_DRV_CONSTRAINT_USE_CACHE);
+		ump_cpu_msync_now((ump_handle)ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE, NULL, 0);
+	}
 
     if (UMP_INVALID_MEMORY_HANDLE != ump_mem_handle) {
         cpu_ptr = ump_mapped_pointer_get(ump_mem_handle);
