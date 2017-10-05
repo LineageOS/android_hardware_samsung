@@ -981,12 +981,7 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
 #endif
 
     for (size_t i = 0; i < NUM_HW_WINDOWS; i++) {
-
-        if (i == 3)
-            window = 4;
-        else
-            window = i;
-
+        window = i;
         struct hwc_win_info_t &win = ctx->win[window];
         int layer_idx = win.layer_index;
 
