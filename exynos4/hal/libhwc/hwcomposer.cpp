@@ -1047,6 +1047,11 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
                 config[window].blending = S3C_FB_BLENDING_NONE;
             }
 
+            if (window == 0 && config[window].plane_alpha != 255) {
+                ALOGV("alpha not supported on window 0; forcing 255");
+                config[window].plane_alpha = 255;
+            }
+
             hwc_rect_t crop = integerizeSourceCrop(layer.sourceCropf);
             if ( (WIDTH(crop) <= 15) ||
                  (HEIGHT(crop) <= 7) ||
