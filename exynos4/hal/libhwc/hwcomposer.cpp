@@ -587,7 +587,7 @@ void assignWindows(hwc_context_t *ctx, hwc_display_contents_1_t *contents)
                         ctx->win[nextWindow].rect_info.x = layer.displayFrame.left;
                         ctx->win[nextWindow].rect_info.y = layer.displayFrame.top;
                         ctx->win[nextWindow].rect_info.w = WIDTH(layer.displayFrame);
-                        ctx->win[nextWindow].rect_info.w = HEIGHT(layer.displayFrame);
+                        ctx->win[nextWindow].rect_info.h = HEIGHT(layer.displayFrame);
 
                         window_buffer_allocate(ctx, &ctx->win[nextWindow]);
                     } else {
