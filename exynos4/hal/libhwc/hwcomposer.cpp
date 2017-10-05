@@ -659,99 +659,81 @@ static int perform_fimg(hwc_context_t *ctx, const hwc_layer_1_t &layer, struct h
     uint32_t dst_addr = (uint32_t) dst_handle->ion_memory;
 
     //should we need to fill whole fimg_cmd struct or can we reuse the old command?
-    if (fimg_cmd->op == (enum blit_op) -1) {
-        memset(fimg_cmd, 0, sizeof(struct fimg2d_blit));
-        memset(g2d_src_img, 0, sizeof(struct fimg2d_image));
-        memset(g2d_dst_img, 0, sizeof(struct fimg2d_image));
+    memset(fimg_cmd, 0, sizeof(struct fimg2d_blit));
+    memset(g2d_src_img, 0, sizeof(struct fimg2d_image));
+    memset(g2d_dst_img, 0, sizeof(struct fimg2d_image));
 
-        fimg_cmd->op = BLIT_OP_SRC;
-        fimg_cmd->seq_no = SEQ_NO_BLT_HWC_NOSEC;
-        fimg_cmd->sync = BLIT_SYNC;
-        fimg_cmd->param.g_alpha = 255;
-        fimg_cmd->param.rotate = rotateValueHAL2G2D(layer.transform);
+    fimg_cmd->op = BLIT_OP_SRC;
+    fimg_cmd->seq_no = SEQ_NO_BLT_HWC_NOSEC;
+    fimg_cmd->sync = BLIT_SYNC;
+    fimg_cmd->param.g_alpha = 255;
+    fimg_cmd->param.rotate = rotateValueHAL2G2D(layer.transform);
 
-        hwc_rect_t crop = integerizeSourceCrop(layer.sourceCropf);
+    hwc_rect_t crop = integerizeSourceCrop(layer.sourceCropf);
 
-        if (is_scaled(layer) || fimg_cmd->param.rotate != ORIGIN) {
-            fimg_cmd->param.scaling.mode = SCALING_BILINEAR;
-            fimg_cmd->param.scaling.src_w = WIDTH(crop);
-            fimg_cmd->param.scaling.src_h = HEIGHT(crop);
+    if (is_scaled(layer) || fimg_cmd->param.rotate != ORIGIN) {
+        fimg_cmd->param.scaling.mode = SCALING_BILINEAR;
+        fimg_cmd->param.scaling.src_w = WIDTH(crop);
+        fimg_cmd->param.scaling.src_h = HEIGHT(crop);
 
-            if (fimg_cmd->param.rotate == ROT_90 || fimg_cmd->param.rotate == ROT_270) {
-                fimg_cmd->param.scaling.dst_w = HEIGHT(layer.displayFrame);
-                fimg_cmd->param.scaling.dst_h = WIDTH(layer.displayFrame);
-            } else {
-                fimg_cmd->param.scaling.dst_w = WIDTH(layer.displayFrame);
-                fimg_cmd->param.scaling.dst_h = HEIGHT(layer.displayFrame);
-            }
+        if (fimg_cmd->param.rotate == ROT_90 || fimg_cmd->param.rotate == ROT_270) {
+            fimg_cmd->param.scaling.dst_w = HEIGHT(layer.displayFrame);
+            fimg_cmd->param.scaling.dst_h = WIDTH(layer.displayFrame);
+        } else {
+            fimg_cmd->param.scaling.dst_w = WIDTH(layer.displayFrame);
+            fimg_cmd->param.scaling.dst_h = HEIGHT(layer.displayFrame);
+        }
+    }
+
+    if (src_handle->base) {
+        formatValueHAL2G2D(src_handle->format, &g2d_format, &pixel_order, &src_bpp);
+
+        g2d_src_img->addr.type = ADDR_USER;
+        g2d_src_img->addr.start = src_handle->base;
+
+        if (src_bpp == 1) {
+            g2d_src_img->plane2.type = ADDR_USER;
+            g2d_src_img->plane2.start = src_handle->base + src_handle->uoffset;
         }
 
-        if (src_handle->base) {
-            formatValueHAL2G2D(src_handle->format, &g2d_format, &pixel_order, &src_bpp);
+        g2d_src_img->width = src_handle->width;
+        g2d_src_img->height = src_handle->height;
+        g2d_src_img->stride = g2d_src_img->width * src_bpp;
+        g2d_src_img->order = (enum pixel_order) pixel_order;
+        g2d_src_img->fmt = (enum color_format) g2d_format;
+        g2d_src_img->rect.x1 = crop.left;
+        g2d_src_img->rect.y1 = crop.top;
+        g2d_src_img->rect.x2 = crop.right;
+        g2d_src_img->rect.y2 = crop.bottom;
+        g2d_src_img->need_cacheopr = false;
 
-            g2d_src_img->addr.type = ADDR_USER;
-            g2d_src_img->addr.start = src_handle->base;
+        fimg_cmd->src = g2d_src_img;
+    }
 
-            if (src_bpp == 1) {
-                g2d_src_img->plane2.type = ADDR_USER;
-                g2d_src_img->plane2.start = src_handle->base + src_handle->uoffset;
-            }
+    if (dst_addr > 0) {
+        formatValueHAL2G2D(dst_format, &g2d_format, &pixel_order, &dst_bpp);
 
-            g2d_src_img->width = src_handle->width;
-            g2d_src_img->height = src_handle->height;
-            g2d_src_img->stride = g2d_src_img->width * src_bpp;
-            g2d_src_img->order = (enum pixel_order) pixel_order;
-            g2d_src_img->fmt = (enum color_format) g2d_format;
-            g2d_src_img->rect.x1 = crop.left;
-            g2d_src_img->rect.y1 = crop.top;
-            g2d_src_img->rect.x2 = crop.right;
-            g2d_src_img->rect.y2 = crop.bottom;
-            g2d_src_img->need_cacheopr = false;
+        g2d_dst_img->addr.type = ADDR_USER;
+        g2d_dst_img->addr.start = dst_addr;
 
-            fimg_cmd->src = g2d_src_img;
+        g2d_dst_img->width = WIDTH(layer.displayFrame);
+        g2d_dst_img->height = HEIGHT(layer.displayFrame);
+
+        if (dst_bpp == 1) {
+            g2d_dst_img->plane2.type = ADDR_USER;
+            g2d_dst_img->plane2.start = dst_addr + (EXYNOS4_ALIGN(g2d_dst_img->width, 16) * EXYNOS4_ALIGN(g2d_dst_img->height, 16));
         }
 
-        if (dst_addr > 0) {
-            formatValueHAL2G2D(dst_format, &g2d_format, &pixel_order, &dst_bpp);
+        g2d_dst_img->stride = g2d_dst_img->width * dst_bpp;
+        g2d_dst_img->order = (enum pixel_order) pixel_order;
+        g2d_dst_img->fmt = (enum color_format) g2d_format;
+        g2d_dst_img->rect.x1 = 0;
+        g2d_dst_img->rect.y1 = 0;
+        g2d_dst_img->rect.x2 = WIDTH(layer.displayFrame);
+        g2d_dst_img->rect.y2 = HEIGHT(layer.displayFrame);
+        g2d_dst_img->need_cacheopr = false;
 
-            g2d_dst_img->addr.type = ADDR_USER;
-            g2d_dst_img->addr.start = dst_addr;
-
-            g2d_dst_img->width = WIDTH(layer.displayFrame);
-            g2d_dst_img->height = HEIGHT(layer.displayFrame);
-
-            if (dst_bpp == 1) {
-                g2d_dst_img->plane2.type = ADDR_USER;
-                g2d_dst_img->plane2.start = dst_addr + (EXYNOS4_ALIGN(g2d_dst_img->width, 16) * EXYNOS4_ALIGN(g2d_dst_img->height, 16));
-            }
-
-            g2d_dst_img->stride = g2d_dst_img->width * dst_bpp;
-            g2d_dst_img->order = (enum pixel_order) pixel_order;
-            g2d_dst_img->fmt = (enum color_format) g2d_format;
-            g2d_dst_img->rect.x1 = 0;
-            g2d_dst_img->rect.y1 = 0;
-            g2d_dst_img->rect.x2 = WIDTH(layer.displayFrame);
-            g2d_dst_img->rect.y2 = HEIGHT(layer.displayFrame);
-            g2d_dst_img->need_cacheopr = false;
-
-            fimg_cmd->dst = g2d_dst_img;
-        }
-    } else {
-        if (src_handle->base) {
-            fimg_cmd->src->addr.start = src_handle->base;
-
-            if (fimg_cmd->src->plane2.start) {
-                fimg_cmd->src->plane2.start = src_handle->base + src_handle->uoffset;
-            }
-        }
-
-        if (dst_addr > 0) {
-            fimg_cmd->dst->addr.start = dst_addr;
-
-            if (fimg_cmd->dst->plane2.start) {
-                fimg_cmd->dst->plane2.start = dst_addr + (EXYNOS4_ALIGN(fimg_cmd->dst->width, 16) * EXYNOS4_ALIGN(fimg_cmd->dst->height, 16));
-            }
-        }
+        fimg_cmd->dst = g2d_dst_img;
     }
 
     if (layer.acquireFenceFd >= 0) {
