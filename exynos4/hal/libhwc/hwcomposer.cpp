@@ -464,8 +464,22 @@ void determineBandwidthSupport(hwc_context_t *ctx, hwc_display_contents_1_t *con
                 }
 
                 enum gsc_map_t::mode mode = layer_requires_process(layer);
+                private_handle_t *handle = private_handle_t::dynamicCast(layer.handle);
 
                 switch (mode) {
+                    case gsc_map_t::FIMC:
+                        ALOGV("%s: layer %u: mode=FIMC", __FUNCTION__, i);
+                        can_compose = can_compose && !fimc_used;
+                        fimc_used = true;
+                        if (!can_compose && format_is_supported_by_fimg(handle->format)) {
+                            can_compose = true;
+                            // fall through to FIMG
+                            mode = gsc_map_t::FIMG;
+                        } else {
+                            yuv_layer = i;
+                            break;
+                        }
+
                     case gsc_map_t::FIMG:
                         ALOGV("%s: layer %u: mode=FIMG can_compose(%d) fimg_used(%d)", __FUNCTION__, i, can_compose, fimg_used);
 
@@ -488,13 +502,7 @@ void determineBandwidthSupport(hwc_context_t *ctx, hwc_display_contents_1_t *con
 
                         break;
 
-                    case gsc_map_t::FIMC:
-                        ALOGV("%s: layer %u: mode=FIMC", __FUNCTION__, i);
-                        can_compose = can_compose && !fimc_used;
-                        fimc_used = true;
-                        yuv_layer = i;
-                        break;
- 
+
                     default:
                         ALOGV("%s: layer %u: mode=%d", __FUNCTION__, i, mode);
                         can_compose = true;
@@ -549,7 +557,7 @@ void assignWindows(hwc_context_t *ctx, hwc_display_contents_1_t *contents)
 {
     unsigned int nextWindow = 0;
     enum gsc_map_t::mode mode;
-
+    bool fimc_used = false;
     for (size_t i = 0; i < contents->numHwLayers; i++) {
         hwc_layer_1_t &layer = contents->hwLayers[i];
 
@@ -575,6 +583,11 @@ void assignWindows(hwc_context_t *ctx, hwc_display_contents_1_t *contents)
                 switch (mode) {
                 case gsc_map_t::FIMG:
                 case gsc_map_t::FIMC:
+                    if (mode == gsc_map_t::FIMC) {
+                        if (fimc_used)
+                            mode = gsc_map_t::FIMG;
+                        else fimc_used = true;
+                    }
                     ALOGV("\tlayer(%d) using FIM%c for format(%d)", i, (mode == gsc_map_t::FIMG)?'G':'C', handle->format);
                     ctx->win[nextWindow].gsc.mode = mode;
 
