@@ -610,18 +610,6 @@ static int prepare_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
 {
     ctx->force_fb = ctx->force_gpu;
 
-    //when rotating, first frame has geometry changed, second has rotation
-    if (contents->flags & HWC_GEOMETRY_CHANGED) {
-        // When rotating the device, SurfaceFlinger contents are not stable, which causes artifacts,
-        // so let's wait a little before we decide to composite.
-        ctx->bypass_count = 2;
-
-        //force re-fill of fimg_cmd
-        for (size_t i = 0; i < NUM_HW_WINDOWS; i++) {
-            ctx->win[i].fimg_cmd.op = (enum blit_op) -1;
-        }
-    }
-
     if (ctx->bypass_count > 0) {
         ctx->force_fb = true;
     }
