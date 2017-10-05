@@ -8,6 +8,7 @@ LOCAL_SRC_FILES:= \
     secril-client.cpp
 
 LOCAL_SHARED_LIBRARIES := \
+    liblog \
     libutils \
     libbinder \
     libcutils \
