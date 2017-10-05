@@ -1035,7 +1035,9 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
                     config[window].stride = EXYNOS4_ALIGN(config[window].w,16) * 4;
                 }
                 break;
-
+            case gsc_map_t::NONE:
+                config_overlay(ctx, layer, config[window]);
+                config[window].stride = EXYNOS4_ALIGN(config[window].w, 16) * 4;
             default:
                 config_overlay(ctx, layer, config[window]);
             }
