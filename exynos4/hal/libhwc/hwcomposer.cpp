@@ -1336,16 +1336,18 @@ static void hwc_dump(struct hwc_composer_device_1* dev, char *buff, int buff_len
     android::String8 tmp("");
     tmp.appendFormat("Exynos HWC: force_fb=%d force_gpu=%d bypass_count=%d multi_fimg=%d\n", ctx->force_fb, ctx->force_gpu,
             ctx->bypass_count, ctx->multi_fimg);
-    tmp.appendFormat("win | mode | layer_index |    paddr    |\n");
-    //                3-- | 4--- | 11--------- | 0x100000000 |
+    tmp.appendFormat("win | mode | layer_index |    paddr    |     hnd     |\n");
+    //                3-- | 4--- | 11--------- | 0x100000000 | 0x100000000 |
     for (int i = 0; i < NUM_HW_WINDOWS; i++) {
         struct hwc_win_info_t *win = &ctx->win[i];
         if (win->src_buf)
-            tmp.appendFormat("  %d | %4s |          % 2d | 0x%09x |\n", i, modes[win->gsc.mode],
-                    win->layer_index, win->src_buf->paddr);
+            tmp.appendFormat("  %d | %4s |          % 2d | 0x%09x | 0x%09x\n",
+                    i, win->layer_index < 0 ? "OFF" : modes[win->gsc.mode],
+                    win->layer_index, win->src_buf->paddr, win->src_buf);
         else
-            tmp.appendFormat("  %d | %4s |          % 2d | 0x%09x |\n", i, modes[win->gsc.mode],
-                    win->layer_index, 0xdead);
+            tmp.appendFormat("  %d | %4s |          % 2d | 0x%09x | 0x%09x\n",
+                    i, win->layer_index < 0 ? "OFF" : modes[win->gsc.mode],
+                    win->layer_index, 0xdead, 0x0);
 
     }
     ctx->multi_fimg = property_get_int32("persist.sys.hwc.multi_fimg", 0);
