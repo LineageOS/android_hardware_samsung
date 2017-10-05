@@ -1028,7 +1028,7 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
                     //use geometry of layer.handle and overwrite the rest
                     config_handle(ctx, layer, config[window]);
 
-                    config[window].format = S3C_FB_PIXEL_FORMAT_BGRA_8888;
+                    config[window].format = S3C_FB_PIXEL_FORMAT_RGBA_8888;
                     private_handle_t* dst_hnd = private_handle_t::dynamicCast(win.dst_buf[win.current_buf]);
                     config[window].phys_addr = dst_hnd->paddr;
                     config[window].offset = 0;
