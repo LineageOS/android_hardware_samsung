@@ -98,6 +98,177 @@ extern int get_bpp(int format);
 
 #define EXYNOS4_ALIGN( value, base ) (((value) + ((base) - 1)) & ~((base) - 1))
 
+int gralloc_alloc_fimc1(size_t size, int usage,
+                        buffer_handle_t* pHandle, int w, int h,
+                        int format, int bpp, int stride_raw, int stride) {
+    char node[20];
+    int ret;
+    int offset=0;
+    struct v4l2_control vc;
+    struct v4l2_format fmt;
+    int rc;
+    int fd;
+    int lock_state=0;
+    private_handle_t* hnd;
+    unsigned int current_address = 0;
+
+    if (gReservedMemAddr == 0) {
+        sprintf(node, "%s", PFX_NODE_FIMC0);
+
+        fd = open(node, O_RDWR);
+        if (fd < 0) {
+            ALOGE("%s:: %s Post processor open error\n", __func__, node);
+            return false;
+        }
+
+        fmt.type = V4L2_BUF_TYPE_VIDEO_OUTPUT;
+
+        rc = ioctl(fd, VIDIOC_G_FMT, &fmt);
+        if (rc < 0) {
+            ALOGE("%s:: %s VIDIOC_G_FMT error\n", __func__, node);
+            return false;
+        }
+
+        vc.id = V4L2_CID_RESERVED_MEM_BASE_ADDR;
+        vc.value = 0;
+        ret = ioctl(fd, VIDIOC_G_CTRL, &vc);
+        if (ret < 0) {
+            ALOGE("%s Error in video VIDIOC_G_CTRL - V4L2_CID_RESERVED_MEM_BASE_ADDR (%d)\n", __func__, ret);
+            return false;
+        }
+        gReservedMemAddr = (unsigned int)vc.value;
+
+        vc.id = V4L2_CID_RESERVED_MEM_SIZE;
+        vc.value = 0;
+        ret = ioctl(fd, VIDIOC_G_CTRL, &vc);
+        if (ret < 0) {
+            ALOGE("%s Error in video VIDIOC_G_CTRL - V4L2_CID_RESERVED_MEM_SIZE (%d)\n", __func__, ret);
+            return false;
+        }
+        gReservedMemSize = vc.value;
+
+        if (gReservedMemSize == 0) {
+            ALOGE("%s Error in video VIDIOC_G_CTRL - V4L2_CID_RESERVED_MEM_SIZE is 0\n", __func__);
+            return false;
+        }
+
+        if (gReservedMemSize >= 4096) {
+            gReservedMemAddr += ((gReservedMemSize - 4096) * 1024);
+            gReservedMemSize = 4096;
+        }
+
+        close(fd);
+
+        if (gFimc1Fd == 0) {
+            sprintf(node, "%s", PFX_NODE_FIMC1);
+
+            gFimc1Fd = open(node, O_RDWR);
+
+            if (gFimc1Fd < 0) {
+                ALOGE("%s:: %s Post processor open error\n", __func__, node);
+                return false;
+            }
+        } // fimc3 setup
+    } // fimc1 setup
+
+    if ((unsigned int) (buffer_offset + size) >= (unsigned int) (gReservedMemSize * 1024))
+        buffer_offset = 0;
+
+    current_address = gReservedMemAddr + buffer_offset;
+
+    if ( (usage < 0 || usage & (GRALLOC_USAGE_HWC_HWOVERLAY | GRALLOC_USAGE_HW_FIMC1)) &&
+         (format == (int)HAL_PIXEL_FORMAT_RGBA_8888 || format == (int)HAL_PIXEL_FORMAT_RGB_565) ) {
+
+        if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
+            hnd = new private_handle_t(private_handle_t::PRIV_FLAGS_NONE_CACHED | private_handle_t::PRIV_FLAGS_USES_HDMI,
+                                       size, 0, private_handle_t::LOCK_STATE_MAPPED, 0, 0);
+        } else {
+            hnd = new private_handle_t(private_handle_t::PRIV_FLAGS_USES_HDMI,
+                                       size, 0, private_handle_t::LOCK_STATE_MAPPED, 0, 0);
+        }
+    } else {
+
+        if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
+            hnd = new private_handle_t(private_handle_t::PRIV_FLAGS_NONE_CACHED | private_handle_t::PRIV_FLAGS_USES_IOCTL,
+                                       size, 0, private_handle_t::LOCK_STATE_MAPPED, 0, 0);
+        } else {
+            hnd = new private_handle_t(private_handle_t::PRIV_FLAGS_USES_IOCTL,
+                                       size, 0, private_handle_t::LOCK_STATE_MAPPED, 0, 0);
+        }
+
+    }
+
+    *pHandle = hnd;
+    hnd->format = format;
+    hnd->usage = usage;
+    hnd->width = w;
+    hnd->height = h;
+    hnd->bpp = bpp;
+    hnd->paddr = current_address;
+    hnd->yaddr = gReservedMemSize;
+    hnd->offset = buffer_offset;
+    hnd->stride = stride;
+    hnd->fd = gFimc1Fd;
+    hnd->uoffset = (EXYNOS4_ALIGN((EXYNOS4_ALIGN(hnd->width, 16) * EXYNOS4_ALIGN(hnd->height, 16)), 4096));
+    hnd->voffset = (EXYNOS4_ALIGN((EXYNOS4_ALIGN((hnd->width >> 1), 16) * EXYNOS4_ALIGN((hnd->height >> 1), 16)), 4096));
+
+    buffer_offset += size;
+
+    ALOGD_IF(debug_level > 0, "%s hnd=%x paddr=%x yaddr=%x offset=%x", __func__, hnd, current_address, gReservedMemSize, buffer_offset);
+    return 0;
+}
+
+static int gralloc_alloc_ion(alloc_device_t *dev, size_t size, int usage,
+							 int format, ion_buffer *ion_fd, ion_phys_addr_t *ion_paddr,
+							 int *priv_alloc_flag, ump_handle *ump_mem_handle) {
+	unsigned int ion_flags = 0;
+	private_module_t* m;
+
+    if (!ion_dev_open) {
+        ALOGE("%s ERROR, failed to open ion", __func__);
+        return -1;
+    }
+
+    m = reinterpret_cast<private_module_t*>(dev->common.module);
+
+    if (usage < 0 || usage & GRALLOC_USAGE_HWC_HWOVERLAY )
+    {
+        if ((format == HAL_PIXEL_FORMAT_RGBA_8888) || (format == HAL_PIXEL_FORMAT_RGB_565)) {
+            *priv_alloc_flag |= (private_handle_t::PRIV_FLAGS_USES_ION | private_handle_t::PRIV_FLAGS_USES_HDMI);
+        } else {
+            *priv_alloc_flag |= private_handle_t::PRIV_FLAGS_USES_ION;
+        }
+    } else {
+        *priv_alloc_flag |= private_handle_t::PRIV_FLAGS_USES_ION;
+    }
+
+    if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
+        *priv_alloc_flag |= private_handle_t::PRIV_FLAGS_NONE_CACHED;
+        ion_flags = ION_EXYNOS_NONCACHE_MASK | ION_HEAP_EXYNOS_CONTIG_MASK;
+    } else {
+        ion_flags = ION_HEAP_EXYNOS_CONTIG_MASK;
+    }
+
+    *ion_fd = ion_alloc(m->ion_client, size, 0, ion_flags);
+    if (*ion_fd < 0) {
+        ALOGE("%s Failed to ion_alloc", __func__);
+        return -1;
+    }
+
+    *ion_paddr = ion_getphys(m->ion_client, *ion_fd);
+
+/* TODO: #ifdef SAMSUNG_EXYNOS_CACHE_UMP here...*/
+    if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
+        ALOGD_IF(debug_level > 0, "%s FIMC1 none", __func__);
+        *ump_mem_handle = ump_ref_drv_ion_import(*ion_fd, UMP_REF_DRV_CONSTRAINT_NONE);
+    } else {
+        ALOGD_IF(debug_level > 0, "%s FIMC1 cached", __func__);
+        *ump_mem_handle = ump_ref_drv_ion_import(*ion_fd, UMP_REF_DRV_CONSTRAINT_USE_CACHE);
+        ump_cpu_msync_now((ump_handle)*ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE, NULL, 0);
+    }
+    return 0;
+}
+
 static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
                                 buffer_handle_t* pHandle, int w, int h,
                                 int format, int bpp, int stride_raw, int stride)
@@ -107,10 +278,8 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
     ump_secure_id ump_id;
     ion_buffer ion_fd = 0;
     ion_phys_addr_t ion_paddr = 0;
-    unsigned int ion_flags = 0;
     int priv_alloc_flag = private_handle_t::PRIV_FLAGS_USES_UMP;
-    int orig_size=size;
-    private_module_t* m;
+    int ret = 0;
 
     ALOGD_IF(debug_level > 0, "%s size=%d usage=0x%x format=0x%x\n", __func__, size, usage, format);
 
@@ -118,172 +287,14 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
 
     if (usage & GRALLOC_USAGE_HW_FIMC1) {
         ALOGD_IF(debug_level > 0, "%s usage = GRALLOC_USAGE_HW_FIMC1", __func__);
-
-        char node[20];
-        int ret;
-        int offset=0;
-        struct v4l2_control vc;
-        struct v4l2_format fmt;
-        int rc;
-        int fd;
-        int lock_state=0;
-        private_handle_t* hnd;
-        unsigned int current_address = 0;
-
-        if (gReservedMemAddr == 0) {
-            sprintf(node, "%s", PFX_NODE_FIMC0);
-
-            fd = open(node, O_RDWR);
-            if (fd < 0) {
-                ALOGE("%s:: %s Post processor open error\n", __func__, node);
-                return false;
-            }
-
-            fmt.type = V4L2_BUF_TYPE_VIDEO_OUTPUT;
-
-            rc = ioctl(fd, VIDIOC_G_FMT, &fmt);
-            if (rc < 0) {
-                ALOGE("%s:: %s VIDIOC_G_FMT error\n", __func__, node);
-                return false;
-            }
-
-            vc.id = V4L2_CID_RESERVED_MEM_BASE_ADDR;
-            vc.value = 0;
-            ret = ioctl(fd, VIDIOC_G_CTRL, &vc);
-            if (ret < 0) {
-                ALOGE("%s Error in video VIDIOC_G_CTRL - V4L2_CID_RESERVED_MEM_BASE_ADDR (%d)\n", __func__, ret);
-                return false;
-            }
-            gReservedMemAddr = (unsigned int)vc.value;
-
-            vc.id = V4L2_CID_RESERVED_MEM_SIZE;
-            vc.value = 0;
-            ret = ioctl(fd, VIDIOC_G_CTRL, &vc);
-            if (ret < 0) {
-                ALOGE("%s Error in video VIDIOC_G_CTRL - V4L2_CID_RESERVED_MEM_SIZE (%d)\n", __func__, ret);
-                return false;
-            }
-            gReservedMemSize = vc.value;
-
-            if (gReservedMemSize == 0) {
-                ALOGE("%s Error in video VIDIOC_G_CTRL - V4L2_CID_RESERVED_MEM_SIZE is 0\n", __func__);
-                return false;
-            }
-
-            if (gReservedMemSize >= 4096) {
-                gReservedMemAddr += ((gReservedMemSize - 4096) * 1024);
-                gReservedMemSize = 4096;
-            }
-
-            close(fd);
-
-            if (gFimc1Fd == 0) {
-                sprintf(node, "%s", PFX_NODE_FIMC1);
-
-                gFimc1Fd = open(node, O_RDWR);
-
-                if (gFimc1Fd < 0) {
-                    ALOGE("%s:: %s Post processor open error\n", __func__, node);
-                    return false;
-                }
-            } // fimc3 setup
-        } // fimc1 setup
-
-        if ((unsigned int) (buffer_offset + size) >= (unsigned int) (gReservedMemSize * 1024))
-            buffer_offset = 0;
-
-        current_address = gReservedMemAddr + buffer_offset;
-
-        if ( (usage < 0 || usage & (GRALLOC_USAGE_HWC_HWOVERLAY | GRALLOC_USAGE_HW_FIMC1)) &&
-             (format == (int)HAL_PIXEL_FORMAT_RGBA_8888 || format == (int)HAL_PIXEL_FORMAT_RGB_565) ) {
-
-            if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
-                hnd = new private_handle_t(private_handle_t::PRIV_FLAGS_NONE_CACHED | private_handle_t::PRIV_FLAGS_USES_HDMI,
-                                           size, 0, private_handle_t::LOCK_STATE_MAPPED, 0, 0);
-            } else {
-                hnd = new private_handle_t(private_handle_t::PRIV_FLAGS_USES_HDMI,
-                                           size, 0, private_handle_t::LOCK_STATE_MAPPED, 0, 0);
-            }
-        } else {
-
-            if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
-                hnd = new private_handle_t(private_handle_t::PRIV_FLAGS_NONE_CACHED | private_handle_t::PRIV_FLAGS_USES_IOCTL,
-                                           size, 0, private_handle_t::LOCK_STATE_MAPPED, 0, 0);
-            } else {
-                hnd = new private_handle_t(private_handle_t::PRIV_FLAGS_USES_IOCTL,
-                                           size, 0, private_handle_t::LOCK_STATE_MAPPED, 0, 0);
-            }
-
-        }
-
-        *pHandle = hnd;
-        hnd->format = format;
-        hnd->usage = usage;
-        hnd->width = w;
-        hnd->height = h;
-        hnd->bpp = bpp;
-        hnd->paddr = current_address;
-        hnd->yaddr = gReservedMemSize;
-        hnd->offset = buffer_offset;
-        hnd->stride = stride;
-        hnd->fd = gFimc1Fd;
-        hnd->uoffset = (EXYNOS4_ALIGN((EXYNOS4_ALIGN(hnd->width, 16) * EXYNOS4_ALIGN(hnd->height, 16)), 4096));
-        hnd->voffset = (EXYNOS4_ALIGN((EXYNOS4_ALIGN((hnd->width >> 1), 16) * EXYNOS4_ALIGN((hnd->height >> 1), 16)), 4096));
-
-        buffer_offset += size;
-
-        ALOGD_IF(debug_level > 0, "%s hnd=%x paddr=%x yaddr=%x offset=%x", __func__, hnd, current_address, gReservedMemSize, buffer_offset);
-        return 0;
+        return gralloc_alloc_fimc1(size, usage, pHandle, w, h, format, bpp, stride_raw, stride);
     }
 
-    if (usage & GRALLOC_USAGE_HW_ION) {
-        ALOGD_IF(debug_level > 0, "%s usage = GRALLOC_USAGE_HW_ION", __func__);
-
-        if (!ion_dev_open) {
-            ALOGE("%s ERROR, failed to open ion", __func__);
-            return -1;
-        }
-
-        m = reinterpret_cast<private_module_t*>(dev->common.module);
-
-        if (usage < 0 || usage & GRALLOC_USAGE_HWC_HWOVERLAY )
-        {
-            if ((format == HAL_PIXEL_FORMAT_RGBA_8888) || (format == HAL_PIXEL_FORMAT_RGB_565)) {
-                priv_alloc_flag |= (private_handle_t::PRIV_FLAGS_USES_ION | private_handle_t::PRIV_FLAGS_USES_HDMI);
-            } else {
-                priv_alloc_flag |= private_handle_t::PRIV_FLAGS_USES_ION;
-            }
-        } else {
-            priv_alloc_flag |= private_handle_t::PRIV_FLAGS_USES_ION;
-        }
-
-        if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
-            priv_alloc_flag |= private_handle_t::PRIV_FLAGS_NONE_CACHED;
-            ion_flags = ION_EXYNOS_NONCACHE_MASK | ION_HEAP_EXYNOS_CONTIG_MASK;
-        } else {
-            ion_flags = ION_HEAP_EXYNOS_CONTIG_MASK;
-        }
-
-        ion_fd = ion_alloc(m->ion_client, size, 0, ion_flags);
-        if (ion_fd < 0) {
-            ALOGE("%s Failed to ion_alloc", __func__);
-            return -1;
-        }
-
-        ion_paddr = ion_getphys(m->ion_client, ion_fd);
-
-/* TODO: #ifdef SAMSUNG_EXYNOS_CACHE_UMP here...*/
-        if (usage & GRALLOC_USAGE_PRIVATE_NONECACHE) {
-            ALOGD_IF(debug_level > 0, "%s FIMC1 none", __func__);
-            ump_mem_handle = ump_ref_drv_ion_import(ion_fd, UMP_REF_DRV_CONSTRAINT_NONE);
-        } else {
-            ALOGD_IF(debug_level > 0, "%s FIMC1 cached", __func__);
-            ump_mem_handle = ump_ref_drv_ion_import(ion_fd, UMP_REF_DRV_CONSTRAINT_USE_CACHE);
-            ump_cpu_msync_now((ump_handle)ump_mem_handle, UMP_MSYNC_CLEAN_AND_INVALIDATE, NULL, 0);
-        }
-
-    } else {
-
+    ret = gralloc_alloc_ion(dev, size, usage, format, &ion_fd, &ion_paddr, &priv_alloc_flag, &ump_mem_handle);
+    if (ret < 0) {
+        // may happen if ion carveout is out of memory
+        ALOGI("Falling back to UMP-only allocation...");
+        priv_alloc_flag = private_handle_t::PRIV_FLAGS_USES_UMP;
 #ifdef SAMSUNG_EXYNOS_CACHE_UMP
         if ((usage & GRALLOC_USAGE_SW_READ_MASK) == GRALLOC_USAGE_SW_READ_OFTEN) {
             ALOGD_IF(debug_level > 0, "%s UMP cached", __func__);
@@ -294,10 +305,8 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
             ump_mem_handle = ump_ref_drv_allocate(size, UMP_REF_DRV_CONSTRAINT_NONE);
         }
 #else
-        else
-            ump_mem_handle = ump_ref_drv_allocate(size, UMP_REF_DRV_CONSTRAINT_NONE);
+        ump_mem_handle = ump_ref_drv_allocate(size, UMP_REF_DRV_CONSTRAINT_NONE);
 #endif
-
     }
 
     if (UMP_INVALID_MEMORY_HANDLE != ump_mem_handle) {
@@ -308,7 +317,7 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
                 private_handle_t* hnd;
 
                 hnd = new private_handle_t(priv_alloc_flag, size, (int)cpu_ptr,
-                private_handle_t::LOCK_STATE_MAPPED, ump_id, ump_mem_handle, ion_fd, 0, 0);
+                private_handle_t::LOCK_STATE_MAPPED, ump_id, ump_mem_handle, ion_fd < 0 ? 0 : ion_fd, 0, 0);
 
                 if (NULL != hnd) {
                     *pHandle = hnd;
@@ -334,7 +343,8 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
                     hnd->uoffset = ((EXYNOS4_ALIGN(hnd->width, 16) * EXYNOS4_ALIGN(hnd->height, 16)));
                     hnd->voffset = ((EXYNOS4_ALIGN((hnd->width / 2), 16) * EXYNOS4_ALIGN((hnd->height / 2), 16)));
                     hnd->paddr = ion_paddr;
-                    hnd->ion_memory = ion_map(ion_fd, size, 0);
+                    if (ion_fd >= 0)
+                        hnd->ion_memory = ion_map(ion_fd, size, 0);
 
                     ALOGD_IF(debug_level > 0, "%s hnd->format=0x%x hnd->uoffset=%d hnd->voffset=%d hnd->paddr=%x hnd->bpp=%d", __func__, hnd->format, hnd->uoffset, hnd->voffset, hnd->paddr, hnd->bpp);
                     return 0;
