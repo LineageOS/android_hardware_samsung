@@ -85,6 +85,12 @@ struct private_handle_rect {
 };
 #endif
 
+struct private_extra_t {
+    uint64_t backing_store;
+    int producer_usage;
+    int consumer_usage;
+};
+
 #ifdef __cplusplus
 struct private_handle_t : public native_handle
 {
@@ -145,6 +151,8 @@ struct private_handle_t {
     unsigned int uoffset;
     unsigned int voffset;
 
+    struct private_extra_t *extra;
+
 #ifdef __cplusplus
     static const int sNumInts = 21;
     static const int sNumFds = 1;
@@ -179,6 +187,9 @@ struct private_handle_t {
         version = sizeof(native_handle);
         numFds = sNumFds;
         numInts = sNumInts;
+        extra = new private_extra_t();
+        ALOGV("%s: fd:%d magic:%d flags:%d size:%d base:%d", __func__,
+            fd, magic, flags, size, base);
     }
 
     private_handle_t(int flags, int size, int base, int lock_state, int fb_file, int fb_offset):
@@ -210,11 +221,15 @@ struct private_handle_t {
         version = sizeof(native_handle);
         numFds = sNumFds;
         numInts = sNumInts;
+        extra = new private_extra_t();
+        ALOGV("%s: fd:%d magic:%d flags:%d size:%d base:%d", __func__,
+            fd, magic, flags, size, base);
     }
 
     ~private_handle_t()
     {
         magic = 0;
+        delete extra;
     }
 
     bool usesPhysicallyContiguousMemory()
