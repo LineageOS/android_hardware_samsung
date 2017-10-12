@@ -24,6 +24,7 @@
  * limitations under the License.
  */
 
+//#define LOG_NDEBUG 0
 #ifndef GRALLOC_PRIV_H_
 #define GRALLOC_PRIV_H_
 
@@ -145,8 +146,17 @@ struct private_handle_t {
     unsigned int uoffset;
     unsigned int voffset;
 
+    /* Following members are added but must be excluded when
+     * passed to libMali.so. Use toLegacyHandle() to restore
+     * NumInts to original/expected value
+     */
+    uint64_t backing_store;
+    uint64_t producer_usage;
+    uint64_t consumer_usage;
+
 #ifdef __cplusplus
     static const int sNumInts = 21;
+    static const int sExtraNumInts = 6;
     static const int sNumFds = 1;
     static const int sMagic = 0x3141592;
 
@@ -178,7 +188,9 @@ struct private_handle_t {
     {
         version = sizeof(native_handle);
         numFds = sNumFds;
-        numInts = sNumInts;
+        numInts = sNumInts + sExtraNumInts;
+        ALOGV("%s: fd:%d magic:%d flags:%d size:%d base:%d", __func__,
+            fd, magic, flags, size, base);
     }
 
     private_handle_t(int flags, int size, int base, int lock_state, int fb_file, int fb_offset):
@@ -209,7 +221,9 @@ struct private_handle_t {
     {
         version = sizeof(native_handle);
         numFds = sNumFds;
-        numInts = sNumInts;
+        numInts = sNumInts + sExtraNumInts;
+        ALOGV("%s: fd:%d magic:%d flags:%d size:%d base:%d", __func__,
+            fd, magic, flags, size, base);
     }
 
     ~private_handle_t()
@@ -226,7 +240,8 @@ struct private_handle_t {
     {
         const private_handle_t* hnd = (const private_handle_t*)h;
         if (!h || h->version != sizeof(native_handle) ||
-            h->numInts != sNumInts ||
+            !(h->numInts == sNumInts ||
+              h->numInts == sNumInts + sExtraNumInts) ||
             h->numFds != sNumFds ||
             hnd->magic != sMagic)
             return -EINVAL;
