@@ -787,7 +787,7 @@ static int perform_fimc(hwc_context_t *ctx, const hwc_layer_1_t &layer, struct h
     //src
     hwc_rect_t crop = integerizeSourceCrop(layer.sourceCropf);
 
-    ret = v4l2_s_fmt_pix_out(ctx, EXYNOS4_ALIGN(WIDTH(crop), 16), EXYNOS4_ALIGN(HEIGHT(crop), 16), HAL_PIXEL_FORMAT_2_V4L2_PIX(src_handle->format), 0);
+    ret = v4l2_s_fmt_pix_out(ctx, EXYNOS4_ALIGN(src_handle->width, 16), EXYNOS4_ALIGN(src_handle->height, 16), HAL_PIXEL_FORMAT_2_V4L2_PIX(src_handle->format), 0);
     if (ret < 0) {
         ALOGE("%s: v4l2_s_fmt_pix_out() rc=%d", __FUNCTION__, ret);
         return ret;
@@ -876,9 +876,9 @@ static int perform_fimc(hwc_context_t *ctx, const hwc_layer_1_t &layer, struct h
     ALOGV("%s: src_handle usage(0x%x) base(0x%x) paddr(0x%x)", __FUNCTION__, src_handle->usage, src_handle->base, src_handle->paddr);
 
     struct fimc_buf buf;
-    buf.base[FIMC_ADDR_Y] = src_handle->paddr;
-    buf.base[FIMC_ADDR_CB] = src_handle->paddr + src_handle->uoffset;
-    buf.base[FIMC_ADDR_CR] = src_handle->paddr + src_handle->uoffset + src_handle->voffset;
+    buf.base[FIMC_ADDR_Y] = src_handle->paddr + src_handle->offset;
+    buf.base[FIMC_ADDR_CB] = src_handle->paddr + src_handle->offset + src_handle->uoffset;
+    buf.base[FIMC_ADDR_CR] = src_handle->paddr + src_handle->offset + src_handle->uoffset + src_handle->voffset;
 
     ret = v4l2_qbuf(ctx, 0, (unsigned long) &buf);
     if (ret < 0) {
@@ -903,7 +903,7 @@ static int perform_fimc(hwc_context_t *ctx, const hwc_layer_1_t &layer, struct h
         close(layer.acquireFenceFd);
     }
 
-    return 0;
+    return w;
 }
 
 static void config_overlay(hwc_context_t *ctx, hwc_layer_1_t &layer, s3c_fb_win_config &cfg)
