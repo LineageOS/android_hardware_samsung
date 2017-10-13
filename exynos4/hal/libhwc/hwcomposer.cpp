@@ -1057,6 +1057,7 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
                 config[window].state = config->S3C_FB_WIN_STATE_DISABLED;
             }
         }
+        memcpy(&win.win_cfg, &config[window], sizeof(struct s3c_fb_win_config));
     }
 
     dump_fb_win_cfg(win_data);
@@ -1070,9 +1071,9 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
 
     if (wincfg_err < 0) {
         ALOGE("%s S3CFB_WIN_CONFIG failed: %s", __FUNCTION__, strerror(errno));
+        return wincfg_err;
     }
 
-    memcpy(&ctx->win_cfg, config, sizeof(*config));
 
     return win_data.fence;
 }
@@ -1340,8 +1341,12 @@ static void hwc_dump(struct hwc_composer_device_1* dev, char *buff, int buff_len
             ctx->bypass_count, ctx->multi_fimg);
     tmp.appendFormat("win | mode | layer_index |    paddr    |     hnd     |\n");
     //                3-- | 4--- | 11--------- | 0x100000000 | 0x100000000 |
+    int fimc_win = -1;
+    int fimg_win = -1;
     for (int i = 0; i < NUM_HW_WINDOWS; i++) {
         struct hwc_win_info_t *win = &ctx->win[i];
+        if (win->gsc.mode == gsc_map_t::FIMC) fimc_win = i;
+        else if (win->gsc.mode == gsc_map_t::FIMG) fimg_win = i;
         if (win->src_buf)
             tmp.appendFormat("  %d | %4s |          % 2d | 0x%09x | 0x%09x\n",
                     i, win->layer_index < 0 ? "OFF" : modes[win->gsc.mode],
@@ -1352,6 +1357,21 @@ static void hwc_dump(struct hwc_composer_device_1* dev, char *buff, int buff_len
                     win->layer_index, 0xdead, 0x0);
 
     }
+
+    if (fimc_win != -1) {
+        tmp.appendFormat("\n\n--FIMC info (%d)--\n", fimc_win);
+        struct s3c_fb_win_config *cfg = &ctx->win[fimc_win].win_cfg;
+        tmp.appendFormat("paddr=0x%09x, offset=%d, stride=%d, fmt=%d, blending=%d, alpha=%d\n",
+                cfg->phys_addr, cfg->offset, cfg->stride, cfg->format, cfg->blending, cfg->plane_alpha);
+    }
+
+    if (fimg_win != -1) {
+        tmp.appendFormat("\n\n--FIMG info (%d)--\n", fimg_win);
+        struct s3c_fb_win_config *cfg = &ctx->win[fimc_win].win_cfg;
+        tmp.appendFormat("paddr=0x%09x, offset=%d, stride=%d, fmt=%d, blending=%d, alpha=%d\n",
+                cfg->phys_addr, cfg->offset, cfg->stride, cfg->format, cfg->blending, cfg->plane_alpha);
+    }
+
     ctx->multi_fimg = property_get_int32("persist.sys.hwc.multi_fimg", 0);
     strlcpy(buff, tmp.string(), buff_len);
 }

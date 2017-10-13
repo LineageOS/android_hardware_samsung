@@ -116,6 +116,7 @@ struct hwc_win_info_t {
     struct fimg2d_blit          fimg_cmd; //if geometry, blending hasn't changed, only buffers have to be swapped
     struct fimg2d_image         g2d_src_img;
     struct fimg2d_image         g2d_dst_img;
+    struct s3c_fb_win_config	win_cfg;
 
     int                         blending;
     int                         layer_index;
@@ -137,7 +138,6 @@ struct hwc_context_t {
     bool                      multi_fimg; // enable multiple fimg layers
     int                       bypass_count;
 
-    struct s3c_fb_win_config  win_cfg;
     struct hwc_win_info_t     win[NUM_HW_WINDOWS];
 
     // V4L2 info of FIMC device
