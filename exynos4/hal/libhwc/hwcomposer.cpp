@@ -1006,7 +1006,7 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
                     private_handle_t* dst_hnd = private_handle_t::dynamicCast(win.dst_buf[win.current_buf]);
                     config[window].phys_addr = dst_hnd->paddr;
                     config[window].offset = 0;
-                    config[window].stride = EXYNOS4_ALIGN(config[window].w,16) * 4;
+                    config[window].stride = win.g2d_dst_img.stride;
                 }
                 break;
 
