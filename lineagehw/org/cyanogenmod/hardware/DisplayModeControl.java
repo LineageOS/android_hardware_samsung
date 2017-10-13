@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package org.cyanogenmod.hardware;
+package org.lineageos.hardware;
 
-import cyanogenmod.hardware.DisplayMode;
-import org.cyanogenmod.internal.util.FileUtils;
+import lineageos.hardware.DisplayMode;
+import org.lineageos.internal.util.FileUtils;
 
 import java.util.Arrays;
 
