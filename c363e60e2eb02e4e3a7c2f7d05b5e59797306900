@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f09920ee_4027fd85",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3714,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-10-13T00:51:12Z",
+      "side": 1,
+      "message": "works this way in my devices (where mqanelements is 6)",
+      "parentUuid": "af956572_a65cf75c",
+      "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24745735_2339113c",
         "filename": "ril/libril/ril_service.cpp",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-27T10:36:37Z",
       "side": 1,
       "message": "why change this?",
+      "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a0977ce_5a692ba0",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3721,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-10-13T00:51:12Z",
+      "side": 1,
+      "message": "because of this\nhttps://github.com/LineageOS/android_device_samsung_ha3g/blob/cm-14.1/ril/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java#L258",
+      "parentUuid": "24745735_2339113c",
       "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
@@ -81,6 +117,24 @@
       "writtenOn": "2017-09-27T10:36:37Z",
       "side": 1,
       "message": "why change this?",
+      "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51999785_455b45fa",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4369,
+      "author": {
+        "id": 16012
+      },
+      "writtenOn": "2017-10-13T00:51:12Z",
+      "side": 1,
+      "message": "because of this\nhttps://github.com/LineageOS/android_device_samsung_ha3g/blob/cm-14.1/ril/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java#L258",
+      "parentUuid": "70c5bee2_21239021",
       "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
