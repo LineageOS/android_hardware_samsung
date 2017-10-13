@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "041b7042_cb4b5855",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3721,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2017-10-13T03:26:51Z",
+      "side": 1,
+      "message": "Hmm, ok. It looks like i9300 doesn\u0027t have this, so I guess these changes should be applied conditionally. (I guess if resp[1] isn\u0027t a string, that also explains why you had to change the numStrings check). I\u0027m not sure if using a property or a compile-time check is better, though.",
+      "parentUuid": "4a0977ce_5a692ba0",
+      "revId": "c363e60e2eb02e4e3a7c2f7d05b5e59797306900",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eb7b6f3_78eef926",
         "filename": "ril/libril/ril_service.cpp",
         "patchSetId": 1
