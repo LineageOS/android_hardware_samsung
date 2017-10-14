@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.settings.device;
+package org.lineageos.settings.device;
 
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
@@ -22,7 +22,7 @@ import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
 import android.provider.Settings;
 
-import org.cyanogenmod.internal.util.ScreenType;
+import org.lineageos.internal.util.ScreenType;
 
 public class TouchscreenGestureSettings extends PreferenceFragment {
 
