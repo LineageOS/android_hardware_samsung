@@ -14,7 +14,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-appcompat \
     android-support-v7-preference \
     android-support-v7-recyclerview \
-    org.cyanogenmod.platform.internal
+    org.lineageos.platform.internal
 
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
