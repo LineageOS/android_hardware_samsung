@@ -1,4 +1,4 @@
--keep class com.cyanogenmod.settings.device.* {
+-keep class org.lineageos.settings.device.* {
   *;
 }
 
