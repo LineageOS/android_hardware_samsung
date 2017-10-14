@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cyanogenmod.settings.device"
+    package="org.lineageos.settings.device"
     android:versionCode="1"
     android:versionName="1.0"
     android:sharedUserId="android.uid.system">
@@ -20,14 +20,14 @@
         android:label="@string/device_settings_app_name"
         android:persistent="true">
 
-        <receiver android:name="com.cyanogenmod.settings.device.BootCompletedReceiver">
+        <receiver android:name="org.lineageos.settings.device.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.cyanogenmod.settings.device.SamsungDozeService"
+        <service android:name="org.lingeageos.settings.device.SamsungDozeService"
                  android:permission="SamsungDozeService">
         </service>
 
@@ -36,7 +36,7 @@
             android:label="@string/ambient_display_title"
             android:theme="@style/SamsungDozeSettings">
             <intent-filter>
-                <action android:name="org.cyanogenmod.settings.device.DOZE_SETTINGS" />
+                <action android:name="org.lineageos.settings.device.DOZE_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

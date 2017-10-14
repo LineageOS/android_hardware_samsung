@@ -20,7 +20,7 @@
         android:key="ambient_display_key"
         android:title="@string/ambient_display_title">
 
-        <cyanogenmod.preference.SecureSettingSwitchPreference
+        <lineageos.preference.SecureSettingSwitchPreference
             android:key="doze_enabled"
             android:defaultValue="true"
             android:title="@string/ambient_display_enable_title"
