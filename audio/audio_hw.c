@@ -2799,8 +2799,7 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
             }
         }
 
-        if ((adev->mode == AUDIO_MODE_NORMAL) && adev->voice.in_call &&
-                (out == adev->primary_output)) {
+        if ((adev->mode != AUDIO_MODE_IN_CALL) && adev->voice.in_call) {
             stop_voice_call(adev);
         }
         pthread_mutex_unlock(&adev->lock);

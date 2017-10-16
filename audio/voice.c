@@ -295,6 +295,9 @@ void stop_voice_session(struct voice_session *session)
 {
     int status = 0;
 
+    ril_set_call_clock_sync(&session->ril, SOUND_CLOCK_STOP);
+
+
     ALOGV("%s: Closing active PCMs", __func__);
 
     if (session->pcm_voice_rx != NULL) {

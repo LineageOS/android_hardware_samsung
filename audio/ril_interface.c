@@ -49,7 +49,7 @@ static void *_wb_amr_data = NULL;
 
 /* This is the callback function that the RIL uses to
 set the wideband AMR state */
-static int ril_internal_wb_amr_callback(HRilClient client __unused,
+static int ril_internal_wb_amr_callback(void *ril_client __unused,
                                         const void *data,
                                         size_t datalen)
 {
