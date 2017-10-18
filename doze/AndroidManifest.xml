@@ -13,28 +13,28 @@
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
     <uses-sdk
-        android:minSdkVersion="21"
-        android:targetSdkVersion="21"/>
+        android:minSdkVersion="24"
+        android:targetSdkVersion="26"/>
 
     <application
         android:label="@string/device_settings_app_name"
         android:persistent="true">
 
-        <receiver android:name="org.lineageos.settings.device.BootCompletedReceiver">
+        <receiver android:name=".BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <service android:name="org.lingeageos.settings.device.SamsungDozeService"
+        <service android:name=".SamsungDozeService"
                  android:permission="SamsungDozeService">
         </service>
 
         <activity
             android:name=".SamsungDozeActivity"
             android:label="@string/ambient_display_title"
-            android:theme="@style/SamsungDozeSettings">
+            android:theme="@style/Theme.Main">
             <intent-filter>
                 <action android:name="org.lineageos.settings.device.DOZE_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
