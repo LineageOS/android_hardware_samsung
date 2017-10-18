@@ -16,11 +16,13 @@
 
 package org.lineageos.settings.device;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.Preference;
 import android.provider.Settings;
+import android.view.MenuItem;
 
 import org.lineageos.internal.util.ScreenType;
 
@@ -35,6 +37,8 @@ public class TouchscreenGestureSettings extends PreferenceFragment {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.gesture_panel);
+        final ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         mHandwavePreference =
             (SwitchPreference) findPreference(KEY_HAND_WAVE);
@@ -68,4 +72,13 @@ public class TouchscreenGestureSettings extends PreferenceFragment {
             return true;
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getActivity().onBackPressed();
+            return true;
+        }
+        return false;
+    }
 }
