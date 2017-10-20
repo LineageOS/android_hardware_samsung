@@ -106,11 +106,13 @@ MsgHeader* SapImpl::createMsgHeader(MsgId msgId, int32_t token) {
 
 Return<void> SapImpl::addPayloadAndDispatchRequest(MsgHeader *msg, uint16_t reqLen,
         uint8_t *reqPtr) {
-    msg->payload = (pb_bytes_array_t *)malloc(sizeof(pb_bytes_array_t) - 1 + reqLen);
-    if (msg->payload == NULL) {
+    pb_bytes_array_t *payload = (pb_bytes_array_t *) malloc(sizeof(pb_bytes_array_t) - 1 + reqLen);
+    if (payload == NULL) {
         sendFailedResponse(msg->id, msg->token, 2, reqPtr, msg);
         return Void();
     }
+
+    msg->payload = payload;
     msg->payload->size = reqLen;
     memcpy(msg->payload->bytes, reqPtr, reqLen);
 
@@ -120,7 +122,7 @@ Return<void> SapImpl::addPayloadAndDispatchRequest(MsgHeader *msg, uint16_t reqL
         sapSocket->dispatchRequest(msg);
     } else {
         RLOGE("SapImpl::addPayloadAndDispatchRequest: sapSocket is null");
-        sendFailedResponse(msg->id, msg->token, 3, msg->payload, reqPtr, msg);
+        sendFailedResponse(msg->id, msg->token, 3, payload, reqPtr, msg);
         return Void();
     }
     free(msg->payload);
