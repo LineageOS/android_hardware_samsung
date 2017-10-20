@@ -55,10 +55,9 @@ void RilSapSocket::sOnRequestComplete (RIL_Token t,
         sap_socket->onRequestComplete(t,e,response,responselen);
     } else {
         RLOGE("Invalid socket id");
-        if (request->curr->payload) {
-            free(request->curr->payload);
+        if (request->curr) {
+            free(request->curr);
         }
-        free(request->curr);
         free(request);
     }
 }
@@ -234,6 +233,12 @@ void RilSapSocket::dispatchRequest(MsgHeader *req) {
 void RilSapSocket::onRequestComplete(RIL_Token t, RIL_Errno e, void *response,
         size_t response_len) {
     SapSocketRequest* request= (SapSocketRequest*)t;
+
+    if (!request || !request->curr) {
+        RLOGE("RilSapSocket::onRequestComplete: request/request->curr is NULL");
+        return;
+    }
+
     MsgHeader *hdr = request->curr;
 
     MsgHeader rsp;
