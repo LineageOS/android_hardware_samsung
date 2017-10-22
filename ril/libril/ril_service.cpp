@@ -6696,8 +6696,25 @@ int radio::nitzTimeReceivedInd(int slotId,
             RLOGE("nitzTimeReceivedInd: invalid response");
             return 0;
         }
-        hidl_string nitzTime = convertCharPtrToHidlString((char *) response);
+        hidl_string nitzTime;
         int64_t timeReceived = android::elapsedRealtime();
+        char *resp = strndup((char *) response, responseLen);
+        char *tmp = resp;
+
+        /* Find the 3rd comma */
+        for (int i = 0; i < 3; i++) {
+            if (tmp != NULL) {
+                tmp = strchr(tmp + 1, ',');
+            }
+        }
+
+        /* Make the 3rd comma the end of the string */
+        if (tmp != NULL) {
+            *tmp = '\0';
+        }
+
+        nitzTime = convertCharPtrToHidlString(resp);
+        free(resp);
 #if VDBG
         RLOGD("nitzTimeReceivedInd: nitzTime %s receivedTime %" PRId64, nitzTime.c_str(),
                 timeReceived);
