@@ -7651,6 +7651,18 @@ int radio::cdmaInfoRecInd(int slotId,
                     record->signal[0].signalType = infoRec->rec.signal.signalType;
                     record->signal[0].alertPitch = infoRec->rec.signal.alertPitch;
                     record->signal[0].signal = infoRec->rec.signal.signal;
+
+                    /* Drop the response to workaround the "ring of death" bug */
+                    if (infoRec->rec.signal.isPresent
+                            /* IS95_CONST_IR_SIGNAL_IS54B */
+                            && infoRec->rec.signal.signalType == 2
+                            /* IS95_CONST_IR_ALERT_MED */
+                            && infoRec->rec.signal.alertPitch == 0
+                            /* IS95_CONST_IR_SIG_IS54B_L */
+                            && infoRec->rec.signal.signal == 1) {
+                        return 0;
+                    }
+
                     break;
                 }
 
