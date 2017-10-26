@@ -1212,22 +1212,48 @@ static int hwc_eventControl(struct hwc_composer_device_1* dev, __unused int dpy,
     return -EINVAL;
 }
 
-static int hwc_blank(struct hwc_composer_device_1 *dev, int dpy, int blank)
+static int hwc_setPowerMode(struct hwc_composer_device_1 *dev, int dpy, int mode)
 {
     struct hwc_context_t* ctx = (struct hwc_context_t*)dev;
     int fence = 0;
+    int blank;
 
-    ALOGV("%s blank=%d", __FUNCTION__, blank);
+    ALOGV("%s mode=%d", __FUNCTION__, mode);
 
     fence = window_clear(ctx);
     if (fence != -1)
         close(fence);
 
-    if (ioctl(ctx->fb0_fd, FBIOBLANK, blank ? FB_BLANK_POWERDOWN : FB_BLANK_UNBLANK) < 0) {
+
+    switch (mode) {
+        case HWC_POWER_MODE_OFF:
+            blank = FB_BLANK_POWERDOWN;
+            break;
+        case HWC_POWER_MODE_NORMAL:
+            blank = FB_BLANK_UNBLANK;
+            break;
+        default:
+            // FIXME DOZE and DOZE_SUSPEND are unsupported by the fb driver
+            return -EINVAL;
+    }
+
+    if (ioctl(ctx->fb0_fd, FBIOBLANK, blank) < 0) {
         ALOGE("%s Error %s in FBIOBLANK blank=%d", __FUNCTION__, strerror(errno), blank);
     }
 
     return 0;
+}
+
+static int hwc_getActiveConfig(struct hwc_composer_device_1 *dev, int disp)
+{
+    // we only support the primary display
+    return 0;
+}
+
+static int hwc_setActiveConfig(struct hwc_composer_device_1 *dev, int dpy, int idx)
+{
+    // Only 1 config supported for the primary display
+    return (idx == 0) ? idx : -EINVAL;
 }
 
 static int hwc_query(struct hwc_composer_device_1* dev,
@@ -1414,19 +1440,21 @@ static int hwc_device_open(const struct hw_module_t* module, const char* name,
 
         // initialize the procs
         dev->device.common.tag = HARDWARE_DEVICE_TAG;
-        dev->device.common.version = HWC_DEVICE_API_VERSION_1_3;
+        dev->device.common.version = HWC_DEVICE_API_VERSION_1_4;
         dev->device.common.module = const_cast<hw_module_t*>(module);
         dev->device.common.close = hwc_device_close;
 
         dev->device.prepare = hwc_prepare;
         dev->device.set = hwc_set;
         dev->device.eventControl = hwc_eventControl;
-        dev->device.blank = hwc_blank;
+        dev->device.setPowerMode = hwc_setPowerMode;
         dev->device.query = hwc_query;
         dev->device.registerProcs = hwc_registerProcs;
         dev->device.dump = hwc_dump;
         dev->device.getDisplayConfigs = hwc_getDisplayConfigs;
         dev->device.getDisplayAttributes = hwc_getDisplayAttributes;
+        dev->device.getActiveConfig = hwc_getActiveConfig;
+        dev->device.setActiveConfig = hwc_setActiveConfig;
 
         *device = &dev->device.common;
 
