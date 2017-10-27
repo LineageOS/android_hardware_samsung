@@ -208,12 +208,21 @@ static enum gsc_map_t::mode layer_requires_process(hwc_layer_1_t &layer)
 
     switch(mode) {
     case gsc_map_t::NONE:
-        if ((is_scaled(layer) || is_transformed(layer)) && is_contiguous(layer)) { // TODO: can FIMC handle non-x aligned buffers?
+        if (!is_scaled(layer) && is_transformed(layer) && is_contiguous(layer)) { // TODO: can FIMC handle non-x aligned buffers?
             mode = gsc_map_t::FIMC;
         } else if (is_scaled(layer) || is_transformed(layer) || !is_x_aligned(layer) || !is_contiguous(layer)) {
             ALOGV("%s: direct render -> fimg because is_scaled(%d) is_transformed(%d) is_x_aligned(%d)",
                     __FUNCTION__, is_scaled(layer), is_transformed(layer), is_x_aligned(layer));
             mode = gsc_map_t::FIMG;
+        }
+        break;
+
+    case gsc_map_t::FIMC:
+        if (is_scaled(layer)) {
+            // FIMC _should_ be able to do scaling
+            // but it doesn't seem to work well.
+            // Disable it for now.
+            mode = gsc_map_t::NONE;
         }
         break;
 
