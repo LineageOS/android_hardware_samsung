@@ -121,7 +121,7 @@ int window_buffer_allocate(struct hwc_context_t *ctx, struct hwc_win_info_t *win
 
     for (i = 0; i < NUM_OF_WIN_BUF; i++) {
         rc = ctx->alloc_device->alloc(ctx->alloc_device, win->rect_info.w, win->rect_info.h,
-                    HAL_PIXEL_FORMAT_RGBA_8888, GRALLOC_USAGE_HW_ION, &win->dst_buf[i],
+                    HAL_PIXEL_FORMAT_RGBA_8888, GRALLOC_USAGE_HW_COMPOSER, &win->dst_buf[i],
                     &dst_stride);
         if (rc < 0) {
             ALOGE("%s: Failed to allocate destination buffer: %s", __FUNCTION__, strerror(-rc));
