@@ -208,13 +208,13 @@ static enum gsc_map_t::mode layer_requires_process(hwc_layer_1_t &layer)
 
     switch(mode) {
     case gsc_map_t::NONE:
-        if (!is_scaled(layer) && is_transformed(layer) && is_contiguous(layer)) { // TODO: can FIMC handle non-x aligned buffers?
-            mode = gsc_map_t::FIMC;
-        } else if (is_scaled(layer) || is_transformed(layer) || !is_x_aligned(layer) || !is_contiguous(layer)) {
+        // FIMG adds noticable touch latency and also seems to break the panel.
+        // Disable it for now
+        /*if (is_scaled(layer) || is_transformed(layer) || !is_x_aligned(layer) || !is_contiguous(layer)) {
             ALOGV("%s: direct render -> fimg because is_scaled(%d) is_transformed(%d) is_x_aligned(%d)",
                     __FUNCTION__, is_scaled(layer), is_transformed(layer), is_x_aligned(layer));
             mode = gsc_map_t::FIMG;
-        }
+        }*/
         break;
 
     case gsc_map_t::FIMC:
