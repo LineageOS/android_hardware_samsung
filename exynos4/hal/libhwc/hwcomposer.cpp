@@ -302,7 +302,8 @@ bool is_overlay_supported(struct hwc_context_t *ctx, hwc_layer_1_t &layer, size_
         break;
 
     default:
-        if (!format_is_supported(handle->format)) {
+        if (!format_is_supported(handle->format) || is_transformed(layer) || is_scaled(layer) || !is_contiguous(layer)
+				|| !is_x_aligned(layer)) {
             ALOGW("\tlayer %u: pixel format %u not supported", i, handle->format);
             return false;
         }
