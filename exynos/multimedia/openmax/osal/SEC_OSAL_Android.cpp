@@ -215,12 +215,13 @@ OMX_ERRORTYPE SEC_OSAL_GetPhysANBHandle(
 
     SEC_OSAL_Log(SEC_LOG_TRACE, "%s: handle: 0x%x", __func__, handle);
 
+/*
     if (mapper.getphys(bufferHandle, paddr) != 0) {
         SEC_OSAL_Log(SEC_LOG_ERROR, "%s: mapper.getphys() fail", __func__);
         ret = OMX_ErrorUndefined;
         goto EXIT;
     }
-
+*/
 EXIT:
     FunctionOut();
 

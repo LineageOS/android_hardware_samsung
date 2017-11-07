@@ -588,7 +588,7 @@ struct private_module_t HAL_MODULE_INFO_SYM =
         unregisterBuffer: gralloc_unregister_buffer,
         lock: gralloc_lock,
         unlock: gralloc_unlock,
-        getphys: gralloc_getphys,
+//        getphys: gralloc_getphys,
         perform: gralloc_perform,
     },
     framebuffer: NULL,
