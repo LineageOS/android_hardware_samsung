@@ -2745,7 +2745,7 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
             }
         }
 #endif
-        if (val != 0) {
+        if (val != SND_DEVICE_NONE) {
             bool bt_sco_active = false;
 
             if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
