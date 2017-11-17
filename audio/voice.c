@@ -62,14 +62,6 @@ struct pcm_config pcm_config_voice_sco = {
     .format = PCM_FORMAT_S16_LE,
 };
 
-struct pcm_config pcm_config_voice_sco_wb = {
-    .channels = 1,
-    .rate = SCO_WB_SAMPLING_RATE,
-    .period_size = SCO_PERIOD_SIZE,
-    .period_count = SCO_PERIOD_COUNT,
-    .format = PCM_FORMAT_S16_LE,
-};
-
 /* Prototypes */
 int start_voice_call(struct audio_device *adev);
 int stop_voice_call(struct audio_device *adev);
@@ -167,13 +159,8 @@ void start_voice_session_bt_sco(struct voice_session *session)
 
     ALOGV("%s: Opening SCO PCMs", __func__);
 
-    if (session->wb_amr_type >= 1) {
-        ALOGV("%s: pcm_config wideband", __func__);
-        voice_sco_config = &pcm_config_voice_sco_wb;
-    } else {
-        ALOGV("%s: pcm_config narrowband", __func__);
-        voice_sco_config = &pcm_config_voice_sco;
-    }
+    /* always use 16kHz for SCO */
+    voice_sco_config = &pcm_config_voice_sco;
 
     session->pcm_sco_rx = pcm_open(SOUND_CARD,
                                    SOUND_PLAYBACK_SCO_DEVICE,
