@@ -2942,10 +2942,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
             }
         }
 
-        if ((adev->mode == AUDIO_MODE_NORMAL) && adev->voice.in_call &&
-                (out == adev->primary_output)) {
-            stop_voice_call(adev);
-        }
         pthread_mutex_unlock(&adev->lock);
         pthread_mutex_unlock(&out->lock);
 #ifdef PREPROCESSING_ENABLED
@@ -4278,6 +4274,10 @@ static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
             ALOGE("Failed setting amplifier mode");
         }
         adev->mode = mode;
+
+        if ((mode == AUDIO_MODE_NORMAL) && adev->voice.in_call) {
+            stop_voice_call(adev);
+        }
     }
     pthread_mutex_unlock(&adev->lock);
     return 0;
