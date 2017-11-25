@@ -73,6 +73,12 @@
 #define SUPPORTS_IRQ_AFFINITY 0
 
 /*
+ * ril_set_call_clock_sync() can cause problems with changing
+ * call-volume and muting the mic in a call.
+ */
+// #define DISABLE_CALL_CLOCK_SYNC
+
+/*
  * The Wolfson/Cirruslogic chips need to shutdown the DAPM route completely
  * to be able to load a new firmware. Some of these chips need a delay after
  * shutodown to full poweroff the DSPs.

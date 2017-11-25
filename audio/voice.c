@@ -269,7 +269,9 @@ int start_voice_session(struct voice_session *session)
         ril_set_two_mic_control(&session->ril, AUDIENCE, TWO_MIC_SOLUTION_OFF);
     }
 
+#ifndef DISABLE_CALL_CLOCK_SYNC
     ril_set_call_clock_sync(&session->ril, SOUND_CLOCK_START);
+#endif
 
     return 0;
 }
