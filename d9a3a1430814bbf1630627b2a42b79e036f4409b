@@ -91,6 +91,23 @@
       "revId": "d9a3a1430814bbf1630627b2a42b79e036f4409b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b60b4928_0be6f1c5",
+        "filename": "ril/rilj/telephony/java/com/android/internal/telephony/SamsungExynosRIL.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 9760
+      },
+      "writtenOn": "2017-12-01T07:42:48Z",
+      "side": 1,
+      "message": "break?",
+      "revId": "d9a3a1430814bbf1630627b2a42b79e036f4409b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
