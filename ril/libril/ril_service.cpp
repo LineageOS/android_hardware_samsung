@@ -68,6 +68,26 @@ constexpr bool kOemHookEnabled = true;
 RIL_RadioFunctions *s_vendorFunctions = NULL;
 static CommandInfo *s_commands;
 
+/* For older RILs that do not support new commands RIL_REQUEST_VOICE_RADIO_TECH and
+   RIL_UNSOL_VOICE_RADIO_TECH_CHANGED messages, decode the voice radio tech from
+   radio state message and store it. Every time there is a change in Radio State
+   check to see if voice radio tech changes and notify telephony
+ */
+int voiceRadioTech = -1;
+
+/* For older RILs that do not support new commands RIL_REQUEST_GET_CDMA_SUBSCRIPTION_SOURCE
+   and RIL_UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED messages, decode the subscription
+   source from radio state and store it. Every time there is a change in Radio State
+   check to see if subscription source changed and notify telephony
+ */
+int cdmaSubscriptionSource = -1;
+
+/* For older RILs that do not send RIL_UNSOL_RESPONSE_SIM_STATUS_CHANGED, decode the
+   SIM/RUIM state from radio state and store it. Every time there is a change in Radio State,
+   check to see if SIM/RUIM status changed and notify telephony
+ */
+int simRuimStatus = -1;
+
 struct RadioImpl;
 struct OemHookImpl;
 
@@ -6496,12 +6516,128 @@ RadioIndicationType convertIntToRadioIndicationType(int indicationType) {
             (RadioIndicationType::UNSOLICITED_ACK_EXP);
 }
 
+static int
+decodeVoiceRadioTechnology (RIL_RadioState radioState) {
+    switch (radioState) {
+        case RADIO_STATE_SIM_NOT_READY:
+        case RADIO_STATE_SIM_LOCKED_OR_ABSENT:
+        case RADIO_STATE_SIM_READY:
+            return RADIO_TECH_UMTS;
+
+        case RADIO_STATE_RUIM_NOT_READY:
+        case RADIO_STATE_RUIM_READY:
+        case RADIO_STATE_RUIM_LOCKED_OR_ABSENT:
+        case RADIO_STATE_NV_NOT_READY:
+        case RADIO_STATE_NV_READY:
+            return RADIO_TECH_1xRTT;
+
+        default:
+            RLOGD("decodeVoiceRadioTechnology: Invoked with incorrect RadioState");
+            return -1;
+    }
+}
+
+static int
+decodeCdmaSubscriptionSource (RIL_RadioState radioState) {
+    switch (radioState) {
+        case RADIO_STATE_SIM_NOT_READY:
+        case RADIO_STATE_SIM_LOCKED_OR_ABSENT:
+        case RADIO_STATE_SIM_READY:
+        case RADIO_STATE_RUIM_NOT_READY:
+        case RADIO_STATE_RUIM_READY:
+        case RADIO_STATE_RUIM_LOCKED_OR_ABSENT:
+            return CDMA_SUBSCRIPTION_SOURCE_RUIM_SIM;
+
+        case RADIO_STATE_NV_NOT_READY:
+        case RADIO_STATE_NV_READY:
+            return CDMA_SUBSCRIPTION_SOURCE_NV;
+
+        default:
+            RLOGD("decodeCdmaSubscriptionSource: Invoked with incorrect RadioState");
+            return -1;
+    }
+}
+
+static int
+decodeSimStatus (RIL_RadioState radioState) {
+   switch (radioState) {
+       case RADIO_STATE_SIM_NOT_READY:
+       case RADIO_STATE_RUIM_NOT_READY:
+       case RADIO_STATE_NV_NOT_READY:
+       case RADIO_STATE_NV_READY:
+           return -1;
+       case RADIO_STATE_SIM_LOCKED_OR_ABSENT:
+       case RADIO_STATE_SIM_READY:
+       case RADIO_STATE_RUIM_READY:
+       case RADIO_STATE_RUIM_LOCKED_OR_ABSENT:
+           return radioState;
+       default:
+           RLOGD("decodeSimStatus: Invoked with incorrect RadioState");
+           return -1;
+   }
+}
+
+static bool is3gpp2(int radioTech) {
+    switch (radioTech) {
+        case RADIO_TECH_IS95A:
+        case RADIO_TECH_IS95B:
+        case RADIO_TECH_1xRTT:
+        case RADIO_TECH_EVDO_0:
+        case RADIO_TECH_EVDO_A:
+        case RADIO_TECH_EVDO_B:
+        case RADIO_TECH_EHRPD:
+            return true;
+        default:
+            return false;
+    }
+}
+
+/* If RIL sends SIM states or RUIM states, store the voice radio
+ * technology and subscription source information so that they can be
+ * returned when telephony framework requests them
+ */
+int radio::processRadioState(int newRadioState, int slotId, int indicationType, int token, RIL_Errno e) {
+    RLOGE("%s: BEGIN : %d", __func__, newRadioState);
+    if((newRadioState > RADIO_STATE_UNAVAILABLE) && (newRadioState < RADIO_STATE_ON)) {
+        RLOGE("%s: Executing old RIL", __func__);
+        int newVoiceRadioTech;
+        int newCdmaSubscriptionSource;
+        int newSimStatus;
+
+        /* This is old RIL. Decode Subscription source and Voice Radio Technology
+           from Radio State and send change notifications if there has been a change */
+        newVoiceRadioTech = decodeVoiceRadioTechnology((RIL_RadioState)newRadioState);
+        if(newVoiceRadioTech != voiceRadioTech) {
+            voiceRadioTech = newVoiceRadioTech;
+            voiceRadioTechChangedInd(slotId, indicationType, token, e, &voiceRadioTech, sizeof(int));
+        }
+        if(is3gpp2(newVoiceRadioTech)) {
+            newCdmaSubscriptionSource = decodeCdmaSubscriptionSource((RIL_RadioState)newRadioState);
+            if(newCdmaSubscriptionSource != cdmaSubscriptionSource) {
+                cdmaSubscriptionSource = newCdmaSubscriptionSource;
+                cdmaSubscriptionSourceChangedInd(slotId, indicationType, token, e, &cdmaSubscriptionSource, sizeof(int));
+            }
+        }
+        newSimStatus = decodeSimStatus((RIL_RadioState)newRadioState);
+        if(newSimStatus != simRuimStatus) {
+            simRuimStatus = newSimStatus;
+            simStatusChangedInd(slotId, indicationType, token, e, &simRuimStatus, sizeof(int));
+        }
+
+        /* Send RADIO_ON to telephony */
+        newRadioState = RADIO_STATE_ON;
+    }
+
+    RLOGE("%s: END", __func__);
+    return newRadioState;
+}
+
 int radio::radioStateChangedInd(int slotId,
                                  int indicationType, int token, RIL_Errno e, void *response,
                                  size_t responseLen) {
     if (radioService[slotId] != NULL && radioService[slotId]->mRadioIndication != NULL) {
         RadioState radioState =
-                (RadioState) CALL_ONSTATEREQUEST(slotId);
+                (RadioState)processRadioState(CALL_ONSTATEREQUEST(slotId), slotId, indicationType, token, e);
         RLOGD("radioStateChangedInd: radioState %d", radioState);
         Return<void> retStatus = radioService[slotId]->mRadioIndication->radioStateChanged(
                 convertIntToRadioIndicationType(indicationType), radioState);
