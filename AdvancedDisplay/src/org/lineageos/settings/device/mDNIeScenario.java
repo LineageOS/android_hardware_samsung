@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.settings.device;
+package org.lineageos.settings.device;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,30 +25,30 @@ import android.support.v7.preference.Preference.OnPreferenceChangeListener;
 import android.support.v7.preference.PreferenceManager;
 import android.util.AttributeSet;
 
-import org.cyanogenmod.internal.util.FileUtils;
+import org.lineageos.internal.util.FileUtils;
 
-public class mDNIeNegative extends ListPreference implements OnPreferenceChangeListener {
+public class mDNIeScenario extends ListPreference implements OnPreferenceChangeListener {
 
     private static String FILE = null;
 
-    public mDNIeNegative(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public mDNIeScenario(Context context, AttributeSet attrs) {
+        super(context,attrs);
         this.setOnPreferenceChangeListener(this);
-        FILE = context.getResources().getString(R.string.mdnie_negative_sysfs_file);
+        FILE = context.getResources().getString(R.string.mdnie_scenario_sysfs_file);
     }
 
     /**
-     * Restore mdnie user mode setting from SharedPreferences. (Write to kernel.)
+     * Restore mdnie "camera" setting from SharedPreferences. (Write to kernel.)
      * @param context       The context to read the SharedPreferences from
      */
     public static void restore(Context context) {
-        FILE = context.getResources().getString(R.string.mdnie_negative_sysfs_file);
+        FILE = context.getResources().getString(R.string.mdnie_scenario_sysfs_file);
         if (!FileUtils.isFileWritable(FILE)) {
             return;
         }
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        FileUtils.writeLine(FILE, sharedPrefs.getString(Constants.KEY_MDNIE_NEGATIVE, "0"));
+        FileUtils.writeLine(FILE, sharedPrefs.getString(Constants.KEY_MDNIE_SCENARIO, "0"));
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {

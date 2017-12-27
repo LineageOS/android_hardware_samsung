@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.settings.device;
+package org.lineageos.settings.device;
 
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
 
-import com.cyanogenmod.settings.device.R;
+import org.lineageos.settings.device.R;
 
-import org.cyanogenmod.internal.util.FileUtils;
+import org.lineageos.internal.util.FileUtils;
 
 public class AdvancedDisplayFragment extends PreferenceFragment {
     private mDNIeScenario mmDNIeScenario;

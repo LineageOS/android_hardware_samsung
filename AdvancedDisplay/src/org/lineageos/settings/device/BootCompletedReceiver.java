@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2017 The LineageOS Project
+ * Copyright (C) 2012 The CyanogenMod Project
+ *               2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +15,17 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.settings.device;
+package org.lineageos.settings.device;
 
-import android.os.Bundle;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
-import com.android.settingslib.drawer.SettingsDrawerActivity;
+public class BootCompletedReceiver extends BroadcastReceiver {
 
-public class AdvancedDisplayActivity extends SettingsDrawerActivity {
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        getFragmentManager().beginTransaction().replace(R.id.content_frame,
-                new AdvancedDisplayFragment()).commit();
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        mDNIeScenario.restore(context);
+        mDNIeNegative.restore(context);
     }
 }

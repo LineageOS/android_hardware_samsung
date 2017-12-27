@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.settings.device;
+package org.lineageos.settings.device;
 
 public class Constants {
     static final String KEY_MDNIE_SCENARIO = "mdnie_scenario";
