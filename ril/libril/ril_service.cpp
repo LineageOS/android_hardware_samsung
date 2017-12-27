@@ -7225,7 +7225,9 @@ int radio::currentSignalStrengthInd(int slotId,
                                     void *response, size_t responseLen) {
     if (radioService[slotId] != NULL && radioService[slotId]->mRadioIndication != NULL) {
         if (response == NULL || (responseLen != sizeof(RIL_SignalStrength_v10)
-                && responseLen != sizeof(RIL_SignalStrength_v8))) {
+                && responseLen != sizeof(RIL_SignalStrength_v8)
+                && responseLen != sizeof(RIL_SignalStrength_v6)
+                && responseLen != sizeof(RIL_SignalStrength_v5))) {
             RLOGE("currentSignalStrengthInd: invalid response");
             return 0;
         }
