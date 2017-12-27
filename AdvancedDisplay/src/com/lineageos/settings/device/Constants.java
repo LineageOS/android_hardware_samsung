@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2012 The CyanogenMod Project
- *               2017 The LineageOS Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +14,9 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.settings.device;
+package com.lineageos.settings.device;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
-public class BootCompletedReceiver extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        mDNIeScenario.restore(context);
-        mDNIeNegative.restore(context);
-    }
+public class Constants {
+    static final String KEY_MDNIE_SCENARIO = "mdnie_scenario";
+    static final String KEY_MDNIE_NEGATIVE = "mdnie_negative";
 }
