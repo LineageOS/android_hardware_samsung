@@ -2839,10 +2839,35 @@ int radio::getIccCardStatusResponse(int slotId,
         RadioResponseInfo responseInfo = {};
         populateResponseInfo(responseInfo, serial, responseType, e);
         CardStatus cardStatus = {};
-        if (response == NULL || responseLen != sizeof(RIL_CardStatus_v6)) {
+        if (response == NULL) {
             RLOGE("getIccCardStatusResponse: Invalid response");
             if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
-        } else {
+        } else if (responseLen == sizeof(RIL_CardStatus_v5)) {
+            RIL_CardStatus_v5 *p_cur = ((RIL_CardStatus_v5 *) response);
+            cardStatus.cardState = (CardState) p_cur->card_state;
+            cardStatus.universalPinState = (PinState) p_cur->universal_pin_state;
+            cardStatus.gsmUmtsSubscriptionAppIndex = p_cur->gsm_umts_subscription_app_index;
+            cardStatus.cdmaSubscriptionAppIndex = p_cur->cdma_subscription_app_index;
+            cardStatus.imsSubscriptionAppIndex = -1;
+
+            RIL_AppStatus *rilAppStatus = p_cur->applications;
+            cardStatus.applications.resize(p_cur->num_applications);
+            AppStatus *appStatus = cardStatus.applications.data();
+#if VDBG
+            RLOGD("getIccCardStatusResponse: num_applications %d", p_cur->num_applications);
+#endif
+            for (int i = 0; i < p_cur->num_applications; i++) {
+                appStatus[i].appType = (AppType) rilAppStatus[i].app_type;
+                appStatus[i].appState = (AppState) rilAppStatus[i].app_state;
+                appStatus[i].persoSubstate = (PersoSubstate) rilAppStatus[i].perso_substate;
+                appStatus[i].aidPtr = convertCharPtrToHidlString(rilAppStatus[i].aid_ptr);
+                appStatus[i].appLabelPtr = convertCharPtrToHidlString(
+                        rilAppStatus[i].app_label_ptr);
+                appStatus[i].pin1Replaced = rilAppStatus[i].pin1_replaced;
+                appStatus[i].pin1 = (PinState) rilAppStatus[i].pin1;
+                appStatus[i].pin2 = (PinState) rilAppStatus[i].pin2;
+            }
+        } else if (responseLen == sizeof(RIL_CardStatus_v6)) {
             RIL_CardStatus_v6 *p_cur = ((RIL_CardStatus_v6 *) response);
             cardStatus.cardState = (CardState) p_cur->card_state;
             cardStatus.universalPinState = (PinState) p_cur->universal_pin_state;
@@ -2867,6 +2892,10 @@ int radio::getIccCardStatusResponse(int slotId,
                 appStatus[i].pin1 = (PinState) rilAppStatus[i].pin1;
                 appStatus[i].pin2 = (PinState) rilAppStatus[i].pin2;
             }
+        } else {
+            RLOGE("%s: Invalid response: Unsupported RIL_CardStatus (%d)",
+                __func__, responseLen);
+            if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
         }
 
         Return<void> retStatus = radioService[slotId]->mRadioResponse->
