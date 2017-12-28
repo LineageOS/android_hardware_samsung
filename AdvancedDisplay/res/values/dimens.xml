@@ -17,4 +17,6 @@
 <resources>
     <!-- ActionBar contentInsetStart -->
     <dimen name="actionbar_subsettings_contentInsetStart">72dp</dimen>
+
+    <dimen name="settings_side_margin">0dip</dimen>
 </resources>

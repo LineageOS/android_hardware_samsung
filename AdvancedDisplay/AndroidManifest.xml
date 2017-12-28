@@ -6,7 +6,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Main">
         <receiver android:name="org.lineageos.settings.device.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -16,17 +17,16 @@
 
         <activity
             android:name=".AdvancedDisplayActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AdvancedDisplay">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
             </intent-filter>
             <meta-data
-                android:name="com.android.settings.icon"
-                android:resource="@drawable/ic_settings_advanced_display" />
-            <meta-data
                 android:name="com.android.settings.category"
-                android:value="com.android.settings.category.device" />
+                android:value="com.android.settings.category.ia.display" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:value="@string/summary_empty" />
         </activity>
     </application>
 </manifest>

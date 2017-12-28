@@ -26,4 +26,7 @@
     <string name="mdnie_scenario_summary_head">Set the mDNIe scenario</string>
     <string name="mdnie_negative_title_head">Negative mode</string>
     <string name="mdnie_negative_summary_head">Enable/disable inverted colors</string>
+
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="summary_empty" translatable="false"></string>
 </resources>
