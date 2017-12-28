@@ -16,9 +16,11 @@
 
 package org.lineageos.settings.device;
 
+import android.app.ActionBar;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
+import android.view.MenuItem;
 
 import org.lineageos.settings.device.R;
 
@@ -33,6 +35,9 @@ public class AdvancedDisplayFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.screen_preferences);
         Resources res = getResources();
 
+        final ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         /* mDNIe */
         mmDNIeScenario = (mDNIeScenario) findPreference(Constants.KEY_MDNIE_SCENARIO);
         mmDNIeScenario.setEnabled(
@@ -41,5 +46,14 @@ public class AdvancedDisplayFragment extends PreferenceFragment {
         mmDNIeNegative = (mDNIeNegative) findPreference(Constants.KEY_MDNIE_NEGATIVE);
         mmDNIeNegative.setEnabled(
                 FileUtils.isFileWritable(res.getString(R.string.mdnie_negative_sysfs_file)));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getActivity().onBackPressed();
+            return true;
+        }
+        return false;
     }
 }
