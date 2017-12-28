@@ -230,7 +230,7 @@ int main() {
     ALOGD("Change permissions of %s\n", CID_PATH);
 
     fd = fileno(cidfile);
-    amode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
+    amode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
     ret = fchmod(fd, amode);
     if (ret != 0) {
         ALOGE("Can't set permissions on %s - %s\n",
