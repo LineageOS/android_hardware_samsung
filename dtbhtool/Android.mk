@@ -12,7 +12,7 @@ include $(BUILD_HOST_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := mkbootimg.c
-LOCAL_STATIC_LIBRARIES := libdtbimg libfdt libmincrypt
+LOCAL_STATIC_LIBRARIES := libdtbimg libfdt libcrypto_static
 
 LOCAL_MODULE := mkdtbhbootimg
 
@@ -34,7 +34,7 @@ include $(BUILD_HOST_EXECUTABLE)
 
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := mkbootimg.c
-LOCAL_STATIC_LIBRARIES := libdtbimg libfdt libmincrypt libcutils libc
+LOCAL_STATIC_LIBRARIES := libdtbimg libfdt libcrypto_static libcutils libc
 LOCAL_MODULE := utility_mkdtbhbootimg
 LOCAL_MODULE_STEM := mkdtbhbootimg
 LOCAL_MODULE_CLASS := UTILITY_EXECUTABLES
