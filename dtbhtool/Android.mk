@@ -1,12 +1,11 @@
 LOCAL_PATH:= $(call my-dir)
-include $(CLEAR_VARS)
 
+# Host static library
+include $(CLEAR_VARS)
 LOCAL_SRC_FILES := dtbimg.c
 LOCAL_STATIC_LIBRARIES := libfdt
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/libdtbimg
-
 LOCAL_MODULE := libdtbimg
-
 include $(BUILD_HOST_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -31,6 +30,14 @@ LOCAL_STATIC_LIBRARIES := libdtbimg libfdt
 LOCAL_MODULE := dtbhtoolExynos
 
 include $(BUILD_HOST_EXECUTABLE)
+
+# Target static library
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := dtbimg.c
+LOCAL_STATIC_LIBRARIES := libfdt
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/libdtbimg
+LOCAL_MODULE := libdtbimg
+include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := mkbootimg.c
