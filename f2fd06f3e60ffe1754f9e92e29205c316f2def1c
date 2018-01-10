@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4c88903_795c352a",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 15173
+      },
+      "writtenOn": "2018-01-10T09:28:03Z",
+      "side": 1,
+      "message": "Please insert this in the proper sort order (before a0:cc:2b)",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 18
+      },
+      "revId": "f2fd06f3e60ffe1754f9e92e29205c316f2def1c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
