@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <cutils/log.h>
+#include <cutils/properties.h>
 #include <sys/stat.h>
 #include <sys/syscall.h>
 
@@ -82,6 +83,10 @@ static int load_module(char const *path)
         close(fd);
         return -errno;
     }
+
+    // let wifi HAL know we succeeded
+    ALOGV("Successfully loaded WLAN module: %s", WIFI_DRIVER_MODULE_NAME);
+    property_set("wlan.driver.status", "ok");
 
     close(fd);
     return 0;

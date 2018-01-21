@@ -7,7 +7,7 @@ LOCAL_SRC_FILES := \
     wifiloader.c
 
 LOCAL_SHARED_LIBRARIES := \
-    liblog libutils
+    libcutils liblog libutils
 
 ifneq ($(WIFI_DRIVER_MODULE_NAME),)
 LOCAL_CFLAGS += -DWIFI_DRIVER_MODULE_NAME=\"$(WIFI_DRIVER_MODULE_NAME)\"
