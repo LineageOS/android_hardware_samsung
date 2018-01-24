@@ -28,6 +28,8 @@
 #include <sys/stat.h>
 #include <sys/syscall.h>
 
+#include <private/android_filesystem_config.h>
+
 #define DEFERRED_INITCALLS        "/proc/deferred_initcalls"
 
 #ifndef WIFI_DRIVER_MODULE_NAME
@@ -36,6 +38,10 @@
 
 #ifndef WIFI_DRIVER_MODULE_PATH
 #define WIFI_DRIVER_MODULE_PATH   "/system/lib/modules/" WIFI_DRIVER_MODULE_NAME ".ko"
+#endif
+
+#ifndef WIFI_DRIVER_FW_PATH_PARAM
+#define WIFI_DRIVER_FW_PATH_PARAM "/sys/module/wlan/parameters/fwpath"
 #endif
 
 #define finit_module(fd, params, flags) syscall(__NR_finit_module, fd, params, flags)
@@ -81,6 +87,13 @@ static int load_module(char const *path)
     if (finit_module(fd, "", 0) != 0) {
         ALOGE("Failed to load module %s - error: %s", path, strerror(errno));
         close(fd);
+        return -errno;
+    }
+
+    // setup proper permissions for firmware change
+    if (chown(WIFI_DRIVER_FW_PATH_PARAM, AID_WIFI, AID_WIFI) != 0) {
+        ALOGE("Failed to chown firmware path %s - error: %s",
+              WIFI_DRIVER_FW_PATH_PARAM, strerror(errno));
         return -errno;
     }
 
