@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a6f69a_8628696f",
+        "filename": "wifiloader/wifiloader.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2018-01-27T22:22:25Z",
+      "side": 1,
+      "message": "arent you missing an \u0027close(fd);\u0027 here?",
+      "revId": "2f3ca7d215650421e38f4ba5afe828e6aabd3951",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
