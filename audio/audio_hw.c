@@ -539,7 +539,17 @@ static int mixer_init(struct audio_device *adev)
                 }
             } while (mixer == NULL);
 
-            sprintf(mixer_path, "/system/etc/mixer_paths_%d.xml", card);
+            sprintf(mixer_path, "/vendor/etc/mixer_paths_%d.xml", card);
+            if (access(mixer_path, F_OK) == -1) {
+                ALOGW("%s: Failed to open mixer paths from %s, retrying with legacy location",
+                      __func__, mixer_path);
+                sprintf(mixer_path, "/system/etc/mixer_paths_%d.xml", card);
+                if (access(mixer_path, F_OK) == -1) {
+                    ALOGE("%s: Failed to load a mixer paths configuration, your system will crash",
+                          __func__);
+                }
+            }
+
             audio_route = audio_route_init(card, mixer_path);
             if (!audio_route) {
                 ALOGE("%s: Failed to init audio route controls for card %d, aborting.",
