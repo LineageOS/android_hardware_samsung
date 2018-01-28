@@ -34,6 +34,14 @@ LOCAL_MODULE := dtbhtoolExynos
 include $(BUILD_HOST_EXECUTABLE)
 
 include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := unpackdtimg.c
+
+LOCAL_MODULE := unpackdtimg
+
+include $(BUILD_HOST_EXECUTABLE)
+
+include $(CLEAR_VARS)
 LOCAL_SRC_FILES := mkbootimg.c
 LOCAL_STATIC_LIBRARIES := libdtbimg libfdt libmincrypt libcutils libc
 LOCAL_MODULE := utility_mkdtbhbootimg
