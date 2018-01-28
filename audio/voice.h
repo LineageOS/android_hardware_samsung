@@ -29,6 +29,7 @@ struct voice_session {
     struct pcm *pcm_sco_tx;
 
     int wb_amr_type;
+    bool bluetooth_wb;
     bool two_mic_control;
     bool two_mic_disabled;
 

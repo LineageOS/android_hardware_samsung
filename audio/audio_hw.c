@@ -4140,9 +4140,9 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
                             sizeof(value));
     if (ret >= 0) {
         if (strcmp(value, AUDIO_PARAMETER_VALUE_ON) == 0) {
-            adev->voice.bluetooth_wb = true;
+            adev->voice.session->bluetooth_wb = true;
         } else {
-            adev->voice.bluetooth_wb = false;
+            adev->voice.session->bluetooth_wb = false;
         }
     }
 
@@ -4550,7 +4550,6 @@ static int adev_open(const hw_module_t *module, const char *name,
     adev->voice.volume = 1.0f;
     adev->voice.bluetooth_nrec = true;
     adev->voice.in_call = false;
-    adev->voice.bluetooth_wb = false;
 
     /* adev->cur_hdmi_channels = 0;  by calloc() */
     adev->snd_dev_ref_cnt = calloc(SND_DEVICE_MAX, sizeof(int));
