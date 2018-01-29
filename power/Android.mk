@@ -18,12 +18,27 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := power.c
+LOCAL_SRC_FILES := power_helper.c
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
+
+LOCAL_SHARED_LIBRARIES := liblog
+
+LOCAL_MODULE := power_helper
+LOCAL_MODULE_TAGS := optional
+
+include $(BUILD_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+    power.c
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 
 LOCAL_SHARED_LIBRARIES := liblog libcutils
-LOCAL_STATIC_LIBRARIES := liblights_helper
+LOCAL_STATIC_LIBRARIES := liblights_helper power_helper
 
 LOCAL_MODULE := power.$(TARGET_BOOTLOADER_BOARD_NAME)
 LOCAL_MODULE_RELATIVE_PATH := hw

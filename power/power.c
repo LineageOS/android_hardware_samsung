@@ -36,21 +36,10 @@
 #include <hardware/hardware.h>
 #include <hardware/power.h>
 #include <liblights/samsung_lights_helper.h>
+#include <power/samsung_power_helper.h>
 
 #include "samsung_power.h"
-
-#define BOOST_PATH        "/boost"
-#define BOOSTPULSE_PATH   "/boostpulse"
-
-#define IO_IS_BUSY_PATH   "/io_is_busy"
-#define HISPEED_FREQ_PATH "/hispeed_freq"
-
-#define MAX_FREQ_PATH     "/cpufreq/scaling_max_freq"
-
-#define CLUSTER_COUNT     ARRAY_SIZE(CPU_SYSFS_PATHS)
-#define PARAM_MAXLEN      10
-
-#define ARRAY_SIZE(a)     sizeof(a) / sizeof(a[0])
+#include "util.h"
 
 struct samsung_power_module {
     struct power_module base;
@@ -71,140 +60,6 @@ enum power_profile_e {
 };
 
 static enum power_profile_e current_power_profile = PROFILE_BALANCED;
-
-/**********************************************************
- *** HELPER FUNCTIONS
- **********************************************************/
-
-static int sysfs_read(char *path, char *s, int num_bytes)
-{
-    char errno_str[64];
-    int len;
-    int ret = 0;
-    int fd;
-
-    fd = open(path, O_RDONLY);
-    if (fd < 0) {
-        strerror_r(errno, errno_str, sizeof(errno_str));
-        ALOGE("Error opening %s: %s", path, errno_str);
-
-        return -1;
-    }
-
-    len = read(fd, s, num_bytes - 1);
-    if (len < 0) {
-        strerror_r(errno, errno_str, sizeof(errno_str));
-        ALOGE("Error reading from %s: %s", path, errno_str);
-
-        ret = -1;
-    } else {
-        // do not store newlines, but terminate the string instead
-        if (s[len-1] == '\n') {
-            s[len-1] = '\0';
-        } else {
-            s[len] = '\0';
-        }
-    }
-
-    close(fd);
-
-    return ret;
-}
-
-static void sysfs_write(const char *path, char *s)
-{
-    char errno_str[64];
-    int len;
-    int fd;
-
-    fd = open(path, O_WRONLY);
-    if (fd < 0) {
-        strerror_r(errno, errno_str, sizeof(errno_str));
-        ALOGE("Error opening %s: %s", path, errno_str);
-        return;
-    }
-
-    len = write(fd, s, strlen(s));
-    if (len < 0) {
-        strerror_r(errno, errno_str, sizeof(errno_str));
-        ALOGE("Error writing to %s: %s", path, errno_str);
-    }
-
-    close(fd);
-}
-
-static void cpu_sysfs_read(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
-{
-    char path[PATH_MAX];
-
-    for (unsigned int i = 0; i < ARRAY_SIZE(CPU_SYSFS_PATHS); i++) {
-        sprintf(path, "%s%s", CPU_SYSFS_PATHS[i], param);
-        sysfs_read(path, s[i], PARAM_MAXLEN);
-    }
-}
-
-static void cpu_sysfs_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
-{
-    char path[PATH_MAX];
-
-    for (unsigned int i = 0; i < ARRAY_SIZE(CPU_SYSFS_PATHS); i++) {
-        sprintf(path, "%s%s", CPU_SYSFS_PATHS[i], param);
-        sysfs_write(path, s[i]);
-    }
-}
-
-static void cpu_interactive_read(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
-{
-    char path[PATH_MAX];
-
-    for (unsigned int i = 0; i < ARRAY_SIZE(CPU_INTERACTIVE_PATHS); i++) {
-        sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[i], param);
-        sysfs_read(path, s[i], PARAM_MAXLEN);
-    }
-}
-
-static void cpu_interactive_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
-{
-    char path[PATH_MAX];
-
-    for (unsigned int i = 0; i < ARRAY_SIZE(CPU_INTERACTIVE_PATHS); i++) {
-        sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[i], param);
-        sysfs_write(path, s[i]);
-    }
-}
-
-static void send_boost(int boost_fd, int32_t duration_us)
-{
-    int len;
-
-    if (boost_fd < 0) {
-        return;
-    }
-
-    len = write(boost_fd, "1", 1);
-    if (len < 0) {
-        ALOGE("Error writing to %s%s: %s", CPU_INTERACTIVE_PATHS[0], BOOST_PATH, strerror(errno));
-        return;
-    }
-
-    usleep(duration_us);
-    len = write(boost_fd, "0", 1);
-}
-
-static void send_boostpulse(int boostpulse_fd)
-{
-    int len;
-
-    if (boostpulse_fd < 0) {
-        return;
-    }
-
-    len = write(boostpulse_fd, "1", 1);
-    if (len < 0) {
-        ALOGE("Error writing to %s%s: %s", CPU_INTERACTIVE_PATHS[0], BOOSTPULSE_PATH,
-                strerror(errno));
-    }
-}
 
 /**********************************************************
  *** POWER FUNCTIONS
