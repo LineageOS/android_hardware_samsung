@@ -20,7 +20,8 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := \
     power.c \
-    util.c
+    util.c \
+    tsp.c
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 
