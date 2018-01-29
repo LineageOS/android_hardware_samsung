@@ -34,6 +34,9 @@ struct voice_session {
 
     /* from uc_info */
     audio_devices_t out_device;
+
+    /* parent container */
+    struct voice_data *vdata;
 };
 
 void prepare_voice_session(struct voice_session *session,
