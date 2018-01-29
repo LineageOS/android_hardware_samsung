@@ -170,14 +170,16 @@ void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz)
 
         prop_platform = fdt_getprop(dtb, offset, "model_info-platform", &len);
         if (strcmp((char *)&prop_platform[0], DTBH_PLATFORM)) {
-            warnx("model_info-platform of %s is invalid, skipping", fname);
+            warnx("model_info-platform of %s is invalid, skipping (expected %s but got %s)",
+                  fname, DTBH_PLATFORM, (char *)&prop_platform[0]);
             free(dtb);
             continue;
         }
 
         prop_subtype = fdt_getprop(dtb, offset, "model_info-subtype", &len);
         if (strcmp((char *)&prop_subtype[0], DTBH_SUBTYPE)) {
-            warnx("model_info-subtype of %s is invalid, skipping", fname);
+            warnx("model_info-subtype of %s is invalid, skipping (expected %s but got %s)",
+                  fname, DTBH_SUBTYPE, (char *)&prop_subtype[0]);
             free(dtb);
             continue;
         }
