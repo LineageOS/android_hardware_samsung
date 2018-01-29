@@ -40,6 +40,9 @@
 
 #include "samsung_power.h"
 #include "util.h"
+#ifdef ENABLE_AOD_DT2W
+#include "tsp.h"
+#endif
 
 struct samsung_power_module {
     struct power_module base;
@@ -50,6 +53,10 @@ struct samsung_power_module {
     char max_freqs[CLUSTER_COUNT][PARAM_MAXLEN];
     char* touchscreen_power_path;
     char* touchkey_power_path;
+#ifdef ENABLE_AOD_DT2W
+    bool dt2w_supported;
+    bool dt2w_active;
+#endif
 };
 
 enum power_profile_e {
@@ -235,6 +242,19 @@ static void samsung_power_init(struct power_module *module)
     samsung_pwr->touchkey_power_path = NULL;
     init_touch_input_power_path(samsung_pwr);
 
+#ifdef ENABLE_AOD_DT2W
+    // ensure TSP is active
+    if (samsung_pwr->touchscreen_power_path)
+        sysfs_write(samsung_pwr->touchscreen_power_path, "1");
+    samsung_pwr->dt2w_supported = tsp_doubletap_init();
+    if (!samsung_pwr->dt2w_supported)
+        ALOGE("dt2w not supported!");
+    samsung_pwr->dt2w_active = false;
+    // deactivate TSP
+    if (samsung_pwr->touchscreen_power_path)
+        sysfs_write(samsung_pwr->touchscreen_power_path, "1");
+#endif
+
     ALOGI("Initialized settings:");
     char max_freqs[PATH_MAX];
     sprintf(max_freqs, "max_freqs: cluster[0]: %s", samsung_pwr->max_freqs[0]);
@@ -289,10 +309,32 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
         }
     }
 
+#ifdef ENABLE_AOD_DT2W
+    /*
+     * Before turning touchscreen off, set AOD double-tap up.
+     * We set the rectangle to the whole area of the display. This is necessary
+     * every time because the TSP resets the rectangle whenever it wakes back up
+     * - at least, this is the case on a7y17lte.
+     * TSP also seems to not respond if doubletap is enabled before it's enabled
+     * by the system - so we just keep enabling/disabling here.
+     */
+    if (!on && samsung_pwr->dt2w_supported && samsung_pwr->dt2w_active) {
+        tsp_set_doubletap(true);
+        tsp_doubletap_set_region();
+    }
+#endif
+
     /* Sanity check the touchscreen path */
     if (samsung_pwr->touchscreen_power_path) {
         sysfs_write(samsung_pwr->touchscreen_power_path, on ? "1" : "0");
     }
+
+#ifdef ENABLE_AOD_DT2W
+    // disable doubletap after turning TSP back on
+    if (on && samsung_pwr->dt2w_supported && samsung_pwr->dt2w_active) {
+        tsp_set_doubletap(false);
+    }
+#endif
 
     /* Bail out if the device does not have touchkeys */
     if (samsung_pwr->touchkey_power_path == NULL) {
@@ -380,6 +422,7 @@ static void samsung_power_hint(struct power_module *module,
 static int samsung_get_feature(struct power_module *module __unused,
                                feature_t feature)
 {
+    struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
     if (feature == POWER_FEATURE_SUPPORTED_PROFILES) {
         return PROFILE_MAX;
     }
@@ -392,11 +435,17 @@ static void samsung_set_feature(struct power_module *module, feature_t feature, 
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
 
     switch (feature) {
-#ifdef TARGET_TAP_TO_WAKE_NODE
         case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
+#ifdef TARGET_TAP_TO_WAKE_NODE
             ALOGV("%s: %s double tap to wake", __func__, state ? "enabling" : "disabling");
             sysfs_write(TARGET_TAP_TO_WAKE_NODE, state > 0 ? "1" : "0");
             break;
+#elif ENABLE_AOD_DT2W
+            if (samsung_pwr->dt2w_supported) {
+                state = !!state;
+                ALOGV("%s: %s double tap to wake", __func__, state ? "enabling" : "disabling");
+                samsung_pwr->dt2w_active = state;
+            }
 #endif
         default:
             break;
