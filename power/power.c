@@ -39,6 +39,7 @@
 
 #include "samsung_power.h"
 #include "util.h"
+#include "tsp.h"
 
 struct samsung_power_module {
     struct power_module base;
@@ -49,6 +50,8 @@ struct samsung_power_module {
     char max_freqs[CLUSTER_COUNT][PARAM_MAXLEN];
     char* touchscreen_power_path;
     char* touchkey_power_path;
+    bool dt2w_supported;
+    bool dt2w_active;
 };
 
 enum power_profile_e {
@@ -247,6 +250,8 @@ static void samsung_power_init(struct power_module *module)
         sprintf(hispeed_freqs, "%s, %s[%d]: %s", hispeed_freqs, "cluster", i,
                 samsung_pwr->hispeed_freqs[i]);
     }
+    samsung_pwr->dt2w_supported = tsp_has_doubletap();
+    samsung_pwr->dt2w_active = false;
     ALOGI("%s", hispeed_freqs);
     ALOGI("boostpulse_fd: %d", samsung_pwr->boostpulse_fd);
     ALOGI("touchscreen_power_path: %s",
@@ -379,8 +384,12 @@ static void samsung_power_hint(struct power_module *module,
 static int samsung_get_feature(struct power_module *module __unused,
                                feature_t feature)
 {
+    struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
     if (feature == POWER_FEATURE_SUPPORTED_PROFILES) {
         return PROFILE_MAX;
+    } else if (feature == POWER_FEATURE_DOUBLE_TAP_TO_WAKE &&
+            samsung_pwr->dt2w_supported) {
+        return samsung_pwr->dt2w_active;
     }
 
     return -1;
@@ -391,11 +400,19 @@ static void samsung_set_feature(struct power_module *module, feature_t feature, 
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
 
     switch (feature) {
-#ifdef TARGET_TAP_TO_WAKE_NODE
         case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
+#ifdef TARGET_TAP_TO_WAKE_NODE
             ALOGV("%s: %s double tap to wake", __func__, state ? "enabling" : "disabling");
             sysfs_write(TARGET_TAP_TO_WAKE_NODE, state > 0 ? "1" : "0");
             break;
+#else
+            if (samsung_pwr->dt2w_supported) {
+                state = !!state;
+                ALOGV("%s: %s double tap to wake", __func__, state ? "enabling" : "disabling");
+                if (tsp_set_doubletap(state, 1920, 1080, 0, 0)) {
+                    samsung_pwr->dt2w_active = state;
+                }
+            }
 #endif
         default:
             break;
