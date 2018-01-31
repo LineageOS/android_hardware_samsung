@@ -2602,7 +2602,7 @@ static int responseCallList(Parcel &p, void *response, size_t responselen) {
             p_cur->als,
             (p_cur->isVoice)?"voc":"nonvoc",
             (p_cur->isVoicePrivacy)?"evp":"noevp");
-#ifdef SAMSUNG_NEXT_GEN_MODEM
+#ifdef NEEDS_VIDEO_CALL_FIELD
         appendPrintBuf("%s,%s,",
             printBuf,
             (p_cur->isVideo) ? "vid" : "novid");
@@ -3259,6 +3259,17 @@ static void responseRilSignalStrengthV5(Parcel &p, RIL_SignalStrength_v10 *p_cur
     p.writeInt32(evdoDbm);
     p.writeInt32(p_cur->EVDO_SignalStrength.ecio);
     p.writeInt32(p_cur->EVDO_SignalStrength.signalNoiseRatio);
+
+    appendPrintBuf("%s[v5:signalStrength=%d,bitErrorRate=%d,\
+            CDMA_SS.dbm=%d,CDM_SS.ecio=%d,\
+            EVDO_SS.dbm=%d,EVDO_SS.ecio=%d,\
+            EVDO_SS.signalNoiseRatio=%d]",
+            printBuf, gsmSignalStrength,
+            p_cur->GW_SignalStrength.bitErrorRate,
+            cdmaDbm, p_cur->CDMA_SignalStrength.ecio,
+            evdoDbm, p_cur->EVDO_SignalStrength.ecio,
+            p_cur->EVDO_SignalStrength.signalNoiseRatio
+            );
 }
 
 static void responseRilSignalStrengthV6Extra(Parcel &p, RIL_SignalStrength_v10 *p_cur) {
@@ -3292,21 +3303,33 @@ static void responseRilSignalStrengthV6Extra(Parcel &p, RIL_SignalStrength_v10 *
     p.writeInt32(p_cur->LTE_SignalStrength.rsrq);
     p.writeInt32(p_cur->LTE_SignalStrength.rssnr);
     p.writeInt32(p_cur->LTE_SignalStrength.cqi);
+    appendPrintBuf("%s[v6:LTE_SS.signalStrength=%d,LTE_SS.rsrp=%d,LTE_SS.rsrq=%d,\
+            LTE_SS.rssnr=%d,LTE_SS.cqi=%d,TDSCDMA_SS.rscp=%d]",
+            printBuf,
+            p_cur->LTE_SignalStrength.signalStrength,
+            p_cur->LTE_SignalStrength.rsrp,
+            p_cur->LTE_SignalStrength.rsrq,
+            p_cur->LTE_SignalStrength.rssnr,
+            p_cur->LTE_SignalStrength.cqi);
 }
 
 static void responseRilSignalStrengthV10(Parcel &p, RIL_SignalStrength_v10 *p_cur) {
     responseRilSignalStrengthV5(p, p_cur);
     responseRilSignalStrengthV6Extra(p, p_cur);
     p.writeInt32(p_cur->TD_SCDMA_SignalStrength.rscp);
+    appendPrintBuf("%s[v10:TD_SCDMA_SS.rscp=%d]", printBuf,
+            p_cur->TD_SCDMA_SignalStrength.rscp);
 }
 
 static int responseRilSignalStrength(Parcel &p,
                     void *response, size_t responselen) {
+    int ret = 0;
     if (response == NULL && responselen != 0) {
         RLOGE("invalid response: NULL");
         return RIL_ERRNO_INVALID_RESPONSE;
     }
 
+    startResponse;
     RIL_SignalStrength_v10 *p_cur;
     if (s_callbacks.version <= LAST_IMPRECISE_RIL_VERSION) {
         if (responselen >= sizeof (RIL_SignalStrength_v5)) {
@@ -3318,6 +3341,8 @@ static int responseRilSignalStrength(Parcel &p,
                 responseRilSignalStrengthV6Extra(p, p_cur);
                 if (responselen >= sizeof (RIL_SignalStrength_v10)) {
                     p.writeInt32(p_cur->TD_SCDMA_SignalStrength.rscp);
+                    appendPrintBuf("%s[v10:TD_SCDMA_SS.rscp=%d]", printBuf,
+                            p_cur->TD_SCDMA_SignalStrength.rscp);
                 } else {
                     p.writeInt32(INT_MAX);
                 }
@@ -3331,13 +3356,15 @@ static int responseRilSignalStrength(Parcel &p,
             }
         } else {
             RLOGE("invalid response length");
-            return RIL_ERRNO_INVALID_RESPONSE;
+            ret = RIL_ERRNO_INVALID_RESPONSE;
+            goto exit;
         }
     } else { // RIL version >= 13
         if (responselen % sizeof(RIL_SignalStrength_v10) != 0) {
             RLOGE("Data structure expected is RIL_SignalStrength_v10");
             if (!isDebuggable()) {
-                return RIL_ERRNO_INVALID_RESPONSE;
+                ret = RIL_ERRNO_INVALID_RESPONSE;
+                goto exit;
             } else {
                 assert(0);
             }
@@ -3345,29 +3372,9 @@ static int responseRilSignalStrength(Parcel &p,
         p_cur = ((RIL_SignalStrength_v10 *) response);
         responseRilSignalStrengthV10(p, p_cur);
     }
-    startResponse;
-    appendPrintBuf("%s[signalStrength=%d,bitErrorRate=%d,\
-            CDMA_SS.dbm=%d,CDMA_SSecio=%d,\
-            EVDO_SS.dbm=%d,EVDO_SS.ecio=%d,\
-            EVDO_SS.signalNoiseRatio=%d,\
-            LTE_SS.signalStrength=%d,LTE_SS.rsrp=%d,LTE_SS.rsrq=%d,\
-            LTE_SS.rssnr=%d,LTE_SS.cqi=%d,TDSCDMA_SS.rscp=%d]",
-            printBuf,
-            gsmSignalStrength,
-            p_cur->GW_SignalStrength.bitErrorRate,
-            cdmaDbm,
-            p_cur->CDMA_SignalStrength.ecio,
-            evdoDbm,
-            p_cur->EVDO_SignalStrength.ecio,
-            p_cur->EVDO_SignalStrength.signalNoiseRatio,
-            p_cur->LTE_SignalStrength.signalStrength,
-            p_cur->LTE_SignalStrength.rsrp,
-            p_cur->LTE_SignalStrength.rsrq,
-            p_cur->LTE_SignalStrength.rssnr,
-            p_cur->LTE_SignalStrength.cqi,
-            p_cur->TD_SCDMA_SignalStrength.rscp);
+exit:
     closeResponse;
-    return 0;
+    return ret;
 }
 
 static int responseCallRing(Parcel &p, void *response, size_t responselen) {
@@ -3536,7 +3543,7 @@ static int responseCellInfoListV6(Parcel &p, void *response, size_t responselen)
     startResponse;
     int i;
     for (i = 0; i < num; i++) {
-        appendPrintBuf("%s[%d: type=%d,registered=%d,timeStampType=%d,timeStamp=%lld", printBuf, i,
+        appendPrintBuf("%s[%d: type=%d,registered=%d,timeStampType=%d,timeStamp=%lu", printBuf, i,
             p_cur->cellInfoType, p_cur->registered, p_cur->timeStampType, p_cur->timeStamp);
         p.writeInt32((int)p_cur->cellInfoType);
         p.writeInt32(p_cur->registered);
@@ -3688,9 +3695,9 @@ static int responseCellInfoListV12(Parcel &p, void *response, size_t responselen
     startResponse;
     int i;
     for (i = 0; i < num; i++) {
-        appendPrintBuf("%s[%d: type=%d,registered=%d,timeStampType=%d,timeStamp=%lld", printBuf, i,
+        appendPrintBuf("%s[%d: type=%d,registered=%d,timeStampType=%d,timeStamp=%lu", printBuf, i,
             p_cur->cellInfoType, p_cur->registered, p_cur->timeStampType, p_cur->timeStamp);
-        RLOGE("[%d: type=%d,registered=%d,timeStampType=%d,timeStamp=%lld", i,
+        RLOGE("[%d: type=%d,registered=%d,timeStampType=%d,timeStamp=%lu", i,
             p_cur->cellInfoType, p_cur->registered, p_cur->timeStampType, p_cur->timeStamp);
         p.writeInt32((int)p_cur->cellInfoType);
         p.writeInt32(p_cur->registered);
@@ -3976,7 +3983,7 @@ static int responseRadioCapability(Parcel &p, void *response, size_t responselen
 
     startResponse;
     appendPrintBuf("%s[version=%d,session=%d,phase=%d,\
-            rat=%s,logicalModemUuid=%s,status=%d]",
+            rat=%d,logicalModemUuid=%s,status=%d]",
             printBuf,
             p_cur->version,
             p_cur->session,
@@ -4285,7 +4292,7 @@ static int responseDcRtInfo(Parcel &p, void *response, size_t responselen)
     RIL_DcRtInfo *pDcRtInfo = (RIL_DcRtInfo *)response;
     p.writeInt64(pDcRtInfo->time);
     p.writeInt32(pDcRtInfo->powerState);
-    appendPrintBuf("%s[time=%d,powerState=%d]", printBuf,
+    appendPrintBuf("%s[time=%lu,powerState=%d]", printBuf,
         pDcRtInfo->time,
         pDcRtInfo->powerState);
     closeResponse;
