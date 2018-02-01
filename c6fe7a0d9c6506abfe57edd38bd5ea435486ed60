@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3882653_9833764d",
+        "filename": "power/power.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2018-02-01T14:40:54Z",
+      "side": 1,
+      "message": "before the touchscreen is enabled",
+      "range": {
+        "startLine": 311,
+        "startChar": 62,
+        "endLine": 311,
+        "endChar": 80
+      },
+      "revId": "c6fe7a0d9c6506abfe57edd38bd5ea435486ed60",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
