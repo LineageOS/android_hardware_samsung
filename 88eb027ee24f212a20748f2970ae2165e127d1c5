@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e42e5c_691f4396",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2605,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2018-02-02T16:39:57Z",
+      "side": 1,
+      "message": "Can you make this a separate change?",
+      "revId": "88eb027ee24f212a20748f2970ae2165e127d1c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fd4173c_6b48ad93",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3332,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2018-02-02T16:39:57Z",
+      "side": 1,
+      "message": "why move this here?\nis this needed to access response in line 3336?",
+      "revId": "88eb027ee24f212a20748f2970ae2165e127d1c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f384d043_2d17010b",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3546,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2018-02-02T16:39:57Z",
+      "side": 1,
+      "message": "Formatting changes should go in a separate patch probably.",
+      "revId": "88eb027ee24f212a20748f2970ae2165e127d1c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
