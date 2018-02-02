@@ -985,6 +985,7 @@ int disable_snd_device(struct audio_device *adev,
 {
     struct mixer_card *mixer_card;
     struct listnode *node;
+    struct audio_usecase *out_uc_info = get_usecase_from_type(adev, PCM_PLAYBACK);
     const char *snd_device_name = get_snd_device_name(snd_device);
 
     if (snd_device_name == NULL)
@@ -1011,6 +1012,14 @@ int disable_snd_device(struct audio_device *adev,
             update_mixer = true;
 #endif /* DSP_POWEROFF_DELAY */
             audio_route_reset_path(mixer_card->audio_route, snd_device_name);
+            if (out_uc_info->out_snd_device != SND_DEVICE_NONE) {
+                /*
+                 * Cycle the rx device to eliminate routing conflicts.
+                 * This prevents issues when an input route shares mixer controls with an output
+                 * route.
+                 */
+                audio_route_apply_path(mixer_card->audio_route, snd_device_name);
+            }
             if (update_mixer) {
                 audio_route_update_mixer(mixer_card->audio_route);
             }
