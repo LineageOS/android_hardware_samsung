@@ -973,6 +973,38 @@ static int enable_snd_device(struct audio_device *adev,
     return 0;
 }
 
+static void reapply_usecase_paths(struct audio_device *adev)
+{
+    struct audio_usecase *usecase;
+    struct listnode *node;
+    struct mixer_card *mixer_card;
+
+    for (int i = 0; i < AUDIO_USECASE_MAX; i++) {
+        usecase = get_usecase_from_id(adev, i);
+        if (usecase == NULL)
+            continue;
+        ALOGV("reapplying usecase id=%d", i);
+
+        list_for_each(node, &usecase->mixer_list) {
+            mixer_card = node_to_item(node, struct mixer_card, uc_list_node[usecase->id]);
+            bool changed = false;
+            if (usecase->out_snd_device != SND_DEVICE_NONE) {
+                audio_route_apply_path(mixer_card->audio_route,
+                        get_snd_device_name(usecase->out_snd_device));
+                changed = true;
+            }
+            if (usecase->in_snd_device != SND_DEVICE_NONE) {
+                audio_route_apply_path(mixer_card->audio_route,
+                        get_snd_device_name(usecase->in_snd_device));
+                changed = true;
+            }
+
+            if (changed)
+                audio_route_update_mixer(mixer_card->audio_route);
+        }
+    }
+}
+
 int disable_snd_device(struct audio_device *adev,
                               struct audio_usecase *uc_info,
                               snd_device_t snd_device,
@@ -2826,6 +2858,7 @@ static int out_standby(struct audio_stream *stream)
         pthread_mutex_lock(&adev->lock);
         amplifier_output_stream_standby((struct audio_stream_out *) stream);
         do_out_standby_l(out);
+        reapply_usecase_paths(adev);
         pthread_mutex_unlock(&adev->lock);
     }
     pthread_mutex_unlock(&out->lock);
@@ -3543,6 +3576,8 @@ static int in_standby(struct audio_stream *stream)
     ALOGV("%s: enter", __func__);
     pthread_mutex_lock(&adev->lock_inputs);
     status = in_standby_l(in);
+    if (status == 0)
+        reapply_usecase_paths(adev);
     pthread_mutex_unlock(&adev->lock_inputs);
     ALOGV("%s: exit:  status(%d)", __func__, status);
     return status;
