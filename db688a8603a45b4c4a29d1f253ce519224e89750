@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be295987_655ae0b3",
+        "filename": "power/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2018-02-02T16:35:26Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer to factor the helper code out into something like \"libpower_helper\", just like the liblights helper we have.",
+      "revId": "db688a8603a45b4c4a29d1f253ce519224e89750",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
