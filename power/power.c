@@ -50,6 +50,7 @@ struct samsung_power_module {
     char max_freqs[CLUSTER_COUNT][PARAM_MAXLEN];
     char* touchscreen_power_path;
     char* touchkey_power_path;
+    bool dt2w_enabled;
 };
 
 enum power_profile_e {
@@ -234,6 +235,7 @@ static void samsung_power_init(struct power_module *module)
     samsung_pwr->touchscreen_power_path = NULL;
     samsung_pwr->touchkey_power_path = NULL;
     init_touch_input_power_path(samsung_pwr);
+    samsung_pwr->dt2w_enabled = false;
 
     ALOGI("Initialized settings:");
     char max_freqs[PATH_MAX];
@@ -254,6 +256,7 @@ static void samsung_power_init(struct power_module *module)
             samsung_pwr->touchscreen_power_path ? samsung_pwr->touchscreen_power_path : "NULL");
     ALOGI("touchkey_power_path: %s",
             samsung_pwr->touchkey_power_path ? samsung_pwr->touchkey_power_path : "NULL");
+    ALOGI("dt2w_enabled: %d", samsung_pwr->dt2w_enabled);
 }
 
 /**********************************************************
@@ -290,7 +293,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     }
 
     /* Sanity check the touchscreen path */
-    if (samsung_pwr->touchscreen_power_path) {
+    if (samsung_pwr->touchscreen_power_path  && !samsung_pwr->dt2w_enabled) {
         sysfs_write(samsung_pwr->touchscreen_power_path, on ? "1" : "0");
     }
 
@@ -396,6 +399,7 @@ static void samsung_set_feature(struct power_module *module, feature_t feature, 
         case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
             ALOGV("%s: %s double tap to wake", __func__, state ? "enabling" : "disabling");
             sysfs_write(TARGET_TAP_TO_WAKE_NODE, state > 0 ? "1" : "0");
+            samsung_pwr->dt2w_enabled = true;
             break;
 #endif
         default:
