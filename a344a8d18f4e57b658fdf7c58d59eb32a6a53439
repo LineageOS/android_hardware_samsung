@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26533339_da02950a",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2018-02-04T10:57:29Z",
+      "side": 1,
+      "message": "get_snd_device_name(out_uc_info-\u003eout_snd_device)",
+      "revId": "a344a8d18f4e57b658fdf7c58d59eb32a6a53439",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
