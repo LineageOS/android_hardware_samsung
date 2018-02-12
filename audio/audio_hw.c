@@ -1013,7 +1013,7 @@ int disable_snd_device(struct audio_device *adev,
             update_mixer = true;
 #endif /* DSP_POWEROFF_DELAY */
             audio_route_reset_path(mixer_card->audio_route, snd_device_name);
-            if (out_uc_info != NULL) {
+            if (snd_device > SND_DEVICE_IN_BEGIN && out_uc_info != NULL) {
                 /*
                  * Cycle the rx device to eliminate routing conflicts.
                  * This prevents issues when an input route shares mixer controls with an output
