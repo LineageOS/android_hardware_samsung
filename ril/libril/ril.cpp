@@ -1860,11 +1860,21 @@ static void dispatchSetInitialAttachApn(Parcel &p, RequestInfo *pRI)
         pf.roamingProtocol = "IP";
 #endif
 
+#ifdef NEEDS_IMS_TYPE_FIELD
+    if (p.readInt32(&t) == NO_ERROR)
+        pf.imsType = (int) t;
+    else
+        pf.imsType = 0;
+#endif
+
     startRequest;
     appendPrintBuf("%sapn=%s, protocol=%s, authtype=%d, username=%s, password=%s",
             printBuf, pf.apn, pf.protocol, pf.authtype, pf.username, pf.password);
 #ifdef NEEDS_ROAMING_PROTOCOL_FIELD
     appendPrintBuf("%sroamingProtocol=%s", pf.roamingProtocol);
+#endif
+#ifdef NEEDS_IMS_TYPE_FIELD
+    appendPrintBuf("%simsType=%d", pf.pf.imsType);
 #endif
     closeRequest;
     printRequest(pRI->token, pRI->pCI->requestNumber);
