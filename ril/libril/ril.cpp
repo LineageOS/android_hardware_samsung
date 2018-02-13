@@ -1854,9 +1854,16 @@ static void dispatchSetInitialAttachApn(Parcel &p, RequestInfo *pRI)
     pf.username = strdupReadString(p);
     pf.password = strdupReadString(p);
 
+    pf.roamingProtocol = strdupReadString(p);
+
+    status = p.readInt32(&t);
+    pf.imsType = (int) t;
+
     startRequest;
     appendPrintBuf("%sapn=%s, protocol=%s, authtype=%d, username=%s, password=%s",
-            printBuf, pf.apn, pf.protocol, pf.authtype, pf.username, pf.password);
+            ", roamingProtocol=%s, imsType=%s",
+            printBuf, pf.apn, pf.protocol, pf.authtype, pf.username, pf.password,
+            pf.roamingProtocol, pf.imsType);
     closeRequest;
     printRequest(pRI->token, pRI->pCI->requestNumber);
 
