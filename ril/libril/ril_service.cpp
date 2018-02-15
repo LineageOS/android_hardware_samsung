@@ -491,7 +491,11 @@ void sendErrorResponse(RequestInfo *pRI, RIL_Errno err) {
 
 /**
  * Copies over src to dest. If memory allocation fails, responseFunction() is called for the
- * request with error RIL_E_NO_MEMORY.
+ * request with error RIL_E_NO_MEMORY. The size() method is used to determine the size of the
+ * destination buffer into which the HIDL string is copied. If there is a discrepancy between
+ * the string length reported by the size() method, and the length of the string returned by
+ * the c_str() method, the function will return false indicating a failure.
+ *
  * Returns true on success, and false on failure.
  */
 bool copyHidlStringToRil(char **dest, const hidl_string &src, RequestInfo *pRI, bool allowEmpty) {
@@ -506,7 +510,12 @@ bool copyHidlStringToRil(char **dest, const hidl_string &src, RequestInfo *pRI, 
         sendErrorResponse(pRI, RIL_E_NO_MEMORY);
         return false;
     }
-    strncpy(*dest, src.c_str(), len + 1);
+    if (strlcpy(*dest, src.c_str(), len + 1) >= (len + 1)) {
+        RLOGE("Copy of the HIDL string has been truncated, as "
+              "the string length reported by size() does not "
+              "match the length of string returned by c_str().");
+        return false;
+    }
     return true;
 }
 
@@ -2541,7 +2550,7 @@ Return<void> RadioImpl::setRadioCapability(int32_t serial, const RadioCapability
     rilRc.phase = (int) rc.phase;
     rilRc.rat = (int) rc.raf;
     rilRc.status = (int) rc.status;
-    strncpy(rilRc.logicalModemUuid, rc.logicalModemUuid.c_str(), MAX_UUID_LENGTH);
+    strlcpy(rilRc.logicalModemUuid, rc.logicalModemUuid.c_str(), sizeof(rilRc.logicalModemUuid));
 
     CALL_ONREQUEST(pRI->pCI->requestNumber, &rilRc, sizeof(rilRc), pRI, mSlotId);
 
