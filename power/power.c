@@ -477,11 +477,11 @@ static void samsung_power_hint(struct power_module *module,
                                   void *data)
 {
     struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
-    int len;
+    power_hint_t hint_whitelist = POWER_HINT_LOW_POWER | POWER_HINT_SET_PROFILE |
+                                  POWER_HINT_DISABLE_TOUCH;
 
     /* Bail out if low-power mode is active */
-    if (current_power_profile == PROFILE_POWER_SAVE && hint != POWER_HINT_LOW_POWER
-            && hint != POWER_HINT_SET_PROFILE) {
+    if (current_power_profile == PROFILE_POWER_SAVE && !(hint_whitelist & hint)) {
         ALOGV("%s: PROFILE_POWER_SAVE active, ignoring hint %d", __func__, hint);
         return;
     }
