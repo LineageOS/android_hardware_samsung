@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c55a5d_4b82e8c8",
+        "filename": "power/power.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2018-02-19T21:27:12Z",
+      "side": 1,
+      "message": "FWIW, hint_whitelist \u0026 hint is how I see it in my mind, but this is equivalent regardless.",
+      "revId": "b12be7c5f4ab3c319ef5da502386a1862e9ad429",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
