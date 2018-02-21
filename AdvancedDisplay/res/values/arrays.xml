@@ -40,12 +40,12 @@
         <item>8</item>
     </string-array>
 
-    <string-array name="mdnie_negative_entries" translatable="false">
-        <item>@string/mdnie_inverse_normal</item>
-        <item>@string/mdnie_inverse_inverse</item>
+    <string-array name="mdnie_accessibility_rentries" translatable="false">
+        <item>@string/mdnie_accessibility_normal</item>
+        <item>@string/mdnie_accessibility_inverse</item>
     </string-array>
 
-    <string-array name="mdnie_negative_entries_values" translatable="false">
+    <string-array name="mdnie_accessibility_rentries_values" translatable="false">
         <item>0</item>
         <item>1</item>
     </string-array>
