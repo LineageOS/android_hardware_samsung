@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77455f7a_135ae44c",
+        "filename": "AdvancedDisplay/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2018-02-21T18:24:05Z",
+      "side": 1,
+      "message": "What does this even mean?",
+      "range": {
+        "startLine": 44,
+        "startChar": 39,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "9763918db8565ee18217f9de6fa96b4def867957",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
