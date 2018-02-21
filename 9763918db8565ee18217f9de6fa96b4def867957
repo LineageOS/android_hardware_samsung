@@ -22,6 +22,24 @@
       "revId": "9763918db8565ee18217f9de6fa96b4def867957",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd713f4e_fce1f762",
+        "filename": "AdvancedDisplay/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2018-02-21T20:27:39Z",
+      "side": 1,
+      "message": "I have no idea, I just adapted luk\u0027s change to this new format of doing things.",
+      "parentUuid": "",
+      "revId": "9763918db8565ee18217f9de6fa96b4def867957",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
