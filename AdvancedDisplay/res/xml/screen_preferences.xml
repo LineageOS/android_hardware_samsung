@@ -14,9 +14,9 @@
                 android:entryValues="@array/mdnie_scenario_entries_values"
                 android:defaultValue="0" />
 
-        <!-- mDNIe Negative mode -->
-        <org.lineageos.settings.device.mDNIeNegative
-                android:key="mdnie_negative"
+        <!-- mDNIe Accessibility mode -->
+        <org.lineageos.settings.device.mDNIeAccessibility
+                android:key="mdnie_accessibility"
                 android:title="@string/mdnie_negative_title_head"
                 android:summary="@string/mdnie_negative_summary_head"
                 android:entries="@array/mdnie_negative_entries"
