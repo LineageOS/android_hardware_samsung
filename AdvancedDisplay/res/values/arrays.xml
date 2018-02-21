@@ -41,8 +41,8 @@
     </string-array>
 
     <string-array name="mdnie_negative_entries" translatable="false">
-        <item>@string/mdnie_inverse_normal</item>
-        <item>@string/mdnie_inverse_inverse</item>
+        <item>@string/mdnie_accessibility_normal</item>
+        <item>@string/mdnie_accessibility_inverse</item>
     </string-array>
 
     <string-array name="mdnie_negative_entries_values" translatable="false">
