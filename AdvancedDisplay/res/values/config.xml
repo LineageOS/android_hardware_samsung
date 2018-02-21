@@ -20,6 +20,6 @@
 
     <!-- MDNIE -->
     <string name="mdnie_scenario_sysfs_file" translatable="false">"/sys/class/mdnie/mdnie/scenario"</string>
-    <string name="mdnie_negative_sysfs_file" translatable="false">"/sys/class/mdnie/mdnie/negative"</string>
+    <string name="mdnie_accessibility_sysfs_file" translatable="false">"/sys/class/mdnie/mdnie/negative"</string>
 
 </resources>

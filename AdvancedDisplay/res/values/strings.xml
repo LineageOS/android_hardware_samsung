@@ -25,8 +25,8 @@
     <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Scenario</string>
     <string name="mdnie_scenario_summary_head">Set the mDNIe scenario</string>
-    <string name="mdnie_negative_title_head">Negative mode</string>
-    <string name="mdnie_negative_summary_head">Enable/disable inverted colors</string>
+    <string name="mdnie_accessibility_title_head">Accessibility mode</string>
+    <string name="mdnie_accessibility_summary_head">Set the mDNIe accessibility mode</string>
 
     <!-- Scenario names -->
     <string name="mdnie_scenario_default">LineageOS (default)</string>
@@ -42,9 +42,13 @@
     <string name="mdnie_scenario_email">E-mail</string>
     <string name="mdnie_scenario_tdmb">Digital television</string>
 
-    <!-- Inverse mode names -->
-    <string name="mdnie_inverse_normal">Normal</string>
-    <string name="mdnie_inverse_inverse">Inverted</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Normal</string>
+    <string name="mdnie_accessibility_inverse">Inverted</string>
+    <string name="mdnie_accessibility_color_blind">Color Blind</string>
+    <string name="mdnie_accessibility_screen_curtain">Screen Curtain</string>
+    <string name="mdnie_accessibility_grayscale">Gray</string>
+    <string name="mdnie_accessibility_gray_negative">Gray Inverted</string>
 
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
     <string name="summary_empty" translatable="false"></string>

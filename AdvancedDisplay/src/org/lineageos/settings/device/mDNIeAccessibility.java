@@ -27,14 +27,14 @@ import android.util.AttributeSet;
 
 import org.lineageos.internal.util.FileUtils;
 
-public class mDNIeNegative extends ListPreference implements OnPreferenceChangeListener {
+public class mDNIeAccessibility extends ListPreference implements OnPreferenceChangeListener {
 
     private static String FILE = null;
 
-    public mDNIeNegative(Context context, AttributeSet attrs) {
+    public mDNIeAccessibility(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setOnPreferenceChangeListener(this);
-        FILE = context.getResources().getString(R.string.mdnie_negative_sysfs_file);
+        FILE = context.getResources().getString(R.string.mdnie_accessibility_sysfs_file);
     }
 
     /**
@@ -42,13 +42,13 @@ public class mDNIeNegative extends ListPreference implements OnPreferenceChangeL
      * @param context       The context to read the SharedPreferences from
      */
     public static void restore(Context context) {
-        FILE = context.getResources().getString(R.string.mdnie_negative_sysfs_file);
+        FILE = context.getResources().getString(R.string.mdnie_accessibility_sysfs_file);
         if (!FileUtils.isFileWritable(FILE)) {
             return;
         }
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        FileUtils.writeLine(FILE, sharedPrefs.getString(Constants.KEY_MDNIE_NEGATIVE, "0"));
+        FileUtils.writeLine(FILE, sharedPrefs.getString(Constants.KEY_MDNIE_ACCESSIBILITY, "0"));
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
