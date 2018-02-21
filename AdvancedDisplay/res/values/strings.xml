@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2012-2014 The CyanogenMod Project
+     Copyright (C) 2018 The LineageOS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -26,6 +27,20 @@
     <string name="mdnie_scenario_summary_head">Set the mDNIe scenario</string>
     <string name="mdnie_negative_title_head">Negative mode</string>
     <string name="mdnie_negative_summary_head">Enable/disable inverted colors</string>
+
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (default)</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_video_warm">Video warm</string>
+    <string name="mdnie_scenario_video_cold">Video cold</string>
+    <string name="mdnie_scenario_camera">Camera</string>
+    <string name="mdnie_scenario_navigation">Navigation</string>
+    <string name="mdnie_scenario_gallery">Gallery</string>
+    <string name="mdnie_scenario_vt">Video call</string>
+
+    <!-- Inverse mode names -->
+    <string name="mdnie_inverse_normal">Normal</string>
+    <string name="mdnie_inverse_inverse">Inverted</string>
 
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
     <string name="summary_empty" translatable="false"></string>
