@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.device;
+package org.lineageos.settings.doze;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
