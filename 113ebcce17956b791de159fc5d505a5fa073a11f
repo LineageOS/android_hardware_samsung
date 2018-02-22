@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a370128b_ba45af29",
+        "filename": "AdvancedDisplay/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2018-02-22T02:33:10Z",
+      "side": 1,
+      "message": "Maybe make this \"Video call\"?",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "113ebcce17956b791de159fc5d505a5fa073a11f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
