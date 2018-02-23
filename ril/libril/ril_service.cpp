@@ -3712,10 +3712,6 @@ int radio::getOperatorResponse(int slotId,
 #if VDBG
     RLOGD("getOperatorResponse: serial %d", serial);
 #endif
-    int mqanelements;
-    char value[PROPERTY_VALUE_MAX];
-    property_get("ro.ril.telephony.mqanelements", value, "4");
-    mqanelements = atoi(value);
 
     if (radioService[slotId]->mRadioResponse != NULL) {
         RadioResponseInfo responseInfo = {};
@@ -3724,14 +3720,14 @@ int radio::getOperatorResponse(int slotId,
         hidl_string shortName;
         hidl_string numeric;
         int numStrings = responseLen / sizeof(char *);
-        if (response == NULL || numStrings != mqanelements - 2) {
+        if (response == NULL || numStrings != 3) {
             RLOGE("getOperatorResponse Invalid response: NULL");
             if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
 
         } else {
             char **resp = (char **) response;
             longName = convertCharPtrToHidlString(resp[0]);
-            shortName = convertCharPtrToHidlString(resp[0]);
+            shortName = convertCharPtrToHidlString(resp[1]);
             numeric = convertCharPtrToHidlString(resp[2]);
         }
         Return<void> retStatus = radioService[slotId]->mRadioResponse->getOperatorResponse(
