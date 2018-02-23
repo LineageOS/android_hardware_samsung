@@ -3724,7 +3724,7 @@ int radio::getOperatorResponse(int slotId,
         hidl_string shortName;
         hidl_string numeric;
         int numStrings = responseLen / sizeof(char *);
-        if (response == NULL || numStrings != mqanelements - 2) {
+        if (response == NULL || numStrings != mqanelements - 1) {
             RLOGE("getOperatorResponse Invalid response: NULL");
             if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
 
