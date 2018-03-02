@@ -242,6 +242,14 @@ OMX_ERRORTYPE SEC_OSAL_LockANB(
     android_native_buffer_t *pANB = (android_native_buffer_t *) pBuffer;
 
     ret = SEC_OSAL_LockANBHandle((OMX_U32)pANB->handle, width, height, format, vaddr);
+
+    // Extract pointers for YUV-adresses and free memory
+    void **pAddr = (void **)vaddr[0];
+    vaddr[0] = pAddr[0];
+    vaddr[1] = pAddr[1];
+    vaddr[2] = pAddr[2];
+    free(pAddr);
+
     *pStride = pANB->stride;
 
 EXIT:
