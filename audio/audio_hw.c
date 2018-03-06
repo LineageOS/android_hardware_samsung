@@ -1026,6 +1026,7 @@ int disable_snd_device(struct audio_device *adev,
                  */
                 out_snd_device_name = get_snd_device_name(out_uc_info->out_snd_device);
                 audio_route_apply_path(mixer_card->audio_route, out_snd_device_name);
+                update_mixer = true;
             }
             if (update_mixer) {
                 audio_route_update_mixer(mixer_card->audio_route);
