@@ -19,6 +19,7 @@
 #include <dlfcn.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 
 #include <cutils/log.h>
 
@@ -122,7 +123,19 @@ static uint64_t fingerprint_get_auth_id(struct fingerprint_device __unused *dev)
 
 static int fingerprint_cancel(struct fingerprint_device __unused *dev)
 {
-    return bauth_handle->ss_fingerprint_cancel();
+    fingerprint_msg_t *cancel_msg;
+    int ret = 0;
+
+    ret = bauth_handle->ss_fingerprint_cancel();
+
+    cancel_msg = (fingerprint_msg_t *)malloc(sizeof(fingerprint_msg_t));
+    memset(cancel_msg, 0, sizeof(fingerprint_msg_t));
+
+    cancel_msg->type = FINGERPRINT_ERROR;
+    cancel_msg->data.error = FINGERPRINT_ERROR_CANCELED;
+
+    original_notify(cancel_msg);
+    return ret;
 }
 
 static int fingerprint_remove(struct fingerprint_device __unused *dev, uint32_t gid, uint32_t fid)
