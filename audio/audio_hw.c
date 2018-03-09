@@ -924,8 +924,7 @@ static int64_t render_latency(audio_usecase_t usecase)
 
 static int enable_snd_device(struct audio_device *adev,
                              struct audio_usecase *uc_info,
-                             snd_device_t snd_device,
-                             bool update_mixer)
+                             snd_device_t snd_device)
 {
     struct mixer_card *mixer_card;
     struct listnode *node;
@@ -940,8 +939,8 @@ static int enable_snd_device(struct audio_device *adev,
 
     if (snd_device == SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES) {
         ALOGV("Request to enable combo device: enable individual devices\n");
-        enable_snd_device(adev, uc_info, SND_DEVICE_OUT_SPEAKER, update_mixer);
-        enable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES, update_mixer);
+        enable_snd_device(adev, uc_info, SND_DEVICE_OUT_SPEAKER);
+        enable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES);
         return 0;
     }
     adev->snd_dev_ref_cnt[snd_device]++;
@@ -969,15 +968,11 @@ static int enable_snd_device(struct audio_device *adev,
                 usleep(DSP_POWEROFF_DELAY - elapsed_usec);
             }
         }
-        update_mixer = true;
 #endif /* DSP_POWEROFF_DELAY */
 
         amplifier_enable_devices(snd_device, true);
 
-        audio_route_apply_path(mixer_card->audio_route, snd_device_name);
-        if (update_mixer) {
-            audio_route_update_mixer(mixer_card->audio_route);
-        }
+        audio_route_apply_and_update_path(mixer_card->audio_route, snd_device_name);
     }
 
     return 0;
@@ -985,8 +980,7 @@ static int enable_snd_device(struct audio_device *adev,
 
 int disable_snd_device(struct audio_device *adev,
                               struct audio_usecase *uc_info,
-                              snd_device_t snd_device,
-                              bool update_mixer)
+                              snd_device_t snd_device)
 {
     struct mixer_card *mixer_card;
     struct listnode *node;
@@ -999,8 +993,8 @@ int disable_snd_device(struct audio_device *adev,
 
     if (snd_device == SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES) {
         ALOGV("Request to disable combo device: disable individual devices\n");
-        disable_snd_device(adev, uc_info, SND_DEVICE_OUT_SPEAKER, update_mixer);
-        disable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES, update_mixer);
+        disable_snd_device(adev, uc_info, SND_DEVICE_OUT_SPEAKER);
+        disable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES);
         return 0;
     }
 
@@ -1014,10 +1008,7 @@ int disable_snd_device(struct audio_device *adev,
               snd_device, snd_device_name);
         list_for_each(node, &uc_info->mixer_list) {
             mixer_card = node_to_item(node, struct mixer_card, uc_list_node[uc_info->id]);
-#ifdef DSP_POWEROFF_DELAY
-            update_mixer = true;
-#endif /* DSP_POWEROFF_DELAY */
-            audio_route_reset_path(mixer_card->audio_route, snd_device_name);
+            audio_route_reset_and_update_path(mixer_card->audio_route, snd_device_name);
             if (out_uc_info != NULL) {
                 /*
                  * Cycle the rx device to eliminate routing conflicts.
@@ -1025,11 +1016,7 @@ int disable_snd_device(struct audio_device *adev,
                  * route.
                  */
                 out_snd_device_name = get_snd_device_name(out_uc_info->out_snd_device);
-                audio_route_apply_path(mixer_card->audio_route, out_snd_device_name);
-                update_mixer = true;
-            }
-            if (update_mixer) {
-                audio_route_update_mixer(mixer_card->audio_route);
+                audio_route_apply_and_update_path(mixer_card->audio_route, out_snd_device_name);
             }
 
             amplifier_enable_devices(snd_device, false);
@@ -1150,11 +1137,6 @@ static int select_devices(struct audio_device *adev,
 
     if (in_snd_device != SND_DEVICE_NONE) {
         enable_snd_device(adev, usecase, in_snd_device, false);
-    }
-
-    list_for_each(node, &usecase->mixer_list) {
-         mixer_card = node_to_item(node, struct mixer_card, uc_list_node[usecase->id]);
-         audio_route_update_mixer(mixer_card->audio_route);
     }
 
     usecase->in_snd_device = in_snd_device;
