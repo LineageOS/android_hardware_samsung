@@ -1,0 +1,33 @@
+cc_library_shared {
+    name: "android.hardware.graphics.allocator@2.0-impl-exynos4",
+    defaults: ["hidl_defaults"],
+    proprietary: true,
+    relative_install_path: "hw",
+    srcs: ["Gralloc.cpp", "Gralloc0Allocator.cpp", "Gralloc1Allocator.cpp"],
+    include_dirs: ["system/core/libgrallocusage/include"],
+    cppflags: ["-Wall", "-Wextra"],
+    shared_libs: [
+        "android.hardware.graphics.allocator@2.0",
+        "libbase",
+        "libcutils",
+        "libhardware",
+        "libhidlbase",
+        "libhidltransport",
+        "liblog",
+        "libutils",
+    ],
+    header_libs: [
+        "libgrallocmapperincludes",
+    ],
+    whole_static_libs: ["libgrallocusage"],
+}
+
+cc_library_static {
+    name: "libgralloc1-adapter-exynos4",
+    defaults: ["hidl_defaults"],
+    srcs: ["gralloc1-adapter.cpp", "Gralloc1On0Adapter.cpp"],
+    include_dirs: ["system/core/libsync/include"],
+    cflags: ["-Wall", "-Wextra"],
+    export_include_dirs: ["."],
+    whole_static_libs: ["libgrallocusage"],
+}

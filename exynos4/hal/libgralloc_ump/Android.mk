@@ -47,7 +47,7 @@ LOCAL_CFLAGS:= -DLOG_TAG=\"gralloc\" -DGRALLOC_32_BITS
 LOCAL_CFLAGS += -DSAMSUNG_EXYNOS
 LOCAL_CFLAGS += -DSAMSUNG_EXYNOS_CACHE_UMP
 
-LOCAL_STATIC_LIBRARIES        := libgralloc1-adapter
+LOCAL_STATIC_LIBRARIES        := libgralloc1-adapter-exynos4
 LOCAL_SHARED_LIBRARIES        += libsync
 
 ifeq ($(TARGET_SOC),exynos4210)
