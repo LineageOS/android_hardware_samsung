@@ -19,7 +19,7 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 LOCAL_PRELINK_MODULE := false
-LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
+LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_SHARED_LIBRARIES := liblog libcutils libEGL \
 			  libGLESv1_CM libhardware libhardware_legacy
 
@@ -78,4 +78,5 @@ endif
 
 LOCAL_MODULE := hwcomposer.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_TAGS := optional
+LOCAL_VENDOR_MODULE := true
 include $(BUILD_SHARED_LIBRARY)
