@@ -139,7 +139,7 @@ void prepare_voice_session(struct voice_session *session,
  * This must be called with the hw device mutex locked, OK to hold other
  * mutexes.
  */
-static void stop_voice_session_bt_sco(struct voice_session *session) {
+void stop_voice_session_bt_sco(struct voice_session *session) {
     ALOGV("%s: Closing SCO PCMs", __func__);
 
     if (session->pcm_sco_rx != NULL) {
@@ -265,10 +265,6 @@ int start_voice_session(struct voice_session *session)
     pcm_start(session->pcm_voice_rx);
     pcm_start(session->pcm_voice_tx);
 
-    if (session->out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-        start_voice_session_bt_sco(session);
-    }
-
 #ifdef AUDIENCE_EARSMART_IC
     ALOGV("%s: Enabling Audience IC", __func__);
     es_start_voice_session(session);
@@ -309,10 +305,6 @@ void stop_voice_session(struct voice_session *session)
         pcm_close(session->pcm_voice_tx);
         session->pcm_voice_tx = NULL;
         status++;
-    }
-
-    if (session->out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-        stop_voice_session_bt_sco(session);
     }
 
 #ifdef AUDIENCE_EARSMART_IC
