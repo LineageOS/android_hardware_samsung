@@ -54,6 +54,9 @@
 #endif
 #endif
 
+#define MIXER_PATH_MAX_LENGTH 100
+#define MIXER_XML_PATH "mixer_paths.xml"
+
 /* Unusupported
 #define SOUND_CAPTURE_LOOPBACK_AEC_DEVICE 1
 #define SOUND_CAPTURE_HOTWORD_DEVICE 0
