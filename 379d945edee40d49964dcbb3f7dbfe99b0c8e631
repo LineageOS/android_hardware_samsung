@@ -1,0 +1,364 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5ec20f0_00482a56",
+        "filename": "audio/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "Aww, why no more -Werror?",
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecd0f83a_fc6d74de",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "shouldn\u0027t this section lose one level of indent?",
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12f8642b_6c788dd9",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "skip the intermediate variable and just return pcm_device_table[usecase][0] or [1]",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 17
+      },
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62dce5fa_d2af2885",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be /odm/etc like the comment says?",
+      "range": {
+        "startLine": 390,
+        "startChar": 25,
+        "endLine": 390,
+        "endChar": 36
+      },
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "585cfa10_5d018d27",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "the naming convention is lower_case not camel case",
+      "range": {
+        "startLine": 394,
+        "startChar": 5,
+        "endLine": 394,
+        "endChar": 22
+      },
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab9d2c0e_e93ffeed",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this just be a boolean?",
+      "range": {
+        "startLine": 841,
+        "startChar": 12,
+        "endLine": 841,
+        "endChar": 28
+      },
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8318830_f283c97d",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "I think you can probably merge a lot of the logic between this function and the previous one so you have to copy-paste less things.",
+      "range": {
+        "startLine": 862,
+        "startChar": 12,
+        "endLine": 862,
+        "endChar": 44
+      },
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a06227c_bc83fd01",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this just be a boolean?",
+      "range": {
+        "startLine": 895,
+        "startChar": 8,
+        "endLine": 895,
+        "endChar": 24
+      },
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc11cb66_ed38bb8f",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "why the extra newline?",
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e41d3f3_f8ee89e1",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "why the extra newline?",
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2fa0c1f_c308ab1a",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1927,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "why the newline?",
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1550365_bffe3cfc",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1995,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "Isn\u0027t the more traditional thing to bound your outer loop using this count variable? This while loop is a little hard to read.",
+      "range": {
+        "startLine": 1995,
+        "startChar": 20,
+        "endLine": 1995,
+        "endChar": 40
+      },
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5d95903_775df083",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "range": {
+        "startLine": 2071,
+        "startChar": 20,
+        "endLine": 2071,
+        "endChar": 40
+      },
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4758eb8_633e317d",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "why the newline?",
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0aa85809_6a86dcb8",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 2162,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "why the extra newline?",
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5ffa198_c3905849",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 2471,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be something like the enum instead?",
+      "range": {
+        "startLine": 2471,
+        "startChar": 19,
+        "endLine": 2471,
+        "endChar": 20
+      },
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f8adb01_11ee3091",
+        "filename": "audio/audio_hw.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "This file doesn\u0027t use tabs",
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34090487_ca42952a",
+        "filename": "audio/audio_hw.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-04-26T04:09:15Z",
+      "side": 1,
+      "message": "same",
+      "revId": "379d945edee40d49964dcbb3f7dbfe99b0c8e631",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
