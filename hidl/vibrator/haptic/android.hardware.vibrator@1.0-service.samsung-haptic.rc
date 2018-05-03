@@ -1,0 +1,4 @@
+service vendor.vibrator-1-0 /vendor/bin/hw/android.hardware.vibrator@1.0-service.samsung-haptic
+    class hal
+    user system
+    group system
