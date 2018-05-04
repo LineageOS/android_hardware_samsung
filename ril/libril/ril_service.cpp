@@ -8481,6 +8481,9 @@ void radio::registerService(RIL_RadioFunctions *callbacks, CommandInfo *commands
     simCount = SIM_COUNT;
     #endif
 
+    s_vendorFunctions = callbacks;
+    s_commands = commands;
+
     configureRpcThreadpool(1, true /* callerWillJoin */);
     for (int i = 0; i < simCount; i++) {
         pthread_rwlock_t *radioServiceRwlockPtr = getRadioServiceRwlock(i);
@@ -8498,9 +8501,6 @@ void radio::registerService(RIL_RadioFunctions *callbacks, CommandInfo *commands
         ret = pthread_rwlock_unlock(radioServiceRwlockPtr);
         assert(ret == 0);
     }
-
-    s_vendorFunctions = callbacks;
-    s_commands = commands;
 }
 
 void rilc_thread_pool() {
