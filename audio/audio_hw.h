@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
  * Copyright (C) 2017 Christopher N. Hesse <raymanfx@gmail.com>
+ * Copyright (C) 2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,12 +47,6 @@ struct effect_info_s {
     size_t num_channel_configs;
     channel_config_t *channel_configs;
 };
-#endif
-
-#ifdef __LP64__
-#define SOUND_TRIGGER_HAL_LIBRARY_PATH "/system/lib64/hw/sound_trigger.primary.flounder.so"
-#else
-#define SOUND_TRIGGER_HAL_LIBRARY_PATH "/system/lib/hw/sound_trigger.primary.flounder.so"
 #endif
 
 /* Sound devices specific to the platform
@@ -190,7 +185,6 @@ typedef enum {
 
     /* Capture usecases */
     USECASE_AUDIO_CAPTURE,
-    USECASE_AUDIO_CAPTURE_HOTWORD,
 
     USECASE_VOICE_CALL,
     AUDIO_USECASE_MAX
@@ -225,7 +219,6 @@ typedef enum {
     PCM_PLAYBACK = 0x1,
     PCM_CAPTURE = 0x2,
     VOICE_CALL = 0x4,
-    PCM_HOTWORD_STREAMING = 0x8,
     PCM_CAPTURE_LOW_LATENCY = 0x10,
 } usecase_type_t;
 
@@ -252,7 +245,6 @@ struct pcm_device {
     struct resampler_itfe*     resampler;
     int16_t*                   res_buffer;
     size_t                     res_byte_count;
-    int                        sound_trigger_handle;
 };
 
 struct stream_out {
@@ -422,11 +414,6 @@ struct audio_device {
     // with audio device mutex if needed
     volatile int32_t        echo_reference_generation;
 #endif
-
-    void*                   sound_trigger_lib;
-    int                     (*sound_trigger_open_for_streaming)();
-    size_t                  (*sound_trigger_read_samples)(int, void*, size_t);
-    int                     (*sound_trigger_close_for_streaming)(int);
 
     pthread_mutex_t         lock_inputs; /* see note below on mutex acquisition order */
     amplifier_device_t      *amp;
