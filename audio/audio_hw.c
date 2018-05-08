@@ -2399,11 +2399,6 @@ static int out_open_pcm_devices(struct stream_out *out)
         if (out->flags & AUDIO_OUTPUT_FLAG_DEEP_BUFFER)
             pcm_device_id = pcm_device_deep_buffer.id;
 
-        if (out->dev->voice.in_call) {
-            ALOGV("%s: in_call, not opening PCMs", __func__);
-            return ret;
-        }
-
         ALOGV("%s: Opening PCM device card_id(%d) device_id(%d)",
               __func__, pcm_device_card, pcm_device_id);
 
@@ -3207,12 +3202,6 @@ static int out_get_presentation_position(const struct audio_stream_out *stream,
     if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD) {
         ret = out_get_presentation_offload_position(out, frames, timestamp);
     } else {
-        if (out->dev->voice.in_call) {
-            ALOGVV("%s: in_call, do not handle PCMs", __func__);
-            ret = 0;
-            goto done;
-        }
-
         /* FIXME: which device to read from? */
         if (!list_empty(&out->pcm_dev_list)) {
             struct pcm_device *pcm_device;
