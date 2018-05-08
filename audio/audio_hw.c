@@ -1000,6 +1000,67 @@ int disable_snd_device(struct audio_device *adev,
     return 0;
 }
 
+static void check_and_route_usecases(struct audio_device *adev,
+                                              struct audio_usecase *uc_info,
+                                              usecase_type_t type,
+                                              snd_device_t snd_device)
+{
+    struct listnode *node;
+    struct audio_usecase *usecase;
+    bool switch_device[AUDIO_USECASE_MAX], need_switch = false;
+    snd_device_t usecase_snd_device = SND_DEVICE_NONE;
+    int i;
+
+    /*
+     * This function is to make sure that all the usecases that are active on
+     * the hardware codec backend are always routed to any one device that is
+     * handled by the hardware codec.
+     * For example, if low-latency and deep-buffer usecases are currently active
+     * on speaker and out_set_parameters(headset) is received on low-latency
+     * output, then we have to make sure deep-buffer is also switched to headset or
+     * if audio-record and voice-call usecases are currently
+     * active on speaker(rx) and speaker-mic (tx) and out_set_parameters(earpiece)
+     * is received for voice call then we have to make sure that audio-record
+     * usecase is also switched to earpiece i.e.
+     * because of the limitation that both the devices cannot be enabled
+     * at the same time as they share the same backend.
+     */
+    /* Disable all the usecases on the shared backend other than the
+       specified usecase */
+    for (i = 0; i < AUDIO_USECASE_MAX; i++)
+        switch_device[i] = false;
+
+    list_for_each(node, &adev->usecase_list) {
+        usecase = node_to_item(node, struct audio_usecase, adev_list_node);
+        if (usecase->type != type || usecase == uc_info)
+            continue;
+        usecase_snd_device = (type == PCM_PLAYBACK) ? usecase->out_snd_device :
+                              usecase->in_snd_device;
+        if (usecase_snd_device != snd_device) {
+            ALOGV("%s: Usecase (%s) is active on (%s) - disabling ..",
+                  __func__, use_case_table[usecase->id],
+                  get_snd_device_name(usecase_snd_device));
+            switch_device[usecase->id] = true;
+            need_switch = true;
+        }
+    }
+    if (need_switch) {
+        list_for_each(node, &adev->usecase_list) {
+            usecase = node_to_item(node, struct audio_usecase, adev_list_node);
+            usecase_snd_device = (type == PCM_PLAYBACK) ? usecase->out_snd_device :
+                                  usecase->in_snd_device;
+            if (switch_device[usecase->id]) {
+                disable_snd_device(adev, usecase, usecase_snd_device);
+                enable_snd_device(adev, usecase, snd_device);
+                if (type == PCM_PLAYBACK)
+                    usecase->out_snd_device = snd_device;
+                else
+                    usecase->in_snd_device = snd_device;
+            }
+        }
+    }
+}
+
 static int select_devices(struct audio_device *adev,
                           audio_usecase_t uc_id)
 {
@@ -1099,10 +1160,12 @@ static int select_devices(struct audio_device *adev,
             set_voice_session_audio_path(adev->voice.session);
         }
 
+        check_and_route_usecases(adev, usecase, PCM_PLAYBACK, out_snd_device);
         enable_snd_device(adev, usecase, out_snd_device);
     }
 
     if (in_snd_device != SND_DEVICE_NONE) {
+        check_and_route_usecases(adev, usecase, PCM_CAPTURE, in_snd_device);
         enable_snd_device(adev, usecase, in_snd_device);
     }
 
