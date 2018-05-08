@@ -2421,7 +2421,7 @@ static int out_open_pcm_devices(struct stream_out *out)
               __func__, pcm_device_card, pcm_device_id);
 
         pcm_device->pcm = pcm_open(pcm_device_card, pcm_device_id,
-                               PCM_OUT | PCM_MONOTONIC, &pcm_device->pcm_profile->config);
+                               PCM_OUT | PCM_MONOTONIC, &out->config);
 
         if (pcm_device->pcm && !pcm_is_ready(pcm_device->pcm)) {
             ALOGE("%s: %s", __func__, pcm_get_error(pcm_device->pcm));
