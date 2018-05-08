@@ -241,10 +241,6 @@ struct pcm_device {
     struct pcm_device_profile* pcm_profile;
     struct pcm*                pcm;
     int                        status;
-    /* TODO: remove resampler if possible when AudioFlinger supports downsampling from 48 to 8 */
-    struct resampler_itfe*     resampler;
-    int16_t*                   res_buffer;
-    size_t                     res_byte_count;
 };
 
 struct stream_out {
