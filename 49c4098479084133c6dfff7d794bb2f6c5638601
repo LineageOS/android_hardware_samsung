@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0d7a3a9_c01ee1c8",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2018-05-08T10:56:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"The LineageOS Project\"?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 64
+      },
+      "revId": "49c4098479084133c6dfff7d794bb2f6c5638601",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55fb30b9_4fd565a4",
+        "filename": "audio/audio_hw.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2018-05-08T10:56:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"The LineageOS Project\"?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 64
+      },
+      "revId": "49c4098479084133c6dfff7d794bb2f6c5638601",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
