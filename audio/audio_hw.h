@@ -333,13 +333,6 @@ struct stream_in {
     int16_t *ref_buf;
     size_t ref_buf_size;
     size_t ref_buf_frames;
-
-#ifdef HW_AEC_LOOPBACK
-    bool hw_echo_reference;
-    int16_t* hw_ref_buf;
-    size_t hw_ref_buf_size;
-#endif
-
     int num_preprocessors;
     struct effect_info_s preprocessors[MAX_PREPROCESSORS];
 
