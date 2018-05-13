@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bb324c7_2261abbf",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-05-13T18:10:02Z",
+      "side": 1,
+      "message": "nit: line length",
+      "range": {
+        "startLine": 1037,
+        "startChar": 80,
+        "endLine": 1037,
+        "endChar": 103
+      },
+      "revId": "edeca8df7fc2fb19dec416dab5f189acfadc6ab5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83df7ada_ea00b707",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-05-13T18:10:02Z",
+      "side": 1,
+      "message": "nit: line length",
+      "range": {
+        "startLine": 1049,
+        "startChar": 84,
+        "endLine": 1049,
+        "endChar": 107
+      },
+      "revId": "edeca8df7fc2fb19dec416dab5f189acfadc6ab5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
