@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e87b392_900099b8",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 6968
+      },
+      "writtenOn": "2018-05-18T04:59:24Z",
+      "side": 0,
+      "message": "out-\u003esample_rate always \u003d\u003d pcm_device-\u003epcm_profile-\u003econfig.rate because this configured in adev_open_out_stream - \nout-\u003esample_rate \u003d out-\u003econfig.rate; \n\nout-\u003econfig.rate \u003d pcm_profile-\u003econfig or pcm_device_deep_buffer.config.",
+      "range": {
+        "startLine": 2431,
+        "startChar": 8,
+        "endLine": 2431,
+        "endChar": 69
+      },
+      "revId": "39d1d019965d04ddfad2c643de53cd5501803aa4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
