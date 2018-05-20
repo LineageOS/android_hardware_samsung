@@ -72,7 +72,9 @@ static struct pcm_device_profile pcm_device_playback = {
     .id = SOUND_PLAYBACK_DEVICE,
     .type = PCM_PLAYBACK,
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
-               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE,
+               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|
+               AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
+               AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
 };
 
 static struct pcm_device_profile pcm_device_deep_buffer = {
@@ -90,7 +92,9 @@ static struct pcm_device_profile pcm_device_deep_buffer = {
     .id = SOUND_DEEP_BUFFER_DEVICE,
     .type = PCM_PLAYBACK,
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
-               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE,
+               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|
+               AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
+               AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
 };
 
 static struct pcm_device_profile pcm_device_capture = {
@@ -149,26 +153,6 @@ static struct pcm_device_profile pcm_device_capture_loopback_aec = {
 };
 #endif
 
-static struct pcm_device_profile pcm_device_playback_sco = {
-    .config = {
-        .channels = SCO_DEFAULT_CHANNEL_COUNT,
-        .rate = SCO_DEFAULT_SAMPLING_RATE,
-        .period_size = SCO_PERIOD_SIZE,
-        .period_count = SCO_PERIOD_COUNT,
-        .format = PCM_FORMAT_S16_LE,
-        .start_threshold = SCO_START_THRESHOLD,
-        .stop_threshold = SCO_STOP_THRESHOLD,
-        .silence_threshold = 0,
-        .avail_min = SCO_AVAILABLE_MIN,
-    },
-    .card = SOUND_CARD,
-    .id = SOUND_PLAYBACK_SCO_DEVICE,
-    .type = PCM_PLAYBACK,
-    .devices =
-            AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
-            AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
-};
-
 static struct pcm_device_profile pcm_device_capture_sco = {
     .config = {
         .channels = SCO_DEFAULT_CHANNEL_COUNT,
@@ -191,7 +175,6 @@ static struct pcm_device_profile * const pcm_devices[] = {
     &pcm_device_playback,
     &pcm_device_capture,
     &pcm_device_capture_low_latency,
-    &pcm_device_playback_sco,
     &pcm_device_capture_sco,
 #ifdef SOUND_CAPTURE_LOOPBACK_AEC_DEVICE
     &pcm_device_capture_loopback_aec,
