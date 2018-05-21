@@ -291,12 +291,6 @@ ssize_t out_write_offload(struct audio_stream_out *stream, const void *buffer,
         out->offload_state = OFFLOAD_STATE_PLAYING;
     }
     pthread_mutex_unlock(&out->lock);
-#ifdef PREPROCESSING_ENABLED
-    if (in) {
-        /* This mutex was left locked iff in != NULL */
-        pthread_mutex_unlock(&adev->lock_inputs);
-    }
-#endif
 
     return ret;
 }
