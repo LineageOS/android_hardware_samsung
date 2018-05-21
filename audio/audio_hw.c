@@ -1121,46 +1121,6 @@ static ssize_t read_frames(struct stream_in *in, void *buffer, ssize_t frames);
 static int do_in_standby_l(struct stream_in *in);
 
 #ifdef PREPROCESSING_ENABLED
-static void get_capture_reference_delay(struct stream_in *in,
-                              size_t frames __unused,
-                              struct echo_reference_buffer *buffer)
-{
-    ALOGVV("%s: enter:)", __func__);
-
-    /* read frames available in kernel driver buffer */
-    unsigned int kernel_frames;
-    struct timespec tstamp;
-    long buf_delay;
-    long kernel_delay;
-    long delay_ns;
-    struct pcm_device *ref_device;
-    long rsmp_delay = 0;
-
-    ref_device = node_to_item(list_tail(&in->pcm_dev_list),
-                              struct pcm_device, stream_list_node);
-
-    if (pcm_get_htimestamp(ref_device->pcm, &kernel_frames, &tstamp) < 0) {
-        buffer->time_stamp.tv_sec  = 0;
-        buffer->time_stamp.tv_nsec = 0;
-        buffer->delay_ns           = 0;
-        ALOGW("read get_capture_reference_delay(): pcm_htimestamp error");
-        return;
-    }
-
-    /* adjust render time stamp with delay added by current driver buffer.
-    * Add the duration of current frame as we want the render time of the last
-    * sample being written. */
-
-    kernel_delay = (long)(((int64_t)kernel_frames * 1000000000) / ref_device->pcm_profile->config.rate);
-
-    buffer->time_stamp = tstamp;
-    buffer->delay_ns = kernel_delay;
-
-    ALOGVV("get_capture_reference_delay_time_stamp Secs: [%10ld], nSecs: [%9ld], kernel_frames: [%5d],"
-          " delay_ns: [%d] , frames:[%zd]",
-           buffer->time_stamp.tv_sec , buffer->time_stamp.tv_nsec, kernel_frames, buffer->delay_ns, frames);
-}
-
 static void get_capture_delay(struct stream_in *in,
                               size_t frames __unused,
                               struct echo_reference_buffer *buffer)
@@ -1253,41 +1213,45 @@ static int32_t update_echo_reference(struct stream_in *in, size_t frames)
     return b.delay_ns;
 }
 
-static int set_preprocessor_param(effect_handle_t handle,
-                           effect_param_t *param)
+static int set_preprocessor_echo_delay(effect_handle_t handle,
+                                     int32_t delay_us)
 {
-    uint32_t size = sizeof(int);
-    uint32_t psize = ((param->psize - 1) / sizeof(int) + 1) * sizeof(int) +
-                        param->vsize;
+
+    uint32_t psize = sizeof(uint32_t);
+    uint32_t vsize = sizeof(uint32_t);
+    uint32_t size  = sizeof(int);
+
+    psize = ((psize - 1) / sizeof(int) + 1) * sizeof(int) +
+              vsize;
+
+    uint8_t *effect_param_buf = malloc(sizeof(effect_param_t) + psize);
+    if (!effect_param_buf) {
+        ALOGW("%s: cannot allocate effect_param_buf!", __func__);
+        return -ENOMEM;
+    }
+
+    memset(effect_param_buf, 0, sizeof(effect_param_t) + psize);
+
+    effect_param_t *effect_param = (effect_param_t*)effect_param_buf;
+    effect_param->psize = psize;
+    effect_param->vsize = vsize;
+
+    *(uint32_t*)(effect_param_buf + sizeof(effect_param_t)) = 
+        AEC_PARAM_ECHO_DELAY;
+
+    *(int32_t*)(effect_param_buf + sizeof(effect_param_t) + sizeof(uint32_t)) = 
+        delay_us;
 
     int status = (*handle)->command(handle,
                                    EFFECT_CMD_SET_PARAM,
                                    sizeof (effect_param_t) + psize,
-                                   param,
+                                   effect_param_buf,
                                    &size,
-                                   &param->status);
+                                   &effect_param->status);
     if (status == 0)
-        status = param->status;
+        status = effect_param->status;
 
     return status;
-}
-
-static int set_preprocessor_echo_delay(effect_handle_t handle,
-                                     int32_t delay_us)
-{
-    struct {
-        effect_param_t  param;
-        uint32_t        data_0;
-        int32_t         data_1;
-    } buf;
-    memset(&buf, 0, sizeof(buf));
-
-    buf.param.psize = sizeof(uint32_t);
-    buf.param.vsize = sizeof(uint32_t);
-    buf.data_0 = AEC_PARAM_ECHO_DELAY;
-    buf.data_1 = delay_us;
-
-    return set_preprocessor_param(handle, &buf.param);
 }
 
 static void push_echo_reference(struct stream_in *in, size_t frames)
@@ -1297,7 +1261,6 @@ static void push_echo_reference(struct stream_in *in, size_t frames)
      * in->ref_buf_frames is updated with frames available in in->ref_buf */
 
     int32_t delay_us = update_echo_reference(in, frames)/1000;
-    int32_t size_in_bytes = 0;
     int i;
     audio_buffer_t buf;
 
@@ -1390,7 +1353,6 @@ static int get_playback_delay(struct stream_out *out,
 {
     unsigned int kernel_frames;
     int status;
-    int primary_pcm = 0;
     struct pcm_device *pcm_device;
 
     pcm_device = node_to_item(list_head(&out->pcm_dev_list),
