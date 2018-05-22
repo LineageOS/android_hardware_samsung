@@ -756,16 +756,11 @@ static snd_device_t get_input_snd_device(struct audio_device *adev, audio_device
 
         /* BT SCO */
         if (out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-            snd_device = SND_DEVICE_IN_VOICE_MIC;
 
-            if (out_device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET) {
-                if (voice_session_uses_wideband(adev->voice.session)) {
+            if (voice_session_uses_wideband(adev->voice.session)) {
                     snd_device = SND_DEVICE_IN_VOICE_BT_SCO_MIC_WB;
-                } else {
+            } else {
                     snd_device = SND_DEVICE_IN_VOICE_BT_SCO_MIC;
-                }
-            } else if (voice_session_uses_twomic(adev->voice.session)) {
-                snd_device = SND_DEVICE_IN_VOICE_EARPIECE_MIC;
             }
         }
     } else if (source == AUDIO_SOURCE_CAMCORDER) {
