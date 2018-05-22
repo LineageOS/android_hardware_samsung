@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8b43a8a_adfde35d",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 9760
+      },
+      "writtenOn": "2018-05-22T05:22:27Z",
+      "side": 1,
+      "message": "error: use of undeclared identifier \u0027frame_size\u0027",
+      "revId": "06dc81a5a448f98afedfd34b8b7bf395264720cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
