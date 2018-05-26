@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b6644bf_acb3317e",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2018-05-26T05:40:41Z",
+      "side": 1,
+      "message": "what\u0027s the point of this? why not just psize +\u003d vsize? or even just change \u0027+ psize\u0027 to \u0027+ psize + vsize\u0027 on line 1288",
+      "revId": "e7372655793b8c5e4d8a7650b87e2d64bd36184e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b59bb57_4984077e",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 11604
+      },
+      "writtenOn": "2018-05-26T05:40:41Z",
+      "side": 1,
+      "message": "why not just keep the struct for this?",
+      "revId": "e7372655793b8c5e4d8a7650b87e2d64bd36184e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
