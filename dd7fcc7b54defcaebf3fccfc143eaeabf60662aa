@@ -16,6 +16,24 @@
       "revId": "dd7fcc7b54defcaebf3fccfc143eaeabf60662aa",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8042ffb_f5946d44",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1297,
+      "author": {
+        "id": 17868
+      },
+      "writtenOn": "2018-05-26T12:15:48Z",
+      "side": 0,
+      "message": "\u003e i\u0027m not sure that merging this function with set_preprocessor_echo_delay\n \u003e is really necessary - presumably there\u0027s a chance that at some\n \u003e point in the future we\u0027ll want to have more than just echo_delay?\n\nAgree, will rebase the change with a set_preprocessor_param in place",
+      "parentUuid": "47aadf74_0b50b20b",
+      "revId": "dd7fcc7b54defcaebf3fccfc143eaeabf60662aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }

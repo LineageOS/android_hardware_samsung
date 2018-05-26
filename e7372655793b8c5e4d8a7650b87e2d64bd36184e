@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5fd83f4_5e00d65d",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 17868
+      },
+      "writtenOn": "2018-05-26T12:15:48Z",
+      "side": 1,
+      "message": "EFFECT_CMD_SET_PARAM requires padded param tag field, see https://github.com/LineageOS/android_hardware_libhardware/blob/050200471390125a6c2ed9d255c330a8761c1072/include/hardware/audio_effect.h#L527 so this was used from initial flounder code",
+      "parentUuid": "2b6644bf_acb3317e",
+      "revId": "e7372655793b8c5e4d8a7650b87e2d64bd36184e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b59bb57_4984077e",
         "filename": "audio/audio_hw.c",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-05-26T05:40:41Z",
       "side": 1,
       "message": "why not just keep the struct for this?",
+      "revId": "e7372655793b8c5e4d8a7650b87e2d64bd36184e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e8b8be_f53336bd",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 17868
+      },
+      "writtenOn": "2018-05-26T12:15:48Z",
+      "side": 1,
+      "message": "Original struct issued a clang error as variable-size nested structures located not at the end of container structure is GNU extension. I decided to solve it with dynamic buffer.",
+      "parentUuid": "0b59bb57_4984077e",
       "revId": "e7372655793b8c5e4d8a7650b87e2d64bd36184e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
