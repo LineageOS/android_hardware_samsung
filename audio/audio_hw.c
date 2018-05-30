@@ -1075,11 +1075,8 @@ static int select_devices(struct audio_device *adev,
         if (vc_usecase == NULL) {
             ALOGE("%s: Could not find the voice call usecase", __func__);
         } else {
-            ALOGV("%s: in call, reusing devices (rx: %s, tx: %s)", __func__,
-                  get_snd_device_display_name(vc_usecase->out_snd_device),
-                  get_snd_device_display_name(vc_usecase->in_snd_device));
-            usecase->devices = vc_usecase->devices;
-            return 0;
+            in_snd_device = vc_usecase->in_snd_device;
+            out_snd_device = vc_usecase->out_snd_device;
         }
     }
 
