@@ -1248,7 +1248,8 @@ static void * RxReaderFunc(void *param) {
 
         RLOGV("[*] %s() b_connect=%d\n", __FUNCTION__, client_prv->b_connect);
         if (select(maxfd, &(client_prv->sock_rfds), NULL, NULL, NULL) > 0) {
-            if (FD_ISSET(client_prv->sock, &(client_prv->sock_rfds))) {
+            if ((client_prv->sock > 0) &&
+                     FD_ISSET(client_prv->sock, &(client_prv->sock_rfds))) {
                 // Read incoming data
                 for (;;) {
                     // loop until EAGAIN/EINTR, end of stream, or other error
