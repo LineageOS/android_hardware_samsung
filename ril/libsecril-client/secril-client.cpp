@@ -1248,6 +1248,21 @@ static void * RxReaderFunc(void *param) {
 
         RLOGV("[*] %s() b_connect=%d\n", __FUNCTION__, client_prv->b_connect);
         if (select(maxfd, &(client_prv->sock_rfds), NULL, NULL, NULL) > 0) {
+            // check if RIL connection is still up
+            if (!client_prv->b_connect) {
+                RLOGE("%s: lost connection after select()", __FUNCTION__);
+
+                if (client_prv->p_rs)
+                    record_stream_free(client_prv->p_rs);
+
+                // EOS
+                if (client_prv->err_cb) {
+                    client_prv->err_cb(client_prv->err_cb_data, RIL_CLIENT_ERR_CONNECT);
+                    return NULL;
+                }
+
+                break;
+            }
             if (FD_ISSET(client_prv->sock, &(client_prv->sock_rfds))) {
                 // Read incoming data
                 for (;;) {
