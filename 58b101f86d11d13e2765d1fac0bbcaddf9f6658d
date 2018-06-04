@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae1ef9b_7167658a",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2018-06-04T18:51:56Z",
+      "side": 1,
+      "message": "if client_prv-\u003esock is the problem, we should catch it here:\n\nif (client_prv-\u003esock \u003c\u003d 0)\n    return NULL;",
+      "revId": "58b101f86d11d13e2765d1fac0bbcaddf9f6658d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0865097b_902bc2f4",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 7155
+      },
+      "writtenOn": "2018-06-04T18:51:56Z",
+      "side": 1,
+      "message": "Why does this code SIGABRT?\nIs client_prv-\u003esock the problem or client_priv-\u003esocket_rfds?",
+      "revId": "58b101f86d11d13e2765d1fac0bbcaddf9f6658d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
