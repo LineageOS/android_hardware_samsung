@@ -1117,14 +1117,16 @@ static int SendOemRequestHookRaw(HRilClient client, int req_id, char *data, size
 
     ret = blockingWrite(client_prv->sock, (void *)&header, sizeof(header));
     if (ret < 0) {
-        RLOGE("%s: send request header failed. (%d)", __FUNCTION__, ret);
+        RLOGE("%s: send request header (req_id = %d) failed. (%d)", __FUNCTION__,
+                req_id, ret);
         goto error;
     }
 
     // Do TX: response data.
     ret = blockingWrite(client_prv->sock, p.data(), p.dataSize());
     if (ret < 0) {
-        RLOGE("%s: send request data failed. (%d)", __FUNCTION__, ret);
+        RLOGE("%s: send request data (req_id = %d) failed. (%d)", __FUNCTION__,
+                req_id, ret);
         goto error;
     }
 
