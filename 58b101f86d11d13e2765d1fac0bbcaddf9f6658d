@@ -51,6 +51,24 @@
       "revId": "58b101f86d11d13e2765d1fac0bbcaddf9f6658d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79cddacc_932b4cd3",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 17868
+      },
+      "writtenOn": "2018-06-10T18:19:14Z",
+      "side": 1,
+      "message": "The end of main log shows SetTwoMicControl() returns with rc\u003d7. Maybe there it is race condition between -\u003esock \u003d -1 and the Rx reader thread?\n\nAnyway we must sanitize all the places where sock is assigned to -1 with setting b_connect to 0.",
+      "parentUuid": "0865097b_902bc2f4",
+      "revId": "58b101f86d11d13e2765d1fac0bbcaddf9f6658d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
