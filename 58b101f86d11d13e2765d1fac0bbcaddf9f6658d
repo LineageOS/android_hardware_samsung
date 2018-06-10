@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67e84ee9_f1a2cae7",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 17868
+      },
+      "writtenOn": "2018-06-10T18:08:43Z",
+      "side": 1,
+      "message": "This works before entering a message loop",
+      "parentUuid": "cae1ef9b_7167658a",
+      "revId": "58b101f86d11d13e2765d1fac0bbcaddf9f6658d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0865097b_902bc2f4",
         "filename": "ril/libsecril-client/secril-client.cpp",
         "patchSetId": 1
