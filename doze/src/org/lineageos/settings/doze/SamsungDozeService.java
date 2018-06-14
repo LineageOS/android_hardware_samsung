@@ -30,6 +30,10 @@ import android.os.PowerManager;
 import android.os.UserHandle;
 import android.util.Log;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 public class SamsungDozeService extends Service {
     private static final String TAG = "SamsungDozeService";
     private static final boolean DEBUG = false;
@@ -39,6 +43,7 @@ public class SamsungDozeService extends Service {
     private static final int POCKET_DELTA_NS = 1000 * 1000 * 1000;
 
     private Context mContext;
+    private ExecutorService mExecutorService;
     private SamsungProximitySensor mSensor;
     private PowerManager mPowerManager;
 
@@ -55,6 +60,11 @@ public class SamsungDozeService extends Service {
         public SamsungProximitySensor(Context context) {
             mSensorManager = context.getSystemService(SensorManager.class);
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+            mExecutorService = Executors.newSingleThreadExecutor();
+        }
+
+        private Future<?> submit(Runnable runnable) {
+            return mExecutorService.submit(runnable);
         }
 
         @Override
@@ -92,11 +102,16 @@ public class SamsungDozeService extends Service {
         }
 
         public void enable() {
-            mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            submit(() -> {
+                mSensorManager.registerListener(this, mSensor,
+                        SensorManager.SENSOR_DELAY_NORMAL);
+            });
         }
 
         public void disable() {
-            mSensorManager.unregisterListener(this, mSensor);
+            submit(() -> {
+                mSensorManager.unregisterListener(this, mSensor);
+            });
         }
     }
 
