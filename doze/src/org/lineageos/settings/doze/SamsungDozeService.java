@@ -33,6 +33,10 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import java.lang.System;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -53,6 +57,7 @@ public class SamsungDozeService extends Service {
     private Context mContext;
     private SamsungProximitySensor mSensor;
     private PowerManager mPowerManager;
+    private ExecutorService mExecutorService;
 
     private boolean mHandwaveGestureEnabled = false;
     private boolean mPocketGestureEnabled = false;
@@ -68,6 +73,10 @@ public class SamsungDozeService extends Service {
         public SamsungProximitySensor(Context context) {
             mSensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
             mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+            mExecutorService = Executors.newSingleThreadExecutor();
+            }
+            private Future<?> submit(Runnable runnable) {
+            return mExecutorService.submit(runnable);
         }
 
         @Override
@@ -107,12 +116,17 @@ public class SamsungDozeService extends Service {
         public void testAndEnable() {
             if ((isDozeEnabled() && (mHandwaveGestureEnabled || mPocketGestureEnabled)) ||
                     mProximityWakeEnabled) {
-                mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+                 submit(() -> {
+                     mSensorManager.registerListener(this, mSensor,
+                         SensorManager.SENSOR_DELAY_NORMAL);
+                 });
             }
         }
 
         public void disable() {
-            mSensorManager.unregisterListener(this, mSensor);
+            submit(() -> {
+                mSensorManager.unregisterListener(this, mSensor);
+            });
         }
     }
 
