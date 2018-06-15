@@ -27,6 +27,11 @@
 #include <inttypes.h>
 #include <cutils/properties.h>
 
+#define ANDROID_ATOMIC_INLINE
+extern "C" {
+#include <cutils/atomic.h>
+}
+
 #define INVALID_HEX_CHAR 16
 
 // Enable verbose logging
