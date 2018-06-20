@@ -102,7 +102,6 @@ enum {
     SND_DEVICE_IN_CAMCORDER_MIC,
     SND_DEVICE_IN_VOICE_REC_HEADSET_MIC,
     SND_DEVICE_IN_VOICE_REC_MIC,
-    SND_DEVICE_IN_LOOPBACK_AEC,
     SND_DEVICE_IN_END,
 
     SND_DEVICE_MAX = SND_DEVICE_IN_END,
@@ -329,13 +328,6 @@ struct stream_in {
     int16_t *ref_buf;
     size_t ref_buf_size;
     size_t ref_buf_frames;
-
-#ifdef HW_AEC_LOOPBACK
-    bool hw_echo_reference;
-    int16_t* hw_ref_buf;
-    size_t hw_ref_buf_size;
-#endif
-
     int num_preprocessors;
     struct effect_info_s preprocessors[MAX_PREPROCESSORS];
 
