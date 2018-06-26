@@ -75,6 +75,7 @@ static struct pcm_device_profile pcm_device_playback = {
                AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|
                AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
                AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
+    .uc_id = USECASE_AUDIO_PLAYBACK,
 };
 
 static struct pcm_device_profile pcm_device_deep_buffer = {
@@ -95,6 +96,7 @@ static struct pcm_device_profile pcm_device_deep_buffer = {
                AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|
                AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
                AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
+    .uc_id = USECASE_AUDIO_PLAYBACK_DEEP_BUFFER,
 };
 
 static struct pcm_device_profile pcm_device_capture = {
@@ -113,6 +115,7 @@ static struct pcm_device_profile pcm_device_capture = {
     .id = SOUND_CAPTURE_DEVICE,
     .type = PCM_CAPTURE,
     .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC,
+    .uc_id = USECASE_AUDIO_CAPTURE,
 };
 
 static struct pcm_device_profile pcm_device_capture_low_latency = {
@@ -131,6 +134,7 @@ static struct pcm_device_profile pcm_device_capture_low_latency = {
     .id = SOUND_CAPTURE_DEVICE,
     .type = PCM_CAPTURE_LOW_LATENCY,
     .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC,
+    .uc_id = USECASE_AUDIO_CAPTURE,
 };
 
 static struct pcm_device_profile pcm_device_capture_sco = {
@@ -149,10 +153,12 @@ static struct pcm_device_profile pcm_device_capture_sco = {
     .id = SOUND_CAPTURE_SCO_DEVICE,
     .type = PCM_CAPTURE,
     .devices = AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET,
+    .uc_id = USECASE_AUDIO_BT_SCO,
 };
 
 static struct pcm_device_profile * const pcm_devices[] = {
     &pcm_device_playback,
+    &pcm_device_deep_buffer,
     &pcm_device_capture,
     &pcm_device_capture_low_latency,
     &pcm_device_capture_sco,
@@ -535,14 +541,13 @@ static const char *get_snd_device_display_name(snd_device_t snd_device)
     return name;
 }
 
-static struct pcm_device_profile *get_pcm_device(usecase_type_t uc_type, audio_devices_t devices)
+static struct pcm_device_profile *get_pcm_device(usecase_type_t uc_type, audio_usecase_t uc_id)
 {
     int i;
 
-    devices &= ~AUDIO_DEVICE_BIT_IN;
     for (i = 0; pcm_devices[i] != NULL; i++) {
         if ((pcm_devices[i]->type == uc_type) &&
-                (devices & pcm_devices[i]->devices))
+                (uc_id == pcm_devices[i]->uc_id))
             break;
     }
     return pcm_devices[i];
@@ -2030,7 +2035,7 @@ static int start_input_stream(struct stream_in *in)
 
     ALOGV("%s: enter: usecase(%d)", __func__, in->usecase);
     adev->active_input = in;
-    pcm_profile = get_pcm_device(in->usecase_type, in->devices);
+    pcm_profile = get_pcm_device(in->usecase_type, in->usecase);
     if (pcm_profile == NULL) {
         ALOGE("%s: Could not find PCM device id for the usecase(%d)",
               __func__, in->usecase);
@@ -2208,12 +2213,11 @@ static int uc_select_pcm_devices(struct audio_usecase *usecase)
     struct pcm_device *pcm_device;
     struct pcm_device_profile *pcm_profile;
     struct mixer_card *mixer_card;
-    audio_devices_t devices = usecase->devices;
 
     list_init(&usecase->mixer_list);
     list_init(&out->pcm_dev_list);
 
-    while ((pcm_profile = get_pcm_device(usecase->type, devices)) != NULL) {
+    if ((pcm_profile = get_pcm_device(usecase->type, usecase->id)) != NULL) {
         pcm_device = calloc(1, sizeof(struct pcm_device));
         if (pcm_device == NULL) {
             return -ENOMEM;
@@ -2225,7 +2229,6 @@ static int uc_select_pcm_devices(struct audio_usecase *usecase)
             mixer_card = adev_get_mixer_for_card(out->dev, pcm_profile->card);
             list_add_tail(&usecase->mixer_list, &mixer_card->uc_list_node[usecase->id]);
         }
-        devices &= ~pcm_profile->devices;
     }
 
     return 0;
@@ -2259,9 +2262,6 @@ static int out_open_pcm_devices(struct stream_out *out)
         pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
         pcm_device_card = pcm_device->pcm_profile->card;
         pcm_device_id = pcm_device->pcm_profile->id;
-
-        if (out->flags & AUDIO_OUTPUT_FLAG_DEEP_BUFFER)
-            pcm_device_id = pcm_device_deep_buffer.id;
 
         ALOGV("%s: Opening PCM device card_id(%d) device_id(%d)",
               __func__, pcm_device_card, pcm_device_id);
@@ -2492,7 +2492,7 @@ static size_t get_input_buffer_size(uint32_t sample_rate,
                                     audio_format_t format,
                                     int channel_count,
                                     usecase_type_t usecase_type,
-                                    audio_devices_t devices)
+                                    audio_usecase_t uc_id)
 {
     size_t size = 0;
     struct pcm_device_profile *pcm_profile;
@@ -2500,7 +2500,7 @@ static size_t get_input_buffer_size(uint32_t sample_rate,
     if (check_input_parameters(sample_rate, format, channel_count) != 0)
         return 0;
 
-    pcm_profile = get_pcm_device(usecase_type, devices);
+    pcm_profile = get_pcm_device(usecase_type, uc_id);
     if (pcm_profile == NULL)
         return 0;
 
@@ -3201,7 +3201,7 @@ static size_t in_get_buffer_size(const struct audio_stream *stream)
                                  in_get_format(stream),
                                  audio_channel_count_from_in_mask(in->main_channels),
                                  in->usecase_type,
-                                 in->devices);
+                                 in->usecase);
 }
 
 static int in_close_pcm_devices(struct stream_in *in)
@@ -3665,7 +3665,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
     out->supported_channel_masks[0] = AUDIO_CHANNEL_OUT_STEREO;
     out->handle = handle;
 
-    pcm_profile = get_pcm_device(PCM_PLAYBACK, devices);
+    pcm_profile = get_pcm_device(PCM_PLAYBACK, USECASE_AUDIO_PLAYBACK);
     if (pcm_profile == NULL) {
         ret = -EINVAL;
         goto error_open;
@@ -4034,7 +4034,7 @@ static size_t adev_get_input_buffer_size(const struct audio_hw_device *dev,
                                  config->format,
                                  audio_channel_count_from_in_mask(config->channel_mask),
                                  PCM_CAPTURE /* usecase_type */,
-                                 AUDIO_DEVICE_IN_BUILTIN_MIC);
+                                 USECASE_AUDIO_CAPTURE);
 }
 
 static int adev_open_input_stream(struct audio_hw_device *dev,
@@ -4059,14 +4059,14 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
 
     usecase_type_t usecase_type = flags & AUDIO_INPUT_FLAG_FAST ?
                         PCM_CAPTURE_LOW_LATENCY : PCM_CAPTURE;
-    pcm_profile = get_pcm_device(usecase_type, devices);
+    pcm_profile = get_pcm_device(usecase_type, USECASE_AUDIO_CAPTURE);
     if (pcm_profile == NULL && usecase_type == PCM_CAPTURE_LOW_LATENCY) {
         // a low latency profile may not exist for that device, fall back
         // to regular capture. the MixerThread automatically changes
         // to non-fast capture based on the buffer size.
         flags &= ~AUDIO_INPUT_FLAG_FAST;
         usecase_type = PCM_CAPTURE;
-        pcm_profile = get_pcm_device(usecase_type, devices);
+        pcm_profile = get_pcm_device(usecase_type, USECASE_AUDIO_CAPTURE);
     }
     if (pcm_profile == NULL)
         return -EINVAL;
