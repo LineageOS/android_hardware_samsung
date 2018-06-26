@@ -182,8 +182,13 @@ typedef enum {
     USECASE_AUDIO_PLAYBACK_OFFLOAD,
     USECASE_AUDIO_PLAYBACK_DEEP_BUFFER,
 
+    /* BT Use case*/
+    USECASE_AUDIO_BT_SCO,
+    USECASE_AUDIO_BT_SCO_WB,
+
     /* Capture usecases */
     USECASE_AUDIO_CAPTURE,
+    USECASE_AUDIO_CAPTURE_LOW_LATENCY,
 
     USECASE_VOICE_CALL,
     AUDIO_USECASE_MAX
@@ -218,7 +223,8 @@ typedef enum {
     PCM_PLAYBACK = 0x1,
     PCM_CAPTURE = 0x2,
     VOICE_CALL = 0x4,
-    PCM_CAPTURE_LOW_LATENCY = 0x10,
+    PCM_CAPTURE_LOW_LATENCY = 0x8,
+    PCM_BT_CALL = 0x10,
 } usecase_type_t;
 
 struct offload_cmd {
