@@ -239,6 +239,7 @@ struct pcm_device_profile {
     int               id;
     usecase_type_t    type;
     audio_devices_t   devices;
+    audio_usecase_t   uc_id;
 };
 
 struct pcm_device {
