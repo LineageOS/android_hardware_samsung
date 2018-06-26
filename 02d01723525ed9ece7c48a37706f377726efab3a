@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b64facb_49486040",
+        "filename": "audio/audio_hw.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 2264,
+      "author": {
+        "id": 6968
+      },
+      "writtenOn": "2018-06-26T08:36:27Z",
+      "side": 0,
+      "message": "not needed now.",
+      "range": {
+        "startLine": 2263,
+        "startChar": 8,
+        "endLine": 2264,
+        "endChar": 54
+      },
+      "revId": "02d01723525ed9ece7c48a37706f377726efab3a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
