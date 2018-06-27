@@ -225,6 +225,7 @@ static const struct string_to_enum out_channels_name_to_enum_table[] = {
 
 static struct audio_device *adev = NULL;
 
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
 static amplifier_device_t * get_amplifier_device(void)
 {
     if (adev)
@@ -352,6 +353,7 @@ static int amplifier_close(void)
 
     return 0;
 }
+#endif
 
 struct timespec time_spec_diff(struct timespec time1, struct timespec time0) {
     struct timespec ret;
@@ -947,7 +949,9 @@ static int enable_snd_device(struct audio_device *adev,
         }
 #endif /* DSP_POWEROFF_DELAY */
 
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
         amplifier_enable_devices(snd_device, true);
+#endif
 
         audio_route_apply_and_update_path(mixer_card->audio_route, snd_device_name);
     }
@@ -996,7 +1000,10 @@ int disable_snd_device(struct audio_device *adev,
                 audio_route_apply_and_update_path(mixer_card->audio_route, out_snd_device_name);
             }
 
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
             amplifier_enable_devices(snd_device, false);
+#endif
+
 #ifdef DSP_POWEROFF_DELAY
             clock_gettime(CLOCK_MONOTONIC, &(mixer_card->dsp_poweroff_time));
 #endif /* DSP_POWEROFF_DELAY */
@@ -1114,9 +1121,11 @@ static int select_devices(struct audio_device *adev,
     usecase->in_snd_device = in_snd_device;
     usecase->out_snd_device = out_snd_device;
 
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
     /* Rely on amplifier_set_devices to distinguish between in/out devices */
     amplifier_set_input_devices(in_snd_device);
     amplifier_set_output_devices(out_snd_device);
+#endif
 
     return 0;
 }
@@ -2778,7 +2787,9 @@ static int out_standby(struct audio_stream *stream)
     lock_output_stream(out);
     if (!out->standby) {
         pthread_mutex_lock(&adev->lock);
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
         amplifier_output_stream_standby((struct audio_stream_out *) stream);
+#endif
         do_out_standby_l(out);
         pthread_mutex_unlock(&adev->lock);
     }
@@ -2912,7 +2923,9 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
         pthread_mutex_unlock(&adev->lock_inputs);
     }
 
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
     amplifier_set_parameters(parms);
+#endif
 
     if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD) {
         parse_compress_metadata(out, parms);
@@ -3061,9 +3074,12 @@ static ssize_t out_write(struct audio_stream_out *stream, const void *buffer,
 #endif
         pthread_mutex_lock(&adev->lock);
         ret = start_output_stream(out);
+
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
         if (ret == 0) {
             amplifier_output_stream_start(stream, out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD);
         }
+#endif
 
         /* ToDo: If use case is compress offload should return 0 */
         if (ret != 0) {
@@ -3476,7 +3492,11 @@ static int in_standby_l(struct stream_in *in)
     lock_input_stream(in);
     if (!in->standby) {
         pthread_mutex_lock(&adev->lock);
+
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
         amplifier_input_stream_standby((struct audio_stream_in *) in);
+#endif
+
         status = do_in_standby_l(in);
         pthread_mutex_unlock(&adev->lock);
     }
@@ -3627,9 +3647,13 @@ static ssize_t in_read(struct audio_stream_in *stream, void *buffer,
         }
         pthread_mutex_lock(&adev->lock);
         ret = start_input_stream(in);
+
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
         if (ret == 0) {
             amplifier_input_stream_start(stream);
         }
+#endif
+
         pthread_mutex_unlock(&adev->lock);
         pthread_mutex_unlock(&adev->lock_inputs);
 
@@ -4195,9 +4219,12 @@ static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
     pthread_mutex_lock(&adev->lock);
     if (adev->mode != mode) {
         ALOGI("%s mode = %d", __func__, mode);
+
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
         if (amplifier_set_mode(mode) != 0) {
             ALOGE("Failed setting amplifier mode");
         }
+#endif
         adev->mode = mode;
 
         if ((mode == AUDIO_MODE_NORMAL) && adev->voice.in_call) {
@@ -4397,11 +4424,15 @@ static int adev_close(hw_device_t *device)
     struct audio_device *adev = (struct audio_device *)device;
     voice_session_deinit(adev->voice.session);
     audio_device_ref_count--;
+
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
     if (audio_device_ref_count == 0) {
         if (amplifier_close() != 0) {
             ALOGE("Amplifier close failed");
         }
     }
+#endif
+
     free(adev->snd_dev_ref_cnt);
     free_mixer_list(adev);
     free(device);
@@ -4520,9 +4551,11 @@ static int adev_open(const hw_module_t *module, const char *name,
         return -EINVAL;
     }
 
+#ifdef DEVICE_HAS_AMPLIFIER_SUPPORT
     if (amplifier_open() != 0) {
         ALOGE("Amplifier initialization failed");
     }
+#endif
 
     *device = &adev->device.common;
 
