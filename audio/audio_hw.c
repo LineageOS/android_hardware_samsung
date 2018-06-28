@@ -218,14 +218,14 @@ static int amplifier_open(void)
     rc = hw_get_module(AMPLIFIER_HARDWARE_MODULE_ID,
             (const hw_module_t **) &module);
     if (rc) {
-        ALOGV("%s: Failed to obtain reference to amplifier module: %s\n",
+        ALOGV("%s: Failed to obtain reference to amplifier module or amplifier absent: %s\n",
                 __func__, strerror(-rc));
         return -ENODEV;
     }
 
     rc = amplifier_device_open((const hw_module_t *) module, &adev->amp);
     if (rc) {
-        ALOGV("%s: Failed to open amplifier hardware device: %s\n",
+        ALOGV("%s: Failed to open amplifier hardware device or amplifier absent: %s\n",
                 __func__, strerror(-rc));
         return -ENODEV;
     }
