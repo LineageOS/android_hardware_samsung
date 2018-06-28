@@ -4356,10 +4356,7 @@ int radio::getAvailableNetworksResponse(int slotId,
 #if VDBG
     RLOGD("getAvailableNetworksResponse: serial %d", serial);
 #endif
-    int mqanelements;
-    char value[PROPERTY_VALUE_MAX];
-    property_get("ro.ril.telephony.mqanelements", value, "4");
-	mqanelements = atoi(value);
+    int mqanelements = property_get_int32("ro.ril.telephony.mqanelements", 4);
 
     if (radioService[slotId]->mRadioResponse != NULL) {
         RadioResponseInfo responseInfo = {};
