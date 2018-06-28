@@ -1943,7 +1943,7 @@ Return<void> RadioImpl::setInitialAttachApn(int32_t serial, const DataProfileInf
 
 #ifdef NEEDS_ROAMING_PROTOCOL_FIELD
         if (!copyHidlStringToRil(&iaa.roamingProtocol, dataProfileInfo.roamingProtocol, pRI)) {
-            memsetAndFreeStrings(4, iaa.apn, iaa.protocol, iaa.username, iaa.roamingProtocol);
+            memsetAndFreeStrings(4, iaa.apn, iaa.protocol, iaa.username, iaa.password);
             return Void();
         }
 #endif
@@ -1954,7 +1954,12 @@ Return<void> RadioImpl::setInitialAttachApn(int32_t serial, const DataProfileInf
 
         CALL_ONREQUEST(RIL_REQUEST_SET_INITIAL_ATTACH_APN, &iaa, sizeof(iaa), pRI, mSlotId);
 
+#ifdef NEEDS_ROAMING_PROTOCOL_FIELD
+        memsetAndFreeStrings(5, iaa.apn, iaa.protocol, iaa.username, iaa.password,
+                iaa.roamingProtocol);
+#else
         memsetAndFreeStrings(4, iaa.apn, iaa.protocol, iaa.username, iaa.password);
+#endif
     } else {
         RIL_InitialAttachApn_v15 iaa = {};
 
