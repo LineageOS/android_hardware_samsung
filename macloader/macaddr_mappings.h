@@ -54,6 +54,7 @@ static const struct company_range murata_ranges = {
         "10:a5:d0",
         "10:d5:42",
         "14:7d:c5",
+        "1c:70:22",
         "1c:99:4c",
         "20:02:af",
         "40:f3:08",
