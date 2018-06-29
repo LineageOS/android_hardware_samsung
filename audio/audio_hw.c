@@ -18,8 +18,8 @@
  */
 
 #define LOG_TAG "audio_hw_primary"
-/*#define LOG_NDEBUG 0*/
-/*#define VERY_VERY_VERBOSE_LOGGING*/
+#define LOG_NDEBUG 0
+#define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -50,6 +50,7 @@
 #include "audio_hw.h"
 #include "compress_offload.h"
 #include "voice.h"
+#include "sco.h"
 
 #include "sound/compress_params.h"
 
@@ -2710,8 +2711,8 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                        (out == adev->primary_output)) {
                 /* Turn on bluetooth if needed */
                 if ((out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && !bt_sco_active) {
-                    select_devices(adev, USECASE_VOICE_CALL);
-                    start_voice_session_bt_sco(adev->voice.session);
+                    //select_devices(adev, USECASE_VOICE_CALL);
+                    //start_voice_session_bt_sco(adev->voice.session);
                 } else {
                     /*
                      * When we select different devices we need to restart the
@@ -3906,6 +3907,8 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
         pthread_mutex_unlock(&adev->lock);
     }
 #endif /* SWAP_SPEAKER_ON_SCREEN_ROTATION */
+
+    audio_bt_sco_set_parameters(adev,parms);
 
     str_parms_destroy(parms);
 

@@ -25,7 +25,8 @@ LOCAL_SRC_FILES := \
 	audio_hw.c \
 	compress_offload.c \
 	ril_interface.c \
-	voice.c
+	voice.c \
+        sco.c
 
 # TODO: remove resampler if possible when AudioFlinger supports downsampling from 48 to 8
 LOCAL_SHARED_LIBRARIES := \
