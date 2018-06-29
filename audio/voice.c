@@ -266,7 +266,7 @@ int start_voice_session(struct voice_session *session)
     pcm_start(session->pcm_voice_tx);
 
     if (session->out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-        start_voice_session_bt_sco(session);
+        //start_voice_session_bt_sco(session);
     }
 
 #ifdef AUDIENCE_EARSMART_IC
@@ -312,7 +312,7 @@ void stop_voice_session(struct voice_session *session)
     }
 
     if (session->out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-        stop_voice_session_bt_sco(session);
+        //stop_voice_session_bt_sco(session);
     }
 
 #ifdef AUDIENCE_EARSMART_IC
