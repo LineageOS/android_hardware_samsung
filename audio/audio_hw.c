@@ -50,6 +50,7 @@
 #include "audio_hw.h"
 #include "compress_offload.h"
 #include "voice.h"
+#include "sco.h"
 
 #include "sound/compress_params.h"
 
@@ -3906,6 +3907,8 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
         pthread_mutex_unlock(&adev->lock);
     }
 #endif /* SWAP_SPEAKER_ON_SCREEN_ROTATION */
+
+    audio_bt_sco_set_parameters(adev,parms);
 
     str_parms_destroy(parms);
 

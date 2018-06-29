@@ -389,7 +389,8 @@ struct audio_device {
     bool                    screen_off;
 
     struct voice_data       voice;
-
+    struct pcm*             pcm_sco_rx;
+    struct pcm*             pcm_sco_tx;
     int*                    snd_dev_ref_cnt;
     struct listnode         usecase_list;
     bool                    speaker_lr_swap;
