@@ -1173,6 +1173,11 @@ static void get_capture_delay(struct stream_in *in,
     long delay_ns;
     struct pcm_device *pcm_device;
 
+    if (list_empty(&in->pcm_dev_list)) {
+        ALOGE("%s: pcm device list empty", __func__);
+        return;
+    }
+
     pcm_device = node_to_item(list_head(&in->pcm_dev_list),
                               struct pcm_device, stream_list_node);
 
@@ -1218,6 +1223,11 @@ static int32_t update_echo_reference(struct stream_in *in, size_t frames)
     struct echo_reference_buffer b;
     b.delay_ns = 0;
     struct pcm_device *pcm_device;
+
+    if (list_empty(&in->pcm_dev_list)) {
+        ALOGE("%s: pcm device list empty", __func__);
+        return b.delay_ns;
+    }
 
     pcm_device = node_to_item(list_head(&in->pcm_dev_list),
                               struct pcm_device, stream_list_node);
@@ -1446,6 +1456,11 @@ static int get_playback_delay(struct stream_out *out,
     unsigned int kernel_frames;
     int status;
     struct pcm_device *pcm_device;
+
+    if (list_empty(&out->pcm_dev_list)) {
+        ALOGE("%s: pcm device list empty", __func__);
+        return -EINVAL;
+    }
 
     pcm_device = node_to_item(list_head(&out->pcm_dev_list),
                               struct pcm_device, stream_list_node);
@@ -1946,7 +1961,7 @@ static int get_next_buffer(struct resampler_buffer_provider *buffer_provider,
         buffer->raw = NULL;
         buffer->frame_count = 0;
         in->read_status = -ENODEV;
-        return -ENODEV;
+        return in->read_status;
     }
 
     pcm_device = node_to_item(list_head(&in->pcm_dev_list),
@@ -2332,10 +2347,12 @@ static int uc_release_pcm_devices(struct audio_usecase *usecase)
     struct listnode *node;
     struct listnode *next;
 
-    list_for_each_safe(node, next, &out->pcm_dev_list) {
-        pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
-        list_remove(node);
-        free(pcm_device);
+    if (!list_empty(&out->pcm_dev_list)) {
+        list_for_each_safe(node, next, &out->pcm_dev_list) {
+            pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
+            list_remove(node);
+            free(pcm_device);
+        }
     }
     list_init(&usecase->mixer_list);
 
@@ -2377,11 +2394,14 @@ static int out_close_pcm_devices(struct stream_out *out)
     struct pcm_device *pcm_device;
     struct listnode *node;
 
-    list_for_each(node, &out->pcm_dev_list) {
-        pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
-        if (pcm_device->pcm) {
-            pcm_close(pcm_device->pcm);
-            pcm_device->pcm = NULL;
+    if (!list_empty(&out->pcm_dev_list)) {
+        list_for_each(node, &out->pcm_dev_list) {
+            pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
+            if (pcm_device->pcm) {
+                pcm_close(pcm_device->pcm);
+                pcm_close(pcm_device->pcm);
+                pcm_device->pcm = NULL;
+            }
         }
     }
 
@@ -2395,6 +2415,11 @@ static int out_open_pcm_devices(struct stream_out *out)
     int ret = 0;
     int pcm_device_card;
     int pcm_device_id;
+
+    if (list_empty(&out->pcm_dev_list)) {
+        ALOGE("%s: pcm device list empty", __func__);
+        return -EINVAL;
+    }
 
     list_for_each(node, &out->pcm_dev_list) {
         pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
@@ -3653,6 +3678,11 @@ static int in_get_capture_position(const struct audio_stream_in *stream,
     struct stream_in *in = (struct stream_in *)stream;
     struct pcm_device *pcm_device;
     int ret = -ENOSYS;
+
+    if (list_empty(&in->pcm_dev_list)) {
+        in->read_status = -ENODEV;
+        return in->read_status;
+    }
 
     pcm_device = node_to_item(list_head(&in->pcm_dev_list),
                               struct pcm_device, stream_list_node);
