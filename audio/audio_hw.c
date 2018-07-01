@@ -1176,6 +1176,11 @@ static int32_t update_echo_reference(struct stream_in *in, size_t frames)
     b.delay_ns = 0;
     struct pcm_device *pcm_device;
 
+    if (list_empty(&in->pcm_dev_list)) {
+        ALOGW("%s: pcm device list empty", __func__);
+        return b.delay_ns;
+    }
+
     pcm_device = node_to_item(list_head(&in->pcm_dev_list),
                               struct pcm_device, stream_list_node);
 
@@ -3478,6 +3483,11 @@ static int in_get_capture_position(const struct audio_stream_in *stream,
     struct stream_in *in = (struct stream_in *)stream;
     struct pcm_device *pcm_device;
     int ret = -ENOSYS;
+
+    if (list_empty(&in->pcm_dev_list)) {
+        ALOGW("%s: pcm device list empty", __func__);
+        return -ENODEV;
+    }
 
     pcm_device = node_to_item(list_head(&in->pcm_dev_list),
                               struct pcm_device, stream_list_node);
