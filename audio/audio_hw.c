@@ -1447,6 +1447,11 @@ static int get_playback_delay(struct stream_out *out,
     int status;
     struct pcm_device *pcm_device;
 
+    if (list_empty(&out->pcm_dev_list)) {
+        ALOGE("%s: pcm device list empty", __func__);
+        return -EINVAL;
+    }
+
     pcm_device = node_to_item(list_head(&out->pcm_dev_list),
                               struct pcm_device, stream_list_node);
 
@@ -2332,10 +2337,12 @@ static int uc_release_pcm_devices(struct audio_usecase *usecase)
     struct listnode *node;
     struct listnode *next;
 
-    list_for_each_safe(node, next, &out->pcm_dev_list) {
-        pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
-        list_remove(node);
-        free(pcm_device);
+    if (!list_empty(&out->pcm_dev_list)) {
+        list_for_each_safe(node, next, &out->pcm_dev_list) {
+            pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
+            list_remove(node);
+            free(pcm_device);
+        }
     }
     list_init(&usecase->mixer_list);
 
@@ -2377,11 +2384,14 @@ static int out_close_pcm_devices(struct stream_out *out)
     struct pcm_device *pcm_device;
     struct listnode *node;
 
-    list_for_each(node, &out->pcm_dev_list) {
-        pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
-        if (pcm_device->pcm) {
-            pcm_close(pcm_device->pcm);
-            pcm_device->pcm = NULL;
+    if (!list_empty(&out->pcm_dev_list)) {
+        list_for_each(node, &out->pcm_dev_list) {
+            pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
+            if (pcm_device->pcm) {
+                pcm_close(pcm_device->pcm);
+                pcm_close(pcm_device->pcm);
+                pcm_device->pcm = NULL;
+            }
         }
     }
 
@@ -2395,6 +2405,11 @@ static int out_open_pcm_devices(struct stream_out *out)
     int ret = 0;
     int pcm_device_card;
     int pcm_device_id;
+
+    if (list_empty(&out->pcm_dev_list)) {
+        ALOGE("%s: pcm device list empty", __func__);
+        return -EINVAL;
+    }
 
     list_for_each(node, &out->pcm_dev_list) {
         pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
