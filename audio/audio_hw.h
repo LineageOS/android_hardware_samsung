@@ -33,6 +33,8 @@
 #define RETRY_NUMBER 10
 #define RETRY_US 500000
 
+#define AUDIO_PARAMETER_BT_SCO      "BT_SCO"
+
 #ifdef __LP64__
 #define OFFLOAD_FX_LIBRARY_PATH "/system/lib64/soundfx/libnvvisualizer.so"
 #else
@@ -388,6 +390,13 @@ struct audio_device {
     struct stream_out*      primary_output;
     bool                    mic_mute;
     bool                    screen_off;
+
+    struct pcm*             pcm_sco_rx;
+    struct pcm*             pcm_sco_tx;
+
+
+    struct pcm*             pcm_voice_rx;
+    struct pcm*             pcm_voice_tx;
 
     struct voice_data       voice;
 

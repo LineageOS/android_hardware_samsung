@@ -47,7 +47,11 @@ void set_voice_session_volume(struct voice_session *session, float volume);
 void set_voice_session_audio_path(struct voice_session *session);
 void set_voice_session_mic_mute(struct voice_session *session, bool state);
 
-void start_voice_session_bt_sco(struct voice_session *session);
+void start_bt_sco(struct audio_device *adev);
+void stop_bt_sco(struct audio_device *adev);
+void start_voice_pcm(struct audio_device *adev);
+void stop_voice_pcm(struct audio_device *adev);
+
 
 bool voice_session_uses_twomic(struct voice_session *session);
 bool voice_session_uses_wideband(struct voice_session *session);
