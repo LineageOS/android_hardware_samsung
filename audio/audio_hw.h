@@ -109,6 +109,11 @@ enum {
 };
 
 
+#define AUDIO_DEVICE_OUT_ALL_CODEC_BACKEND \
+    (AUDIO_DEVICE_OUT_EARPIECE | AUDIO_DEVICE_OUT_SPEAKER | \
+     AUDIO_DEVICE_OUT_WIRED_HEADSET | AUDIO_DEVICE_OUT_WIRED_HEADPHONE)
+
+
 /*
  * tinyAlsa library interprets period size as number of frames
  * one frame = channel_count * sizeof (pcm sample)
@@ -190,6 +195,8 @@ typedef enum {
 } audio_usecase_t;
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
+
+const char * const use_case_table[AUDIO_USECASE_MAX];
 
 /*
  * tinyAlsa library interprets period size as number of frames
@@ -383,6 +390,12 @@ struct audio_device {
 
     struct voice_data       voice;
 
+    struct pcm              *pcm_voice_rx;
+    struct pcm              *pcm_voice_tx;
+
+    struct pcm              *pcm_sco_rx;
+    struct pcm              *pcm_sco_tx;
+
     int*                    snd_dev_ref_cnt;
     struct listnode         usecase_list;
     bool                    speaker_lr_swap;
@@ -413,5 +426,8 @@ struct audio_device {
  * stream_in mutex must always be before stream_out mutex
  * lock_inputs must be held in order to either close the input stream, or prevent closure.
  */
+
+int select_devices(struct audio_device *adev,
+                          audio_usecase_t uc_id);
 
 #endif // SAMSUNG_AUDIO_HW_H

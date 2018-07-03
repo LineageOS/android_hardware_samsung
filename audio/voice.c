@@ -16,7 +16,7 @@
 
 #define LOG_TAG "audio_hw_voice"
 #define LOG_NDEBUG 0
-/*#define VERY_VERY_VERBOSE_LOGGING*/
+#define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -55,19 +55,19 @@ static struct pcm_config pcm_config_voicecall_wideband = {
 };
 
 struct pcm_config pcm_config_voice_sco = {
-    .channels = 1,
-    .rate = SCO_DEFAULT_SAMPLING_RATE,
-    .period_size = SCO_PERIOD_SIZE,
-    .period_count = SCO_PERIOD_COUNT,
-    .format = PCM_FORMAT_S16_LE,
+        .channels = 2,
+        .rate = 8000,
+        .period_size = 2048,
+        .period_count = 6,
+        .format = PCM_FORMAT_S16_LE,
 };
 
 struct pcm_config pcm_config_voice_sco_wb = {
-    .channels = 1,
-    .rate = SCO_WB_SAMPLING_RATE,
-    .period_size = SCO_PERIOD_SIZE,
-    .period_count = SCO_PERIOD_COUNT,
-    .format = PCM_FORMAT_S16_LE,
+        .channels = 2,
+        .rate = 16000,
+        .period_size = 2048,
+        .period_count = 6,
+        .format = PCM_FORMAT_S16_LE,
 };
 
 /* Prototypes */
@@ -135,39 +135,113 @@ void prepare_voice_session(struct voice_session *session,
     }
 }
 
+void stop_voice_pcm(struct audio_device *adev) {
+    ALOGV("%s: Closing voice PCMs", __func__);
+
+    if (adev->pcm_voice_rx != NULL) {
+        pcm_stop(adev->pcm_voice_rx);
+        pcm_close(adev->pcm_voice_rx);
+        adev->pcm_voice_rx = NULL;
+    }
+
+    if (adev->pcm_voice_tx != NULL) {
+        pcm_stop(adev->pcm_voice_tx);
+        pcm_close(adev->pcm_voice_tx);
+        adev->pcm_voice_tx = NULL;
+    }
+}
+
+
+void start_voice_pcm(struct audio_device *adev)
+{
+    struct pcm_config *voice_config;
+
+    if (adev->pcm_voice_rx != NULL || adev->pcm_voice_tx != NULL) {
+        ALOGW("%s: voice PCMs already open - reopen!\n", __func__);
+        stop_voice_pcm(adev);
+    }
+
+    ALOGV("%s: Opening voice PCMs", __func__);
+
+    if (adev->voice.bluetooth_wb) {
+        ALOGV("%s: pcm_config wideband", __func__);
+        voice_config = &pcm_config_voicecall_wideband;
+    } else {
+        ALOGV("%s: pcm_config narrowband", __func__);
+        voice_config = &pcm_config_voicecall;
+    }
+
+    adev->pcm_voice_rx = pcm_open(SOUND_CARD,
+                                   SOUND_PLAYBACK_VOICE_DEVICE,
+                                   PCM_OUT,
+                                   voice_config);
+    if (pcm_prepare(adev->pcm_voice_rx)) {
+        ALOGE("%s: cannot open PCM voice RX stream: %s",
+              __func__, pcm_get_error(adev->pcm_voice_rx));
+        goto err_voice_rx;
+    }
+
+/*
+
+    adev->pcm_voice_tx = pcm_open(SOUND_CARD,
+                                   SOUND_CAPTURE_VOICE_DEVICE,
+                                   PCM_IN,
+                                   voice_config);
+    if (adev->pcm_voice_tx && !pcm_is_ready(adev->pcm_voice_tx)) {
+        ALOGE("%s: cannot open PCM voice TX stream: %s",
+              __func__, pcm_get_error(adev->pcm_voice_tx));
+        goto err_voice_tx;
+    }
+
+*/
+
+//    pcm_prepare(adev->pcm_voice_rx);
+//    pcm_prepare(adev->pcm_voice_tx);
+
+    return;
+
+//err_voice_tx:
+//    pcm_close(adev->pcm_voice_tx);
+//    adev->pcm_voice_tx = NULL;
+err_voice_rx:
+    pcm_close(adev->pcm_voice_rx);
+    adev->pcm_voice_rx = NULL;
+}
+
+
 /*
  * This must be called with the hw device mutex locked, OK to hold other
  * mutexes.
  */
-static void stop_voice_session_bt_sco(struct voice_session *session) {
+void stop_voice_session_bt_sco(struct audio_device *adev) {
     ALOGV("%s: Closing SCO PCMs", __func__);
 
-    if (session->pcm_sco_rx != NULL) {
-        pcm_stop(session->pcm_sco_rx);
-        pcm_close(session->pcm_sco_rx);
-        session->pcm_sco_rx = NULL;
+    if (adev->pcm_sco_rx != NULL) {
+        pcm_stop(adev->pcm_sco_rx);
+        pcm_close(adev->pcm_sco_rx);
+        adev->pcm_sco_rx = NULL;
     }
 
-    if (session->pcm_sco_tx != NULL) {
-        pcm_stop(session->pcm_sco_tx);
-        pcm_close(session->pcm_sco_tx);
-        session->pcm_sco_tx = NULL;
+    if (adev->pcm_sco_tx != NULL) {
+        pcm_stop(adev->pcm_sco_tx);
+        pcm_close(adev->pcm_sco_tx);
+        adev->pcm_sco_tx = NULL;
     }
 }
 
 /* must be called with the hw device mutex locked, OK to hold other mutexes */
-void start_voice_session_bt_sco(struct voice_session *session)
+void start_voice_session_bt_sco(struct audio_device *adev)
 {
     struct pcm_config *voice_sco_config;
 
-    if (session->pcm_sco_rx != NULL || session->pcm_sco_tx != NULL) {
-        ALOGW("%s: SCO PCMs already open!\n", __func__);
-        return;
+    if (adev->pcm_sco_rx != NULL || adev->pcm_sco_tx != NULL) {
+        ALOGW("%s: SCO PCMs already open - reopen!\n", __func__);
+        stop_voice_session_bt_sco(adev);
     }
 
     ALOGV("%s: Opening SCO PCMs", __func__);
 
-    if (session->vdata->bluetooth_wb) {
+    if (adev->voice.bluetooth_wb) {
         ALOGV("%s: pcm_config wideband", __func__);
         voice_sco_config = &pcm_config_voice_sco_wb;
     } else {
@@ -175,37 +249,40 @@ void start_voice_session_bt_sco(struct voice_session *session)
         voice_sco_config = &pcm_config_voice_sco;
     }
 
-    session->pcm_sco_rx = pcm_open(SOUND_CARD,
+    adev->pcm_sco_rx = pcm_open(SOUND_CARD,
                                    SOUND_PLAYBACK_SCO_DEVICE,
-                                   PCM_OUT|PCM_MONOTONIC,
+                                   PCM_OUT,
                                    voice_sco_config);
-    if (session->pcm_sco_rx != NULL && !pcm_is_ready(session->pcm_sco_rx)) {
+
+    if (adev->pcm_sco_rx != NULL && !pcm_is_ready(adev->pcm_sco_rx)) {
         ALOGE("%s: cannot open PCM SCO RX stream: %s",
-              __func__, pcm_get_error(session->pcm_sco_rx));
+              __func__, pcm_get_error(adev->pcm_sco_rx));
         goto err_sco_rx;
     }
 
-    session->pcm_sco_tx = pcm_open(SOUND_CARD,
+    adev->pcm_sco_tx = pcm_open(SOUND_CARD,
                                    SOUND_CAPTURE_SCO_DEVICE,
-                                   PCM_IN|PCM_MONOTONIC,
+                                   PCM_IN,
                                    voice_sco_config);
-    if (session->pcm_sco_tx && !pcm_is_ready(session->pcm_sco_tx)) {
+
+    if (adev->pcm_sco_tx && !pcm_is_ready(adev->pcm_sco_tx)) {
         ALOGE("%s: cannot open PCM SCO TX stream: %s",
-              __func__, pcm_get_error(session->pcm_sco_tx));
+              __func__, pcm_get_error(adev->pcm_sco_tx));
         goto err_sco_tx;
     }
 
-    pcm_start(session->pcm_sco_rx);
-    pcm_start(session->pcm_sco_tx);
+
+    pcm_start(adev->pcm_sco_rx);
+    pcm_start(adev->pcm_sco_tx);
 
     return;
 
 err_sco_tx:
-    pcm_close(session->pcm_sco_tx);
-    session->pcm_sco_tx = NULL;
+    pcm_close(adev->pcm_sco_tx);
+    adev->pcm_sco_tx = NULL;
 err_sco_rx:
-    pcm_close(session->pcm_sco_rx);
-    session->pcm_sco_rx = NULL;
+    pcm_close(adev->pcm_sco_rx);
+    adev->pcm_sco_rx = NULL;
 }
 /*
  * This function must be called with hw device mutex locked, OK to hold other
@@ -234,7 +311,7 @@ int start_voice_session(struct voice_session *session)
     /* Open modem PCM channels */
     session->pcm_voice_rx = pcm_open(SOUND_CARD,
                                      SOUND_PLAYBACK_VOICE_DEVICE,
-                                     PCM_OUT|PCM_MONOTONIC,
+                                     PCM_OUT,
                                      voice_config);
     if (session->pcm_voice_rx != NULL && !pcm_is_ready(session->pcm_voice_rx)) {
         ALOGE("%s: cannot open PCM voice RX stream: %s",
@@ -249,7 +326,7 @@ int start_voice_session(struct voice_session *session)
 
     session->pcm_voice_tx = pcm_open(SOUND_CARD,
                                      SOUND_CAPTURE_VOICE_DEVICE,
-                                     PCM_IN|PCM_MONOTONIC,
+                                     PCM_IN,
                                      voice_config);
     if (session->pcm_voice_tx != NULL && !pcm_is_ready(session->pcm_voice_tx)) {
         ALOGE("%s: cannot open PCM voice TX stream: %s",
@@ -264,10 +341,6 @@ int start_voice_session(struct voice_session *session)
 
     pcm_start(session->pcm_voice_rx);
     pcm_start(session->pcm_voice_tx);
-
-    if (session->out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-        start_voice_session_bt_sco(session);
-    }
 
 #ifdef AUDIENCE_EARSMART_IC
     ALOGV("%s: Enabling Audience IC", __func__);
@@ -309,10 +382,6 @@ void stop_voice_session(struct voice_session *session)
         pcm_close(session->pcm_voice_tx);
         session->pcm_voice_tx = NULL;
         status++;
-    }
-
-    if (session->out_device & AUDIO_DEVICE_OUT_ALL_SCO) {
-        stop_voice_session_bt_sco(session);
     }
 
 #ifdef AUDIENCE_EARSMART_IC
@@ -462,6 +531,22 @@ struct voice_session *voice_session_init(struct audio_device *adev)
     session->vdata = &adev->voice;
 
     return session;
+}
+
+void voice_update_devices_for_all_voice_usecases(struct audio_device *adev)
+{
+    struct listnode *node;
+    struct audio_usecase *usecase;
+
+    list_for_each(node, &adev->usecase_list) {
+        usecase = node_to_item(node, struct audio_usecase, adev_list_node);
+        if (usecase->type == VOICE_CALL) {
+            ALOGV("%s: updating device for usecase:%s", __func__,
+                  use_case_table[usecase->id]);
+            usecase->stream = (struct audio_stream *)adev->primary_output;
+            select_devices(adev, usecase->id);
+        }
+    }
 }
 
 void voice_session_deinit(struct voice_session *session)
