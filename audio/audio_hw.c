@@ -129,26 +129,6 @@ static struct pcm_device_profile pcm_device_capture_low_latency = {
     .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC,
 };
 
-#ifdef SOUND_CAPTURE_LOOPBACK_AEC_DEVICE
-static struct pcm_device_profile pcm_device_capture_loopback_aec = {
-    .config = {
-        .channels = CAPTURE_DEFAULT_CHANNEL_COUNT,
-        .rate = CAPTURE_DEFAULT_SAMPLING_RATE,
-        .period_size = CAPTURE_PERIOD_SIZE,
-        .period_count = CAPTURE_PERIOD_COUNT,
-        .format = PCM_FORMAT_S16_LE,
-        .start_threshold = CAPTURE_START_THRESHOLD,
-        .stop_threshold = 0,
-        .silence_threshold = 0,
-        .avail_min = 0,
-    },
-    .card = SOUND_CARD,
-    .id = SOUND_CAPTURE_LOOPBACK_AEC_DEVICE,
-    .type = PCM_CAPTURE,
-    .devices = SND_DEVICE_IN_LOOPBACK_AEC,
-};
-#endif
-
 static struct pcm_device_profile pcm_device_playback_sco = {
     .config = {
         .channels = SCO_DEFAULT_CHANNEL_COUNT,
@@ -193,9 +173,6 @@ static struct pcm_device_profile * const pcm_devices[] = {
     &pcm_device_capture_low_latency,
     &pcm_device_playback_sco,
     &pcm_device_capture_sco,
-#ifdef SOUND_CAPTURE_LOOPBACK_AEC_DEVICE
-    &pcm_device_capture_loopback_aec,
-#endif
     NULL,
 };
 
@@ -443,7 +420,6 @@ static const char * const device_table[SND_DEVICE_MAX] = {
     [SND_DEVICE_IN_CAMCORDER_MIC] = "camcorder-mic",
     [SND_DEVICE_IN_VOICE_REC_HEADSET_MIC] = "voice-rec-headset-mic",
     [SND_DEVICE_IN_VOICE_REC_MIC] = "voice-rec-mic",
-    [SND_DEVICE_IN_LOOPBACK_AEC] = "loopback-aec",
 };
 
 static struct mixer_card *adev_get_mixer_for_card(struct audio_device *adev, int card)
@@ -1389,55 +1365,6 @@ static struct echo_reference_itfe *get_echo_reference(struct audio_device *adev,
     return adev->echo_reference;
 }
 
-#ifdef HW_AEC_LOOPBACK
-static int get_hw_echo_reference(struct stream_in *in)
-{
-    struct pcm_device_profile *ref_pcm_profile;
-    struct pcm_device *ref_device;
-    struct audio_device *adev = in->dev;
-
-    in->hw_echo_reference = false;
-
-    if (adev->primary_output!= NULL &&
-        !adev->primary_output->standby &&
-        adev->primary_output->usecase == USECASE_AUDIO_PLAYBACK &&
-        adev->primary_output->devices == AUDIO_DEVICE_OUT_SPEAKER) {
-        struct audio_stream *stream = &adev->primary_output->stream.common;
-
-        // TODO: currently there is no low latency mode for aec reference.
-        ref_pcm_profile = get_pcm_device(PCM_CAPTURE, pcm_device_capture_loopback_aec.devices);
-        if (ref_pcm_profile == NULL) {
-            ALOGE("%s: Could not find PCM device id for the usecase(%d)",
-                __func__, pcm_device_capture_loopback_aec.devices);
-            return -EINVAL;
-        }
-
-        ref_device = (struct pcm_device *)calloc(1, sizeof(struct pcm_device));
-        if (ref_device == NULL) {
-            return -ENOMEM;
-        }
-        ref_device->pcm_profile = ref_pcm_profile;
-
-        ALOGV("%s: ref_device rate:%d, ch:%d", __func__, ref_pcm_profile->config.rate, ref_pcm_profile->config.channels);
-        ref_device->pcm = pcm_open(ref_device->pcm_profile->card, ref_device->pcm_profile->id, PCM_IN | PCM_MONOTONIC, &ref_device->pcm_profile->config);
-
-        if (ref_device->pcm && !pcm_is_ready(ref_device->pcm)) {
-           ALOGE("%s: %s", __func__, pcm_get_error(ref_device->pcm));
-           pcm_close(ref_device->pcm);
-          ref_device->pcm = NULL;
-          return -EIO;
-        }
-        list_add_tail(&in->pcm_dev_list, &ref_device->stream_list_node);
-
-        in->hw_echo_reference = true;
-
-        ALOGV("%s: hw_echo_reference is true", __func__);
-    }
-
-    return 0;
-}
-#endif
-
 static int get_playback_delay(struct stream_out *out,
                        size_t frames,
                        struct echo_reference_buffer *buffer)
@@ -1971,56 +1898,6 @@ static int get_next_buffer(struct resampler_buffer_provider *buffer_provider,
         }
         in->read_buf_frames = in->config.period_size;
 
-#ifdef PREPROCESSING_ENABLED
-#ifdef HW_AEC_LOOPBACK
-        if (in->hw_echo_reference) {
-            struct pcm_device *temp_device = NULL;
-            struct pcm_device *ref_device = NULL;
-            struct listnode *node = NULL;
-            struct echo_reference_buffer b;
-            size_t size_hw_ref_bytes;
-            size_t size_hw_ref_frames;
-            int read_status = 0;
-
-            ref_device = node_to_item(list_tail(&in->pcm_dev_list),
-                                      struct pcm_device, stream_list_node);
-            list_for_each(node, &in->pcm_dev_list) {
-                temp_device = node_to_item(node, struct pcm_device, stream_list_node);
-                if (temp_device->pcm_profile->id == 1) {
-                    ref_device = temp_device;
-                    break;
-                }
-            }
-            if (ref_device) {
-                size_hw_ref_bytes = pcm_frames_to_bytes(ref_device->pcm, ref_device->pcm_profile->config.period_size);
-                size_hw_ref_frames = ref_device->pcm_profile->config.period_size;
-                if (in->hw_ref_buf_size < size_hw_ref_frames) {
-                    in->hw_ref_buf_size = size_hw_ref_frames;
-                    in->hw_ref_buf = (int16_t *) realloc(in->hw_ref_buf, size_hw_ref_bytes);
-                    ALOG_ASSERT((in->hw_ref_buf != NULL),
-                                "get_next_buffer() failed to reallocate hw_ref_buf");
-                    ALOGV("get_next_buffer(): hw_ref_buf %p extended to %zd bytes",
-                          in->hw_ref_buf, size_hw_ref_bytes);
-                }
-
-                read_status = pcm_read(ref_device->pcm, (void*)in->hw_ref_buf, size_hw_ref_bytes);
-                if (read_status != 0) {
-                    ALOGE("process_frames() pcm_read error for HW reference %d", read_status);
-                    b.raw = NULL;
-                    b.frame_count = 0;
-                }
-                else {
-                    get_capture_reference_delay(in, size_hw_ref_frames, &b);
-                    b.raw = (void *)in->hw_ref_buf;
-                    b.frame_count = size_hw_ref_frames;
-                    if (b.delay_ns != 0)
-                        b.delay_ns = -b.delay_ns; // as this is capture delay, it needs to be subtracted from the microphone delay
-                    in->echo_reference->write(in->echo_reference, &b);
-                }
-            }
-        }
-#endif // HW_AEC_LOOPBACK
-#endif // PREPROCESSING_ENABLED
     }
 
     buffer->frame_count = (buffer->frame_count > in->read_buf_frames) ?
@@ -2138,13 +2015,6 @@ static int stop_input_stream(struct stream_in *in)
     in_release_pcm_devices(in);
     list_init(&in->pcm_dev_list);
 
-#ifdef HW_AEC_LOOPBACK
-    if (in->hw_echo_reference)
-    {
-        in->hw_echo_reference = false;
-    }
-#endif
-
     ALOGV("%s: exit", __func__);
     return 0;
 }
@@ -2245,16 +2115,6 @@ static int start_input_stream(struct stream_in *in)
                                                 );
     }
 
-#ifdef HW_AEC_LOOPBACK
-    if (in->enable_aec) {
-        ret = get_hw_echo_reference(in);
-        if (ret!=0)
-            goto error_open;
-
-        /* force ref buffer reallocation */
-        in->hw_ref_buf_size = 0;
-    }
-#endif
 #endif
 
     if (in->dev->voice.in_call) {
@@ -3442,15 +3302,6 @@ static int do_in_standby_l(struct stream_in *in)
             put_echo_reference(adev, in->echo_reference);
             in->echo_reference = NULL;
         }
-#ifdef HW_AEC_LOOPBACK
-        if (in->hw_echo_reference)
-        {
-            if (in->hw_ref_buf) {
-                free(in->hw_ref_buf);
-                in->hw_ref_buf = NULL;
-            }
-        }
-#endif  // HW_AEC_LOOPBACK
 #endif  // PREPROCESSING_ENABLED
 
         status = stop_input_stream(in);
