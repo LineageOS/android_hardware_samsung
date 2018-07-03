@@ -189,6 +189,8 @@ typedef enum {
     AUDIO_USECASE_MAX
 } audio_usecase_t;
 
+const char * const use_case_table[AUDIO_USECASE_MAX];
+
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 
 /*
@@ -376,12 +378,19 @@ struct audio_device {
     pthread_mutex_t         lock; /* see note below on mutex acquisition order */
     struct listnode         mixer_list;
     audio_mode_t            mode;
-    struct stream_in*       active_input;
-    struct stream_out*      primary_output;
+    struct stream_in        *active_input;
+    struct stream_out       *primary_output;
+    struct stream_out       *current_call_output;
     bool                    mic_mute;
     bool                    screen_off;
 
     struct voice_data       voice;
+
+    struct pcm              *pcm_voice_rx;
+    struct pcm              *pcm_voice_tx;
+
+    struct pcm              *pcm_sco_rx;
+    struct pcm              *pcm_sco_tx;
 
     int*                    snd_dev_ref_cnt;
     struct listnode         usecase_list;
@@ -406,6 +415,9 @@ struct audio_device {
     pthread_mutex_t         lock_inputs; /* see note below on mutex acquisition order */
     amplifier_device_t      *amp;
 };
+
+int select_devices(struct audio_device *adev, audio_usecase_t uc_id);
+
 
 /*
  * NOTE: when multiple mutexes have to be acquired, always take the
