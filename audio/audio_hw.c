@@ -18,8 +18,8 @@
  */
 
 #define LOG_TAG "audio_hw_primary"
-/*#define LOG_NDEBUG 0*/
-/*#define VERY_VERY_VERBOSE_LOGGING*/
+#define LOG_NDEBUG 0
+#define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -72,9 +72,7 @@ static struct pcm_device_profile pcm_device_playback = {
     .id = SOUND_PLAYBACK_DEVICE,
     .type = PCM_PLAYBACK,
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
-               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|
-               AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
-               AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
+               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|AUDIO_DEVICE_OUT_ALL_SCO,
 };
 
 static struct pcm_device_profile pcm_device_deep_buffer = {
@@ -92,9 +90,7 @@ static struct pcm_device_profile pcm_device_deep_buffer = {
     .id = SOUND_DEEP_BUFFER_DEVICE,
     .type = PCM_PLAYBACK,
     .devices = AUDIO_DEVICE_OUT_WIRED_HEADSET|AUDIO_DEVICE_OUT_WIRED_HEADPHONE|
-               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|
-               AUDIO_DEVICE_OUT_BLUETOOTH_SCO|AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET|
-               AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
+               AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_EARPIECE|AUDIO_DEVICE_OUT_ALL_SCO,
 };
 
 static struct pcm_device_profile pcm_device_capture = {
@@ -112,7 +108,7 @@ static struct pcm_device_profile pcm_device_capture = {
     .card = SOUND_CARD,
     .id = SOUND_CAPTURE_DEVICE,
     .type = PCM_CAPTURE,
-    .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC,
+    .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC|AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET,
 };
 
 static struct pcm_device_profile pcm_device_capture_low_latency = {
@@ -133,29 +129,10 @@ static struct pcm_device_profile pcm_device_capture_low_latency = {
     .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC,
 };
 
-static struct pcm_device_profile pcm_device_capture_sco = {
-    .config = {
-        .channels = SCO_DEFAULT_CHANNEL_COUNT,
-        .rate = SCO_DEFAULT_SAMPLING_RATE,
-        .period_size = SCO_PERIOD_SIZE,
-        .period_count = SCO_PERIOD_COUNT,
-        .format = PCM_FORMAT_S16_LE,
-        .start_threshold = CAPTURE_START_THRESHOLD,
-        .stop_threshold = 0,
-        .silence_threshold = 0,
-        .avail_min = 0,
-    },
-    .card = SOUND_CARD,
-    .id = SOUND_CAPTURE_SCO_DEVICE,
-    .type = PCM_CAPTURE,
-    .devices = AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET,
-};
-
 static struct pcm_device_profile * const pcm_devices[] = {
     &pcm_device_playback,
     &pcm_device_capture,
     &pcm_device_capture_low_latency,
-    &pcm_device_capture_sco,
     NULL,
 };
 
@@ -1938,8 +1915,6 @@ static ssize_t read_frames(struct stream_in *in, void *buffer, ssize_t frames)
 
     while (frames_wr < frames) {
         size_t frames_rd = frames - frames_wr;
-        ALOGVV("%s: frames_rd: %zd, frames_wr: %zd, in->config.channels: %d",
-               __func__,frames_rd,frames_wr,in->config.channels);
         if (in->resampler != NULL) {
             in->resampler->resample_from_provider(in->resampler,
                     (int16_t *)((char *)buffer +
@@ -2630,13 +2605,9 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
 {
     struct stream_out *out = (struct stream_out *)stream;
     struct audio_device *adev = out->dev;
-    struct listnode *node;
     struct str_parms *parms;
     char value[32];
     int ret, val = 0;
-    struct audio_usecase *uc_info;
-    bool do_standby = false;
-    struct pcm_device *pcm_device;
 #ifdef PREPROCESSING_ENABLED
     struct stream_in *in = NULL;    /* if non-NULL, then force input to standby */
 #endif
@@ -2671,6 +2642,7 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
         }
 #endif
         if (val != SND_DEVICE_NONE) {
+            bool devices_changed = out->devices != (audio_devices_t)val;
             bool bt_sco_active = false;
 
             if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
@@ -2679,28 +2651,20 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
             out->devices = val;
 
             if (!out->standby) {
-                uc_info = get_usecase_from_id(adev, out->usecase);
-                if (uc_info == NULL) {
-                    ALOGE("%s: Could not find the usecase (%d) in the list",
-                          __func__, out->usecase);
-                } else {
-                    list_for_each(node, &out->pcm_dev_list) {
-                        pcm_device = node_to_item(node, struct pcm_device, stream_list_node);
-                        if ((pcm_device->pcm_profile->devices & val) == 0)
-                            do_standby = true;
-                        val &= ~pcm_device->pcm_profile->devices;
-                    }
-                    if (val != 0)
-                        do_standby = true;
-                }
-                if (do_standby)
+                if (devices_changed)
                     do_out_standby_l(out);
                 else {
-                    if (out->usecase == USECASE_AUDIO_PLAYBACK_OFFLOAD)
-                        out_set_offload_parameters(adev, uc_info);
                     select_devices(adev, out->usecase);
                 }
             }
+
+            if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
+                start_voice_session_bt_sco(adev);
+            }
+            else {
+                stop_voice_session_bt_sco(adev);
+            }
+
 
             if ((adev->mode == AUDIO_MODE_IN_CALL) && !adev->voice.in_call &&
                     (out == adev->primary_output)) {
@@ -2708,11 +2672,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
             } else if ((adev->mode == AUDIO_MODE_IN_CALL) &&
                        adev->voice.in_call &&
                        (out == adev->primary_output)) {
-                /* Turn on bluetooth if needed */
-                if ((out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && !bt_sco_active) {
-                    select_devices(adev, USECASE_VOICE_CALL);
-                    start_voice_session_bt_sco(adev->voice.session);
-                } else {
                     /*
                      * When we select different devices we need to restart the
                      * voice call. The modem closes the stream on its end and
@@ -2720,7 +2679,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                      */
                     stop_voice_call(adev);
                     start_voice_call(adev);
-                }
             }
         }
 
@@ -2961,7 +2919,6 @@ false_alarm:
                     out->echo_reference->write(out->echo_reference, &b);
                  }
 #endif
-                ALOGVV("%s: writing buffer (%d bytes) to pcm device", __func__, bytes);
                 pcm_device->status = pcm_write(pcm_device->pcm, (void *)buffer, bytes);
                 if (pcm_device->status != 0)
                     ret = pcm_device->status;
