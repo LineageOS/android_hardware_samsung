@@ -381,6 +381,10 @@ struct audio_device {
     bool                    mic_mute;
     bool                    screen_off;
 
+    bool                    bt_sco_active;
+    struct pcm              *pcm_sco_rx;
+    struct pcm              *pcm_sco_tx;
+
     struct voice_data       voice;
 
     int*                    snd_dev_ref_cnt;
