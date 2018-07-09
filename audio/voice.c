@@ -153,6 +153,10 @@ void stop_voice_session_bt_sco(struct audio_device *adev) {
         pcm_close(adev->pcm_sco_tx);
         adev->pcm_sco_tx = NULL;
     }
+
+    /* audio codecs like wm5201 need open modem pcm while using bt sco */
+    if (adev->mode != AUDIO_MODE_IN_CALL)
+        stop_voice_session(adev->voice.session);
 }
 
 /* must be called with the hw device mutex locked, OK to hold other mutexes */
@@ -197,6 +201,10 @@ void start_voice_session_bt_sco(struct audio_device *adev)
 
     pcm_start(adev->pcm_sco_rx);
     pcm_start(adev->pcm_sco_tx);
+
+    /* audio codecs like wm5201 need open modem pcm while using bt sco */
+    if (adev->mode != AUDIO_MODE_IN_CALL)
+        start_voice_session(adev->voice.session);
 
     return;
 
