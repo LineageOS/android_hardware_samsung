@@ -133,29 +133,10 @@ static struct pcm_device_profile pcm_device_capture_low_latency = {
     .devices = AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_WIRED_HEADSET|AUDIO_DEVICE_IN_BACK_MIC,
 };
 
-static struct pcm_device_profile pcm_device_capture_sco = {
-    .config = {
-        .channels = SCO_DEFAULT_CHANNEL_COUNT,
-        .rate = SCO_DEFAULT_SAMPLING_RATE,
-        .period_size = SCO_PERIOD_SIZE,
-        .period_count = SCO_PERIOD_COUNT,
-        .format = PCM_FORMAT_S16_LE,
-        .start_threshold = CAPTURE_START_THRESHOLD,
-        .stop_threshold = 0,
-        .silence_threshold = 0,
-        .avail_min = 0,
-    },
-    .card = SOUND_CARD,
-    .id = SOUND_CAPTURE_SCO_DEVICE,
-    .type = PCM_CAPTURE,
-    .devices = AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET,
-};
-
 static struct pcm_device_profile * const pcm_devices[] = {
     &pcm_device_playback,
     &pcm_device_capture,
     &pcm_device_capture_low_latency,
-    &pcm_device_capture_sco,
     NULL,
 };
 
@@ -2671,11 +2652,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
         }
 #endif
         if (val != SND_DEVICE_NONE) {
-            bool bt_sco_active = false;
-
-            if (out->devices & AUDIO_DEVICE_OUT_ALL_SCO) {
-                bt_sco_active = true;
-            }
             out->devices = val;
 
             if (!out->standby) {
@@ -2702,17 +2678,22 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                 }
             }
 
+            /* Turn on bluetooth if needed */
+            if ((out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && !adev->bt_sco_active) {
+                adev->bt_sco_active = true;
+                start_voice_session_bt_sco(adev);
+            }
+            else if (!(out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && adev->bt_sco_active) {
+                adev->bt_sco_active = false;
+                stop_voice_session_bt_sco(adev);
+            }
+
             if ((adev->mode == AUDIO_MODE_IN_CALL) && !adev->voice.in_call &&
                     (out == adev->primary_output)) {
                 start_voice_call(adev);
             } else if ((adev->mode == AUDIO_MODE_IN_CALL) &&
                        adev->voice.in_call &&
                        (out == adev->primary_output)) {
-                /* Turn on bluetooth if needed */
-                if ((out->devices & AUDIO_DEVICE_OUT_ALL_SCO) && !bt_sco_active) {
-                    select_devices(adev, USECASE_VOICE_CALL);
-                    start_voice_session_bt_sco(adev->voice.session);
-                } else {
                     /*
                      * When we select different devices we need to restart the
                      * voice call. The modem closes the stream on its end and
@@ -2720,7 +2701,6 @@ static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
                      */
                     stop_voice_call(adev);
                     start_voice_call(adev);
-                }
             }
         }
 
@@ -4263,6 +4243,8 @@ static int adev_open(const hw_module_t *module, const char *name,
     adev->voice.bluetooth_nrec = true;
     adev->voice.in_call = false;
     adev->voice.bluetooth_wb = false;
+
+    adev->bt_sco_active = false;
 
     /* adev->cur_hdmi_channels = 0;  by calloc() */
     adev->snd_dev_ref_cnt = calloc(SND_DEVICE_MAX, sizeof(int));
