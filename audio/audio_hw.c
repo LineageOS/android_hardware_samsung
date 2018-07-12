@@ -2120,11 +2120,6 @@ static int start_input_stream(struct stream_in *in)
 
 #endif
 
-    if (in->dev->voice.in_call) {
-        ALOGV("%s: in_call, not handling PCMs", __func__);
-        goto skip_pcm_handling;
-    }
-
     /* Open the PCM device.
      * The HW is limited to support only the default pcm_profile settings.
      * As such a change in aux_channels will not have an effect.
@@ -2145,7 +2140,6 @@ static int start_input_stream(struct stream_in *in)
         goto error_open;
     }
 
-skip_pcm_handling:
     /* force read and proc buffer reallocation in case of frame size or
      * channel count change */
     in->proc_buf_frames = 0;
