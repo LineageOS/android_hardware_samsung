@@ -49,6 +49,11 @@ struct effect_info_s {
 };
 #endif
 
+#define AUDIO_DEVICE_OUT_ALL_CODEC_BACKEND \
+    (AUDIO_DEVICE_OUT_EARPIECE | AUDIO_DEVICE_OUT_SPEAKER | \
+     AUDIO_DEVICE_OUT_WIRED_HEADSET | AUDIO_DEVICE_OUT_WIRED_HEADPHONE)
+
+
 /* Sound devices specific to the platform
  * The DEVICE_OUT_* and DEVICE_IN_* should be mapped to these sound
  * devices to enable corresponding mixer paths
