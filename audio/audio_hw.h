@@ -33,6 +33,8 @@
 #define RETRY_NUMBER 10
 #define RETRY_US 500000
 
+#define MIXER_PATH_MAX_LENGTH 100
+
 #ifdef __LP64__
 #define OFFLOAD_FX_LIBRARY_PATH "/system/lib64/soundfx/libnvvisualizer.so"
 #else
@@ -410,6 +412,10 @@ struct audio_device {
     pthread_mutex_t         lock_inputs; /* see note below on mutex acquisition order */
     amplifier_device_t      *amp;
 };
+
+int enable_audio_route(struct audio_device *adev,
+                       struct audio_usecase *usecase);
+
 
 /*
  * NOTE: when multiple mutexes have to be acquired, always take the
