@@ -181,7 +181,7 @@ void start_voice_session_bt_sco(struct audio_device *adev)
 
     adev->pcm_sco_rx = pcm_open(SOUND_CARD,
                                    SOUND_PLAYBACK_SCO_DEVICE,
-                                   PCM_OUT|PCM_MONOTONIC,
+                                   PCM_OUT,
                                    voice_sco_config);
     if (adev->pcm_sco_rx != NULL && !pcm_is_ready(adev->pcm_sco_rx)) {
         ALOGE("%s: cannot open PCM SCO RX stream: %s",
@@ -191,7 +191,7 @@ void start_voice_session_bt_sco(struct audio_device *adev)
 
     adev->pcm_sco_tx = pcm_open(SOUND_CARD,
                                    SOUND_CAPTURE_SCO_DEVICE,
-                                   PCM_IN|PCM_MONOTONIC,
+                                   PCM_IN,
                                    voice_sco_config);
     if (adev->pcm_sco_tx && !pcm_is_ready(adev->pcm_sco_tx)) {
         ALOGE("%s: cannot open PCM SCO TX stream: %s",

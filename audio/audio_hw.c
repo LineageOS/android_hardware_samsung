@@ -18,8 +18,8 @@
  */
 
 #define LOG_TAG "audio_hw_primary"
-/*#define LOG_NDEBUG 0*/
-/*#define VERY_VERY_VERBOSE_LOGGING*/
+#define LOG_NDEBUG 0
+#define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -850,8 +850,8 @@ static int enable_snd_device(struct audio_device *adev,
         enable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES);
         return 0;
     }
-    adev->snd_dev_ref_cnt[snd_device]++;
-    if (adev->snd_dev_ref_cnt[snd_device] > 1) {
+
+    if (adev->snd_dev_ref_cnt[snd_device] >= 1) {
         ALOGV("%s: snd_device(%d: %s) is already active",
               __func__, snd_device, snd_device_name);
         return 0;
@@ -882,6 +882,7 @@ static int enable_snd_device(struct audio_device *adev,
         audio_route_apply_and_update_path(mixer_card->audio_route, snd_device_name);
     }
 
+    adev->snd_dev_ref_cnt[snd_device]++;
     return 0;
 }
 
@@ -1091,7 +1092,6 @@ static int select_devices(struct audio_device *adev,
         if (adev->voice.in_call) {
             set_voice_session_audio_path(adev->voice.session);
         }
-
         check_and_route_usecases(adev, usecase, PCM_PLAYBACK, out_snd_device);
         enable_snd_device(adev, usecase, out_snd_device);
     }
