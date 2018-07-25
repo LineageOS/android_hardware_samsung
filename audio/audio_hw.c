@@ -1091,8 +1091,8 @@ static int select_devices(struct audio_device *adev,
         if (adev->voice.in_call) {
             set_voice_session_audio_path(adev->voice.session);
         }
-
-        check_and_route_usecases(adev, usecase, PCM_PLAYBACK, out_snd_device);
+        if (usecase->devices & AUDIO_DEVICE_OUT_ALL_CODEC_BACKEND)
+            check_and_route_usecases(adev, usecase, PCM_PLAYBACK, out_snd_device);
         enable_snd_device(adev, usecase, out_snd_device);
     }
 
