@@ -411,6 +411,10 @@ struct audio_device {
     amplifier_device_t      *amp;
 };
 
+int enable_audio_route(struct audio_device *adev,
+                       struct audio_usecase *usecase);
+
+
 /*
  * NOTE: when multiple mutexes have to be acquired, always take the
  * lock_inputs, stream_in, stream_out, then audio_device mutex.
