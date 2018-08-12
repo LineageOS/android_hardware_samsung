@@ -15,6 +15,7 @@ LOCAL_SHARED_LIBRARIES := \
     liblog
 
 LOCAL_CFLAGS := 
+LOCAL_CFLAGS += -Wno-error
 
 LOCAL_MODULE:= libsecril-client-sap
 LOCAL_PRELINK_MODULE := false

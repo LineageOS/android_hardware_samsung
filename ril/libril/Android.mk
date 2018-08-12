@@ -58,6 +58,8 @@ ifeq ($(BOARD_NEEDS_IMS_TYPE_FIELD), true)
 LOCAL_CFLAGS += -DNEEDS_IMS_TYPE_FIELD
 endif
 
+LOCAL_CFLAGS += -Wno-error
+
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
 LOCAL_C_INCLUDES += external/nanopb-c
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../include

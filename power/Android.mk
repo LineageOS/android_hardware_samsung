@@ -18,6 +18,8 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+LOCAL_CFLAGS += -Wno-error
+
 LOCAL_SRC_FILES := power.c
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include

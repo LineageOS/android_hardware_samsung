@@ -23,6 +23,8 @@ ifneq ($(filter m7450 mdm9x35 ss333 xmm7260,$(BOARD_MODEM_TYPE)),)
 LOCAL_CFLAGS += -DSAMSUNG_NEXT_GEN_MODEM
 endif
 
+LOCAL_CFLAGS += -Wno-error
+
 LOCAL_MODULE:= libsecril-client
 LOCAL_PRELINK_MODULE := false
 
