@@ -114,11 +114,7 @@ RIL_RadioFunctions s_callbacks = {0, NULL, NULL, NULL, NULL, NULL};
 static int s_registerCalled = 0;
 
 static pthread_t s_tid_dispatch;
-static pthread_t s_tid_reader;
 static int s_started = 0;
-
-static int s_fdDebug = -1;
-static int s_fdDebug_socket2 = -1;
 
 static int s_fdWakeupRead;
 static int s_fdWakeupWrite;
@@ -128,7 +124,6 @@ int s_wakelock_count = 0;
 static struct ril_event s_wakeupfd_event;
 
 static pthread_mutex_t s_pendingRequestsMutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_mutex_t s_writeMutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t s_wakeLockCountMutex = PTHREAD_MUTEX_INITIALIZER;
 static RequestInfo *s_pendingRequests = NULL;
 
@@ -150,21 +145,10 @@ static pthread_mutex_t s_writeMutex_socket4            = PTHREAD_MUTEX_INITIALIZ
 static RequestInfo *s_pendingRequests_socket4          = NULL;
 #endif
 
-static struct ril_event s_wake_timeout_event;
-static struct ril_event s_debug_event;
-
-
 static const struct timeval TIMEVAL_WAKE_TIMEOUT = {ANDROID_WAKE_LOCK_SECS,ANDROID_WAKE_LOCK_USECS};
-
 
 static pthread_mutex_t s_startupMutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t s_startupCond = PTHREAD_COND_INITIALIZER;
-
-static pthread_mutex_t s_dispatchMutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t s_dispatchCond = PTHREAD_COND_INITIALIZER;
-
-static RequestInfo *s_toDispatchHead = NULL;
-static RequestInfo *s_toDispatchTail = NULL;
 
 static UserCallbackInfo *s_last_wake_timeout_info = NULL;
 
@@ -455,9 +439,6 @@ extern "C" void RIL_setcallbacks (const RIL_RadioFunctions *callbacks) {
 
 extern "C" void
 RIL_register (const RIL_RadioFunctions *callbacks) {
-    int ret;
-    int flags;
-
     RLOGI("SIM_COUNT: %d", SIM_COUNT);
 
     if (callbacks == NULL) {
@@ -602,9 +583,7 @@ checkAndDequeueRequestInfoIfAck(struct RequestInfo *pRI, bool isAck) {
 extern "C" void
 RIL_onRequestAck(RIL_Token t) {
     RequestInfo *pRI;
-    int ret;
 
-    size_t errorOffset;
     RIL_SOCKET_ID socket_id = RIL_SOCKET_1;
 
     pRI = (RequestInfo *)t;
@@ -638,7 +617,6 @@ extern "C" void
 RIL_onRequestComplete(RIL_Token t, RIL_Errno e, void *response, size_t responselen) {
     RequestInfo *pRI;
     int ret;
-    size_t errorOffset;
     RIL_SOCKET_ID socket_id = RIL_SOCKET_1;
 
     pRI = (RequestInfo *)t;
@@ -1016,7 +994,7 @@ failCauseToString(RIL_Errno e) {
         case RIL_E_SIM_FULL: return "E_SIM_FULL";
         case RIL_E_NETWORK_REJECT: return "E_NETWORK_REJECT";
         case RIL_E_OPERATION_NOT_ALLOWED: return "E_OPERATION_NOT_ALLOWED";
-        case RIL_E_EMPTY_RECORD: "E_EMPTY_RECORD";
+        case RIL_E_EMPTY_RECORD: return "E_EMPTY_RECORD";
         case RIL_E_INVALID_SMS_FORMAT: return "E_INVALID_SMS_FORMAT";
         case RIL_E_ENCODING_ERR: return "E_ENCODING_ERR";
         case RIL_E_INVALID_SMSC_ADDRESS: return "E_INVALID_SMSC_ADDRESS";
