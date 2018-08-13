@@ -181,7 +181,7 @@ void v4l2_overlay_dump_state(int fd)
 
 }
 
-int fimc_v4l2_query_buf(int fd, SecBuffer *secBuf, enum v4l2_buf_type type, enum v4l2_memory memory, int buf_index, int num_plane)
+int fimc_v4l2_query_buf(int fd, SecBuffer *secBuf, enum v4l2_buf_type type, enum v4l2_memory memory __unused, int buf_index, int num_plane)
 {
     struct v4l2_buffer buf;
     memset(&buf, 0, sizeof(struct v4l2_buffer));
@@ -691,8 +691,6 @@ err :
 
 bool SecFimc::destroy()
 {
-    s5p_fimc_params_t *params = &(mS5pFimc.params);
-
     if (mFlagCreate == false) {
         ALOGE("%s::Already Destroyed fail", __func__);
         return false;
@@ -1191,8 +1189,6 @@ bool SecFimc::setDstAddr(unsigned int physYAddr, unsigned int physCbAddr, unsign
 
 bool SecFimc::setRotVal(unsigned int rotVal)
 {
-    struct v4l2_control vc;
-
     if (mFlagCreate == false) {
         ALOGE("%s::Not yet created", __func__);
         return false;
@@ -1337,7 +1333,7 @@ bool SecFimc::setColorKey(bool enable, int colorKey)
     return true;
 }
 
-bool SecFimc::draw(int src_index, int dst_index)
+bool SecFimc::draw(int src_index, int dst_index __unused)
 {
 #ifdef DEBUG_LIB_FIMC
     ALOGD("%s", __func__);
@@ -1481,7 +1477,7 @@ bool SecFimc::m_streamOn()
 }
 
 bool SecFimc::m_checkSrcSize(unsigned int width, unsigned int height,
-                             unsigned int cropX, unsigned int cropY,
+                             unsigned int cropX __unused, unsigned int cropY __unused,
                              unsigned int *cropWidth, unsigned int *cropHeight,
                              int colorFormat,
                              bool forceChange)
@@ -1531,7 +1527,7 @@ bool SecFimc::m_checkSrcSize(unsigned int width, unsigned int height,
 }
 
 bool SecFimc::m_checkDstSize(unsigned int width, unsigned int height,
-                             unsigned int cropX, unsigned int cropY,
+                             unsigned int cropX __unused, unsigned int cropY __unused,
                              unsigned int *cropWidth, unsigned int *cropHeight,
                              int colorFormat, int rotVal,  bool forceChange)
 {

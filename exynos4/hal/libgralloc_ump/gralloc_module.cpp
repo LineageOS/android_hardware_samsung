@@ -32,6 +32,7 @@
 #include <errno.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <sys/mman.h>
 #include <cutils/log.h>
@@ -118,7 +119,7 @@ int release_rect(int secure_id)
 }
 #endif
 
-static int gralloc_map(gralloc_module_t const* module,
+static int gralloc_map(gralloc_module_t const* module __unused,
         buffer_handle_t handle, void** vaddr)
 {
     private_handle_t* hnd = (private_handle_t*)handle;
@@ -161,7 +162,7 @@ static int gralloc_map(gralloc_module_t const* module,
     return 0;
 }
 
-static int gralloc_unmap(gralloc_module_t const* module,
+static int gralloc_unmap(gralloc_module_t const* module __unused,
         buffer_handle_t handle)
 {
     private_handle_t* hnd = (private_handle_t*)handle;
@@ -374,8 +375,9 @@ static int gralloc_unregister_buffer(gralloc_module_t const* module, buffer_hand
     return 0;
 }
 
-static int gralloc_lock(gralloc_module_t const* module, buffer_handle_t handle,
-                        int usage, int l, int t, int w, int h, void** vaddr)
+static int gralloc_lock(gralloc_module_t const* module __unused, buffer_handle_t handle,
+                        int usage, int l __unused, int t __unused, int w __unused,
+                        int h __unused, void** vaddr)
 {
     int err = 0;
     if (private_handle_t::validate(handle) < 0) {

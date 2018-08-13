@@ -18,7 +18,7 @@ LOCAL_SRC_FILES := \
 LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE := libsecosal
 
-LOCAL_CFLAGS :=
+LOCAL_CFLAGS := -Wno-error
 
 ifeq ($(BOARD_USE_V4L2), false)
 ifeq ($(BOARD_USE_S3D_SUPPORT), true)

@@ -24,6 +24,7 @@
  *
  */
 
+#include <string.h>
 #include "SecHWCUtils.h"
 #define V4L2_BUF_TYPE_OUTPUT V4L2_BUF_TYPE_VIDEO_OUTPUT
 #define V4L2_BUF_TYPE_CAPTURE V4L2_BUF_TYPE_VIDEO_CAPTURE
@@ -84,9 +85,7 @@ struct yuv_fmt_list yuv_list[] = {
 
 int window_open(struct hwc_win_info_t *win, int id)
 {
-    int fd = 0;
     char name[64];
-    int vsync = 1;
     int real_id = id;
 
     char const * const device_template = "/dev/graphics/fb%u";
@@ -135,6 +134,8 @@ int window_open(struct hwc_win_info_t *win, int id)
     }
 
 #ifdef ENABLE_FIMD_VSYNC
+    int vsync = 1;
+
     if (ioctl(win->fd, S3CFB_SET_VSYNC_INT, &vsync) < 0) {
         SEC_HWC_Log(HWC_LOG_ERROR, "%s::S3CFB_SET_VSYNC_INT fail", __func__);
         goto error;
@@ -461,7 +462,7 @@ int fimc_v4l2_queue(int fd, struct fimc_buf *fimc_buf, enum v4l2_buf_type type, 
     return 0;
 }
 
-int fimc_v4l2_dequeue(int fd, struct fimc_buf *fimc_buf, enum v4l2_buf_type type)
+int fimc_v4l2_dequeue(int fd, struct fimc_buf *fimc_buf __unused, enum v4l2_buf_type type)
 {
     struct v4l2_buffer          buf;
 
@@ -516,7 +517,7 @@ int fimc_v4l2_S_ctrl(int fd)
     return 0;
 }
 
-int fimc_handle_oneshot(int fd, struct fimc_buf *fimc_src_buf, struct fimc_buf *fimc_dst_buf)
+int fimc_handle_oneshot(int fd, struct fimc_buf *fimc_src_buf, struct fimc_buf *fimc_dst_buf __unused)
 {
 #ifdef CHECK_FPS
     check_fps();

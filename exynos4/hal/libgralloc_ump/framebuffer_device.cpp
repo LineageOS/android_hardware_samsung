@@ -85,13 +85,13 @@ static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
                 0, 0, m->info.xres, m->info.yres, NULL);
 
         const size_t offset = hnd->base - m->framebuffer->base;
-        int interrupt;
         m->info.activate = FB_ACTIVATE_VBL;
         m->info.yoffset = offset / m->finfo.line_length;
 
 #ifdef STANDARD_LINUX_SCREEN
 #define FBIO_WAITFORVSYNC       _IOW('F', 0x20, __u32)
 #define S3CFB_SET_VSYNC_INT     _IOW('F', 206, unsigned int)
+        int interrupt;
         if (ioctl(m->framebuffer->fd, FBIOPAN_DISPLAY, &m->info) == -1) {
             ALOGE("FBIOPAN_DISPLAY failed");
             m->base.unlock(&m->base, buffer);
@@ -389,7 +389,7 @@ static int fb_close(struct hw_device_t *device)
     return 0;
 }
 
-int compositionComplete(struct framebuffer_device_t* dev)
+int compositionComplete(struct framebuffer_device_t* dev __unused)
 {
 #ifndef HWC_HWOVERLAY
     unsigned char pixels[4];
@@ -413,7 +413,7 @@ int compositionComplete(struct framebuffer_device_t* dev)
     return 0;
 }
 
-int framebuffer_device_open(hw_module_t const* module, const char* name, hw_device_t** device)
+int framebuffer_device_open(hw_module_t const* module, const char* name __unused, hw_device_t** device)
 {
     int status = -EINVAL;
 

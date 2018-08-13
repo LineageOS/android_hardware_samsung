@@ -14,7 +14,7 @@ LOCAL_SHARED_LIBRARIES := \
     libhardware_legacy \
     liblog
 
-LOCAL_CFLAGS := 
+LOCAL_CFLAGS := -Wno-error
 
 ifeq ($(TARGET_BOARD_PLATFORM),exynos4)
 LOCAL_CFLAGS += -DRIL_CALL_AUDIO_PATH_EXTRAVOLUME

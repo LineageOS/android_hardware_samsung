@@ -9,7 +9,7 @@ LOCAL_SRC_FILES := SEC_OMX_Component_Register.c \
 LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE := libSEC_OMX_Core
 
-LOCAL_CFLAGS :=
+LOCAL_CFLAGS := -Wno-error
 
 LOCAL_ARM_MODE := arm
 

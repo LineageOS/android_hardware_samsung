@@ -133,7 +133,7 @@ int api_jpeg_decode_init()
         return -1;
     }
     ALOGV("api_jpeg_decode_init jpeg_ctx->args.mmapped_addr 0x%08x\n",
-                                                jpeg_ctx->args.mmapped_addr);
+                                                (unsigned int)jpeg_ctx->args.mmapped_addr);
 #endif /* S5P_VMEM */
 
     return jpeg_ctx->jpeg_fd;
@@ -165,12 +165,12 @@ int api_jpeg_encode_init()
         return -1;
     }
     ALOGV("api_jpeg_encode_init jpeg_ctx->args.mmapped_addr 0x%08x\n",
-                                                jpeg_ctx->args.mmapped_addr);
+                                                (unsigned int)jpeg_ctx->args.mmapped_addr);
 #endif /* S5P_VMEM */
     return jpeg_ctx->jpeg_fd;
 }
 
-int api_jpeg_decode_deinit(int dev_fd)
+int api_jpeg_decode_deinit(int dev_fd __unused)
 {
     if (jpeg_ctx->args.mmapped_addr != NULL)
         munmap(jpeg_ctx->args.mmapped_addr, JPEG_TOTAL_BUF_SIZE);
@@ -191,7 +191,7 @@ int api_jpeg_decode_deinit(int dev_fd)
     return JPEG_OK;
 }
 
-int api_jpeg_encode_deinit(int dev_fd)
+int api_jpeg_encode_deinit(int dev_fd __unused)
 {
     if (jpeg_ctx->args.mmapped_addr != NULL)
         munmap(jpeg_ctx->args.mmapped_addr, JPEG_TOTAL_BUF_SIZE);
@@ -211,7 +211,7 @@ int api_jpeg_encode_deinit(int dev_fd)
     return JPEG_OK;
 }
 
-void *api_jpeg_get_decode_in_buf(int dev_fd, unsigned int size)
+void *api_jpeg_get_decode_in_buf(int dev_fd __unused, unsigned int size)
 {
     if (size < 0 || size > MAX_JPEG_RES) {
         ALOGE("Invalid decode input buffer size\r\n");
@@ -231,7 +231,7 @@ void *api_jpeg_get_decode_in_buf(int dev_fd, unsigned int size)
     return (void *)(jpeg_ctx->args.in_buf);
 }
 
-void *api_jpeg_get_encode_in_buf(int dev_fd, unsigned int size)
+void *api_jpeg_get_encode_in_buf(int dev_fd __unused, unsigned int size)
 {
 #ifdef S5P_VMEM
     jpeg_ctx->args.in_cookie = (unsigned int)ioctl(jpeg_ctx->jpeg_fd,
@@ -247,12 +247,12 @@ void *api_jpeg_get_encode_in_buf(int dev_fd, unsigned int size)
 #endif
 
     ALOGV("api_jpeg_get_encode_in_buf: 0x%x\n",
-                        jpeg_ctx->args.in_buf);
+                        (unsigned int)jpeg_ctx->args.in_buf);
 
     return (void *)(jpeg_ctx->args.in_buf);
 }
 
-void *api_jpeg_get_decode_out_buf(int dev_fd)
+void *api_jpeg_get_decode_out_buf(int dev_fd __unused)
 {
 #ifdef S5P_VMEM
     jpeg_ctx->args.out_cookie = (unsigned int)ioctl(jpeg_ctx->jpeg_fd,
@@ -272,7 +272,7 @@ void *api_jpeg_get_decode_out_buf(int dev_fd)
     return (void *)(jpeg_ctx->args.out_buf);
 }
 
-void *api_jpeg_get_encode_out_buf(int dev_fd)
+void *api_jpeg_get_encode_out_buf(int dev_fd __unused)
 {
 #ifdef S5P_VMEM
     jpeg_ctx->args.out_cookie = (unsigned int)ioctl(jpeg_ctx->jpeg_fd,
@@ -287,7 +287,7 @@ void *api_jpeg_get_encode_out_buf(int dev_fd)
 #endif /* S5P_VMEM */
 
     ALOGV("api_jpeg_get_encode_out_buf: 0x%x\n",
-                        jpeg_ctx->args.out_buf);
+                        (unsigned int)jpeg_ctx->args.out_buf);
 
     return (void *)(jpeg_ctx->args.out_buf);
 }
@@ -304,7 +304,7 @@ void api_jpeg_set_encode_param(struct jpeg_enc_param *param)
     ioctl(jpeg_ctx->jpeg_fd, IOCTL_SET_ENC_PARAM, jpeg_ctx->args.enc_param);
 }
 
-enum jpeg_ret_type api_jpeg_decode_exe(int dev_fd,
+enum jpeg_ret_type api_jpeg_decode_exe(int dev_fd __unused,
                                     struct jpeg_dec_param *dec_param)
 {
     struct jpeg_args *arg;
@@ -326,7 +326,7 @@ enum jpeg_ret_type api_jpeg_decode_exe(int dev_fd,
     return JPEG_DECODE_OK;
 }
 
-enum jpeg_ret_type api_jpeg_encode_exe(int dev_fd,
+enum jpeg_ret_type api_jpeg_encode_exe(int dev_fd __unused,
                                         struct jpeg_enc_param *enc_param)
 {
     struct jpeg_args     *arg;

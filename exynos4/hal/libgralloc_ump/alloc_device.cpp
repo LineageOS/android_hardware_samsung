@@ -523,7 +523,7 @@ static int alloc_device_close(struct hw_device_t *device)
     return 0;
 }
 
-int alloc_device_open(hw_module_t const* module, const char* name, hw_device_t** device)
+int alloc_device_open(hw_module_t const* module, const char* name __unused, hw_device_t** device)
 {
     alloc_device_t *dev;
 

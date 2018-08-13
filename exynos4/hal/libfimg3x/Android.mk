@@ -17,6 +17,8 @@ LOCAL_MODULE:= libfimg
 
 LOCAL_PRELINK_MODULE := false
 
+LOCAL_CFLAGS := -Wno-error
+
 include $(BUILD_SHARED_LIBRARY)
 
 endif

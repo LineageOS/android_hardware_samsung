@@ -176,7 +176,7 @@ ump_secure_id ump_arch_ion_import(int ion_fd, unsigned long *size, ump_alloc_con
     call_arg.size = *size;
     call_arg.constraints = (ump_uk_alloc_constraints)constraints;
 
-    UMP_DEBUG_PRINT(4, ("%s ion_fd=%d size=%x constraints=x", __func__, ion_fd, size, constraints));
+    UMP_DEBUG_PRINT(4, ("%s ion_fd=%d size=%lu constraints=%x", __func__, ion_fd, (unsigned long)size, constraints));
 
     if ( _UMP_OSU_ERR_OK != _ump_uku_ion_import(&call_arg) )
     {

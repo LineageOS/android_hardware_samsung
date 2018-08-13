@@ -30,6 +30,7 @@
 #include <EGL/egl.h>
 #include <fcntl.h>
 #include <hardware_legacy/uevent.h>
+#include <string.h>
 #include <sys/prctl.h>
 #include <sys/resource.h>
 

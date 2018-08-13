@@ -30,6 +30,7 @@ LOCAL_C_INCLUDES := \
 LOCAL_SRC_FILES := SecHWCLog.cpp SecHWCUtils.cpp SecHWC.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../libfimg
+LOCAL_CFLAGS += -Wno-error
 
 ifeq ($(TARGET_SOC),exynos4210)
 LOCAL_CFLAGS += -DSAMSUNG_EXYNOS4210

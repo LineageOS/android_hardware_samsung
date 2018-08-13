@@ -34,7 +34,7 @@ HardwareConverter::~HardwareConverter()
 {
     SecFimc* handle_fimc = (SecFimc*)mSecFimc;
     handle_fimc->destroy();
-    delete mSecFimc;
+    delete handle_fimc;
 }
 
 bool HardwareConverter::convert(
@@ -131,9 +131,11 @@ unsigned int HardwareConverter::OMXtoHarPixelFomrat(OMX_COLOR_FORMATTYPE omx_for
     case OMX_COLOR_FormatYUV420SemiPlanar:
         hal_format = HAL_PIXEL_FORMAT_YCbCr_420_SP;
         break;
+/*
     case OMX_SEC_COLOR_FormatNV12TPhysicalAddress:
         hal_format = HAL_PIXEL_FORMAT_CUSTOM_YCbCr_420_SP_TILED;
         break;
+*/
     default:
         hal_format = HAL_PIXEL_FORMAT_YCbCr_420_P;
         break;
