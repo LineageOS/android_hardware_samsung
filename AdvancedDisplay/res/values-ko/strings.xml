@@ -24,7 +24,17 @@
   <!-- mDNIe -->
   <string name="mdnie_scenario_title_head">시나리오</string>
   <string name="mdnie_scenario_summary_head">mDNIe 시나리오 설정</string>
+  <string name="mdnie_accessibility_title_head">접근성 모드</string>
+  <string name="mdnie_accessibility_summary_head">mDNIe 접근성 모드 설정</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_ui">LineageOS (기본값)</string>
+  <string name="mdnie_scenario_camera">카메라</string>
+  <string name="mdnie_scenario_navigation">내비게이션</string>
+  <string name="mdnie_scenario_gallery">갤러리</string>
+  <string name="mdnie_scenario_vt">영상 통화</string>
+  <string name="mdnie_scenario_browser">브라우저</string>
+  <string name="mdnie_scenario_ebook">전자책</string>
+  <string name="mdnie_scenario_email">이메일</string>
   <!-- Accessibility mode names -->
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

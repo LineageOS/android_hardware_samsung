@@ -25,6 +25,20 @@
   <string name="mdnie_scenario_title_head">Szenario</string>
   <string name="mdnie_scenario_summary_head">Wählen Sie das mDNIe-Szenario</string>
   <!-- Scenario names -->
+  <string name="mdnie_scenario_ui">LineageOS (Standard)</string>
+  <string name="mdnie_scenario_video">Video</string>
+  <string name="mdnie_scenario_video_warm">Videomodus (warm)</string>
+  <string name="mdnie_scenario_video_cold">Videomodus (kalt)</string>
+  <string name="mdnie_scenario_camera">Kamera</string>
+  <string name="mdnie_scenario_navigation">Navigation</string>
+  <string name="mdnie_scenario_gallery">Galerie</string>
+  <string name="mdnie_scenario_vt">Videoanruf</string>
+  <string name="mdnie_scenario_browser">Browser</string>
+  <string name="mdnie_scenario_ebook">E-Book</string>
+  <string name="mdnie_scenario_email">E-Mail</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Normal</string>
+  <string name="mdnie_accessibility_inverse">Invertiert</string>
+  <string name="mdnie_accessibility_grayscale">Grau</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
