@@ -24,7 +24,7 @@
 
 namespace sap {
 
-void registerService(RIL_RadioFunctions *callbacks);
+void registerService(const RIL_RadioFunctions *callbacks);
 void processResponse(MsgHeader *rsp, RilSapSocket *sapSocket);
 void processUnsolResponse(MsgHeader *rsp, RilSapSocket *sapSocket);
 

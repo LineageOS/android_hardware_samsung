@@ -16,7 +16,7 @@
 
 #define LOG_TAG "RIL_SAP"
 
-#include <android/hardware/radio/1.0/ISap.h>
+#include <android/hardware/radio/1.1/ISap.h>
 
 #include <hwbinder/IPCThreadState.h>
 #include <hwbinder/ProcessState.h>
@@ -42,7 +42,7 @@ sp<SapImpl> sapService[SIM_COUNT];
 sp<SapImpl> sapService[1];
 #endif
 
-struct SapImpl : public ISap {
+struct SapImpl : public android::hardware::radio::V1_1::ISap {
     int32_t slotId;
     sp<ISapCallback> sapCallback;
     RIL_SOCKET_ID rilSocketId;
@@ -106,11 +106,13 @@ MsgHeader* SapImpl::createMsgHeader(MsgId msgId, int32_t token) {
 
 Return<void> SapImpl::addPayloadAndDispatchRequest(MsgHeader *msg, uint16_t reqLen,
         uint8_t *reqPtr) {
-    msg->payload = (pb_bytes_array_t *)malloc(sizeof(pb_bytes_array_t) - 1 + reqLen);
-    if (msg->payload == NULL) {
+    pb_bytes_array_t *payload = (pb_bytes_array_t *) malloc(sizeof(pb_bytes_array_t) - 1 + reqLen);
+    if (payload == NULL) {
         sendFailedResponse(msg->id, msg->token, 2, reqPtr, msg);
         return Void();
     }
+
+    msg->payload = payload;
     msg->payload->size = reqLen;
     memcpy(msg->payload->bytes, reqPtr, reqLen);
 
@@ -120,7 +122,7 @@ Return<void> SapImpl::addPayloadAndDispatchRequest(MsgHeader *msg, uint16_t reqL
         sapSocket->dispatchRequest(msg);
     } else {
         RLOGE("SapImpl::addPayloadAndDispatchRequest: sapSocket is null");
-        sendFailedResponse(msg->id, msg->token, 3, msg->payload, reqPtr, msg);
+        sendFailedResponse(msg->id, msg->token, 3, payload, reqPtr, msg);
         return Void();
     }
     free(msg->payload);
@@ -775,6 +777,13 @@ void processResponse(MsgHeader *rsp, RilSapSocket *sapSocket, MsgType msgType) {
         return;
     }
 
+    if (messagePtr == NULL) {
+        RLOGE("processResponse: *messagePtr == NULL; msgId = %d; msgType = %d",
+                msgId, msgType);
+        sapImpl->sendFailedResponse(msgId, rsp->token, 0);
+        return;
+    }
+
     RLOGD("processResponse: sapCallback != NULL; msgId = %d; msgType = %d",
             msgId, msgType);
 
@@ -914,7 +923,7 @@ void sap::processUnsolResponse(MsgHeader *rsp, RilSapSocket *sapSocket) {
     processResponse(rsp, sapSocket, MsgType_UNSOL_RESPONSE);
 }
 
-void sap::registerService(RIL_RadioFunctions *callbacks) {
+void sap::registerService(const RIL_RadioFunctions *callbacks) {
     using namespace android::hardware;
     int simCount = 1;
     const char *serviceNames[] = {
