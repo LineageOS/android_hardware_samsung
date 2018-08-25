@@ -300,9 +300,13 @@ static int gralloc_register_buffer(gralloc_module_t const* module, buffer_handle
         ALOGE("Unable to register handle 0x%x coming from different process: %d", (unsigned int)hnd, hnd->pid );
         return 0;
     }
-
+sd
     if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_ION)
         err = gralloc_map(module, handle, &vaddr); */
+
+    if (hnd->flags & private_handle_t::PRIV_FLAGS_FRAMEBUFFER) {
+        return 0;
+    }
 
     pthread_mutex_lock(&s_map_lock);
 
@@ -318,7 +322,7 @@ static int gralloc_register_buffer(gralloc_module_t const* module, buffer_handle
 
     hnd->pid = getpid(); /* not in stock */
 
-    if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_UMP) {
+   if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_UMP) {
         hnd->ump_mem_handle = (int)ump_handle_create_from_secure_id(hnd->ump_id);
 
         ALOGD_IF(debug_level > 0, "%s PRIV_FLAGS_USES_UMP hnd->ump_mem_handle=%d(%x)", __func__, hnd->ump_mem_handle, hnd->ump_mem_handle);
@@ -406,6 +410,11 @@ static int gralloc_unregister_buffer(gralloc_module_t const* module, buffer_hand
     }
 
     private_handle_t* hnd = (private_handle_t*)handle;
+    if (hnd->flags & private_handle_t::PRIV_FLAGS_FRAMEBUFFER) {
+        hnd->base = 0;
+        return 0;
+    }
+
 #ifdef USE_PARTIAL_FLUSH
     if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_UMP)
         if (!release_rect((int)hnd->ump_id))
