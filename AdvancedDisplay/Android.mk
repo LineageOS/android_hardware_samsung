@@ -9,31 +9,24 @@ LOCAL_PACKAGE_NAME := AdvancedDisplay
 LOCAL_PRIVATE_PLATFORM_APIS := true
 LOCAL_CERTIFICATE := platform
 
-LOCAL_STATIC_JAVA_LIBRARIES := \
-    android-support-v4 \
-    android-support-v7-appcompat \
-    android-support-v7-preference \
-    android-support-v7-recyclerview \
-    android-support-v13 \
-    android-support-v14-preference \
-    org.lineageos.platform.internal
+LOCAL_USE_AAPT2 := true
 
-LOCAL_PROGUARD_FLAG_FILES := proguard.flags
+LOCAL_STATIC_ANDROID_LIBRARIES := \
+    android-support-v4 \
+    android-support-v7-recyclerview \
+    android-support-v7-preference \
+    android-support-v7-appcompat \
+    android-support-v13 \
+    android-support-v14-preference
+
+LOCAL_STATIC_JAVA_LIBRARIES := \
+    org.lineageos.platform.internal
 
 LOCAL_RESOURCE_DIR := \
     $(LOCAL_PATH)/res \
-    $(TOP)/packages/resources/devicesettings/res \
-    frameworks/support/v14/preference/res \
-    frameworks/support/v7/appcompat/res \
-    frameworks/support/v7/preference/res \
-    frameworks/support/v7/recyclerview/res
+    $(TOP)/packages/resources/devicesettings/res
 
-LOCAL_AAPT_FLAGS := \
-    --auto-add-overlay \
-    --extra-packages android.support.v14.preference \
-    --extra-packages android.support.v7.appcompat \
-    --extra-packages android.support.v7.preference \
-    --extra-packages android.support.v7.recyclerview
+LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
 include $(BUILD_PACKAGE)
 
