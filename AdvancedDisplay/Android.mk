@@ -23,9 +23,8 @@ LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 LOCAL_RESOURCE_DIR := \
     $(LOCAL_PATH)/res \
     $(TOP)/packages/resources/devicesettings/res \
-    frameworks/support/v14/preference/res \
+    frameworks/support/preference/res \
     frameworks/support/v7/appcompat/res \
-    frameworks/support/v7/preference/res \
     frameworks/support/v7/recyclerview/res
 
 LOCAL_AAPT_FLAGS := \
