@@ -41,6 +41,7 @@ endif
 
 LOCAL_CFLAGS  += \
 	-DDEFAULT_FB_NUM=$(DEFAULT_FB_NUM)
+LOCAL_CFLAGS += -Wno-error
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../include \
