@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d7e8f6_ed741f18",
+        "filename": "ril/libril/ril.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2018-08-26T09:35:30Z",
+      "side": 1,
+      "message": "this looks like something you should split out and push as separate change to 15.1.",
+      "range": {
+        "startLine": 997,
+        "startChar": 33,
+        "endLine": 997,
+        "endChar": 39
+      },
+      "revId": "db83a830832e5d47b5fbc1089f67aeaea800b53c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
