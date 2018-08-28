@@ -178,7 +178,6 @@ static int write_leds(const struct led_config *led)
 
     char blink[32];
     int count, err;
-    int color;
 
     if (led == NULL)
         led = &led_off;
