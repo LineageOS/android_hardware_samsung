@@ -76,6 +76,7 @@ static const struct company_range murata_ranges = {
         "b0:72:bf",
         "b8:d7:af",
         "c8:14:79",
+        "cc:c0:79",
         "d0:e4:4a",
         "d8:c4:6a",
         "dc:ef:ca",
