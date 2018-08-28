@@ -532,7 +532,6 @@ Return<void> SapImpl::setTransferProtocolReq(int32_t token, SapTransferProtocol 
 
 void *sapDecodeMessage(MsgId msgId, MsgType msgType, uint8_t *payloadPtr, size_t payloadLen) {
     void *responsePtr = NULL;
-    bool decodeStatus = false;
     pb_istream_t stream;
 
     /* Create the stream */
