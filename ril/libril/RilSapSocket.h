@@ -36,22 +36,6 @@
  */
 class RilSapSocket : public RilSocket {
     /**
-     * Function pointer to the ril initialization funtion.
-     *
-     * @param Ril environment variable with place request and
-     *        response handlers and timeout handler.
-     *
-     * @param Number of arguements for the initialization function.
-     *
-     * @param Arguements to the initialization function used to
-     *        generate instance id of the ril daemon.
-     *
-     * @return Radio functions with handlers for onRequest, onStateRequest,
-     *         supports, onCancel and getVersion.
-     */
-    RIL_RadioFunctions *(*UimInit)(const struct RIL_Env *, int argc, char **argv);
-
-    /**
      * Place holder for the radio functions returned by the initialization
      * function. Currenty only onRequest handler is being used.
      */
