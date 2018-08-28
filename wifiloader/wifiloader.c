@@ -111,7 +111,6 @@ int main(void)
     char buf[8] = { '\0' };
     FILE *fp;
     size_t r;
-    int fd;
     struct stat st;
 
     if (stat(WIFI_DRIVER_MODULE_PATH, &st) == 0) {
