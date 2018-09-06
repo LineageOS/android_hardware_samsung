@@ -72,6 +72,10 @@ enum power_profile_e {
 
 static enum power_profile_e current_power_profile = PROFILE_BALANCED;
 
+// Custom Lineage hints
+const static power_hint_t POWER_HINT_CPU_BOOST = (power_hint_t)0x00000110;
+const static power_hint_t POWER_HINT_SET_PROFILE = (power_hint_t)0x00000111;
+
 /**********************************************************
  *** HELPER FUNCTIONS
  **********************************************************/
