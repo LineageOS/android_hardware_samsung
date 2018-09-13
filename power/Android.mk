@@ -12,27 +12,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(TARGET_POWERHAL_VARIANT),samsung)
-
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES := power.c
-
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
-
-LOCAL_SHARED_LIBRARIES := liblog libcutils
-LOCAL_STATIC_LIBRARIES := liblights_helper
-
-LOCAL_MODULE := power.$(TARGET_BOOTLOADER_BOARD_NAME)
-LOCAL_MODULE_RELATIVE_PATH := hw
-LOCAL_MODULE_TAGS := optional
 
 ifneq ($(TARGET_TAP_TO_WAKE_NODE),)
     LOCAL_CFLAGS := -DTARGET_TAP_TO_WAKE_NODE=\"$(TARGET_TAP_TO_WAKE_NODE)\"
 endif
 
-include $(BUILD_SHARED_LIBRARY)
+LOCAL_CFLAGS += -Wall -Werror
 
-endif
+LOCAL_SRC_FILES := \
+    Power.cpp \
+    service.cpp \
+    power.c
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
+
+LOCAL_SHARED_LIBRARIES := \
+    liblog \
+    libcutils \
+    libdl \
+    libhidlbase \
+    libhidltransport \
+    libhardware \
+    libutils \
+    android.hardware.power@1.0 \
+    vendor.lineage.power@1.0
+
+LOCAL_STATIC_LIBRARIES := liblights_helper
+
+LOCAL_MODULE := android.hardware.power@1.0-service.samsung
+LOCAL_INIT_RC := android.hardware.power@1.0-service.samsung.rc
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_MODULE_TAGS := optional
+LOCAL_VENDOR_MODULE := true
+LOCAL_MODULE_OWNER := samsung
+include $(BUILD_EXECUTABLE)
