@@ -1,0 +1,4 @@
+service power-hal-1-0 /vendor/bin/hw/android.hardware.power@1.0-service.samsung
+    class hal
+    user system
+    group system
