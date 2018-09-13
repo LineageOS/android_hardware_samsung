@@ -52,9 +52,14 @@
 
 #define ARRAY_SIZE(a)     sizeof(a) / sizeof(a[0])
 
+enum power_profile_e {
+    PROFILE_POWER_SAVE = 0,
+    PROFILE_BALANCED,
+    PROFILE_HIGH_PERFORMANCE,
+    PROFILE_MAX
+};
+
 struct samsung_power_module {
-    struct power_module base;
-    pthread_mutex_t lock;
     int boost_fd;
     int boostpulse_fd;
     char hispeed_freqs[CLUSTER_COUNT][PARAM_MAXLEN];
@@ -63,20 +68,19 @@ struct samsung_power_module {
     char* touchkey_power_path;
 };
 
-enum power_profile_e {
-    PROFILE_POWER_SAVE = 0,
-    PROFILE_BALANCED,
-    PROFILE_HIGH_PERFORMANCE,
-    PROFILE_MAX
-};
+// Custom Lineage hints
+const static power_hint_t POWER_HINT_CPU_BOOST = (power_hint_t)0x00000110;
+const static power_hint_t POWER_HINT_SET_PROFILE = (power_hint_t)0x00000111;
 
 static enum power_profile_e current_power_profile = PROFILE_BALANCED;
+
+static struct samsung_power_module *samsung_pwr;
 
 /**********************************************************
  *** HELPER FUNCTIONS
  **********************************************************/
 
-static int sysfs_read(char *path, char *s, int num_bytes)
+int sysfs_read(char *path, char *s, int num_bytes)
 {
     char errno_str[64];
     int len;
@@ -111,7 +115,7 @@ static int sysfs_read(char *path, char *s, int num_bytes)
     return ret;
 }
 
-static void sysfs_write(const char *path, char *s)
+void sysfs_write(const char *path, char *s)
 {
     char errno_str[64];
     int len;
@@ -133,7 +137,7 @@ static void sysfs_write(const char *path, char *s)
     close(fd);
 }
 
-static void cpu_sysfs_read(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
+void cpu_sysfs_read(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
 {
     char path[PATH_MAX];
 
@@ -143,7 +147,7 @@ static void cpu_sysfs_read(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN
     }
 }
 
-static void cpu_sysfs_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
+void cpu_sysfs_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
 {
     char path[PATH_MAX];
 
@@ -153,7 +157,7 @@ static void cpu_sysfs_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLE
     }
 }
 
-static void cpu_interactive_read(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
+void cpu_interactive_read(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
 {
     char path[PATH_MAX];
 
@@ -163,7 +167,7 @@ static void cpu_interactive_read(const char *param, char s[CLUSTER_COUNT][PARAM_
     }
 }
 
-static void cpu_interactive_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
+void cpu_interactive_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
 {
     char path[PATH_MAX];
 
@@ -173,7 +177,7 @@ static void cpu_interactive_write(const char *param, char s[CLUSTER_COUNT][PARAM
     }
 }
 
-static void send_boost(int boost_fd, int32_t duration_us)
+void send_boost(int boost_fd, int32_t duration_us)
 {
     int len;
 
@@ -191,7 +195,7 @@ static void send_boost(int boost_fd, int32_t duration_us)
     len = write(boost_fd, "0", 1);
 }
 
-static void send_boostpulse(int boostpulse_fd)
+void send_boostpulse(int boostpulse_fd)
 {
     int len;
 
@@ -210,8 +214,7 @@ static void send_boostpulse(int boostpulse_fd)
  *** POWER FUNCTIONS
  **********************************************************/
 
-static void set_power_profile(struct samsung_power_module *samsung_pwr,
-                              int profile)
+void set_power_profile(int profile)
 {
     if (profile < 0 || profile >= PROFILE_MAX) {
         return;
@@ -249,7 +252,7 @@ static void set_power_profile(struct samsung_power_module *samsung_pwr,
     current_power_profile = profile;
 }
 
-static void find_input_nodes(struct samsung_power_module *samsung_pwr, char *dir)
+void find_input_nodes(char *dir)
 {
     const char filename[] = "name";
     char errno_str[64];
@@ -321,24 +324,24 @@ static void find_input_nodes(struct samsung_power_module *samsung_pwr, char *dir
  *** INIT FUNCTIONS
  **********************************************************/
 
-static void init_cpufreqs(struct samsung_power_module *samsung_pwr)
+void init_cpufreqs()
 {
     cpu_interactive_read(HISPEED_FREQ_PATH, samsung_pwr->hispeed_freqs);
     cpu_sysfs_read(MAX_FREQ_PATH, samsung_pwr->max_freqs);
 }
 
-static void init_touch_input_power_path(struct samsung_power_module *samsung_pwr)
+void init_touch_input_power_path()
 {
     char dir[1024];
     uint32_t i;
 
     for (i = 0; i < 20; i++) {
         snprintf(dir, sizeof(dir), "/sys/class/input/input%d", i);
-        find_input_nodes(samsung_pwr, dir);
+        find_input_nodes(dir);
     }
 }
 
-static void boost_open(struct samsung_power_module *samsung_pwr)
+void boost_open()
 {
     char path[PATH_MAX];
 
@@ -351,7 +354,7 @@ static void boost_open(struct samsung_power_module *samsung_pwr)
     }
 }
 
-static void boostpulse_open(struct samsung_power_module *samsung_pwr)
+void boostpulse_open()
 {
     char path[PATH_MAX];
 
@@ -364,19 +367,17 @@ static void boostpulse_open(struct samsung_power_module *samsung_pwr)
     }
 }
 
-static void samsung_power_init(struct power_module *module)
+void samsung_power_init()
 {
-    struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
-
-    init_cpufreqs(samsung_pwr);
+    init_cpufreqs();
 
     // keep interactive boost fds opened
-    boost_open(samsung_pwr);
-    boostpulse_open(samsung_pwr);
+    boost_open();
+    boostpulse_open();
 
     samsung_pwr->touchscreen_power_path = NULL;
     samsung_pwr->touchkey_power_path = NULL;
-    init_touch_input_power_path(samsung_pwr);
+    init_touch_input_power_path();
 
     ALOGI("Initialized settings:");
     char max_freqs[PATH_MAX];
@@ -405,13 +406,12 @@ static void samsung_power_init(struct power_module *module)
  *** Refer to power.h for documentation.
  **********************************************************/
 
-static void samsung_power_set_interactive(struct power_module *module, int on)
+void samsung_power_set_interactive(int on)
 {
-    struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
     int panel_brightness;
     char button_state[2];
     int rc;
-    static bool touchkeys_blocked = false;
+    bool touchkeys_blocked = false;
     char ON[CLUSTER_COUNT][PARAM_MAXLEN]  = {"1", "1"};
     char OFF[CLUSTER_COUNT][PARAM_MAXLEN] = {"0", "0"};
 
@@ -470,11 +470,8 @@ out:
     ALOGV("power_set_interactive: %d done", on);
 }
 
-static void samsung_power_hint(struct power_module *module,
-                                  power_hint_t hint,
-                                  void *data)
+void samsung_power_hint(power_hint_t hint, void *data)
 {
-    struct samsung_power_module *samsung_pwr = (struct samsung_power_module *) module;
 
     /* Bail out if low-power mode is active */
     if (current_power_profile == PROFILE_POWER_SAVE && hint != POWER_HINT_LOW_POWER
@@ -493,7 +490,7 @@ static void samsung_power_hint(struct power_module *module,
             break;
         case POWER_HINT_LOW_POWER:
             ALOGV("%s: POWER_HINT_LOW_POWER", __func__);
-            set_power_profile(samsung_pwr, data ? PROFILE_POWER_SAVE : PROFILE_BALANCED);
+            set_power_profile(data ? PROFILE_POWER_SAVE : PROFILE_BALANCED);
             break;
         case POWER_HINT_LAUNCH:
             ALOGV("%s: POWER_HINT_LAUNCH", __func__);
@@ -507,7 +504,7 @@ static void samsung_power_hint(struct power_module *module,
         case POWER_HINT_SET_PROFILE:
             ALOGV("%s: POWER_HINT_SET_PROFILE", __func__);
             int profile = *((intptr_t *)data);
-            set_power_profile(samsung_pwr, profile);
+            set_power_profile(profile);
             break;
         case POWER_HINT_DISABLE_TOUCH:
             ALOGV("%s: POWER_HINT_DISABLE_TOUCH", __func__);
@@ -519,17 +516,7 @@ static void samsung_power_hint(struct power_module *module,
     }
 }
 
-static int samsung_get_feature(struct power_module *module __unused,
-                               feature_t feature)
-{
-    if (feature == POWER_FEATURE_SUPPORTED_PROFILES) {
-        return PROFILE_MAX;
-    }
-
-    return -1;
-}
-
-static void samsung_set_feature(struct power_module *module __unused, feature_t feature, int state __unused)
+void samsung_set_feature(feature_t feature, int state __unused)
 {
     switch (feature) {
 #ifdef TARGET_TAP_TO_WAKE_NODE
@@ -543,29 +530,7 @@ static void samsung_set_feature(struct power_module *module __unused, feature_t 
     }
 }
 
-static struct hw_module_methods_t power_module_methods = {
-    .open = NULL,
-};
-
-struct samsung_power_module HAL_MODULE_INFO_SYM = {
-    .base = {
-        .common = {
-            .tag = HARDWARE_MODULE_TAG,
-            .module_api_version = POWER_MODULE_API_VERSION_0_2,
-            .hal_api_version = HARDWARE_HAL_API_VERSION,
-            .id = POWER_HARDWARE_MODULE_ID,
-            .name = "Samsung Power HAL",
-            .author = "The LineageOS Project",
-            .methods = &power_module_methods,
-        },
-
-        .init = samsung_power_init,
-        .setInteractive = samsung_power_set_interactive,
-        .powerHint = samsung_power_hint,
-        .getFeature = samsung_get_feature,
-        .setFeature = samsung_set_feature
-    },
-
-    .lock = PTHREAD_MUTEX_INITIALIZER,
-    .boostpulse_fd = -1,
-};
+int get_number_of_profiles()
+{
+    return PROFILE_MAX;
+}
