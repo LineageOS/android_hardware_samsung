@@ -126,7 +126,9 @@ void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz)
     uint32_t version = DTBH_VERSION;
     unsigned blob_sz = 0;
     char fname[PATH_MAX];
+#ifdef DTBH_MODEL
     const unsigned *model;
+#endif
     const unsigned *prop_chip;
     const unsigned *prop_platform;
     const unsigned *prop_subtype;
