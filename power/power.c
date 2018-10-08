@@ -412,8 +412,15 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     char button_state[2];
     int rc;
     static bool touchkeys_blocked = false;
-    char ON[CLUSTER_COUNT][PARAM_MAXLEN]  = {"1", "1"};
-    char OFF[CLUSTER_COUNT][PARAM_MAXLEN] = {"0", "0"};
+
+#define INITIALIZE_CLUSTER_STATE(_name, _value) \
+    char _name[CLUSTER_COUNT][PARAM_MAXLEN] = {}; \
+    for (unsigned int i = 0; i < CLUSTER_COUNT; i++) { \
+        strcpy(_name[i], _value); \
+    }
+
+    INITIALIZE_CLUSTER_STATE(ON, "1");
+    INITIALIZE_CLUSTER_STATE(OFF, "0");
 
     ALOGV("power_set_interactive: %d", on);
 
