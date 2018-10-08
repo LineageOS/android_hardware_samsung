@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db99012_0da63972",
+        "filename": "power/power.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2018-10-08T10:07:17Z",
+      "side": 1,
+      "message": "should i use strncpy(_name[i], _value, PARAM_MAXLEN); here instead?",
+      "range": {
+        "startLine": 419,
+        "startChar": 8,
+        "endLine": 419,
+        "endChar": 33
+      },
+      "revId": "f4860345410434a914ccb7f2c1fe81cb523e7d40",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
