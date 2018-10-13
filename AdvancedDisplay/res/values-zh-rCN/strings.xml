@@ -43,7 +43,7 @@
   <string name="mdnie_accessibility_normal">普通</string>
   <string name="mdnie_accessibility_inverse">反色</string>
   <string name="mdnie_accessibility_color_blind">色盲模式</string>
-  <string name="mdnie_accessibility_screen_curtain">屏幕遮蔽</string>
+  <string name="mdnie_accessibility_screen_curtain">屏幕遮罩</string>
   <string name="mdnie_accessibility_grayscale">灰度</string>
   <string name="mdnie_accessibility_gray_negative">反色灰度</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->

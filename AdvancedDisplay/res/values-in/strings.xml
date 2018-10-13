@@ -24,13 +24,23 @@
   <!-- mDNIe -->
   <string name="mdnie_scenario_title_head">Skenario</string>
   <string name="mdnie_scenario_summary_head">Setel skenario mDNIe</string>
+  <string name="mdnie_accessibility_title_head">Modus aksesibilitas</string>
   <!-- Scenario names -->
   <string name="mdnie_scenario_ui">LineageOS (standar)</string>
   <string name="mdnie_scenario_video">Video</string>
+  <string name="mdnie_scenario_video_warm">Video (warna hangat)</string>
+  <string name="mdnie_scenario_video_cold">Video (warna sejuk)</string>
   <string name="mdnie_scenario_camera">Kamera</string>
   <string name="mdnie_scenario_navigation">Navigasi</string>
   <string name="mdnie_scenario_gallery">Galeri</string>
   <string name="mdnie_scenario_vt">Panggilan video</string>
+  <string name="mdnie_scenario_browser">Browser</string>
+  <string name="mdnie_scenario_ebook">eBook</string>
+  <string name="mdnie_scenario_email">E-mail</string>
   <!-- Accessibility mode names -->
+  <string name="mdnie_accessibility_normal">Normal</string>
+  <string name="mdnie_accessibility_inverse">Terbalik</string>
+  <string name="mdnie_accessibility_screen_curtain">Tirai layar</string>
+  <string name="mdnie_accessibility_grayscale">Abu-abu</string>
   <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
