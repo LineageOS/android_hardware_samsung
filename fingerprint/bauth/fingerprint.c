@@ -163,6 +163,11 @@ static int set_notify_callback(struct fingerprint_device *dev, fingerprint_notif
     return bauth_handle->ss_set_notify_callback(hal_notify_convert);
 }
 
+static int enumerate(struct fingerprint_device *dev __unused)
+{
+    return -1;
+}
+
 static int fingerprint_open(const hw_module_t* module, const char *id, hw_device_t** device)
 {
     int ret;
@@ -198,6 +203,7 @@ static int fingerprint_open(const hw_module_t* module, const char *id, hw_device
     dev->set_active_group = fingerprint_set_active_group;
     dev->authenticate = fingerprint_authenticate;
     dev->set_notify = set_notify_callback;
+    dev->enumerate = enumerate;
     dev->notify = NULL;
 
     *device = (hw_device_t*) dev;
