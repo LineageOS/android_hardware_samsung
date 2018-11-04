@@ -17,34 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">進階顯示</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">螢幕</string>
-  <string name="screen_colors_title">色彩</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">場景</string>
-  <string name="mdnie_scenario_summary_head">設定 mDNIe 場景</string>
-  <string name="mdnie_accessibility_title_head">無障礙模式</string>
-  <string name="mdnie_accessibility_summary_head">設定 mDNIe 無障礙模式</string>
-  <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS (預設)</string>
-  <string name="mdnie_scenario_video">視訊</string>
-  <string name="mdnie_scenario_video_warm">影片 (暖色)</string>
-  <string name="mdnie_scenario_video_cold">影片 (冷色)</string>
-  <string name="mdnie_scenario_camera">相機</string>
-  <string name="mdnie_scenario_navigation">導覽</string>
-  <string name="mdnie_scenario_gallery">圖片庫</string>
-  <string name="mdnie_scenario_vt">視訊通話</string>
-  <string name="mdnie_scenario_browser">瀏覽器</string>
-  <string name="mdnie_scenario_ebook">電子書</string>
-  <string name="mdnie_scenario_email">電子郵件</string>
-  <string name="mdnie_scenario_tdmb">數位電視</string>
-  <!-- Accessibility mode names -->
-  <string name="mdnie_accessibility_normal">一般</string>
-  <string name="mdnie_accessibility_inverse">負片</string>
-  <string name="mdnie_accessibility_color_blind">色盲模式</string>
-  <string name="mdnie_accessibility_screen_curtain">黑屏模式</string>
-  <string name="mdnie_accessibility_grayscale">灰色</string>
-  <string name="mdnie_accessibility_gray_negative">負片灰階</string>
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">進階顯示</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">螢幕</string>
+    <string name="screen_colors_title">色彩</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">場景</string>
+    <string name="mdnie_scenario_summary_head">設定 mDNIe 場景</string>
+    <string name="mdnie_accessibility_title_head">無障礙模式</string>
+    <string name="mdnie_accessibility_summary_head">設定 mDNIe 無障礙模式</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (預設)</string>
+    <string name="mdnie_scenario_video">視訊</string>
+    <string name="mdnie_scenario_video_warm">影片 (暖色)</string>
+    <string name="mdnie_scenario_video_cold">影片 (冷色)</string>
+    <string name="mdnie_scenario_camera">相機</string>
+    <string name="mdnie_scenario_navigation">導覽</string>
+    <string name="mdnie_scenario_gallery">圖片庫</string>
+    <string name="mdnie_scenario_vt">視訊通話</string>
+    <string name="mdnie_scenario_browser">瀏覽器</string>
+    <string name="mdnie_scenario_ebook">電子書</string>
+    <string name="mdnie_scenario_email">電子郵件</string>
+    <string name="mdnie_scenario_tdmb">數位電視</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">一般</string>
+    <string name="mdnie_accessibility_inverse">負片</string>
+    <string name="mdnie_accessibility_color_blind">色盲模式</string>
+    <string name="mdnie_accessibility_screen_curtain">黑屏模式</string>
+    <string name="mdnie_accessibility_grayscale">灰色</string>
+    <string name="mdnie_accessibility_gray_negative">負片灰階</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

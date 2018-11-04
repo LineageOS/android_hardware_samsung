@@ -17,34 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Gelişmiş ekran</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Ekran</string>
-  <string name="screen_colors_title">Renkler</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Ekran Modu</string>
-  <string name="mdnie_scenario_summary_head">mDNIe senaryosunu ayarla</string>
-  <string name="mdnie_accessibility_title_head">Erişilebilirlik modu</string>
-  <string name="mdnie_accessibility_summary_head">mDNIe ile erişilebilirlik modunu ayarlayın</string>
-  <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS (varsayılan)</string>
-  <string name="mdnie_scenario_video">Video</string>
-  <string name="mdnie_scenario_video_warm">Video sıcak</string>
-  <string name="mdnie_scenario_video_cold">Video soğuk</string>
-  <string name="mdnie_scenario_camera">Kamera</string>
-  <string name="mdnie_scenario_navigation">Gezinme</string>
-  <string name="mdnie_scenario_gallery">Galeri</string>
-  <string name="mdnie_scenario_vt">Görüntülü arama</string>
-  <string name="mdnie_scenario_browser">Tarayıcı</string>
-  <string name="mdnie_scenario_ebook">E-kitap</string>
-  <string name="mdnie_scenario_email">E-posta</string>
-  <string name="mdnie_scenario_tdmb">Dijital televizyon</string>
-  <!-- Accessibility mode names -->
-  <string name="mdnie_accessibility_normal">Normal</string>
-  <string name="mdnie_accessibility_inverse">Ters çevrilmiş</string>
-  <string name="mdnie_accessibility_color_blind">Renk körü</string>
-  <string name="mdnie_accessibility_screen_curtain">Ekran perdesi</string>
-  <string name="mdnie_accessibility_grayscale">Gri</string>
-  <string name="mdnie_accessibility_gray_negative">Ters gri</string>
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Gelişmiş ekran</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Ekran</string>
+    <string name="screen_colors_title">Renkler</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Ekran Modu</string>
+    <string name="mdnie_scenario_summary_head">mDNIe senaryosunu ayarla</string>
+    <string name="mdnie_accessibility_title_head">Erişilebilirlik modu</string>
+    <string name="mdnie_accessibility_summary_head">mDNIe ile erişilebilirlik modunu ayarlayın</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (varsayılan)</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_video_warm">Video sıcak</string>
+    <string name="mdnie_scenario_video_cold">Video soğuk</string>
+    <string name="mdnie_scenario_camera">Kamera</string>
+    <string name="mdnie_scenario_navigation">Gezinme</string>
+    <string name="mdnie_scenario_gallery">Galeri</string>
+    <string name="mdnie_scenario_vt">Görüntülü arama</string>
+    <string name="mdnie_scenario_browser">Tarayıcı</string>
+    <string name="mdnie_scenario_ebook">E-kitap</string>
+    <string name="mdnie_scenario_email">E-posta</string>
+    <string name="mdnie_scenario_tdmb">Dijital televizyon</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Normal</string>
+    <string name="mdnie_accessibility_inverse">Ters çevrilmiş</string>
+    <string name="mdnie_accessibility_color_blind">Renk körü</string>
+    <string name="mdnie_accessibility_screen_curtain">Ekran perdesi</string>
+    <string name="mdnie_accessibility_grayscale">Gri</string>
+    <string name="mdnie_accessibility_gray_negative">Ters gri</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

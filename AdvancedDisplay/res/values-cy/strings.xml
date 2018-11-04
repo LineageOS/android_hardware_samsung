@@ -17,11 +17,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Screen Preference -->
-  <!-- mDNIe -->
-  <!-- Scenario names -->
-  <string name="mdnie_scenario_camera">Camera</string>
-  <string name="mdnie_scenario_browser">Porwr</string>
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <!-- Screen Preference -->
+    <!-- mDNIe -->
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_camera">Camera</string>
+    <string name="mdnie_scenario_browser">Porwr</string>
+    <!-- Accessibility mode names -->
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

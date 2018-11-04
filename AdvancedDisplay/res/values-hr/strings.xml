@@ -17,14 +17,14 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Napredni zaslon</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Zaslon</string>
-  <string name="screen_colors_title">Boje</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Scenarij</string>
-  <string name="mdnie_scenario_summary_head">Podesite mDNIe scenarij</string>
-  <!-- Scenario names -->
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Napredni zaslon</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Zaslon</string>
+    <string name="screen_colors_title">Boje</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Scenarij</string>
+    <string name="mdnie_scenario_summary_head">Podesite mDNIe scenarij</string>
+    <!-- Scenario names -->
+    <!-- Accessibility mode names -->
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

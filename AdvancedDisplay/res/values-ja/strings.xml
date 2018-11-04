@@ -17,34 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">ディスプレイの詳細設定</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">画面</string>
-  <string name="screen_colors_title">色</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">シナリオ</string>
-  <string name="mdnie_scenario_summary_head">mDNIeシナリオを設定する</string>
-  <string name="mdnie_accessibility_title_head">アクセシビリティモード</string>
-  <string name="mdnie_accessibility_summary_head">mDNIe アクセシビリティモードを設定します</string>
-  <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS（デフォルト）</string>
-  <string name="mdnie_scenario_video">ビデオ</string>
-  <string name="mdnie_scenario_video_warm">ビデオ（暖色）</string>
-  <string name="mdnie_scenario_video_cold">ビデオ（寒色）</string>
-  <string name="mdnie_scenario_camera">カメラ</string>
-  <string name="mdnie_scenario_navigation">ナビゲーション</string>
-  <string name="mdnie_scenario_gallery">ギャラリー</string>
-  <string name="mdnie_scenario_vt">ビデオ通話</string>
-  <string name="mdnie_scenario_browser">ブラウザー</string>
-  <string name="mdnie_scenario_ebook">電子書籍</string>
-  <string name="mdnie_scenario_email">メール</string>
-  <string name="mdnie_scenario_tdmb">デジタルテレビ</string>
-  <!-- Accessibility mode names -->
-  <string name="mdnie_accessibility_normal">標準</string>
-  <string name="mdnie_accessibility_inverse">反転</string>
-  <string name="mdnie_accessibility_color_blind">色覚異常</string>
-  <string name="mdnie_accessibility_screen_curtain">スクリーンカーテン</string>
-  <string name="mdnie_accessibility_grayscale">グレー</string>
-  <string name="mdnie_accessibility_gray_negative">グレー反転</string>
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">ディスプレイの詳細設定</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">画面</string>
+    <string name="screen_colors_title">色</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">シナリオ</string>
+    <string name="mdnie_scenario_summary_head">mDNIeシナリオを設定する</string>
+    <string name="mdnie_accessibility_title_head">アクセシビリティモード</string>
+    <string name="mdnie_accessibility_summary_head">mDNIe アクセシビリティモードを設定します</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS（デフォルト）</string>
+    <string name="mdnie_scenario_video">ビデオ</string>
+    <string name="mdnie_scenario_video_warm">ビデオ（暖色）</string>
+    <string name="mdnie_scenario_video_cold">ビデオ（寒色）</string>
+    <string name="mdnie_scenario_camera">カメラ</string>
+    <string name="mdnie_scenario_navigation">ナビゲーション</string>
+    <string name="mdnie_scenario_gallery">ギャラリー</string>
+    <string name="mdnie_scenario_vt">ビデオ通話</string>
+    <string name="mdnie_scenario_browser">ブラウザー</string>
+    <string name="mdnie_scenario_ebook">電子書籍</string>
+    <string name="mdnie_scenario_email">メール</string>
+    <string name="mdnie_scenario_tdmb">デジタルテレビ</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">標準</string>
+    <string name="mdnie_accessibility_inverse">反転</string>
+    <string name="mdnie_accessibility_color_blind">色覚異常</string>
+    <string name="mdnie_accessibility_screen_curtain">スクリーンカーテン</string>
+    <string name="mdnie_accessibility_grayscale">グレー</string>
+    <string name="mdnie_accessibility_gray_negative">グレー反転</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
