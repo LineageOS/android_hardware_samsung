@@ -25,6 +25,7 @@
     <string name="mdnie_scenario_title_head">Szenario</string>
     <string name="mdnie_scenario_summary_head">Wählen Sie das mDNIe-Szenario</string>
     <string name="mdnie_accessibility_title_head">Barrierefreier Modus</string>
+    <string name="mdnie_accessibility_summary_head">mDNIe-Modus festlegen</string>
     <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (Standard)</string>
     <string name="mdnie_scenario_video">Video</string>
