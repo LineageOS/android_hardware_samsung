@@ -97,13 +97,14 @@ struct private_handle_t {
     struct native_handle nativeHandle;
 #endif
     enum {
-        PRIV_FLAGS_FRAMEBUFFER = 0x00000001,
-        PRIV_FLAGS_USES_UMP    = 0x00000002,
-        PRIV_FLAGS_USES_PMEM   = 0x00000004,
-        PRIV_FLAGS_USES_IOCTL  = 0x00000008,
-        PRIV_FLAGS_USES_HDMI   = 0x00000010,
-        PRIV_FLAGS_USES_ION    = 0x00000020,
-        PRIV_FLAGS_NONE_CACHED = 0x00000040,
+        PRIV_FLAGS_FRAMEBUFFER   = 0x00000001,
+        PRIV_FLAGS_USES_UMP      = 0x00000002,
+        PRIV_FLAGS_USES_PMEM     = 0x00000004,
+        PRIV_FLAGS_USES_IOCTL    = 0x00000008,
+        PRIV_FLAGS_USES_HDMI     = 0x00000010,
+        PRIV_FLAGS_USES_ION      = 0x00000020,
+        PRIV_FLAGS_NONE_CACHED   = 0x00000040,
+        PRIV_FLAGS_GRAPHICBUFFER = 0x00000080
     };
 
     enum {

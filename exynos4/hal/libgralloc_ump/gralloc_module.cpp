@@ -398,6 +398,11 @@ sd
         ALOGE("%s registering non-UMP buffer not supported", __func__);
     }
 
+    if (hnd->flags & private_handle_t::PRIV_FLAGS_GRAPHICBUFFER) {
+        ALOGD_IF(debug_level > 0, "ump_id:%d %s: GraphicBuffer (ump_id:%d): ump_mem_handle:%08x (ump_reference_release)", hnd->ump_id, __func__, hnd->ump_id, hnd->ump_mem_handle);
+        ump_reference_release((ump_handle)hnd->ump_mem_handle);
+    }
+
     pthread_mutex_unlock(&s_map_lock);
     return retval;
 }
