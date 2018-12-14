@@ -43,6 +43,7 @@
     <string name="mdnie_accessibility_normal">기본</string>
     <string name="mdnie_accessibility_inverse">반전</string>
     <string name="mdnie_accessibility_color_blind">색맹</string>
+    <string name="mdnie_accessibility_screen_curtain">화면 커튼</string>
     <string name="mdnie_accessibility_grayscale">흑백</string>
     <string name="mdnie_accessibility_gray_negative">흑백 반전</string>
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
