@@ -33,6 +33,7 @@ LOCAL_SHARED_LIBRARIES := \
 	libcutils \
 	libaudioutils \
 	libhardware \
+	libprocessgroup \
 	libtinyalsa \
 	libtinycompress \
 	libaudioroute \
