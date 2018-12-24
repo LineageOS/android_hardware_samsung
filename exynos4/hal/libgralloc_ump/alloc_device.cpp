@@ -361,11 +361,14 @@ static int gralloc_alloc_buffer(alloc_device_t* dev, size_t size, int usage,
                         hnd->ion_memory = ion_map(ion_fd, size, 0);
 
                     ALOGD_IF(debug_level > 0, "%s hnd->format=0x%x hnd->uoffset=%d hnd->voffset=%d hnd->paddr=%x hnd->bpp=%d", __func__, hnd->format, hnd->uoffset, hnd->voffset, hnd->paddr, hnd->bpp);
+
+                    ALOGD_IF(debug_level > 1, "%s: ump_id:%d", __func__, hnd->ump_id);
+/*
                     if (hnd->flags & private_handle_t::PRIV_FLAGS_GRAPHICBUFFER) {
                         ALOGD_IF(debug_level > 0, "%s: GraphicBuffer (ump_id:%d): ump_reference_add ump_mem_handle:%08x", __func__, ump_id, ump_mem_handle);
                         ump_reference_add(ump_mem_handle);
                     }
-
+*/
                     return 0;
                 } else {
                     ALOGE("%s failed to allocate handle", __func__);
@@ -653,6 +656,7 @@ static int alloc_device_free(alloc_device_t* dev, buffer_handle_t handle)
     private_handle_t const* hnd = reinterpret_cast<private_handle_t const*>(handle);
     private_module_t* m = reinterpret_cast<private_module_t*>(dev->common.module);
 
+    ALOGD_IF(debug_level > 1, "%s: ump_id:%d", __func__, hnd->ump_id);
     pthread_mutex_lock(&l_surface);
     if (hnd->flags & private_handle_t::PRIV_FLAGS_GRAPHICBUFFER) {
         ALOGD_IF(debug_level > 0, "%s: GraphicBuffer (ump_id:%d): Freeing ump_mem_handle:%08x", __func__, hnd->ump_id, hnd->ump_mem_handle);
