@@ -407,14 +407,7 @@ sd
     return retval;
 }
 
-static int gralloc_unregister_buffer(gralloc_module_t const* module, buffer_handle_t handle)
-{
-    if (private_handle_t::validate(handle) < 0) {
-        ALOGE("%s unregistering invalid buffer, returning error", __func__);
-        return -EINVAL;
-    }
-
-    private_handle_t* hnd = (private_handle_t*)handle;
+static int unregister_buffer(private_handle_t* hnd) {
     if (hnd->flags & private_handle_t::PRIV_FLAGS_FRAMEBUFFER) {
         hnd->base = 0;
         return 0;
@@ -473,6 +466,18 @@ static int gralloc_unregister_buffer(gralloc_module_t const* module, buffer_hand
     /*} not in stock */
 
     return 0;
+}
+
+
+static int gralloc_unregister_buffer(gralloc_module_t const* module, buffer_handle_t handle)
+{
+    if (private_handle_t::validate(handle) < 0) {
+        ALOGE("%s unregistering invalid buffer, returning error", __func__);
+        return -EINVAL;
+    }
+
+    private_handle_t* hnd = (private_handle_t*)handle;
+    return unregister_buffer(hnd);
 }
 
 static int gralloc_lock(gralloc_module_t const* module __unused, buffer_handle_t handle,
