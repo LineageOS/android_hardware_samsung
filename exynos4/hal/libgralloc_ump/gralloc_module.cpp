@@ -97,7 +97,7 @@ int get_bpp(int format)
 }
 
 #ifdef USE_PARTIAL_FLUSH
-struct private_handle_rect *rect_list;
+static struct private_handle_rect *rect_list;
 static pthread_mutex_t s_rect_lock = PTHREAD_MUTEX_INITIALIZER;
 
 private_handle_rect *find_rect(int secure_id)
@@ -115,12 +115,71 @@ private_handle_rect *find_rect(int secure_id)
     return psRect;
 }
 
+void insert_rect_first(private_handle_rect *new_rect) {
+    int secure_id = new_rect->handle;
+    private_handle_rect *psRect = NULL;
+    private_handle_rect *psFRect = NULL;
+
+    ALOGD_IF(debug_level > 0, "%s secure_id=%d",__func__,secure_id);
+
+    pthread_mutex_lock(&s_rect_lock);
+    if (rect_list == NULL) {
+        rect_list = (private_handle_rect *)calloc(1, sizeof(private_handle_rect));
+        rect_list->next = new_rect;
+    } else {
+        for (psRect = rect_list; psRect; psRect = psRect->next) {
+            if (psRect->handle == secure_id) {
+                  // Inserts rect before existing
+                  psFRect->next = new_rect;
+                  new_rect->next = psRect;
+                  pthread_mutex_unlock(&s_rect_lock);
+                  return;
+            }
+            psFRect = psRect;
+        }
+        // No match found, just append it
+        psFRect->next = new_rect;
+    }
+    pthread_mutex_unlock(&s_rect_lock);
+}
+
+void insert_rect_last(private_handle_rect *new_rect) {
+    int secure_id = new_rect->handle;
+    private_handle_rect *psRect = NULL;
+    private_handle_rect *psFRect = NULL;
+    private_handle_rect *psMatchRect = NULL;
+
+
+    ALOGD_IF(debug_level > 0, "%s secure_id=%d",__func__,secure_id);
+
+    pthread_mutex_lock(&s_rect_lock);
+    if (rect_list == NULL) {
+        rect_list = (private_handle_rect *)calloc(1, sizeof(private_handle_rect));
+        rect_list->next = new_rect;
+    } else {
+        for (psRect = rect_list; psRect; psRect = psRect->next) {
+            if (psRect->handle == secure_id) {
+                psMatchRect = psRect;
+            } else if (psMatchRect) {
+                psMatchRect->next = new_rect;
+                new_rect->next = psRect;
+                pthread_mutex_unlock(&s_rect_lock);
+                return;
+            }
+            psFRect = psRect;
+        }
+        // No match found, just append it
+        psFRect->next = new_rect;
+    }
+    pthread_mutex_unlock(&s_rect_lock);
+}
+
 private_handle_rect *find_last_rect(int secure_id)
 {
     private_handle_rect *psRect = NULL;
     private_handle_rect *psFRect = NULL;
 
-    ALOGD_IF(debug_level > 0, "%s secure_id=%d",__func__,secure_id);
+    ALOGD_IF(debug_level > 0, "%s secure_id=%d",__func__, secure_id);
 
     pthread_mutex_lock(&s_rect_lock);
     if (rect_list == NULL) {
@@ -135,6 +194,36 @@ private_handle_rect *find_last_rect(int secure_id)
     }
     pthread_mutex_unlock(&s_rect_lock);
     return psFRect;
+}
+
+int count_rect(int secure_id) {
+    private_handle_rect *psRect;
+    private_handle_rect *next;
+
+    int count = 0;
+    pthread_mutex_lock(&s_rect_lock);
+    for (psRect = rect_list; psRect; psRect = psRect->next) {
+        next = psRect->next;
+        if (next && next->handle == secure_id) {
+            count++;
+        }
+    }
+
+    pthread_mutex_unlock(&s_rect_lock);
+    return count;
+}
+
+void dump_rect() {
+    private_handle_rect *psRect;
+    private_handle_rect *next;
+
+    pthread_mutex_lock(&s_rect_lock);
+    for (psRect = rect_list; psRect; psRect = psRect->next) {
+        ALOGD_IF(debug_partial_flush > 0, "%s:PARTIAL_FLUSH handle/ump_id:%d w:%d h:%d stride:%d, psRect:%08x", __func__, psRect->handle, psRect->w, psRect->h, psRect->stride, psRect);
+        next = psRect->next;
+    }
+
+    pthread_mutex_unlock(&s_rect_lock);
 }
 
 int release_rect(int secure_id)
@@ -282,13 +371,24 @@ static int gralloc_register_buffer(gralloc_module_t const* module, buffer_handle
 
 #ifdef USE_PARTIAL_FLUSH
     if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_UMP) {
+        ALOGD_IF(debug_partial_flush > 0,
+            "%s: PARTIAL_FLUSH ump_id:%d === BEGIN === ump_mem_handle:%08x flags=%x usage=%x count:%d backingstore:%d",
+            __func__, hnd->ump_id, hnd->ump_mem_handle, hnd->flags, hnd->usage, count_rect(hnd->ump_id), hnd->backing_store);
+        if (debug_partial_flush > 0)
+            dump_rect();
         private_handle_rect *psRect;
-        private_handle_rect *psFRect;
         psRect = (private_handle_rect *)calloc(1, sizeof(private_handle_rect));
         psRect->handle = (int)hnd->ump_id;
-        psRect->stride = (int) (hnd->stride * get_bpp(hnd->format));;
-        psFRect = find_last_rect((int)hnd->ump_id);
-        psFRect->next = psRect;
+        psRect->stride = (int) (hnd->stride * get_bpp(hnd->format));
+        ALOGD_IF(debug_partial_flush > 0,
+            "%s: PARTIAL_FLUSH ump_id:%d === insert_rect_last === ump_mem_handle:%08x flags=%x usage=%x count:%d backingstore:%d",
+            __func__, hnd->ump_id, hnd->ump_mem_handle, hnd->flags, hnd->usage, count_rect(hnd->ump_id), hnd->backing_store);
+        insert_rect_last(psRect);
+        if (debug_partial_flush > 0)
+            dump_rect();
+        ALOGD_IF(debug_partial_flush > 0,
+            "%s: PARTIAL_FLUSH ump_id:%d === END === ump_mem_handle:%08x flags=%x usage=%x count:%d backingstore:%d",
+            __func__, hnd->ump_id, hnd->ump_mem_handle, hnd->flags, hnd->usage, count_rect(hnd->ump_id), hnd->backing_store);
     }
 #endif
 
@@ -327,6 +427,7 @@ sd
         ALOGD_IF(debug_level > 1, "%s: ump_id:%d ump_mem_handle:%08x", __func__, hnd->ump_id, hnd->ump_mem_handle);
 
         hnd->ump_mem_handle = (int)ump_handle_create_from_secure_id(hnd->ump_id);
+        ALOGD_IF(debug_partial_flush > 0, "%s: PARTIAL_FLUSH ump_id:%d ump_mem_handle:%08x flags=%x usage=%x count:%d backing_store:%d", __func__, hnd->ump_id, hnd->ump_mem_handle, hnd->flags, hnd->usage, count_rect(hnd->ump_id), hnd->backing_store);
 
         ALOGD_IF(debug_level > 0, "%s PRIV_FLAGS_USES_UMP hnd->ump_mem_handle=%d(%x)", __func__, hnd->ump_mem_handle, hnd->ump_mem_handle);
 
@@ -424,9 +525,25 @@ static int unregister_buffer(private_handle_t* hnd) {
     }
 
 #ifdef USE_PARTIAL_FLUSH
-    if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_UMP)
+    if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_UMP) {
+        ALOGD_IF(debug_partial_flush > 0,
+            "%s: PARTIAL_FLUSH ump_id:%d === BEGIN === ump_mem_handle:%08x flags=%x usage=%x count:%d backingstore:%d",
+            __func__, hnd->ump_id, hnd->ump_mem_handle, hnd->flags, hnd->usage, count_rect(hnd->ump_id), hnd->backing_store);
+        if (debug_partial_flush > 0)
+            dump_rect();
+
+        ALOGD_IF(debug_partial_flush > 0,
+            "%s: PARTIAL_FLUSH ump_id:%d === release_rect === ump_mem_handle:%08x flags=%x usage=%x count:%d backingstore:%d",
+            __func__, hnd->ump_id, hnd->ump_mem_handle, hnd->flags, hnd->usage, count_rect(hnd->ump_id), hnd->backing_store);
         if (!release_rect((int)hnd->ump_id))
-            ALOGE("%s secureID: 0x%x, release error", __func__, (int)hnd->ump_id);
+            ALOGE("%s: PARTIAL_FLUSH ump_id:%d, release error", __func__, (int)hnd->ump_id);
+
+        if (debug_partial_flush > 0)
+            dump_rect();
+        ALOGD_IF(debug_partial_flush > 0,
+            "%s: PARTIAL_FLUSH ump_id:%d === END === ump_mem_handle:%08x flags=%x usage=%x count:%d backingstore:%d",
+            __func__, hnd->ump_id, hnd->ump_mem_handle, hnd->flags, hnd->usage, count_rect(hnd->ump_id), hnd->backing_store);
+    }
 #endif
     ALOGE_IF(hnd->lockState & private_handle_t::LOCK_STATE_READ_MASK,
             "%s [unregister] handle %p still locked (state=%08x)", __func__, hnd, hnd->lockState);

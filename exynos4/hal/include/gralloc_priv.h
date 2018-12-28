@@ -48,6 +48,7 @@
 
 #define GRALLOC_ARM_UMP_MODULE 1
 #define debug_level 0
+#define debug_partial_flush 0
 
 static int gMemfd = 0;
 
