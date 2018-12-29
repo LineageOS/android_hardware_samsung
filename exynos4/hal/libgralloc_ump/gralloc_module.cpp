@@ -607,7 +607,40 @@ void* gralloc_unregister_buffer_thread(void *data) {
     usleep(1000000); // 1000ms
     unregister_buffer(hnd);
     ALOGD_IF(debug_level > 1, "%s: ump_id:%d END", __func__, hnd->ump_id);
+    delete hnd;
     return NULL;
+}
+
+static private_handle_t* clone_private_handle(private_handle_t* hnd) {
+    private_handle_t* result = new private_handle_t(
+        hnd->flags,
+        hnd->size,
+        hnd->base,
+        hnd->lockState,
+        (ump_secure_id)hnd->ump_id,
+        (ump_handle)hnd->ump_mem_handle,
+        hnd->fd,
+        hnd->offset,
+        hnd->paddr);
+    result->magic = hnd->magic;
+    result->base = hnd->base;
+    result->writeOwner = hnd->writeOwner;
+    result->pid = hnd->pid;
+    result->format = hnd->format;
+    result->usage = hnd->usage;
+    result->width = hnd->width;
+    result->height = hnd->height;
+    result->bpp = hnd->bpp;
+    result->stride = hnd->stride;
+    result->yaddr = hnd->yaddr;
+    result->uoffset = hnd->uoffset;
+    result->voffset = hnd->voffset;
+    result->ion_client = hnd->ion_client;
+    result->ion_memory = hnd->ion_memory;
+    result->backing_store = hnd->backing_store;
+    result->producer_usage = hnd->producer_usage;
+    result->consumer_usage = hnd->consumer_usage;
+    return result;
 }
 
 static int gralloc_unregister_buffer(gralloc_module_t const* module, buffer_handle_t handle)
@@ -626,7 +659,7 @@ static int gralloc_unregister_buffer(gralloc_module_t const* module, buffer_hand
         pthread_attr_init(&thread_attr);
         pthread_attr_setdetachstate(&thread_attr, PTHREAD_CREATE_DETACHED);
         int rc = pthread_create(&unreg_buffer_thread, &thread_attr,
-	    gralloc_unregister_buffer_thread, (void *) handle);
+	    gralloc_unregister_buffer_thread, (void *) clone_private_handle(hnd));
         if (rc < 0) {
             ALOGE("%s: Unable to create thread", __func__);
             return -1;
