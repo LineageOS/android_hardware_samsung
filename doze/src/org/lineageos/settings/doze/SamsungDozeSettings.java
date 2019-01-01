@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 The CyanogenMod Project
+ *               2017-2019 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +39,7 @@ public class SamsungDozeSettings extends PreferenceFragment
     private TextView mTextView;
     private View mSwitchBar;
 
+    private SwitchPreference mAlwaysOnDisplayPreference;
     private SwitchPreference mHandwavePreference;
     private SwitchPreference mPocketPreference;
 
@@ -49,6 +51,10 @@ public class SamsungDozeSettings extends PreferenceFragment
 
         boolean dozeEnabled = Utils.isDozeEnabled(getActivity());
 
+        mAlwaysOnDisplayPreference = findPreference(Utils.ALWAYS_ON_DISPLAY);
+        mAlwaysOnDisplayPreference.setEnabled(dozeEnabled);
+        mAlwaysOnDisplayPreference.setOnPreferenceChangeListener(this);
+
         mHandwavePreference = findPreference(Utils.GESTURE_HAND_WAVE_KEY);
         mHandwavePreference.setEnabled(dozeEnabled);
         mHandwavePreference.setOnPreferenceChangeListener(this);
@@ -56,6 +62,14 @@ public class SamsungDozeSettings extends PreferenceFragment
         mPocketPreference = findPreference(Utils.GESTURE_POCKET_KEY);
         mPocketPreference.setEnabled(dozeEnabled);
         mPocketPreference.setOnPreferenceChangeListener(this);
+
+        // Hide AOD if not supported and set all its dependents otherwise
+        if (!Utils.alwaysOnDisplayAvailable(getActivity())) {
+            getPreferenceScreen().removePreference(mAlwaysOnDisplayPreference);
+        } else {
+            mHandwavePreference.setDependency(Utils.ALWAYS_ON_DISPLAY);
+            mPocketPreference.setDependency(Utils.ALWAYS_ON_DISPLAY);
+        }
     }
 
     @Override
@@ -100,7 +114,12 @@ public class SamsungDozeSettings extends PreferenceFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        Utils.enableGesture(getActivity(), preference.getKey(), (Boolean) newValue);
+        if (Utils.ALWAYS_ON_DISPLAY.equals(preference.getKey())) {
+            Utils.enableAlwaysOn(getActivity(), (Boolean) newValue);
+        } else {
+            Utils.enableGesture(getActivity(), preference.getKey(), (Boolean) newValue);
+        }
+
         Utils.checkDozeService(getActivity());
 
         return true;
@@ -113,6 +132,12 @@ public class SamsungDozeSettings extends PreferenceFragment
 
         mTextView.setText(getString(isChecked ? R.string.switch_bar_on : R.string.switch_bar_off));
         mSwitchBar.setActivated(isChecked);
+
+        if (!isChecked) {
+            Utils.enableAlwaysOn(getActivity(), false);
+            mAlwaysOnDisplayPreference.setChecked(false);
+        }
+        mAlwaysOnDisplayPreference.setEnabled(isChecked);
 
         mHandwavePreference.setEnabled(isChecked);
         mPocketPreference.setEnabled(isChecked);
