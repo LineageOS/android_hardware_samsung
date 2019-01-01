@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2015 The CyanogenMod Project
+                   2018-2019 The LineageOS Project
 
      Licensed under the Apache License, Version 2.0 (the "License"
      you may not use this file except in compliance with the License.
@@ -16,6 +17,12 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <SwitchPreference
+        android:key="always_on_display"
+        android:defaultValue="false"
+        android:title="@string/ambient_display_always_on_title"
+        android:summary="@string/ambient_display_always_on_summary" />
+
     <PreferenceCategory
         android:key="proximity_sensor"
         android:title="@string/proximity_sensor_title">
@@ -24,13 +31,15 @@
             android:key="gesture_hand_wave"
             android:defaultValue="false"
             android:title="@string/hand_wave_gesture_title"
-            android:summary="@string/hand_wave_gesture_summary" />
+            android:summary="@string/hand_wave_gesture_summary"
+            android:dependency="always_on_display" />
 
         <SwitchPreference
             android:key="gesture_pocket"
             android:defaultValue="false"
             android:title="@string/pocket_gesture_title"
-            android:summary="@string/pocket_gesture_summary" />
+            android:summary="@string/pocket_gesture_summary"
+            android:dependency="always_on_display" />
     </PreferenceCategory>
 
 </PreferenceScreen>
