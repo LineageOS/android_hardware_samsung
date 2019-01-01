@@ -17,10 +17,12 @@
 
 package org.lineageos.settings.doze;
 
+import static android.provider.Settings.Secure.DOZE_ALWAYS_ON;
 import static android.provider.Settings.Secure.DOZE_ENABLED;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.display.AmbientDisplayConfiguration;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
@@ -31,6 +33,8 @@ public final class Utils {
 
     private static final String TAG = "DozeUtils";
     private static final boolean DEBUG = false;
+
+    protected static final String ALWAYS_ON_DISPLAY = "always_on_display";
 
     protected static final String GESTURE_HAND_WAVE_KEY = "gesture_hand_wave";
     protected static final String GESTURE_POCKET_KEY = "gesture_pocket";
@@ -48,16 +52,31 @@ public final class Utils {
     }
 
     protected static void checkDozeService(Context context) {
-        if (isDozeEnabled(context) && isAnyGestureEnabled(context)) {
+        if (!isAlwaysOnEnabled(context) &&
+                isDozeEnabled(context) && isAnyGestureEnabled(context)) {
             startService(context);
         } else {
             stopService(context);
         }
     }
 
+    protected static boolean alwaysOnDisplayAvailable(Context context) {
+        return new AmbientDisplayConfiguration(context).alwaysOnAvailable();
+    }
+
+    private static boolean isAlwaysOnEnabled(Context context) {
+        return Settings.Secure.getIntForUser(context.getContentResolver(),
+                DOZE_ALWAYS_ON, 1, UserHandle.USER_CURRENT) != 0;
+    }
+
     protected static boolean isDozeEnabled(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
                 DOZE_ENABLED, 1) != 0;
+    }
+
+    protected static boolean enableAlwaysOn(Context context, boolean enable) {
+        return Settings.Secure.putIntForUser(context.getContentResolver(),
+                DOZE_ALWAYS_ON, enable ? 1 : 0, UserHandle.USER_CURRENT);
     }
 
     protected static boolean enableDoze(Context context, boolean enable) {
