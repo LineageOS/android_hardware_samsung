@@ -1062,14 +1062,6 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
                 ALOGV("alpha not supported on window 0; forcing 255");
                 config[window].plane_alpha = 255;
             }
-
-            hwc_rect_t crop = integerizeSourceCrop(layer.sourceCropf);
-            if ( (WIDTH(crop) <= 15) ||
-                 (HEIGHT(crop) <= 7) ||
-                 (WIDTH(layer.displayFrame) <= 31) ||
-                 (HEIGHT(layer.displayFrame) <= 31) ) {
-                config[window].state = config->S3C_FB_WIN_STATE_DISABLED;
-            }
         }
         memcpy(&win.win_cfg, &config[window], sizeof(struct s3c_fb_win_config));
     }
@@ -1087,7 +1079,6 @@ static int post_fimd(hwc_context_t *ctx, hwc_display_contents_1_t* contents)
         ALOGE("%s S3CFB_WIN_CONFIG failed: %s", __FUNCTION__, strerror(errno));
         return wincfg_err;
     }
-
 
     return win_data.fence;
 }
