@@ -43,6 +43,7 @@
     <string name="mdnie_accessibility_normal">Normal</string>
     <string name="mdnie_accessibility_inverse">Invertiert</string>
     <string name="mdnie_accessibility_color_blind">Farbenblind</string>
+    <string name="mdnie_accessibility_screen_curtain">Bildschirmvorhang</string>
     <string name="mdnie_accessibility_grayscale">Grau</string>
     <string name="mdnie_accessibility_gray_negative">Grau invertiert</string>
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
