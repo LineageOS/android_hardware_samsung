@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace touch {
 namespace V1_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -37,7 +37,7 @@ using ::android::sp;
 
 struct KeyDisabler : public IKeyDisabler {
     // Methods from ::vendor::lineage::touch::V1_0::IKeyDisabler follow.
-    Return<void> setEnabled(bool enabled) override;
+    Return<void> setEnabled(bool) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
@@ -46,7 +46,7 @@ struct KeyDisabler : public IKeyDisabler {
 // FIXME: most likely delete, this is only for passthrough implementations
 // extern "C" IKeyDisabler* HIDL_FETCH_IKeyDisabler(const char* name);
 
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V1_0
 }  // namespace touch
 }  // namespace lineage

@@ -20,11 +20,12 @@ namespace vendor {
 namespace lineage {
 namespace touch {
 namespace V1_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::touch::V1_0::IKeyDisabler follow.
 Return<void> KeyDisabler::setEnabled(bool enabled) {
-    // TODO implement
+    std::ofstream file("/sys/class/sec/sec_touchkey/input/enabled");
+    file << (enabled ? "0" : "1");
     return Void();
 }
 
@@ -35,7 +36,7 @@ Return<void> KeyDisabler::setEnabled(bool enabled) {
     //return new KeyDisabler();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V1_0
 }  // namespace touch
 }  // namespace lineage
