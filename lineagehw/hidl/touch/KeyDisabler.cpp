@@ -14,28 +14,40 @@
  * limitations under the License.
  */
 
+#include <fstream>
+
 #include "KeyDisabler.h"
 
 namespace vendor {
 namespace lineage {
 namespace touch {
 namespace V1_0 {
-namespace implementation {
+namespace samsung {
 
-// Methods from ::vendor::lineage::touch::V1_0::IKeyDisabler follow.
-Return<void> KeyDisabler::setEnabled(bool enabled) {
-    // TODO implement
-    return Void();
+bool KeyDisabler::isSupported() {
+    std::ofstream file("/sys/class/sec/sec_touchkey/input/enabled");
+    return file.good();
 }
 
+// Methods from ::vendor::lineage::touch::V1_0::IKeyDisabler follow.
+Return<bool> KeyDisabler::isEnabled() {
+    std::ifstream file("/sys/class/sec/sec_touchkey/input/enabled");
+    int status = -1;
 
-// Methods from ::android::hidl::base::V1_0::IBase follow.
+    if (file.is_open()) {
+        file >> status;
+    }
 
-//IKeyDisabler* HIDL_FETCH_IKeyDisabler(const char* /* name */) {
-    //return new KeyDisabler();
-//}
-//
-}  // namespace implementation
+    return file.good() && status == 0;
+}
+
+Return<bool> KeyDisabler::setEnabled(bool enabled) {
+    std::ofstream file("/sys/class/sec/sec_touchkey/input/enabled");
+    file << (enabled ? "0" : "1");
+    return true;
+}
+
+}  // namespace samsung
 }  // namespace V1_0
 }  // namespace touch
 }  // namespace lineage
