@@ -53,6 +53,7 @@ public class SamsungDozeSettings extends PreferenceFragment
 
         mAlwaysOnDisplayPreference = findPreference(Utils.ALWAYS_ON_DISPLAY);
         mAlwaysOnDisplayPreference.setEnabled(dozeEnabled);
+        mAlwaysOnDisplayPreference.setChecked(Utils.isAlwaysOnEnabled(getActivity()));
         mAlwaysOnDisplayPreference.setOnPreferenceChangeListener(this);
 
         // Hide AOD if not supported
