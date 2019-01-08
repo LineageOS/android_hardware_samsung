@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace touch {
 namespace V1_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -37,8 +37,8 @@ using ::android::sp;
 
 struct TouchscreenGesture : public ITouchscreenGesture {
     // Methods from ::vendor::lineage::touch::V1_0::ITouchscreenGesture follow.
-    Return<void> getSupportedGestures(getSupportedGestures_cb _hidl_cb) override;
-    Return<void> setGestureEnabled(const ::vendor::lineage::touch::V1_0::Gesture& gesture, bool enabled) override;
+    Return<void> getSupportedGestures(getSupportedGestures_cb) override;
+    Return<void> setGestureEnabled(const ::vendor::lineage::touch::V1_0::Gesture&, bool) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
@@ -47,7 +47,7 @@ struct TouchscreenGesture : public ITouchscreenGesture {
 // FIXME: most likely delete, this is only for passthrough implementations
 // extern "C" ITouchscreenGesture* HIDL_FETCH_ITouchscreenGesture(const char* name);
 
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V1_0
 }  // namespace touch
 }  // namespace lineage
