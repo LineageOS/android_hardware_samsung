@@ -20,10 +20,10 @@ namespace vendor {
 namespace lineage {
 namespace touch {
 namespace V1_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::touch::V1_0::IKeyDisabler follow.
-Return<void> KeyDisabler::setEnabled(bool enabled) {
+Return<void> KeyDisabler::setEnabled(bool) {
     // TODO implement
     return Void();
 }
@@ -35,7 +35,7 @@ Return<void> KeyDisabler::setEnabled(bool enabled) {
     //return new KeyDisabler();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V1_0
 }  // namespace touch
 }  // namespace lineage
