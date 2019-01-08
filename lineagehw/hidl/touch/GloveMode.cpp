@@ -14,28 +14,24 @@
  * limitations under the License.
  */
 
+#include <fstream>
+
 #include "GloveMode.h"
 
 namespace vendor {
 namespace lineage {
 namespace touch {
 namespace V1_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::touch::V1_0::IGloveMode follow.
 Return<void> GloveMode::setEnabled(bool enabled) {
-    // TODO implement
+    std::ofstream file("/sys/class/sec/tsp/cmd");
+    file << "glove_mode," << (enabled ? "1" : "0");
     return Void();
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IGloveMode* HIDL_FETCH_IGloveMode(const char* /* name */) {
-    //return new GloveMode();
-//}
-//
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V1_0
 }  // namespace touch
 }  // namespace lineage
