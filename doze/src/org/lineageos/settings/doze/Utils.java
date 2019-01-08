@@ -64,7 +64,7 @@ public final class Utils {
         return new AmbientDisplayConfiguration(context).alwaysOnAvailable();
     }
 
-    private static boolean isAlwaysOnEnabled(Context context) {
+    protected static boolean isAlwaysOnEnabled(Context context) {
         return Settings.Secure.getIntForUser(context.getContentResolver(),
                 DOZE_ALWAYS_ON, 1, UserHandle.USER_CURRENT) != 0;
     }
