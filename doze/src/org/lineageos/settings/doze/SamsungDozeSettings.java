@@ -19,6 +19,7 @@ package org.lineageos.settings.doze;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,8 @@ public class SamsungDozeSettings extends PreferenceFragment
     private SwitchPreference mAlwaysOnDisplayPreference;
     private SwitchPreference mHandwavePreference;
     private SwitchPreference mPocketPreference;
+
+    private Handler mHandler = new Handler();
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -117,11 +120,9 @@ public class SamsungDozeSettings extends PreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (Utils.ALWAYS_ON_DISPLAY.equals(preference.getKey())) {
             Utils.enableAlwaysOn(getActivity(), (Boolean) newValue);
-        } else {
-            Utils.enableGesture(getActivity(), preference.getKey(), (Boolean) newValue);
         }
 
-        Utils.checkDozeService(getActivity());
+        mHandler.post(() -> Utils.checkDozeService(getActivity()));
 
         return true;
     }
