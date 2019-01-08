@@ -84,11 +84,6 @@ public final class Utils {
                 DOZE_ENABLED, enable ? 1 : 0);
     }
 
-    protected static void enableGesture(Context context, String gesture, boolean enable) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putBoolean(gesture, enable).apply();
-    }
-
     protected static boolean isAnyGestureEnabled(Context context) {
         return isHandwaveGestureEnabled(context) || isPocketGestureEnabled(context);
     }
