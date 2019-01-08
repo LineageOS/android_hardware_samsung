@@ -20,17 +20,17 @@ namespace vendor {
 namespace lineage {
 namespace touch {
 namespace V1_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::touch::V1_0::ITouchscreenGesture follow.
-Return<void> TouchscreenGesture::getSupportedGestures(getSupportedGestures_cb _hidl_cb) {
+Return<void> TouchscreenGesture::getSupportedGestures(getSupportedGestures_cb) {
     // TODO implement
     return Void();
 }
 
-Return<void> TouchscreenGesture::setGestureEnabled(const ::vendor::lineage::touch::V1_0::Gesture& gesture, bool enabled) {
+Return<bool> TouchscreenGesture::setGestureEnabled(const ::vendor::lineage::touch::V1_0::Gesture&, bool) {
     // TODO implement
-    return Void();
+    return bool {};
 }
 
 
@@ -40,7 +40,7 @@ Return<void> TouchscreenGesture::setGestureEnabled(const ::vendor::lineage::touc
     //return new TouchscreenGesture();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V1_0
 }  // namespace touch
 }  // namespace lineage
