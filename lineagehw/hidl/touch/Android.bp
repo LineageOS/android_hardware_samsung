@@ -1,0 +1,42 @@
+// Copyright (C) 2019 The LineageOS Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+cc_library_shared {
+    // FIXME: this should only be -impl for a passthrough hal.
+    // In most cases, to convert this to a binderized implementation, you should:
+    // - change '-impl' to '-service' here and make it a cc_binary instead of a
+    //   cc_library_shared.
+    // - add a *.rc file for this module.
+    // - delete HIDL_FETCH_I* functions.
+    // - call configureRpcThreadpool and registerAsService on the instance.
+    // You may also want to append '-impl/-service' with a specific identifier like
+    // '-vendor' or '-<hardware identifier>' etc to distinguish it.
+    name: "vendor.lineage.touch@1.0-impl",
+    relative_install_path: "hw",
+    // FIXME: this should be 'vendor: true' for modules that will eventually be
+    // on AOSP.
+    proprietary: true,
+    srcs: [
+        "GloveMode.cpp",
+        "KeyDisabler.cpp",
+        "StylusMode.cpp",
+        "TouchscreenGesture.cpp",
+    ],
+    shared_libs: [
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "vendor.lineage.touch@1.0",
+    ],
+}
