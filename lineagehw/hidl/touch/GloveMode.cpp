@@ -14,28 +14,49 @@
  * limitations under the License.
  */
 
+#include <fstream>
+
 #include "GloveMode.h"
 
 namespace vendor {
 namespace lineage {
 namespace touch {
 namespace V1_0 {
-namespace implementation {
+namespace samsung {
 
-// Methods from ::vendor::lineage::touch::V1_0::IGloveMode follow.
-Return<void> GloveMode::setEnabled(bool enabled) {
-    // TODO implement
-    return Void();
+bool GloveMode::isSupported() {
+    std::ifstream file("/sys/class/sec/tsp/cmd_list");
+    if (file.is_open()) {
+        std::string line;
+        while (getline(file, line)) {
+            if (!line.compare("glove_mode"))
+                return true;
+        }
+        file.close();
+    }
+    return false;
 }
 
+// Methods from ::vendor::lineage::touch::V1_0::IGloveMode follow.
+Return<bool> GloveMode::isEnabled() {
+    std::ifstream file("/sys/class/sec/tsp/cmd_result");
+    if (file.is_open()) {
+        std::string line;
+        getline(file, line);
+        if (!line.compare("glove_mode,1:OK"))
+            return true;
+        file.close();
+    }
+    return false;
+}
 
-// Methods from ::android::hidl::base::V1_0::IBase follow.
+Return<bool> GloveMode::setEnabled(bool enabled) {
+    std::ofstream file("/sys/class/sec/tsp/cmd");
+    file << "glove_mode," << (enabled ? "1" : "0");
+    return true;
+}
 
-//IGloveMode* HIDL_FETCH_IGloveMode(const char* /* name */) {
-    //return new GloveMode();
-//}
-//
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V1_0
 }  // namespace touch
 }  // namespace lineage
