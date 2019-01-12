@@ -17,14 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Visualización avanzada</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Pantalla</string>
-  <string name="screen_colors_title">Colores</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Escenariu</string>
-  <string name="mdnie_scenario_summary_head">Afita l\'escenariu mDNIe</string>
-  <!-- Scenario names -->
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Visualización avanzada</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Pantalla</string>
+    <string name="screen_colors_title">Colores</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Escenariu</string>
+    <string name="mdnie_scenario_summary_head">Afita l\'escenariu mDNIe</string>
+    <string name="mdnie_accessibility_title_head">Mou d\'accesibilidá</string>
+    <string name="mdnie_accessibility_summary_head">Afitar el mou d\'accesibilidá mDNIe</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (por defeutu)</string>
+    <string name="mdnie_scenario_video">Videu</string>
+    <string name="mdnie_scenario_video_warm">Videu caldiu</string>
+    <string name="mdnie_scenario_video_cold">Videu fríu</string>
+    <string name="mdnie_scenario_camera">Cámara</string>
+    <string name="mdnie_scenario_navigation">Navegación</string>
+    <string name="mdnie_scenario_gallery">Galería</string>
+    <string name="mdnie_scenario_vt">Videollamada</string>
+    <string name="mdnie_scenario_browser">Restolador</string>
+    <string name="mdnie_scenario_ebook">Llibru electrónicu</string>
+    <string name="mdnie_scenario_email">Corréu electrónicu</string>
+    <string name="mdnie_scenario_tdmb">Televisión dixital</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Normal</string>
+    <string name="mdnie_accessibility_inverse">Invertíu</string>
+    <string name="mdnie_accessibility_color_blind">Daltónicu</string>
+    <string name="mdnie_accessibility_screen_curtain">Cortina de pantalla</string>
+    <string name="mdnie_accessibility_grayscale">Buxu</string>
+    <string name="mdnie_accessibility_gray_negative">Gris invertíu</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

@@ -17,9 +17,29 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Screen Preference -->
-  <!-- mDNIe -->
-  <!-- Scenario names -->
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <!-- Screen Preference -->
+    <!-- mDNIe -->
+    <string name="mdnie_accessibility_title_head">Modh na so-inntrigeachd</string>
+    <string name="mdnie_accessibility_summary_head">Suidhich modh so-inntrigeachd mDNIe</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (bun-roghainn)</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_video_warm">Video blàth</string>
+    <string name="mdnie_scenario_video_cold">Video fuar</string>
+    <string name="mdnie_scenario_camera">Camara</string>
+    <string name="mdnie_scenario_navigation">Seòladaireachd</string>
+    <string name="mdnie_scenario_gallery">Gailearaidh</string>
+    <string name="mdnie_scenario_vt">Gairm video</string>
+    <string name="mdnie_scenario_browser">Brabhsair</string>
+    <string name="mdnie_scenario_ebook">Leabhar-d</string>
+    <string name="mdnie_scenario_email">Post-d</string>
+    <string name="mdnie_scenario_tdmb">Telebhisean digiteach</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Àbhaisteach</string>
+    <string name="mdnie_accessibility_inverse">Ais-thionndaichte</string>
+    <string name="mdnie_accessibility_color_blind">Dath-dhoille</string>
+    <string name="mdnie_accessibility_screen_curtain">Cùirtear sgrìn</string>
+    <string name="mdnie_accessibility_grayscale">Liath</string>
+    <string name="mdnie_accessibility_gray_negative">Liath ais-thionndaichte</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

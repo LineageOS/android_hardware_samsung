@@ -17,14 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Настройки на дисплея</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Екран</string>
-  <string name="screen_colors_title">Цветове</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Сценарий</string>
-  <string name="mdnie_scenario_summary_head">Избор на сценария mDNIe</string>
-  <!-- Scenario names -->
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Настройки на дисплея</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Екран</string>
+    <string name="screen_colors_title">Цветове</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Сценарий</string>
+    <string name="mdnie_scenario_summary_head">Избор на сценария mDNIe</string>
+    <string name="mdnie_accessibility_title_head">Режим на достъп</string>
+    <string name="mdnie_accessibility_summary_head">Задайте режим на достъп за mDNIe</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (по подразбиране)</string>
+    <string name="mdnie_scenario_video">Видео</string>
+    <string name="mdnie_scenario_video_warm">Видео топло</string>
+    <string name="mdnie_scenario_video_cold">Видео студено</string>
+    <string name="mdnie_scenario_camera">Камера</string>
+    <string name="mdnie_scenario_navigation">Навигация</string>
+    <string name="mdnie_scenario_gallery">Галерия</string>
+    <string name="mdnie_scenario_vt">Видео разговор</string>
+    <string name="mdnie_scenario_browser">Браузър</string>
+    <string name="mdnie_scenario_ebook">Е-книга</string>
+    <string name="mdnie_scenario_email">Имейл</string>
+    <string name="mdnie_scenario_tdmb">Цифрова телевизия</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Нормален</string>
+    <string name="mdnie_accessibility_inverse">Обърнат</string>
+    <string name="mdnie_accessibility_color_blind">За далтонисти</string>
+    <string name="mdnie_accessibility_screen_curtain">Екранна завеса</string>
+    <string name="mdnie_accessibility_grayscale">Сив</string>
+    <string name="mdnie_accessibility_gray_negative">Обърнат сив</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

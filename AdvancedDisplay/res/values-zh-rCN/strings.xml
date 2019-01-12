@@ -17,34 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">高级显示</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">屏幕</string>
-  <string name="screen_colors_title">颜色</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">场景</string>
-  <string name="mdnie_scenario_summary_head">设置 mDNIe 场景</string>
-  <string name="mdnie_accessibility_title_head">无障碍模式</string>
-  <string name="mdnie_accessibility_summary_head">设置 mDNIe 无障碍模式</string>
-  <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS (默认)</string>
-  <string name="mdnie_scenario_video">视频</string>
-  <string name="mdnie_scenario_video_warm">视频模式 (温)</string>
-  <string name="mdnie_scenario_video_cold">视频模式 (冷)</string>
-  <string name="mdnie_scenario_camera">相机</string>
-  <string name="mdnie_scenario_navigation">导航</string>
-  <string name="mdnie_scenario_gallery">图库</string>
-  <string name="mdnie_scenario_vt">视频通话</string>
-  <string name="mdnie_scenario_browser">浏览器</string>
-  <string name="mdnie_scenario_ebook">电子书</string>
-  <string name="mdnie_scenario_email">电子邮件</string>
-  <string name="mdnie_scenario_tdmb">数字电视</string>
-  <!-- Accessibility mode names -->
-  <string name="mdnie_accessibility_normal">普通</string>
-  <string name="mdnie_accessibility_inverse">反色</string>
-  <string name="mdnie_accessibility_color_blind">色盲模式</string>
-  <string name="mdnie_accessibility_screen_curtain">屏幕遮蔽</string>
-  <string name="mdnie_accessibility_grayscale">灰度</string>
-  <string name="mdnie_accessibility_gray_negative">反色灰度</string>
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">高级显示</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">屏幕</string>
+    <string name="screen_colors_title">颜色</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">场景</string>
+    <string name="mdnie_scenario_summary_head">设置 mDNIe 场景</string>
+    <string name="mdnie_accessibility_title_head">无障碍模式</string>
+    <string name="mdnie_accessibility_summary_head">设置 mDNIe 无障碍模式</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (默认)</string>
+    <string name="mdnie_scenario_video">视频</string>
+    <string name="mdnie_scenario_video_warm">视频模式 (温)</string>
+    <string name="mdnie_scenario_video_cold">视频模式 (冷)</string>
+    <string name="mdnie_scenario_camera">相机</string>
+    <string name="mdnie_scenario_navigation">导航</string>
+    <string name="mdnie_scenario_gallery">图库</string>
+    <string name="mdnie_scenario_vt">视频通话</string>
+    <string name="mdnie_scenario_browser">浏览器</string>
+    <string name="mdnie_scenario_ebook">电子书</string>
+    <string name="mdnie_scenario_email">电子邮件</string>
+    <string name="mdnie_scenario_tdmb">数字电视</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">普通</string>
+    <string name="mdnie_accessibility_inverse">反色</string>
+    <string name="mdnie_accessibility_color_blind">色盲模式</string>
+    <string name="mdnie_accessibility_screen_curtain">屏幕遮罩</string>
+    <string name="mdnie_accessibility_grayscale">灰度</string>
+    <string name="mdnie_accessibility_gray_negative">反色灰度</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

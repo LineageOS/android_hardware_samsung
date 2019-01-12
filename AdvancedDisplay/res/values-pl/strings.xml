@@ -17,14 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Zaawansowane ustawienia ekranu</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Ekran</string>
-  <string name="screen_colors_title">Kolory</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Scenerie</string>
-  <string name="mdnie_scenario_summary_head">Ustaw scenariusz mDNIe</string>
-  <!-- Scenario names -->
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Zaawansowane ustawienia ekranu</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Ekran</string>
+    <string name="screen_colors_title">Kolory</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Scenerie</string>
+    <string name="mdnie_scenario_summary_head">Ustaw scenariusz mDNIe</string>
+    <string name="mdnie_accessibility_title_head">Ułatwienia dostępu</string>
+    <string name="mdnie_accessibility_summary_head">Ustaw tryb dostępności mDNIe</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (domyślnie)</string>
+    <string name="mdnie_scenario_video">Wideo</string>
+    <string name="mdnie_scenario_video_warm">Ciepły film</string>
+    <string name="mdnie_scenario_video_cold">Zimny film</string>
+    <string name="mdnie_scenario_camera">Aparat</string>
+    <string name="mdnie_scenario_navigation">Nawigacja</string>
+    <string name="mdnie_scenario_gallery">Galeria</string>
+    <string name="mdnie_scenario_vt">Połączenie wideo</string>
+    <string name="mdnie_scenario_browser">Przeglądarka</string>
+    <string name="mdnie_scenario_ebook">eBook</string>
+    <string name="mdnie_scenario_email">E-mail</string>
+    <string name="mdnie_scenario_tdmb">Telewizja cyfrowa</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Normalny</string>
+    <string name="mdnie_accessibility_inverse">Odwrócony</string>
+    <string name="mdnie_accessibility_color_blind">Daltonizm</string>
+    <string name="mdnie_accessibility_screen_curtain">Kurtyna ekranowa</string>
+    <string name="mdnie_accessibility_grayscale">Szary</string>
+    <string name="mdnie_accessibility_gray_negative">Szary, odwrócony</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

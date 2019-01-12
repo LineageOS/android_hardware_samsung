@@ -17,14 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">عرض متقدم</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">الشاشة</string>
-  <string name="screen_colors_title">الألوان</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">السيناريو</string>
-  <string name="mdnie_scenario_summary_head">تعيين السيناريو mDNIe</string>
-  <!-- Scenario names -->
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">عرض متقدم</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">الشاشة</string>
+    <string name="screen_colors_title">الألوان</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">السيناريو</string>
+    <string name="mdnie_scenario_summary_head">تعيين السيناريو mDNIe</string>
+    <string name="mdnie_accessibility_title_head">وضع إمكانية الوصول</string>
+    <string name="mdnie_accessibility_summary_head">قم بتعيين وضع إمكانية الوصول mDNIe</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (الافتراضي)</string>
+    <string name="mdnie_scenario_video">فيديو</string>
+    <string name="mdnie_scenario_video_warm">فيديو دافئ</string>
+    <string name="mdnie_scenario_video_cold">فيديو بارد</string>
+    <string name="mdnie_scenario_camera">الكاميرا</string>
+    <string name="mdnie_scenario_navigation">التنقل</string>
+    <string name="mdnie_scenario_gallery">المعرض</string>
+    <string name="mdnie_scenario_vt">مكالمة فيديو</string>
+    <string name="mdnie_scenario_browser">المتصفح</string>
+    <string name="mdnie_scenario_ebook">كتاب الكتروني</string>
+    <string name="mdnie_scenario_email">البريد الإلكتروني</string>
+    <string name="mdnie_scenario_tdmb">التلفزيون الرقمي</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">عادي</string>
+    <string name="mdnie_accessibility_inverse">معكوس</string>
+    <string name="mdnie_accessibility_color_blind">عمى الألوان</string>
+    <string name="mdnie_accessibility_screen_curtain">حجب الشاشة</string>
+    <string name="mdnie_accessibility_grayscale">رمادي</string>
+    <string name="mdnie_accessibility_gray_negative">رمادي معكوس</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

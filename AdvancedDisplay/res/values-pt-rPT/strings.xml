@@ -17,14 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Visualização avançada</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Ecrã</string>
-  <string name="screen_colors_title">Cores</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Cenário</string>
-  <string name="mdnie_scenario_summary_head">Definir o cenário mDNIe</string>
-  <!-- Scenario names -->
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Visualização avançada</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Ecrã</string>
+    <string name="screen_colors_title">Cores</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Cenário</string>
+    <string name="mdnie_scenario_summary_head">Definir o cenário mDNIe</string>
+    <string name="mdnie_accessibility_title_head">Modo de acessibilidade</string>
+    <string name="mdnie_accessibility_summary_head">Definir o modo de acessibilidade do mDNIe</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (padrão)</string>
+    <string name="mdnie_scenario_video">Vídeo</string>
+    <string name="mdnie_scenario_video_warm">Vídeo quente</string>
+    <string name="mdnie_scenario_video_cold">Vídeo frio</string>
+    <string name="mdnie_scenario_camera">Câmara</string>
+    <string name="mdnie_scenario_navigation">Navegação</string>
+    <string name="mdnie_scenario_gallery">Galeria</string>
+    <string name="mdnie_scenario_vt">Chamada de vídeo</string>
+    <string name="mdnie_scenario_browser">Navegador</string>
+    <string name="mdnie_scenario_ebook">eBook</string>
+    <string name="mdnie_scenario_email">E-mail</string>
+    <string name="mdnie_scenario_tdmb">Televisão digital</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Normal</string>
+    <string name="mdnie_accessibility_inverse">Invertido</string>
+    <string name="mdnie_accessibility_color_blind">Daltónico</string>
+    <string name="mdnie_accessibility_screen_curtain">Cortina de ecrã</string>
+    <string name="mdnie_accessibility_grayscale">Cinzento</string>
+    <string name="mdnie_accessibility_gray_negative">Cinzento invertido</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

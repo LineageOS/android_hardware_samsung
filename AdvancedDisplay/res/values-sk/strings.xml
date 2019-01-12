@@ -17,14 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Pokročilé zobrazenie</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Obrazovka</string>
-  <string name="screen_colors_title">Farby</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Scenár</string>
-  <string name="mdnie_scenario_summary_head">Nastaviť scenár mDNIe</string>
-  <!-- Scenario names -->
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Pokročilé zobrazenie</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Obrazovka</string>
+    <string name="screen_colors_title">Farby</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Scenár</string>
+    <string name="mdnie_scenario_summary_head">Nastaviť scenár mDNIe</string>
+    <string name="mdnie_accessibility_title_head">Režim uľahčenia ovládania</string>
+    <string name="mdnie_accessibility_summary_head">Nastavenie režimu uľahčenia ovládania mDNIe</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (predvolené)</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_video_warm">Video (teplé tóny)</string>
+    <string name="mdnie_scenario_video_cold">Video (studené tóny)</string>
+    <string name="mdnie_scenario_camera">Fotoaparát</string>
+    <string name="mdnie_scenario_navigation">Navigácia</string>
+    <string name="mdnie_scenario_gallery">Galéria</string>
+    <string name="mdnie_scenario_vt">Videohovor</string>
+    <string name="mdnie_scenario_browser">Prehliadač</string>
+    <string name="mdnie_scenario_ebook">Elektronická kniha</string>
+    <string name="mdnie_scenario_email">E-mail</string>
+    <string name="mdnie_scenario_tdmb">Digitálna televízia</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Normalny</string>
+    <string name="mdnie_accessibility_inverse">Obrátený</string>
+    <string name="mdnie_accessibility_color_blind">Farbosleposť</string>
+    <string name="mdnie_accessibility_screen_curtain">Záclony v obraze</string>
+    <string name="mdnie_accessibility_grayscale">Šedý zákal</string>
+    <string name="mdnie_accessibility_gray_negative">Obrátený šedý zákal</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

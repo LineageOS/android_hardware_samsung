@@ -17,34 +17,34 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Napreden zaslon</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Zaslon</string>
-  <string name="screen_colors_title">Barve</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Scenarij</string>
-  <string name="mdnie_scenario_summary_head">Nastavite scenarij mDNIe</string>
-  <string name="mdnie_accessibility_title_head">Način dostopnosti</string>
-  <string name="mdnie_accessibility_summary_head">Nastavite način dostopnosti mDNIe</string>
-  <!-- Scenario names -->
-  <string name="mdnie_scenario_ui">LineageOS (privzeto)</string>
-  <string name="mdnie_scenario_video">Video</string>
-  <string name="mdnie_scenario_video_warm">Topel videoposnetek</string>
-  <string name="mdnie_scenario_video_cold">Hladen videoposnetek</string>
-  <string name="mdnie_scenario_camera">Fotoaparat</string>
-  <string name="mdnie_scenario_navigation">Navigacija</string>
-  <string name="mdnie_scenario_gallery">Galerija</string>
-  <string name="mdnie_scenario_vt">Video klic</string>
-  <string name="mdnie_scenario_browser">Brskalnik</string>
-  <string name="mdnie_scenario_ebook">E-knjiga</string>
-  <string name="mdnie_scenario_email">E-pošta</string>
-  <string name="mdnie_scenario_tdmb">Digitalna tv</string>
-  <!-- Accessibility mode names -->
-  <string name="mdnie_accessibility_normal">Običajno</string>
-  <string name="mdnie_accessibility_inverse">Obrnjeno</string>
-  <string name="mdnie_accessibility_color_blind">Barvna slepota</string>
-  <string name="mdnie_accessibility_screen_curtain">Zaslonska zavesa</string>
-  <string name="mdnie_accessibility_grayscale">Sivina</string>
-  <string name="mdnie_accessibility_gray_negative">Obrnjena sivina</string>
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Napreden zaslon</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Zaslon</string>
+    <string name="screen_colors_title">Barve</string>
+    <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Scenarij</string>
+    <string name="mdnie_scenario_summary_head">Nastavite scenarij mDNIe</string>
+    <string name="mdnie_accessibility_title_head">Način dostopnosti</string>
+    <string name="mdnie_accessibility_summary_head">Nastavite način dostopnosti mDNIe</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (privzeto)</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_video_warm">Topel videoposnetek</string>
+    <string name="mdnie_scenario_video_cold">Hladen videoposnetek</string>
+    <string name="mdnie_scenario_camera">Fotoaparat</string>
+    <string name="mdnie_scenario_navigation">Navigacija</string>
+    <string name="mdnie_scenario_gallery">Galerija</string>
+    <string name="mdnie_scenario_vt">Video klic</string>
+    <string name="mdnie_scenario_browser">Brskalnik</string>
+    <string name="mdnie_scenario_ebook">E-knjiga</string>
+    <string name="mdnie_scenario_email">E-pošta</string>
+    <string name="mdnie_scenario_tdmb">Digitalna tv</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Običajno</string>
+    <string name="mdnie_accessibility_inverse">Obrnjeno</string>
+    <string name="mdnie_accessibility_color_blind">Barvna slepota</string>
+    <string name="mdnie_accessibility_screen_curtain">Zaslonska zavesa</string>
+    <string name="mdnie_accessibility_grayscale">Sivina</string>
+    <string name="mdnie_accessibility_gray_negative">Obrnjena sivina</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

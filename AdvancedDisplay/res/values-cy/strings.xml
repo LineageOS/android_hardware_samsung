@@ -17,9 +17,30 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Screen Preference -->
-  <!-- mDNIe -->
-  <!-- Scenario names -->
-  <!-- Accessibility mode names -->
-  <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="app_name">Dangosydd uwch</string>
+    <!-- Screen Preference -->
+    <string name="category_screen_title">Sgrin</string>
+    <string name="screen_colors_title">Lliwiau</string>
+    <!-- mDNIe -->
+    <string name="mdnie_accessibility_title_head">Modd hygyrchedd</string>
+    <string name="mdnie_accessibility_summary_head">Gosod modd hygyrchedd mDNIe</string>
+    <!-- Scenario names -->
+    <string name="mdnie_scenario_ui">LineageOS (rhagosodiad)</string>
+    <string name="mdnie_scenario_video">Fideo</string>
+    <string name="mdnie_scenario_video_warm">Fideo cynnes</string>
+    <string name="mdnie_scenario_video_cold">Fideo oer</string>
+    <string name="mdnie_scenario_camera">Camera</string>
+    <string name="mdnie_scenario_navigation">Llywio</string>
+    <string name="mdnie_scenario_gallery">Oriel</string>
+    <string name="mdnie_scenario_vt">Galwad fideo</string>
+    <string name="mdnie_scenario_browser">Porwr</string>
+    <string name="mdnie_scenario_ebook">eLyfr</string>
+    <string name="mdnie_scenario_email">Ebost</string>
+    <string name="mdnie_scenario_tdmb">Teledu digidol</string>
+    <!-- Accessibility mode names -->
+    <string name="mdnie_accessibility_normal">Arferol</string>
+    <string name="mdnie_accessibility_inverse">Wedi\'i wrthdroi</string>
+    <string name="mdnie_accessibility_grayscale">Llwyd</string>
+    <string name="mdnie_accessibility_gray_negative">Llwyd wedi\'i wrthdroi</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
