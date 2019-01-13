@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63e8ffa6_e087eddc",
+        "filename": "lineagehw/hidl/touch/service.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-01-13T15:53:57Z",
+      "side": 1,
+      "message": "This should be \u00273\u0027 since we\u0027re registering 3 services now.",
+      "range": {
+        "startLine": 66,
+        "startChar": 27,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "30fc060322a084dbe3b806b5feb090f50ff09dee",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
