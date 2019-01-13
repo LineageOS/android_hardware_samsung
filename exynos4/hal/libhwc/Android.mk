@@ -28,6 +28,7 @@ LOCAL_SHARED_LIBRARIES := liblog libEGL libcutils libhardware libutils libsync l
 
 ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),smdk4210)
     LOCAL_CFLAGS += -DNO_FIMG
+    LOCAL_CFLAGS += -DSMDK4210
 endif
 
 LOCAL_SRC_FILES := hwcomposer.cpp \

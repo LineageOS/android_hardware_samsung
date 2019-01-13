@@ -262,6 +262,69 @@ bool is_offscreen(struct hwc_context_t *ctx, hwc_layer_1_t &layer)
             layer.displayFrame.bottom < 0;
 }
 
+#ifdef SMDK4210
+bool is_overlay_supported(struct hwc_context_t *ctx, hwc_layer_1_t &layer, size_t i)
+{
+   if(layer.flags & HWC_SKIP_LAYER  || !layer.handle) {
+        ALOGV("%s::is_skip_layer  %d  layer.handle %x ",
+                __func__, layer.flags & HWC_SKIP_LAYER, layer.handle);
+
+        return false;
+    }
+
+    bool result = false;
+    private_handle_t *prev_handle = (private_handle_t *)(layer.handle);
+
+    if (i == 0) {
+    /* check here....if we have any resolution constraints */
+        if (((layer.sourceCrop.right - layer.sourceCrop.left + 1) < 16) ||
+            ((layer.sourceCrop.bottom - layer.sourceCrop.top + 1) < 8))
+            return result;
+
+        if ((layer.transform == HAL_TRANSFORM_ROT_90) ||
+            (layer.transform == HAL_TRANSFORM_ROT_270)) {
+            if (((layer.displayFrame.right - layer.displayFrame.left + 1) < 4) ||
+                ((layer.displayFrame.bottom - layer.displayFrame.top + 1) < 8))
+                return result;
+        } else if (((layer.displayFrame.right - layer.displayFrame.left + 1) < 8) ||
+                   ((layer.displayFrame.bottom - layer.displayFrame.top + 1) < 4)) {
+            return result;
+        }
+
+        switch (prev_handle->format) {
+        case HAL_PIXEL_FORMAT_CUSTOM_YCbCr_420_SP:
+        case HAL_PIXEL_FORMAT_CUSTOM_YCrCb_420_SP:
+        case HAL_PIXEL_FORMAT_CUSTOM_YCbCr_420_SP_TILED:
+            result = true;
+            break;
+        case HAL_PIXEL_FORMAT_YV12:                 /* YCrCb_420_P */
+        case HAL_PIXEL_FORMAT_YCbCr_420_P:
+        case HAL_PIXEL_FORMAT_YCrCb_420_SP:
+        case HAL_PIXEL_FORMAT_YCbCr_420_SP:
+            if ((prev_handle->usage & GRALLOC_USAGE_HWC_HWOVERLAY) &&
+                 (layer.blending == HWC_BLENDING_NONE))
+                result = true;
+            else
+                result = false;
+            break;
+        default:
+            result = false;
+            break;
+        }
+    }
+
+    ALOGV("%s:(%s)=>0:FB,1:OVERLAY \r\n"
+            "   format(0x%x),magic(0x%x),flags(%d),size(%d),offset(%d)"
+            "b_addr(0x%x),usage(%d),w(%d),h(%d),bpp(%d)",
+            __func__, result ? "true" : "false",
+            prev_handle->format, prev_handle->magic, prev_handle->flags,
+            prev_handle->size, prev_handle->offset, prev_handle->base,
+            prev_handle->usage, prev_handle->width, prev_handle->height,
+            prev_handle->bpp);
+
+    return result;
+}
+#else
 bool is_overlay_supported(struct hwc_context_t *ctx, hwc_layer_1_t &layer, size_t i)
 {
     enum gsc_map_t::mode mode;
@@ -325,6 +388,7 @@ bool is_overlay_supported(struct hwc_context_t *ctx, hwc_layer_1_t &layer, size_
     ALOGV("%s: return true", __FUNCTION__);
     return true;
 }
+#endif
 
 void determineSupportedOverlays(hwc_context_t *ctx, hwc_display_contents_1_t *contents)
 {
