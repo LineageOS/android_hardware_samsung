@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -35,21 +35,24 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct DisplayModes : public IDisplayModes {
+class DisplayModes : public IDisplayModes {
+  public:
+    DisplayModes();
+    bool isSupported();
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
-    Return<void> getDisplayModes(getDisplayModes_cb _hidl_cb) override;
-    Return<void> getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) override;
-    Return<void> getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_cb) override;
+    Return<void> getDisplayModes(getDisplayModes_cb resultCb) override;
+    Return<void> getCurrentDisplayMode(getCurrentDisplayMode_cb resultCb) override;
+    Return<void> getDefaultDisplayMode(getDefaultDisplayMode_cb resultCb) override;
     Return<bool> setDisplayMode(int32_t modeID, bool makeDefault) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
-
+  private:
+    static const std::map<int32_t, std::string> kModeMap;
+    int32_t mDefaultModeId;
 };
 
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IDisplayModes* HIDL_FETCH_IDisplayModes(const char* name);
-
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
