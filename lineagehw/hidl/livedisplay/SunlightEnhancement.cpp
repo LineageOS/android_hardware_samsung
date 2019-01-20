@@ -14,33 +14,43 @@
  * limitations under the License.
  */
 
+#include <fstream>
+
 #include "SunlightEnhancement.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
+bool SunlightEnhancement::isSupported() {
+    std::ofstream file("/sys/class/mdnie/mdnie/outdoor");
+    return file.good();
+}
+
+// Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
 Return<bool> SunlightEnhancement::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::ifstream file("/sys/class/mdnie/mdnie/outdoor");
+
+    if (file.is_open()) {
+        std::string line;
+        getline(file, line);
+        if (!line.compare("1"))
+            return true;
+    }
+
+    return false;
 }
 
 Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    std::ofstream file("/sys/class/mdnie/mdnie/outdoor");
+    file << (enabled ? "1" : "0");
+    return true;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//ISunlightEnhancement* HIDL_FETCH_ISunlightEnhancement(const char* /* name */) {
-    //return new SunlightEnhancement();
-//}
-//
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
