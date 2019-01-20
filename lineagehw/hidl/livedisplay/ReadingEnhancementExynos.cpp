@@ -19,7 +19,7 @@
 
 #include <fstream>
 
-#include "ReadingEnhancement.h"
+#include "ReadingEnhancementExynos.h"
 
 using android::base::ReadFileToString;
 using android::base::Trim;
@@ -31,26 +31,27 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char *kREPath = "/sys/devices/virtual/mdnie/mdnie/accessibility";
+static constexpr const char *kREPath = "/sys/class/mdnie/mdnie/accessibility";
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
-bool ReadingEnhancement::isSupported() {
+bool ReadingEnhancementExynos::isSupported() {
     std::fstream re(kREPath, re.in | re.out);
     return re.good();
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
-Return<bool> ReadingEnhancement::isEnabled() {
-    std::string contents;
+Return<bool> ReadingEnhancementExynos::isEnabled() {
+    std::string tmp;
+    int32_t contents = 0;
 
-    if (ReadFileToString(kREPath, &contents)) {
-        contents = Trim(contents);
+    if (ReadFileToString(kREPath, &tmp)) {
+        contents = std::stoi(Trim(tmp));
     }
 
-    return !contents.compare("Current accessibility : DSI0 : GRAYSCALE ");
+    return contents == 4;
 }
 
-Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
+Return<bool> ReadingEnhancementExynos::setEnabled(bool enabled) {
     return WriteStringToFile(enabled ? "4" : "0", kREPath, true);
 }
 
