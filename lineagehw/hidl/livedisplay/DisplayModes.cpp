@@ -20,7 +20,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
 Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb _hidl_cb) {
@@ -50,7 +50,7 @@ Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
     //return new DisplayModes();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

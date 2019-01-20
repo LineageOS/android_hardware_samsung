@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -53,7 +53,7 @@ struct PictureAdjustment : public IPictureAdjustment {
 // FIXME: most likely delete, this is only for passthrough implementations
 // extern "C" IPictureAdjustment* HIDL_FETCH_IPictureAdjustment(const char* name);
 
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
