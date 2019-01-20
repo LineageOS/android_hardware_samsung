@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -37,9 +37,9 @@ using ::android::sp;
 
 struct ColorBalance : public IColorBalance {
     // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
-    Return<void> getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) override;
+    Return<void> getColorBalanceRange(getColorBalanceRange_cb) override;
     Return<int32_t> getColorBalance() override;
-    Return<bool> setColorBalance(int32_t value) override;
+    Return<bool> setColorBalance(int32_t) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
@@ -48,7 +48,7 @@ struct ColorBalance : public IColorBalance {
 // FIXME: most likely delete, this is only for passthrough implementations
 // extern "C" IColorBalance* HIDL_FETCH_IColorBalance(const char* name);
 
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
