@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
+#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYCOLORCALIBRATIONEXYNOS_H
+#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYCOLORCALIBRATIONEXYNOS_H
 
-#include <vendor/lineage/livedisplay/2.0/IColorBalance.h>
+#include <vendor/lineage/livedisplay/2.0/IDisplayColorCalibration.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 
@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -35,23 +35,24 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct ColorBalance : public IColorBalance {
-    // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
-    Return<void> getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) override;
-    Return<int32_t> getColorBalance() override;
-    Return<bool> setColorBalance(int32_t value) override;
+class DisplayColorCalibrationExynos : public IDisplayColorCalibration {
+  public:
+    bool isSupported();
+
+    // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.
+    Return<int32_t> getMaxValue() override;
+    Return<int32_t> getMinValue() override;
+    Return<void> getCalibration(getCalibration_cb resultCb) override;
+    Return<bool> setCalibration(const hidl_vec<int32_t>& rgb) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
 };
 
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IColorBalance* HIDL_FETCH_IColorBalance(const char* name);
-
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
 
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
+#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYCOLORCALIBRATIONEXYNOS_H

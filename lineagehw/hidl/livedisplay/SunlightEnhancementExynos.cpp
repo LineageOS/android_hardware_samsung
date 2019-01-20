@@ -16,7 +16,7 @@
 
 #include <fstream>
 
-#include "ReadingEnhancement.h"
+#include "SunlightEnhancementExynos.h"
 
 namespace vendor {
 namespace lineage {
@@ -25,34 +25,32 @@ namespace V2_0 {
 namespace samsung {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
-bool ReadingEnhancement::isSupported() {
-    std::ofstream file("/sys/devices/virtual/mdnie/mdnie/accessibility");
+bool SunlightEnhancementExynos::isSupported() {
+    std::ofstream file("/sys/class/mdnie/mdnie/lux");
     return file.good();
 }
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
-Return<bool> ReadingEnhancement::isEnabled() {
-    std::ifstream file("/sys/devices/virtual/mdnie/mdnie/accessibility");
-    std::string line;
+// Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
+Return<bool> SunlightEnhancementExynos::isEnabled() {
+    std::ifstream file("/sys/class/mdnie/mdnie/lux");
+    int status = -1;
 
     if (file.is_open()) {
-        file >> line;
+        file >> status;
     }
 
-    return !line.compare("Current accessibility : DSI0 : GRAYSCALE ");
+    return file.good() && status > 0;
 }
 
-Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
-    std::ofstream file("/sys/devices/virtual/mdnie/mdnie/accessibility");
+Return<bool> SunlightEnhancementExynos::setEnabled(bool enabled) {
+    std::ofstream file("/sys/class/mdnie/mdnie/lux");
     if (file.is_open()) {
-        file << (enabled ? "4" : "0");
+        /* see drivers/video/fbdev/exynos/decon_7880/panels/mdnie_lite_table*, get_hbm_index */
+        file << (enabled ? "40000" : "0");
     }
 
     return true;
 }
-
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
 
 }  // namespace samsung
 }  // namespace V2_0
