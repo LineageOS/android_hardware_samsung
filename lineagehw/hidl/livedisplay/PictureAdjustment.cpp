@@ -20,45 +20,45 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment follow.
-Return<void> PictureAdjustment::getHueRange(getHueRange_cb _hidl_cb) {
+Return<void> PictureAdjustment::getHueRange(getHueRange_cb) {
     // TODO implement
     return Void();
 }
 
-Return<void> PictureAdjustment::getSaturationRange(getSaturationRange_cb _hidl_cb) {
+Return<void> PictureAdjustment::getSaturationRange(getSaturationRange_cb) {
     // TODO implement
     return Void();
 }
 
-Return<void> PictureAdjustment::getIntensityRange(getIntensityRange_cb _hidl_cb) {
+Return<void> PictureAdjustment::getIntensityRange(getIntensityRange_cb) {
     // TODO implement
     return Void();
 }
 
-Return<void> PictureAdjustment::getContrastRange(getContrastRange_cb _hidl_cb) {
+Return<void> PictureAdjustment::getContrastRange(getContrastRange_cb) {
     // TODO implement
     return Void();
 }
 
-Return<void> PictureAdjustment::getSaturationThresholdRange(getSaturationThresholdRange_cb _hidl_cb) {
+Return<void> PictureAdjustment::getSaturationThresholdRange(getSaturationThresholdRange_cb) {
     // TODO implement
     return Void();
 }
 
-Return<void> PictureAdjustment::getPictureAdjustment(getPictureAdjustment_cb _hidl_cb) {
+Return<void> PictureAdjustment::getPictureAdjustment(getPictureAdjustment_cb) {
     // TODO implement
     return Void();
 }
 
-Return<void> PictureAdjustment::getDefaultPictureAdjustment(getDefaultPictureAdjustment_cb _hidl_cb) {
+Return<void> PictureAdjustment::getDefaultPictureAdjustment(getDefaultPictureAdjustment_cb) {
     // TODO implement
     return Void();
 }
 
-Return<bool> PictureAdjustment::setPictureAdjustment(const ::vendor::lineage::livedisplay::V2_0::HSIC& hsic) {
+Return<bool> PictureAdjustment::setPictureAdjustment(const ::vendor::lineage::livedisplay::V2_0::HSIC&) {
     // TODO implement
     return bool {};
 }
@@ -70,7 +70,7 @@ Return<bool> PictureAdjustment::setPictureAdjustment(const ::vendor::lineage::li
     //return new PictureAdjustment();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
