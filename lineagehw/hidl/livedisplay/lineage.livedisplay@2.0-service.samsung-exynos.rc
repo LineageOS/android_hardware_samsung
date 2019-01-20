@@ -1,0 +1,4 @@
+service livedisplay-hal-2-0-samsung-exynos /system/bin/hw/lineage.livedisplay@2.0-service.samsung-exynos
+    class hal
+    user system
+    group system
