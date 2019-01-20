@@ -19,7 +19,8 @@
 
 #include <fstream>
 
-#include "ReadingEnhancement.h"
+#include "SunlightEnhancementExynos.h"
+
 
 using android::base::ReadFileToString;
 using android::base::Trim;
@@ -31,31 +32,30 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char *kREPath = "/sys/devices/virtual/mdnie/mdnie/accessibility";
+static constexpr const char *kLUXPath = "/sys/class/mdnie/mdnie/lux";
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
-bool ReadingEnhancement::isSupported() {
-    std::fstream re(kREPath, re.in | re.out);
-    return re.good();
+bool SunlightEnhancementExynos::isSupported() {
+    std::fstream file(kLUXPath, file.in | file.out);
+    return file.good();
 }
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
-Return<bool> ReadingEnhancement::isEnabled() {
-    std::string contents;
+// Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
+Return<bool> SunlightEnhancementExynos::isEnabled() {
+    std::string tmp;
+    int32_t contents = 0;
 
-    if (ReadFileToString(kREPath, &contents)) {
-        contents = Trim(contents);
+    if (ReadFileToString(kLUXPath, &tmp)) {
+        contents = std::stoi(Trim(tmp));
     }
 
-    return !contents.compare("Current accessibility : DSI0 : GRAYSCALE ") || !contents.compare("4");
+    return contents > 0;
 }
 
-Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
-    return WriteStringToFile(enabled ? "4" : "0", kREPath, true);
+Return<bool> SunlightEnhancementExynos::setEnabled(bool enabled) {
+    /* see drivers/video/fbdev/exynos/decon_7880/panels/mdnie_lite_table*, get_hbm_index */
+    return WriteStringToFile(enabled ? "40000" : "0", kLUXPath, true);
 }
-
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
 
 }  // namespace samsung
 }  // namespace V2_0
