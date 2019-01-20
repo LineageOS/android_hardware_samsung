@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
+#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENTEXYNOS_H
+#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENTEXYNOS_H
 
-#include <vendor/lineage/livedisplay/2.0/IDisplayModes.h>
+#include <vendor/lineage/livedisplay/2.0/ISunlightEnhancement.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 
@@ -35,19 +35,19 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct DisplayModes : public IDisplayModes {
-    // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
-    Return<void> getDisplayModes(getDisplayModes_cb) override;
-    Return<void> getCurrentDisplayMode(getCurrentDisplayMode_cb) override;
-    Return<void> getDefaultDisplayMode(getDefaultDisplayMode_cb) override;
-    Return<bool> setDisplayMode(int32_t, bool) override;
+class SunlightEnhancementExynos : public ISunlightEnhancement {
+  public:
+    SunlightEnhancementExynos() = default;
+
+    bool isSupported();
+
+    // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
+    Return<bool> isEnabled() override;
+    Return<bool> setEnabled(bool enabled) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
 };
-
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IDisplayModes* HIDL_FETCH_IDisplayModes(const char* name);
 
 }  // namespace samsung
 }  // namespace V2_0
@@ -55,4 +55,4 @@ struct DisplayModes : public IDisplayModes {
 }  // namespace lineage
 }  // namespace vendor
 
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
+#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENTEXYNOS_H
