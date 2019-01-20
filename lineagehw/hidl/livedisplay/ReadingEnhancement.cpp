@@ -14,33 +14,50 @@
  * limitations under the License.
  */
 
+#include <android-base/file.h>
+#include <android-base/strings.h>
+
+#include <fstream>
+
 #include "ReadingEnhancement.h"
+
+using android::base::ReadFileToString;
+using android::base::Trim;
+using android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
+
+static constexpr const char *kREPath = "/sys/class/mdnie/mdnie/accessibility";
+
+// Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
+bool ReadingEnhancement::isSupported() {
+    std::fstream re(kREPath, re.in | re.out);
+    return re.good();
+}
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
 Return<bool> ReadingEnhancement::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::string contents;
+
+    if (ReadFileToString(kREPath, &contents)) {
+        contents = Trim(contents);
+    }
+
+    return !contents.compare("Current accessibility : DSI0 : GRAYSCALE ") || !contents.compare("4");
 }
 
 Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    return WriteStringToFile(enabled ? "4" : "0", kREPath, true);
 }
 
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 
-//IReadingEnhancement* HIDL_FETCH_IReadingEnhancement(const char* /* name */) {
-    //return new ReadingEnhancement();
-//}
-//
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

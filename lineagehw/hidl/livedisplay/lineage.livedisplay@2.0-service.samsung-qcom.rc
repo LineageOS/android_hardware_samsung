@@ -1,0 +1,4 @@
+service livedisplay-hal-2-0-samsung-qcom /system/bin/hw/lineage.livedisplay@2.0-service.samsung-qcom
+    class late_start
+    user system
+    group system

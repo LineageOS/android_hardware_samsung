@@ -12,36 +12,74 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-cc_library_shared {
-    // FIXME: this should only be -impl for a passthrough hal.
-    // In most cases, to convert this to a binderized implementation, you should:
-    // - change '-impl' to '-service' here and make it a cc_binary instead of a
-    //   cc_library_shared.
-    // - add a *.rc file for this module.
-    // - delete HIDL_FETCH_I* functions.
-    // - call configureRpcThreadpool and registerAsService on the instance.
-    // You may also want to append '-impl/-service' with a specific identifier like
-    // '-vendor' or '-<hardware identifier>' etc to distinguish it.
-    name: "vendor.lineage.livedisplay@2.0-impl",
+cc_defaults {
+    name: "livedisplay_samsung_exynos_defaults",
+    defaults: ["hidl_defaults"],
     relative_install_path: "hw",
-    // FIXME: this should be 'vendor: true' for modules that will eventually be
-    // on AOSP.
-    proprietary: true,
     srcs: [
         "AdaptiveBacklight.cpp",
-        "AutoContrast.cpp",
-        "ColorBalance.cpp",
-        "ColorEnhancement.cpp",
-        "DisplayColorCalibration.cpp",
+        "DisplayColorCalibrationExynos.cpp",
         "DisplayModes.cpp",
-        "PictureAdjustment.cpp",
         "ReadingEnhancement.cpp",
-        "SunlightEnhancement.cpp",
+        "SunlightEnhancementExynos.cpp",
+        "serviceExynos.cpp",
     ],
     shared_libs: [
+        "libbase",
+        "libbinder",
         "libhidlbase",
         "libhidltransport",
         "libutils",
         "vendor.lineage.livedisplay@2.0",
     ],
+}
+
+cc_defaults {
+    name: "livedisplay_samsung_qcom_defaults",
+    defaults: ["hidl_defaults"],
+    relative_install_path: "hw",
+    srcs: [
+        "AdaptiveBacklight.cpp",
+        "DisplayColorCalibration.cpp",
+        "DisplayModes.cpp",
+        "ReadingEnhancement.cpp",
+        "SunlightEnhancement.cpp",
+        "service.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder",
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "vendor.lineage.livedisplay@2.0",
+    ],
+}
+
+cc_binary {
+    name: "lineage.livedisplay@2.0-service.samsung-exynos",
+    init_rc: ["lineage.livedisplay@2.0-service.samsung-exynos.rc"],
+    defaults: ["livedisplay_samsung_exynos_defaults"],
+    cflags: ["-DLIVES_IN_SYSTEM"],
+}
+
+cc_binary {
+    name: "vendor.lineage.livedisplay@2.0-service.samsung-exynos",
+    init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-exynos.rc"],
+    defaults: ["livedisplay_samsung_exynos_defaults"],
+    vendor: true,
+}
+
+cc_binary {
+    name: "lineage.livedisplay@2.0-service.samsung-qcom",
+    init_rc: ["lineage.livedisplay@2.0-service.samsung-qcom.rc"],
+    defaults: ["livedisplay_samsung_qcom_defaults"],
+    cflags: ["-DLIVES_IN_SYSTEM"],
+}
+
+cc_binary {
+    name: "vendor.lineage.livedisplay@2.0-service.samsung-qcom",
+    init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-qcom.rc"],
+    defaults: ["livedisplay_samsung_qcom_defaults"],
+    vendor: true,
 }
