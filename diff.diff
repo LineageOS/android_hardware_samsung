@@ -1,0 +1,89 @@
+diff --git a/lineagehw/hidl/livedisplay/service.cpp b/lineagehw/hidl/livedisplay/service.cpp
+index 78e5112..8102a07 100644
+--- a/lineagehw/hidl/livedisplay/service.cpp
++++ b/lineagehw/hidl/livedisplay/service.cpp
+@@ -26,6 +26,7 @@
+ 
+ using android::hardware::configureRpcThreadpool;
+ using android::hardware::joinRpcThreadpool;
++using android::hidl::base::V1_0::IBase;
+ using android::sp;
+ using android::status_t;
+ using android::OK;
+@@ -35,69 +36,32 @@ using vendor::lineage::livedisplay::V2_0::samsung::SunlightEnhancement;
+ using vendor::lineage::livedisplay::V2_0::samsung::SunlightEnhancementExynos;
+ 
+ int main() {
++	std::vector<sp<IBase>> services;
+     sp<AdaptiveBacklight> adaptiveBacklight;
+     sp<SunlightEnhancement> sunlightEnhancement;
+     sp<SunlightEnhancementExynos> sunlightEnhancementExynos;
+-    status_t status;
+-    uint8_t services = 0;
+ 
+     LOG(INFO) << "LiveDisplay HAL service is starting.";
+ 
+     adaptiveBacklight = new AdaptiveBacklight();
+-    if (adaptiveBacklight == nullptr) {
+-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL AdaptiveBacklight Iface, exiting.";
+-        goto shutdown;
+-    }
+     if (adaptiveBacklight->isSupported()) {
+-        services++;
++        services.push_back(adaptiveBacklight);
+     }
+ 
+     sunlightEnhancement = new SunlightEnhancement();
+-    if (sunlightEnhancement == nullptr) {
+-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL SunlightEnhancement Iface, exiting.";
+-        goto shutdown;
+-    }
+     if (sunlightEnhancement->isSupported()) {
+-        services++;
++        services.push_back(sunlightEnhancement);
+     }
+ 
+     sunlightEnhancementExynos = new SunlightEnhancementExynos();
+-    if (sunlightEnhancementExynos == nullptr) {
+-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL SunlightEnhancement Iface, exiting.";
+-        goto shutdown;
+-    }
+     if (sunlightEnhancementExynos->isSupported()) {
+-        services++;
+-    }
+-
+-    configureRpcThreadpool(services, true /*callerWillJoin*/);
+-
+-    if (adaptiveBacklight->isSupported()) {
+-        status = adaptiveBacklight->registerAsService();
+-        if (status != OK) {
+-            LOG(ERROR)
+-                << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("
+-                << status << ")";
+-            goto shutdown;
+-        }
++        services.push_back(sunlightEnhancementExynos);
+     }
+ 
+-    if (sunlightEnhancement->isSupported()) {
+-        status = sunlightEnhancement->registerAsService();
+-        if (status != OK) {
+-            LOG(ERROR)
+-                << "Could not register service for LiveDisplay HAL SunlightEnhancement Iface ("
+-                << status << ")";
+-            goto shutdown;
+-        }
+-    }
++    configureRpcThreadpool(services.size(), true /*callerWillJoin*/);
+ 
+-    if (sunlightEnhancementExynos->isSupported()) {
+-        status = sunlightEnhancementExynos->registerAsService();
+-        if (status != OK) {
+-            LOG(ERROR)
+-                << "Could not register service for LiveDisplay HAL SunlightEnhancement Iface ("
+-                << status << ")";
++    for (auto& service : services) {
++        if (service->registerAsService() != OK) {
+             goto shutdown;
+         }
+     }
