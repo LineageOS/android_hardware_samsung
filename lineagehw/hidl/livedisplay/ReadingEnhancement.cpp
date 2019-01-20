@@ -14,23 +14,41 @@
  * limitations under the License.
  */
 
+#include <fstream>
+
 #include "ReadingEnhancement.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
+
+// Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
+bool ReadingEnhancement::isSupported() {
+    std::ofstream file("/sys/devices/virtual/mdnie/mdnie/accessibility");
+    return file.good();
+}
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
 Return<bool> ReadingEnhancement::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::ifstream file("/sys/devices/virtual/mdnie/mdnie/accessibility");
+    std::string line;
+
+    if (file.is_open()) {
+        file >> line;
+    }
+
+    return !line.compare("Current accessibility : DSI0 : GRAYSCALE ");
 }
 
 Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    std::ofstream file("/sys/devices/virtual/mdnie/mdnie/accessibility");
+    if (file.is_open()) {
+        file << (enabled ? "4" : "0");
+    }
+
+    return true;
 }
 
 
@@ -40,7 +58,7 @@ Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
     //return new ReadingEnhancement();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

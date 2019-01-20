@@ -14,38 +14,47 @@
  * limitations under the License.
  */
 
-#include "ColorBalance.h"
+#include <fstream>
+
+#include "ReadingEnhancementExynos.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
-Return<void> ColorBalance::getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) {
-    // TODO implement
-    return Void();
+// Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
+bool ReadingEnhancementExynos::isSupported() {
+    std::ofstream file("/sys/class/mdnie/mdnie/accessibility");
+    return file.good();
 }
 
-Return<int32_t> ColorBalance::getColorBalance() {
-    // TODO implement
-    return int32_t {};
+// Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
+Return<bool> ReadingEnhancementExynos::isEnabled() {
+    std::ifstream file("/sys/class/mdnie/mdnie/accessibility");
+    int status;
+
+    if (file.is_open()) {
+        file >> status;
+    }
+
+    return file.good() && status == 4;
 }
 
-Return<bool> ColorBalance::setColorBalance(int32_t value) {
-    // TODO implement
-    return bool {};
+Return<bool> ReadingEnhancementExynos::setEnabled(bool enabled) {
+    std::ofstream file("/sys/class/mdnie/mdniee/accessibility");
+    if (file.is_open()) {
+        file << (enabled ? "4" : "0");
+    }
+
+    return true;
 }
 
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 
-//IColorBalance* HIDL_FETCH_IColorBalance(const char* /* name */) {
-    //return new ColorBalance();
-//}
-//
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
