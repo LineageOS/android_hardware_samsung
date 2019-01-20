@@ -20,7 +20,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.
 Return<int32_t> DisplayColorCalibration::getMaxValue() {
@@ -33,12 +33,12 @@ Return<int32_t> DisplayColorCalibration::getMinValue() {
     return int32_t {};
 }
 
-Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb _hidl_cb) {
+Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb) {
     // TODO implement
     return Void();
 }
 
-Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>& rgb) {
+Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>&) {
     // TODO implement
     return bool {};
 }
@@ -50,7 +50,7 @@ Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>& rg
     //return new DisplayColorCalibration();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
