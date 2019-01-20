@@ -14,33 +14,38 @@
  * limitations under the License.
  */
 
+#include <fstream>
+
 #include "AdaptiveBacklight.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
+
+bool AdaptiveBacklight::isSupported() {
+    std::ofstream file("/sys/class/lcd/panel/power_reduce");
+    return file.good();
+}
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
 Return<bool> AdaptiveBacklight::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::ifstream file("/sys/class/lcd/panel/power_reduce");
+    int value;
+
+    file >> value;
+
+    return !file.fail() && value == 1;
 }
 
 Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    std::ofstream file("/sys/class/lcd/panel/power_reduce");
+    file << (enabled ? "1" : "0");
+    return true;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IAdaptiveBacklight* HIDL_FETCH_IAdaptiveBacklight(const char* /* name */) {
-    //return new AdaptiveBacklight();
-//}
-//
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
