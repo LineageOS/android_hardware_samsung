@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -49,7 +49,7 @@ struct DisplayColorCalibration : public IDisplayColorCalibration {
 // FIXME: most likely delete, this is only for passthrough implementations
 // extern "C" IDisplayColorCalibration* HIDL_FETCH_IDisplayColorCalibration(const char* name);
 
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

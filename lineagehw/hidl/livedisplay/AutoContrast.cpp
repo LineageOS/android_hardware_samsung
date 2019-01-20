@@ -20,7 +20,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
 Return<bool> AutoContrast::isEnabled() {
@@ -40,7 +40,7 @@ Return<bool> AutoContrast::setEnabled(bool enabled) {
     //return new AutoContrast();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

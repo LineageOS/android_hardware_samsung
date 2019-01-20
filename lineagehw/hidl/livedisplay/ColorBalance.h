@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -48,7 +48,7 @@ struct ColorBalance : public IColorBalance {
 // FIXME: most likely delete, this is only for passthrough implementations
 // extern "C" IColorBalance* HIDL_FETCH_IColorBalance(const char* name);
 
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

@@ -20,7 +20,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment follow.
 Return<void> PictureAdjustment::getHueRange(getHueRange_cb _hidl_cb) {
@@ -70,7 +70,7 @@ Return<bool> PictureAdjustment::setPictureAdjustment(const ::vendor::lineage::li
     //return new PictureAdjustment();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
