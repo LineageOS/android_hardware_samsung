@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -37,14 +37,14 @@ using ::android::sp;
 
 struct PictureAdjustment : public IPictureAdjustment {
     // Methods from ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment follow.
-    Return<void> getHueRange(getHueRange_cb _hidl_cb) override;
-    Return<void> getSaturationRange(getSaturationRange_cb _hidl_cb) override;
-    Return<void> getIntensityRange(getIntensityRange_cb _hidl_cb) override;
-    Return<void> getContrastRange(getContrastRange_cb _hidl_cb) override;
-    Return<void> getSaturationThresholdRange(getSaturationThresholdRange_cb _hidl_cb) override;
-    Return<void> getPictureAdjustment(getPictureAdjustment_cb _hidl_cb) override;
-    Return<void> getDefaultPictureAdjustment(getDefaultPictureAdjustment_cb _hidl_cb) override;
-    Return<bool> setPictureAdjustment(const ::vendor::lineage::livedisplay::V2_0::HSIC& hsic) override;
+    Return<void> getHueRange(getHueRange_cb) override;
+    Return<void> getSaturationRange(getSaturationRange_cb) override;
+    Return<void> getIntensityRange(getIntensityRange_cb) override;
+    Return<void> getContrastRange(getContrastRange_cb) override;
+    Return<void> getSaturationThresholdRange(getSaturationThresholdRange_cb) override;
+    Return<void> getPictureAdjustment(getPictureAdjustment_cb) override;
+    Return<void> getDefaultPictureAdjustment(getDefaultPictureAdjustment_cb) override;
+    Return<bool> setPictureAdjustment(const ::vendor::lineage::livedisplay::V2_0::HSIC&) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
@@ -53,7 +53,7 @@ struct PictureAdjustment : public IPictureAdjustment {
 // FIXME: most likely delete, this is only for passthrough implementations
 // extern "C" IPictureAdjustment* HIDL_FETCH_IPictureAdjustment(const char* name);
 
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
