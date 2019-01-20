@@ -14,33 +14,55 @@
  * limitations under the License.
  */
 
+#include <fstream>
+
 #include "SunlightEnhancement.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
+bool SunlightEnhancement::isSupported() {
+    std::ofstream fileSRE("/sys/class/mdnie/mdnie/outdoor");
+    std::ofstream fileHBM("/sys/class/lcd/panel/panel/auto_brightness");
+    return fileSRE.good() || fileHBM.good();
+}
+
+// Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
 Return<bool> SunlightEnhancement::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::ifstream fileSRE("/sys/class/mdnie/mdnie/outdoor");
+    std::ifstream fileHBM("/sys/class/lcd/panel/panel/auto_brightness");
+    int statusSRE = -1;
+    int statusHBM = -1;
+
+    if (fileSRE.is_open()) {
+        fileSRE >> statusSRE;
+    }
+    if (fileHBM.is_open()) {
+        fileHBM >> statusHBM;
+    }
+
+    return (fileSRE.good() || fileHBM.good()) && ((statusSRE == 1 && statusHBM == 6) || statusSRE == 1);
 }
 
 Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    std::ofstream fileSRE("/sys/class/mdnie/mdnie/outdoor");
+    std::ofstream fileHBM("/sys/class/lcd/panel/panel/auto_brightness");
+
+    if (fileSRE.is_open()) {
+        fileSRE << (enabled ? "1" : "0");
+    }
+    if (fileHBM.is_open()) {
+        fileHBM << (enabled ? "6" : "0");
+    }
+
+    return true;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//ISunlightEnhancement* HIDL_FETCH_ISunlightEnhancement(const char* /* name */) {
-    //return new SunlightEnhancement();
-//}
-//
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

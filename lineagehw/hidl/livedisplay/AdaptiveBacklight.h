@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -35,7 +35,10 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct AdaptiveBacklight : public IAdaptiveBacklight {
+class AdaptiveBacklight : public IAdaptiveBacklight {
+  public:
+    bool isSupported();
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;
@@ -44,10 +47,7 @@ struct AdaptiveBacklight : public IAdaptiveBacklight {
 
 };
 
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IAdaptiveBacklight* HIDL_FETCH_IAdaptiveBacklight(const char* name);
-
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
