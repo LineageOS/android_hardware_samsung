@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -35,19 +35,19 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct ReadingEnhancement : public IReadingEnhancement {
+class ReadingEnhancement : public IReadingEnhancement {
+  public:
+    bool isSupported();
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
     Return<bool> isEnabled() override;
-    Return<bool> setEnabled(bool enabled) override;
+    Return<bool> setEnabled(bool) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
 };
 
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IReadingEnhancement* HIDL_FETCH_IReadingEnhancement(const char* name);
-
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
