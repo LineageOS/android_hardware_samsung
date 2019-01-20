@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORENHANCEMENT_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORENHANCEMENT_H
+#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_READINGENHANCEMENTEXYNOS_H
+#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_READINGENHANCEMENTEXYNOS_H
 
-#include <vendor/lineage/livedisplay/2.0/IColorEnhancement.h>
+#include <vendor/lineage/livedisplay/2.0/IReadingEnhancement.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 
@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -35,22 +35,22 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct ColorEnhancement : public IColorEnhancement {
-    // Methods from ::vendor::lineage::livedisplay::V2_0::IColorEnhancement follow.
+class ReadingEnhancementExynos : public IReadingEnhancement {
+  public:
+    bool isSupported();
+
+    // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
     Return<bool> isEnabled() override;
-    Return<bool> setEnabled(bool enabled) override;
+    Return<bool> setEnabled(bool) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
 };
 
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IColorEnhancement* HIDL_FETCH_IColorEnhancement(const char* name);
-
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
 
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORENHANCEMENT_H
+#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_READINGENHANCEMENTEXYNOS_H
