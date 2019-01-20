@@ -16,7 +16,7 @@
 
 #include <fstream>
 
-#include "DisplayColorCalibration.h"
+#include "DisplayColorCalibrationExynos.h"
 
 namespace vendor {
 namespace lineage {
@@ -24,22 +24,22 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char *kColorPath = "/sys/class/graphics/fb0/rgb";
+static constexpr const char *kColorPath = "/sys/class/mdnie/mdnie/sensorRGB";
 
-bool DisplayColorCalibration::isSupported() {
+bool DisplayColorCalibrationExynos::isSupported() {
     std::ofstream file(kColorPath);
     return file.good();
 }
 
-Return<int32_t> DisplayColorCalibration::getMaxValue() {
-    return 32768;
-}
-
-Return<int32_t> DisplayColorCalibration::getMinValue() {
+Return<int32_t> DisplayColorCalibrationExynos::getMaxValue() {
     return 255;
 }
 
-Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb resultCb) {
+Return<int32_t> DisplayColorCalibrationExynos::getMinValue() {
+    return 1;
+}
+
+Return<void> DisplayColorCalibrationExynos::getCalibration(getCalibration_cb resultCb) {
     std::ifstream file(kColorPath);
     int r, g, b;
 
@@ -53,7 +53,7 @@ Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb resultCb)
     return Void();
 }
 
-Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>& rgb) {
+Return<bool> DisplayColorCalibrationExynos::setCalibration(const hidl_vec<int32_t>& rgb) {
     std::ofstream file(kColorPath);
     if (rgb.size() != 3) {
         return false;

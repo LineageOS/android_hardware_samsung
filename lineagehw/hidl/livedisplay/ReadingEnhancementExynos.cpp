@@ -14,33 +14,47 @@
  * limitations under the License.
  */
 
-#include "AutoContrast.h"
+#include <fstream>
+
+#include "ReadingEnhancementExynos.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
-Return<bool> AutoContrast::isEnabled() {
-    // TODO implement
-    return bool {};
+// Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
+bool ReadingEnhancementExynos::isSupported() {
+    std::ofstream file("/sys/class/mdnie/mdnie/accessibility");
+    return file.good();
 }
 
-Return<bool> AutoContrast::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+// Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
+Return<bool> ReadingEnhancementExynos::isEnabled() {
+    std::ifstream file("/sys/class/mdnie/mdnie/accessibility");
+    int status;
+
+    if (file.is_open()) {
+        file >> status;
+    }
+
+    return file.good() && status == 4;
+}
+
+Return<bool> ReadingEnhancementExynos::setEnabled(bool enabled) {
+    std::ofstream file("/sys/class/mdnie/mdnie/accessibility");
+    if (file.is_open()) {
+        file << (enabled ? "4" : "0");
+    }
+
+    return true;
 }
 
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 
-//IAutoContrast* HIDL_FETCH_IAutoContrast(const char* /* name */) {
-    //return new AutoContrast();
-//}
-//
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
