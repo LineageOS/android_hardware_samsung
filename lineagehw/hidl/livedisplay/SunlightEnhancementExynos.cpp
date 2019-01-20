@@ -16,7 +16,7 @@
 
 #include <fstream>
 
-#include "AdaptiveBacklight.h"
+#include "SunlightEnhancementExynos.h"
 
 namespace vendor {
 namespace lineage {
@@ -24,24 +24,31 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-bool AdaptiveBacklight::isSupported() {
-    std::ofstream file("/sys/class/lcd/panel/power_reduce");
+// Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
+bool SunlightEnhancementExynos::isSupported() {
+    std::ofstream file("/sys/class/mdnie/mdnie/lux");
     return file.good();
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
-Return<bool> AdaptiveBacklight::isEnabled() {
-    std::ifstream file("/sys/class/lcd/panel/power_reduce");
-    int value;
+Return<bool> SunlightEnhancementExynos::isEnabled() {
+    std::ifstream file("/sys/class/mdnie/mdnie/lux");
+    int status = -1;
 
-    file >> value;
+    if (file.is_open()) {
+        file >> status;
+    }
 
-    return !file.fail() && value == 1;
+    return file.good() && status > 0;
 }
 
-Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
-    std::ofstream file("/sys/class/lcd/panel/power_reduce");
-    file << (enabled ? "1" : "0");
+Return<bool> SunlightEnhancementExynos::setEnabled(bool enabled) {
+    std::ofstream file("/sys/class/mdnie/mdnie/lux");
+    if (file.is_open()) {
+        /* see drivers/video/fbdev/exynos/decon_7880/panels/mdnie_lite_table*, get_hbm_index */
+        file << (enabled ? "40000" : "0");
+    }
+
     return true;
 }
 
