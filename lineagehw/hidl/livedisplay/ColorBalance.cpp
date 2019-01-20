@@ -20,10 +20,10 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace implementation {
+namespace samsung {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
-Return<void> ColorBalance::getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) {
+Return<void> ColorBalance::getColorBalanceRange(getColorBalanceRange_cb) {
     // TODO implement
     return Void();
 }
@@ -33,7 +33,7 @@ Return<int32_t> ColorBalance::getColorBalance() {
     return int32_t {};
 }
 
-Return<bool> ColorBalance::setColorBalance(int32_t value) {
+Return<bool> ColorBalance::setColorBalance(int32_t) {
     // TODO implement
     return bool {};
 }
@@ -45,7 +45,7 @@ Return<bool> ColorBalance::setColorBalance(int32_t value) {
     //return new ColorBalance();
 //}
 //
-}  // namespace implementation
+}  // namespace samsung
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
