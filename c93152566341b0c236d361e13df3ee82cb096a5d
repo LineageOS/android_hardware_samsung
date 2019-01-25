@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "53b79646_fceb75ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2019-01-25T13:45:07Z",
+      "side": 1,
+      "message": "I think it doesn\u0027t matter either way. Using the \u0027implementation\u0027 namespace may be more \u0027standard\u0027, but both will work.",
+      "parentUuid": "59b2636e_4da5f6ce",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "c93152566341b0c236d361e13df3ee82cb096a5d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cfd23d_46cbfd71",
+        "filename": "lineagehw/hidl/livedisplay/AdaptiveBacklight.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2019-01-25T13:45:07Z",
+      "side": 1,
+      "message": "int value;\nfile \u003e\u003e value;\nreturn !file.fail() \u0026\u0026 value \u003d\u003d 1;",
+      "revId": "c93152566341b0c236d361e13df3ee82cb096a5d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "874eca88_70cce6fb",
         "filename": "lineagehw/hidl/livedisplay/AdaptiveBacklight.h",
         "patchSetId": 8
@@ -42,6 +83,81 @@
         "endLine": 40,
         "endChar": 34
       },
+      "revId": "c93152566341b0c236d361e13df3ee82cb096a5d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3866e2d_fd1b55b6",
+        "filename": "lineagehw/hidl/livedisplay/AdaptiveBacklight.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2019-01-25T13:45:07Z",
+      "side": 1,
+      "message": "It implements the default constructor: https://stackoverflow.com/questions/20828907/the-new-keyword-default-in-c11\n ... omitting this line would have the same effect though, I guess, especially given the class doesn\u0027t have any member variables.",
+      "parentUuid": "874eca88_70cce6fb",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "c93152566341b0c236d361e13df3ee82cb096a5d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebbb163_2cd76871",
+        "filename": "lineagehw/hidl/livedisplay/SunlightEnhancement.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2019-01-25T13:45:07Z",
+      "side": 1,
+      "message": "You could store the \u0027good\u0027 file path in a member variable here and avoid the double open attempts below.",
+      "revId": "c93152566341b0c236d361e13df3ee82cb096a5d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a08b010_1dafdbea",
+        "filename": "lineagehw/hidl/livedisplay/service.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2019-01-25T13:45:07Z",
+      "side": 1,
+      "message": "I don\u0027t think this can actually happen.",
+      "revId": "c93152566341b0c236d361e13df3ee82cb096a5d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9394d25f_c948449c",
+        "filename": "lineagehw/hidl/livedisplay/service.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2019-01-25T13:45:07Z",
+      "side": 1,
+      "message": "Cleaner than the double check would be this:\n\nstd::vector\u003csp\u003cIBase\u003e \u003e services;\nsp\u003cAdaptiveBacklight\u003e adaptiveBacklight \u003d new AdaptiveBacklight();\nif (adaptiveBacklight-\u003eisSupported()) {\n    services.push_back(adaptiveBacklight);\n}\n\n[... same for sunlight enhancement ... ]\nif (services.empty()) {\n    goto shutdown;\n}\n\nfor (auto\u0026 service : services) {\n    if (service-\u003eregisterAsService() !\u003d OK) {\n        [... log error ... ]\n        goto shutdown;\n    }\n}\n\n\n(Yes, this should also/especially be done in the default implementations in hardware/lineage/livedisplay)",
       "revId": "c93152566341b0c236d361e13df3ee82cb096a5d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
