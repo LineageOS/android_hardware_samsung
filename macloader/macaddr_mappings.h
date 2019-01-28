@@ -52,6 +52,7 @@ static const struct company_range murata_ranges = {
         "00:ae:fa",
         "04:46:65",
         "10:5f:06",
+        "10:98:c3",
         "10:a5:d0",
         "10:d5:42",
         "14:7d:c5",
@@ -104,7 +105,9 @@ static const struct company_range semco3rd_ranges = {
     .type = SEMCO3RD,
     .macaddrs = {
         "04:d6:aa",
+        "24:18:1d",
         "2c:0e:3d",
+        "30:07:4d",
         "54:88:0e",
         "84:38:38",
         "8c:f5:a3",
@@ -129,6 +132,7 @@ static const struct company_range semco_ranges = {
     .macaddrs = {
         "4c:66:41",
         "51:f6:6b",
+        "94:76:b7",
         "cc:07:ab",
         "d8:c4:e9",
         "ec:9b:f3",
