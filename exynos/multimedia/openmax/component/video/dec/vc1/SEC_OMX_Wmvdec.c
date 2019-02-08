@@ -542,6 +542,7 @@ OMX_ERRORTYPE SEC_MFC_WmvDec_SetParameter(
 
             switch (pSECOutputPort->portDefinition.format.video.eColorFormat) {
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
             case OMX_COLOR_FormatYUV420SemiPlanar:
             case OMX_SEC_COLOR_FormatNV12TPhysicalAddress:
             case OMX_SEC_COLOR_FormatANBYUV420SemiPlanar:
@@ -1328,6 +1329,7 @@ OMX_ERRORTYPE SEC_MFC_Wmv_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC_
                     height / 2);
                 break;
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
             default:
 #ifdef USE_CSC_FIMC
                 if ((pSECOutputPort->bIsANBEnabled == OMX_TRUE) && (pWmvDec->hFIMCHandle != NULL)) {
@@ -1636,6 +1638,7 @@ OMX_ERRORTYPE SEC_MFC_Wmv_Decode_Block(OMX_COMPONENTTYPE *pOMXComponent, SEC_OMX
                         height / 2);
                     break;
                 case OMX_COLOR_FormatYUV420Planar:
+                case OMX_COLOR_FormatYCbCr420Planar:
                 default:
 #ifdef USE_CSC_FIMC
                     if ((pSECOutputPort->bIsANBEnabled == OMX_TRUE) && (pWmvDec->hFIMCHandle != NULL)) {

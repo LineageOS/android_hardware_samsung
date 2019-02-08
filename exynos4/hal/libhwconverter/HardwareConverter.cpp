@@ -102,6 +102,7 @@ bool HardwareConverter::convert(
         }
         break;
     case OMX_COLOR_FormatYUV420Planar:
+    case OMX_COLOR_FormatYCbCr420Planar:
     default:
         if (!handle_fimc->setDstPhyAddr((unsigned int)(dst_addr_array[0]),
                                      (unsigned int)(dst_addr_array[1]),

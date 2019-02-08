@@ -479,6 +479,7 @@ OMX_ERRORTYPE SEC_MFC_H264Dec_SetParameter(
 
             switch (pSECOutputPort->portDefinition.format.video.eColorFormat) {
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
             case OMX_COLOR_FormatYUV420SemiPlanar:
             case OMX_SEC_COLOR_FormatNV12TPhysicalAddress:
             case OMX_SEC_COLOR_FormatANBYUV420SemiPlanar:
@@ -1132,6 +1133,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420SemiPlanar_SBS_LR;
                         break;
                     case OMX_COLOR_FormatYUV420Planar:
+                    case OMX_COLOR_FormatYCbCr420Planar:
                     default:
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420Planar_SBS_LR;
                         break;
@@ -1146,6 +1148,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420SemiPlanar_SBS_RL;
                         break;
                     case OMX_COLOR_FormatYUV420Planar:
+                    case OMX_COLOR_FormatYCbCr420Planar:
                     default:
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420Planar_SBS_RL;
                         break;
@@ -1162,6 +1165,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420SemiPlanar_TB_LR;
                         break;
                     case OMX_COLOR_FormatYUV420Planar:
+                    case OMX_COLOR_FormatYCbCr420Planar:
                     default:
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420Planar_TB_LR;
                         break;
@@ -1176,6 +1180,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420SemiPlanar_TB_RL;
                         break;
                     case OMX_COLOR_FormatYUV420Planar:
+                    case OMX_COLOR_FormatYCbCr420Planar:
                     default:
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420Planar_TB_RL;
                         break;
@@ -1429,6 +1434,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                     actualHeight / 2);
                 break;
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
 #ifdef S3D_SUPPORT
             case OMX_SEC_COLOR_FormatYUV420Planar_SBS_LR:
             case OMX_SEC_COLOR_FormatYUV420Planar_SBS_RL:
@@ -1991,7 +1997,7 @@ OSCL_EXPORT_REF OMX_ERRORTYPE SEC_OMX_ComponentInit(OMX_HANDLETYPE hComponent, O
     SEC_OSAL_Strcpy(pSECPort->portDefinition.format.video.cMIMEType, "raw/video");
     pSECPort->portDefinition.format.video.pNativeRender = 0;
     pSECPort->portDefinition.format.video.bFlagErrorConcealment = OMX_FALSE;
-    pSECPort->portDefinition.format.video.eColorFormat = OMX_COLOR_FormatYUV420Planar;
+    pSECPort->portDefinition.format.video.eColorFormat = OMX_COLOR_FormatYCbCr420Planar;
     pSECPort->portDefinition.bEnabled = OMX_TRUE;
     if (bFlashPlayerMode != OMX_FALSE) {
         pSECPort->portDefinition.nBufferCountActual = MAX_H264_FP_VIDEO_OUTPUTBUFFER_NUM;

@@ -629,6 +629,7 @@ OMX_ERRORTYPE SEC_MFC_Mpeg4Dec_SetParameter(
 
             switch (pSECOutputPort->portDefinition.format.video.eColorFormat) {
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
             case OMX_COLOR_FormatYUV420SemiPlanar:
             case OMX_SEC_COLOR_FormatNV12TPhysicalAddress:
             case OMX_SEC_COLOR_FormatANBYUV420SemiPlanar:
@@ -1430,6 +1431,7 @@ OMX_ERRORTYPE SEC_MFC_Mpeg4_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SE
                     height / 2);
                 break;
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
             default:
 #ifdef USE_CSC_FIMC
                 if ((pSECOutputPort->bIsANBEnabled == OMX_TRUE) && (pMpeg4Dec->hFIMCHandle != NULL)) {
@@ -1699,6 +1701,7 @@ OMX_ERRORTYPE SEC_MFC_Mpeg4_Decode_Block(OMX_COMPONENTTYPE *pOMXComponent, SEC_O
                         height / 2);
                     break;
                 case OMX_COLOR_FormatYUV420Planar:
+                case OMX_COLOR_FormatYCbCr420Planar:
                 default:
 #ifdef USE_CSC_FIMC
                     if ((pSECOutputPort->bIsANBEnabled == OMX_TRUE) && (pMpeg4Dec->hFIMCHandle != NULL)) {
@@ -1964,7 +1967,7 @@ OSCL_EXPORT_REF OMX_ERRORTYPE SEC_OMX_ComponentInit(OMX_HANDLETYPE hComponent, O
     SEC_OSAL_Strcpy(pSECPort->portDefinition.format.video.cMIMEType, "raw/video");
     pSECPort->portDefinition.format.video.pNativeRender = 0;
     pSECPort->portDefinition.format.video.bFlagErrorConcealment = OMX_FALSE;
-    pSECPort->portDefinition.format.video.eColorFormat = OMX_COLOR_FormatYUV420Planar;
+    pSECPort->portDefinition.format.video.eColorFormat = OMX_COLOR_FormatYCbCr420Planar;
     pSECPort->portDefinition.bEnabled = OMX_TRUE;
 
     if (codecType == CODEC_TYPE_MPEG4) {

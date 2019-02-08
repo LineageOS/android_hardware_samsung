@@ -142,6 +142,7 @@ OMX_ERRORTYPE SEC_OSAL_LockANBHandle(
 
     switch (format) {
     case OMX_COLOR_FormatYUV420Planar:
+    case OMX_COLOR_FormatYCbCr420Planar:
     case OMX_COLOR_FormatYUV420SemiPlanar:
 #ifdef S3D_SUPPORT
     case OMX_SEC_COLOR_FormatNV12Tiled_SBS_LR:
