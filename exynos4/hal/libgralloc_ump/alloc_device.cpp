@@ -453,14 +453,21 @@ static int gralloc_alloc_framebuffer_locked(alloc_device_t* dev, size_t size, in
     ALOGD_IF(debug_level > 0, "%s current=0x%x vaddr=0x%x l_paddr=0x%x before", __func__, current, vaddr, l_paddr);
 
     /* find a free slot */
+    uint32_t freeSlot = numBuffers -1;
     for (uint32_t i = 0; i < numBuffers; i++) {
         if ((bufferMask & (1LU<<i)) == 0) {
             m->bufferMask |= (1LU<<i);
+            freeSlot = i;
             break;
         }
         current += bufferSize;
         l_paddr = vaddr + current;
     }
+    ALOGE("%d: Using bufferslot:%d", __func__, freeSlot);
+
+    /* Update buffermask with freed slots */
+    m->bufferMask ^= m->bufferFreedMask;
+    m->bufferFreedMask &= m->bufferMask;
 
     ALOGD_IF(debug_level > 0, "%s current=0x%x vaddr=0x%x l_paddr=0x%x after", __func__, current, vaddr, l_paddr);
 
@@ -683,7 +690,9 @@ static int alloc_device_free(alloc_device_t* dev, buffer_handle_t handle)
         const size_t bufferSize = m->finfo.line_length * m->info.yres;
         int index = (hnd->base - m->framebuffer->base) / bufferSize;
 
-        m->bufferMask &= ~(1<<index);
+        /* Mark slot as freed */
+        m->bufferFreedMask |= (1LU<<index);
+
         close(hnd->fd);
 
     } else if (hnd->flags & private_handle_t::PRIV_FLAGS_USES_UMP) {

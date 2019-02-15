@@ -61,6 +61,8 @@ struct private_module_t {
     uint32_t flags;
     uint32_t numBuffers;
     uint32_t bufferMask;
+    uint32_t bufferFreedMask;
+
     pthread_mutex_t lock;
     buffer_handle_t currentBuffer;
     int ion_client;
