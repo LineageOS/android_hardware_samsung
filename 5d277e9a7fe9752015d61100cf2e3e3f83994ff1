@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a83e6d03_a45548e3",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "10:5F:06 Actionte\tActiontec Electronics, Inc",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1824bdd4_641652ab",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "10:D5:42 SamsungE\tSamsung Electronics Co.,Ltd",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022cbc29_d3bcbe09",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "78:52:1A SamsungE\tSamsung Electronics Co.,Ltd",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3f44b6_05ac60ca",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "C8:14:79 SamsungE\tSamsung Electronics Co.,Ltd",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44764f98_f77fea92",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "34:23:BA SamsungE\tSamsung Electro-Mechanics(Thailand)",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a614dfae_02dcd18e",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "6C:C7:EC SamsungE\tSamsung Electro-Mechanics(Thailand)",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383fb967_283e81f1",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "88:32:9B SamsungE\tSamsung Electro-Mechanics(Thailand)",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4056b930_9c14ffba",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "AC:36:13 SamsungE\tSamsung Electronics Co.,Ltd",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d83174_36c469a6",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "C:66:41 SamsungE\tSamsung Electro-Mechanics(Thailand)",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6945be8e_c2767963",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "unknown",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df32b468_faca9986",
+        "filename": "macloader/macaddr_mappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-02-15T00:49:33Z",
+      "side": 0,
+      "message": "EC:9B:F3 SamsungE\tSamsung Electro-Mechanics(Thailand)",
+      "revId": "5d277e9a7fe9752015d61100cf2e3e3f83994ff1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
