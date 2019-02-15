@@ -25,7 +25,6 @@ enum Type {
     MURATA,
     SEMCOSH,
     SEMCO3RD,
-    SEMCO,
     WISOL,
     TYPE_MAX = WISOL
 };
@@ -129,22 +128,6 @@ static const struct company_range semco3rd_ranges = {
     }
 };
 
-static const struct company_range semco_ranges = {
-    .type = SEMCO,
-    .macaddrs = {
-        "48:13:7e",
-        "4c:66:41",
-        "51:f6:6b",
-        "94:76:b7",
-        "a4:84:31",
-        "cc:07:ab",
-        "d8:c4:e9",
-        "e8:3a:12",
-        "ec:9b:f3",
-        "f8:e6:1a"
-    }
-};
-
 static const struct company_range wisol_ranges = {
     .type = WISOL,
     .macaddrs = {
@@ -157,7 +140,6 @@ static const struct company_range *all_ranges[TYPE_MAX] = {
     &murata_ranges,
     &semcosh_ranges,
     &semco3rd_ranges,
-    &semco_ranges,
     &wisol_ranges
 };
 

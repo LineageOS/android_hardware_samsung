@@ -135,9 +135,7 @@ static int classify_macaddr_half(char const *macaddr_half)
     }
 
 exit:
-    if (type != NONE) {
-        ALOGV("Found CID type: %d", type);
-    }
+    ALOGV("Found CID type: %d", type);
     return type;
 }
 
@@ -170,13 +168,6 @@ int main() {
     }
 
     type = classify_macaddr_half(mac_addr_half);
-    if (type == NONE) {
-        /* delete cid file if no specific type */
-        ALOGD("Deleting file %s\n", CID_PATH);
-        remove(CID_PATH);
-        ret = 0;
-        goto out;
-    }
 
     const char *nvram_file;
     const char *type_str;
@@ -193,16 +184,12 @@ int main() {
         case SEMCO3RD:
             type_str = "semco3rd";
             break;
-        case SEMCO:
-            type_str = "semco";
-            break;
         case WISOL:
             type_str = "wisol";
             break;
         default:
-            ALOGE("Unknown CID type: %d", type);
-            ret = -1;
-            goto out;
+            type_str = "semco";
+            break;
     }
 
     ALOGI("Settting wifi type to %s in %s\n", type_str, CID_PATH);
