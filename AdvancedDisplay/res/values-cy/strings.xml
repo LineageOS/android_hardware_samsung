@@ -22,6 +22,8 @@
     <string name="category_screen_title">Sgrin</string>
     <string name="screen_colors_title">Lliwiau</string>
     <!-- mDNIe -->
+    <string name="mdnie_scenario_title_head">Senario</string>
+    <string name="mdnie_scenario_summary_head">Gosod y senario mDNIe</string>
     <string name="mdnie_accessibility_title_head">Modd hygyrchedd</string>
     <string name="mdnie_accessibility_summary_head">Gosod modd hygyrchedd mDNIe</string>
     <!-- Scenario names -->
@@ -40,6 +42,7 @@
     <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Arferol</string>
     <string name="mdnie_accessibility_inverse">Wedi\'i wrthdroi</string>
+    <string name="mdnie_accessibility_screen_curtain">Screen curtain (Rhybudd: Peryg. Paid â\'i ddewis.) </string>
     <string name="mdnie_accessibility_grayscale">Llwyd</string>
     <string name="mdnie_accessibility_gray_negative">Llwyd wedi\'i wrthdroi</string>
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
