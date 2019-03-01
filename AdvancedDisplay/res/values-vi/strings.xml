@@ -18,15 +18,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Hiển thị nâng cao</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">Màn hình</string>
     <string name="screen_colors_title">Màu</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Tình huống</string>
     <string name="mdnie_scenario_summary_head">Đặt tình huống cho mDNIe</string>
     <string name="mdnie_accessibility_title_head">Chế độ trợ năng</string>
     <string name="mdnie_accessibility_summary_head">Cài đặt chế độ trợ năng mDNIe</string>
-    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (mặc định)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video ấm</string>
@@ -39,12 +36,10 @@
     <string name="mdnie_scenario_ebook">sách điện tử</string>
     <string name="mdnie_scenario_email">E-mail</string>
     <string name="mdnie_scenario_tdmb">Truyền hình kỹ thuật số</string>
-    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Bình thường</string>
     <string name="mdnie_accessibility_inverse">Đảo ngược</string>
     <string name="mdnie_accessibility_color_blind">Mù màu</string>
     <string name="mdnie_accessibility_screen_curtain">Bảo vệ màn hình</string>
     <string name="mdnie_accessibility_grayscale">Xám</string>
     <string name="mdnie_accessibility_gray_negative">Đảo ngược màu xám</string>
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
