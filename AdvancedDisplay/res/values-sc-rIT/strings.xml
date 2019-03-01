@@ -17,11 +17,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Screen Preference -->
     <string name="category_screen_title">Ischermu</string>
     <string name="screen_colors_title">Colores</string>
-    <!-- mDNIe -->
-    <!-- Scenario names -->
-    <!-- Accessibility mode names -->
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

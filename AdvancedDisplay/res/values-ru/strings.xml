@@ -18,15 +18,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Настройки экрана</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">Экран</string>
     <string name="screen_colors_title">Цвета</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Сценарий</string>
     <string name="mdnie_scenario_summary_head">Установка сценария mDNIe</string>
     <string name="mdnie_accessibility_title_head">Режим специальных возможностей</string>
     <string name="mdnie_accessibility_summary_head">Настроить режим специальных возможностей mDNIe</string>
-    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (по умолчанию)</string>
     <string name="mdnie_scenario_video">Фильм</string>
     <string name="mdnie_scenario_video_warm">Фильм (теплые тона)</string>
@@ -39,12 +36,10 @@
     <string name="mdnie_scenario_ebook">Электронная книга</string>
     <string name="mdnie_scenario_email">Электронная почта</string>
     <string name="mdnie_scenario_tdmb">Цифровое телевидение</string>
-    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Нормальный</string>
     <string name="mdnie_accessibility_inverse">Инвертированный</string>
     <string name="mdnie_accessibility_color_blind">Дальтонизм</string>
     <string name="mdnie_accessibility_screen_curtain">Затемнение экрана</string>
     <string name="mdnie_accessibility_grayscale">Серый</string>
     <string name="mdnie_accessibility_gray_negative">Инверсия серого</string>
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

@@ -18,15 +18,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Pantaila aurreratua</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">Pantaila</string>
     <string name="screen_colors_title">Koloreak</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Eszenatokia</string>
     <string name="mdnie_scenario_summary_head">mDNIe eszenatokia ezarri</string>
     <string name="mdnie_accessibility_title_head">Irisgarritasun modua</string>
     <string name="mdnie_accessibility_summary_head">Ezarri mDNIe irisgarritasun modua</string>
-    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (lehenetsia)</string>
     <string name="mdnie_scenario_video">Bideoa</string>
     <string name="mdnie_scenario_video_warm">Bideo epela</string>
@@ -39,12 +36,10 @@
     <string name="mdnie_scenario_ebook">eBook</string>
     <string name="mdnie_scenario_email">E-mail</string>
     <string name="mdnie_scenario_tdmb">Telebista digitala</string>
-    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Arrunta</string>
     <string name="mdnie_accessibility_inverse">Alderantzikatua</string>
     <string name="mdnie_accessibility_color_blind">Kolore-itsua</string>
     <string name="mdnie_accessibility_screen_curtain">Pantaila gortina</string>
     <string name="mdnie_accessibility_grayscale">Grisa</string>
     <string name="mdnie_accessibility_gray_negative">Grisa alderantzikatua</string>
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

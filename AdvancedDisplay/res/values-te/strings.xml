@@ -18,13 +18,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">అధునాతన ప్రదర్శన</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">స్క్రీన్</string>
     <string name="screen_colors_title">రంగులు</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">దృశ్యవివరణ</string>
     <string name="mdnie_scenario_summary_head">mDNIe దృశ్యవివరణను సెట్ చేయుము</string>
-    <!-- Scenario names -->
-    <!-- Accessibility mode names -->
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

@@ -18,13 +18,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Avansert visning</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">Skjerm</string>
     <string name="screen_colors_title">Farger</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Scenario</string>
     <string name="mdnie_scenario_summary_head">Angi mDNIe scenariet</string>
-    <!-- Scenario names -->
-    <!-- Accessibility mode names -->
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

@@ -18,13 +18,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Gevorderde skerm</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">Skerm</string>
     <string name="screen_colors_title">Kleure</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Scenario</string>
     <string name="mdnie_scenario_summary_head">Stel die mDNIe scenario</string>
-    <!-- Scenario names -->
-    <!-- Accessibility mode names -->
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
