@@ -38,6 +38,7 @@
     <string name="mdnie_scenario_tdmb">Teledu digidol</string>
     <string name="mdnie_accessibility_normal">Arferol</string>
     <string name="mdnie_accessibility_inverse">Wedi\'i wrthdroi</string>
+    <string name="mdnie_accessibility_color_blind">Lliwddall</string>
     <string name="mdnie_accessibility_screen_curtain">Screen curtain (Rhybudd: Peryg. Paid â\'i ddewis.) </string>
     <string name="mdnie_accessibility_grayscale">Llwyd</string>
     <string name="mdnie_accessibility_gray_negative">Llwyd wedi\'i wrthdroi</string>
