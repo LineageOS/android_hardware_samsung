@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Speciális kijelző</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Kijelző</string>
-  <string name="screen_colors_title">Színek</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Megjelenítés</string>
-  <string name="mdnie_scenario_summary_head">mDNIe megjelenítési beállítások</string>
-  <string name="mdnie_negative_title_head">Negatív üzemmód</string>
-  <string name="mdnie_negative_summary_head">Fordított színek ki/be</string>
+    <string name="app_name">Speciális kijelző</string>
+    <string name="category_screen_title">Kijelző</string>
+    <string name="screen_colors_title">Színek</string>
+    <string name="mdnie_scenario_title_head">Megjelenítés</string>
+    <string name="mdnie_scenario_summary_head">mDNIe megjelenítési beállítások</string>
+    <string name="mdnie_negative_title_head">Negatív üzemmód</string>
+    <string name="mdnie_negative_summary_head">Fordított színek ki/be</string>
 </resources>

@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (default)</item>
-    <item>واجهة المستخدم</item>
-    <item>فيديو</item>
-    <item>فيديو سريع</item>
-    <item>فيديو بطيء</item>
-    <item>الكاميرا</item>
-    <item>التنقل</item>
-    <item>معرض</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>عادي</item>
-    <item>معكوس</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (default)</item>
+        <item>واجهة المستخدم</item>
+        <item>فيديو</item>
+        <item>فيديو سريع</item>
+        <item>فيديو بطيء</item>
+        <item>الكاميرا</item>
+        <item>التنقل</item>
+        <item>معرض</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>عادي</item>
+        <item>معكوس</item>
+    </string-array>
 </resources>

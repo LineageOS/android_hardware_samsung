@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (default)</item>
-    <item>UI</item>
-    <item>ڤیدیۆ</item>
-    <item>ڤیدیۆی گەرم</item>
-    <item>ڤیدیۆی سارد</item>
-    <item>کامێرا</item>
-    <item>ئاڕاستە</item>
-    <item>گەلەری</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>ئاسایی</item>
-    <item>پێچەوانە</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (default)</item>
+        <item>UI</item>
+        <item>ڤیدیۆ</item>
+        <item>ڤیدیۆی گەرم</item>
+        <item>ڤیدیۆی سارد</item>
+        <item>کامێرا</item>
+        <item>ئاڕاستە</item>
+        <item>گەلەری</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>ئاسایی</item>
+        <item>پێچەوانە</item>
+    </string-array>
 </resources>

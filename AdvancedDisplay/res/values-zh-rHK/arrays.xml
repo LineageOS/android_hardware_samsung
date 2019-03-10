@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (default)</item>
-    <item>UI</item>
-    <item>Video</item>
-    <item>影片（暖色）</item>
-    <item>影片（冷色）</item>
-    <item>Camera</item>
-    <item>導覽</item>
-    <item>圖片庫</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>適中</item>
-    <item>反向</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (default)</item>
+        <item>UI</item>
+        <item>Video</item>
+        <item>影片（暖色）</item>
+        <item>影片（冷色）</item>
+        <item>Camera</item>
+        <item>導覽</item>
+        <item>圖片庫</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>適中</item>
+        <item>反向</item>
+    </string-array>
 </resources>

@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">प्रगत प्रदर्शन</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">स्क्रीन</string>
-  <string name="screen_colors_title">रंग</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">परिस्थिती</string>
-  <string name="mdnie_scenario_summary_head">mDNIe परिस्थिती सेट करा</string>
-  <string name="mdnie_negative_title_head">नकारात्मक मोड</string>
-  <string name="mdnie_negative_summary_head">अधोमुख रंग सक्षम करा/अक्षम करा</string>
+    <string name="app_name">प्रगत प्रदर्शन</string>
+    <string name="category_screen_title">स्क्रीन</string>
+    <string name="screen_colors_title">रंग</string>
+    <string name="mdnie_scenario_title_head">परिस्थिती</string>
+    <string name="mdnie_scenario_summary_head">mDNIe परिस्थिती सेट करा</string>
+    <string name="mdnie_negative_title_head">नकारात्मक मोड</string>
+    <string name="mdnie_negative_summary_head">अधोमुख रंग सक्षम करा/अक्षम करा</string>
 </resources>

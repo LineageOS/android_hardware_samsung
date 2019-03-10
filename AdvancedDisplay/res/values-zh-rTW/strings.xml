@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">進階顯示</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">螢幕</string>
-  <string name="screen_colors_title">色彩</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">場景</string>
-  <string name="mdnie_scenario_summary_head">設定 mDNIe 場景</string>
-  <string name="mdnie_negative_title_head">負片模式</string>
-  <string name="mdnie_negative_summary_head">啟用/停用反轉顏色</string>
+    <string name="app_name">進階顯示</string>
+    <string name="category_screen_title">螢幕</string>
+    <string name="screen_colors_title">色彩</string>
+    <string name="mdnie_scenario_title_head">場景</string>
+    <string name="mdnie_scenario_summary_head">設定 mDNIe 場景</string>
+    <string name="mdnie_negative_title_head">負片模式</string>
+    <string name="mdnie_negative_summary_head">啟用/停用反轉顏色</string>
 </resources>

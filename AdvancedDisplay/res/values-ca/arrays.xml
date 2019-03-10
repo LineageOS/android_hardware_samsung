@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (per defecte)</item>
-    <item>IU</item>
-    <item>Vídeo</item>
-    <item>Video càlid</item>
-    <item>Vídeo fred</item>
-    <item>Càmera</item>
-    <item>Navegació</item>
-    <item>Galeria</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>Normal</item>
-    <item>Invertit</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (per defecte)</item>
+        <item>IU</item>
+        <item>Vídeo</item>
+        <item>Video càlid</item>
+        <item>Vídeo fred</item>
+        <item>Càmera</item>
+        <item>Navegació</item>
+        <item>Galeria</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Normal</item>
+        <item>Invertit</item>
+    </string-array>
 </resources>

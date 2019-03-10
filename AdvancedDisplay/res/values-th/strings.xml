@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">หน้าจอขั้นสูง</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">หน้าจอ</string>
-  <string name="screen_colors_title">สี</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">สถานการณ์</string>
-  <string name="mdnie_scenario_summary_head">กำหนดสถานการณ์ mDNIe</string>
-  <string name="mdnie_negative_title_head">รูปแบบกลับสี</string>
-  <string name="mdnie_negative_summary_head">เปิด/ปิดสีที่สลับ</string>
+    <string name="app_name">หน้าจอขั้นสูง</string>
+    <string name="category_screen_title">หน้าจอ</string>
+    <string name="screen_colors_title">สี</string>
+    <string name="mdnie_scenario_title_head">สถานการณ์</string>
+    <string name="mdnie_scenario_summary_head">กำหนดสถานการณ์ mDNIe</string>
+    <string name="mdnie_negative_title_head">รูปแบบกลับสี</string>
+    <string name="mdnie_negative_summary_head">เปิด/ปิดสีที่สลับ</string>
 </resources>

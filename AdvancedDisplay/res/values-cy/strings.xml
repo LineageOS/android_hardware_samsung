@@ -16,6 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Screen Preference -->
-  <!-- mDNIe -->
+    <string name="app_name">Dangosydd uwch</string>
+    <string name="category_screen_title">Sgrin</string>
+    <string name="screen_colors_title">Lliwiau</string>
+    <string name="mdnie_scenario_title_head">Senario</string>
+    <string name="mdnie_scenario_summary_head">Gosod y senario mDNIe</string>
+    <string name="mdnie_negative_title_head">Modd negyddol</string>
+    <string name="mdnie_negative_summary_head">Galluogi/analluogi gwrthdroi lliwiau</string>
 </resources>

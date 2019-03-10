@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Täpsem displei</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Ekraan</string>
-  <string name="screen_colors_title">Värvid</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Stsenaarium</string>
-  <string name="mdnie_scenario_summary_head">Seadke mDNIe stsenaarium</string>
-  <string name="mdnie_negative_title_head">Negatiivne režiim</string>
-  <string name="mdnie_negative_summary_head">Luba/keela negatiivsed värvid</string>
+    <string name="app_name">Täpsem displei</string>
+    <string name="category_screen_title">Ekraan</string>
+    <string name="screen_colors_title">Värvid</string>
+    <string name="mdnie_scenario_title_head">Stsenaarium</string>
+    <string name="mdnie_scenario_summary_head">Seadke mDNIe stsenaarium</string>
+    <string name="mdnie_negative_title_head">Negatiivne režiim</string>
+    <string name="mdnie_negative_summary_head">Luba/keela negatiivsed värvid</string>
 </resources>

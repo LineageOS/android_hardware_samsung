@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">ئالىي ئېكران</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">ئېكران</string>
-  <string name="screen_colors_title">رەڭلەر</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">كۆرۈنۈش</string>
-  <string name="mdnie_scenario_summary_head">mDNIe لايىھە تەڭشىكى</string>
-  <string name="mdnie_negative_title_head">‫مەنپىي ھالەت</string>
-  <string name="mdnie_negative_summary_head">ئەكسىچە رەڭنى قوزغىتىش/چەكلەش</string>
+    <string name="app_name">ئالىي ئېكران</string>
+    <string name="category_screen_title">ئېكران</string>
+    <string name="screen_colors_title">رەڭلەر</string>
+    <string name="mdnie_scenario_title_head">كۆرۈنۈش</string>
+    <string name="mdnie_scenario_summary_head">mDNIe لايىھە تەڭشىكى</string>
+    <string name="mdnie_negative_title_head">‫مەنپىي ھالەت</string>
+    <string name="mdnie_negative_summary_head">ئەكسىچە رەڭنى قوزغىتىش/چەكلەش</string>
 </resources>

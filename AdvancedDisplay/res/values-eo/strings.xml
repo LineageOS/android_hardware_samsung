@@ -16,7 +16,5 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Screen Preference -->
-  <string name="screen_colors_title">Koloroj</string>
-  <!-- mDNIe -->
+    <string name="screen_colors_title">Koloroj</string>
 </resources>

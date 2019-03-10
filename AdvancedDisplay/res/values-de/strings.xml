@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Erweiterte Anzeige-Einstellungen</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Bildschirm</string>
-  <string name="screen_colors_title">Farben</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Szenario</string>
-  <string name="mdnie_scenario_summary_head">Wählen Sie das mDNIe-Szenario</string>
-  <string name="mdnie_negative_title_head">Negativmodus</string>
-  <string name="mdnie_negative_summary_head">Invertierte Farben ein-/ausschalten</string>
+    <string name="app_name">Erweiterte Anzeige-Einstellungen</string>
+    <string name="category_screen_title">Bildschirm</string>
+    <string name="screen_colors_title">Farben</string>
+    <string name="mdnie_scenario_title_head">Szenario</string>
+    <string name="mdnie_scenario_summary_head">Wählen Sie das mDNIe-Szenario</string>
+    <string name="mdnie_negative_title_head">Negativmodus</string>
+    <string name="mdnie_negative_summary_head">Invertierte Farben ein-/ausschalten</string>
 </resources>

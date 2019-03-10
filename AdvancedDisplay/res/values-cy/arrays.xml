@@ -16,15 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (rhagosodiad)</item>
-    <item>UI</item>
-    <item>Video</item>
-    <item>Video warm</item>
-    <item>Video cold</item>
-    <item>Camera</item>
-    <item>Navigation</item>
-    <item>Gallery</item>
-    <item>VT</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (rhagosodiad)</item>
+        <item>Rhyngwyneb</item>
+        <item>Fideo</item>
+        <item>Fideo cynnes</item>
+        <item>Fideo oer</item>
+        <item>Camera</item>
+        <item>Llywio</item>
+        <item>Oriel</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Arferol</item>
+        <item>Wedi\'i wrthdroi</item>
+    </string-array>
 </resources>

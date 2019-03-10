@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (default)</item>
-    <item>Lietotāja saskarne</item>
-    <item>Video</item>
-    <item>Silts video</item>
-    <item>Auksts video</item>
-    <item>Kamera</item>
-    <item>Navigācija</item>
-    <item>Galerija</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>Parasts</item>
-    <item>Invertēts</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (default)</item>
+        <item>Lietotāja saskarne</item>
+        <item>Video</item>
+        <item>Silts video</item>
+        <item>Auksts video</item>
+        <item>Kamera</item>
+        <item>Navigācija</item>
+        <item>Galerija</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Parasts</item>
+        <item>Invertēts</item>
+    </string-array>
 </resources>
