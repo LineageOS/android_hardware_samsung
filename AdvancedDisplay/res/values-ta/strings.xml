@@ -18,13 +18,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">மேம்பட்ட காட்சி</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">திரை</string>
     <string name="screen_colors_title">நிறங்கள்</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">சூழ்நிலை</string>
     <string name="mdnie_scenario_summary_head">mDNIe சூழ்நிலையை அமை</string>
-    <!-- Scenario names -->
-    <!-- Accessibility mode names -->
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

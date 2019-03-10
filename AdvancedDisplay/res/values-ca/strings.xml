@@ -18,15 +18,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Pantalla avançada</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">Pantalla</string>
     <string name="screen_colors_title">Colors</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Escenari</string>
     <string name="mdnie_scenario_summary_head">Estableix l\'escenari de mDNIe</string>
     <string name="mdnie_accessibility_title_head">Mode d\'accessibilitat</string>
     <string name="mdnie_accessibility_summary_head">Estableix el mode d\'accessibilitat mDNIe</string>
-    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (per defecte)</string>
     <string name="mdnie_scenario_video">Vídeo</string>
     <string name="mdnie_scenario_video_warm">Vídeo càlid</string>
@@ -39,12 +36,10 @@
     <string name="mdnie_scenario_ebook">eBook</string>
     <string name="mdnie_scenario_email">Correu</string>
     <string name="mdnie_scenario_tdmb">Televisió digital</string>
-    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Normal</string>
     <string name="mdnie_accessibility_inverse">Invertit</string>
     <string name="mdnie_accessibility_color_blind">Daltònic</string>
     <string name="mdnie_accessibility_screen_curtain">Cortina de pantalla</string>
     <string name="mdnie_accessibility_grayscale">Gris</string>
     <string name="mdnie_accessibility_gray_negative">Gris invertit</string>
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

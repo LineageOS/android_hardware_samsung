@@ -18,15 +18,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Näytön lisäasetukset</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">Näyttö</string>
     <string name="screen_colors_title">Värit</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Skenaario</string>
     <string name="mdnie_scenario_summary_head">Aseta mDNIe-skenaario</string>
     <string name="mdnie_accessibility_title_head">Helppokäyttötila</string>
     <string name="mdnie_accessibility_summary_head">Aseta mDNIe-tila</string>
-    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (oletus)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video (lämmin)</string>
@@ -39,12 +36,10 @@
     <string name="mdnie_scenario_ebook">E-kirja</string>
     <string name="mdnie_scenario_email">Sähköposti</string>
     <string name="mdnie_scenario_tdmb">Digitaalinen televisio</string>
-    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Normaali</string>
     <string name="mdnie_accessibility_inverse">Käänteinen</string>
     <string name="mdnie_accessibility_color_blind">Värisokea</string>
     <string name="mdnie_accessibility_screen_curtain">Näyttöverho</string>
     <string name="mdnie_accessibility_grayscale">Harmaa</string>
     <string name="mdnie_accessibility_gray_negative">Harmaa (käänteinen)</string>
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

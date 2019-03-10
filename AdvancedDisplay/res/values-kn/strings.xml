@@ -18,13 +18,28 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">ಸುಧಾರಿತ ಪ್ರದರ್ಶನ</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">ಪರದೆ</string>
     <string name="screen_colors_title">ಬಣ್ಣಗಳು</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">ಸನ್ನಿವೇಶ</string>
     <string name="mdnie_scenario_summary_head">mDNIe ಸನ್ನಿವೇಶವನ್ನು ಹೊಂದಿಸಿ</string>
-    <!-- Scenario names -->
-    <!-- Accessibility mode names -->
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
+    <string name="mdnie_accessibility_title_head">ಪ್ರವೇಶಿಸುವಿಕೆ ರೀತಿ</string>
+    <string name="mdnie_accessibility_summary_head">mDNIe ಪ್ರವೇಶ ರೀತಿ ಹೊಂದಿಸು</string>
+    <string name="mdnie_scenario_ui">LineageOS (ಇದ್ದಾಯ್ಕೆ)</string>
+    <string name="mdnie_scenario_video">ದೃಶ್ಯ</string>
+    <string name="mdnie_scenario_video_warm">ಬೆಚ್ಚನೆ ದೃಶ್ಯ</string>
+    <string name="mdnie_scenario_video_cold">ತಣ್ಣನೆ ದೃಶ್ಯ</string>
+    <string name="mdnie_scenario_camera">ಕ್ಯಾಮೆರಾ</string>
+    <string name="mdnie_scenario_navigation">ಸಂಚಾಲನೆ</string>
+    <string name="mdnie_scenario_gallery">ಚಿತ್ರಶಾಲೆ</string>
+    <string name="mdnie_scenario_vt">ದೃಶ್ಯ ಕರೆ</string>
+    <string name="mdnie_scenario_browser">ಬ್ರೌಸರ್</string>
+    <string name="mdnie_scenario_ebook">e-ಪುಸ್ತಕ</string>
+    <string name="mdnie_scenario_email">e-ಅಂಚೆ</string>
+    <string name="mdnie_scenario_tdmb">ಅಂಕೀಯ ದೂರದರ್ಶನ</string>
+    <string name="mdnie_accessibility_normal">ಸಾಧಾರಣ</string>
+    <string name="mdnie_accessibility_inverse">ವ್ಯತಿರಿಕ್ತವಾದ</string>
+    <string name="mdnie_accessibility_color_blind">ಬಣ್ಣ ಕುರುಡು</string>
+    <string name="mdnie_accessibility_screen_curtain">ಪರದೆಯ ತೆರೆ</string>
+    <string name="mdnie_accessibility_grayscale">ಬೂದು</string>
+    <string name="mdnie_accessibility_gray_negative">ವ್ಯತಿರಿಕ್ತವಾದ ಬೂದು</string>
 </resources>

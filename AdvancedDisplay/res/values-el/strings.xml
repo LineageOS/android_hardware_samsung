@@ -18,15 +18,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Ρυθμίσεις οθόνης για προχωρημένους</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">Οθόνη</string>
     <string name="screen_colors_title">Χρώματα</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Σενάριο</string>
     <string name="mdnie_scenario_summary_head">Ορίστε το σενάριο mDNIe</string>
     <string name="mdnie_accessibility_title_head">Λειτουργία προσβασιμότητας</string>
     <string name="mdnie_accessibility_summary_head">Ορίστε τη λειτουργία προσβασιμότητας mDNIe</string>
-    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (προεπιλογή)</string>
     <string name="mdnie_scenario_video">Βίντεο</string>
     <string name="mdnie_scenario_video_warm">Θερμό βίντεο</string>
@@ -39,12 +36,10 @@
     <string name="mdnie_scenario_ebook">eBook</string>
     <string name="mdnie_scenario_email">E-mail</string>
     <string name="mdnie_scenario_tdmb">Ψηφιακή τηλεόραση</string>
-    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Κανονική</string>
     <string name="mdnie_accessibility_inverse">Ανεστραμμένη</string>
     <string name="mdnie_accessibility_color_blind">Αχρωματοψία</string>
     <string name="mdnie_accessibility_screen_curtain">Κουρτίνα οθόνης</string>
     <string name="mdnie_accessibility_grayscale">Γκρί</string>
     <string name="mdnie_accessibility_gray_negative">Γκρι ανεστραμμένη</string>
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

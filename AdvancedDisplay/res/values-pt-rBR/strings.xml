@@ -18,15 +18,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Display avançado</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">Tela</string>
     <string name="screen_colors_title">Cores</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Cenário</string>
     <string name="mdnie_scenario_summary_head">Define o cenário mDNIe</string>
     <string name="mdnie_accessibility_title_head">Modo de acessibilidade</string>
     <string name="mdnie_accessibility_summary_head">Definir o modo de acessibilidade do mDNIe</string>
-    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (padrão)</string>
     <string name="mdnie_scenario_video">Vídeo</string>
     <string name="mdnie_scenario_video_warm">Vídeo quente</string>
@@ -39,12 +36,10 @@
     <string name="mdnie_scenario_ebook">e-book</string>
     <string name="mdnie_scenario_email">E-mail</string>
     <string name="mdnie_scenario_tdmb">Televisão digital</string>
-    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Normal</string>
     <string name="mdnie_accessibility_inverse">Invertido</string>
     <string name="mdnie_accessibility_color_blind">Daltônico</string>
     <string name="mdnie_accessibility_screen_curtain">Filtro de tela</string>
     <string name="mdnie_accessibility_grayscale">Cinza</string>
     <string name="mdnie_accessibility_gray_negative">Cinza invertido</string>
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

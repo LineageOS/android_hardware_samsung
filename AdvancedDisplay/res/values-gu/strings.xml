@@ -18,13 +18,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">ઍડવાન્સ્ડ ડિસ્પ્લે</string>
-    <!-- Screen Preference -->
     <string name="category_screen_title">સ્ક્રીન</string>
     <string name="screen_colors_title">રંગો</string>
-    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">દ્રશ્ય</string>
     <string name="mdnie_scenario_summary_head">mDNIe દ્રશ્ય સેટ કરો</string>
-    <!-- Scenario names -->
-    <!-- Accessibility mode names -->
-    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
