@@ -22,4 +22,20 @@
     <string name="screen_colors_title">צבעים</string>
     <string name="mdnie_scenario_title_head">תרחיש</string>
     <string name="mdnie_scenario_summary_head">הגדר תרחיש mDNIe</string>
+    <string name="mdnie_accessibility_title_head">מצב נגישות</string>
+    <string name="mdnie_scenario_ui">LineageOS (ברירת מחדל)</string>
+    <string name="mdnie_scenario_video">וידאו</string>
+    <string name="mdnie_scenario_video_warm">וידאו חם</string>
+    <string name="mdnie_scenario_video_cold">וידאו קר</string>
+    <string name="mdnie_scenario_camera">מצלמה</string>
+    <string name="mdnie_scenario_navigation">ניווט</string>
+    <string name="mdnie_scenario_gallery">גלריה</string>
+    <string name="mdnie_scenario_vt">שיחת וידאו</string>
+    <string name="mdnie_scenario_browser">דפדפן</string>
+    <string name="mdnie_scenario_ebook">ספר אלקטרוני</string>
+    <string name="mdnie_scenario_email">דוא\"ל</string>
+    <string name="mdnie_scenario_tdmb">טלוויזיה דיגיטלית</string>
+    <string name="mdnie_accessibility_normal">רגיל</string>
+    <string name="mdnie_accessibility_inverse">הפוך</string>
+    <string name="mdnie_accessibility_color_blind">עיוור צבעים</string>
 </resources>

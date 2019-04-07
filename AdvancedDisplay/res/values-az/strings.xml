@@ -22,4 +22,24 @@
     <string name="screen_colors_title">Rənglər</string>
     <string name="mdnie_scenario_title_head">Ekran rejimi</string>
     <string name="mdnie_scenario_summary_head">mDNle ssenarisini tənzimlə</string>
+    <string name="mdnie_accessibility_title_head">Əlçatımlılıq rejimi</string>
+    <string name="mdnie_accessibility_summary_head">mDNIe əlçatımlılıq rejimini tənzimlə</string>
+    <string name="mdnie_scenario_ui">LineageOS (ilkin)</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_video_warm">Video - isti</string>
+    <string name="mdnie_scenario_video_cold">Video - soyuq</string>
+    <string name="mdnie_scenario_camera">Kamera</string>
+    <string name="mdnie_scenario_navigation">Hərəkət</string>
+    <string name="mdnie_scenario_gallery">Qalereya</string>
+    <string name="mdnie_scenario_vt">Görüntülü zəng</string>
+    <string name="mdnie_scenario_browser">Səyyah</string>
+    <string name="mdnie_scenario_ebook">Elektron kitab</string>
+    <string name="mdnie_scenario_email">Elektron poçt</string>
+    <string name="mdnie_scenario_tdmb">Rəqəmsal televizor</string>
+    <string name="mdnie_accessibility_normal">Normal</string>
+    <string name="mdnie_accessibility_inverse">Tərsinə çevrilmiş</string>
+    <string name="mdnie_accessibility_color_blind">Daltonizm</string>
+    <string name="mdnie_accessibility_screen_curtain">Ekran pərdəsi</string>
+    <string name="mdnie_accessibility_grayscale">Boz</string>
+    <string name="mdnie_accessibility_gray_negative">Tərs boz</string>
 </resources>
