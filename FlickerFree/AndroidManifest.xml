@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2019 The MoKee Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.settings.flickerfree"
+    android:sharedUserId="android.uid.system">
+
+    <application
+        android:icon="@mipmap/ic_launcher_settings"
+        android:label="@string/device_settings_app_name"
+        android:theme="@style/Theme.Settings"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true">
+
+        <activity
+            android:name=".FlickerFreeSettingsActivity"
+            android:label="@string/flicker_free_settings_title">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.display" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/flicker_free_settings_summary" />
+        </activity>
+
+        <receiver android:name=".Startup" >
+            <intent-filter>
+                <action android:name="lineageos.intent.action.INITIALIZE_LINEAGE_HARDWARE" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
