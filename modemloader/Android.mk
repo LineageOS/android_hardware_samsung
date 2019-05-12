@@ -23,4 +23,8 @@ LOCAL_SHARED_LIBRARIES := liblog libcutils
 LOCAL_MODULE := modemloader
 LOCAL_MODULE_TAGS := optional
 
+ifeq ($(PRODUCT_VENDOR_MOVE_ENABLED),true)
+LOCAL_VENDOR_MODULE := true
+endif
+
 include $(BUILD_EXECUTABLE)

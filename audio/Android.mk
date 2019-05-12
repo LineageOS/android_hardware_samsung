@@ -59,6 +59,10 @@ LOCAL_MODULE_RELATIVE_PATH := hw
 
 LOCAL_MODULE_TAGS := optional
 
+ifeq ($(PRODUCT_VENDOR_MOVE_ENABLED),true)
+LOCAL_VENDOR_MODULE := true
+endif
+
 include $(BUILD_SHARED_LIBRARY)
 
 endif

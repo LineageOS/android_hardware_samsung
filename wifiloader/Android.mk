@@ -27,6 +27,10 @@ endif
 LOCAL_MODULE := wifiloader
 LOCAL_MODULE_TAGS := optional
 
+ifeq ($(PRODUCT_VENDOR_MOVE_ENABLED),true)
+LOCAL_VENDOR_MODULE := true
+endif
+
 include $(BUILD_EXECUTABLE)
 
 endif
