@@ -56,6 +56,8 @@ DisplayModes::DisplayModes() : mDefaultModeId(0) {
             break;
         }
     }
+
+    setDisplayMode(mDefaultModeId, false);
 }
 
 bool DisplayModes::isSupported() {
