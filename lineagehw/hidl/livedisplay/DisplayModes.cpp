@@ -29,7 +29,7 @@ namespace samsung {
 
 static constexpr const char* kModePath = "/sys/class/mdnie/mdnie/mode";
 static constexpr const char* kModeMaxPath = "/sys/class/mdnie/mdnie/mode_max";
-static constexpr const char* kDefaultPath = "/data/misc/.displaymodedefault";
+static constexpr const char* kDefaultPath = "/data/vendor/display/.displaymodedefault";
 
 const std::map<int32_t, std::string> DisplayModes::kModeMap = {
     {0, "Dynamic"},
