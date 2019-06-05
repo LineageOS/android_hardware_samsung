@@ -24,6 +24,7 @@
  * limitations under the License.
  */
 
+//#define LOG_NDEBUG 0
 #ifndef GRALLOC_PRIV_H_
 #define GRALLOC_PRIV_H_
 
@@ -46,6 +47,10 @@
 #define HWC_HWOVERLAY 1
 
 #define GRALLOC_ARM_UMP_MODULE 1
+#define debug_level 0
+#define debug_partial_flush 0
+
+static int gMemfd = 0;
 
 struct private_handle_t;
 
@@ -56,6 +61,8 @@ struct private_module_t {
     uint32_t flags;
     uint32_t numBuffers;
     uint32_t bufferMask;
+    uint32_t bufferFreedMask;
+
     pthread_mutex_t lock;
     buffer_handle_t currentBuffer;
     int ion_client;
@@ -93,13 +100,14 @@ struct private_handle_t {
     struct native_handle nativeHandle;
 #endif
     enum {
-        PRIV_FLAGS_FRAMEBUFFER = 0x00000001,
-        PRIV_FLAGS_USES_UMP    = 0x00000002,
-        PRIV_FLAGS_USES_PMEM   = 0x00000004,
-        PRIV_FLAGS_USES_IOCTL  = 0x00000008,
-        PRIV_FLAGS_USES_HDMI   = 0x00000010,
-        PRIV_FLAGS_USES_ION    = 0x00000020,
-        PRIV_FLAGS_NONE_CACHED = 0x00000040,
+        PRIV_FLAGS_FRAMEBUFFER   = 0x00000001,
+        PRIV_FLAGS_USES_UMP      = 0x00000002,
+        PRIV_FLAGS_USES_PMEM     = 0x00000004,
+        PRIV_FLAGS_USES_IOCTL    = 0x00000008,
+        PRIV_FLAGS_USES_HDMI     = 0x00000010,
+        PRIV_FLAGS_USES_ION      = 0x00000020,
+        PRIV_FLAGS_NONE_CACHED   = 0x00000040,
+        PRIV_FLAGS_GRAPHICBUFFER = 0x00000080
     };
 
     enum {
@@ -131,19 +139,18 @@ struct private_handle_t {
     int     bpp;
     int     stride;
 
-    /* Following members are for ION memory only */
-    int     ion_client;
-
     /* Following members ard for YUV information */
-#ifdef USELESS_SEC_YADDR
-    /* Samsung Mobile's blobs don't appear to be using yaddr 
-     * in their header file, and none of the source uses it
-     * anywhere
-     */
     unsigned int yaddr;
-#endif
     unsigned int uoffset;
     unsigned int voffset;
+
+    /* Following members are for ION memory only */
+    int     ion_client;
+    void   *ion_memory;
+
+    uint64_t backing_store;
+    uint64_t producer_usage;
+    uint64_t consumer_usage;
 
 #ifdef __cplusplus
     static const int sNumInts = 21;
@@ -170,15 +177,15 @@ struct private_handle_t {
     bpp(0),
     stride(0),
     ion_client(0),
-#ifdef USELESS_SEC_YADDR
     yaddr(0),
-#endif
     uoffset(0),
     voffset(0)
     {
         version = sizeof(native_handle);
         numFds = sNumFds;
         numInts = sNumInts;
+        ALOGV("%s: fd:%d magic:%d flags:%d size:%d base:%d", __func__,
+            fd, magic, flags, size, base);
     }
 
     private_handle_t(int flags, int size, int base, int lock_state, int fb_file, int fb_offset):
@@ -201,15 +208,15 @@ struct private_handle_t {
     bpp(0),
     stride(0),
     ion_client(0),
-#ifdef USELESS_SEC_YADDR
     yaddr(0),
-#endif
     uoffset(0),
     voffset(0)
     {
         version = sizeof(native_handle);
         numFds = sNumFds;
         numInts = sNumInts;
+        ALOGV("%s: fd:%d magic:%d flags:%d size:%d base:%d", __func__,
+            fd, magic, flags, size, base);
     }
 
     ~private_handle_t()

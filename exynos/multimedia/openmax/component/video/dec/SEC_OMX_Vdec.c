@@ -71,6 +71,7 @@ void SEC_UpdateFrameSize(OMX_COMPONENTTYPE *pOMXComponent)
 
         switch(secOutputPort->portDefinition.format.video.eColorFormat) {
         case OMX_COLOR_FormatYUV420Planar:
+        case OMX_COLOR_FormatYCbCr420Planar:
         case OMX_COLOR_FormatYUV420SemiPlanar:
         case OMX_SEC_COLOR_FormatNV12TPhysicalAddress:
         case OMX_SEC_COLOR_FormatANBYUV420SemiPlanar:
@@ -1057,7 +1058,7 @@ OMX_ERRORTYPE SEC_OMX_VideoDecodeGetParameter(
             switch (index) {
             case supportFormat_0:
                 portFormat->eCompressionFormat = OMX_VIDEO_CodingUnused;
-                portFormat->eColorFormat       = OMX_COLOR_FormatYUV420Planar;
+                portFormat->eColorFormat       = OMX_COLOR_FormatYCbCr420Planar;
                 portFormat->xFramerate         = portDefinition->format.video.xFramerate;
                 break;
             case supportFormat_1:

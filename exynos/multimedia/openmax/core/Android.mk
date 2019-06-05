@@ -9,12 +9,12 @@ LOCAL_SRC_FILES := SEC_OMX_Component_Register.c \
 LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE := libSEC_OMX_Core
 
-LOCAL_CFLAGS :=
+LOCAL_CFLAGS := -Wno-error
 
 LOCAL_ARM_MODE := arm
 
 LOCAL_STATIC_LIBRARIES := libsecosal libsecbasecomponent
-LOCAL_SHARED_LIBRARIES := libc libdl libcutils libutils \
+LOCAL_SHARED_LIBRARIES := libc libdl libcutils libutils liblog \
 	libSEC_OMX_Resourcemanager
 
 LOCAL_C_INCLUDES := $(SEC_OMX_INC)/khronos \

@@ -7,7 +7,7 @@
  */
 
 #define LOG_TAG "RILClient"
-/*#define LOG_NDEBUG 0*/
+#define LOG_NDEBUG 0
 
 #include <binder/Parcel.h>
 #include <telephony/ril.h>

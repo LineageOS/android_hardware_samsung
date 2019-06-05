@@ -71,6 +71,7 @@ int ump_arch_lock( ump_secure_id secure_id, ump_lock_usage lock_usage );
 /** Unlocking buffer. Let other users lock the buffer for their usage */
 int ump_arch_unlock( ump_secure_id secure_id );
 
+ump_secure_id ump_arch_ion_import(int ion_fd, unsigned long *size, ump_alloc_constraints constraints);
 
 #ifdef __cplusplus
 }

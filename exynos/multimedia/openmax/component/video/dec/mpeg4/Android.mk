@@ -11,7 +11,7 @@ LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE := libOMX.SEC.M4V.Decoder
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/omx
 
-LOCAL_CFLAGS :=
+LOCAL_CFLAGS := -Wno-error
 
 ifeq ($(BOARD_NONBLOCK_MODE_PROCESS), true)
 LOCAL_CFLAGS += -DNONBLOCK_MODE_PROCESS
@@ -30,7 +30,7 @@ LOCAL_ARM_MODE := arm
 
 LOCAL_STATIC_LIBRARIES := libSEC_OMX_Vdec libsecosal libsecbasecomponent \
 	libseccscapi
-LOCAL_SHARED_LIBRARIES := libc libdl libcutils libutils libui \
+LOCAL_SHARED_LIBRARIES := libc libdl libcutils libutils libui liblog \
 	libSEC_OMX_Resourcemanager
 
 ifeq ($(TARGET_SOC),exynos4x12)

@@ -45,7 +45,7 @@
 #endif
 
 /* To use CSC FIMC in SEC OMX, gralloc should allocate physical memory using FIMC */
-/* It means GRALLOC_USAGE_HW_FIMC1 should be set on Native Window usage */
+/* It means GRALLOC_USAGE_HW_ION should be set on Native Window usage */
 #ifdef USE_CSC_FIMC
 #include "csc_fimc.h"
 #endif
@@ -53,6 +53,7 @@
 #undef  SEC_LOG_TAG
 #define SEC_LOG_TAG    "SEC_H264_DEC"
 #define SEC_LOG_OFF
+
 #include "SEC_OSAL_Log.h"
 
 #define H264_DEC_NUM_OF_EXTRA_BUFFERS 1
@@ -479,6 +480,7 @@ OMX_ERRORTYPE SEC_MFC_H264Dec_SetParameter(
 
             switch (pSECOutputPort->portDefinition.format.video.eColorFormat) {
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
             case OMX_COLOR_FormatYUV420SemiPlanar:
             case OMX_SEC_COLOR_FormatNV12TPhysicalAddress:
             case OMX_SEC_COLOR_FormatANBYUV420SemiPlanar:
@@ -968,6 +970,16 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
 #endif
 
     FunctionIn();
+    if (pSECInputPort->portDefinition.format.video.nFrameWidth > 1920 &&
+        pSECInputPort->portDefinition.format.video.nFrameHeight > 1088) {
+        SEC_OSAL_Log(SEC_LOG_ERROR, "Unsupported video size: %d, %d.",
+                    pSECInputPort->portDefinition.format.video.nFrameWidth,
+                    pSECInputPort->portDefinition.format.video.nFrameHeight);
+        /* Decoding unsupported video size causes mediaserver to crash. */
+        /* Just don't decode frame to prevent other issues. */
+        ret = OMX_ErrorNone;
+        goto EXIT;
+    }
 
     if (pH264Dec->hMFCH264Handle.bConfiguredMFC == OMX_FALSE) {
         SSBSIP_MFC_CODEC_TYPE eCodecType = H264_DEC;
@@ -1132,6 +1144,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420SemiPlanar_SBS_LR;
                         break;
                     case OMX_COLOR_FormatYUV420Planar:
+                    case OMX_COLOR_FormatYCbCr420Planar:
                     default:
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420Planar_SBS_LR;
                         break;
@@ -1146,6 +1159,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420SemiPlanar_SBS_RL;
                         break;
                     case OMX_COLOR_FormatYUV420Planar:
+                    case OMX_COLOR_FormatYCbCr420Planar:
                     default:
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420Planar_SBS_RL;
                         break;
@@ -1162,6 +1176,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420SemiPlanar_TB_LR;
                         break;
                     case OMX_COLOR_FormatYUV420Planar:
+                    case OMX_COLOR_FormatYCbCr420Planar:
                     default:
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420Planar_TB_LR;
                         break;
@@ -1176,6 +1191,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420SemiPlanar_TB_RL;
                         break;
                     case OMX_COLOR_FormatYUV420Planar:
+                    case OMX_COLOR_FormatYCbCr420Planar:
                     default:
                         pSECOutputPort->portDefinition.format.video.eColorFormat = OMX_SEC_COLOR_FormatYUV420Planar_TB_RL;
                         break;
@@ -1429,6 +1445,7 @@ OMX_ERRORTYPE SEC_MFC_H264_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC
                     actualHeight / 2);
                 break;
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
 #ifdef S3D_SUPPORT
             case OMX_SEC_COLOR_FormatYUV420Planar_SBS_LR:
             case OMX_SEC_COLOR_FormatYUV420Planar_SBS_RL:
@@ -1991,7 +2008,7 @@ OSCL_EXPORT_REF OMX_ERRORTYPE SEC_OMX_ComponentInit(OMX_HANDLETYPE hComponent, O
     SEC_OSAL_Strcpy(pSECPort->portDefinition.format.video.cMIMEType, "raw/video");
     pSECPort->portDefinition.format.video.pNativeRender = 0;
     pSECPort->portDefinition.format.video.bFlagErrorConcealment = OMX_FALSE;
-    pSECPort->portDefinition.format.video.eColorFormat = OMX_COLOR_FormatYUV420Planar;
+    pSECPort->portDefinition.format.video.eColorFormat = OMX_COLOR_FormatYCbCr420Planar;
     pSECPort->portDefinition.bEnabled = OMX_TRUE;
     if (bFlashPlayerMode != OMX_FALSE) {
         pSECPort->portDefinition.nBufferCountActual = MAX_H264_FP_VIDEO_OUTPUTBUFFER_NUM;

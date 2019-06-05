@@ -300,6 +300,7 @@ OMX_ERRORTYPE SEC_MFC_VP8Dec_SetParameter(
 
             switch (pSECOutputPort->portDefinition.format.video.eColorFormat) {
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
             case OMX_COLOR_FormatYUV420SemiPlanar:
             case OMX_SEC_COLOR_FormatNV12TPhysicalAddress:
             case OMX_SEC_COLOR_FormatANBYUV420SemiPlanar:
@@ -1010,6 +1011,7 @@ OMX_ERRORTYPE SEC_MFC_VP8_Decode_Nonblock(OMX_COMPONENTTYPE *pOMXComponent, SEC_
                      break;
                 break;
             case OMX_COLOR_FormatYUV420Planar:
+            case OMX_COLOR_FormatYCbCr420Planar:
             default:
                 csc_tiled_to_linear_y_neon(
                     (unsigned char *)pYUVBuf[0],
@@ -1237,6 +1239,7 @@ OMX_ERRORTYPE SEC_MFC_VP8_Decode_Block(OMX_COMPONENTTYPE *pOMXComponent, SEC_OMX
                         height / 2);
                     break;
                 case OMX_COLOR_FormatYUV420Planar:
+                case OMX_COLOR_FormatYCbCr420Planar:
                 default:
                     csc_tiled_to_linear_y_neon(
                         (unsigned char *)pYUVBuf[0],
@@ -1475,7 +1478,7 @@ OSCL_EXPORT_REF OMX_ERRORTYPE SEC_OMX_ComponentInit(OMX_HANDLETYPE hComponent, O
     SEC_OSAL_Strcpy(pSECPort->portDefinition.format.video.cMIMEType, "raw/video");
     pSECPort->portDefinition.format.video.pNativeRender = 0;
     pSECPort->portDefinition.format.video.bFlagErrorConcealment = OMX_FALSE;
-    pSECPort->portDefinition.format.video.eColorFormat = OMX_COLOR_FormatYUV420Planar;
+    pSECPort->portDefinition.format.video.eColorFormat = OMX_COLOR_FormatYCbCr420Planar;
     pSECPort->portDefinition.bEnabled = OMX_TRUE;
 
     /*for(i = 0; i < ALL_PORT_NUM; i++) {

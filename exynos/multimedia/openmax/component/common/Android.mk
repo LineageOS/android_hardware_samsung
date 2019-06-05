@@ -9,7 +9,7 @@ LOCAL_SRC_FILES := \
 
 LOCAL_MODULE := libsecbasecomponent
 
-LOCAL_CFLAGS :=
+LOCAL_CFLAGS := -Wno-error
 
 LOCAL_STATIC_LIBRARIES := libsecosal
 LOCAL_SHARED_LIBRARIES := libcutils libutils
@@ -31,7 +31,7 @@ LOCAL_SRC_FILES := \
 LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE := libSEC_OMX_Resourcemanager
 
-LOCAL_CFLAGS :=
+LOCAL_CFLAGS := -Wno-error
 
 LOCAL_STATIC_LIBRARIES := libsecosal
 LOCAL_SHARED_LIBRARIES := libcutils libutils
