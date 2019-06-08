@@ -22,8 +22,12 @@
     <string name="screen_colors_title">สี</string>
     <string name="mdnie_scenario_title_head">สถานการณ์</string>
     <string name="mdnie_scenario_summary_head">กำหนดสถานการณ์ mDNIe</string>
+    <string name="mdnie_accessibility_title_head">โหมดการเข้าถึง</string>
+    <string name="mdnie_accessibility_summary_head">ตั้งค่าโหมดการเข้าถึง mDNIe</string>
     <string name="mdnie_scenario_ui">LineageOS (เริ่มต้น)</string>
     <string name="mdnie_scenario_video">วิดีโอ</string>
+    <string name="mdnie_scenario_video_warm">วิดีโออบอุ่น</string>
+    <string name="mdnie_scenario_video_cold">วิดีโอเย็น</string>
     <string name="mdnie_scenario_camera">กล้องถ่ายรูป</string>
     <string name="mdnie_scenario_navigation">การนำทาง</string>
     <string name="mdnie_scenario_gallery">แกลเลอรี</string>
@@ -35,6 +39,7 @@
     <string name="mdnie_accessibility_normal">ปกติ</string>
     <string name="mdnie_accessibility_inverse">กลับสี</string>
     <string name="mdnie_accessibility_color_blind">ตาบอดสี</string>
+    <string name="mdnie_accessibility_screen_curtain">จอม่าน</string>
     <string name="mdnie_accessibility_grayscale">สีเทา</string>
     <string name="mdnie_accessibility_gray_negative">กลับสีเทา</string>
 </resources>
