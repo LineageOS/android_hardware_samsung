@@ -17,7 +17,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Avancerede skærmindstillinger</string>
+    <string name="app_name">Avanceret display</string>
     <string name="category_screen_title">Skærm</string>
     <string name="screen_colors_title">Farver</string>
     <string name="mdnie_scenario_title_head">Scenarie</string>
