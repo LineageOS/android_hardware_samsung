@@ -47,7 +47,7 @@ Return<bool> ReadingEnhancement::isEnabled() {
         contents = Trim(contents);
     }
 
-    return !contents.compare("Current accessibility : DSI0 : GRAYSCALE ") || !contents.compare("4");
+    return !contents.compare("Current accessibility : DSI0 : GRAYSCALE") || !contents.compare("4");
 }
 
 Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
