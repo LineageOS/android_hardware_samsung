@@ -29,8 +29,7 @@ bool GloveMode::isSupported() {
     if (file.is_open()) {
         std::string line;
         while (getline(file, line)) {
-            if (!line.compare("glove_mode"))
-                return true;
+            if (!line.compare("glove_mode")) return true;
         }
         file.close();
     }
@@ -43,8 +42,7 @@ Return<bool> GloveMode::isEnabled() {
     if (file.is_open()) {
         std::string line;
         getline(file, line);
-        if (!line.compare("glove_mode,1:OK"))
-            return true;
+        if (!line.compare("glove_mode,1:OK")) return true;
         file.close();
     }
     return false;

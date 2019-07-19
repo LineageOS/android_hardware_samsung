@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_TOUCH_V1_0_STYLUSMODE_H
 #define VENDOR_LINEAGE_TOUCH_V1_0_STYLUSMODE_H
 
-#include <vendor/lineage/touch/1.0/IStylusMode.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/touch/1.0/IStylusMode.h>
 
 namespace vendor {
 namespace lineage {
@@ -46,7 +46,6 @@ class StylusMode : public IStylusMode {
     Return<bool> setEnabled(bool enabled) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
-
 };
 
 }  // namespace samsung

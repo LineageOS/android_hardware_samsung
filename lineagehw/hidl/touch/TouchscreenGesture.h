@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_TOUCH_V1_0_TOUCHSCREENGESTURE_H
 #define VENDOR_LINEAGE_TOUCH_V1_0_TOUCHSCREENGESTURE_H
 
-#include <vendor/lineage/touch/1.0/ITouchscreenGesture.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/touch/1.0/ITouchscreenGesture.h>
 
 namespace vendor {
 namespace lineage {
@@ -50,7 +50,6 @@ class TouchscreenGesture : public ITouchscreenGesture {
         const char* name;
     } GestureInfo;
     static const std::map<int32_t, GestureInfo> kGestureInfoMap;  // id -> info
-
 };
 
 // FIXME: most likely delete, this is only for passthrough implementations
