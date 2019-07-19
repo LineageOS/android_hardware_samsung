@@ -27,13 +27,10 @@ namespace samsung {
 static constexpr const char* kGeasturePath = "/sys/class/sec/sec_epen/epen_gestures";
 
 const std::map<int32_t, TouchscreenGesture::GestureInfo> TouchscreenGesture::kGestureInfoMap = {
-    {0, {0x2f1, "Swipe up stylus"}},
-    {1, {0x2f2, "Swipe down stylus"}},
-    {2, {0x2f3, "Swipe left stylus"}},
-    {3, {0x2f4, "Swipe right stylus"}},
+    {0, {0x2f1, "Swipe up stylus"}},   {1, {0x2f2, "Swipe down stylus"}},
+    {2, {0x2f3, "Swipe left stylus"}}, {3, {0x2f4, "Swipe right stylus"}},
     {4, {0x2f5, "Long press stylus"}},
 };
-
 
 bool TouchscreenGesture::isSupported() {
     std::ifstream file(kGeasturePath);
@@ -57,7 +54,7 @@ Return<bool> TouchscreenGesture::setGestureEnabled(
     std::fstream file(kGeasturePath);
     int gestureMode;
     int mask = 1 << gesture.id;
-    
+
     file >> gestureMode;
 
     if (enabled)
@@ -69,7 +66,6 @@ Return<bool> TouchscreenGesture::setGestureEnabled(
 
     return !file.fail();
 }
-
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 

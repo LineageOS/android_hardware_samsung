@@ -29,8 +29,7 @@ bool StylusMode::isSupported() {
     if (file.is_open()) {
         std::string line;
         while (getline(file, line)) {
-            if (!line.compare("hover_enable"))
-                return true;
+            if (!line.compare("hover_enable")) return true;
         }
         file.close();
     }
@@ -43,8 +42,7 @@ Return<bool> StylusMode::isEnabled() {
     if (file.is_open()) {
         std::string line;
         getline(file, line);
-        if (!line.compare("hover_enable,1:OK"))
-            return true;
+        if (!line.compare("hover_enable,1:OK")) return true;
         file.close();
     }
     return false;
