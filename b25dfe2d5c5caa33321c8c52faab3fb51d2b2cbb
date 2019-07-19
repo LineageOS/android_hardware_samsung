@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bff5f96_ade6af19",
+        "filename": "hidl/light/Light.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 16185
+      },
+      "writtenOn": "2019-07-19T21:31:37Z",
+      "side": 1,
+      "message": ";p",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 4
+      },
+      "revId": "b25dfe2d5c5caa33321c8c52faab3fb51d2b2cbb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
