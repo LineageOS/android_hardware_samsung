@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENT_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENT_H
 
-#include <vendor/lineage/livedisplay/2.0/ISunlightEnhancement.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/livedisplay/2.0/ISunlightEnhancement.h>
 
 namespace vendor {
 namespace lineage {

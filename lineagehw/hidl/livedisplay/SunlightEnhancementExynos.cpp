@@ -21,7 +21,6 @@
 
 #include "SunlightEnhancementExynos.h"
 
-
 using android::base::ReadFileToString;
 using android::base::Trim;
 using android::base::WriteStringToFile;
@@ -32,7 +31,7 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char *kLUXPath = "/sys/class/mdnie/mdnie/lux";
+static constexpr const char* kLUXPath = "/sys/class/mdnie/mdnie/lux";
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 bool SunlightEnhancementExynos::isSupported() {

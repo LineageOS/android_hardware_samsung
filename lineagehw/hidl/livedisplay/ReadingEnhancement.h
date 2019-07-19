@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_READINGENHANCEMENT_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_READINGENHANCEMENT_H
 
-#include <vendor/lineage/livedisplay/2.0/IReadingEnhancement.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/livedisplay/2.0/IReadingEnhancement.h>
 
 namespace vendor {
 namespace lineage {
@@ -44,7 +44,6 @@ class ReadingEnhancement : public IReadingEnhancement {
     Return<bool> setEnabled(bool) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
-
 };
 
 }  // namespace samsung

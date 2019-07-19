@@ -26,18 +26,19 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-
 static constexpr const char* kModePath = "/sys/class/mdnie/mdnie/mode";
 static constexpr const char* kModeMaxPath = "/sys/class/mdnie/mdnie/mode_max";
 static constexpr const char* kDefaultPath = "/data/vendor/display/.displaymodedefault";
 
 const std::map<int32_t, std::string> DisplayModes::kModeMap = {
+    // clang-format off
     {0, "Dynamic"},
     {1, "Standard"},
     {2, "Natural"},
     {3, "Cinema"},
     {4, "Adaptive"},
     {5, "Reading"},
+    // clang-format on
 };
 
 DisplayModes::DisplayModes() : mDefaultModeId(0) {
@@ -76,8 +77,7 @@ Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb resultCb) {
         value = kModeMap.size();
     }
     for (const auto& entry : kModeMap) {
-        if (entry.first < value)
-            modes.push_back({entry.first, entry.second});
+        if (entry.first < value) modes.push_back({entry.first, entry.second});
     }
     resultCb(modes);
     return Void();
@@ -126,7 +126,6 @@ Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
     }
     return true;
 }
-
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 

@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
 
-#include <vendor/lineage/livedisplay/2.0/IDisplayModes.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/livedisplay/2.0/IDisplayModes.h>
 
 namespace vendor {
 namespace lineage {
