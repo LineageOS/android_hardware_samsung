@@ -32,7 +32,7 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char *kColorPath = "/sys/class/mdnie/mdnie/sensorRGB";
+static constexpr const char* kColorPath = "/sys/class/mdnie/mdnie/sensorRGB";
 
 bool DisplayColorCalibrationExynos::isSupported() {
     std::fstream rgb(kColorPath, rgb.in | rgb.out);

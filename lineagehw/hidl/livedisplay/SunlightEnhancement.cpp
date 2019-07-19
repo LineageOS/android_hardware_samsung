@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 #include <android-base/file.h>
 #include <android-base/strings.h>
 
@@ -32,8 +31,8 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char *kHBMPath = "/sys/class/lcd/panel/panel/auto_brightness";
-static constexpr const char *kSREPath = "/sys/class/mdnie/mdnie/outdoor";
+static constexpr const char* kHBMPath = "/sys/class/lcd/panel/panel/auto_brightness";
+static constexpr const char* kSREPath = "/sys/class/mdnie/mdnie/outdoor";
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 bool SunlightEnhancement::isSupported() {
@@ -59,7 +58,7 @@ Return<bool> SunlightEnhancement::isEnabled() {
     if (mHasHBM && ReadFileToString(kHBMPath, &tmp)) {
         statusHBM = std::stoi(Trim(tmp));
     }
-    
+
     return ((statusSRE == 1 && statusHBM == 6) || statusSRE == 1);
 }
 

@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYCOLORCALIBRATIONEXYNOS_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYCOLORCALIBRATIONEXYNOS_H
 
-#include <vendor/lineage/livedisplay/2.0/IDisplayColorCalibration.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/livedisplay/2.0/IDisplayColorCalibration.h>
 
 namespace vendor {
 namespace lineage {
@@ -46,7 +46,6 @@ class DisplayColorCalibrationExynos : public IDisplayColorCalibration {
     Return<bool> setCalibration(const hidl_vec<int32_t>& rgb) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
-
 };
 
 }  // namespace samsung

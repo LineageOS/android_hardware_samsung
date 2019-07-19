@@ -32,7 +32,7 @@ using ::android::hardware::Void;
 #define FILE_RGB "/sys/class/graphics/fb0/rgb"
 
 class DisplayColorCalibration : public IDisplayColorCalibration {
-   public:
+  public:
     bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.

@@ -54,13 +54,15 @@ int main() {
 
     adaptiveBacklight = new AdaptiveBacklight();
     if (adaptiveBacklight == nullptr) {
-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL AdaptiveBacklight Iface, exiting.";
+        LOG(ERROR)
+            << "Can not create an instance of LiveDisplay HAL AdaptiveBacklight Iface, exiting.";
         goto shutdown;
     }
 
     displayColorCalibrationExynos = new DisplayColorCalibrationExynos();
     if (displayColorCalibrationExynos == nullptr) {
-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL DisplayColorCalibration Iface, exiting.";
+        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL DisplayColorCalibration "
+                      "Iface, exiting.";
         goto shutdown;
     }
 
@@ -72,13 +74,15 @@ int main() {
 
     readingEnhancement = new ReadingEnhancement();
     if (readingEnhancement == nullptr) {
-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL ReadingEnhancement Iface, exiting.";
+        LOG(ERROR)
+            << "Can not create an instance of LiveDisplay HAL ReadingEnhancement Iface, exiting.";
         goto shutdown;
     }
 
     sunlightEnhancementExynos = new SunlightEnhancementExynos();
     if (sunlightEnhancementExynos == nullptr) {
-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL SunlightEnhancement Iface, exiting.";
+        LOG(ERROR)
+            << "Can not create an instance of LiveDisplay HAL SunlightEnhancement Iface, exiting.";
         goto shutdown;
     }
 
@@ -87,9 +91,8 @@ int main() {
     if (adaptiveBacklight->isSupported()) {
         status = adaptiveBacklight->registerAsService();
         if (status != OK) {
-            LOG(ERROR)
-                << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("
-                << status << ")";
+            LOG(ERROR) << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("
+                       << status << ")";
             goto shutdown;
         }
     }
@@ -107,9 +110,8 @@ int main() {
     if (displayModes->isSupported()) {
         status = displayModes->registerAsService();
         if (status != OK) {
-            LOG(ERROR)
-                << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
-                << status << ")";
+            LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
+                       << status << ")";
             goto shutdown;
         }
     }
@@ -136,7 +138,7 @@ int main() {
 
     LOG(INFO) << "LiveDisplay HAL service is ready.";
     joinRpcThreadpool();
-    // Should not pass this line
+// Should not pass this line
 
 shutdown:
     // In normal operation, we don't expect the thread pool to shutdown
