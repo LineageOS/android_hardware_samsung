@@ -22,4 +22,6 @@
     <string name="screen_colors_title">Farver</string>
     <string name="mdnie_scenario_title_head">Scenarie</string>
     <string name="mdnie_scenario_summary_head">Angiv mDNIe-scenariet</string>
+    <string name="mdnie_scenario_ui">LineageOS (standard)</string>
+    <string name="mdnie_scenario_vt">Videoopkald</string>
 </resources>
