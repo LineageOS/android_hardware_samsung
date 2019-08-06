@@ -16,11 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Qabaqcıl ekran</string>
-    <string name="category_screen_title">Ekran</string>
-    <string name="screen_colors_title">Rənglər</string>
-    <string name="mdnie_scenario_title_head">Ekran rejimi</string>
-    <string name="mdnie_scenario_summary_head">mDNle ssenarisini tənzimlə</string>
-    <string name="mdnie_negative_title_head">Neqativ rejim</string>
-    <string name="mdnie_negative_summary_head">Tərs rәnglәri fəallaşdır/sıradan çıxart</string>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (standert)</item>
+        <item>Brûkersomjouwing</item>
+        <item>Fideo</item>
+        <item>Fideo (waarm)</item>
+        <item>Fideo (kâld)</item>
+        <item>Kamera</item>
+        <item>Navigaasje</item>
+        <item>Galery</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Normaal</item>
+        <item>Omkeard</item>
+    </string-array>
 </resources>

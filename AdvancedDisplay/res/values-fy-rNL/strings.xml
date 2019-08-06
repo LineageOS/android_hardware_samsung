@@ -16,11 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Qabaqcıl ekran</string>
-    <string name="category_screen_title">Ekran</string>
-    <string name="screen_colors_title">Rənglər</string>
-    <string name="mdnie_scenario_title_head">Ekran rejimi</string>
-    <string name="mdnie_scenario_summary_head">mDNle ssenarisini tənzimlə</string>
-    <string name="mdnie_negative_title_head">Neqativ rejim</string>
-    <string name="mdnie_negative_summary_head">Tərs rәnglәri fəallaşdır/sıradan çıxart</string>
+    <string name="app_name">Avansearre ynstellingen</string>
+    <string name="category_screen_title">Skerm</string>
+    <string name="screen_colors_title">Kleuren</string>
+    <string name="mdnie_scenario_title_head">Senario</string>
+    <string name="mdnie_scenario_summary_head">mDNIe-senario ynstelle</string>
+    <string name="mdnie_negative_title_head">Negative modus</string>
+    <string name="mdnie_negative_summary_head">Negative kleuren yn-/útskeakelje</string>
 </resources>

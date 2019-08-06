@@ -16,11 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">ଉନ୍ନତ ଡିସ୍‍ପ୍ଲେ</string>
-  <string name="category_screen_title">ସ୍କ୍ରିନ୍</string>
-  <string name="screen_colors_title">ରଙ୍ଗଗୁଡିକ</string>
-  <string name="mdnie_scenario_title_head">ଦୃଶ୍ୟପଟ</string>
-  <string name="mdnie_scenario_summary_head">mDNIe ଦୃଶ୍ୟପଟ ସେଟ୍‍ କରନ୍ତୁ</string>
-  <string name="mdnie_negative_title_head">ନେଗେଟିଭ୍‍ ମୋଡ୍‍</string>
-  <string name="mdnie_negative_summary_head">ଇ‍ନ୍ଭର୍ଟେଡ ରଙ୍ଗ ସଷମ/ଅଷମ କରନ୍ତୁ</string>
+    <string name="app_name">ଉନ୍ନତ ଡିସ୍‍ପ୍ଲେ</string>
+    <string name="category_screen_title">ସ୍କ୍ରିନ୍</string>
+    <string name="screen_colors_title">ରଙ୍ଗଗୁଡିକ</string>
+    <string name="mdnie_scenario_title_head">ଦୃଶ୍ୟପଟ</string>
+    <string name="mdnie_scenario_summary_head">mDNIe ଦୃଶ୍ୟପଟ ସେଟ୍‍ କରନ୍ତୁ</string>
+    <string name="mdnie_negative_title_head">ନେଗେଟିଭ୍‍ ମୋଡ୍‍</string>
+    <string name="mdnie_negative_summary_head">ଇ‍ନ୍ଭର୍ଟେଡ ରଙ୍ଗ ସଷମ/ଅଷମ କରନ୍ତୁ</string>
 </resources>

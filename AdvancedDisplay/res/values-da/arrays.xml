@@ -17,11 +17,11 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string-array name="mdnie_scenario_entries">
-        <item>LineageOS (default)</item>
-        <item>UI</item>
+        <item>LineageOS (standard)</item>
+        <item>Brugerflade</item>
         <item>Video</item>
-        <item>Varm video</item>
-        <item>Kold video</item>
+        <item>Video varm</item>
+        <item>Video kold</item>
         <item>Kamera</item>
         <item>Navigation</item>
         <item>Galleri</item>
