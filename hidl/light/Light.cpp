@@ -125,10 +125,7 @@ void Light::setNotificationLED() {
     bool bln = false;
 #endif
 
-    if (mBatteryState.color & COLOR_MASK) {
-        adjusted_brightness = LED_BRIGHTNESS_BATTERY;
-        state = mBatteryState;
-    } else if (mNotificationState.color & COLOR_MASK) {
+    if (mNotificationState.color & COLOR_MASK) {
         adjusted_brightness = LED_BRIGHTNESS_NOTIFICATION;
         state = mNotificationState;
 #ifdef LED_BLN_NODE
@@ -144,6 +141,9 @@ void Light::setNotificationLED() {
         if (state.flashMode == Flash::NONE) {
             state.color = 0;
         }
+    } else if (mBatteryState.color & COLOR_MASK) {
+        adjusted_brightness = LED_BRIGHTNESS_BATTERY;
+        state = mBatteryState;
     } else {
         set(LED_BLINK_NODE, "0x00000000 0 0");
         return;
