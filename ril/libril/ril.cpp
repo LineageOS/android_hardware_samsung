@@ -21,13 +21,11 @@
 #include <telephony/ril.h>
 #include <telephony/ril_cdma_sms.h>
 #include <cutils/sockets.h>
-#include <cutils/jstring.h>
 #include <hwbinder/ProcessState.h>
 #include <telephony/record_stream.h>
 #include <utils/Log.h>
 #include <utils/SystemClock.h>
 #include <pthread.h>
-#include <cutils/jstring.h>
 #include <sys/types.h>
 #include <sys/limits.h>
 #include <sys/system_properties.h>
