@@ -35,6 +35,11 @@ include $(SAM_ROOT)/macloader/Android.mk
 include $(SAM_ROOT)/wifiloader/Android.mk
 endif
 
+# Loki
+ifeq ($(TAGET_NEEDS_LOKI),true)
+include $(SAM_ROOT)/loki_tool/Android.mk
+endif
+
 ifeq ($(BOARD_VENDOR),samsung)
 include $(SAM_ROOT)/AdvancedDisplay/Android.mk
 include $(SAM_ROOT)/audio/Android.mk
