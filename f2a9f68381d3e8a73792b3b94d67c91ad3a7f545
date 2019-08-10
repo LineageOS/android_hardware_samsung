@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70f0b3a3_6c10ceef",
+        "filename": "mkbootimg.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-08-10T08:07:19Z",
+      "side": 1,
+      "message": "needs and else as soon as its known how the tool is named",
+      "revId": "f2a9f68381d3e8a73792b3b94d67c91ad3a7f545",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
