@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (типово)</item>
-    <item>Інтерфейс користувача</item>
-    <item>Відео</item>
-    <item>Відео теплий</item>
-    <item>Відео — холодні тони</item>
-    <item>Камера</item>
-    <item>Навігація</item>
-    <item>Галерея</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>Звичайний</item>
-    <item>Негатив</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (типово)</item>
+        <item>Інтерфейс користувача</item>
+        <item>Відео</item>
+        <item>Відео теплий</item>
+        <item>Відео — холодні тони</item>
+        <item>Камера</item>
+        <item>Навігація</item>
+        <item>Галерея</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Звичайний</item>
+        <item>Негатив</item>
+    </string-array>
 </resources>

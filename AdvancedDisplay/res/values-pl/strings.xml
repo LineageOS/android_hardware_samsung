@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Zaawansowane ustawienia ekranu</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Ekran</string>
-  <string name="screen_colors_title">Kolory</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Scenerie</string>
-  <string name="mdnie_scenario_summary_head">Ustaw scenariusz mDNIe</string>
-  <string name="mdnie_negative_title_head">Tryb negatywu</string>
-  <string name="mdnie_negative_summary_head">Włącz/wyłącz odwrócone kolory</string>
+    <string name="app_name">Zaawansowane ustawienia ekranu</string>
+    <string name="category_screen_title">Ekran</string>
+    <string name="screen_colors_title">Kolory</string>
+    <string name="mdnie_scenario_title_head">Scenerie</string>
+    <string name="mdnie_scenario_summary_head">Ustaw scenariusz mDNIe</string>
+    <string name="mdnie_negative_title_head">Tryb negatywu</string>
+    <string name="mdnie_negative_summary_head">Włącz/wyłącz odwrócone kolory</string>
 </resources>

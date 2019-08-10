@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (default)</item>
-    <item>Gebruikerskoppelvlak Modus</item>
-    <item>Video Modus</item>
-    <item>Video Warm Modus</item>
-    <item>Video Koud Modus</item>
-    <item>Kamera</item>
-    <item>Navigasie</item>
-    <item>Galery</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>Normaal</item>
-    <item>Omgekeerde</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (default)</item>
+        <item>Gebruikerskoppelvlak Modus</item>
+        <item>Video Modus</item>
+        <item>Video Warm Modus</item>
+        <item>Video Koud Modus</item>
+        <item>Kamera</item>
+        <item>Navigasie</item>
+        <item>Galery</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Normaal</item>
+        <item>Omgekeerde</item>
+    </string-array>
 </resources>

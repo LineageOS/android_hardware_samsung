@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (standaard)</item>
-    <item>Gebruikersomgeving</item>
-    <item>Video</item>
-    <item>Video (warm)</item>
-    <item>Video (koud)</item>
-    <item>Camera</item>
-    <item>Navigatie</item>
-    <item>Galerij</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>Normaal</item>
-    <item>Omgedraaid</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (standaard)</item>
+        <item>Gebruikersomgeving</item>
+        <item>Video</item>
+        <item>Video (warm)</item>
+        <item>Video (koud)</item>
+        <item>Camera</item>
+        <item>Navigatie</item>
+        <item>Galerij</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Normaal</item>
+        <item>Omgedraaid</item>
+    </string-array>
 </resources>

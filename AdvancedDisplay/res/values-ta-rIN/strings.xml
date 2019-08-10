@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">மேம்பட்ட காட்சி</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">திரை</string>
-  <string name="screen_colors_title">நிறங்கள்</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">சூழ்நிலை</string>
-  <string name="mdnie_scenario_summary_head">mDNIe சூழ்நிலையை அமை</string>
-  <string name="mdnie_negative_title_head">எதிர்மறை பயன்முறை</string>
-  <string name="mdnie_negative_summary_head">இன்வர்டடு வண்னங்களை செயல்படுத்து/முடக்கு</string>
+    <string name="app_name">மேம்பட்ட காட்சி</string>
+    <string name="category_screen_title">திரை</string>
+    <string name="screen_colors_title">நிறங்கள்</string>
+    <string name="mdnie_scenario_title_head">சூழ்நிலை</string>
+    <string name="mdnie_scenario_summary_head">mDNIe சூழ்நிலையை அமை</string>
+    <string name="mdnie_negative_title_head">எதிர்மறை பயன்முறை</string>
+    <string name="mdnie_negative_summary_head">இன்வர்டடு வண்னங்களை செயல்படுத்து/முடக்கு</string>
 </resources>

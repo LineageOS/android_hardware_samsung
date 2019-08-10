@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (default)</item>
-    <item>UI</item>
-    <item>Bideoa</item>
-    <item>Bideo epela</item>
-    <item>Bideo hotza</item>
-    <item>Kamera</item>
-    <item>Nabigazioa</item>
-    <item>Galeria</item>
-    <item>Bideodeia</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>Arrunta</item>
-    <item>Alderantzikatua</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (default)</item>
+        <item>UI</item>
+        <item>Bideoa</item>
+        <item>Bideo epela</item>
+        <item>Bideo hotza</item>
+        <item>Kamera</item>
+        <item>Nabigazioa</item>
+        <item>Galeria</item>
+        <item>Bideodeia</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Arrunta</item>
+        <item>Alderantzikatua</item>
+    </string-array>
 </resources>

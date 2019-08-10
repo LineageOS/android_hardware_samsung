@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Напредни екран</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Екран</string>
-  <string name="screen_colors_title">Боје</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Сценарио</string>
-  <string name="mdnie_scenario_summary_head">Постави mDNIe сценарио</string>
-  <string name="mdnie_negative_title_head">Негативни режим</string>
-  <string name="mdnie_negative_summary_head">Омогући/онемогући обрнуте боје</string>
+    <string name="app_name">Напредни екран</string>
+    <string name="category_screen_title">Екран</string>
+    <string name="screen_colors_title">Боје</string>
+    <string name="mdnie_scenario_title_head">Сценарио</string>
+    <string name="mdnie_scenario_summary_head">Постави mDNIe сценарио</string>
+    <string name="mdnie_negative_title_head">Негативни режим</string>
+    <string name="mdnie_negative_summary_head">Омогући/онемогући обрнуте боје</string>
 </resources>

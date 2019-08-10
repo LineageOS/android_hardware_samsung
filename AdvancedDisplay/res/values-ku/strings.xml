@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">پیشاندانی پێشکه‌وتوو</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">شاشە</string>
-  <string name="screen_colors_title">ڕه‌نگه‌کان</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">سیناریۆ</string>
-  <string name="mdnie_scenario_summary_head">دانانی دۆخی mDNIe سیناریۆ</string>
-  <string name="mdnie_negative_title_head">دۆخی نەرێنی</string>
-  <string name="mdnie_negative_summary_head">چالاککردن/ناچالاککردنی ڕه‌نگه‌کان گۆڕاوەکان</string>
+    <string name="app_name">پیشاندانی پێشکه‌وتوو</string>
+    <string name="category_screen_title">شاشە</string>
+    <string name="screen_colors_title">ڕه‌نگه‌کان</string>
+    <string name="mdnie_scenario_title_head">سیناریۆ</string>
+    <string name="mdnie_scenario_summary_head">دانانی دۆخی mDNIe سیناریۆ</string>
+    <string name="mdnie_negative_title_head">دۆخی نەرێنی</string>
+    <string name="mdnie_negative_summary_head">چالاککردن/ناچالاککردنی ڕه‌نگه‌کان گۆڕاوەکان</string>
 </resources>

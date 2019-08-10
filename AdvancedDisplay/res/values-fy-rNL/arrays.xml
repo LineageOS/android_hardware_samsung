@@ -15,4 +15,20 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"></resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (standert)</item>
+        <item>Brûkersomjouwing</item>
+        <item>Fideo</item>
+        <item>Fideo (waarm)</item>
+        <item>Fideo (kâld)</item>
+        <item>Kamera</item>
+        <item>Navigaasje</item>
+        <item>Galery</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Normaal</item>
+        <item>Omkeard</item>
+    </string-array>
+</resources>

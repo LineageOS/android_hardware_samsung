@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (default)</item>
-    <item>UI</item>
-    <item>வீடியோ</item>
-    <item>வீடியோ கதகதப்பு</item>
-    <item>வீடியோ குளிர்</item>
-    <item>கேமரா</item>
-    <item>வழிச்செல்லுதல்</item>
-    <item>படத்தொகுப்பு</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>இயல்பு</item>
-    <item>திருப்பிவிடப்பட்ட</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (default)</item>
+        <item>UI</item>
+        <item>வீடியோ</item>
+        <item>வீடியோ கதகதப்பு</item>
+        <item>வீடியோ குளிர்</item>
+        <item>கேமரா</item>
+        <item>வழிச்செல்லுதல்</item>
+        <item>படத்தொகுப்பு</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>இயல்பு</item>
+        <item>திருப்பிவிடப்பட்ட</item>
+    </string-array>
 </resources>

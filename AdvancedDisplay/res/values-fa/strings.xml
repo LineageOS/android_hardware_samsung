@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">نمایش پیشرفته</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">صفحه نمایش</string>
-  <string name="screen_colors_title">رنگ‌ها</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">خط مشی</string>
-  <string name="mdnie_scenario_summary_head">تنظیم خط مشی mDNIe</string>
-  <string name="mdnie_negative_title_head">حالت معکوس رنگ‌ها</string>
-  <string name="mdnie_negative_summary_head">فعال/غیرفعال کردن رنگ‌های معکوس</string>
+    <string name="app_name">نمایش پیشرفته</string>
+    <string name="category_screen_title">صفحه نمایش</string>
+    <string name="screen_colors_title">رنگ‌ها</string>
+    <string name="mdnie_scenario_title_head">خط مشی</string>
+    <string name="mdnie_scenario_summary_head">تنظیم خط مشی mDNIe</string>
+    <string name="mdnie_negative_title_head">حالت معکوس رنگ‌ها</string>
+    <string name="mdnie_negative_summary_head">فعال/غیرفعال کردن رنگ‌های معکوس</string>
 </resources>

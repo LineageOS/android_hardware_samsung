@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (privzeto)</item>
-    <item>UI</item>
-    <item>Videopos.</item>
-    <item>Topel videoposnetek</item>
-    <item>Hladen videoposnetek</item>
-    <item>Fotoaparat</item>
-    <item>Navigacija</item>
-    <item>Galerija</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>Običajno</item>
-    <item>Obrnjeno</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (privzeto)</item>
+        <item>UI</item>
+        <item>Videopos.</item>
+        <item>Topel videoposnetek</item>
+        <item>Hladen videoposnetek</item>
+        <item>Fotoaparat</item>
+        <item>Navigacija</item>
+        <item>Galerija</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>Običajno</item>
+        <item>Obrnjeno</item>
+    </string-array>
 </resources>

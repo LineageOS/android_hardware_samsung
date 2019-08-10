@@ -16,6 +16,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Screen Preference -->
-  <!-- mDNIe -->
+    <string name="category_screen_title">ეკრანი</string>
+    <string name="screen_colors_title">ფერები</string>
 </resources>

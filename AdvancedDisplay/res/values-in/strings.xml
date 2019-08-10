@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Tampilan lanjutan</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Layar</string>
-  <string name="screen_colors_title">Warna</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Skenario</string>
-  <string name="mdnie_scenario_summary_head">Setel skenario mDNIe</string>
-  <string name="mdnie_negative_title_head">Mode negatif</string>
-  <string name="mdnie_negative_summary_head">Hidup/Matikan warna terbalik</string>
+    <string name="app_name">Tampilan lanjutan</string>
+    <string name="category_screen_title">Layar</string>
+    <string name="screen_colors_title">Warna</string>
+    <string name="mdnie_scenario_title_head">Skenario</string>
+    <string name="mdnie_scenario_summary_head">Setel skenario mDNIe</string>
+    <string name="mdnie_negative_title_head">Mode negatif</string>
+    <string name="mdnie_negative_summary_head">Hidup/Matikan warna terbalik</string>
 </resources>

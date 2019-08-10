@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Pantalla avançada</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Pantalla</string>
-  <string name="screen_colors_title">Colors</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Escenari</string>
-  <string name="mdnie_scenario_summary_head">Estableix l\'escenari de mDNIe</string>
-  <string name="mdnie_negative_title_head">Mode negatiu</string>
-  <string name="mdnie_negative_summary_head">Habilita/inhabilita els colors invertits</string>
+    <string name="app_name">Pantalla avançada</string>
+    <string name="category_screen_title">Pantalla</string>
+    <string name="screen_colors_title">Colors</string>
+    <string name="mdnie_scenario_title_head">Escenari</string>
+    <string name="mdnie_scenario_summary_head">Estableix l\'escenari de mDNIe</string>
+    <string name="mdnie_negative_title_head">Mode negatiu</string>
+    <string name="mdnie_negative_summary_head">Habilita/inhabilita els colors invertits</string>
 </resources>

@@ -16,6 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Screen Preference -->
-  <!-- mDNIe -->
+    <string name="app_name">Avansearre ynstellingen</string>
+    <string name="category_screen_title">Skerm</string>
+    <string name="screen_colors_title">Kleuren</string>
+    <string name="mdnie_scenario_title_head">Senario</string>
+    <string name="mdnie_scenario_summary_head">mDNIe-senario ynstelle</string>
+    <string name="mdnie_negative_title_head">Negative modus</string>
+    <string name="mdnie_negative_summary_head">Negative kleuren yn-/útskeakelje</string>
 </resources>

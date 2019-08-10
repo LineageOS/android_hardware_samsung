@@ -16,19 +16,19 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string-array name="mdnie_scenario_entries">
-    <item>LineageOS (ברירת מחדל)</item>
-    <item>ממשק משתמש</item>
-    <item>וידאו</item>
-    <item>וידאו חם</item>
-    <item>וידאו קר</item>
-    <item>מצלמה</item>
-    <item>ניווט</item>
-    <item>גלריה</item>
-    <item>VT</item>
-  </string-array>
-  <string-array name="mdnie_negative_entries">
-    <item>רגיל</item>
-    <item>הפוך</item>
-  </string-array>
+    <string-array name="mdnie_scenario_entries">
+        <item>LineageOS (ברירת מחדל)</item>
+        <item>ממשק משתמש</item>
+        <item>וידאו</item>
+        <item>וידאו חם</item>
+        <item>וידאו קר</item>
+        <item>מצלמה</item>
+        <item>ניווט</item>
+        <item>גלריה</item>
+        <item>VT</item>
+    </string-array>
+    <string-array name="mdnie_negative_entries">
+        <item>רגיל</item>
+        <item>הפוך</item>
+    </string-array>
 </resources>

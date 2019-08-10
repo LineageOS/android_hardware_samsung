@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Setări avansate de afișare</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Ecran</string>
-  <string name="screen_colors_title">Culori</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Scenariu</string>
-  <string name="mdnie_scenario_summary_head">Setează scenariul mDNIe</string>
-  <string name="mdnie_negative_title_head">Mod culori negative</string>
-  <string name="mdnie_negative_summary_head">Activează/dezactivează culori inversate</string>
+    <string name="app_name">Setări avansate de afișare</string>
+    <string name="category_screen_title">Ecran</string>
+    <string name="screen_colors_title">Culori</string>
+    <string name="mdnie_scenario_title_head">Scenariu</string>
+    <string name="mdnie_scenario_summary_head">Setează scenariul mDNIe</string>
+    <string name="mdnie_negative_title_head">Mod culori negative</string>
+    <string name="mdnie_negative_summary_head">Activează/dezactivează culori inversate</string>
 </resources>

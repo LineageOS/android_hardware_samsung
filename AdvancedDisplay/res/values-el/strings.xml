@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Ρυθμίσεις οθόνης για προχωρημένους</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Οθόνη</string>
-  <string name="screen_colors_title">Χρώματα</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Σενάριο</string>
-  <string name="mdnie_scenario_summary_head">Ορίστε το σενάριο mDNIe</string>
-  <string name="mdnie_negative_title_head">Αρνητική λειτουργία</string>
-  <string name="mdnie_negative_summary_head">Ενεργοποίηση/απενεργοποίηση αντεστραμμένων χρωμάτων</string>
+    <string name="app_name">Ρυθμίσεις οθόνης για προχωρημένους</string>
+    <string name="category_screen_title">Οθόνη</string>
+    <string name="screen_colors_title">Χρώματα</string>
+    <string name="mdnie_scenario_title_head">Σενάριο</string>
+    <string name="mdnie_scenario_summary_head">Ορίστε το σενάριο mDNIe</string>
+    <string name="mdnie_negative_title_head">Αρνητική λειτουργία</string>
+    <string name="mdnie_negative_summary_head">Ενεργοποίηση/απενεργοποίηση αντεστραμμένων χρωμάτων</string>
 </resources>

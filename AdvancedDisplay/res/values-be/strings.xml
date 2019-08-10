@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Налады экрана</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Экран</string>
-  <string name="screen_colors_title">Колеры</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Сцэнар</string>
-  <string name="mdnie_scenario_summary_head">Усталёўка сцэнара mDNIe</string>
-  <string name="mdnie_negative_title_head">Негатыў</string>
-  <string name="mdnie_negative_summary_head">Укл./выкл. інверсіі колераў</string>
+    <string name="app_name">Налады экрана</string>
+    <string name="category_screen_title">Экран</string>
+    <string name="screen_colors_title">Колеры</string>
+    <string name="mdnie_scenario_title_head">Сцэнар</string>
+    <string name="mdnie_scenario_summary_head">Усталёўка сцэнара mDNIe</string>
+    <string name="mdnie_negative_title_head">Негатыў</string>
+    <string name="mdnie_negative_summary_head">Укл./выкл. інверсіі колераў</string>
 </resources>

@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Rozšířené zobrazení</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Obrazovka</string>
-  <string name="screen_colors_title">Barvy</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Scénář</string>
-  <string name="mdnie_scenario_summary_head">Nastavit scénář pro mDNIe</string>
-  <string name="mdnie_negative_title_head">Inverzní režim</string>
-  <string name="mdnie_negative_summary_head">Použít invertování barev</string>
+    <string name="app_name">Rozšířené zobrazení</string>
+    <string name="category_screen_title">Obrazovka</string>
+    <string name="screen_colors_title">Barvy</string>
+    <string name="mdnie_scenario_title_head">Scénář</string>
+    <string name="mdnie_scenario_summary_head">Nastavit scénář pro mDNIe</string>
+    <string name="mdnie_negative_title_head">Inverzní režim</string>
+    <string name="mdnie_negative_summary_head">Použít invertování barev</string>
 </resources>

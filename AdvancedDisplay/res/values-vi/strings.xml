@@ -16,13 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Hiển thị nâng cao</string>
-  <!-- Screen Preference -->
-  <string name="category_screen_title">Màn hình</string>
-  <string name="screen_colors_title">Màu</string>
-  <!-- mDNIe -->
-  <string name="mdnie_scenario_title_head">Tình huống</string>
-  <string name="mdnie_scenario_summary_head">Đặt tình huống cho mDNIe</string>
-  <string name="mdnie_negative_title_head">Chế độ màu âm bản</string>
-  <string name="mdnie_negative_summary_head">Bật/tắt đảo ngược màu sắc</string>
+    <string name="app_name">Hiển thị nâng cao</string>
+    <string name="category_screen_title">Màn hình</string>
+    <string name="screen_colors_title">Màu</string>
+    <string name="mdnie_scenario_title_head">Tình huống</string>
+    <string name="mdnie_scenario_summary_head">Đặt tình huống cho mDNIe</string>
+    <string name="mdnie_negative_title_head">Chế độ màu âm bản</string>
+    <string name="mdnie_negative_summary_head">Bật/tắt đảo ngược màu sắc</string>
 </resources>
