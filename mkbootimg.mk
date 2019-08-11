@@ -60,7 +60,7 @@ dtimage: $(INSTALLED_DTIMAGE_TARGET)
 endif
 endif
 
-ifeq ($(strip $(TAGET_NEEDS_LOKI)),true)
+ifeq ($(strip $(TARGET_NEEDS_LOKI)),true)
 LOKI_TOOL := loki_tool
 else
 LOKI_TOOL := echo

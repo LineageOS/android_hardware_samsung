@@ -36,7 +36,7 @@ include $(SAM_ROOT)/wifiloader/Android.mk
 endif
 
 # Loki
-ifeq ($(TAGET_NEEDS_LOKI),true)
+ifeq ($(strip $(TARGET_NEEDS_LOKI)),true)
 include $(SAM_ROOT)/loki_tool/Android.mk
 endif
 
