@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5730e330_359621c3",
+        "filename": "mkbootimg.mk",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-08-11T06:02:43Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "range": {
+        "startLine": 75,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 8
+      },
+      "revId": "e5947fe2fdce89487c8f2fba0b25720e6c954525",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
