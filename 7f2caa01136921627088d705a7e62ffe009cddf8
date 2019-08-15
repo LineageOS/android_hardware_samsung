@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d202d25b_66c28f5d",
+        "filename": "recovery/recovery_updater.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-08-15T16:08:51Z",
+      "side": 1,
+      "message": "need to find a better way to do this",
+      "range": {
+        "startLine": 34,
+        "startChar": 36,
+        "endLine": 34,
+        "endChar": 53
+      },
+      "revId": "7f2caa01136921627088d705a7e62ffe009cddf8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
