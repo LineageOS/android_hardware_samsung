@@ -50,5 +50,6 @@ include $(SAM_ROOT)/hidl/Android.mk
 include $(SAM_ROOT)/liblights/Android.mk
 include $(SAM_ROOT)/modemloader/Android.mk
 include $(SAM_ROOT)/power/Android.mk
+include $(SAM_ROOT)/recovery/Android.mk
 include $(SAM_ROOT)/ril/Android.mk
 endif
