@@ -1,0 +1,57 @@
+/*
+ * Copyright 2019 The LineageOS Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#define LOG_TAG "android.hardware.keymaster@4.0-service.samsung"
+
+#include <android-base/logging.h>
+#include <android/hardware/keymaster/4.0/IKeymasterDevice.h>
+#include <hidl/HidlTransportSupport.h>
+
+#include <AndroidKeymaster4Device.h>
+
+using android::hardware::configureRpcThreadpool;
+using android::hardware::joinRpcThreadpool;
+
+using android::hardware::keymaster::V4_0::IKeymasterDevice;
+using android::hardware::keymaster::V4_0::SecurityLevel;
+
+using android::OK;
+using android::status_t;
+
+namespace skeymaster {
+IKeymasterDevice* CreateSKeymasterDevice(SecurityLevel securityLevel);
+}  // namespace skeymaster
+
+int main() {
+    IKeymasterDevice* keymaster =
+        skeymaster::CreateSKeymasterDevice(SecurityLevel::TRUSTED_ENVIRONMENT);
+
+    configureRpcThreadpool(1, true /* willJoinThreadpool */);
+
+    status_t status = keymaster->registerAsService();
+    if (status != OK) {
+        LOG(ERROR) << "Cannot register Keymaster HAL service.";
+        return 1;
+    }
+
+    LOG(INFO) << "Keymaster HAL service ready.";
+
+    joinRpcThreadpool();
+
+    LOG(ERROR) << "Keymaster HAL service failed to join thread pool.";
+
+    return -1;
+}
