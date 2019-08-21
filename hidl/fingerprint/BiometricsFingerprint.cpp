@@ -173,7 +173,18 @@ Return<uint64_t> BiometricsFingerprint::getAuthenticatorId() {
 }
 
 Return<RequestStatus> BiometricsFingerprint::cancel() {
-    return ErrorFilter(ss_fingerprint_cancel());
+    int32_t ret = ss_fingerprint_cancel();
+
+#ifdef CALL_NOTIFY_ON_CANCEL
+    if (ret == 0) {
+        fingerprint_msg_t msg{};
+        msg.type = FINGERPRINT_ERROR;
+        msg.data.error = FINGERPRINT_ERROR_CANCELED;
+        notify(&msg);
+    }
+#endif
+
+    return ErrorFilter(ret);
 }
 
 Return<RequestStatus> BiometricsFingerprint::enumerate() {
