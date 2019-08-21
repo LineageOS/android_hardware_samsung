@@ -306,9 +306,7 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
                                      msg->data.enroll.finger.gid, msg->data.enroll.samples_remaining)
                     .isOk()) {
 #ifdef USES_PERCENTAGE_SAMPLES
-                fingerprint_msg_t* newMsg = (fingerprint_msg_t*)msg;
-                newMsg->data.enroll.samples_remaining = 100 - msg->data.enroll.samples_remaining;
-                msg = newMsg;
+                const_cast<fingerprint_msg_t*>(msg)->data.enroll.samples_remaining = 100 - msg->data.enroll.samples_remaining;
 #endif
             } else {
                 LOG(ERROR) << "failed to invoke fingerprint onEnrollResult callback";
