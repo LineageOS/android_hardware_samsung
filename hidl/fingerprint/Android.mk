@@ -31,6 +31,10 @@ LOCAL_SHARED_LIBRARIES := \
     libutils \
     android.hardware.biometrics.fingerprint@2.1
 
+ifeq ($(TARGET_SEC_FP_CALL_NOTIFY_ON_CANCEL),true)
+    LOCAL_CFLAGS += -DCALL_NOTIFY_ON_CANCEL
+endif
+
 ifeq ($(TARGET_SEC_FP_USES_PERCENTAGE_SAMPLES),true)
     LOCAL_CFLAGS += -DUSES_PERCENTAGE_SAMPLES
 endif
