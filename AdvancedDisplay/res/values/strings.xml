@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2012-2014 The CyanogenMod Project
-     Copyright (C) 2018 The LineageOS Project
+     Copyright (C) 2018-2019 The LineageOS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -40,6 +40,11 @@
     <string name="mdnie_scenario_browser">Browser</string>
     <string name="mdnie_scenario_ebook">eBook</string>
     <string name="mdnie_scenario_email">E-mail</string>
+    <string name="mdnie_scenario_game_low_app">GAME_LOW_APP</string>
+    <string name="mdnie_scenario_game_mid_app">GAME_MID_APP</string>
+    <string name="mdnie_scenario_game_high_app">GAME_HIGH_APP</string>
+    <string name="mdnie_scenario_video_enhancer">VIDEO_ENHANCER</string>
+    <string name="mdnie_scenario_video_enhancer_third">VIDEO_ENHANCER_THIRD</string>
     <string name="mdnie_scenario_tdmb">Digital television</string>
 
     <!-- Accessibility mode names -->
