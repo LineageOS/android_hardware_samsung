@@ -28,7 +28,6 @@ LOCAL_C_INCLUDES := \
 	$(TOP)/$(TARGET_OMX_PATH)/include/khronos \
 	$(TOP)/$(TARGET_OMX_PATH)/include/sec
 
-LOCAL_MODULE_TAGS := eng
 LOCAL_MODULE := libhwconverter
 
 include $(BUILD_SHARED_LIBRARY)
