@@ -19,11 +19,11 @@ package org.lineageos.settings.device;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.preference.ListPreference;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.Preference.OnPreferenceChangeListener;
-import android.support.v7.preference.PreferenceManager;
 import android.util.AttributeSet;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.Preference.OnPreferenceChangeListener;
+import androidx.preference.PreferenceManager;
 
 import org.lineageos.internal.util.FileUtils;
 
