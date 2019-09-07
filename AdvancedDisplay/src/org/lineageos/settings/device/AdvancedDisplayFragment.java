@@ -19,7 +19,7 @@ package org.lineageos.settings.device;
 import android.app.ActionBar;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v14.preference.PreferenceFragment;
+import androidx.preference.PreferenceFragment;
 import android.view.MenuItem;
 
 import org.lineageos.settings.device.R;
