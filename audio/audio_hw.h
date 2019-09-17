@@ -21,7 +21,6 @@
 
 #include <cutils/list.h>
 #include <hardware/audio.h>
-#include <hardware/audio_amplifier.h>
 
 #include <tinyalsa/asoundlib.h>
 #include <tinycompress/tinycompress.h>
@@ -408,7 +407,6 @@ struct audio_device {
 #endif
 
     pthread_mutex_t         lock_inputs; /* see note below on mutex acquisition order */
-    amplifier_device_t      *amp;
 };
 
 /*
