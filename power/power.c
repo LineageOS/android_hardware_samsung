@@ -167,13 +167,13 @@ static void cpu_interactive_read(const char *param, char s[CLUSTER_COUNT][PARAM_
     }
 }
 
-static void cpu_interactive_write(const char *param, char s[CLUSTER_COUNT][PARAM_MAXLEN])
+static void cpu_interactive_write(const char *param, char *s)
 {
     char path[PATH_MAX];
 
     for (unsigned int i = 0; i < ARRAY_SIZE(CPU_INTERACTIVE_PATHS); i++) {
         sprintf(path, "%s%s", CPU_INTERACTIVE_PATHS[i], param);
-        sysfs_write(path, s[i]);
+        sysfs_write(path, s);
     }
 }
 
@@ -416,8 +416,6 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     char button_state[2];
     int rc;
     static bool touchkeys_blocked = false;
-    char ON[CLUSTER_COUNT][PARAM_MAXLEN]  = {"1", "1"};
-    char OFF[CLUSTER_COUNT][PARAM_MAXLEN] = {"0", "0"};
 
     ALOGV("power_set_interactive: %d", on);
 
@@ -469,7 +467,7 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
     }
 
 out:
-    cpu_interactive_write(IO_IS_BUSY_PATH, on ? ON : OFF);
+    cpu_interactive_write(IO_IS_BUSY_PATH, on ? "1" : "0");
 
     ALOGV("power_set_interactive: %d done", on);
 }
