@@ -28,9 +28,7 @@ LOCAL_SHARED_LIBRARIES := \
     libbase \
     libhardware \
     libhidlbase \
-    libhidltransport \
     liblog \
-    libhwbinder \
     libutils \
     vendor.lineage.biometrics.fingerprint.inscreen@1.0
 

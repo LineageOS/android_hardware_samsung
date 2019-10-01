@@ -30,7 +30,6 @@ LOCAL_SHARED_LIBRARIES := \
     libbase \
     libbinder \
     libhidlbase \
-    libhidltransport \
     libutils \
     android.hardware.power@1.0 \
     vendor.lineage.power@1.0
