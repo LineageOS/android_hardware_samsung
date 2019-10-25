@@ -155,3 +155,8 @@
     {RIL_REQUEST_SEND_DEVICE_STATE, radio::sendDeviceStateResponse},
     {RIL_REQUEST_SET_UNSOLICITED_RESPONSE_FILTER, radio::setIndicationFilterResponse},
     {RIL_REQUEST_SET_SIM_CARD_POWER, radio::setSimCardPowerResponse},
+    {RIL_REQUEST_SET_CARRIER_INFO_IMSI_ENCRYPTION, radio::setCarrierInfoForImsiEncryptionResponse},
+    {RIL_REQUEST_START_NETWORK_SCAN, radio::startNetworkScanResponse},
+    {RIL_REQUEST_STOP_NETWORK_SCAN, radio::stopNetworkScanResponse},
+    {RIL_REQUEST_START_KEEPALIVE, radio::startKeepaliveResponse},
+    {RIL_REQUEST_STOP_KEEPALIVE, radio::stopKeepaliveResponse},

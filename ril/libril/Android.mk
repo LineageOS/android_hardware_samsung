@@ -21,15 +21,17 @@ LOCAL_SHARED_LIBRARIES := \
     libhardware_legacy \
     librilutils \
     android.hardware.radio@1.0 \
+    android.hardware.radio@1.1 \
     android.hardware.radio.deprecated@1.0 \
     libhidlbase  \
     libhidltransport \
     libhwbinder
 
 LOCAL_STATIC_LIBRARIES := \
-    libprotobuf-c-nano-enable_malloc \
+    libprotobuf-c-nano-enable_malloc-32bit \
 
-LOCAL_CFLAGS += -Wno-unused-parameter
+LOCAL_CFLAGS += -Wall -Wextra -Wno-unused-parameter -Werror
+LOCAL_CFLAGS += -DPB_FIELD_32BIT
 
 ifeq ($(SIM_COUNT), 2)
     LOCAL_CFLAGS += -DANDROID_MULTI_SIM -DDSDA_RILD1
@@ -60,6 +62,10 @@ endif
 
 ifneq ($(DISABLE_RILD_OEM_HOOK),)
     LOCAL_CFLAGS += -DOEM_HOOK_DISABLED
+endif
+
+ifneq ($(TARGET_USES_OLD_MNC_FORMAT),)
+    LOCAL_CFLAGS += -DOLD_MNC_FORMAT
 endif
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
