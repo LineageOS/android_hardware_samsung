@@ -217,7 +217,44 @@ Return<RequestStatus> BiometricsFingerprint::authenticate(uint64_t operationId, 
     return ErrorFilter(ss_fingerprint_authenticate(operationId, gid));
 }
 
+#ifdef FOD
+Return<void> BiometricsFingerprint::request(int32_t cmd_id, int32_t len,
+            int32_t inParam, const hidl_vec<int8_t>& inputBuf, request_cb _hidl_cb) {
+    size_t inputSize = 0;
+    for (; inputBuf[inputSize] != '\0'; ++inputSize);
+
+    int8_t input[inputSize + 1];
+    int8_t output[len];
+
+    for (size_t i = 0; i < inputSize; ++i) {
+        input[i] = inputBuf[i];
+    }
+    input[inputSize] = '\0';
+    for (size_t i = 0; i < static_cast<size_t>(len); ++i) {
+        output[i] = '\0';
+    }
+
+    LOG(ERROR) << "request(cmd_id=" << cmd_id
+            << ", len=" << len
+            << ", inParam=" << inParam
+            << ", inputBuf=" << input
+            << ")";
+
+    int ret = ss_fingerprint_request(cmd_id, input, 0, len == 0 ? nullptr : output, len, inParam);
+
+    auto outBuf = hidl_vec<int8_t>();
+    outBuf.setToExternal(output, len);
+
+    _hidl_cb(ret, outBuf);
+    return Void();
+}
+#endif
+
+#ifdef FOD
+ISecBiometricsFingerprint* BiometricsFingerprint::getInstance() {
+#else
 IBiometricsFingerprint* BiometricsFingerprint::getInstance() {
+#endif
     if (!sInstance) {
         sInstance = new BiometricsFingerprint();
     }
@@ -254,6 +291,10 @@ bool BiometricsFingerprint::openHal() {
             dlsym(handle, "ss_fingerprint_set_active_group"));
         ss_fingerprint_authenticate = reinterpret_cast<typeof(ss_fingerprint_authenticate)>(
             dlsym(handle, "ss_fingerprint_authenticate"));
+#ifdef FOD
+        ss_fingerprint_request = reinterpret_cast<typeof(ss_fingerprint_request)>(
+            dlsym(handle, "ss_fingerprint_request"));
+#endif
 
         if ((err = ss_fingerprint_open(nullptr)) != 0) {
             LOG(ERROR) << "Can't open fingerprint, error: " << err;
