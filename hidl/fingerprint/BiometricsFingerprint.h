@@ -17,7 +17,11 @@
 #ifndef ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_1_BIOMETRICSFINGERPRINT_H
 #define ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_1_BIOMETRICSFINGERPRINT_H
 
+#ifdef FOD
+#include <vendor/samsung/hardware/biometrics/fingerprint/2.1/ISecBiometricsFingerprint.h>
+#else
 #include <android/hardware/biometrics/fingerprint/2.1/IBiometricsFingerprint.h>
+#endif
 #include <hardware/fingerprint.h>
 #include <hardware/hardware.h>
 #include <hidl/MQDescriptor.h>
@@ -39,13 +43,22 @@ using ::android::hardware::biometrics::fingerprint::V2_1::IBiometricsFingerprint
 using ::android::hardware::biometrics::fingerprint::V2_1::IBiometricsFingerprintClientCallback;
 using ::android::hardware::biometrics::fingerprint::V2_1::RequestStatus;
 
+#ifdef FOD
+using ::vendor::samsung::hardware::biometrics::fingerprint::V2_1::ISecBiometricsFingerprint;
+
+struct BiometricsFingerprint : public ISecBiometricsFingerprint {
+#else
 struct BiometricsFingerprint : public IBiometricsFingerprint {
+#endif
     BiometricsFingerprint();
     ~BiometricsFingerprint();
 
     // Method to wrap legacy HAL with BiometricsFingerprint class
+#ifdef FOD
+    static ISecBiometricsFingerprint* getInstance();
+#else
     static IBiometricsFingerprint* getInstance();
-
+#endif
     // Methods from ::android::hardware::biometrics::fingerprint::V2_1::IBiometricsFingerprint follow.
     Return<uint64_t> setNotify(
         const sp<IBiometricsFingerprintClientCallback>& clientCallback) override;
@@ -59,6 +72,9 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     Return<RequestStatus> remove(uint32_t gid, uint32_t fid) override;
     Return<RequestStatus> setActiveGroup(uint32_t gid, const hidl_string& storePath) override;
     Return<RequestStatus> authenticate(uint64_t operationId, uint32_t gid) override;
+#ifdef FOD
+    Return<void> request(int32_t cmd_id, int32_t outBuf_len, int32_t inParam, const hidl_vec<int8_t>& inputBuf, request_cb _hidl_cb) override;
+#endif
 
   private:
     bool openHal();
@@ -85,6 +101,9 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     int (*ss_fingerprint_remove)(uint32_t gid, uint32_t fid);
     int (*ss_fingerprint_set_active_group)(uint32_t gid, const char* store_path);
     int (*ss_fingerprint_authenticate)(uint64_t operation_id, uint32_t gid);
+#ifdef FOD
+    int (*ss_fingerprint_request)(int32_t cmd_id, const int8_t* inputBuf, uint32_t value, int8_t* outBuf, uint32_t len, uint32_t inParam);
+#endif
 };
 
 }  // namespace implementation

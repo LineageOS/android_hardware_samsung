@@ -25,14 +25,22 @@
 using android::hardware::configureRpcThreadpool;
 using android::hardware::joinRpcThreadpool;
 
+#ifdef FOD
+using vendor::samsung::hardware::biometrics::fingerprint::V2_1::ISecBiometricsFingerprint;
+#else
 using android::hardware::biometrics::fingerprint::V2_1::IBiometricsFingerprint;
+#endif
 using android::hardware::biometrics::fingerprint::V2_1::implementation::BiometricsFingerprint;
 
 using android::OK;
 using android::sp;
 
 int main() {
+#ifdef FOD
+    android::sp<ISecBiometricsFingerprint> bio = BiometricsFingerprint::getInstance();
+#else
     android::sp<IBiometricsFingerprint> bio = BiometricsFingerprint::getInstance();
+#endif
 
     configureRpcThreadpool(1, true);
 
