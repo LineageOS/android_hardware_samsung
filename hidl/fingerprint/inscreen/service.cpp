@@ -14,37 +14,37 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.biometrics.fingerprint@2.1-service.samsung"
+#define LOG_TAG "lineage.biometrics.fingerprint.inscreen@1.0-service.samsung"
 
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
-#include <utils/Errors.h>
 
-#include "BiometricsFingerprint.h"
+#include "FingerprintInscreen.h"
 
 using android::hardware::configureRpcThreadpool;
 using android::hardware::joinRpcThreadpool;
-using vendor::samsung::hardware::biometrics::fingerprint::V2_1::ISecBiometricsFingerprint;
-using android::hardware::biometrics::fingerprint::V2_1::implementation::BiometricsFingerprint;
+
+using vendor::lineage::biometrics::fingerprint::inscreen::V1_0::IFingerprintInscreen;
+using vendor::lineage::biometrics::fingerprint::inscreen::V1_0::implementation::FingerprintInscreen;
 
 using android::OK;
-using android::sp;
+using android::status_t;
 
 int main() {
-    android::sp<ISecBiometricsFingerprint> bio = BiometricsFingerprint::getInstance();
+    android::sp<IFingerprintInscreen> service = new FingerprintInscreen();
 
     configureRpcThreadpool(1, true);
 
-    if (bio == nullptr || bio->registerAsService() != OK) {
-        LOG(ERROR) << "Could not register service for Fingerprint HAL";
-        goto shutdown;
+    status_t status = service->registerAsService();
+    if (status != OK) {
+        LOG(ERROR) << "Cannot register FOD HAL service.";
+        return 1;
     }
 
-    LOG(INFO) << "Fingerprint HAL service is Ready.";
+    LOG(INFO) << "FOD HAL service ready.";
+
     joinRpcThreadpool();
 
-shutdown:
-    // In normal operation, we don't expect the thread pool to shutdown
-    LOG(ERROR) << "Fingerprint HAL failed to join thread pool.";
+    LOG(ERROR) << "FOD HAL service failed to join thread pool.";
     return 1;
 }
