@@ -19,8 +19,10 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := \
-    BiometricsFingerprint.cpp \
+    FingerprintInscreen.cpp \
     service.cpp
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 
 LOCAL_SHARED_LIBRARIES := \
     libbase \
@@ -28,24 +30,14 @@ LOCAL_SHARED_LIBRARIES := \
     libhidlbase \
     libhidltransport \
     liblog \
+    libhwbinder \
     libutils \
+    vendor.lineage.biometrics.fingerprint.inscreen@1.0 \
     android.hardware.biometrics.fingerprint@2.1 \
     vendor.samsung.hardware.biometrics.fingerprint@2.1
 
-ifeq ($(TARGET_SEC_FP_CALL_NOTIFY_ON_CANCEL),true)
-    LOCAL_CFLAGS += -DCALL_NOTIFY_ON_CANCEL
-endif
-
-ifeq ($(TARGET_SEC_FP_USES_PERCENTAGE_SAMPLES),true)
-    LOCAL_CFLAGS += -DUSES_PERCENTAGE_SAMPLES
-endif
-
-ifeq ($(TARGET_SEC_FP_CALL_CANCEL_ON_ENROLL_COMPLETION),true)
-    LOCAL_CFLAGS += -DCALL_CANCEL_ON_ENROLL_COMPLETION
-endif
-
-LOCAL_MODULE := android.hardware.biometrics.fingerprint@2.1-service.samsung
-LOCAL_INIT_RC := android.hardware.biometrics.fingerprint@2.1-service.samsung.rc
+LOCAL_MODULE := vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.samsung
+LOCAL_INIT_RC := vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.samsung.rc
 LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_OWNER := samsung
