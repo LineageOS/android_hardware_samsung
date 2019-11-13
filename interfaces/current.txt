@@ -1,3 +1,4 @@
+2b3da4cdb2039ac5acc70a59ae6e0ad753da12634ed5e762ab50fa93d4ad6db7 vendor.samsung.hardware.biometrics.fingerprint@2.1::ISecBiometricsFingerprint
 d70c073053fc04425ee47b8ce56f01e984cd3af354c91fa9ce0e3833b84e2eda vendor.samsung.hardware.radio@1.2::types
 e80adc3606e15e3a71e2b3451e1785287406dca19abd719064927c8477dbb7e7 vendor.samsung.hardware.radio@1.2::IRadio
 482cdc2795dd2d3c89f81f16496a180294b00f05efc0dec599f801823f30c270 vendor.samsung.hardware.radio@1.2::IRadioIndication
