@@ -41,6 +41,15 @@ cc_binary {
     "clang-analyzer-security*",
   ],
   tidy_flags: [
-      "-warnings-as-errors=android-*,clang-analyzer-security*,cert-*"
+    "-warnings-as-errors=android-*,clang-analyzer-security*,cert-*"
+  ],
+}
+
+sh_binary {
+  name: "thermal_logd.samsung",
+  src: "init.thermal.logging.sh",
+  vendor: true,
+  init_rc: [
+    "samsung-thermal-logd.rc",
   ],
 }

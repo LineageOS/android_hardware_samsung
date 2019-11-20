@@ -1,0 +1,14 @@
+on property:persist.vendor.log.thermal=1
+    start vendor.thermal.logd
+
+on property:persist.vendor.log.thermal=0
+    stop vendor.thermal.logd
+
+on property:persist.vendor.log.thermal=1 && property:persist.vendor.log.thermal.interval=*
+    restart vendor.thermal.logd
+
+service vendor.thermal.logd /vendor/bin/thermal_logd.samsung ${persist.vendor.log.thermal.interval:-5}
+    class main
+    user root
+    group root system
+    disabled
