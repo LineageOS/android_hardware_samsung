@@ -35,7 +35,7 @@
 
 #include <hardware/hardware.h>
 #include <hardware/power.h>
-#include <liblights/samsung_lights_helper.h>
+#include "samsung_lights.h"
 
 #include "samsung_power.h"
 
@@ -208,6 +208,27 @@ static void send_boostpulse(int boostpulse_fd)
         ALOGE("Error writing to %s%s: %s", CPU_INTERACTIVE_PATHS[0], BOOSTPULSE_PATH,
                 strerror(errno));
     }
+}
+
+static int get_cur_panel_brightness() {
+    int ret = 0;
+    int read_status;
+    // brightness can range from 0 to 255, so max. 3 chars + '\0'
+    char panel_brightness[4];
+    // for strtol
+    char *dummy;
+    const int base = 10;
+
+    read_status = sysfs_read(PANEL_BRIGHTNESS_NODE, panel_brightness, sizeof(PANEL_BRIGHTNESS_NODE));
+    if (read_status < 0) {
+        ALOGE("%s: Failed to read panel brightness from %s!\n", __func__, PANEL_BRIGHTNESS_NODE);
+        return -1;
+    }
+
+    ret = strtol(panel_brightness, &dummy, base);
+    ALOGV("%s: Panel brightness is: %d", __func__, ret);
+
+    return ret;
 }
 
 /**********************************************************
