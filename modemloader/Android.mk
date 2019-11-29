@@ -21,6 +21,7 @@ LOCAL_SRC_FILES := modemloader.c
 LOCAL_SHARED_LIBRARIES := liblog libcutils
 
 LOCAL_MODULE := modemloader
+LOCAL_VENDOR_MODULE := true
 LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_EXECUTABLE)
