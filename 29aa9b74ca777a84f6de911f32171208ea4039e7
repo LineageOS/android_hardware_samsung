@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "882a57d2_995b9b29",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-12-23T11:44:23Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 292,
+        "startChar": 12,
+        "endLine": 292,
+        "endChar": 13
+      },
+      "revId": "29aa9b74ca777a84f6de911f32171208ea4039e7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b3043b_065e7beb",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-12-23T11:44:23Z",
+      "side": 1,
+      "message": "try using\nconst_cast\u003cfingerprint_msg_t*\u003e(msg)-\u003edata.enroll.samples_remaining \u003d\n                    100 - msg-\u003edata.enroll.samples_remaining;",
+      "range": {
+        "startLine": 293,
+        "startChar": 16,
+        "endLine": 295,
+        "endChar": 30
+      },
+      "revId": "29aa9b74ca777a84f6de911f32171208ea4039e7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f992b430_201f87db",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2019-12-23T11:44:23Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 296,
+        "startChar": 12,
+        "endLine": 296,
+        "endChar": 13
+      },
+      "revId": "29aa9b74ca777a84f6de911f32171208ea4039e7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
