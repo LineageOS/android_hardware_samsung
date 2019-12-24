@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "025f02b4_e04d3a9b",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2019-12-24T14:24:23Z",
+      "side": 1,
+      "message": "will notify free(msg)?",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 16
+      },
+      "revId": "c3f6176e03992e6d006e2db651f57eebe54f92e3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
