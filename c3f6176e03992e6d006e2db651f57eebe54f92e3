@@ -22,6 +22,30 @@
       "revId": "c3f6176e03992e6d006e2db651f57eebe54f92e3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77f0964_e81ea121",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2019-12-24T14:26:30Z",
+      "side": 1,
+      "message": "if not, can you do:\n\n```\n    fingerprint_msg_t msg{};\n    msg.type \u003d FINGERPRINT_ERROR;\n    msg.data.error \u003d FINGERPRINT_ERROR_CANCELED;\n\n    notify(\u0026msg);\n```\n\ninstead?",
+      "parentUuid": "025f02b4_e04d3a9b",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 16
+      },
+      "revId": "c3f6176e03992e6d006e2db651f57eebe54f92e3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
