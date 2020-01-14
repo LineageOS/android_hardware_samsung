@@ -21,7 +21,7 @@
     <string name="category_screen_title">Ekran</string>
     <string name="screen_colors_title">Renkler</string>
     <string name="mdnie_scenario_title_head">Ekran Modu</string>
-    <string name="mdnie_scenario_summary_head">mDNIe senaryosunu ayarla</string>
+    <string name="mdnie_scenario_summary_head">mDNIe ekran modunu ayarla</string>
     <string name="mdnie_accessibility_title_head">Erişilebilirlik modu</string>
     <string name="mdnie_accessibility_summary_head">mDNIe ile erişilebilirlik modunu ayarlayın</string>
     <string name="mdnie_scenario_ui">LineageOS (varsayılan)</string>
