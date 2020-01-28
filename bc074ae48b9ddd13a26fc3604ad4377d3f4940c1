@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641e2246_dc1766ae",
+        "filename": "hidl/consumerir/ConsumerIr.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-01-28T03:31:00Z",
+      "side": 1,
+      "message": "This should probably be casted to an int, just to mirror the old code. I believe that\u0027s a...static_cast?",
+      "range": {
+        "startLine": 44,
+        "startChar": 39,
+        "endLine": 44,
+        "endChar": 54
+      },
+      "revId": "bc074ae48b9ddd13a26fc3604ad4377d3f4940c1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
