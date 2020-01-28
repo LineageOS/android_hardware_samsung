@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +36,7 @@
 // Some devices need MS_IR_SIGNAL to avoid ms to pulses conversionn
 //#define MS_IR_SIGNAL
 
-static const consumerir_freq_range_t consumerir_freqs[] = {
+static const std::vector<ConsumerIrFreqRange> consumerirFreqs = {
     {.min = 30000, .max = 30000},
     {.min = 33000, .max = 33000},
     {.min = 36000, .max = 36000},

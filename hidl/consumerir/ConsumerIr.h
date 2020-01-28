@@ -21,7 +21,9 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 
-#include <samsung_consumerir.h>
+using android::hardware::ir::V1_0::ConsumerIrFreqRange;
+
+#include <samsung_ir.h>
 
 namespace android {
 namespace hardware {
