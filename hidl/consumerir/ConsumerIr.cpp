@@ -16,6 +16,10 @@
 
 #include "ConsumerIr.h"
 
+#include <android-base/file.h>
+
+using android::base::WriteStringToFile;
+
 namespace android {
 namespace hardware {
 namespace ir {
@@ -24,12 +28,27 @@ namespace implementation {
 
 // Methods from ::android::hardware::ir::V1_0::IConsumerIr follow.
 Return<bool> ConsumerIr::transmit(int32_t carrierFreq, const hidl_vec<int32_t>& pattern) {
-    // TODO implement
-    return bool {};
+    float factor;
+    std::string buffer;
+
+    buffer += std::to_string(carrierFreq);
+
+#ifndef MS_IR_SIGNAL
+    // Calculate factor of conversion from microseconds to pulses
+    factor = 1000000 / carrierFreq;
+#else
+    factor = 1;
+#endif
+
+    for (const int32_t& number : pattern) {
+        buffer += "," + std::to_string(number / factor);
+    }
+
+    return WriteStringToFile(buffer, IR_PATH, true);
 }
 
 Return<void> ConsumerIr::getCarrierFreqs(getCarrierFreqs_cb _hidl_cb) {
-    // TODO implement
+    _hidl_cb(true, consumerirFreqs);
     return Void();
 }
 
