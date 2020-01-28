@@ -16,7 +16,7 @@
 
 #include "ConsumerIr.h"
 
-#include <samsung_consumerir.h>
+#include <samsung_ir.h>
 
 namespace android {
 namespace hardware {
