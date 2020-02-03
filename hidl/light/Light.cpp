@@ -15,6 +15,7 @@
  */
 #define LOG_TAG "android.hardware.light@2.0-service.samsung"
 
+#include <android-base/stringprintf.h>
 #include <iomanip>
 
 #include "Light.h"
@@ -155,10 +156,8 @@ void Light::setNotificationLED() {
     }
 
     state.color = calibrateColor(state.color & COLOR_MASK, adjusted_brightness);
-    std::stringstream ss;
-    ss << std::hex << "0x" << std::setfill('0') << std::setw(8) << state.color << std::dec
-       << " " << state.flashOnMs << " " << state.flashOffMs;
-    set(LED_BLINK_NODE, ss.str());
+    set(LED_BLINK_NODE, android::base::StringPrintf("0x%08x %d %d", state.color, state.flashOnMs,
+                                                    state.flashOffMs));
 
 #ifdef LED_BLN_NODE
     if (bln) {
