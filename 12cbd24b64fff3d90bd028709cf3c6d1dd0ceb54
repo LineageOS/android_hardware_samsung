@@ -16,6 +16,24 @@
       "revId": "12cbd24b64fff3d90bd028709cf3c6d1dd0ceb54",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4ab916_913851bd",
+        "filename": "hidl/power/Power.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-02-15T16:57:29Z",
+      "side": 1,
+      "message": "Don\u0027t use exceptions in Android\nThe correct way is to pass std::error_code to the iterator.\n\ntemplate \u003ctypename Fn\u003e\nResult\u003cvoid\u003e WalkDir(const std::string\u0026 path, Fn fn) {\n  namespace fs \u003d std::filesystem;\n  std::error_code ec;\n  auto it \u003d fs::directory_iterator(path, ec);\n  auto end \u003d fs::directory_iterator();\n  while (!ec \u0026\u0026 it !\u003d end) {\n    fn(*it);\n    it.increment(ec);\n  }\n  if (ec) {\n    return Error() \u003c\u003c \"Can\u0027t open \" \u003c\u003c path\n                   \u003c\u003c \" for reading : \" \u003c\u003c ec.message();\n  }\n  return {};\n}\n\n\nIs a nice implementation of it",
+      "parentUuid": "ee7fbe45_6c860e38",
+      "revId": "12cbd24b64fff3d90bd028709cf3c6d1dd0ceb54",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
