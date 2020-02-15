@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee7fbe45_6c860e38",
+        "filename": "hidl/power/Power.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 19057
+      },
+      "writtenOn": "2020-02-15T15:59:09Z",
+      "side": 1,
+      "message": "Segmentation fault here when accessing sysfs nodes that SELinux restricts access to.\n\nA try...catch block ignoring the inaccessible nodes should work here as the seg fault is \"terminating with uncaught exception\"",
+      "revId": "12cbd24b64fff3d90bd028709cf3c6d1dd0ceb54",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
