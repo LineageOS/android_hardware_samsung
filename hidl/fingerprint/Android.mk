@@ -39,6 +39,10 @@ ifeq ($(TARGET_SEC_FP_USES_PERCENTAGE_SAMPLES),true)
     LOCAL_CFLAGS += -DUSES_PERCENTAGE_SAMPLES
 endif
 
+ifeq ($(TARGET_SEC_FP_CALL_CANCEL_ON_ENROLL_COMPLETION),true)
+    LOCAL_CFLAGS += -DCALL_CANCEL_ON_ENROLL_COMPLETION
+endif
+
 LOCAL_MODULE := android.hardware.biometrics.fingerprint@2.1-service.samsung
 LOCAL_INIT_RC := android.hardware.biometrics.fingerprint@2.1-service.samsung.rc
 LOCAL_MODULE_RELATIVE_PATH := hw
