@@ -303,6 +303,11 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
             const_cast<fingerprint_msg_t*>(msg)->data.enroll.samples_remaining =
                 100 - msg->data.enroll.samples_remaining;
 #endif
+#ifdef CALL_CANCEL_ON_ENROLL_COMPLETION
+            if(msg->data.enroll.samples_remaining == 0) {
+                thisPtr->ss_fingerprint_cancel();
+            }
+#endif
             LOG(DEBUG) << "onEnrollResult(fid=" << msg->data.enroll.finger.fid
                        << ", gid=" << msg->data.enroll.finger.gid
                        << ", rem=" << msg->data.enroll.samples_remaining << ")";
