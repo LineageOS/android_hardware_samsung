@@ -67,6 +67,7 @@ void ThermalWatcher::registerFilesToWatch(const std::set<std::string> &sensors_t
     looper_->addFd(uevent_fd_.get(), 0, Looper::EVENT_INPUT, nullptr, nullptr);
     is_polling_ = false;
     thermal_triggered_ = true;
+    last_update_time_ = boot_clock::now();
 }
 
 bool ThermalWatcher::startWatchingDeviceFiles() {
@@ -147,8 +148,11 @@ bool ThermalWatcher::threadLoop() {
     int fd;
     std::set<std::string> sensors;
 
+    auto time_elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(boot_clock::now() -
+                                                                                 last_update_time_)
+                                   .count();
     int timeout = (thermal_triggered_ || is_polling_) ? kMinPollIntervalMs : kUeventPollTimeoutMs;
-    if (looper_->pollOnce(timeout, &fd, nullptr, nullptr) >= 0) {
+    if (time_elapsed_ms < timeout && looper_->pollOnce(timeout, &fd, nullptr, nullptr) >= 0) {
         if (fd != uevent_fd_.get()) {
             return true;
         }
@@ -159,6 +163,7 @@ bool ThermalWatcher::threadLoop() {
         }
     }
     thermal_triggered_ = cb_(sensors);
+    last_update_time_ = boot_clock::now();
     return true;
 }
 
