@@ -27,6 +27,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include <android-base/chrono_utils.h>
 #include <android-base/unique_fd.h>
 #include <utils/Looper.h>
 #include <utils/Thread.h>
@@ -37,6 +38,7 @@ namespace thermal {
 namespace V2_0 {
 namespace implementation {
 
+using android::base::boot_clock;
 using android::base::unique_fd;
 using WatcherCallback = std::function<bool(const std::set<std::string> &name)>;
 
@@ -92,6 +94,8 @@ class ThermalWatcher : public ::android::Thread {
     bool thermal_triggered_;
     // Flag to point out if device can support uevent notify.
     bool is_polling_;
+    // Timestamp for last thermal update
+    boot_clock::time_point last_update_time_;
 };
 
 }  // namespace implementation
