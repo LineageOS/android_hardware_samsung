@@ -120,18 +120,19 @@ void Light::handleAttention(const LightState& state) {
 }
 
 void Light::setNotificationLED() {
+#ifdef LED_BLINK_NODE
     int32_t adjusted_brightness = MAX_INPUT_BRIGHTNESS;
     LightState state;
 #ifdef LED_BLN_NODE
     bool bln = false;
-#endif
+#endif /* LED_BLN_NODE */
 
     if (mNotificationState.color & COLOR_MASK) {
         adjusted_brightness = LED_BRIGHTNESS_NOTIFICATION;
         state = mNotificationState;
 #ifdef LED_BLN_NODE
         bln = true;
-#endif
+#endif /* LED_BLN_NODE */
     } else if (mAttentionState.color & COLOR_MASK) {
         adjusted_brightness = LED_BRIGHTNESS_ATTENTION;
         state = mAttentionState;
@@ -163,7 +164,8 @@ void Light::setNotificationLED() {
     if (bln) {
         set(LED_BLN_NODE, (state.color & COLOR_MASK) ? 1 : 0);
     }
-#endif
+#endif /* LED_BLN_NODE */
+#endif /* LED_BLINK_NODE */
 }
 
 Return<void> Light::getSupportedTypes(getSupportedTypes_cb _hidl_cb) {
@@ -185,6 +187,7 @@ uint32_t Light::rgbToBrightness(const LightState& state) {
            8;
 }
 
+#ifdef LED_BLINK_NODE
 uint32_t Light::calibrateColor(uint32_t color, int32_t brightness) {
     uint32_t red = ((color >> 16) & 0xFF) * LED_ADJUSTMENT_R;
     uint32_t green = ((color >> 8) & 0xFF) * LED_ADJUSTMENT_G;
@@ -193,6 +196,7 @@ uint32_t Light::calibrateColor(uint32_t color, int32_t brightness) {
     return (((red * brightness) / 255) << 16) + (((green * brightness) / 255) << 8) +
            ((blue * brightness) / 255);
 }
+#endif /* LED_BLINK_MODE */
 
 }  // namespace implementation
 }  // namespace V2_0
