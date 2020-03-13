@@ -48,17 +48,20 @@ struct Light : public ILight {
     void handleBacklight(const LightState& state);
 #ifdef BUTTON_BRIGHTNESS_NODE
     void handleButtons(const LightState& state);
-#endif
+#endif /* BUTTON_BRIGHTNESS_NODE */
+#ifdef LED_BLINK_NODE
     void handleBattery(const LightState& state);
     void handleNotifications(const LightState& state);
     void handleAttention(const LightState& state);
     void setNotificationLED();
-    uint32_t rgbToBrightness(const LightState& state);
     uint32_t calibrateColor(uint32_t color, int32_t brightness);
 
     LightState mAttentionState;
     LightState mBatteryState;
     LightState mNotificationState;
+#endif /* LED_BLINK_NODE */
+
+    uint32_t rgbToBrightness(const LightState& state);
 
     std::mutex mLock;
     std::unordered_map<Type, std::function<void(const LightState&)>> mLights;
