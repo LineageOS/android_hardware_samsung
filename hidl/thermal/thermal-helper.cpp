@@ -605,6 +605,7 @@ bool ThermalHelper::thermalWatcherCallbackFunc(const std::set<std::string> &ueve
         }
         if (sensor_status.severity != ThrottlingSeverity::NONE) {
             thermal_triggered = true;
+            LOG(INFO) << temp.name << ": " << temp.value;
         }
     }
     if (!temps.empty() && cb_) {
