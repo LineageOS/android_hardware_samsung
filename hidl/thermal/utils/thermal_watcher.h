@@ -58,8 +58,7 @@ class ThermalWatcher : public ::android::Thread {
     // Give the file watcher a list of files to start watching. This helper
     // class will by default wait for modifications to the file with a looper.
     // This should be called before starting watcher thread.
-    void registerFilesToWatch(const std::set<std::string> &sensors_to_watch,
-                              const std::set<std::string> &cdev_to_watch, bool uevent_monitor);
+    void registerFilesToWatch(const std::set<std::string> &sensors_to_watch, bool uevent_monitor);
     // Wake up the looper thus the worker thread, immediately. This can be called
     // in any thread.
     void wake();
@@ -76,7 +75,6 @@ class ThermalWatcher : public ::android::Thread {
 
     // Maps watcher filer descriptor to watched file path.
     std::unordered_map<int, std::string> watch_to_file_path_map_;
-    std::vector<android::base::unique_fd> fds_;
 
     // The callback function. Called whenever thermal uevent is seen.
     // The function passed in should expect a string in the form (type).

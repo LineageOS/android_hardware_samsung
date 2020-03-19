@@ -36,20 +36,7 @@ namespace implementation {
 using std::chrono_literals::operator""ms;
 
 void ThermalWatcher::registerFilesToWatch(const std::set<std::string> &sensors_to_watch,
-                                          const std::set<std::string> &cdev_to_watch,
                                           bool uevent_monitor) {
-    int flags = O_RDONLY | O_CLOEXEC | O_BINARY;
-
-    for (const auto &path : cdev_to_watch) {
-        android::base::unique_fd fd(TEMP_FAILURE_RETRY(open(path.c_str(), flags)));
-        if (fd == -1) {
-            PLOG(ERROR) << "failed to watch: " << path;
-            continue;
-        }
-        watch_to_file_path_map_.emplace(fd.get(), path);
-        looper_->addFd(fd.get(), 0, Looper::EVENT_INPUT, nullptr, nullptr);
-        fds_.emplace_back(std::move(fd));
-    }
     monitored_sensors_.insert(sensors_to_watch.begin(), sensors_to_watch.end());
     if (!uevent_monitor) {
         is_polling_ = true;
