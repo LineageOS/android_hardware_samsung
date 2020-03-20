@@ -191,12 +191,14 @@ Return<void> Light::getSupportedTypes(getSupportedTypes_cb _hidl_cb) {
     return Void();
 }
 
+// clang-format off
 uint32_t Light::rgbToBrightness(const LightState& state) {
     uint32_t color = state.color & COLOR_MASK;
 
-    return ((77 * ((color >> 16) & 0xff)) + (150 * ((color >> 8) & 0xff)) + (29 * (color & 0xff))) >>
-           8;
+    return ((77 * ((color >> 16) & 0xff)) + (150 * ((color >> 8) & 0xff)) +
+            (29 * (color & 0xff))) >> 8;
 }
+// clang-format on
 
 }  // namespace implementation
 }  // namespace V2_0
