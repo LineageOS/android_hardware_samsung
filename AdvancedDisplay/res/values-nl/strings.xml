@@ -22,6 +22,9 @@
     <string name="screen_colors_title">Kleuren</string>
     <string name="mdnie_scenario_title_head">Scenario</string>
     <string name="mdnie_scenario_summary_head">mDNIe-scenario instellen</string>
+    <string name="mdnie_accessibility_title_head">Toegankelijkheidsmodus</string>
+    <string name="mdnie_accessibility_summary_head">mDNIe-toegankelijkheidsmodus instellen</string>
+    <string name="mdnie_scenario_ui">LineageOS (standaard)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video (warm)</string>
     <string name="mdnie_scenario_video_cold">Video (koud)</string>
@@ -36,6 +39,7 @@
     <string name="mdnie_accessibility_normal">Normaal</string>
     <string name="mdnie_accessibility_inverse">Omgekeerd</string>
     <string name="mdnie_accessibility_color_blind">Kleurenblind</string>
+    <string name="mdnie_accessibility_screen_curtain">Schermgordijn</string>
     <string name="mdnie_accessibility_grayscale">Grijs</string>
     <string name="mdnie_accessibility_gray_negative">Grijs (omgekeerd)</string>
 </resources>
