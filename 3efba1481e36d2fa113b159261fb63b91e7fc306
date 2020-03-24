@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54b2f67b_8bc29670",
+        "filename": "hidl/boot/BootControl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-03-24T03:04:52Z",
+      "side": 1,
+      "message": "false",
+      "range": {
+        "startLine": 43,
+        "startChar": 15,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "3efba1481e36d2fa113b159261fb63b91e7fc306",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c17c4a_a7a1d03e",
+        "filename": "hidl/boot/BootControl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-03-24T03:04:52Z",
+      "side": 1,
+      "message": "false",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 17
+      },
+      "revId": "3efba1481e36d2fa113b159261fb63b91e7fc306",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421e5d2c_32c6953e",
+        "filename": "hidl/boot/BootControl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-03-24T03:04:52Z",
+      "side": 1,
+      "message": "!slot",
+      "range": {
+        "startLine": 143,
+        "startChar": 16,
+        "endLine": 143,
+        "endChar": 35
+      },
+      "revId": "3efba1481e36d2fa113b159261fb63b91e7fc306",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
