@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95aee2c9_6733998d",
+        "filename": "hidl/boot/bctl_metadata.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-03-24T16:42:43Z",
+      "side": 1,
+      "message": "move to .cpp?",
+      "revId": "248759c7a3f6ea37e7a24bdaeae0059f41cc24c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
