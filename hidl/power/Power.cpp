@@ -59,7 +59,7 @@ Return<void> Power::setInteractive(bool interactive) {
         if (panel_brightness > 0) {
             LOG(VERBOSE) << "Moving to non-interactive state, but screen is still on,"
                          << "not disabling input devices";
-            return Void();
+            goto out;
         }
     }
 
