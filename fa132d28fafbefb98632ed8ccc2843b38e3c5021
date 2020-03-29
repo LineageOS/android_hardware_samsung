@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a84c7801_b249da88",
+        "filename": "hidl/boot/BootControl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-03-29T17:34:28Z",
+      "side": 1,
+      "message": "Leave a comment about why !slot works here. It\u0027s not exactly intuitive unless you\u0027re thinking hard about it.",
+      "revId": "fa132d28fafbefb98632ed8ccc2843b38e3c5021",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
