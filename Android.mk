@@ -47,6 +47,5 @@ include $(SAM_ROOT)/doze/Android.mk
 include $(SAM_ROOT)/dtbhtool/Android.mk
 include $(SAM_ROOT)/hidl/Android.mk
 include $(SAM_ROOT)/modemloader/Android.mk
-include $(SAM_ROOT)/power/Android.mk
 include $(SAM_ROOT)/ril/Android.mk
 endif
