@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "686b595d_024b0b0c",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-04-06T10:19:52Z",
+      "side": 1,
+      "message": "why?\nthe request function is only used by the fod hal, also even samsung devices with a normal fp sensor have this function so it would be always true anyway",
+      "revId": "249d36678ef9e793d84720549012665efa333510",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
