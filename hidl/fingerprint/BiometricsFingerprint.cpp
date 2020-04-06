@@ -217,35 +217,42 @@ Return<RequestStatus> BiometricsFingerprint::authenticate(uint64_t operationId, 
     return ErrorFilter(ss_fingerprint_authenticate(operationId, gid));
 }
 
-Return<void> BiometricsFingerprint::request(int32_t cmd_id, int32_t len,
-            int32_t inParam, const hidl_vec<int8_t>& inputBuf, request_cb _hidl_cb) {
-    size_t inputSize = 0;
-    for (; inputBuf[inputSize] != '\0'; ++inputSize);
+Return<void> BiometricsFingerprint::request(int32_t cmd_id,
+                                            int32_t len,
+                                            int32_t inParam,
+                                            const hidl_vec<char>& inputBuf,
+                                            request_cb _hidl_cb) {
+    size_t inputSize = strlen(inputBuf);
+    char input[inputSize + 1];
+    char output[len];
 
     if (ss_fingerprint_request == NULL) {
         return Void();
     }
 
-    int8_t input[inputSize + 1];
-    int8_t output[len];
+    memset(output, '\0', sizeof(output));
 
-    for (size_t i = 0; i < inputSize; ++i) {
-        input[i] = inputBuf[i];
-    }
-    input[inputSize] = '\0';
-    for (size_t i = 0; i < static_cast<size_t>(len); ++i) {
-        output[i] = '\0';
-    }
+    snprintf(input, sizeof(input), "%s", inputBuf);
 
-    LOG(ERROR) << "request(cmd_id=" << cmd_id
+    LOG(DEBUG) << "request(cmd_id=" << cmd_id
             << ", len=" << len
             << ", inParam=" << inParam
             << ", inputBuf=" << input
             << ")";
 
-    int ret = ss_fingerprint_request(cmd_id, input, 0, len == 0 ? nullptr : output, len, inParam);
+    int ret = ss_fingerprint_request(cmd_id,
+                                     input,
+                                     0,
+                                     len == 0 ? nullptr : output,
+                                     len,
+                                     inParam);
 
-    auto outBuf = hidl_vec<int8_t>();
+    LOG(DEBUG) << "request(cmd_id=" << cmd_id
+               << ", len=" << len
+               << ", output=" << output
+               << ") ret=" << ret;
+
+    auto outBuf = hidl_vec<char>();
     outBuf.setToExternal(output, len);
 
     _hidl_cb(ret, outBuf);

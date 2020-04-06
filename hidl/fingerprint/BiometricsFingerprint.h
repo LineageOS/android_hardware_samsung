@@ -59,7 +59,11 @@ struct BiometricsFingerprint : public ISecBiometricsFingerprint {
     Return<RequestStatus> remove(uint32_t gid, uint32_t fid) override;
     Return<RequestStatus> setActiveGroup(uint32_t gid, const hidl_string& storePath) override;
     Return<RequestStatus> authenticate(uint64_t operationId, uint32_t gid) override;
-    Return<void> request(int32_t cmd_id, int32_t outBuf_len, int32_t inParam, const hidl_vec<int8_t>& inputBuf, request_cb _hidl_cb) override;
+    Return<void> request(int32_t cmd_id,
+                         int32_t outBuf_len,
+                         int32_t inParam,
+                         const hidl_vec<char>& inputBuf,
+                         request_cb _hidl_cb) override;
 
   private:
     bool openHal();
