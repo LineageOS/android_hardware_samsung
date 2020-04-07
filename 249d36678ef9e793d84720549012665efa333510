@@ -16,6 +16,24 @@
       "revId": "249d36678ef9e793d84720549012665efa333510",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb7e805_fe476449",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2020-04-07T11:47:26Z",
+      "side": 1,
+      "message": "Are you sure all of them have it. This just makes sure we don\u0027t segfault.\n\nAlso that might be the function used for fingerprint gestures.",
+      "parentUuid": "686b595d_024b0b0c",
+      "revId": "249d36678ef9e793d84720549012665efa333510",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
