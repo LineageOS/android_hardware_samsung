@@ -34,6 +34,24 @@
       "revId": "249d36678ef9e793d84720549012665efa333510",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836bbd40_28289ae1",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-04-07T12:00:03Z",
+      "side": 1,
+      "message": "yes im pretty sure, i have checked blobs down to android 7 all of em have it\n\nthis patch is about FOD and not gestures, we can deal with that stuff later in a different commit but not here",
+      "parentUuid": "3eb7e805_fe476449",
+      "revId": "249d36678ef9e793d84720549012665efa333510",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
