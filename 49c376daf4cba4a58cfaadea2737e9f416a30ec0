@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d2fbf1c_7e4fd2dd",
+        "filename": "hidl/powershare/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-04-20T16:30:49Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "49c376daf4cba4a58cfaadea2737e9f416a30ec0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8520cb_89c70559",
+        "filename": "hidl/powershare/LineagePowerShare.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-04-20T16:30:49Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "49c376daf4cba4a58cfaadea2737e9f416a30ec0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
