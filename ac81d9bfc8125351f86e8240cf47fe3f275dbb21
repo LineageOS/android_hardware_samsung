@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31bb447f_a9f30ed2",
+        "filename": "hidl/powershare/LineagePowerShare.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2020-04-20T16:12:08Z",
+      "side": 1,
+      "message": "I find those names very long and they are trimmed in logcat. So I would suggest to use:\n\n#define LOG_TAG \"powershare@1.0-samsung\"",
+      "revId": "ac81d9bfc8125351f86e8240cf47fe3f275dbb21",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00a2486_dde0b1d4",
+        "filename": "hidl/powershare/LineagePowerShare.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2020-04-20T16:12:08Z",
+      "side": 1,
+      "message": "I would prefer if we add some logging especially if something goes wrong. See for example:\n\nhttps://github.com/whatawurst/android_device_samsung_exynos9820-common/blob/lineage-17.1/hardware/interface/power/Power.cpp#L46-L70",
+      "revId": "ac81d9bfc8125351f86e8240cf47fe3f275dbb21",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
