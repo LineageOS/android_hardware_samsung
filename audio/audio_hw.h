@@ -371,6 +371,11 @@ struct voice_data {
     struct voice_session *session;
 };
 
+struct a2dp_state {
+    bool  connected;
+    int   prev_mode;
+};
+
 struct audio_device {
     struct audio_hw_device  device;
     pthread_mutex_t         lock; /* see note below on mutex acquisition order */
@@ -386,6 +391,7 @@ struct audio_device {
     struct pcm              *pcm_sco_tx;
 
     struct voice_data       voice;
+    struct a2dp_state       a2dp;
 
     int*                    snd_dev_ref_cnt;
     struct listnode         usecase_list;
