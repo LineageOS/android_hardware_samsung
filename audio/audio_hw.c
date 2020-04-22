@@ -850,9 +850,14 @@ static int enable_snd_device(struct audio_device *adev,
         return -EINVAL;
 
     if (snd_device == SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES) {
-        ALOGV("Request to enable combo device: enable individual devices\n");
-        enable_snd_device(adev, uc_info, SND_DEVICE_OUT_SPEAKER);
-        enable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES);
+        if (adev->mode == AUDIO_MODE_RINGTONE) {
+            ALOGV("Request to enable combo device: but currently the device is ringing\n");
+            enable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES);
+        } else {
+            ALOGV("Request to enable combo device: enable individual devices\n");
+            enable_snd_device(adev, uc_info, SND_DEVICE_OUT_SPEAKER);
+            enable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES);
+        }
         return 0;
     }
     adev->snd_dev_ref_cnt[snd_device]++;
@@ -860,6 +865,13 @@ static int enable_snd_device(struct audio_device *adev,
         ALOGV("%s: snd_device(%d: %s) is already active",
               __func__, snd_device, snd_device_name);
         return 0;
+    }
+
+    if ((adev->mode == AUDIO_MODE_RINGTONE || adev->a2dp.prev_mode == AUDIO_MODE_RINGTONE) &&
+        adev->a2dp.connected && (snd_device == SND_DEVICE_OUT_SPEAKER)) {
+        ALOGV("%s: Exiting: since there is no need to enable snd_device(%d: %s) now",
+             __func__,snd_device, snd_device_name);
+       return 0;
     }
 
     ALOGV("%s: snd_device(%d: %s)", __func__,
@@ -904,9 +916,14 @@ int disable_snd_device(struct audio_device *adev,
         return -EINVAL;
 
     if (snd_device == SND_DEVICE_OUT_SPEAKER_AND_HEADPHONES) {
-        ALOGV("Request to disable combo device: disable individual devices\n");
-        disable_snd_device(adev, uc_info, SND_DEVICE_OUT_SPEAKER);
-        disable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES);
+        if (adev->a2dp.prev_mode == AUDIO_MODE_RINGTONE) {
+            ALOGV("Request to disable combo device: but the device is returning from ringing \n");
+            disable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES);
+        } else {
+            ALOGV("Request to disable combo device: disable individual devices\n");
+            disable_snd_device(adev, uc_info, SND_DEVICE_OUT_SPEAKER);
+            disable_snd_device(adev, uc_info, SND_DEVICE_OUT_HEADPHONES);
+        }
         return 0;
     }
 
@@ -3831,6 +3848,23 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
     /******************************************************
      *** BT SCO
      ******************************************************/
+
+    ret = str_parms_get_str(parms, AUDIO_PARAMETER_DEVICE_CONNECT, value, sizeof(value));
+    if (ret >= 0) {
+        ret  = atoi(value);
+        if (ret > 0) {
+            adev->a2dp.connected = true;
+        }
+    }
+
+    ret = str_parms_get_str(parms, AUDIO_PARAMETER_DEVICE_DISCONNECT, value, sizeof(value));
+    if (ret >= 0) {
+        ret  = atoi(value);
+        if (ret > 0) {
+            adev->a2dp.connected = false;
+        }
+    }
+
     ret = str_parms_get_str(parms, AUDIO_PARAMETER_KEY_BT_NREC, value, sizeof(value));
     if (ret >= 0) {
         /* When set to false, HAL should disable EC and NS
@@ -3854,7 +3888,7 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
         }
     }
 
-    ret = str_parms_get_str(parms, "screen_state", value, sizeof(value));
+    ret = str_parms_get_str(parms, AUDIO_PARAMETER_KEY_SCREEN_STATE, value, sizeof(value));
     if (ret >= 0) {
         if (strcmp(value, AUDIO_PARAMETER_VALUE_ON) == 0)
             adev->screen_off = false;
@@ -3978,6 +4012,8 @@ static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
         if (amplifier_set_mode(mode) != 0) {
             ALOGE("Failed setting amplifier mode");
         }
+
+        adev->a2dp.prev_mode = adev->mode;
         adev->mode = mode;
 
         if ((mode == AUDIO_MODE_NORMAL) && adev->voice.in_call) {
@@ -4247,6 +4283,7 @@ static int adev_open(const hw_module_t *module, const char *name,
 
     /* Set the default route before the PCM stream is opened */
     adev->mode = AUDIO_MODE_NORMAL;
+    adev->a2dp.prev_mode = AUDIO_MODE_NORMAL;
     adev->active_input = NULL;
     adev->primary_output = NULL;
 
@@ -4255,6 +4292,7 @@ static int adev_open(const hw_module_t *module, const char *name,
     adev->voice.in_call = false;
     adev->voice.bluetooth_wb = false;
 
+    adev->a2dp.connected = false;
     adev->bt_sco_active = false;
 
     /* adev->cur_hdmi_channels = 0;  by calloc() */
