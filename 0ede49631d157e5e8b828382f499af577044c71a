@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1665c8a_a441993e",
+        "filename": "hidl/fingerprint/inscreen/Android.mk",
+        "patchSetId": 17
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-04-23T17:53:31Z",
+      "side": 1,
+      "message": "2020? ditto on all the other files",
+      "revId": "0ede49631d157e5e8b828382f499af577044c71a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2237a5ef_d8b4a209",
+        "filename": "hidl/fingerprint/inscreen/FingerprintInscreen.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-04-23T17:53:31Z",
+      "side": 1,
+      "message": "Why is this here?",
+      "revId": "0ede49631d157e5e8b828382f499af577044c71a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1fbb89_a2cdc4bd",
+        "filename": "hidl/fingerprint/inscreen/FingerprintInscreen.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-04-23T17:53:31Z",
+      "side": 1,
+      "message": "should we do something with this?",
+      "revId": "0ede49631d157e5e8b828382f499af577044c71a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9262385f_457fbbb3",
+        "filename": "hidl/fingerprint/inscreen/FingerprintInscreen.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-04-23T17:53:31Z",
+      "side": 1,
+      "message": "the filename is a bit long, fwiw. not a problem, per se",
+      "revId": "0ede49631d157e5e8b828382f499af577044c71a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c47f151_8a538ace",
+        "filename": "hidl/fingerprint/inscreen/FingerprintInscreen.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-04-23T17:53:31Z",
+      "side": 1,
+      "message": "why hidl_vec? Usually std::vector is better, and it can be converted to a hidl_vec.",
+      "revId": "0ede49631d157e5e8b828382f499af577044c71a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
