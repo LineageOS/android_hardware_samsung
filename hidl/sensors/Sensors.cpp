@@ -106,6 +106,9 @@ Sensors::Sensors()
         }
     }
 
+    /* Get us all sensors */
+    setOperationMode(static_cast<hardware::sensors::V1_0::OperationMode>(5555));
+
     mInitCheck = OK;
 }
 
