@@ -106,6 +106,9 @@ Sensors::Sensors()
         }
     }
 
+    /* Get us all sensors */
+    setOperationMode(static_cast<hardware::sensors::V1_0::OperationMode>(5555));
+
     mInitCheck = OK;
 }
 
@@ -120,11 +123,19 @@ Return<void> Sensors::getSensorsList(getSensorsList_cb _hidl_cb) {
     hidl_vec<SensorInfo> out;
     out.resize(count);
 
+    if (count < 32) {
+        LOG(ERROR) << ">>>>>> WARNING SENSOR COUNT: " << count;
+    }
+
     for (size_t i = 0; i < count; ++i) {
         const sensor_t *src = &list[i];
         SensorInfo *dst = &out[i];
 
         convertFromSensor(*src, dst);
+
+        LOG(DEBUG) << ">>>>>> name:         " << dst->name;
+        LOG(DEBUG) << "       typeAsString: " << dst->typeAsString;
+        LOG(DEBUG) << "       requiredPerm: " << dst->requiredPermission;
 
         if (dst->requiredPermission == "com.samsung.permission.SSENSOR") {
             dst->requiredPermission = "";
