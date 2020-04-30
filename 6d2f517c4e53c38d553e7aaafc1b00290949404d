@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f97ed72_1ae747f0",
+        "filename": "hidl/fingerprint/inscreen/FingerprintInscreen.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-04-30T02:32:19Z",
+      "side": 1,
+      "message": "can we define these somewhere? I don\u0027t like magic numbers",
+      "revId": "6d2f517c4e53c38d553e7aaafc1b00290949404d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31cd03ed_127e13b8",
+        "filename": "hidl/fingerprint/inscreen/FingerprintInscreen.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-04-30T02:32:19Z",
+      "side": 1,
+      "message": "should we do anything with the callback?",
+      "revId": "6d2f517c4e53c38d553e7aaafc1b00290949404d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
