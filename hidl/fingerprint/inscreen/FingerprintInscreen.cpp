@@ -80,17 +80,14 @@ Return<void> FingerprintInscreen::onStartEnroll() { return Void(); }
 
 Return<void> FingerprintInscreen::onFinishEnroll() { return Void(); }
 
-Return<void> FingerprintInscreen::onPress() {
+Return<void> FingerprintInscreen::onPress() { return Void(); }
+
+Return<void> FingerprintInscreen::onRelease() { return Void(); }
+
+Return<void> FingerprintInscreen::onShowFODView() {
     set(TSP_CMD_PATH, FOD_ENABLE);
     return Void();
 }
-
-Return<void> FingerprintInscreen::onRelease() {
-    set(TSP_CMD_PATH, FOD_DISABLE);
-    return Void();
-}
-
-Return<void> FingerprintInscreen::onShowFODView() { return Void(); }
 
 Return<void> FingerprintInscreen::onHideFODView() {
     set(TSP_CMD_PATH, FOD_DISABLE);
