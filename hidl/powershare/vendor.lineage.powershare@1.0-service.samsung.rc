@@ -1,4 +1,0 @@
-service vendor.powershare-hal-1-0 /vendor/bin/hw/vendor.lineage.powershare@1.0-service.samsung
-    class hal
-    user system
-    group system
