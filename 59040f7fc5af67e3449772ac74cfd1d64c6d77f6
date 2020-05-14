@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc82aefe_5ae07a63",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-14T14:03:18Z",
+      "side": 1,
+      "message": "I still think this should be the Android sensor permission",
+      "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3b3118_40cb9482",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-14T14:03:18Z",
+      "side": 1,
+      "message": "Why not make this a std::map or something? It seems clunky otherwise. The value could be a std::pair, and the key could be the Samsung string.",
+      "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac3b234_d9e9bb0a",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-14T14:03:18Z",
+      "side": 1,
+      "message": "Why do we have this? Sensors can be binderized, we don\u0027t need this.",
+      "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
