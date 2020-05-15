@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5369aede_2889846a",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-05-15T13:28:31Z",
+      "side": 1,
+      "message": "Is the heart rate sensor on S10 still uses SSENSOR type? That\u0027s probably the case for older devices but now Android has HEART_RATE type.",
+      "parentUuid": "1c68160d_081af6c9",
+      "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a3b3118_40cb9482",
         "filename": "hidl/sensors/Sensors.cpp",
         "patchSetId": 2
