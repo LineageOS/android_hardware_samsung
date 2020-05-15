@@ -104,6 +104,24 @@
       "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dab7fd_a8832bc9",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-05-15T12:35:34Z",
+      "side": 1,
+      "message": "No that won\u0027t work.\n\n\"Passthrough lookup opened android.hardware.sensors@1.0-impl.samsung-sm8250.so but could not find symbol HIDL_FETCH_ISensors: undefined symbol: HIDL_FETCH_ISensors\"\n\n1.0 still uses passthrough and we need passthrough to Samsung\u0027s sensor HALs.",
+      "parentUuid": "1ff0cf50_20697987",
+      "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
