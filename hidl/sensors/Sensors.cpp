@@ -15,7 +15,7 @@
  */
 
 #include "Sensors.h"
-#include "convert.h"
+#include <sensors/convert.h>
 #include "multihal.h"
 
 #include <android-base/logging.h>
