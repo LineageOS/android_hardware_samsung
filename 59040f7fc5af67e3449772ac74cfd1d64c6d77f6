@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8b06133_fed86cbc",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-05-15T11:48:54Z",
+      "side": 1,
+      "message": "Android does not really require permissions for general sensors. The sensitive heart rate sensor is no longer present on new devices that will utilize this HAL.",
+      "parentUuid": "dc82aefe_5ae07a63",
+      "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a3b3118_40cb9482",
         "filename": "hidl/sensors/Sensors.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8939fb30_18863810",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-05-15T11:48:54Z",
+      "side": 1,
+      "message": "Sounds great. But IMO it would be too fancy and not really useful. You can try, though.",
+      "parentUuid": "6a3b3118_40cb9482",
+      "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ac3b234_d9e9bb0a",
         "filename": "hidl/sensors/Sensors.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2020-05-14T14:03:18Z",
       "side": 1,
       "message": "Why do we have this? Sensors can be binderized, we don\u0027t need this.",
+      "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff0cf50_20697987",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-05-15T11:48:54Z",
+      "side": 1,
+      "message": "\u003e Why do we have this? Sensors can be binderized, we don\u0027t need this.\n\nBecause default Sensors HAL does this and it is rather common. (https://github.com/search?q\u003dorg%3ALineageOS+HIDL_FETCH_ISensors\u0026type\u003dCode) It \"can\" but it \"is\" not binderized in 1.0 IIRC and we are talking about 1.0 here. I did a quick search of HIDL_FETCH_ISensors in source tree and I did not find any user, though. I will try to remove this and see how things go.",
+      "parentUuid": "3ac3b234_d9e9bb0a",
       "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
