@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1c68160d_081af6c9",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-05-15T12:48:47Z",
+      "side": 1,
+      "message": "atleast the s10 does have a heart rate sensor",
+      "parentUuid": "a8b06133_fed86cbc",
+      "revId": "59040f7fc5af67e3449772ac74cfd1d64c6d77f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a3b3118_40cb9482",
         "filename": "hidl/sensors/Sensors.cpp",
         "patchSetId": 2
