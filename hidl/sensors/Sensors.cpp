@@ -137,6 +137,7 @@ Return<void> Sensors::getSensorsList(getSensorsList_cb _hidl_cb) {
             LOG(INFO) << "Fixing com.samsung.sensor.physical_proximity";
             dst->type = SensorType::PROXIMITY;
             dst->typeAsString = SENSOR_STRING_TYPE_PROXIMITY;
+            dst->maxRange = 1;
         }
     }
 
