@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "585c8bd0_0b601cbe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-16T15:05:07Z",
+      "side": 1,
+      "message": "maybe explain that any value  \u003e\u003d maxRange is considered far because of this. I wouldn\u0027t know how maxRange worked otherwise.",
+      "range": {
+        "startLine": 20,
+        "startChar": 36,
+        "endLine": 20,
+        "endChar": 53
+      },
+      "revId": "3b783232208d90677da7b4a463fd99820275475a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
