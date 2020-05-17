@@ -427,10 +427,12 @@ static void samsung_power_set_interactive(struct power_module *module, int on)
         panel_brightness = get_cur_panel_brightness();
         if (panel_brightness < 0) {
             ALOGE("%s: Failed to read panel brightness", __func__);
+#ifndef ALLOW_NONINTERACTIVE_SCREENON
         } else if (panel_brightness > 0) {
             ALOGV("%s: Moving to non-interactive state, but screen is still on,"
                   " not disabling input devices", __func__);
             goto out;
+#endif
         }
     }
 
