@@ -22,6 +22,30 @@
       "revId": "6d764a3cef0d77f4b5addd571b9c8d23d4173a51",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d52a884_31ca431e",
+        "filename": "hidl/powershare/vendor.lineage.powershare@1.0-service.samsung.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 25925
+      },
+      "writtenOn": "2020-05-22T16:25:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b438e5b3_cd952915",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "6d764a3cef0d77f4b5addd571b9c8d23d4173a51",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
