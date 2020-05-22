@@ -38,6 +38,7 @@ LOCAL_INIT_RC := vendor.lineage.powershare@1.0-service.samsung.rc
 LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_OWNER := samsung
+LOCAL_VINTF_FRAGMENTS := vendor.lineage.powershare@1.0-service.samsung.xml
 LOCAL_VENDOR_MODULE := true
 
 include $(BUILD_EXECUTABLE)
