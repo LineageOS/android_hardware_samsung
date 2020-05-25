@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "96fcb46f_d5c74384",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-25T15:57:57Z",
+      "side": 1,
+      "message": "I\u0027d drop this",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca4954bd_5b11ff32",
         "filename": "hidl/vibrator/Android.bp",
         "patchSetId": 1
@@ -36,6 +59,81 @@
       "writtenOn": "2020-05-25T15:50:13Z",
       "side": 1,
       "message": "is there a specific reason to add this line?",
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be327ad9_a12b8d1d",
+        "filename": "hidl/vibrator/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-25T15:57:57Z",
+      "side": 1,
+      "message": "Usually we don\u0027t add individual copyrights.",
+      "parentUuid": "69c9e26e_df7e3d95",
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bddc514_5cbb7190",
+        "filename": "hidl/vibrator/Vibrator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-25T15:57:57Z",
+      "side": 1,
+      "message": "Same copyright comments as before",
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f426367e_059df85a",
+        "filename": "hidl/vibrator/Vibrator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-25T15:57:57Z",
+      "side": 1,
+      "message": "usually c* headers are a bit of a red flag - what are we using from cmath?",
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6bb1e8_9f1827a3",
+        "filename": "hidl/vibrator/Vibrator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-25T15:57:57Z",
+      "side": 1,
+      "message": "These could go in the header file I think",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 76
+      },
       "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
@@ -88,6 +186,57 @@
     },
     {
       "key": {
+        "uuid": "40584165_b4d72fe6",
+        "filename": "hidl/vibrator/Vibrator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-25T15:57:57Z",
+      "side": 1,
+      "message": "Why do we have these?",
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc157c75_dd12a71f",
+        "filename": "hidl/vibrator/Vibrator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-25T15:57:57Z",
+      "side": 1,
+      "message": "2020",
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc28ab1_fb89d32d",
+        "filename": "hidl/vibrator/Vibrator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-25T15:57:57Z",
+      "side": 1,
+      "message": "We usually don\u0027t do individual copyrights",
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "830947a5_694ef873",
         "filename": "hidl/vibrator/Vibrator.h",
         "patchSetId": 1
@@ -105,6 +254,23 @@
         "endLine": 73,
         "endChar": 10
       },
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5764ed03_1d773d0a",
+        "filename": "hidl/vibrator/service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-05-25T15:57:57Z",
+      "side": 1,
+      "message": "2020",
       "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
