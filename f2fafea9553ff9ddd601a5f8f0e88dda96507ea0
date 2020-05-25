@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca4954bd_5b11ff32",
+        "filename": "hidl/vibrator/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-05-25T15:50:13Z",
+      "side": 1,
+      "message": "only 2020",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 26
+      },
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c9e26e_df7e3d95",
+        "filename": "hidl/vibrator/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-05-25T15:50:13Z",
+      "side": 1,
+      "message": "is there a specific reason to add this line?",
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e3adc1_29ef6d79",
+        "filename": "hidl/vibrator/Vibrator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-05-25T15:50:13Z",
+      "side": 1,
+      "message": "i still dont like this name, maybe something like \"nodeExist\" makes more sense",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 25
+      },
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d356a949_2a8bcfdf",
+        "filename": "hidl/vibrator/Vibrator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-05-25T15:50:13Z",
+      "side": 1,
+      "message": "ofstream probably makes more sense here since you only write to it",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830947a5_694ef873",
+        "filename": "hidl/vibrator/Vibrator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-05-25T15:50:13Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 10
+      },
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53c31ff_c38f1089",
+        "filename": "hidl/vibrator/service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-05-25T15:50:13Z",
+      "side": 1,
+      "message": "s/ExynosVibrator/Vibrator/",
+      "range": {
+        "startLine": 45,
+        "startChar": 53,
+        "endLine": 45,
+        "endChar": 67
+      },
+      "revId": "f2fafea9553ff9ddd601a5f8f0e88dda96507ea0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
