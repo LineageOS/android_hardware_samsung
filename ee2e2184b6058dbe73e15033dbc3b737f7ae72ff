@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81b55fd5_a2343175",
+        "filename": "hidl/vibrator/Vibrator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-06-03T02:51:18Z",
+      "side": 1,
+      "message": "cant you just use toString directly instead of wrapping it? i see no reason to add these functions tbh",
+      "revId": "ee2e2184b6058dbe73e15033dbc3b737f7ae72ff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c6dbd9_b850a485",
+        "filename": "hidl/vibrator/Vibrator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-06-03T02:51:18Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "ee2e2184b6058dbe73e15033dbc3b737f7ae72ff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a758ec_45327db1",
+        "filename": "hidl/vibrator/service.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-06-03T02:51:18Z",
+      "side": 1,
+      "message": "2020",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "ee2e2184b6058dbe73e15033dbc3b737f7ae72ff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15dd177d_b010cbf3",
+        "filename": "hidl/vibrator/service.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-06-03T02:51:18Z",
+      "side": 1,
+      "message": "s/ExynosVibrator/Vibrator/",
+      "range": {
+        "startLine": 54,
+        "startChar": 54,
+        "endLine": 54,
+        "endChar": 69
+      },
+      "revId": "ee2e2184b6058dbe73e15033dbc3b737f7ae72ff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2903e6e3_c01ae0d5",
+        "filename": "hidl/vibrator/service.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-06-03T02:51:18Z",
+      "side": 1,
+      "message": "s/ExynosVibrator/Vibrator/",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "ee2e2184b6058dbe73e15033dbc3b737f7ae72ff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
