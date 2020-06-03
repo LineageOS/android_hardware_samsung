@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e7a719ba_7332f02c",
+        "filename": "hidl/vibrator/Vibrator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-06-03T06:31:24Z",
+      "side": 1,
+      "message": "now im curious /why/ you cant, i just changed it locally and it compiled just fine",
+      "parentUuid": "9a2eb64d_8e6ff044",
+      "revId": "ee2e2184b6058dbe73e15033dbc3b737f7ae72ff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1c6dbd9_b850a485",
         "filename": "hidl/vibrator/Vibrator.cpp",
         "patchSetId": 2
