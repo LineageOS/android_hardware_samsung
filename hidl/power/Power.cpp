@@ -53,6 +53,7 @@ Return<void> Power::setInteractive(bool interactive) {
         initialize();
     }
 
+#ifndef ALLOW_NONINTERACTIVE_SCREENON
     if (!interactive) {
         int32_t panel_brightness = get(PANEL_BRIGHTNESS_NODE, -1);
 
@@ -62,6 +63,7 @@ Return<void> Power::setInteractive(bool interactive) {
             goto out;
         }
     }
+#endif
 
     if (!sec_touchscreen.empty()) {
         set(sec_touchscreen, interactive ? "1" : "0");
