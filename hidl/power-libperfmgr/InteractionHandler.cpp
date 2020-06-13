@@ -66,14 +66,14 @@ bool InteractionHandler::Init() {
         return true;
 
     int fd = fb_idle_open();
-    if (fd < 0)
-        return false;
     mIdleFd = fd;
 
     mEventFd = eventfd(0, EFD_NONBLOCK);
     if (mEventFd < 0) {
         ALOGE("Unable to create event fd (%d)", errno);
-        close(mIdleFd);
+        if (mIdleFd >= 0) {
+            close(mIdleFd);
+        }
         return false;
     }
 
@@ -96,7 +96,9 @@ void InteractionHandler::Exit() {
     mThread->join();
 
     close(mEventFd);
-    close(mIdleFd);
+    if (mIdleFd >= 0) {
+        close(mIdleFd);
+    }
 }
 
 void InteractionHandler::PerfLock() {
@@ -197,6 +199,11 @@ void InteractionHandler::WaitForIdle(int32_t wait_ms, int32_t timeout_ms) {
     ATRACE_CALL();
 
     ALOGV("%s: wait:%d timeout:%d", __func__, wait_ms, timeout_ms);
+
+    if (mIdleFd < 0) {
+        usleep(wait_ms + timeout_ms);
+        return;
+    }
 
     pfd[0].fd = mEventFd;
     pfd[0].events = POLLIN;
