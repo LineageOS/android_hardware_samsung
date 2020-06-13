@@ -14,16 +14,16 @@
 // limitations under the License.
 
 cc_library_headers {
-    name: "pixel_power_headers",
+    name: "samsung_power_headers",
     vendor_available: true,
     export_include_dirs: ["."],
 }
 
 cc_binary {
-    name: "android.hardware.power@1.3-service.pixel-libperfmgr",
+    name: "android.hardware.power@1.3-service.samsung-libperfmgr",
     relative_install_path: "hw",
-    vintf_fragments: ["android.hardware.power@1.3-service.pixel.xml"],
-    init_rc: ["android.hardware.power@1.3-service.pixel-libperfmgr.rc"],
+    vintf_fragments: ["android.hardware.power@1.3-service.samsung.xml"],
+    init_rc: ["android.hardware.power@1.3-service.samsung-libperfmgr.rc"],
     srcs: ["service.cpp", "Power.cpp", "InteractionHandler.cpp",
             "display-helper.cpp"],
     cflags: [
