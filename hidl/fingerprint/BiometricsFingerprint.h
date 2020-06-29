@@ -23,6 +23,8 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 
+#include "VendorConstants.h"
+
 namespace android {
 namespace hardware {
 namespace biometrics {
@@ -62,6 +64,7 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
 
   private:
     bool openHal();
+    int request(int cmd, int param);
     static void notify(
         const fingerprint_msg_t* msg); /* Static callback for legacy HAL implementation */
     static Return<RequestStatus> ErrorFilter(int32_t error);
@@ -85,6 +88,7 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     int (*ss_fingerprint_remove)(uint32_t gid, uint32_t fid);
     int (*ss_fingerprint_set_active_group)(uint32_t gid, const char* store_path);
     int (*ss_fingerprint_authenticate)(uint64_t operation_id, uint32_t gid);
+    int (*ss_fingerprint_request)(uint32_t cmd, char *inBuf, uint32_t inBuf_length, char *outBuf, uint32_t outBuf_length, uint32_t param);
 };
 
 }  // namespace implementation
