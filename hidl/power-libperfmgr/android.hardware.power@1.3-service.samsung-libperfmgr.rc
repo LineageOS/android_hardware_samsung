@@ -14,3 +14,7 @@ on property:init.svc.zygote=restarting && property:vendor.powerhal.state=*
    setprop vendor.powerhal.audio ""
    setprop vendor.powerhal.rendering ""
    restart vendor.power-hal-1-3
+
+# initialize powerHAL when boot is completed
+on property:sys.boot_completed=1
+   setprop vendor.powerhal.init 1
