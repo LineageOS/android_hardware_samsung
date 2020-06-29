@@ -17,11 +17,16 @@
 #ifndef ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_1_BIOMETRICSFINGERPRINT_H
 #define ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_1_BIOMETRICSFINGERPRINT_H
 
+#include <chrono>
+#include <thread>
+
 #include <android/hardware/biometrics/fingerprint/2.1/IBiometricsFingerprint.h>
 #include <hardware/fingerprint.h>
 #include <hardware/hardware.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+
+#include "VendorConstants.h"
 
 namespace android {
 namespace hardware {
@@ -29,6 +34,8 @@ namespace biometrics {
 namespace fingerprint {
 namespace V2_1 {
 namespace implementation {
+
+using namespace std::chrono_literals;
 
 using ::android::sp;
 using ::android::hardware::hidl_string;
@@ -62,6 +69,8 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
 
   private:
     bool openHal();
+    int request(int cmd, int param);
+    int waitForSensor(std::chrono::milliseconds pollWait, std::chrono::milliseconds timeOut);
     static void notify(
         const fingerprint_msg_t* msg); /* Static callback for legacy HAL implementation */
     static Return<RequestStatus> ErrorFilter(int32_t error);
@@ -85,6 +94,7 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     int (*ss_fingerprint_remove)(uint32_t gid, uint32_t fid);
     int (*ss_fingerprint_set_active_group)(uint32_t gid, const char* store_path);
     int (*ss_fingerprint_authenticate)(uint64_t operation_id, uint32_t gid);
+    int (*ss_fingerprint_request)(uint32_t cmd, char *inBuf, uint32_t inBuf_length, char *outBuf, uint32_t outBuf_length, uint32_t param);
 };
 
 }  // namespace implementation
