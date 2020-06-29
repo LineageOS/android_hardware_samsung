@@ -254,6 +254,8 @@ bool BiometricsFingerprint::openHal() {
             dlsym(handle, "ss_fingerprint_set_active_group"));
         ss_fingerprint_authenticate = reinterpret_cast<typeof(ss_fingerprint_authenticate)>(
             dlsym(handle, "ss_fingerprint_authenticate"));
+        ss_fingerprint_request = reinterpret_cast<typeof(ss_fingerprint_request)>(
+            dlsym(handle, "ss_fingerprint_request"));
 
         if ((err = ss_fingerprint_open(nullptr)) != 0) {
             LOG(ERROR) << "Can't open fingerprint, error: " << err;
@@ -365,6 +367,11 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
             }
             break;
     }
+}
+
+int BiometricsFingerprint::request(int cmd, int param) {
+    // TO-DO: input, output handling not implemented
+    return ss_fingerprint_request(cmd, nullptr, 0, nullptr, 0, param);
 }
 
 }  // namespace implementation
