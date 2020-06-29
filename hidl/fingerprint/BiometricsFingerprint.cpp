@@ -272,6 +272,8 @@ bool BiometricsFingerprint::openHal() {
             dlsym(handle, "ss_fingerprint_set_active_group"));
         ss_fingerprint_authenticate = reinterpret_cast<typeof(ss_fingerprint_authenticate)>(
             dlsym(handle, "ss_fingerprint_authenticate"));
+        ss_fingerprint_request = reinterpret_cast<typeof(ss_fingerprint_request)>(
+            dlsym(handle, "ss_fingerprint_request"));
 
         if ((err = ss_fingerprint_open(nullptr)) != 0) {
             LOG(ERROR) << "Can't open fingerprint, error: " << err;
@@ -383,6 +385,32 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
             }
             break;
     }
+}
+
+int BiometricsFingerprint::request(int cmd, int param) {
+    // TO-DO: input, output handling not implemented
+    int result = ss_fingerprint_request(cmd, nullptr, 0, nullptr, 0, param);
+    LOG(INFO) << "request(cmd=" << cmd << ", param=" << param << ", result=" << result << ")";
+    return result;
+}
+
+int BiometricsFingerprint::waitForSensor(std::chrono::milliseconds pollWait,
+                                         std::chrono::milliseconds timeOut) {
+    int sensorStatus = SEM_SENSOR_STATUS_WORKING;
+    std::chrono::milliseconds timeWaited = 0ms;
+    while (sensorStatus != SEM_SENSOR_STATUS_OK) {
+        if (sensorStatus == SEM_SENSOR_STATUS_CALIBRATION_ERROR
+                || sensorStatus == SEM_SENSOR_STATUS_ERROR){
+            return -1;
+        }
+        if (timeWaited >= timeOut) {
+            return -2;
+        }
+        sensorStatus = request(FINGERPRINT_REQUEST_GET_SENSOR_STATUS, 0);
+        std::this_thread::sleep_for(pollWait);
+        timeWaited += pollWait;
+    }
+    return 0;
 }
 
 }  // namespace implementation
