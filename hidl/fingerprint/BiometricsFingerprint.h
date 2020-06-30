@@ -74,7 +74,12 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     static void notify(
         const fingerprint_msg_t* msg); /* Static callback for legacy HAL implementation */
     static Return<RequestStatus> ErrorFilter(int32_t error);
-    static FingerprintError VendorErrorFilter(int32_t error, int32_t* vendorCode);
+    static FingerprintError VendorErrorFilter(BiometricsFingerprint* thisPtr,
+                                              std::unique_lock<std::mutex>* lock,
+                                              const uint64_t devId,
+                                              int32_t error,
+                                              int32_t* vendorCode,
+                                              bool* processed);
     static FingerprintAcquiredInfo VendorAcquiredFilter(int32_t error, int32_t* vendorCode);
     static BiometricsFingerprint* sInstance;
 

@@ -84,8 +84,13 @@ Return<RequestStatus> BiometricsFingerprint::ErrorFilter(int32_t error) {
 }
 
 // Translate from errors returned by traditional HAL (see fingerprint.h) to
-// HIDL-compliant FingerprintError.
-FingerprintError BiometricsFingerprint::VendorErrorFilter(int32_t error, int32_t* vendorCode) {
+// HIDL-compliant FingerprintError and process vendor error codes if possible.
+FingerprintError BiometricsFingerprint::VendorErrorFilter(BiometricsFingerprint* thisPtr,
+                                                          std::unique_lock<std::mutex>* lock,
+                                                          const uint64_t devId,
+                                                          int32_t error,
+                                                          int32_t* vendorCode,
+                                                          bool* processed) {
     *vendorCode = 0;
     switch (error) {
         case FINGERPRINT_ERROR_HW_UNAVAILABLE:
@@ -102,6 +107,16 @@ FingerprintError BiometricsFingerprint::VendorErrorFilter(int32_t error, int32_t
             return FingerprintError::ERROR_UNABLE_TO_REMOVE;
         case FINGERPRINT_ERROR_LOCKOUT:
             return FingerprintError::ERROR_LOCKOUT;
+        // Vendor error codes follow.
+        case SEM_FINGERPRINT_ERROR_CALIBRATION:
+            if (!thisPtr->mClientCallback->onAcquired(devId,
+                    FingerprintAcquiredInfo::ACQUIRED_IMAGER_DIRTY, *vendorCode).isOk()) {
+                LOG(ERROR) << "failed to invoke fingerprint onAcquired callback";
+            }
+            lock->unlock();
+            thisPtr->ss_fingerprint_cancel();
+            *processed = true;
+            return FingerprintError::ERROR_VENDOR;
         default:
             if (error >= FINGERPRINT_ERROR_VENDOR_BASE) {
                 // vendor specific code.
@@ -154,12 +169,32 @@ Return<uint64_t> BiometricsFingerprint::setNotify(
 }
 
 Return<uint64_t> BiometricsFingerprint::preEnroll() {
-    return ss_fingerprint_pre_enroll();
+    uint64_t ret = ss_fingerprint_pre_enroll();
+
+#ifdef NEEDS_FORCE_CALIBRATE
+    request(FINGERPRINT_REQUEST_GET_SENSOR_STATUS, 0);
+    request(SEM_REQUEST_FORCE_CBGE, 0);
+    if (waitForSensor(250ms, 4000ms)) {
+        LOG(ERROR) << "request: failure waiting for sensor";
+        return 0;
+    }
+#endif
+
+    return ret;
 }
 
 Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69>& hat,
                                                     uint32_t gid, uint32_t timeoutSec) {
     const hw_auth_token_t* authToken = reinterpret_cast<const hw_auth_token_t*>(hat.data());
+
+#ifdef REQUEST_ENROLL_TYPE
+    request(FINGERPRINT_REQUEST_GET_SENSOR_STATUS, 0);
+    request(FINGERPRINT_REQUEST_ENROLL_TYPE, REQUEST_ENROLL_TYPE);
+    if (waitForSensor(250ms, 2500ms)) {
+        LOG(ERROR) << "request: failure waiting for sensor";
+        return RequestStatus::SYS_ETIMEDOUT;
+    }
+#endif
 
     return ErrorFilter(ss_fingerprint_enroll(authToken, gid, timeoutSec));
 }
@@ -276,7 +311,7 @@ bool BiometricsFingerprint::openHal() {
 void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
     BiometricsFingerprint* thisPtr =
         static_cast<BiometricsFingerprint*>(BiometricsFingerprint::getInstance());
-    std::lock_guard<std::mutex> lock(thisPtr->mClientCallbackMutex);
+    std::unique_lock<std::mutex> lock(thisPtr->mClientCallbackMutex);
     if (thisPtr == nullptr || thisPtr->mClientCallback == nullptr) {
         LOG(ERROR) << "Receiving callbacks before the client callback is registered.";
         return;
@@ -285,9 +320,11 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
     switch (msg->type) {
         case FINGERPRINT_ERROR: {
             int32_t vendorCode = 0;
-            FingerprintError result = VendorErrorFilter(msg->data.error, &vendorCode);
+            bool processed = false;
+            FingerprintError result = VendorErrorFilter(thisPtr, &lock, devId, msg->data.error,
+                                                        &vendorCode, &processed);
             LOG(DEBUG) << "onError(" << static_cast<int>(result) << ")";
-            if (!thisPtr->mClientCallback->onError(devId, result, vendorCode).isOk()) {
+            if (!processed && !thisPtr->mClientCallback->onError(devId, result, vendorCode).isOk()) {
                 LOG(ERROR) << "failed to invoke fingerprint onError callback";
             }
         } break;
