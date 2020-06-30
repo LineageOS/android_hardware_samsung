@@ -76,6 +76,8 @@ class Power : public IPower {
     std::atomic<bool> mCameraStreamingMode;
     std::atomic<bool> mReady;
     std::thread mInitThread;
+
+    Return<void> updateHint(const char *hint, bool enable);
 };
 
 }  // namespace implementation
