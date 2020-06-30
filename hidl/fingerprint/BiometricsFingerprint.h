@@ -17,6 +17,9 @@
 #ifndef ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_1_BIOMETRICSFINGERPRINT_H
 #define ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_1_BIOMETRICSFINGERPRINT_H
 
+#include <chrono>
+#include <thread>
+
 #include <android/hardware/biometrics/fingerprint/2.1/IBiometricsFingerprint.h>
 #include <hardware/fingerprint.h>
 #include <hardware/hardware.h>
@@ -31,6 +34,8 @@ namespace biometrics {
 namespace fingerprint {
 namespace V2_1 {
 namespace implementation {
+
+using namespace std::chrono_literals;
 
 using ::android::sp;
 using ::android::hardware::hidl_string;
@@ -68,7 +73,12 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     static void notify(
         const fingerprint_msg_t* msg); /* Static callback for legacy HAL implementation */
     static Return<RequestStatus> ErrorFilter(int32_t error);
-    static FingerprintError VendorErrorFilter(int32_t error, int32_t* vendorCode);
+    static FingerprintError VendorErrorFilter(BiometricsFingerprint* thisPtr,
+                                              std::unique_lock<std::mutex> *lk,
+                                              const uint64_t devId,
+                                              int32_t error,
+                                              int32_t* vendorCode,
+                                              bool* processed);
     static FingerprintAcquiredInfo VendorAcquiredFilter(int32_t error, int32_t* vendorCode);
     static BiometricsFingerprint* sInstance;
 
