@@ -103,6 +103,18 @@ Power::Power()
     mInitThread.detach();
 }
 
+Return<void> Power::updateHint(const char *hint, bool enable) {
+    if (!mReady) {
+        return Void();
+    }
+    if (enable) {
+        mHintManager->DoHint(hint);
+    } else {
+        mHintManager->EndHint(hint);
+    }
+    return Void();
+}
+
 // Methods from ::android::hardware::power::V1_0::IPower follow.
 Return<void> Power::setInteractive(bool /* interactive */) {
     return Void();
