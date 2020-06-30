@@ -50,7 +50,7 @@ class Power : public IPower {
 
     Power();
 
-    Return<void> setInteractive(bool /* interactive */) override;
+    Return<void> setInteractive(bool interactive) override;
     Return<void> powerHint(PowerHint_1_0 hint, int32_t data) override;
     Return<void> setFeature(Feature feature, bool activate) override;
     Return<void> getPlatformLowPowerStats(getPlatformLowPowerStats_cb _hidl_cb) override;
