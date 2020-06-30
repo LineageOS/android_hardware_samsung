@@ -154,13 +154,24 @@ Return<uint64_t> BiometricsFingerprint::setNotify(
 }
 
 Return<uint64_t> BiometricsFingerprint::preEnroll() {
-    return ss_fingerprint_pre_enroll();
+    uint64_t ret = ss_fingerprint_pre_enroll();
+#ifdef NEEDS_FORCE_CALIBRATE
+    if (ret) {
+        request(SEM_REQUEST_FORCE_CBGE, 0);
+    }
+    // Give calibration some time to complete in order to increase stability
+    std::this_thread::sleep_for(1s);
+#endif
+    return ret;
 }
 
 Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69>& hat,
                                                     uint32_t gid, uint32_t timeoutSec) {
     const hw_auth_token_t* authToken = reinterpret_cast<const hw_auth_token_t*>(hat.data());
 
+#ifdef REQUEST_ENROLL_TYPE
+    request(FINGERPRINT_REQUEST_ENROLL_TYPE, REQUEST_ENROLL_TYPE);
+#endif
     return ErrorFilter(ss_fingerprint_enroll(authToken, gid, timeoutSec));
 }
 

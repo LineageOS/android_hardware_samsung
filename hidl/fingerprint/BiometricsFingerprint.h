@@ -17,6 +17,9 @@
 #ifndef ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_1_BIOMETRICSFINGERPRINT_H
 #define ANDROID_HARDWARE_BIOMETRICS_FINGERPRINT_V2_1_BIOMETRICSFINGERPRINT_H
 
+#include <chrono>
+#include <thread>
+
 #include <android/hardware/biometrics/fingerprint/2.1/IBiometricsFingerprint.h>
 #include <hardware/fingerprint.h>
 #include <hardware/hardware.h>
@@ -31,6 +34,8 @@ namespace biometrics {
 namespace fingerprint {
 namespace V2_1 {
 namespace implementation {
+
+using namespace std::chrono_literals;
 
 using ::android::sp;
 using ::android::hardware::hidl_string;
