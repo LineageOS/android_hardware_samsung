@@ -41,6 +41,7 @@ cc_binary {
         "android.hardware.power@1.2",
         "android.hardware.power@1.3",
         "libperfmgr",
+        "vendor.lineage.power@1.0",
     ],
     proprietary: true,
 }
