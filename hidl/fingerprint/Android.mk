@@ -43,6 +43,14 @@ ifeq ($(TARGET_SEC_FP_CALL_CANCEL_ON_ENROLL_COMPLETION),true)
     LOCAL_CFLAGS += -DCALL_CANCEL_ON_ENROLL_COMPLETION
 endif
 
+ifeq ($(TARGET_SEC_FP_NEEDS_FORCE_CALIBRATE),true)
+    LOCAL_CFLAGS += -DNEEDS_FORCE_CALIBRATE
+endif
+
+ifneq ($(TARGET_SEC_FP_REQUEST_ENROLL_TYPE),)
+    LOCAL_CFLAGS += -DREQUEST_ENROLL_TYPE=\"$(TARGET_SEC_FP_REQUEST_ENROLL_TYPE)\"
+endif
+
 LOCAL_MODULE := android.hardware.biometrics.fingerprint@2.1-service.samsung
 LOCAL_INIT_RC := android.hardware.biometrics.fingerprint@2.1-service.samsung.rc
 LOCAL_MODULE_RELATIVE_PATH := hw
