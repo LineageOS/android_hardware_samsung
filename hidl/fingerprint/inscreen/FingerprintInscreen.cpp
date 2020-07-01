@@ -78,6 +78,7 @@ FingerprintInscreen::FingerprintInscreen() {
 #ifdef FOD_SET_RECT
     set(TSP_CMD_PATH, FOD_SET_RECT);
 #endif
+    set(TSP_CMD_PATH, FOD_ENABLE);
 }
 
 Return<void> FingerprintInscreen::onStartEnroll() { return Void(); }
@@ -88,15 +89,9 @@ Return<void> FingerprintInscreen::onPress() { return Void(); }
 
 Return<void> FingerprintInscreen::onRelease() { return Void(); }
 
-Return<void> FingerprintInscreen::onShowFODView() {
-    set(TSP_CMD_PATH, FOD_ENABLE);
-    return Void();
-}
+Return<void> FingerprintInscreen::onShowFODView() { return Void(); }
 
-Return<void> FingerprintInscreen::onHideFODView() {
-    set(TSP_CMD_PATH, FOD_DISABLE);
-    return Void();
-}
+Return<void> FingerprintInscreen::onHideFODView() { return Void(); }
 
 Return<bool> FingerprintInscreen::handleAcquired(int32_t acquiredInfo, int32_t vendorCode) {
     std::lock_guard<std::mutex> _lock(mCallbackLock);
