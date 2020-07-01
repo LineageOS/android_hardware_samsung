@@ -22,6 +22,30 @@
       "revId": "544eca77d5fd0f5ae0572eafc07d8d343792fbe2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7f71f6_014af280",
+        "filename": "hidl/power-libperfmgr/InteractionHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-07-01T13:57:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "695b223b_ce1ecd31",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "544eca77d5fd0f5ae0572eafc07d8d343792fbe2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
