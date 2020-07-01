@@ -41,6 +41,7 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::hardware::power::V1_0::Feature;
 using ::android::hardware::power::V1_0::Status;
+using namespace std::chrono_literals;
 
 constexpr char kPowerHalStateProp[] = "vendor.powerhal.state";
 constexpr char kPowerHalAudioProp[] = "vendor.powerhal.audio";
@@ -119,6 +120,8 @@ Power::Power()
             setProfile(PowerProfile::HIGH_PERFORMANCE);
             mCurrentPerfProfile = PowerProfile::HIGH_PERFORMANCE;
         }
+        mDoubleTapEnabled = false;
+
         // Now start to take powerhint
         mReady.store(true);
         ALOGI("PowerHAL ready to process hints");
@@ -185,7 +188,23 @@ Return<void> Power::setProfile(PowerProfile profile) {
 
 // Methods from ::android::hardware::power::V1_0::IPower follow.
 Return<void> Power::setInteractive(bool interactive) {
-    return updateHint("NOT_INTERACTIVE", !interactive);
+    // Enable dt2w before turning TSP off
+    if (mDoubleTapEnabled && !interactive) {
+       updateHint("DOUBLE_TAP_TO_WAKE", true);
+       // It takes some time till the cmd is executed in the Kernel, there
+       // is an interface to check that. To avoid that just wait for 25ms
+       // till we turn off the touchscreen and lcd.
+       std::this_thread::sleep_for(25ms);
+    }
+
+    updateHint("NOT_INTERACTIVE", !interactive);
+
+    // Disable dt2w after turning TSP back on
+    if (mDoubleTapEnabled && interactive) {
+       updateHint("DOUBLE_TAP_TO_WAKE", false);
+    }
+
+    return Void();
 }
 
 Return<void> Power::powerHint(PowerHint_1_0 hint, int32_t data) {
@@ -262,7 +281,7 @@ Return<void> Power::powerHint(PowerHint_1_0 hint, int32_t data) {
 Return<void> Power::setFeature(Feature feature, bool activate) {
     switch (feature) {
         case Feature::POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
-            updateHint("DOUBLE_TAP_TO_WAKE", activate);
+            mDoubleTapEnabled = activate;
             break;
         default:
             break;

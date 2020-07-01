@@ -118,13 +118,12 @@
         },
         {
             "Name": "DoubleTapToWakeEnable",
-            "Path": "/sys/class/sec/tsp/dt2w_enable",
+            "Path": "/sys/class/sec/tsp/cmd",
             "Values": [
-                "0",
-                "1"
+                "aot_enable,0",
+                "aot_enable,1"
             ],
             "DefaultIndex": 0,
-            "ResetOnInit": true
         },
         {
             "Name": "PowerHALMainState",
@@ -419,7 +418,7 @@
             "PowerHint": "DOUBLE_TAP_TO_WAKE",
             "Node": "DoubleTapToWakeEnable",
             "Duration": 0,
-            "Value": "1"
+            "Value": "aot_enable,1"
         },
         {
             "PowerHint": "PROFILE_POWER_SAVE",
