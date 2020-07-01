@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "601c5a0e_a55c9a79",
+        "filename": "hidl/power-libperfmgr/Power.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-07-01T11:11:29Z",
+      "side": 1,
+      "message": "Is this really necessary given that we writes enable value to node during screen on and nothing writes a disabled value to the node?",
+      "revId": "46adfa593fefa85e8dd288857fd5100e890ab5f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d6c538_8749f9ef",
+        "filename": "hidl/power-libperfmgr/Power.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-07-01T11:11:29Z",
+      "side": 1,
+      "message": "Isn\u0027t this 25000 ms?",
+      "revId": "46adfa593fefa85e8dd288857fd5100e890ab5f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576ab3ff_436c2913",
+        "filename": "hidl/power-libperfmgr/Power.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-07-01T11:11:29Z",
+      "side": 1,
+      "message": "We can probably just use one if. Samsung\u0027s TSP driver queues the commands and executes them at enable.",
+      "revId": "46adfa593fefa85e8dd288857fd5100e890ab5f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
