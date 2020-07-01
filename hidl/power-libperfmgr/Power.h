@@ -95,6 +95,8 @@ class Power : public IPower, public ILineagePower {
     std::atomic<bool> mReady;
     std::thread mInitThread;
 
+    std::atomic<bool> mDoubleTapEnabled;
+
     int32_t mNumPerfProfiles;
     std::atomic<PowerProfile> mCurrentPerfProfile;
 
