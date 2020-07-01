@@ -1,7 +1,7 @@
 service vendor.power-hal-1-3 /vendor/bin/hw/android.hardware.power@1.3-service.samsung-libperfmgr
     class hal
     user root
-    group system
+    group system radio
     priority -20
     interface android.hardware.power@1.0::IPower default
     interface android.hardware.power@1.1::IPower default
