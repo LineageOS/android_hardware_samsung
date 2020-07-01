@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f52965fc_990f0982",
+        "filename": "hidl/power-libperfmgr/Power.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2020-07-01T12:47:16Z",
+      "side": 1,
+      "message": "This is exactly how to get it working. It took me a while to figure it out. Also normally you would check if the command succeeded, see\nhttps://github.com/whatawurst/android_device_samsung_exynos9820-common/blob/lineage-17.1/hardware/libtsp/tsp.c",
+      "parentUuid": "601c5a0e_a55c9a79",
+      "revId": "46adfa593fefa85e8dd288857fd5100e890ab5f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53d6c538_8749f9ef",
         "filename": "hidl/power-libperfmgr/Power.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e0d6e7aa_863ff9b8",
+        "filename": "hidl/power-libperfmgr/Power.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2020-07-01T12:47:16Z",
+      "side": 1,
+      "message": "Read the fine manual:\n\nThe  usleep()  function  suspends  execution  of the calling thread for (at least) usec microseconds.\n\nmicro vs milli ...",
+      "parentUuid": "53d6c538_8749f9ef",
+      "revId": "46adfa593fefa85e8dd288857fd5100e890ab5f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "576ab3ff_436c2913",
         "filename": "hidl/power-libperfmgr/Power.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2020-07-01T11:11:29Z",
       "side": 1,
       "message": "We can probably just use one if. Samsung\u0027s TSP driver queues the commands and executes them at enable.",
+      "revId": "46adfa593fefa85e8dd288857fd5100e890ab5f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4690821d_eead9c6e",
+        "filename": "hidl/power-libperfmgr/Power.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 2320
+      },
+      "writtenOn": "2020-07-01T12:47:16Z",
+      "side": 1,
+      "message": "This is how it works and there is no other way I have found. If you find one which reliably works, let me know.",
+      "parentUuid": "576ab3ff_436c2913",
       "revId": "46adfa593fefa85e8dd288857fd5100e890ab5f6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
