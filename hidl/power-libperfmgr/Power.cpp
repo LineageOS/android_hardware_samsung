@@ -58,6 +58,7 @@ Power::Power()
       mSustainedPerfModeOn(false),
       mCameraStreamingMode(false),
       mReady(false),
+      mDoubleTapEnabled(false),
       mNumPerfProfiles(0),
       mCurrentPerfProfile(PowerProfile::BALANCED) {
     mInitThread = std::thread([this]() {
@@ -120,7 +121,6 @@ Power::Power()
             setProfile(PowerProfile::HIGH_PERFORMANCE);
             mCurrentPerfProfile = PowerProfile::HIGH_PERFORMANCE;
         }
-        mDoubleTapEnabled = false;
 
         // Now start to take powerhint
         mReady.store(true);
