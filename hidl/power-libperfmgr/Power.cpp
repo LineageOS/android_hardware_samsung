@@ -194,7 +194,7 @@ Return<void> Power::setInteractive(bool interactive) {
        // It takes some time till the cmd is executed in the Kernel, there
        // is an interface to check that. To avoid that just wait for 25ms
        // till we turn off the touchscreen and lcd.
-       std::this_thread::sleep_for(25ms);
+       std::this_thread::sleep_for(20ms);
     }
 
     updateHint("NOT_INTERACTIVE", !interactive);
@@ -202,6 +202,7 @@ Return<void> Power::setInteractive(bool interactive) {
     // Disable dt2w after turning TSP back on
     if (mDoubleTapEnabled && interactive) {
        updateHint("DOUBLE_TAP_TO_WAKE", false);
+       std::this_thread::sleep_for(10ms);
     }
 
     return Void();
