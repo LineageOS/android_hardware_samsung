@@ -142,6 +142,14 @@ Return<void> Sensors::getSensorsList(getSensorsList_cb _hidl_cb) {
             dst->maxRange = 1;
         }
 
+        if (dst->typeAsString == "android.sensor.light" &&
+            dst->type == static_cast<SensorType>(65598)) {
+            LOG(INFO) << "Change type of " << dst->name << " to com.samsung.sensor.light";
+            LOG(INFO) << "Set config_displayLightSensorType fw/b overlay to com.samsung.sensor.light";
+
+            dst->typeAsString = "com.samsung.sensor.light";
+        }
+
 #ifdef VERBOSE
         LOG(INFO) << "SENSOR NAME:           " << dst->name;
         LOG(INFO) << "       VENDOR:         " << dst->name;
