@@ -142,6 +142,19 @@ Return<void> Sensors::getSensorsList(getSensorsList_cb _hidl_cb) {
             dst->maxRange = 1;
         }
 
+        if (dst->typeAsString == "android.sensor.light") {
+            if (dst->name == "TCS3407 lux Sensor" &&
+                (uint32_t)dst->type == 65598) {
+                LOG(INFO) << "Fixing android.sensor.light: " << dst->name;
+                dst->type = SensorType::LIGHT;
+            }
+
+            if (dst->name == "TCS3407 Uncalibrated lux Sensor") {
+                LOG(INFO) << "Disabling android.sensor.light: " << dst->name;
+                dst->type = (SensorType)65598;
+            }
+        }
+
 #ifdef VERBOSE
         LOG(INFO) << "SENSOR NAME:           " << dst->name;
         LOG(INFO) << "       VENDOR:         " << dst->name;
