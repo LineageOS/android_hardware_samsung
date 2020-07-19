@@ -64,6 +64,7 @@ class Power : public IPower, public ILineagePower {
     // Methods from ::android::hardware::power::V1_0::IPower follow.
 
     Power();
+    status_t registerAsSystemService();
 
     Return<void> setInteractive(bool interactive) override;
     Return<void> powerHint(PowerHint_1_0 hint, int32_t data) override;
