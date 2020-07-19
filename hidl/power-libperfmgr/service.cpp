@@ -36,15 +36,17 @@ using android::hardware::power::V1_3::implementation::Power;
 int main(int /* argc */, char ** /* argv */) {
     ALOGI("Power HAL Service 1.3 for Samsung is starting.");
 
-    android::sp<IPower> service = new Power();
+    android::sp<Power> service = new Power();
     if (service == nullptr) {
         ALOGE("Can not create an instance of Power HAL Iface, exiting.");
         return 1;
     }
-    android::hardware::setMinSchedulerPolicy(service, SCHED_NORMAL, -20);
+    android::sp<IPower> power_service = new Power();
+
+    android::hardware::setMinSchedulerPolicy(power_service, SCHED_NORMAL, -20);
     configureRpcThreadpool(1, true /*callerWillJoin*/);
 
-    status_t status = service->registerAsService();
+    status_t status = service->registerAsSystemService();
     if (status != OK) {
         ALOGE("Could not register service for Power HAL Iface (%d), exiting.", status);
         return 1;
