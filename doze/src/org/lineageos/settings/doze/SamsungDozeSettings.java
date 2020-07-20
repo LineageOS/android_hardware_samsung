@@ -38,6 +38,7 @@ public class SamsungDozeSettings extends PreferenceFragment
 
     private SwitchPreference mAlwaysOnDisplayPreference;
     private SwitchPreference mHandwavePreference;
+    private SwitchPreference mPickUpPreference;
     private SwitchPreference mPocketPreference;
     private SwitchPreference mWakeOnGesturePreference;
 
@@ -62,6 +63,10 @@ public class SamsungDozeSettings extends PreferenceFragment
         mHandwavePreference.setEnabled(dozeEnabled);
         mHandwavePreference.setOnPreferenceChangeListener(this);
 
+        mPickUpPreference = findPreference(Utils.GESTURE_PICK_UP_KEY);
+        mPickUpPreference.setEnabled(dozeEnabled);
+        mPickUpPreference.setOnPreferenceChangeListener(this);
+
         mPocketPreference = findPreference(Utils.GESTURE_POCKET_KEY);
         mPocketPreference.setEnabled(dozeEnabled);
         mPocketPreference.setOnPreferenceChangeListener(this);
@@ -75,6 +80,7 @@ public class SamsungDozeSettings extends PreferenceFragment
             getPreferenceScreen().removePreference(mAlwaysOnDisplayPreference);
         } else {
             mHandwavePreference.setDependency(Utils.ALWAYS_ON_DISPLAY);
+            mPickUpPreference.setDependency(Utils.ALWAYS_ON_DISPLAY);
             mPocketPreference.setDependency(Utils.ALWAYS_ON_DISPLAY);
             mWakeOnGesturePreference.setDependency(Utils.ALWAYS_ON_DISPLAY);
         }
@@ -115,6 +121,7 @@ public class SamsungDozeSettings extends PreferenceFragment
         mAlwaysOnDisplayPreference.setEnabled(isChecked);
 
         mHandwavePreference.setEnabled(isChecked);
+        mPickUpPreference.setEnabled(isChecked);
         mPocketPreference.setEnabled(isChecked);
         mWakeOnGesturePreference.setEnabled(isChecked);
     }
