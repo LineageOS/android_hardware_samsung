@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d45299bf_b9c977a1",
+        "filename": "hidl/power-libperfmgr/Power.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-07-20T11:39:14Z",
+      "side": 1,
+      "message": "It doesn\u0027t belong to this change.",
+      "revId": "5b739d25604f21d4be25d823dca93186112623de",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
