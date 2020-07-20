@@ -16,6 +16,24 @@
       "revId": "18bf68e83c61ddf7e5bd83be87bd56c048e86cf4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2831e663_c682c925",
+        "filename": "hidl/power-libperfmgr/service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2020-07-20T12:23:45Z",
+      "side": 1,
+      "message": "Ok, I will try to think about this later once I understand how those things works.\nSorry for the mistake, but it\u0027s the first time that I went into these stuffs.",
+      "parentUuid": "f9394b3d_60f69ffe",
+      "revId": "18bf68e83c61ddf7e5bd83be87bd56c048e86cf4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
