@@ -58,4 +58,14 @@
             android:summary="@string/pocket_gesture_summary" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="pickup_sensor"
+        android:title="@string/pickup_sensor_title">
+        <SwitchPreference
+            android:key="gesture_pick_up"
+            android:defaultValue="false"
+            android:title="@string/pick_up_gesture_title"
+            android:summary="@string/pick_up_gesture_summary" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
