@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9394b3d_60f69ffe",
+        "filename": "hidl/power-libperfmgr/service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 14934
+      },
+      "writtenOn": "2020-07-20T11:28:36Z",
+      "side": 1,
+      "message": "This is wrong. You would get two instances and we don\u0027t want two instances. That could lead to all kinds of problems.",
+      "revId": "18bf68e83c61ddf7e5bd83be87bd56c048e86cf4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
