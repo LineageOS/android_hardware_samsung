@@ -37,6 +37,7 @@ public final class Utils {
     protected static final String ALWAYS_ON_DISPLAY = "always_on_display";
     protected static final String DOZE_ENABLE = "doze_enable";
     protected static final String GESTURE_HAND_WAVE_KEY = "gesture_hand_wave";
+    protected static final String GESTURE_PICK_UP_KEY = "gesture_pick_up";
     protected static final String GESTURE_POCKET_KEY = "gesture_pocket";
     protected static final String WAKE_ON_GESTURE_KEY = "wake_on_gesture";
 
@@ -90,12 +91,18 @@ public final class Utils {
     }
 
     protected static boolean isAnyGestureEnabled(Context context) {
-        return isHandwaveGestureEnabled(context) || isPocketGestureEnabled(context);
+        return isHandwaveGestureEnabled(context) || isPickUpGestureEnabled(context) ||
+                isPocketGestureEnabled(context);
     }
 
     protected static boolean isHandwaveGestureEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(GESTURE_HAND_WAVE_KEY, false);
+    }
+
+    protected static boolean isPickUpGestureEnabled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(GESTURE_PICK_UP_KEY, false);
     }
 
     protected static boolean isPocketGestureEnabled(Context context) {
