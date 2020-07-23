@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52fa4c6b_d4829508",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-07-23T09:19:59Z",
+      "side": 1,
+      "message": "Use c++ casting",
+      "range": {
+        "startLine": 154,
+        "startChar": 28,
+        "endLine": 154,
+        "endChar": 40
+      },
+      "revId": "3b2be75f191a020df0fdb867d58f72f94ac30db6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c77098b_21d0f160",
+        "filename": "hidl/sensors/Sensors.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-07-23T09:19:59Z",
+      "side": 1,
+      "message": "given this hardcoding, I can see the list of sensors growing\nMove the names into a map and then look over it",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "3b2be75f191a020df0fdb867d58f72f94ac30db6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
