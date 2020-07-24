@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.flickerfree;
+package org.lineageos.settings.fastcharge;
 
 import android.os.Bundle;
 import androidx.preference.PreferenceFragment;

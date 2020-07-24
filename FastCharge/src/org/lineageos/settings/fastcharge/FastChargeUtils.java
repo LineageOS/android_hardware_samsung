@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.flickerfree;
+package org.lineageos.settings.fastcharge;
 
-import android.os.Bundle;
-import android.util.Log;
+import org.lineageos.internal.util.FileUtils;
 
-public class FlickerFreeSettingsFragment extends NodePreferenceFragment {
+class FastChargeUtils {
 
-    private static final String TAG = "FlickerFreeSettingsFragment";
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.flicker_free_settings);
+    static boolean isSupported() {
+        return FileUtils.fileExists(FastChargeConstants.FAST_CHARGE_NODE);
     }
 
 }

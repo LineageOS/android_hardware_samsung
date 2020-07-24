@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.flickerfree;
+package org.lineageos.settings.fastcharge;
 
-public class FlickerFreeConstants {
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
-    // Preference keys
-    static final String FLICKER_FREE_KEY = "flicker_free";
+public class Startup extends BroadcastReceiver {
 
-    // Flicker-free nodes
-    static final String FLICKER_FREE_NODE =
-            "/sys/class/lcd/panel/smart_on";
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        final String action = intent.getAction();
+        if (Constants.ACTION_INITIALIZE_LINEAGE_HARDWARE.equals(action)) {
+            FastChargeSettingsActivity.restoreState(context);
+            Utils.restoreNodePrefs(context);
+        }
+    }
 
 }

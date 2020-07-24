@@ -14,12 +14,11 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Flicker-free -->
-    <string name="flicker_free_settings_title">Flicker-free</string>
-    <string name="flicker_free_settings_summary">Avoid screen flicker on low brightness</string>
-    <string name="flicker_free_toggle_title">Avoid screen flicker on low brightness</string>
-    <string name="flicker_free_toggle_summary">May reduce image quality</string>
+    <SwitchPreference
+        android:key="fast_charge"
+        android:title="@string/fast_charge_toggle_title"
+        android:summary="@string/fast_charge_toggle_summary" />
 
-</resources>
+</PreferenceScreen>

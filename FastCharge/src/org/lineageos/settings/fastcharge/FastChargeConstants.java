@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.flickerfree;
+package org.lineageos.settings.fastcharge;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+public class FastChargeConstants {
 
-public class Startup extends BroadcastReceiver {
+    // Preference keys
+    static final String FAST_CHARGE_KEY = "fast_charge";
 
-    @Override
-    public void onReceive(final Context context, final Intent intent) {
-        final String action = intent.getAction();
-        if (Constants.ACTION_INITIALIZE_LINEAGE_HARDWARE.equals(action)) {
-            FlickerFreeSettingsActivity.restoreState(context);
-            Utils.restoreNodePrefs(context);
-        }
-    }
+    // Fast-charge nodes
+    static final String FAST_CHARGE_NODE =
+            "/sys/class/sec/switch/afc_disable";
 
 }

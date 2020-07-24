@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.flickerfree;
+package org.lineageos.settings.fastcharge;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,16 +31,16 @@ class Constants {
     // Holds <preference_key> -> <default_values> mapping
     static final Map<String, Object> sNodeDefaultMap = new HashMap<>();
 
-    static final String[] sFlickerFreePrefKeys = {
-        FlickerFreeConstants.FLICKER_FREE_KEY,
+    static final String[] sFastChargePrefKeys = {
+        FastChargeConstants.FAST_CHARGE_KEY,
     };
 
     static {
         sBooleanNodePreferenceMap.put(
-                FlickerFreeConstants.FLICKER_FREE_KEY,
-                FlickerFreeConstants.FLICKER_FREE_NODE);
+                FastChargeConstants.FAST_CHARGE_KEY,
+                FastChargeConstants.FAST_CHARGE_NODE);
 
-        sNodeDefaultMap.put(FlickerFreeConstants.FLICKER_FREE_KEY, false);
+        sNodeDefaultMap.put(FastChargeConstants.FAST_CHARGE_KEY, false);
     }
 
 }

@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.flickerfree;
+package org.lineageos.settings.fastcharge;
 
 import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
-public class FlickerFreeSettingsActivity extends PreferenceActivity {
+public class FastChargeSettingsActivity extends PreferenceActivity {
 
     static boolean isSupported() {
-        return FlickerFreeUtils.isSupported();
+        return FastChargeUtils.isSupported();
     }
 
     static void restoreState(Context context) {
         if (isSupported()) {
-            Utils.enableComponent(context, FlickerFreeSettingsActivity.class);
+            Utils.enableComponent(context, FastChargeSettingsActivity.class);
         } else {
-            Utils.disableComponent(context, FlickerFreeSettingsActivity.class);
+            Utils.disableComponent(context, FastChargeSettingsActivity.class);
         }
     }
 
@@ -44,7 +44,7 @@ public class FlickerFreeSettingsActivity extends PreferenceActivity {
             actionBar.setHomeButtonEnabled(true);
         }
         getFragmentManager().beginTransaction().replace(android.R.id.content,
-                new FlickerFreeSettingsFragment()).commit();
+                new FastChargeSettingsFragment()).commit();
     }
 
 }
