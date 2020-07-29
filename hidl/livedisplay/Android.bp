@@ -18,6 +18,7 @@ cc_defaults {
     relative_install_path: "hw",
     srcs: [
         "AdaptiveBacklight.cpp",
+        "AntiFlickerExynos.cpp",
         "DisplayColorCalibrationExynos.cpp",
         "DisplayModes.cpp",
         "ReadingEnhancement.cpp",
