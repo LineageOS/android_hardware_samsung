@@ -25,6 +25,7 @@
 #include <hidl/HidlTransportSupport.h>
 
 #include "AdaptiveBacklight.h"
+#include "AntiFlickerExynos.h"
 #include "DisplayColorCalibrationExynos.h"
 #include "DisplayModes.h"
 #include "ReadingEnhancement.h"
@@ -37,6 +38,7 @@ using android::status_t;
 using android::OK;
 
 using vendor::lineage::livedisplay::V2_0::samsung::AdaptiveBacklight;
+using vendor::lineage::livedisplay::V2_0::samsung::AntiFlickerExynos;
 using vendor::lineage::livedisplay::V2_0::samsung::DisplayColorCalibrationExynos;
 using vendor::lineage::livedisplay::V2_0::samsung::DisplayModes;
 using vendor::lineage::livedisplay::V2_0::samsung::ReadingEnhancement;
@@ -44,6 +46,7 @@ using vendor::lineage::livedisplay::V2_0::samsung::SunlightEnhancementExynos;
 
 int main() {
     sp<AdaptiveBacklight> adaptiveBacklight;
+    sp<AntiFlickerExynos> antiFlickerExynos;
     sp<DisplayColorCalibrationExynos> displayColorCalibrationExynos;
     sp<DisplayModes> displayModes;
     sp<ReadingEnhancement> readingEnhancement;
@@ -56,6 +59,13 @@ int main() {
     if (adaptiveBacklight == nullptr) {
         LOG(ERROR)
             << "Can not create an instance of LiveDisplay HAL AdaptiveBacklight Iface, exiting.";
+        goto shutdown;
+    }
+
+    antiFlickerExynos = new AntiFlickerExynos();
+    if (antiFlickerExynos == nullptr) {
+        LOG(ERROR)
+            << "Can not create an instance of LiveDisplay HAL AntiFlicker Iface, exiting.";
         goto shutdown;
     }
 
@@ -102,6 +112,16 @@ int main() {
         if (status != OK) {
             LOG(ERROR)
                 << "Could not register service for LiveDisplay HAL DisplayColorCalibration Iface ("
+                << status << ")";
+            goto shutdown;
+        }
+    }
+
+    if (antiFlickerExynos->isSupported()) {
+        status = antiFlickerExynos->registerAsService();
+        if (status != OK) {
+            LOG(ERROR)
+                << "Could not register service for LiveDisplay HAL AntiFlicker Iface ("
                 << status << ")";
             goto shutdown;
         }
