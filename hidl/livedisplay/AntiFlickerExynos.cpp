@@ -51,6 +51,10 @@ Return<bool> AntiFlickerExynos::isEnabled() {
     return contents > 0;
 }
 
+Return<bool> AntiFlickerExynos::showWarning() {
+    return true;
+}
+
 Return<bool> AntiFlickerExynos::setEnabled(bool enabled) {
     return WriteStringToFile(enabled ? "1" : "0", kDcDimmingStatusPath, true);
 }
