@@ -41,6 +41,7 @@ class AntiFlickerExynos : public IAntiFlicker {
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IAntiFlicker follow.
     Return<bool> isEnabled() override;
+    Return<bool> showWarning() override;
     Return<bool> setEnabled(bool enabled) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
