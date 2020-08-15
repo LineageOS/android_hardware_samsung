@@ -48,6 +48,10 @@ ifeq ($(TARGET_SEC_FP_HAS_FINGERPRINT_GESTURES),true)
     LOCAL_CFLAGS += -DHAS_FINGERPRINT_GESTURES
 endif
 
+ifeq ($(TARGET_SEC_FP_REQUEST_FORCE_CALIBRATE),true)
+    LOCAL_CFLAGS += -DREQUEST_FORCE_CALIBRATE
+endif
+
 LOCAL_MODULE := android.hardware.biometrics.fingerprint@2.3-service.samsung
 LOCAL_INIT_RC := android.hardware.biometrics.fingerprint@2.3-service.samsung.rc
 LOCAL_VINTF_FRAGMENTS := android.hardware.biometrics.fingerprint@2.3-service.samsung.xml

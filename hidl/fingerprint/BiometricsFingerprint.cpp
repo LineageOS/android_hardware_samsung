@@ -219,6 +219,10 @@ Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69
                                                     uint32_t gid, uint32_t timeoutSec) {
     const hw_auth_token_t* authToken = reinterpret_cast<const hw_auth_token_t*>(hat.data());
 
+#ifdef REQUEST_FORCE_CALIBRATE
+    request(SEM_REQUEST_FORCE_CBGE, 1);
+#endif
+
     return ErrorFilter(ss_fingerprint_enroll(authToken, gid, timeoutSec));
 }
 
