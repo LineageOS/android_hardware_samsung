@@ -317,6 +317,22 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
         case FINGERPRINT_ERROR: {
             int32_t vendorCode = 0;
             FingerprintError result = VendorErrorFilter(msg->data.error, &vendorCode);
+            switch ((int32_t)msg->data.error) {
+                case SEM_FINGERPRINT_ERROR_CALIBRATION: {
+                    // Framework doesn't properly process error before the first enroll
+                    if (!thisPtr->mClientCallback->onEnrollResult(devId, 0, 0, 100).isOk()) {
+                        LOG(ERROR) << "failed to invoke fingerprint onEnrollResult callback";
+                    }
+                    LOG(DEBUG) << "onAcquired(" << static_cast<int>(result) << ")";
+                    if (!thisPtr->mClientCallback->onAcquired(devId,
+                            FingerprintAcquiredInfo::ACQUIRED_IMAGER_DIRTY, vendorCode).isOk()) {
+                        LOG(ERROR) << "failed to invoke fingerprint onAcquired callback";
+                    }
+                    result = FingerprintError::ERROR_CANCELED;
+                } break;
+                default:
+                    break;
+            }
             LOG(DEBUG) << "onError(" << static_cast<int>(result) << ")";
             if (!thisPtr->mClientCallback->onError(devId, result, vendorCode).isOk()) {
                 LOG(ERROR) << "failed to invoke fingerprint onError callback";
