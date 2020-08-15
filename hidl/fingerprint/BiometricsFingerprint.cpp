@@ -154,12 +154,26 @@ Return<uint64_t> BiometricsFingerprint::setNotify(
 }
 
 Return<uint64_t> BiometricsFingerprint::preEnroll() {
+    mNeedsCalibrate = true;
     return ss_fingerprint_pre_enroll();
 }
 
 Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69>& hat,
                                                     uint32_t gid, uint32_t timeoutSec) {
     const hw_auth_token_t* authToken = reinterpret_cast<const hw_auth_token_t*>(hat.data());
+
+#ifdef REQUEST_FORCE_CALIBRATE
+    if (mNeedsCalibrate) {
+        waitForSensor(100ms, 500ms);
+        request(SEM_REQUEST_FORCE_CBGE, 0);
+        std::this_thread::sleep_for(3s);
+        if (waitForSensor(250ms, 1500ms)) {
+            LOG(ERROR) << "request: failure waiting for sensor";
+            return RequestStatus::SYS_ETIMEDOUT;
+        }
+        mNeedsCalibrate = false;
+    }
+#endif
 
 #ifdef REQUEST_ENROLL_TYPE
     waitForSensor(100ms, 500ms);
