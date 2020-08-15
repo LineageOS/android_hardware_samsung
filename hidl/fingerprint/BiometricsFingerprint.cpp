@@ -84,8 +84,13 @@ Return<RequestStatus> BiometricsFingerprint::ErrorFilter(int32_t error) {
 }
 
 // Translate from errors returned by traditional HAL (see fingerprint.h) to
-// HIDL-compliant FingerprintError.
-FingerprintError BiometricsFingerprint::VendorErrorFilter(int32_t error, int32_t* vendorCode) {
+// HIDL-compliant FingerprintError and process vendor error codes if possible.
+FingerprintError BiometricsFingerprint::VendorErrorFilter(BiometricsFingerprint* thisPtr,
+                                                          std::unique_lock<std::mutex>* lock,
+                                                          const uint64_t devId,
+                                                          int32_t error,
+                                                          int32_t* vendorCode,
+                                                          bool* processed) {
     *vendorCode = 0;
     switch (error) {
         case FINGERPRINT_ERROR_HW_UNAVAILABLE:
@@ -102,6 +107,16 @@ FingerprintError BiometricsFingerprint::VendorErrorFilter(int32_t error, int32_t
             return FingerprintError::ERROR_UNABLE_TO_REMOVE;
         case FINGERPRINT_ERROR_LOCKOUT:
             return FingerprintError::ERROR_LOCKOUT;
+        // Vendor error codes follow.
+        case SEM_FINGERPRINT_ERROR_CALIBRATION:
+            if (!thisPtr->mClientCallback->onAcquired(devId,
+                    FingerprintAcquiredInfo::ACQUIRED_IMAGER_DIRTY, *vendorCode).isOk()) {
+                LOG(ERROR) << "failed to invoke fingerprint onAcquired callback";
+            }
+            lock->unlock();
+            thisPtr->ss_fingerprint_cancel();
+            *processed = true;
+            return FingerprintError::ERROR_VENDOR;
         default:
             if (error >= FINGERPRINT_ERROR_VENDOR_BASE) {
                 // vendor specific code.
@@ -305,7 +320,7 @@ bool BiometricsFingerprint::openHal() {
 void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
     BiometricsFingerprint* thisPtr =
         static_cast<BiometricsFingerprint*>(BiometricsFingerprint::getInstance());
-    std::lock_guard<std::mutex> lock(thisPtr->mClientCallbackMutex);
+    std::unique_lock<std::mutex> lock(thisPtr->mClientCallbackMutex);
     if (thisPtr == nullptr || thisPtr->mClientCallback == nullptr) {
         LOG(ERROR) << "Receiving callbacks before the client callback is registered.";
         return;
@@ -314,9 +329,11 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
     switch (msg->type) {
         case FINGERPRINT_ERROR: {
             int32_t vendorCode = 0;
-            FingerprintError result = VendorErrorFilter(msg->data.error, &vendorCode);
+            bool processed = false;
+            FingerprintError result = VendorErrorFilter(thisPtr, &lock, devId, msg->data.error,
+                                                        &vendorCode, &processed);
             LOG(DEBUG) << "onError(" << static_cast<int>(result) << ")";
-            if (!thisPtr->mClientCallback->onError(devId, result, vendorCode).isOk()) {
+            if (!processed && !thisPtr->mClientCallback->onError(devId, result, vendorCode).isOk()) {
                 LOG(ERROR) << "failed to invoke fingerprint onError callback";
             }
         } break;
