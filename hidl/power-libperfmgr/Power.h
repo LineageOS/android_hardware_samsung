@@ -102,6 +102,7 @@ class Power : public IPower, public ILineagePower {
 
     Return<void> updateHint(const char *hint, bool enable);
     Return<void> setProfile(PowerProfile profile);
+    Return<void> switchDT2W(bool dt2w);
 };
 
 }  // namespace implementation
