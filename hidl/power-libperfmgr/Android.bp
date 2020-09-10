@@ -13,6 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+soong_namespace {
+    imports: [
+        "hardware/google/pixel",
+    ],
+}
+
+
 cc_library_headers {
     name: "samsung_power_headers",
     vendor_available: true,
