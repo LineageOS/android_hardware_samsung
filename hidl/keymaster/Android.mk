@@ -29,7 +29,6 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libhardware \
     libhidlbase \
-    libhidltransport \
     libkeymaster4 \
     liblog \
     libskeymaster4device \
