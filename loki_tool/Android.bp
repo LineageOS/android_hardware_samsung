@@ -1,0 +1,15 @@
+cc_binary_host {
+    name: "loki_tool",
+    cflags: [
+        "-Wno-pointer-arith",
+        "-Wno-unused-result",
+        "-Wno-sign-compare",
+    ],
+    srcs: [
+        "loki_flash.c",
+        "loki_patch.c",
+        "loki_find.c",
+        "loki_unlok.c",
+        "main.c",
+    ],
+}
