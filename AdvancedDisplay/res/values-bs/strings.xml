@@ -16,9 +16,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Додаткові налаштування екрану</string>
-    <string name="category_screen_title">Екран</string>
-    <string name="screen_colors_title">Кольори</string>
-    <string name="mdnie_scenario_title_head">Сценарій</string>
-    <string name="mdnie_scenario_summary_head">Встановити сценарій mDNIe</string>
+    <string name="category_screen_title">Ekran</string>
+    <string name="screen_colors_title">Boje</string>
 </resources>
