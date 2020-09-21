@@ -1,3 +1,50 @@
+soong_config_module_type {
+    name: "dtbhtool_cc_defaults",
+    module_type: "cc_defaults",
+    config_namespace: "dtbhtool",
+    value_variables: [
+        "magic",
+        "version",
+        "platform",
+        "subtype",
+        "platform_code",
+        "subtype_code",
+        "phys_size",
+        "model",
+    ],
+    properties: ["cflags"],
+}
+
+dtbhtool_cc_defaults {
+    name: "dtbhtool_defaults",
+    soong_config_variables: {
+        magic: {
+            cflags: ["-DDTBH_MAGIC=\"%s\""],
+        },
+        version: {
+            cflags: ["-DDTBH_VERSION=%s"],
+        },
+        platform: {
+            cflags: ["-DDTBH_PLATFORM=\"%s\""],
+        },
+        subtype: {
+            cflags: ["-DDTBH_SUBTYPE=\"%s\""],
+        },
+        platform_code: {
+            cflags: ["-DDTBH_PLATFORM_CODE=%s"],
+        },
+        subtype_code: {
+            cflags: ["-DDTBH_SUBTYPE_CODE=%s"],
+        },
+        phys_size: {
+            cflags: ["-DDT_HEADER_PHYS_SIZE=%s"],
+        },
+        model: {
+            cflags: ["-DDTBH_MODEL=\"%s\""],
+        },
+    },
+}
+
 cc_binary_host {
     name: "dtbhtoolExynos",
     shared_libs: [
@@ -42,6 +89,7 @@ cc_binary_host {
 
 cc_library {
     name: "libdtbimg",
+    defaults: ["dtbhtool_defaults"],
     host_supported: true,
     srcs: [
         "dtbimg.c",
