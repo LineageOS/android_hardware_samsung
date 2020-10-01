@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Screen -->
+    <PreferenceCategory
+            android:title="@string/screen_colors_title">
+
+        <!-- mDNIe Scenario modes -->
+        <org.lineageos.settings.device.mDNIeScenario
+                android:key="mdnie_scenario"
+                android:title="@string/mdnie_scenario_title_head"
+                android:summary="@string/mdnie_scenario_summary_head"
+                android:entries="@array/mdnie_scenario_entries"
+                android:entryValues="@array/mdnie_scenario_entries_values"
+                android:defaultValue="0" />
+
+        <!-- mDNIe Accessibility mode -->
+        <org.lineageos.settings.device.mDNIeAccessibility
+                android:key="mdnie_accessibility"
+                android:title="@string/mdnie_accessibility_title_head"
+                android:summary="@string/mdnie_accessibility_summary_head"
+                android:entries="@array/mdnie_accessibility_entries"
+                android:entryValues="@array/mdnie_accessibility_entries_values"
+                android:defaultValue="0" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

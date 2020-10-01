@@ -29,13 +29,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <ui/android_native_buffer.h>
+
 #include <ui/GraphicBuffer.h>
 #include <ui/GraphicBufferMapper.h>
 #include <ui/Rect.h>
-#include <media/stagefright/HardwareAPI.h>
+#include <media/hardware/HardwareAPI.h>
 #include <hardware/hardware.h>
-#include <media/stagefright/MetadataBufferType.h>
+#include <media/hardware/MetadataBufferType.h>
 
 #include "SEC_OSAL_Semaphore.h"
 #include "SEC_OMX_Baseport.h"
@@ -134,7 +134,7 @@ OMX_ERRORTYPE SEC_OSAL_LockANBHandle(
     OMX_ERRORTYPE ret = OMX_ErrorNone;
     GraphicBufferMapper &mapper = GraphicBufferMapper::get();
     buffer_handle_t bufferHandle = (buffer_handle_t) handle;
-    Rect bounds(width, height);
+    Rect bounds((uint32_t)width, (uint32_t)height);
 
     SEC_OSAL_Log(SEC_LOG_TRACE, "%s: handle: 0x%x", __func__, handle);
 

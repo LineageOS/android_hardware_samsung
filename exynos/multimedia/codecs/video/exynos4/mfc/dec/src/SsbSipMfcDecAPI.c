@@ -76,21 +76,21 @@ static int isPBPacked(_MFCLIB *pCtx, int Frameleng)
     while (1) {
         while (startCode != USR_DATA_START_CODE) {
             if ((startCode == VOP_START_CODE) || (leng_idx == Frameleng)) {
-                LOGI("isPBPacked] VOP START Found !!.....return");
-                LOGW("isPBPacked] Non Packed PB");
+                ALOGI("isPBPacked] VOP START Found !!.....return");
+                ALOGW("isPBPacked] Non Packed PB");
                 return 0;
             }
             getAByte(strmBuffer, &startCode);
-            LOGV(">> StartCode = 0x%08x <<\n", startCode);
+            ALOGV(">> StartCode = 0x%08x <<\n", startCode);
             strmBuffer++;
             leng_idx++;
         }
-        LOGI("isPBPacked] User Data Found !!");
+        ALOGI("isPBPacked] User Data Found !!");
 
         do {
             if (*strmBuffer == 'p') {
-                /*LOGI(">> peter strmBuffer = 0x%08x <<\n", *strmBuffer);*/
-                LOGW("isPBPacked] Packed PB\n");
+                /*ALOGI(">> peter strmBuffer = 0x%08x <<\n", *strmBuffer);*/
+                ALOGW("isPBPacked] Packed PB\n");
                 return 1;
             }
             getAByte(strmBuffer, &startCode);
@@ -101,7 +101,7 @@ static int isPBPacked(_MFCLIB *pCtx, int Frameleng)
             break;
     }
 
-    LOGW("isPBPacked] Non Packed PB");
+    ALOGW("isPBPacked] Non Packed PB");
 
     return 0;
 }
@@ -119,7 +119,7 @@ void *SsbSipMfcDecOpen(void)
     int mapped_size;
     struct mfc_common_args CommonArg;
 
-    LOGI("[%s] MFC Library Ver %d.%02d\n",__func__, MFC_LIB_VER_MAJOR, MFC_LIB_VER_MINOR);
+    ALOGI("[%s] MFC Library Ver %d.%02d\n",__func__, MFC_LIB_VER_MAJOR, MFC_LIB_VER_MINOR);
 #ifdef CONFIG_MFC_FPS
     framecount = 0;
     over30ms = 0;
@@ -128,27 +128,27 @@ void *SsbSipMfcDecOpen(void)
 #endif
     pCTX = (_MFCLIB *)malloc(sizeof(_MFCLIB));
     if (pCTX == NULL) {
-        LOGE("SsbSipMfcDecOpen] malloc failed.\n");
+        ALOGE("SsbSipMfcDecOpen] malloc failed.\n");
         return NULL;
     }
     memset(pCTX, 0, sizeof(_MFCLIB));
 
     if (access(mfc_dev_name, F_OK) != 0) {
-        LOGE("SsbSipMfcDecOpen] MFC device node not exists");
+        ALOGE("SsbSipMfcDecOpen] MFC device node not exists");
         free(pCTX);
         return NULL;
     }
 
     hMFCOpen = open(mfc_dev_name, O_RDWR | O_NDELAY);
     if (hMFCOpen < 0) {
-        LOGE("SsbSipMfcDecOpen] MFC Open failure");
+        ALOGE("SsbSipMfcDecOpen] MFC Open failure");
         free(pCTX);
         return NULL;
     }
 
     mapped_size = ioctl(hMFCOpen, IOCTL_MFC_GET_MMAP_SIZE, &CommonArg);
     if ((mapped_size < 0) || (CommonArg.ret_code != MFC_OK)) {
-        LOGE("SsbSipMfcDecOpen] IOCTL_MFC_GET_MMAP_SIZE failed");
+        ALOGE("SsbSipMfcDecOpen] IOCTL_MFC_GET_MMAP_SIZE failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -156,7 +156,7 @@ void *SsbSipMfcDecOpen(void)
 
     mapped_addr = (unsigned int)mmap(0, mapped_size, PROT_READ | PROT_WRITE, MAP_SHARED, hMFCOpen, 0);
     if (!mapped_addr) {
-        LOGE("SsbSipMfcDecOpen] FIMV5.x driver address mapping failed");
+        ALOGE("SsbSipMfcDecOpen] FIMV5.x driver address mapping failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -180,24 +180,24 @@ void *SsbSipMfcDecOpenExt(void *value)
     int err;
     struct mfc_common_args CommonArg;
 
-    LOGI("[%s] MFC Library Ver %d.%02d\n",__func__, MFC_LIB_VER_MAJOR, MFC_LIB_VER_MINOR);
+    ALOGI("[%s] MFC Library Ver %d.%02d\n",__func__, MFC_LIB_VER_MAJOR, MFC_LIB_VER_MINOR);
 
     pCTX = (_MFCLIB *)malloc(sizeof(_MFCLIB));
     if (pCTX == NULL) {
-        LOGE("SsbSipMfcDecOpenExt] malloc failed.\n");
+        ALOGE("SsbSipMfcDecOpenExt] malloc failed.\n");
         return NULL;
     }
     memset(pCTX, 0, sizeof(_MFCLIB));
 
     if (access(mfc_dev_name, F_OK) != 0) {
-        LOGE("SsbSipMfcDecOpen] MFC device node not exists");
+        ALOGE("SsbSipMfcDecOpen] MFC device node not exists");
         free(pCTX);
         return NULL;
     }
 
     hMFCOpen = open(mfc_dev_name, O_RDWR | O_NDELAY);
     if (hMFCOpen < 0) {
-        LOGE("SsbSipMfcDecOpenExt] MFC Open failure");
+        ALOGE("SsbSipMfcDecOpenExt] MFC Open failure");
         free(pCTX);
         return NULL;
     }
@@ -206,7 +206,7 @@ void *SsbSipMfcDecOpenExt(void *value)
 
     err = ioctl(hMFCOpen, IOCTL_MFC_SET_BUF_CACHE, &CommonArg);
     if ((err < 0) || (CommonArg.ret_code != MFC_OK)) {
-        LOGE("SsbSipMfcDecOpenExt] IOCTL_MFC_SET_BUF_CACHE failed");
+        ALOGE("SsbSipMfcDecOpenExt] IOCTL_MFC_SET_BUF_CACHE failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -214,7 +214,7 @@ void *SsbSipMfcDecOpenExt(void *value)
 
     mapped_size = ioctl(hMFCOpen, IOCTL_MFC_GET_MMAP_SIZE, &CommonArg);
     if ((mapped_size < 0) || (CommonArg.ret_code != MFC_OK)) {
-        LOGE("SsbSipMfcDecOpenExt] IOCTL_MFC_GET_MMAP_SIZE failed");
+        ALOGE("SsbSipMfcDecOpenExt] IOCTL_MFC_GET_MMAP_SIZE failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -222,7 +222,7 @@ void *SsbSipMfcDecOpenExt(void *value)
 
     mapped_addr = (unsigned int)mmap(0, mapped_size, PROT_READ | PROT_WRITE, MAP_SHARED, hMFCOpen, 0);
     if (!mapped_addr) {
-        LOGE("SsbSipMfcDecOpenExt] FIMV5.x driver address mapping failed");
+        ALOGE("SsbSipMfcDecOpenExt] FIMV5.x driver address mapping failed");
         free(pCTX);
         close(hMFCOpen);
         return NULL;
@@ -243,9 +243,10 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecInit (void *openHandle, SSBSIP_MFC_CODEC_TYPE 
     int packedPB = 0;
     struct mfc_common_args DecArg;
     _MFCLIB *pCTX;
+    int retries = 3;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcDecInit] openHandle is NULL");
+        ALOGE("SsbSipMfcDecInit] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -264,7 +265,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecInit (void *openHandle, SSBSIP_MFC_CODEC_TYPE 
         (codec_type != XVID_DEC)   &&
         (codec_type != VC1RCV_DEC) &&
         (codec_type != VC1_DEC)) {
-        LOGE("SsbSipMfcDecInit] Undefined codec type");
+        ALOGE("SsbSipMfcDecInit] Undefined codec type");
         return MFC_RET_INVALID_PARAM;
     }
     pCTX->codecType = codec_type;
@@ -298,9 +299,15 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecInit (void *openHandle, SSBSIP_MFC_CODEC_TYPE 
     /* sequence start args */
     /* no needs */
 
+retry:
     r = ioctl(pCTX->hMFC, IOCTL_MFC_DEC_INIT, &DecArg);
     if (DecArg.ret_code != MFC_OK) {
-        LOGE("SsbSipMfcDecInit] IOCTL_MFC_DEC_INIT failed");
+        if (retries) {
+            retries--;
+            usleep(100000);
+            goto retry;
+        }
+        ALOGE("SsbSipMfcDecInit] IOCTL_MFC_DEC_INIT failed");
         return MFC_RET_DEC_INIT_FAIL;
     }
 
@@ -341,12 +348,12 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecExe(void *openHandle, int lengthBufFill)
     long int diffTime, avgTime;
 #endif
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcDecExe] openHandle is NULL\n");
+        ALOGE("SsbSipMfcDecExe] openHandle is NULL\n");
         return MFC_RET_INVALID_PARAM;
     }
 
     if ((lengthBufFill < 0) || (lengthBufFill > MAX_DECODER_INPUT_BUFFER_SIZE)) {
-        LOGE("SsbSipMfcDecExe] lengthBufFill is invalid. (lengthBufFill=%d)", lengthBufFill);
+        ALOGE("SsbSipMfcDecExe] lengthBufFill is invalid. (lengthBufFill=%d)", lengthBufFill);
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -366,12 +373,12 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecExe(void *openHandle, int lengthBufFill)
 #ifdef CONFIG_MFC_FPS
     gettimeofday(&mDec1, NULL);
 
-#ifdef CONFIG_MFC_PERF_LOG
+#ifdef CONFIG_MFC_PERF_ALOG
     if (framecount != 0) {
         if (mDec2.tv_sec == mDec1.tv_sec)
-            LOGI("SsbSipMfcDecExe] Interval between IOCTL_MFC_DEC_EXE's (end to start) = %8d", (mDec1.tv_usec - mDec2.tv_usec));
+            ALOGI("SsbSipMfcDecExe] Interval between IOCTL_MFC_DEC_EXE's (end to start) = %8d", (mDec1.tv_usec - mDec2.tv_usec));
         else
-            LOGI("SsbSipMfcDecExe] Interval between IOCTL_MFC_DEC_EXE's (end to start) = %8d", (1000000 + (mDec1.tv_usec - mDec2.tv_usec)));
+            ALOGI("SsbSipMfcDecExe] Interval between IOCTL_MFC_DEC_EXE's (end to start) = %8d", (1000000 + (mDec1.tv_usec - mDec2.tv_usec)));
     }
 #endif
 #endif
@@ -379,7 +386,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecExe(void *openHandle, int lengthBufFill)
     ret = ioctl(pCTX->hMFC, IOCTL_MFC_DEC_EXE, &DecArg);
 
     if (DecArg.ret_code != MFC_OK) {
-        LOGE("SsbSipMfcDecExe] IOCTL_MFC_DEC_EXE failed(ret : %d)", DecArg.ret_code);
+        ALOGE("SsbSipMfcDecExe] IOCTL_MFC_DEC_EXE failed(ret : %d)", DecArg.ret_code);
         return MFC_RET_DEC_EXE_ERR;
     }
 
@@ -390,14 +397,14 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecExe(void *openHandle, int lengthBufFill)
     if (mDec1.tv_sec == mDec2.tv_sec) {
         if (mDec2.tv_usec - mDec1.tv_usec > 30000)
             over30ms++;
-#ifdef CONFIG_MFC_PERF_LOG
-        LOGI("SsbSipMfcDecExe] Time consumed for IOCTL_MFC_DEC_EXE = %8d", ((mDec2.tv_usec - mDec1.tv_usec)));
+#ifdef CONFIG_MFC_PERF_ALOG
+        ALOGI("SsbSipMfcDecExe] Time consumed for IOCTL_MFC_DEC_EXE = %8d", ((mDec2.tv_usec - mDec1.tv_usec)));
 #endif
     } else {
         if (1000000 + mDec2.tv_usec - mDec1.tv_usec > 30000)
             over30ms++;
-#ifdef CONFIG_MFC_PERF_LOG
-        LOGI("SsbSipMfcDecExe] Time consumed for IOCTL_MFC_DEC_EXE = %8d", (1000000 + (mDec2.tv_usec - mDec1.tv_usec)));
+#ifdef CONFIG_MFC_PERF_ALOG
+        ALOGI("SsbSipMfcDecExe] Time consumed for IOCTL_MFC_DEC_EXE = %8d", (1000000 + (mDec2.tv_usec - mDec1.tv_usec)));
 #endif
     }
 
@@ -411,7 +418,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecExe(void *openHandle, int lengthBufFill)
 
     /* FIXME: dynamic resolution change */
     if (DecArg.args.dec_exe.out_display_status == 4) {
-        LOGI("SsbSipMfcDecExe] Resolution is chagned");
+        ALOGI("SsbSipMfcDecExe] Resolution is chagned");
         /*
         pCTX->virFrmBuf.chroma = DecArg.args.dec_exe.out_u_addr.chroma;
         pCTX->virFrmBuf.luma = DecArg.args.dec_exe.out_u_addr.luma;
@@ -466,14 +473,14 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecClose(void *openHandle)
     struct mfc_common_args free_arg;
 
 #ifdef CONFIG_MFC_FPS
-    LOGI(">>> Statistics in MFC API:");
-    LOGI(">>> Total number of IOCTL_MFC_DEC_EXE = %d", framecount);
-    LOGI(">>> Number of IOCTL_MFC_DEC_EXE taking more than 30ms = %d", over30ms);
-    LOGI(">>> Avg IOCTL_MFC_DEC_EXE time = %dsec %.2fmsec", (int)mAvg.tv_sec, (float)(mAvg.tv_usec / 1000.0));
+    ALOGI(">>> Statistics in MFC API:");
+    ALOGI(">>> Total number of IOCTL_MFC_DEC_EXE = %d", framecount);
+    ALOGI(">>> Number of IOCTL_MFC_DEC_EXE taking more than 30ms = %d", over30ms);
+    ALOGI(">>> Avg IOCTL_MFC_DEC_EXE time = %dsec %.2fmsec", (int)mAvg.tv_sec, (float)(mAvg.tv_usec / 1000.0));
 #endif
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcDecClose] openHandle is NULL");
+        ALOGE("SsbSipMfcDecClose] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -511,12 +518,12 @@ void  *SsbSipMfcDecGetInBuf(void *openHandle, void **phyInBuf, int inputBufferSi
     struct mfc_common_args user_addr_arg, phys_addr_arg;
 
     if (inputBufferSize < 0) {
-        LOGE("SsbSipMfcDecGetInBuf] inputBufferSize = %d is invalid", inputBufferSize);
+        ALOGE("SsbSipMfcDecGetInBuf] inputBufferSize = %d is invalid", inputBufferSize);
         return NULL;
     }
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcDecGetInBuf] openHandle is NULL\n");
+        ALOGE("SsbSipMfcDecGetInBuf] openHandle is NULL\n");
         return NULL;
     }
 
@@ -528,14 +535,14 @@ void  *SsbSipMfcDecGetInBuf(void *openHandle, void **phyInBuf, int inputBufferSi
     user_addr_arg.args.mem_alloc.mapped_addr = pCTX->mapped_addr;
     ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_GET_IN_BUF, &user_addr_arg);
     if (ret_code < 0) {
-        LOGE("SsbSipMfcDecGetInBuf] IOCTL_MFC_GET_IN_BUF failed");
+        ALOGE("SsbSipMfcDecGetInBuf] IOCTL_MFC_GET_IN_BUF failed");
         return NULL;
     }
 
     phys_addr_arg.args.real_addr.key = user_addr_arg.args.mem_alloc.offset;
     ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_GET_REAL_ADDR, &phys_addr_arg);
     if (ret_code < 0) {
-        LOGE("SsbSipMfcDecGetInBuf] IOCTL_MFC_GET_PHYS_ADDR failed");
+        ALOGE("SsbSipMfcDecGetInBuf] IOCTL_MFC_GET_PHYS_ADDR failed");
         return NULL;
     }
 
@@ -558,7 +565,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecSetInBuf(void *openHandle, void *phyInBuf, voi
     _MFCLIB *pCTX;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcDecSetInBuf] openHandle is NULL");
+        ALOGE("SsbSipMfcDecSetInBuf] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -575,7 +582,7 @@ SSBSIP_MFC_DEC_OUTBUF_STATUS SsbSipMfcDecGetOutBuf(void *openHandle, SSBSIP_MFC_
     _MFCLIB *pCTX;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcDecGetOutBuf] openHandle is NULL");
+        ALOGE("SsbSipMfcDecGetOutBuf] openHandle is NULL");
         return MFC_GETOUTBUF_DISPLAY_END;
     }
 
@@ -626,12 +633,12 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecSetConfig(void *openHandle, SSBSIP_MFC_DEC_CON
     struct mfc_dec_fimv1_info *fimv1_res;
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcDecSetConfig] openHandle is NULL");
+        ALOGE("SsbSipMfcDecSetConfig] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
     if (value == NULL) {
-        LOGE("SsbSipMfcDecSetConfig] value is NULL");
+        ALOGE("SsbSipMfcDecSetConfig] value is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -669,8 +676,8 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecSetConfig(void *openHandle, SSBSIP_MFC_DEC_CON
 
     case MFC_DEC_SETCONF_FIMV1_WIDTH_HEIGHT:
         fimv1_res = (struct mfc_dec_fimv1_info *)value;
-        LOGI("fimv1->width  = %d\n", fimv1_res->width);
-        LOGI("fimv1->height = %d\n", fimv1_res->height);
+        ALOGI("fimv1->width  = %d\n", fimv1_res->width);
+        ALOGI("fimv1->height = %d\n", fimv1_res->height);
 #ifdef S3D_SUPPORT
         DecArg.args.config.args.basic.values[0]  = (int)(fimv1_res->width);
         DecArg.args.config.args.basic.values[1]  = (int)(fimv1_res->height);
@@ -696,7 +703,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecSetConfig(void *openHandle, SSBSIP_MFC_DEC_CON
 
     ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_SET_CONFIG, &DecArg);
     if (DecArg.ret_code != MFC_OK) {
-        LOGE("SsbSipMfcDecSetConfig] IOCTL_MFC_SET_CONFIG failed(ret : %d, conf_type: 0x%08x)", DecArg.ret_code, conf_type);
+        ALOGE("SsbSipMfcDecSetConfig] IOCTL_MFC_SET_CONFIG failed(ret : %d, conf_type: 0x%08x)", DecArg.ret_code, conf_type);
         return MFC_RET_DEC_SET_CONF_FAIL;
     }
 
@@ -722,12 +729,12 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecGetConfig(void *openHandle, SSBSIP_MFC_DEC_CON
 #endif
 
     if (openHandle == NULL) {
-        LOGE("SsbSipMfcDecGetConfig] openHandle is NULL");
+        ALOGE("SsbSipMfcDecGetConfig] openHandle is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
     if (value == NULL) {
-        LOGE("SsbSipMfcDecGetConfig] value is NULL");
+        ALOGE("SsbSipMfcDecGetConfig] value is NULL");
         return MFC_RET_INVALID_PARAM;
     }
 
@@ -740,7 +747,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecGetConfig(void *openHandle, SSBSIP_MFC_DEC_CON
         phys_addr_arg.args.get_phys_addr.u_addr = buf_addr->u_addr;
         r = ioctl(pCTX->hMFC, IOCTL_MFC_GET_PHYS_ADDR, &phys_addr_arg);
         if (r < 0) {
-            LOGE("SsbSipMfcDecGetConfig] IOCTL_MFC_GET_PHYS_ADDR failed");
+            ALOGE("SsbSipMfcDecGetConfig] IOCTL_MFC_GET_PHYS_ADDR failed");
             return MFC_API_FAIL;
         }
         buf_addr->p_addr = phys_addr_arg.args.get_phys_addr.p_addr;
@@ -771,7 +778,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecGetConfig(void *openHandle, SSBSIP_MFC_DEC_CON
 
         ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_GET_CONFIG, &DecArg);
         if (DecArg.ret_code != MFC_OK) {
-            LOGE("SsbSipMfcDecGetConfig] IOCTL_MFC_GET_CONFIG failed(ret : %d, conf_type: 0x%08x)", DecArg.ret_code, conf_type);
+            ALOGE("SsbSipMfcDecGetConfig] IOCTL_MFC_GET_CONFIG failed(ret : %d, conf_type: 0x%08x)", DecArg.ret_code, conf_type);
             return MFC_RET_DEC_GET_CONF_FAIL;
         }
 
@@ -793,7 +800,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecGetConfig(void *openHandle, SSBSIP_MFC_DEC_CON
 
         ret_code = ioctl(pCTX->hMFC, IOCTL_MFC_GET_CONFIG, &DecArg);
         if (DecArg.ret_code != MFC_OK) {
-            LOGE("SsbSipMfcDecGetConfig] IOCTL_MFC_GET_CONFIG failed(ret : %d, conf_type: 0x%08x)", DecArg.ret_code, conf_type);
+            ALOGE("SsbSipMfcDecGetConfig] IOCTL_MFC_GET_CONFIG failed(ret : %d, conf_type: 0x%08x)", DecArg.ret_code, conf_type);
             return MFC_RET_DEC_GET_CONF_FAIL;
         }
         crc_data->luma0 = DecArg.args.get_config.out_config_value[0];
@@ -801,7 +808,7 @@ SSBSIP_MFC_ERROR_CODE SsbSipMfcDecGetConfig(void *openHandle, SSBSIP_MFC_DEC_CON
 #endif
         break;
     default:
-        LOGE("SsbSipMfcDecGetConfig] No such conf_type is supported");
+        ALOGE("SsbSipMfcDecGetConfig] No such conf_type is supported");
         return MFC_RET_DEC_GET_CONF_FAIL;
     }
 

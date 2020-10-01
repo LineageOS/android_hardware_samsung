@@ -74,7 +74,7 @@ int CECOpen()
         CECClose();
 
     if ((fd = open(CEC_DEVICE_NAME, O_RDWR)) < 0) {
-        LOGE("Can't open %s!\n", CEC_DEVICE_NAME);
+        ALOGE("Can't open %s!\n", CEC_DEVICE_NAME);
         res = 0;
     }
 
@@ -92,7 +92,7 @@ int CECClose()
 
     if (fd != -1) {
         if (close(fd) != 0) {
-            LOGE("close() failed!\n");
+            ALOGE("close() failed!\n");
             res = 0;
         }
         fd = -1;
@@ -115,12 +115,12 @@ int CECAllocLogicalAddress(int paddr, enum CECDeviceType devtype)
     int i = 0;
 
     if (fd == -1) {
-        LOGE("open device first!\n");
+        ALOGE("open device first!\n");
         return 0;
     }
 
     if (CECSetLogicalAddr(laddr) < 0) {
-        LOGE("CECSetLogicalAddr() failed!\n");
+        ALOGE("CECSetLogicalAddr() failed!\n");
         return 0;
     }
 
@@ -141,12 +141,12 @@ int CECAllocLogicalAddress(int paddr, enum CECDeviceType devtype)
     }
 
     if (laddr == CEC_LADDR_UNREGISTERED) {
-        LOGE("All LA addresses in use!!!\n");
+        ALOGE("All LA addresses in use!!!\n");
         return CEC_LADDR_UNREGISTERED;
     }
 
     if (CECSetLogicalAddr(laddr) < 0) {
-        LOGE("CECSetLogicalAddr() failed!\n");
+        ALOGE("CECSetLogicalAddr() failed!\n");
         return 0;
     }
 
@@ -159,7 +159,7 @@ int CECAllocLogicalAddress(int paddr, enum CECDeviceType devtype)
     buffer[4] = devtype;
 
     if (CECSendMessage(buffer, 5) != 5) {
-        LOGE("CECSendMessage() failed!\n");
+        ALOGE("CECSendMessage() failed!\n");
         return 0;
     }
 
@@ -177,17 +177,17 @@ int CECAllocLogicalAddress(int paddr, enum CECDeviceType devtype)
 int CECSendMessage(unsigned char *buffer, int size)
 {
     if (fd == -1) {
-        LOGE("open device first!\n");
+        ALOGE("open device first!\n");
         return 0;
     }
 
     if (size > CEC_MAX_FRAME_SIZE) {
-        LOGE("size should not exceed %d\n", CEC_MAX_FRAME_SIZE);
+        ALOGE("size should not exceed %d\n", CEC_MAX_FRAME_SIZE);
         return 0;
     }
 
 #if CEC_DEBUG
-    LOGI("CECSendMessage() : ");
+    ALOGI("CECSendMessage() : ");
     CECPrintFrame(buffer, size);
 #endif
 
@@ -211,7 +211,7 @@ int CECReceiveMessage(unsigned char *buffer, int size, long timeout)
     int retval;
 
     if (fd == -1) {
-        LOGE("open device first!\n");
+        ALOGE("open device first!\n");
         return 0;
     }
 
@@ -228,7 +228,7 @@ int CECReceiveMessage(unsigned char *buffer, int size, long timeout)
     } else if (retval) {
         bytes = read(fd, buffer, size);
 #if CEC_DEBUG
-        LOGI("CECReceiveMessage() : size(%d)", bytes);
+        ALOGI("CECReceiveMessage() : size(%d)", bytes);
         if(bytes > 0)
             CECPrintFrame(buffer, bytes);
 #endif
@@ -245,7 +245,7 @@ int CECReceiveMessage(unsigned char *buffer, int size, long timeout)
 int CECSetLogicalAddr(unsigned int laddr)
 {
     if (ioctl(fd, CEC_IOC_SETLADDR, &laddr)) {
-        LOGE("ioctl(CEC_IOC_SETLA) failed!\n");
+        ALOGE("ioctl(CEC_IOC_SETLA) failed!\n");
         return 0;
     }
 
@@ -260,12 +260,12 @@ void CECPrintFrame(unsigned char *buffer, unsigned int size)
 {
     if (size > 0) {
         int i;
-        LOGI("fsize: %d ", size);
-        LOGI("frame: ");
+        ALOGI("fsize: %d ", size);
+        ALOGI("frame: ");
         for (i = 0; i < size; i++)
-            LOGI("0x%02x ", buffer[i]);
+            ALOGI("0x%02x ", buffer[i]);
 
-        LOGI("\n");
+        ALOGI("\n");
     }
 }
 #endif

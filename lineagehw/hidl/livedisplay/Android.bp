@@ -1,0 +1,85 @@
+// Copyright (C) 2019 The LineageOS Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+cc_defaults {
+    name: "livedisplay_samsung_exynos_defaults",
+    defaults: ["hidl_defaults"],
+    relative_install_path: "hw",
+    srcs: [
+        "AdaptiveBacklight.cpp",
+        "DisplayColorCalibrationExynos.cpp",
+        "DisplayModes.cpp",
+        "ReadingEnhancement.cpp",
+        "SunlightEnhancementExynos.cpp",
+        "serviceExynos.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder",
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "vendor.lineage.livedisplay@2.0",
+    ],
+}
+
+cc_defaults {
+    name: "livedisplay_samsung_qcom_defaults",
+    defaults: ["hidl_defaults"],
+    relative_install_path: "hw",
+    srcs: [
+        "AdaptiveBacklight.cpp",
+        "DisplayColorCalibration.cpp",
+        "DisplayModes.cpp",
+        "ReadingEnhancement.cpp",
+        "SunlightEnhancement.cpp",
+        "service.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder",
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "vendor.lineage.livedisplay@2.0",
+    ],
+}
+
+cc_binary {
+    name: "lineage.livedisplay@2.0-service.samsung-exynos",
+    init_rc: ["lineage.livedisplay@2.0-service.samsung-exynos.rc"],
+    defaults: ["livedisplay_samsung_exynos_defaults"],
+    cflags: ["-DLIVES_IN_SYSTEM"],
+}
+
+cc_binary {
+    name: "vendor.lineage.livedisplay@2.0-service.samsung-exynos",
+    init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-exynos.rc"],
+    defaults: ["livedisplay_samsung_exynos_defaults"],
+    vendor: true,
+}
+
+cc_binary {
+    name: "lineage.livedisplay@2.0-service.samsung-qcom",
+    init_rc: ["lineage.livedisplay@2.0-service.samsung-qcom.rc"],
+    defaults: ["livedisplay_samsung_qcom_defaults"],
+    cflags: ["-DLIVES_IN_SYSTEM"],
+}
+
+cc_binary {
+    name: "vendor.lineage.livedisplay@2.0-service.samsung-qcom",
+    init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-qcom.rc"],
+    defaults: ["livedisplay_samsung_qcom_defaults"],
+    vendor: true,
+}

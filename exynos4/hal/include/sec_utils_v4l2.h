@@ -152,7 +152,7 @@ inline int HAL_PIXEL_FORMAT_2_V4L2_PIX(int HAL_PIXEL_FORMAT)
         break;
 
     default:
-        LOGE("%s::unmatched HAL_PIXEL_FORMAT color_space(0x%x)\n",
+        ALOGE("%s::unmatched HAL_PIXEL_FORMAT color_space(0x%x)\n",
                 __func__, HAL_PIXEL_FORMAT);
         break;
     }
@@ -240,7 +240,7 @@ inline int V4L2_PIX_2_HAL_PIXEL_FORMAT(int V4L2_PIX)
         break;
 
     default:
-        LOGE("%s::unmatched V4L2_PIX color_space(%d)\n",
+        ALOGE("%s::unmatched V4L2_PIX color_space(%d)\n",
                 __func__, V4L2_PIX);
         break;
     }
@@ -316,7 +316,7 @@ inline unsigned int FRAME_SIZE(int HAL_PIXEL_FORMAT, int w, int h)
         break;
 
     default:
-        LOGD("%s::no matching source colorformat(0x%x), w(%d), h(%d) fail\n",
+        ALOGD("%s::no matching source colorformat(0x%x), w(%d), h(%d) fail\n",
                 __func__, HAL_PIXEL_FORMAT, w, h);
         break;
     }

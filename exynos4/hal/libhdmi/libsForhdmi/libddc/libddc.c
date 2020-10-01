@@ -83,7 +83,7 @@ int DDCOpen()
 
     // open
     if ((ddc_fd = open(DEV_NAME,O_RDWR)) < 0) {
-        LOGE("%s: Cannot open I2C_DDC : %s",__func__, DEV_NAME);
+        ALOGE("%s: Cannot open I2C_DDC : %s",__func__, DEV_NAME);
         ret = 0;
     }
 
@@ -102,7 +102,7 @@ int DDCClose()
     // check if fd is available
     if (ref_cnt == 0) {
 #if DDC_DEBUG
-        LOGE("%s: I2C_DDC is not available!!!!", __func__);
+        ALOGE("%s: I2C_DDC is not available!!!!", __func__);
 #endif
         return 1;
     }
@@ -115,7 +115,7 @@ int DDCClose()
 
     if (close(ddc_fd) < 0) {
 #if DDC_DEBUG
-        LOGE("%s: Cannot close I2C_DDC : %s",__func__,DEV_NAME);
+        ALOGE("%s: Cannot close I2C_DDC : %s",__func__,DEV_NAME);
 #endif
         ret = 0;
     }
@@ -143,7 +143,7 @@ int DDCRead(unsigned char addr, unsigned char offset,
 
     if (!DDCFileAvailable()) {
 #if DDC_DEBUG
-        LOGE("%s: I2C_DDC is not available!!!!", __func__);
+        ALOGE("%s: I2C_DDC is not available!!!!", __func__);
 #endif
         return 0;
     }
@@ -193,7 +193,7 @@ int EDDCRead(unsigned char segpointer, unsigned char segment, unsigned char addr
 
     if (!DDCFileAvailable()) {
 #if DDC_DEBUG
-        LOGE("%s: I2C_DDC is not available!!!!", __func__);
+        ALOGE("%s: I2C_DDC is not available!!!!", __func__);
 #endif
         return 0;
     }
@@ -227,7 +227,7 @@ int EDDCRead(unsigned char segpointer, unsigned char segment, unsigned char addr
     // eddc read
     if (ioctl(ddc_fd, I2C_RDWR, &msgset) < 0) {
 #if DDC_DEBUG
-        LOGE("%s: ioctl(I2C_RDWR) failed!!!", __func__);
+        ALOGE("%s: ioctl(I2C_RDWR) failed!!!", __func__);
 #endif
         ret = 0;
     }
@@ -251,7 +251,7 @@ int DDCWrite(unsigned char addr, unsigned char offset, unsigned int size, unsign
     // allocate temporary buffer
     temp = (unsigned char*) malloc((size+1)*sizeof(unsigned char));
     if (!temp) {
-        LOGE("%s: not enough resources at %s", __FUNCTION__);
+        ALOGE("%s: not enough resources at %s", __FUNCTION__);
         goto exit;
     }
 
@@ -259,18 +259,18 @@ int DDCWrite(unsigned char addr, unsigned char offset, unsigned int size, unsign
     memcpy(temp+1,buffer,size);
 
     if (!DDCFileAvailable()) {
-        LOGE("%s: I2C_DDC is not available!!!!", __func__);
+        ALOGE("%s: I2C_DDC is not available!!!!", __func__);
         goto exit;
     }
 
     if (ioctl(ddc_fd, I2C_SLAVE, addr>>1) < 0) {
-        LOGE("%s: cannot set slave address 0x%02x", __func__,addr);
+        ALOGE("%s: cannot set slave address 0x%02x", __func__,addr);
         goto exit;
     }
 
     // write temp buffer
     if ((bytes = write(ddc_fd,temp,size+1)) != (size+1)) {
-        LOGE("%s: fail to write %d bytes, only write %d bytes",__func__, size, bytes);
+        ALOGE("%s: fail to write %d bytes, only write %d bytes",__func__, size, bytes);
         goto exit;
     }
 

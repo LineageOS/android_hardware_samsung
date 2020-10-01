@@ -1,0 +1,8 @@
+service vendor.keymaster-4-0 /vendor/bin/hw/android.hardware.keymaster@4.0-service.samsung
+    class early_hal
+    user system
+    group system drmrpc
+
+on post-fs-data
+    mkdir /mnt/vendor/efs/DAK 0775 system system
+    restorecon -R /mnt/vendor/efs/DAK

@@ -141,8 +141,10 @@ OMX_ERRORTYPE SEC_OMX_Component_Unregister(SEC_OMX_COMPONENT_REGLIST *componentL
 {
     OMX_ERRORTYPE ret = OMX_ErrorNone;
 
-    SEC_OSAL_Memset(componentList, 0, sizeof(SEC_OMX_COMPONENT_REGLIST) * MAX_OMX_COMPONENT_NUM);
-    SEC_OSAL_Free(componentList);
+    if (componentList != NULL) {
+        SEC_OSAL_Memset(componentList, 0, sizeof(SEC_OMX_COMPONENT_REGLIST) * MAX_OMX_COMPONENT_NUM);
+        SEC_OSAL_Free(componentList);
+    }
 
 EXIT:
     return ret;

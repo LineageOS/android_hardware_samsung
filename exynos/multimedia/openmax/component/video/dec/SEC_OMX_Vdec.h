@@ -144,7 +144,7 @@ OMX_ERRORTYPE SEC_OMX_VideoDecodeGetExtensionIndex(
 OMX_ERRORTYPE SEC_OMX_VideoDecodeComponentInit(OMX_IN OMX_HANDLETYPE hComponent);
 OMX_ERRORTYPE SEC_OMX_VideoDecodeComponentDeinit(OMX_IN OMX_HANDLETYPE hComponent);
 OMX_BOOL SEC_Check_BufferProcess_State(SEC_OMX_BASECOMPONENT *pSECComponent);
-inline void SEC_UpdateFrameSize(OMX_COMPONENTTYPE *pOMXComponent);
+void SEC_UpdateFrameSize(OMX_COMPONENTTYPE *pOMXComponent);
 
 #ifdef __cplusplus
 }

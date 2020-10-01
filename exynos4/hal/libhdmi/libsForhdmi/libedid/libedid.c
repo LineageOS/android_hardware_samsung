@@ -27,7 +27,7 @@
 //#define EDID_DEBUG 1
 
 #ifdef EDID_DEBUG
-#define DPRINTF(args...)    LOGI(args)
+#define DPRINTF(args...)    ALOGI(args)
 #else
 #define DPRINTF(args...)
 #endif
@@ -219,11 +219,11 @@ static int ReadEDIDBlock(const unsigned int blockNum, unsigned char* const outBu
 #ifdef EDID_DEBUG
     offset = 0;
     do {
-        LOGI("0x%02X", outBuffer[offset++]);
+        ALOGI("0x%02X", outBuffer[offset++]);
         if (offset % 16)
-            LOGI(" ");
+            ALOGI(" ");
         else
-            LOGI("\n");
+            ALOGI("\n");
     } while (SIZEOFEDIDBLOCK > offset);
 #endif // EDID_DEBUG
     return 1;

@@ -139,12 +139,12 @@ namespace android {
 #endif
                     if (pSecHdmi->flush(mSrcWidth, mSrcHeight, mSrcColorFormat, mSrcYAddr, mSrcCbAddr, mSrcCrAddr,
                                 mDstX, mDstY, mHdmiLayer, mHwcLayer) == false) {
-                        LOGE("%s::pSecHdmi->flush() fail on HDMI_MODE_UI", __func__);
+                        ALOGE("%s::pSecHdmi->flush() fail on HDMI_MODE_UI", __func__);
                         ret = false;
                     }
 #ifdef CHECK_UI_TIME
                     end = systemTime();
-                    LOGD("[UI] pSecHdmi->flush[end-start] = %ld ms", long(ns2ms(end)) - long(ns2ms(start)));
+                    ALOGD("[UI] pSecHdmi->flush[end-start] = %ld ms", long(ns2ms(end)) - long(ns2ms(start)));
 #endif
                     break;
                 case HDMI_MODE_VIDEO:
@@ -153,16 +153,16 @@ namespace android {
 #endif
                     if (pSecHdmi->flush(mSrcWidth, mSrcHeight, mSrcColorFormat, mSrcYAddr, mSrcCbAddr, mSrcCrAddr,
                                 mDstX, mDstY, mHdmiLayer, mHwcLayer) == false) {
-                        LOGE("%s::pSecHdmi->flush() fail on HDMI_MODE_VIDEO", __func__);
+                        ALOGE("%s::pSecHdmi->flush() fail on HDMI_MODE_VIDEO", __func__);
                         ret = false;
                     }
 #ifdef CHECK_VIDEO_TIME
                     end = systemTime();
-                    LOGD("[VIDEO] pSecHdmi->flush[end-start] = %ld ms", long(ns2ms(end)) - long(ns2ms(start)));
+                    ALOGD("[VIDEO] pSecHdmi->flush[end-start] = %ld ms", long(ns2ms(end)) - long(ns2ms(start)));
 #endif
                     break;
                 default:
-                    LOGE("Undefined HDMI_MODE");
+                    ALOGE("Undefined HDMI_MODE");
                     ret = false;
                     break;
                 }

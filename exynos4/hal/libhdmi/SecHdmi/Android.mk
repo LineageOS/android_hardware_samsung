@@ -17,8 +17,6 @@ ifeq ($(BOARD_USES_HDMI),true)
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE_TAGS := eng
-
 LOCAL_PRELINK_MODULE := false
 #LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_SHARED_LIBRARIES := libutils liblog libedid libcec
@@ -79,7 +77,7 @@ endif
 
 ifeq ($(BOARD_USE_V4L2_ION),true)
 LOCAL_CFLAGS += -DBOARD_USE_V4L2_ION
-LOCAL_SHARED_LIBRARIES += libion
+LOCAL_SHARED_LIBRARIES += libsamsungion
 endif
 
 LOCAL_MODULE := libhdmi
