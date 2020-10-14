@@ -38,6 +38,7 @@ public final class Utils {
 
     protected static final String GESTURE_HAND_WAVE_KEY = "gesture_hand_wave";
     protected static final String GESTURE_POCKET_KEY = "gesture_pocket";
+    protected static final String WAKE_ON_GESTURE_KEY = "wake_on_gesture";
 
     protected static void startService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting service");
@@ -100,5 +101,10 @@ public final class Utils {
     protected static boolean isPocketGestureEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(GESTURE_POCKET_KEY, false);
+    }
+
+    protected static boolean isWakeOnGestureEnabled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(WAKE_ON_GESTURE_KEY, false);
     }
 }
