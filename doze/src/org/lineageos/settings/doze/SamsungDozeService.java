@@ -27,6 +27,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.SystemClock;
 import android.os.UserHandle;
 import android.util.Log;
 
@@ -72,7 +73,7 @@ public class SamsungDozeService extends Service {
             boolean isNear = event.values[0] < mSensor.getMaximumRange();
             if (mSawNear && !isNear) {
                 if (shouldPulse(event.timestamp)) {
-                    launchDozePulse();
+                    wakeOrLaunchDozePulse();
                 }
             } else {
                 mInPocketTime = event.timestamp;
@@ -140,9 +141,16 @@ public class SamsungDozeService extends Service {
         return null;
     }
 
-    private void launchDozePulse() {
-        mContext.sendBroadcastAsUser(new Intent(DOZE_INTENT),
-                new UserHandle(UserHandle.USER_CURRENT));
+    private void wakeOrLaunchDozePulse() {
+        if (Utils.isWakeOnGestureEnabled(mContext)) {
+            if (DEBUG) Log.d(TAG, "Wake up display");
+            PowerManager powerManager = mContext.getSystemService(PowerManager.class);
+            powerManager.wakeUp(SystemClock.uptimeMillis(), PowerManager.WAKE_REASON_GESTURE, TAG);
+        } else {
+            if (DEBUG) Log.d(TAG, "Launch doze pulse");
+            mContext.sendBroadcastAsUser(
+                    new Intent(DOZE_INTENT), new UserHandle(UserHandle.USER_CURRENT));
+        }
     }
 
     private boolean isInteractive() {
