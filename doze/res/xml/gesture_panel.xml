@@ -24,6 +24,12 @@
         android:summary="@string/ambient_display_always_on_summary"
         android:persistent="false" />
 
+    <SwitchPreference
+        android:key="wake_on_gesture"
+        android:defaultValue="false"
+        android:title="@string/wake_on_gesture_title"
+        android:summary="@string/wake_on_gesture_summary" />
+
     <PreferenceCategory
         android:key="proximity_sensor"
         android:title="@string/proximity_sensor_title">
