@@ -17,30 +17,59 @@
 #define LOG_TAG "android.hardware.power@-service.samsung-libperfmgr"
 #define ATRACE_TAG (ATRACE_TAG_POWER | ATRACE_TAG_HAL)
 
+#include <array>
+#include <memory>
+
 #include <fcntl.h>
 #include <poll.h>
 #include <sys/eventfd.h>
 #include <time.h>
 #include <unistd.h>
+
+#include <android-base/properties.h>
 #include <utils/Log.h>
 #include <utils/Trace.h>
-#include <memory>
 
 #include "InteractionHandler.h"
 
 #define MAX_LENGTH 64
 
 #define MSINSEC 1000L
-#define USINMS 1000000L
+#define NSINMS 1000000L
 
-static const std::vector<std::string> fb_idle_patch = {"/sys/class/drm/card0/device/idle_state",
-                                                       "/sys/class/graphics/fb0/idle_state"};
+namespace aidl {
+namespace google {
+namespace hardware {
+namespace power {
+namespace impl {
+namespace pixel {
+
+namespace {
+
+static const bool kDisplayIdleSupport =
+        ::android::base::GetBoolProperty("vendor.powerhal.disp.idle_support", true);
+static const std::array<const char *, 2> kDispIdlePath = {"/sys/class/drm/card0/device/idle_state",
+                                                          "/sys/class/graphics/fb0/idle_state"};
+static const uint32_t kWaitMs =
+        ::android::base::GetUintProperty("vendor.powerhal.disp.idle_wait", /*default*/ 100U);
+static const uint32_t kMinDurationMs =
+        ::android::base::GetUintProperty("vendor.powerhal.interaction.min", /*default*/ 1400U);
+static const uint32_t kMaxDurationMs =
+        ::android::base::GetUintProperty("vendor.powerhal.interaction.max", /*default*/ 5650U);
+static const uint32_t kDurationOffsetMs =
+        ::android::base::GetUintProperty("vendor.powerhal.interaction.offset", /*default*/ 650U);
+
+static size_t CalcTimespecDiffMs(struct timespec start, struct timespec end) {
+    size_t diff_in_ms = 0;
+    diff_in_ms += (end.tv_sec - start.tv_sec) * MSINSEC;
+    diff_in_ms += (end.tv_nsec - start.tv_nsec) / NSINMS;
+    return diff_in_ms;
+}
+
+}  // namespace
 
 InteractionHandler::InteractionHandler(std::shared_ptr<HintManager> const &hint_manager)
     : mState(INTERACTION_STATE_UNINITIALIZED),
-      mWaitMs(100),
-      mMinDurationMs(1400),
-      mMaxDurationMs(5650),
       mDurationMs(0),
       mHintManager(hint_manager) {}
 
@@ -50,8 +79,8 @@ InteractionHandler::~InteractionHandler() {
 
 static int fb_idle_open(void) {
     int fd;
-    for (auto &path : fb_idle_patch) {
-        fd = open(path.c_str(), O_RDONLY);
+    for (const auto &path : kDispIdlePath) {
+        fd = open(path, O_RDONLY);
         if (fd >= 0)
             return fd;
     }
@@ -115,30 +144,27 @@ void InteractionHandler::PerfRel() {
     ATRACE_INT("interaction_lock", 0);
 }
 
-size_t InteractionHandler::CalcTimespecDiffMs(struct timespec start, struct timespec end) {
-    size_t diff_in_us = 0;
-    diff_in_us += (end.tv_sec - start.tv_sec) * MSINSEC;
-    diff_in_us += (end.tv_nsec - start.tv_nsec) / USINMS;
-    return diff_in_us;
-}
-
 void InteractionHandler::Acquire(int32_t duration) {
     ATRACE_CALL();
 
     std::lock_guard<std::mutex> lk(mLock);
-    if (mState == INTERACTION_STATE_UNINITIALIZED) {
-        ALOGW("%s: called while uninitialized", __func__);
-        return;
-    }
 
-    int inputDuration = duration + 650;
+    int inputDuration = duration + kDurationOffsetMs;
     int finalDuration;
-    if (inputDuration > mMaxDurationMs)
-        finalDuration = mMaxDurationMs;
-    else if (inputDuration > mMinDurationMs)
+    if (inputDuration > kMaxDurationMs)
+        finalDuration = kMaxDurationMs;
+    else if (inputDuration > kMinDurationMs)
         finalDuration = inputDuration;
     else
-        finalDuration = mMinDurationMs;
+        finalDuration = kMinDurationMs;
+
+    // Fallback to do boost directly
+    // 1) override property is set OR
+    // 2) InteractionHandler not initialized
+    if (!kDisplayIdleSupport || mState == INTERACTION_STATE_UNINITIALIZED) {
+        mHintManager->DoHint("INTERACTION", std::chrono::milliseconds(finalDuration));
+        return;
+    }
 
     struct timespec cur_timespec;
     clock_gettime(CLOCK_MONOTONIC, &cur_timespec);
@@ -235,6 +261,7 @@ void InteractionHandler::WaitForIdle(int32_t wait_ms, int32_t timeout_ms) {
 }
 
 void InteractionHandler::Routine() {
+    pthread_setname_np(pthread_self(), "DisplayIdleMonitor");
     std::unique_lock<std::mutex> lk(mLock, std::defer_lock);
 
     while (true) {
@@ -245,7 +272,14 @@ void InteractionHandler::Routine() {
         mState = INTERACTION_STATE_WAITING;
         lk.unlock();
 
-        WaitForIdle(mWaitMs, mDurationMs);
+        WaitForIdle(kWaitMs, mDurationMs);
         Release();
     }
 }
+
+}  // namespace pixel
+}  // namespace impl
+}  // namespace power
+}  // namespace hardware
+}  // namespace google
+}  // namespace aidl
