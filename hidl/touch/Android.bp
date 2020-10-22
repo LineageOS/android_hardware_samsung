@@ -12,14 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-cc_binary {
-    name: "vendor.lineage.touch@1.0-service.samsung",
-    init_rc: ["vendor.lineage.touch@1.0-service.samsung.rc"],
+cc_defaults {
+    name: "touch_samsung_defaults",
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
-    // FIXME: this should be 'vendor: true' for modules that will eventually be
-    // on AOSP.
-    proprietary: true,
     srcs: [
         "GloveMode.cpp",
         "KeyDisabler.cpp",
@@ -34,4 +30,17 @@ cc_binary {
         "libutils",
         "vendor.lineage.touch@1.0",
     ],
+}
+
+cc_binary {
+    name: "lineage.touch@1.0-service.samsung",
+    init_rc: ["lineage.touch@1.0-service.samsung.rc"],
+    defaults: ["touch_samsung_defaults"],
+}
+
+cc_binary {
+    name: "vendor.lineage.touch@1.0-service.samsung",
+    init_rc: ["vendor.lineage.touch@1.0-service.samsung.rc"],
+    defaults: ["touch_samsung_defaults"],
+    proprietary: true,
 }
