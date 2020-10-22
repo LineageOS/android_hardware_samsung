@@ -1,0 +1,4 @@
+service touch-hal-1-0-samsung /system/bin/hw/lineage.touch@1.0-service.samsung
+    class hal
+    user system
+    group system
