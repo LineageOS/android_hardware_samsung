@@ -66,6 +66,17 @@ static size_t CalcTimespecDiffMs(struct timespec start, struct timespec end) {
     return diff_in_ms;
 }
 
+static int FbIdleOpen(void) {
+    int fd;
+    for (const auto &path : kDispIdlePath) {
+        fd = open(path, O_RDONLY);
+        if (fd >= 0)
+            return fd;
+    }
+    ALOGE("Unable to open fb idle state path (%d)", errno);
+    return -1;
+}
+
 }  // namespace
 
 InteractionHandler::InteractionHandler(std::shared_ptr<HintManager> const &hint_manager)
@@ -77,24 +88,13 @@ InteractionHandler::~InteractionHandler() {
     Exit();
 }
 
-static int fb_idle_open(void) {
-    int fd;
-    for (const auto &path : kDispIdlePath) {
-        fd = open(path, O_RDONLY);
-        if (fd >= 0)
-            return fd;
-    }
-    ALOGE("Unable to open fb idle state path (%d)", errno);
-    return -1;
-}
-
 bool InteractionHandler::Init() {
     std::lock_guard<std::mutex> lk(mLock);
 
     if (mState != INTERACTION_STATE_UNINITIALIZED)
         return true;
 
-    int fd = fb_idle_open();
+    int fd = FbIdleOpen();
     if (fd < 0)
         return false;
     mIdleFd = fd;
@@ -261,7 +261,7 @@ void InteractionHandler::WaitForIdle(int32_t wait_ms, int32_t timeout_ms) {
 }
 
 void InteractionHandler::Routine() {
-    pthread_setname_np(pthread_self(), "DisplayIdleMonitor");
+    pthread_setname_np(pthread_self(), "DispIdle");
     std::unique_lock<std::mutex> lk(mLock, std::defer_lock);
 
     while (true) {
