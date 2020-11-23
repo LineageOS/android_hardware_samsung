@@ -35,9 +35,14 @@ namespace android {
 // Defines
 //---------------------------------------------------------------------------
 #define RILD_PORT               7777
+#ifdef USES_VND_SECRIL
+#define MULTI_CLIENT_SOCKET_NAME "VND_Multiclient"
+#define MULTI_CLIENT_SOCKET_NAME_2 "VND_Multiclient2"
+#else
 #define MULTI_CLIENT_SOCKET_NAME "Multiclient"
-#define MULTI_CLIENT_Q_SOCKET_NAME "QMulticlient"
 #define MULTI_CLIENT_SOCKET_NAME_2 "Multiclient2"
+#endif
+#define MULTI_CLIENT_Q_SOCKET_NAME "QMulticlient"
 
 #define MAX_COMMAND_BYTES       (8 * 1024)
 #define REQ_POOL_SIZE           32
