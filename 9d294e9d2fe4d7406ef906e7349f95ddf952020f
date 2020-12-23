@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2395b2db_b260efd0",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-12-23T15:59:36Z",
+      "side": 1,
+      "message": "MULTI_CLIENT_SOCKET_NAME_2",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "9d294e9d2fe4d7406ef906e7349f95ddf952020f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
