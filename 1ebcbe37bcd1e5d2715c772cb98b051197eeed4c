@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e168542_0138ad05",
+        "filename": "ril/libsecril-client/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-12-23T15:54:51Z",
+      "side": 1,
+      "message": "s/TARGET_USES_VND_SECRIL/USES_VND_SECRIL/",
+      "range": {
+        "startLine": 26,
+        "startChar": 16,
+        "endLine": 26,
+        "endChar": 40
+      },
+      "revId": "1ebcbe37bcd1e5d2715c772cb98b051197eeed4c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7178163a_38e2983c",
+        "filename": "ril/libsecril-client/secril-client.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-12-23T15:54:51Z",
+      "side": 1,
+      "message": "s/TARGET_USES_VND_SECRIL/USES_VND_SECRIL/\n\nalso you could move the defines around so you only need one #ifdef/else",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 29
+      },
+      "revId": "1ebcbe37bcd1e5d2715c772cb98b051197eeed4c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
