@@ -1,0 +1,4 @@
+service vendor.fastcharge-hal-1-0 /vendor/bin/hw/vendor.lineage.fastcharge@1.0-service.samsung
+    class hal
+    user system
+    group system
