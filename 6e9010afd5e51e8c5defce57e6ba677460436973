@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a2a864f_2c26df71",
+        "filename": "doze/src/org/lineageos/settings/doze/SamsungDozeService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2020-12-25T13:50:21Z",
+      "side": 1,
+      "message": "indentation",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 49
+      },
+      "revId": "6e9010afd5e51e8c5defce57e6ba677460436973",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
