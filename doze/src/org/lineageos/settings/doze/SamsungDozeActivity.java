@@ -26,6 +26,6 @@ public class SamsungDozeActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
 
         getFragmentManager().beginTransaction().replace(android.R.id.content,
-                new TouchscreenGestureSettings(), TAG).commit();
+                new SamsungDozeSettings(), TAG).commit();
     }
 }
