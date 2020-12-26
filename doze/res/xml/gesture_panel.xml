@@ -17,28 +17,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:key="ambient_display_key"
-        android:title="@string/ambient_display_title">
-
-        <lineageos.preference.SecureSettingSwitchPreference
-            android:key="doze_enabled"
-            android:defaultValue="true"
-            android:title="@string/ambient_display_enable_title"
-            android:summary="@string/ambient_display_enable_summary" />
+        android:key="proximity_sensor"
+        android:title="@string/proximity_sensor_title">
 
         <SwitchPreference
             android:key="gesture_hand_wave"
             android:defaultValue="false"
             android:title="@string/hand_wave_gesture_title"
-            android:summary="@string/hand_wave_gesture_summary"
-            android:dependency="doze_enabled" />
+            android:summary="@string/hand_wave_gesture_summary" />
 
         <SwitchPreference
             android:key="gesture_pocket"
             android:defaultValue="false"
             android:title="@string/pocket_gesture_title"
-            android:summary="@string/pocket_gesture_summary"
-            android:dependency="doze_enabled" />
+            android:summary="@string/pocket_gesture_summary" />
     </PreferenceCategory>
 
 </PreferenceScreen>
