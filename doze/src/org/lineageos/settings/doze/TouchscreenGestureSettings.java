@@ -18,34 +18,19 @@ package org.lineageos.settings.doze;
 
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.MenuItem;
-import androidx.preference.Preference;
+
 import androidx.preference.PreferenceFragment;
-import androidx.preference.SwitchPreference;
 
 import org.lineageos.internal.util.ScreenType;
 
 public class TouchscreenGestureSettings extends PreferenceFragment {
-
-    private static final String KEY_HAND_WAVE = "gesture_hand_wave";
-    private static final String KEY_PROXIMITY_WAKE = "proximity_wake_enable";
-
-    private SwitchPreference mHandwavePreference;
-    private SwitchPreference mProximityWakePreference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.gesture_panel);
         final ActionBar actionBar = getActivity().getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        mHandwavePreference =
-            (SwitchPreference) findPreference(KEY_HAND_WAVE);
-        mHandwavePreference.setOnPreferenceChangeListener(mProximityListener);
-        mProximityWakePreference =
-            (SwitchPreference) findPreference(KEY_PROXIMITY_WAKE);
-        mProximityWakePreference.setOnPreferenceChangeListener(mProximityListener);
     }
 
     @Override
@@ -57,21 +42,6 @@ public class TouchscreenGestureSettings extends PreferenceFragment {
             getListView().setPadding(0, 0, 0, 0);
         }
     }
-
-    private Preference.OnPreferenceChangeListener mProximityListener =
-        new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if ((boolean) newValue) {
-                if (preference.getKey().equals(KEY_HAND_WAVE)) {
-                    mProximityWakePreference.setChecked(false);
-                } else if (preference.getKey().equals(KEY_PROXIMITY_WAKE)) {
-                    mHandwavePreference.setChecked(false);
-                }
-            }
-            return true;
-        }
-    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
