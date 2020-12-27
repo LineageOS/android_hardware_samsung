@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.power-service.pixel-libperfmgr"
+#define LOG_TAG "android.hardware.power-service.samsung-libperfmgr"
 
 #include <thread>
 
@@ -25,7 +25,6 @@
 
 #include "Power.h"
 #include "PowerExt.h"
-#include "disp-power/DisplayLowPower.h"
 
 using aidl::google::hardware::power::impl::pixel::Power;
 using aidl::google::hardware::power::impl::pixel::PowerExt;
@@ -43,17 +42,15 @@ int main() {
         LOG(FATAL) << "Invalid config: " << kPowerHalConfigPath;
     }
 
-    std::shared_ptr<DisplayLowPower> dlpw = std::make_shared<DisplayLowPower>();
-
     // single thread
     ABinderProcess_setThreadPoolMaxThreadCount(0);
 
     // core service
-    std::shared_ptr<Power> pw = ndk::SharedRefBase::make<Power>(hm, dlpw);
+    std::shared_ptr<Power> pw = ndk::SharedRefBase::make<Power>(hm);
     ndk::SpAIBinder pwBinder = pw->asBinder();
 
     // extension service
-    std::shared_ptr<PowerExt> pwExt = ndk::SharedRefBase::make<PowerExt>(hm, dlpw);
+    std::shared_ptr<PowerExt> pwExt = ndk::SharedRefBase::make<PowerExt>(hm);
 
     // attach the extension to the same binder we will be registering
     CHECK(STATUS_OK == AIBinder_setExtension(pwBinder.get(), pwExt->asBinder().get()));
@@ -66,7 +63,6 @@ int main() {
     std::thread initThread([&]() {
         ::android::base::WaitForProperty(kPowerHalInitProp, "1");
         hm->Start();
-        dlpw->Init();
     });
     initThread.detach();
 

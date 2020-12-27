@@ -23,8 +23,7 @@
 #include <aidl/android/hardware/power/BnPower.h>
 #include <perfmgr/HintManager.h>
 
-#include "disp-power/DisplayLowPower.h"
-#include "disp-power/InteractionHandler.h"
+#include "InteractionHandler.h"
 
 namespace aidl {
 namespace google {
@@ -40,7 +39,7 @@ using ::android::perfmgr::HintManager;
 
 class Power : public ::aidl::android::hardware::power::BnPower {
   public:
-    Power(std::shared_ptr<HintManager> hm, std::shared_ptr<DisplayLowPower> dlpw);
+    Power(std::shared_ptr<HintManager> hm);
     ndk::ScopedAStatus setMode(Mode type, bool enabled) override;
     ndk::ScopedAStatus isModeSupported(Mode type, bool *_aidl_return) override;
     ndk::ScopedAStatus setBoost(Boost type, int32_t durationMs) override;
@@ -49,10 +48,13 @@ class Power : public ::aidl::android::hardware::power::BnPower {
 
   private:
     std::shared_ptr<HintManager> mHintManager;
-    std::shared_ptr<DisplayLowPower> mDisplayLowPower;
     std::unique_ptr<InteractionHandler> mInteractionHandler;
+    std::atomic<bool> mDoubleTapEnabled;
     std::atomic<bool> mVRModeOn;
     std::atomic<bool> mSustainedPerfModeOn;
+
+    ndk::ScopedAStatus updateHint(const char *hint, bool enable);
+    ndk::ScopedAStatus switchDT2W(bool enable);
 };
 
 }  // namespace pixel

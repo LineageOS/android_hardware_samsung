@@ -1,5 +1,5 @@
 <manifest version="1.0" type="device">
-    <hal format="aidl">
+    <hal format="aidl" override="true">
         <name>android.hardware.power</name>
         <fqname>IPower/default</fqname>
     </hal>
