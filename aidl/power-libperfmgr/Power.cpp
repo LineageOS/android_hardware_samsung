@@ -15,7 +15,7 @@
  */
 
 #define ATRACE_TAG (ATRACE_TAG_POWER | ATRACE_TAG_HAL)
-#define LOG_TAG "android.hardware.power-service.pixel-libperfmgr"
+#define LOG_TAG "android.hardware.power-service.samsung-libperfmgr"
 
 #include "Power.h"
 
@@ -30,8 +30,6 @@
 #include <utils/Log.h>
 #include <utils/Trace.h>
 
-#include "disp-power/DisplayLowPower.h"
-
 namespace aidl {
 namespace google {
 namespace hardware {
@@ -43,10 +41,12 @@ constexpr char kPowerHalStateProp[] = "vendor.powerhal.state";
 constexpr char kPowerHalAudioProp[] = "vendor.powerhal.audio";
 constexpr char kPowerHalRenderingProp[] = "vendor.powerhal.rendering";
 
-Power::Power(std::shared_ptr<HintManager> hm, std::shared_ptr<DisplayLowPower> dlpw)
+using namespace std::chrono_literals;
+
+Power::Power(std::shared_ptr<HintManager> hm)
     : mHintManager(hm),
-      mDisplayLowPower(dlpw),
       mInteractionHandler(nullptr),
+      mDoubleTapEnabled(false),
       mVRModeOn(false),
       mSustainedPerfModeOn(false) {
     mInteractionHandler = std::make_unique<InteractionHandler>(mHintManager);
@@ -84,14 +84,33 @@ Power::Power(std::shared_ptr<HintManager> hm, std::shared_ptr<DisplayLowPower> d
 
     // Now start to take powerhint
     ALOGI("PowerHAL ready to process hints");
+
+    switchDT2W(mDoubleTapEnabled);
 }
+
+ndk::ScopedAStatus Power::updateHint(const char *hint, bool enable) {
+    if (enable) {
+        mHintManager->DoHint(hint);
+    } else {
+        mHintManager->EndHint(hint);
+    }
+
+    return ndk::ScopedAStatus::ok();
+}
+
+ndk::ScopedAStatus Power::switchDT2W(bool enable) {
+    updateHint("DOUBLE_TAP_TO_WAKE", enable);
+    std::this_thread::sleep_for(20ms);
+
+    return ndk::ScopedAStatus::ok();
+}
+
 
 ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
     LOG(DEBUG) << "Power setMode: " << toString(type) << " to: " << enabled;
     ATRACE_INT(toString(type).c_str(), enabled);
     switch (type) {
         case Mode::LOW_POWER:
-            mDisplayLowPower->SetDisplayLowPower(enabled);
             if (enabled) {
                 mHintManager->DoHint(toString(type));
             } else {
@@ -140,13 +159,16 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
             }
             [[fallthrough]];
         case Mode::DOUBLE_TAP_TO_WAKE:
-            [[fallthrough]];
+            mDoubleTapEnabled = enabled;
+            switchDT2W(enabled);
+            break;
         case Mode::FIXED_PERFORMANCE:
             [[fallthrough]];
         case Mode::EXPENSIVE_RENDERING:
             [[fallthrough]];
         case Mode::INTERACTIVE:
-            [[fallthrough]];
+            updateHint("NOT_INTERACTIVE", !enabled);
+            break;
         case Mode::DEVICE_IDLE:
             [[fallthrough]];
         case Mode::DISPLAY_INACTIVE:
@@ -175,10 +197,20 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
 
 ndk::ScopedAStatus Power::isModeSupported(Mode type, bool *_aidl_return) {
     bool supported = mHintManager->IsHintSupported(toString(type));
-    // LOW_POWER handled insides PowerHAL specifically
-    if (type == Mode::LOW_POWER) {
-        supported = true;
+    switch (type) {
+        case Mode::LOW_POWER: // LOW_POWER handled insides PowerHAL specifically
+            supported = true;
+            break;
+        case Mode::DOUBLE_TAP_TO_WAKE:
+            supported = true;
+            break;
+        case Mode::INTERACTIVE:
+            supported = true;
+            break;
+        default:
+            break;
     }
+    
     LOG(INFO) << "Power mode " << toString(type) << " isModeSupported: " << supported;
     *_aidl_return = supported;
     return ndk::ScopedAStatus::ok();

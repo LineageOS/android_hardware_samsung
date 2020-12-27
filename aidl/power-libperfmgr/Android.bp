@@ -20,59 +20,11 @@ soong_namespace {
     ],
 }
 
-cc_library {
-    name: "libdisppower-pixel",
-    proprietary: true,
-    srcs: [
-        "disp-power/DisplayLowPower.cpp",
-        "disp-power/InteractionHandler.cpp",
-    ],
-     shared_libs: [
-        "libbase",
-        "libcutils",
-        "liblog",
-        "libperfmgr",
-        "libutils",
-    ],
-}
-
-cc_library_headers {
-    name: "pixel_power_headers",
-    vendor: true,
-    export_include_dirs: ["hidl"],
-}
-
 cc_binary {
-    name: "android.hardware.power@1.3-service.pixel-libperfmgr",
+    name: "android.hardware.power-service.samsung-libperfmgr",
     relative_install_path: "hw",
-    vintf_fragments: ["hidl/android.hardware.power@1.3-service.pixel.xml"],
-    init_rc: ["hidl/android.hardware.power@1.3-service.pixel-libperfmgr.rc"],
-    srcs: ["hidl/service.cpp", "hidl/Power.cpp"],
-    cflags: [
-        "-Wall",
-        "-Werror",
-    ],
-    shared_libs: [
-        "libbase",
-        "libhidlbase",
-        "liblog",
-        "libutils",
-        "libcutils",
-        "android.hardware.power@1.0",
-        "android.hardware.power@1.1",
-        "android.hardware.power@1.2",
-        "android.hardware.power@1.3",
-        "libdisppower-pixel",
-        "libperfmgr",
-    ],
-    proprietary: true,
-}
-
-cc_binary {
-    name: "android.hardware.power-service.pixel-libperfmgr",
-    relative_install_path: "hw",
-    init_rc: ["aidl/android.hardware.power-service.pixel-libperfmgr.rc"],
-    vintf_fragments: ["aidl/android.hardware.power-service.pixel.xml"],
+    init_rc: ["android.hardware.power-service.samsung-libperfmgr.rc"],
+    vintf_fragments: ["android.hardware.power-service.samsung.xml"],
     vendor: true,
     shared_libs: [
         "android.hardware.power-ndk_platform",
@@ -81,13 +33,13 @@ cc_binary {
         "liblog",
         "libutils",
         "libbinder_ndk",
-        "libdisppower-pixel",
         "libperfmgr",
         "pixel-power-ext-ndk_platform",
     ],
     srcs: [
-        "aidl/service.cpp",
-        "aidl/Power.cpp",
-        "aidl/PowerExt.cpp",
+        "service.cpp",
+        "Power.cpp",
+        "PowerExt.cpp",
+        "InteractionHandler.cpp",
     ],
 }

@@ -1,0 +1,448 @@
+{
+    "Nodes": [
+        {
+            "Name": "CPULittleClusterMaxFreq",
+            "Path": "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+            "Values": [
+                "9999999",
+                "1113600"
+            ],
+            "DefaultIndex": 0,
+            "ResetOnInit": true
+        },
+        {
+            "Name": "CPULittleClusterMinFreq",
+            "Path": "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
+            "Values": [
+                "9999999",
+                "1113600",
+                "576000"
+            ],
+            "ResetOnInit": true
+        },
+        {
+            "Name": "CPUBigClusterMaxFreq",
+            "Path": "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq",
+            "Values": [
+                "9999999",
+                "2016000",
+                "1497600",
+                "1401600"
+            ],
+            "DefaultIndex": 0,
+            "ResetOnInit": true
+        },
+        {
+            "Name": "CPUBigClusterMinFreq",
+            "Path": "/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq",
+            "Values": [
+                "9999999",
+                "1497600",
+                "1401600",
+                "1286400",
+                "0"
+            ],
+            "ResetOnInit": true
+        },
+        {
+            "Name": "CPUBigPlusClusterMaxFreq",
+            "Path": "/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq",
+            "Values": [
+                "9999999",
+                "2016000",
+                "1497600",
+                "1401600"
+            ],
+            "DefaultIndex": 0,
+            "ResetOnInit": true
+        },
+        {
+            "Name": "CPUBigPlusClusterMinFreq",
+            "Path": "/sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq",
+            "Values": [
+                "9999999",
+                "1497600",
+                "1401600",
+                "1286400",
+                "0"
+            ],
+            "ResetOnInit": true
+        },
+        {
+            "Name": "GPUMaxFreq",
+            "Path": "/sys/class/kgsl/kgsl-3d0/devfreq/max_freq",
+            "Values": [
+                "585000000",
+                "427000000"
+            ],
+            "DefaultIndex": 0,
+            "ResetOnInit": true
+        },
+        {
+            "Name": "GPUMinFreq",
+            "Path": "/sys/class/kgsl/kgsl-3d0/devfreq/min_freq",
+            "Values": [
+                "585000000",
+                "427000000",
+                "345000000",
+                "257000000"
+            ],
+            "ResetOnInit": true
+        },
+        {
+            "Name": "TASchedtuneBoost",
+            "Path": "/dev/stune/top-app/schedtune.boost",
+            "Values": [
+                "30",
+                "10"
+            ],
+            "ResetOnInit": true
+        },
+        {
+            "Name": "PMQoSCpuDmaLatency",
+            "Path": "/dev/cpu_dma_latency",
+            "Values": [
+                "44",
+                "100"
+            ],
+            "HoldFd": true
+        },
+        {
+            "Name": "TouchscreenEnable",
+            "Path": "/sys/class/input/input3/enabled",
+            "Values": [
+                "0",
+                "1"
+            ],
+            "ResetOnInit": true
+        },
+        {
+            "Name": "DoubleTapToWakeEnable",
+            "Path": "/sys/class/sec/tsp/cmd",
+            "Values": [
+                "aot_enable,0",
+                "aot_enable,1"
+            ],
+            "DefaultIndex": 0,
+        },
+        {
+            "Name": "PowerHALMainState",
+            "Path": "vendor.powerhal.state",
+            "Values": [
+                "CAMERA_STREAMING",
+                "SUSTAINED_PERFORMANCE",
+                "VR_MODE",
+                "VR_SUSTAINED_PERFORMANCE",
+                ""
+            ],
+            "Type": "Property"
+        },
+        {
+            "Name": "PowerHALAudioState",
+            "Path": "vendor.powerhal.audio",
+            "Values": [
+                "AUDIO_LOW_LATENCY",
+                ""
+            ],
+            "Type": "Property"
+        },
+        {
+            "Name": "PowerHALRenderingState",
+            "Path": "vendor.powerhal.rendering",
+            "Values": [
+                "EXPENSIVE_RENDERING",
+                ""
+            ],
+            "Type": "Property"
+        },
+        {
+            "Name": "PowerHALPerfProfileState",
+            "Path": "vendor.powerhal.perf_profile",
+            "Values": [
+                "POWER_SAVE",
+                "BIAS_POWER_SAVE",
+                "BIAS_PERFORMANCE",
+                "HIGH_PERFORMANCE"
+            ],
+            "Type": "Property"
+        }
+    ],
+    "Actions": [
+        {
+            "PowerHint": "INTERACTION",
+            "Node": "CPUBigClusterMinFreq",
+            "Duration": 0,
+            "Value": "1286400"
+        },
+        {
+            "PowerHint": "INTERACTION",
+            "Node": "CPUBigPlusClusterMinFreq",
+            "Duration": 0,
+            "Value": "1286400"
+        },
+        {
+            "PowerHint": "INTERACTION",
+            "Node": "CPULittleClusterMinFreq",
+            "Duration": 0,
+            "Value": "1113600"
+        },
+        {
+            "PowerHint": "INTERACTION",
+            "Node": "TASchedtuneBoost",
+            "Duration": 0,
+            "Value": "30"
+        },
+        {
+            "PowerHint": "LAUNCH",
+            "Node": "CPUBigClusterMaxFreq",
+            "Duration": 5000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "LAUNCH",
+            "Node": "CPUBigPlusClusterMaxFreq",
+            "Duration": 5000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "LAUNCH",
+            "Node": "CPUBigClusterMinFreq",
+            "Duration": 5000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "LAUNCH",
+            "Node": "CPUBigPlusClusterMinFreq",
+            "Duration": 5000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "LAUNCH",
+            "Node": "CPULittleClusterMinFreq",
+            "Duration": 5000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "LAUNCH",
+            "Node": "PMQoSCpuDmaLatency",
+            "Duration": 5000,
+            "Value": "44"
+        },
+        {
+            "PowerHint": "CAMERA_LAUNCH",
+            "Node": "CPUBigClusterMaxFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_LAUNCH",
+            "Node": "CPUBigPlusClusterMaxFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_LAUNCH",
+            "Node": "CPUBigClusterMinFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_LAUNCH",
+            "Node": "CPUBigPlusClusterMinFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_LAUNCH",
+            "Node": "CPULittleClusterMaxFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_LAUNCH",
+            "Node": "CPULittleClusterMinFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_LAUNCH",
+            "Node": "PMQoSCpuDmaLatency",
+            "Duration": 1000,
+            "Value": "44"
+        },
+        {
+            "PowerHint": "CAMERA_STREAMING",
+            "Node": "PowerHALMainState",
+            "Duration": 0,
+            "Value": "CAMERA_STREAMING"
+        },
+        {
+            "PowerHint": "CAMERA_STREAMING",
+            "Node": "CPUBigClusterMaxFreq",
+            "Duration": 0,
+            "Value": "2016000"
+        },
+        {
+            "PowerHint": "CAMERA_STREAMING",
+            "Node": "CPUBigPlusClusterMaxFreq",
+            "Duration": 0,
+            "Value": "2016000"
+        },
+        {
+            "PowerHint": "CAMERA_SHOT",
+            "Node": "CPUBigClusterMaxFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_SHOT",
+            "Node": "CPUBigPlusClusterMaxFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_SHOT",
+            "Node": "CPUBigClusterMinFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_SHOT",
+            "Node": "CPUBigPlusClusterMinFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_SHOT",
+            "Node": "CPULittleClusterMaxFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_SHOT",
+            "Node": "CPULittleClusterMinFreq",
+            "Duration": 1000,
+            "Value": "9999999"
+        },
+        {
+            "PowerHint": "CAMERA_SHOT",
+            "Node": "PMQoSCpuDmaLatency",
+            "Duration": 1000,
+            "Value": "44"
+        },
+        {
+            "PowerHint": "AUDIO_STREAMING",
+            "Node": "PMQoSCpuDmaLatency",
+            "Duration": 2000,
+            "Value": "44"
+        },
+        {
+            "PowerHint": "AUDIO_LOW_LATENCY",
+            "Node": "PowerHALAudioState",
+            "Duration": 0,
+            "Value": "AUDIO_LOW_LATENCY"
+        },
+        {
+            "PowerHint": "AUDIO_LOW_LATENCY",
+            "Node": "PMQoSCpuDmaLatency",
+            "Duration": 0,
+            "Value": "44"
+        },
+        {
+            "PowerHint": "SUSTAINED_PERFORMANCE",
+            "Node": "PowerHALMainState",
+            "Duration": 0,
+            "Value": "SUSTAINED_PERFORMANCE"
+        },
+        {
+            "PowerHint": "SUSTAINED_PERFORMANCE",
+            "Node": "CPUBigClusterMaxFreq",
+            "Duration": 0,
+            "Value": "1401600"
+        },
+        {
+            "PowerHint": "SUSTAINED_PERFORMANCE",
+            "Node": "CPUBigPlusClusterMaxFreq",
+            "Duration": 0,
+            "Value": "1401600"
+        },
+        {
+            "PowerHint": "SUSTAINED_PERFORMANCE",
+            "Node": "CPULittleClusterMaxFreq",
+            "Duration": 0,
+            "Value": "1113600"
+        },
+        {
+            "PowerHint": "SUSTAINED_PERFORMANCE",
+            "Node": "GPUMaxFreq",
+            "Duration": 0,
+            "Value": "427000000"
+        },
+        {
+            "PowerHint": "VR_MODE",
+            "Node": "PowerHALMainState",
+            "Duration": 0,
+            "Value": "VR_MODE"
+        },
+        {
+            "PowerHint": "VR_SUSTAINED_PERFORMANCE",
+            "Node": "PowerHALMainState",
+            "Duration": 0,
+            "Value": "VR_SUSTAINED_PERFORMANCE"
+        },
+        {
+            "PowerHint": "EXPENSIVE_RENDERING",
+            "Node": "PowerHALRenderingState",
+            "Duration": 0,
+            "Value": "EXPENSIVE_RENDERING"
+        },
+        {
+            "PowerHint": "EXPENSIVE_RENDERING",
+            "Node": "GPUMinFreq",
+            "Duration": 0,
+            "Value": "427000000"
+        },
+        {
+            "PowerHint": "EXPENSIVE_RENDERING",
+            "Node": "GPUMaxFreq",
+            "Duration": 0,
+            "Value": "585000000"
+        },
+        {
+            "PowerHint": "NOT_INTERACTIVE",
+            "Node": "TouchscreenEnable",
+            "Duration": 0,
+            "Value": "0"
+        },
+        {
+            "PowerHint": "DOUBLE_TAP_TO_WAKE",
+            "Node": "DoubleTapToWakeEnable",
+            "Duration": 0,
+            "Value": "aot_enable,1"
+        },
+        {
+            "PowerHint": "PROFILE_POWER_SAVE",
+            "Node": "PowerHALPerfProfileState",
+            "Duration": 0,
+            "Value": "POWER_SAVE"
+        },
+        {
+            "PowerHint": "PROFILE_BIAS_POWER_SAVE",
+            "Node": "PowerHALPerfProfileState",
+            "Duration": 0,
+            "Value": "BIAS_POWER_SAVE"
+        },
+        {
+            "PowerHint": "PROFILE_BIAS_PERFORMANCE",
+            "Node": "PowerHALPerfProfileState",
+            "Duration": 0,
+            "Value": "BIAS_PERFORMANCE"
+        },
+        {
+            "PowerHint": "PROFILE_HIGH_PERFORMANCE",
+            "Node": "PowerHALPerfProfileState",
+            "Duration": 0,
+            "Value": "HIGH_PERFORMANCE"
+        }
+    ]
+}
