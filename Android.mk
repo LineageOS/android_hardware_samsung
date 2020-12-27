@@ -37,6 +37,7 @@ endif
 
 ifeq ($(BOARD_VENDOR),samsung)
 include $(SAM_ROOT)/AdvancedDisplay/Android.mk
+include $(SAM_ROOT)/aidl/Android.mk
 include $(SAM_ROOT)/audio/Android.mk
 include $(SAM_ROOT)/doze/Android.mk
 include $(SAM_ROOT)/hidl/Android.mk

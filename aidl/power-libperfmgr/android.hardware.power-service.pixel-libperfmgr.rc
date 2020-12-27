@@ -1,0 +1,29 @@
+service vendor.power-hal-aidl /vendor/bin/hw/android.hardware.power-service.pixel-libperfmgr
+    class hal
+    user root
+    group system
+    priority -20
+
+on late-fs
+     start vendor.power-hal-aidl
+
+# restart powerHAL when framework died
+on property:init.svc.zygote=restarting && property:vendor.powerhal.state=*
+    setprop vendor.powerhal.state ""
+    setprop vendor.powerhal.audio ""
+    setprop vendor.powerhal.rendering ""
+    restart vendor.power-hal-aidl
+
+# restart powerHAL when audioHAL died
+on property:init.svc.vendor.audio-hal-2-0=restarting && property:vendor.powerhal.audio=AUDIO_STREAMING_LOW_LATENCY
+    setprop vendor.powerhal.audio ""
+    restart vendor.power-hal-aidl
+
+# Clean up after b/163539793 resolved
+on property:vendor.powerhal.dalvik.vm.dex2oat-threads=*
+    setprop dalvik.vm.dex2oat-threads ${vendor.powerhal.dalvik.vm.dex2oat-threads}
+    setprop dalvik.vm.restore-dex2oat-threads ${vendor.powerhal.dalvik.vm.dex2oat-threads}
+
+on property:vendor.powerhal.dalvik.vm.dex2oat-cpu-set=*
+    setprop dalvik.vm.dex2oat-cpu-set ${vendor.powerhal.dalvik.vm.dex2oat-cpu-set}
+    setprop dalvik.vm.restore-dex2oat-cpu-set ${vendor.powerhal.dalvik.vm.dex2oat-cpu-set}
