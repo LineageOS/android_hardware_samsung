@@ -179,7 +179,8 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
         case Mode::DEVICE_IDLE:
             [[fallthrough]];
         case Mode::DISPLAY_INACTIVE:
-            [[fallthrough]];
+            setInteractive(!enabled);
+            break;
         case Mode::AUDIO_STREAMING_LOW_LATENCY:
             [[fallthrough]];
         case Mode::CAMERA_STREAMING_SECURE:
@@ -212,6 +213,9 @@ ndk::ScopedAStatus Power::isModeSupported(Mode type, bool *_aidl_return) {
             supported = true;
             break;
         case Mode::INTERACTIVE:
+            supported = true;
+            break;
+        case Mode::DISPLAY_INACTIVE:
             supported = true;
             break;
         default:
