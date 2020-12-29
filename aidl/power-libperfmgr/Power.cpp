@@ -160,6 +160,10 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
         case Mode::INTERACTIVE:
             updateHint("NOT_INTERACTIVE", !enabled);
             break;
+        case Mode::DISPLAY_INACTIVE:
+            std::this_thread::sleep_for(30ms);
+            updateHint("NOT_INTERACTIVE", enabled);
+            break;
         case Mode::LAUNCH:
             if (mVRModeOn || mSustainedPerfModeOn) {
                 break;
@@ -170,8 +174,6 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
         case Mode::EXPENSIVE_RENDERING:
             [[fallthrough]];
         case Mode::DEVICE_IDLE:
-            [[fallthrough]];
-        case Mode::DISPLAY_INACTIVE:
             [[fallthrough]];
         case Mode::AUDIO_STREAMING_LOW_LATENCY:
             [[fallthrough]];
@@ -205,6 +207,9 @@ ndk::ScopedAStatus Power::isModeSupported(Mode type, bool *_aidl_return) {
             supported = true;
             break;
         case Mode::INTERACTIVE:
+            supported = true;
+            break;
+        case Mode::DISPLAY_INACTIVE:
             supported = true;
             break;
         default:
