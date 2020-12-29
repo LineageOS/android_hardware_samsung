@@ -105,6 +105,12 @@ ndk::ScopedAStatus Power::switchDT2W(bool enable) {
     return ndk::ScopedAStatus::ok();
 }
 
+ndk::ScopedAStatus Power::setInteractive(bool enable) {
+    std::this_thread::sleep_for(25ms);
+    updateHint("NOT_INTERACTIVE", !enable);
+
+    return ndk::ScopedAStatus::ok();
+}
 
 ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
     LOG(DEBUG) << "Power setMode: " << toString(type) << " to: " << enabled;
@@ -167,7 +173,7 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
         case Mode::EXPENSIVE_RENDERING:
             [[fallthrough]];
         case Mode::INTERACTIVE:
-            updateHint("NOT_INTERACTIVE", !enabled);
+            setInteractive(enabled);
             break;
         case Mode::DEVICE_IDLE:
             [[fallthrough]];
