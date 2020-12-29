@@ -55,6 +55,7 @@ class Power : public ::aidl::android::hardware::power::BnPower {
 
     ndk::ScopedAStatus updateHint(const char *hint, bool enable);
     ndk::ScopedAStatus switchDT2W(bool enable);
+    ndk::ScopedAStatus setInteractive(bool enable);
 };
 
 }  // namespace pixel
