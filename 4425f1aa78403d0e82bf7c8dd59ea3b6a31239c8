@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "023b0610_01b9933f",
+        "filename": "hidl/fastcharge/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 16932
+      },
+      "writtenOn": "2020-12-31T10:50:13Z",
+      "side": 1,
+      "message": "You should drop this dependency. It was moved into libhidlbase.",
+      "revId": "4425f1aa78403d0e82bf7c8dd59ea3b6a31239c8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
