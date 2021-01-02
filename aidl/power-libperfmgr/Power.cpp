@@ -143,21 +143,21 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
                 mVRModeOn = false;
             }
             break;
+        case Mode::DOUBLE_TAP_TO_WAKE:
+            updateHint("DOUBLE_TAP_TO_WAKE", enable);
+            break;
+        case Mode::INTERACTIVE:
+            updateHint("NOT_INTERACTIVE", !enabled);
+            break;
         case Mode::LAUNCH:
             if (mVRModeOn || mSustainedPerfModeOn) {
                 break;
             }
             [[fallthrough]];
-        case Mode::DOUBLE_TAP_TO_WAKE:
-            updateHint("DOUBLE_TAP_TO_WAKE", enable);
-            break;
         case Mode::FIXED_PERFORMANCE:
             [[fallthrough]];
         case Mode::EXPENSIVE_RENDERING:
             [[fallthrough]];
-        case Mode::INTERACTIVE:
-            updateHint("NOT_INTERACTIVE", !enabled);
-            break;
         case Mode::DEVICE_IDLE:
             [[fallthrough]];
         case Mode::DISPLAY_INACTIVE:
