@@ -41,15 +41,69 @@ public class SamsungDozeService extends Service {
 
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
+    private static final int MIN_PULSE_INTERVAL_MS = 2500;
     private static final int POCKET_DELTA_NS = 1000 * 1000 * 1000;
 
     private Context mContext;
     private ExecutorService mExecutorService;
-    private SamsungProximitySensor mSensor;
+    private SamsungProximitySensor mProximitySensor;
+    private SamsungPickUpSensor mPickUpSensor;
     private PowerManager mPowerManager;
 
     private boolean mHandwaveGestureEnabled = false;
+    private boolean mPickUpGestureEnabled = false;
     private boolean mPocketGestureEnabled = false;
+
+	class SamsungPickUpSensor implements SensorEventListener {
+		private SensorManager mSensorManager;
+		private Sensor mSensor;
+
+		private long mEntryTimestamp;
+
+		public SamsungPickUpSensor(Context context) {
+		    mSensorManager = mContext.getSystemService(SensorManager.class);
+		    mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PICK_UP_GESTURE);
+		    mExecutorService = Executors.newSingleThreadExecutor();
+		}
+
+		private Future<?> submit(Runnable runnable) {
+		    return mExecutorService.submit(runnable);
+		}
+
+		@Override
+		public void onSensorChanged(SensorEvent event) {
+
+		    long delta = SystemClock.elapsedRealtime() - mEntryTimestamp;
+		    if (delta < MIN_PULSE_INTERVAL_MS) {
+		        return;
+		    }
+
+		    mEntryTimestamp = SystemClock.elapsedRealtime();
+
+		    if (event.values[0] == 1) {
+		        launchDozePulse();
+		    }
+		}
+
+		@Override
+		public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		    /* Empty */
+		}
+
+		protected void enable() {
+		    submit(() -> {
+		        mSensorManager.registerListener(this, mSensor,
+		                SensorManager.SENSOR_DELAY_NORMAL);
+		        mEntryTimestamp = SystemClock.elapsedRealtime();
+		    });
+		}
+
+		protected void disable() {
+		    submit(() -> {
+		        mSensorManager.unregisterListener(this, mSensor);
+		    });
+		}
+	}
 
     class SamsungProximitySensor implements SensorEventListener {
         private SensorManager mSensorManager;
@@ -121,9 +175,11 @@ public class SamsungDozeService extends Service {
         if (DEBUG) Log.d(TAG, "SamsungDozeService Started");
         mContext = this;
         mPowerManager = getSystemService(PowerManager.class);
-        mSensor = new SamsungProximitySensor(mContext);
+        mProximitySensor = new SamsungProximitySensor(mContext);
+        mPickUpSensor = new SamsungPickUpSensor(mContext);
         if (!isInteractive()) {
-            mSensor.enable();
+            mProximitySensor.enable();
+            mPickUpSensor.enable();
         }
     }
 
@@ -159,12 +215,24 @@ public class SamsungDozeService extends Service {
 
     private void onDisplayOn() {
         if (DEBUG) Log.d(TAG, "Display on");
-        mSensor.disable();
+        if (Utils.isPickUpGestureEnabled(this)) {
+            mPickUpSensor.disable();
+        }
+        if (Utils.isHandwaveGestureEnabled(this) ||
+                Utils.isPocketGestureEnabled(this)) {
+            mProximitySensor.disable();
+        }
     }
 
     private void onDisplayOff() {
         if (DEBUG) Log.d(TAG, "Display off");
-        mSensor.enable();
+        if (Utils.isPickUpGestureEnabled(this)) {
+            mPickUpSensor.enable();
+        }
+        if (Utils.isHandwaveGestureEnabled(this) ||
+                Utils.isPocketGestureEnabled(this)) {
+            mProximitySensor.enable();
+        }
     }
 
     private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
