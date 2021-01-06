@@ -15,6 +15,7 @@
         android:targetSdkVersion="26"/>
 
     <application
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/device_settings_app_name"
         android:persistent="true">
 
