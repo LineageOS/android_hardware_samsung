@@ -41,6 +41,8 @@ class GloveMode : public IGloveMode {
 
     bool isSupported();
 
+    bool touchkeySupportGloveMode = false;
+
     // Methods from ::vendor::lineage::touch::V1_0::IGloveMode follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;

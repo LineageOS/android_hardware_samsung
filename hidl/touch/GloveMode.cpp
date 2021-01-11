@@ -25,6 +25,12 @@ namespace V1_0 {
 namespace samsung {
 
 bool GloveMode::isSupported() {
+
+    std::ofstream touchkeyGloveMode("/sys/class/sec/sec_touchkey/glove_mode");
+    if (touchkeyGloveMode.good() == true ) {
+        GloveMode::touchkeySupportGloveMode = true;
+    }
+
     std::ifstream file("/sys/class/sec/tsp/cmd_list");
     if (file.is_open()) {
         std::string line;
@@ -33,6 +39,7 @@ bool GloveMode::isSupported() {
         }
         file.close();
     }
+
     return false;
 }
 
@@ -49,8 +56,15 @@ Return<bool> GloveMode::isEnabled() {
 }
 
 Return<bool> GloveMode::setEnabled(bool enabled) {
+
+    if (GloveMode::touchkeySupportGloveMode == true) {
+        std::ofstream touchkeyGloveMode("/sys/class/sec/sec_touchkey/glove_mode");
+        touchkeyGloveMode << (enabled ? "1" : "0");
+    }
+
     std::ofstream file("/sys/class/sec/tsp/cmd");
     file << "glove_mode," << (enabled ? "1" : "0");
+
     return true;
 }
 
