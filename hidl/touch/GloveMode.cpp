@@ -51,6 +51,12 @@ Return<bool> GloveMode::isEnabled() {
 Return<bool> GloveMode::setEnabled(bool enabled) {
     std::ofstream file("/sys/class/sec/tsp/cmd");
     file << "glove_mode," << (enabled ? "1" : "0");
+
+    std::ofstream touchkeyGloveMode("/sys/class/sec/sec_touchkey/glove_mode");
+    if (touchkeyGloveMode.good()) {
+        touchkeyGloveMode << (enabled ? "1" : "0");
+    }
+
     return true;
 }
 
