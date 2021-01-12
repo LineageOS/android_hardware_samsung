@@ -45,6 +45,23 @@
       "revId": "be5648845926d572b26f8a4387c433831577bc4e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6324a4_27e7bfc1",
+        "filename": "hidl/touch/GloveMode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2021-01-12T06:57:35Z",
+      "side": 1,
+      "message": "actually, after looking at it again, you could just move the entire check here and done bother with checking in isSupported\n\n    std::ofstream touchkeyGloveMode(\"/sys/class/sec/sec_touchkey/glove_mode\");\n    if (touchkeyGloveMode.good()) {\n        touchkeyGloveMode \u003c\u003c (enabled ? \"1\" : \"0\");\n    }\n\nshould be enough",
+      "revId": "be5648845926d572b26f8a4387c433831577bc4e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
