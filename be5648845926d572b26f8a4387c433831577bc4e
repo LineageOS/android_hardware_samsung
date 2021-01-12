@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a17d1f55_c81764f1",
+        "filename": "hidl/touch/GloveMode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2021-01-12T06:06:07Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "be5648845926d572b26f8a4387c433831577bc4e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcafe51b_8e8037ec",
+        "filename": "hidl/touch/GloveMode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2021-01-12T06:06:07Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "be5648845926d572b26f8a4387c433831577bc4e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
