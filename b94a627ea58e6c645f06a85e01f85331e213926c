@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "344eb5a0_7e5244d8",
+        "filename": "hidl/touch/GloveMode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2021-01-12T18:53:55Z",
+      "side": 1,
+      "message": "`/sys/devices/virtual/sec/sec_touchkey/glove_mode` might be more suitable as for example on s5neo thats the only node exposed",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "b94a627ea58e6c645f06a85e01f85331e213926c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
