@@ -39,4 +39,6 @@ static const std::vector<std::string> cpuInteractivePaths = {
 /* double tap to wake node */
 //#define TAP_TO_WAKE_NODE "/sys/class/sec/tsp/dt2w_enable"
 
+//#define AOD_DT2W
+
 #endif // SAMSUNG_POWER_H
