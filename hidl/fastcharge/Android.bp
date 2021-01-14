@@ -14,12 +14,10 @@
 // limitations under the License.
 //
 
-cc_binary {
-    name: "vendor.lineage.fastcharge@1.0-service.samsung",
-    init_rc: ["vendor.lineage.fastcharge@1.0-service.samsung.rc"],
+cc_defaults {
+    name: "fastcharge_samsung_defaults",
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
-    proprietary: true,
     local_include_dirs: ["include"],
     srcs: [
         "FastCharge.cpp",
@@ -33,5 +31,19 @@ cc_binary {
         "libutils",
         "vendor.lineage.fastcharge@1.0",
     ],
+}
+
+cc_binary {
+    name: "lineage.fastcharge@1.0-service.samsung",
+    defaults: ["fastcharge_samsung_defaults"],
+    init_rc: ["lineage.fastcharge@1.0-service.samsung.rc"],
+    vintf_fragments: ["lineage.fastcharge@1.0-service.samsung.xml"],
+}
+
+cc_binary {
+    name: "vendor.lineage.fastcharge@1.0-service.samsung",
+    defaults: ["fastcharge_samsung_defaults"],
+    init_rc: ["vendor.lineage.fastcharge@1.0-service.samsung.rc"],
     vintf_fragments: ["vendor.lineage.fastcharge@1.0-service.samsung.xml"],
+    proprietary: true,
 }
