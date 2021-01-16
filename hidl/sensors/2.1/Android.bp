@@ -21,6 +21,8 @@ cc_binary {
     vendor: true,
     relative_install_path: "hw",
     srcs: [
+	"HalProxy.cpp",
+	"HalProxyCallback.cpp",
         "service.cpp",
     ],
     init_rc: ["android.hardware.sensors@2.1-service-multihal.rc"],
