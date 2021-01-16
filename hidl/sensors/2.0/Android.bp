@@ -14,7 +14,7 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.sensors@2.0-service.multihal",
+    name: "android.hardware.sensors@2.0-service.samsung-multihal",
     defaults: [
         "hidl_defaults",
     ],
@@ -25,8 +25,8 @@ cc_binary {
 	"HalProxy.cpp",
 	"HalProxyCallback.cpp",
     ],
-    init_rc: ["android.hardware.sensors@2.0-service-multihal.rc"],
-    vintf_fragments: ["android.hardware.sensors@2.0-multihal.xml"],
+    init_rc: ["android.hardware.sensors@2.0-service.samsung-multihal.rc"],
+    vintf_fragments: ["android.hardware.sensors@2.0-samsung-multihal.xml"],
     header_libs: [
         "android.hardware.sensors@2.X-shared-utils",
     ],
