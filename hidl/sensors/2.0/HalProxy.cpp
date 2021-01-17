@@ -124,7 +124,12 @@ Return<void> HalProxy::getSensorsList_2_1(ISensorsV2_1::getSensorsList_2_1_cb _h
 Return<void> HalProxy::getSensorsList(ISensorsV2_0::getSensorsList_cb _hidl_cb) {
     std::vector<V1_0::SensorInfo> sensors;
     for (const auto& iter : mSensors) {
-        sensors.push_back(convertToOldSensorInfo(iter.second));
+        V1_0::SensorInfo dst = convertToOldSensorInfo(iter.second);
+
+        if (dst.requiredPermission == "com.samsung.permission.SSENSOR") {
+            dst.requiredPermission = "";
+        }
+        sensors.push_back(dst);
     }
     _hidl_cb(sensors);
     return Void();
