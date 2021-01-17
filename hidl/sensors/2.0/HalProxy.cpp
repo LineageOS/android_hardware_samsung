@@ -129,6 +129,12 @@ Return<void> HalProxy::getSensorsList(ISensorsV2_0::getSensorsList_cb _hidl_cb) 
         if (dst.requiredPermission == "com.samsung.permission.SSENSOR") {
             dst.requiredPermission = "";
         }
+
+        if (dst.typeAsString == "com.samsung.sensor.physical_proximity") {
+            ALOGI("Fixing com.samsung.sensor.physical_proximity");
+            dst.type = V1_0::SensorType::PROXIMITY;
+            dst.typeAsString = SENSOR_STRING_TYPE_PROXIMITY;
+        }
         sensors.push_back(dst);
     }
     _hidl_cb(sensors);
