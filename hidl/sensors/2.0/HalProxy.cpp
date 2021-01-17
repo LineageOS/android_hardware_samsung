@@ -134,6 +134,7 @@ Return<void> HalProxy::getSensorsList(ISensorsV2_0::getSensorsList_cb _hidl_cb) 
             ALOGI("Fixing com.samsung.sensor.physical_proximity");
             dst.type = V1_0::SensorType::PROXIMITY;
             dst.typeAsString = SENSOR_STRING_TYPE_PROXIMITY;
+            dst.maxRange = 1;
         }
         sensors.push_back(dst);
     }
