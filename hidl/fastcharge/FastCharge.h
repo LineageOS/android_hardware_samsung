@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The LineageOS Project
+ * Copyright (C) 2020-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,8 @@ using ::vendor::lineage::fastcharge::V1_0::IFastCharge;
 
 
 struct FastCharge : public IFastCharge {
+    FastCharge();
+
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enable) override;
 };
