@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+//#define VERBOSE
+
 #include "HalProxy.h"
 
 #include <android/hardware/sensors/2.0/types.h>
@@ -127,6 +129,13 @@ Return<void> HalProxy::getSensorsList_2_1(ISensorsV2_1::getSensorsList_2_1_cb _h
             dst.typeAsString = SENSOR_STRING_TYPE_PROXIMITY;
             dst.maxRange = 1;
         }
+
+#ifdef VERBOSE
+        ALOGI( "SENSOR NAME:%s           ", dst.name.c_str());
+        ALOGI( "       VENDOR:%s         ", dst.name.c_str());
+        ALOGI( "       TYPE:%d           ", (uint32_t)dst.type);
+        ALOGI( "       TYPE_AS_STRING:%s ", dst.typeAsString.c_str());
+#endif
         sensors.push_back(dst);
     }
     _hidl_cb(sensors);
