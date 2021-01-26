@@ -35,12 +35,14 @@ cc_defaults {
 cc_binary {
     name: "lineage.touch@1.0-service.samsung",
     init_rc: ["lineage.touch@1.0-service.samsung.rc"],
+    vintf_fragments: ["lineage.touch@1.0-service.samsung.xml"],
     defaults: ["touch_samsung_defaults"],
 }
 
 cc_binary {
     name: "vendor.lineage.touch@1.0-service.samsung",
     init_rc: ["vendor.lineage.touch@1.0-service.samsung.rc"],
+    vintf_fragments: ["vendor.lineage.touch@1.0-service.samsung.xml"],
     defaults: ["touch_samsung_defaults"],
     proprietary: true,
 }
