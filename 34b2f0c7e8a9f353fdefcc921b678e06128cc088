@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b724e8d_b4cc4c94",
+        "filename": "AdvancedDisplay/src/org/lineageos/settings/device/mDNIeAccessibility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2021-02-04T22:02:05Z",
+      "side": 1,
+      "message": "You can replace this with Preference.OnPreferenceChangeListener and skip that import.",
+      "range": {
+        "startLine": 31,
+        "startChar": 66,
+        "endLine": 31,
+        "endChar": 92
+      },
+      "revId": "34b2f0c7e8a9f353fdefcc921b678e06128cc088",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337dd017_5d353258",
+        "filename": "AdvancedDisplay/src/org/lineageos/settings/device/mDNIeScenario.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2021-02-04T22:02:05Z",
+      "side": 1,
+      "message": "You can replace this with Preference.OnPreferenceChangeListener and skip that import.",
+      "range": {
+        "startLine": 31,
+        "startChar": 61,
+        "endLine": 31,
+        "endChar": 87
+      },
+      "revId": "34b2f0c7e8a9f353fdefcc921b678e06128cc088",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
