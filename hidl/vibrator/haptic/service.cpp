@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.vibrator@1.0-service.samsung-haptic"
+#define LOG_TAG "android.hardware.vibrator@1.3-service.samsung-haptic"
 
 #include <android-base/logging.h>
 #include <android/hardware/vibrator/1.0/IVibrator.h>
@@ -27,8 +27,8 @@
 
 using android::hardware::configureRpcThreadpool;
 using android::hardware::joinRpcThreadpool;
-using android::hardware::vibrator::V1_0::IVibrator;
-using android::hardware::vibrator::V1_0::implementation::Vibrator;
+using android::hardware::vibrator::V1_3::IVibrator;
+using android::hardware::vibrator::V1_3::implementation::Vibrator;
 
 using android::OK;
 using android::sp;
