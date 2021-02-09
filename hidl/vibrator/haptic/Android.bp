@@ -13,11 +13,12 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.vibrator@1.0-service.samsung-haptic",
+    name: "android.hardware.vibrator@1.3-service.samsung-haptic",
     defaults: ["hidl_defaults"],
     vendor: true,
     relative_install_path: "hw",
-    init_rc: ["android.hardware.vibrator@1.0-service.samsung-haptic.rc"],
+    init_rc: ["android.hardware.vibrator@1.3-service.samsung-haptic.rc"],
+    vintf_fragments: ["android.hardware.vibrator@1.3-service.samsung-haptic.xml"],
     srcs: ["service.cpp", "Vibrator.cpp"],
     shared_libs: [
         "libbase",
@@ -26,5 +27,8 @@ cc_binary {
         "libutils",
         "libhardware",
         "android.hardware.vibrator@1.0",
+        "android.hardware.vibrator@1.1",
+        "android.hardware.vibrator@1.2",
+        "android.hardware.vibrator@1.3",
     ],
 }
