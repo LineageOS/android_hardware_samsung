@@ -1,0 +1,14 @@
+service vendor.usb-hal-1-1 /vendor/bin/hw/android.hardware.usb@1.1-service.samsung-typec
+    interface android.hardware.usb@1.1::IUsb default
+    interface android.hardware.usb@1.0::IUsb default
+    class hal
+    user root
+    group root system
+
+on boot
+    chown root system /sys/class/typec/port0/power_role
+    chown root system /sys/class/typec/port0/data_role
+    chown root system /sys/class/typec/port0/port_type
+    chmod 664 /sys/class/typec/port0/power_role
+    chmod 664 /sys/class/typec/port0/data_role
+    chmod 664 /sys/class/typec/port0/port_type
