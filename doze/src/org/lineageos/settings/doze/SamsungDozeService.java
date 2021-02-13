@@ -162,22 +162,28 @@ public class SamsungDozeService extends Service {
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "SamsungDozeService Started");
         mContext = this;
-        mPowerManager = getSystemService(PowerManager.class);
         mProximitySensor = new SamsungProximitySensor(mContext);
         mPickUpSensor = new SamsungPickUpSensor(mContext);
-        if (!isInteractive()) {
-            mProximitySensor.enable();
-            mPickUpSensor.enable();
-        }
+
+        IntentFilter screenStateFilter = new IntentFilter();
+        screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
+        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(mScreenStateReceiver, screenStateFilter);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (DEBUG) Log.d(TAG, "Starting service");
-        IntentFilter screenStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        mContext.registerReceiver(mScreenStateReceiver, screenStateFilter);
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        if (DEBUG) Log.d(TAG, "Destroying service");
+        super.onDestroy();
+        this.unregisterReceiver(mScreenStateReceiver);
+        mProximitySensor.disable();
+        mPickupSensor.disable();
     }
 
     @Override
@@ -195,10 +201,6 @@ public class SamsungDozeService extends Service {
             mContext.sendBroadcastAsUser(
                     new Intent(DOZE_INTENT), new UserHandle(UserHandle.USER_CURRENT));
         }
-    }
-
-    private boolean isInteractive() {
-        return mPowerManager.isInteractive();
     }
 
     private void onDisplayOn() {
