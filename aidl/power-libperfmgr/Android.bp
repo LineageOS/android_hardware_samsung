@@ -27,15 +27,15 @@ cc_binary {
     vintf_fragments: ["android.hardware.power-service.samsung.xml"],
     vendor: true,
     shared_libs: [
-        "android.hardware.power-ndk_platform",
+        "android.hardware.power-V1-ndk_platform",
         "libbase",
         "libcutils",
         "liblog",
         "libutils",
         "libbinder_ndk",
         "libperfmgr",
-        "pixel-power-ext-ndk_platform",
-        "vendor.lineage.power-ndk_platform",
+        "pixel-power-ext-V1-ndk_platform",
+        "vendor.lineage.power-V1-ndk_platform",
     ],
     srcs: [
         "service.cpp",
