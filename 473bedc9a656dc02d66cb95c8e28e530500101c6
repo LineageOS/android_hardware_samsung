@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "601d6593_a1d82eba",
+        "filename": "hidl/livedisplay/include/samsung_livedisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 19057
+      },
+      "writtenOn": "2021-02-20T20:01:59Z",
+      "side": 1,
+      "message": "I think you should change this to ADAPTIVE_BACKLIGHT_PATH to make it more descriptive and avoid possible conflicts.\n\nAlso modify your commit message to reflect this as well.",
+      "revId": "473bedc9a656dc02d66cb95c8e28e530500101c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
