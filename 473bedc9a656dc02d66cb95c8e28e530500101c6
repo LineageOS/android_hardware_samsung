@@ -16,6 +16,24 @@
       "revId": "473bedc9a656dc02d66cb95c8e28e530500101c6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc5113a_b116d654",
+        "filename": "hidl/livedisplay/include/samsung_livedisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 20641
+      },
+      "writtenOn": "2021-02-21T07:51:27Z",
+      "side": 1,
+      "message": "This doesn\u0027t work after all so it is pointless.",
+      "parentUuid": "601d6593_a1d82eba",
+      "revId": "473bedc9a656dc02d66cb95c8e28e530500101c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
