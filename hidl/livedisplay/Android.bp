@@ -1,4 +1,4 @@
-// Copyright (C) 2019 The LineageOS Project
+// Copyright (C) 2019-2021 The LineageOS Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,37 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-cc_defaults {
-    name: "livedisplay_samsung_exynos_defaults",
-    defaults: ["hidl_defaults"],
-    relative_install_path: "hw",
-    srcs: [
-        "AdaptiveBacklight.cpp",
-        "DisplayColorCalibrationExynos.cpp",
-        "DisplayModes.cpp",
-        "ReadingEnhancement.cpp",
-        "SunlightEnhancementExynos.cpp",
-        "serviceExynos.cpp",
-    ],
-    shared_libs: [
-        "libbase",
-        "libbinder",
-        "libhidlbase",
-        "libutils",
-        "vendor.lineage.livedisplay@2.0",
-    ],
+cc_library_headers {
+    name: "vendor.lineage.livedisplay@2.0-samsung-headers",
+    vendor_available: true,
+    export_include_dirs: ["include"],
 }
 
 cc_defaults {
-    name: "livedisplay_samsung_qcom_defaults",
+    name: "livedisplay_samsung_defaults",
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
+    header_libs: [
+        "vendor.lineage.livedisplay@2.0-samsung-headers",
+    ],
     srcs: [
         "AdaptiveBacklight.cpp",
-        "DisplayColorCalibration.cpp",
         "DisplayModes.cpp",
         "ReadingEnhancement.cpp",
-        "SunlightEnhancement.cpp",
         "service.cpp",
     ],
     shared_libs: [
@@ -54,30 +40,74 @@ cc_defaults {
     ],
 }
 
+cc_defaults {
+    name: "livedisplay_samsung_exynos_defaults",
+    srcs: [
+        "exynos/DisplayColorCalibration.cpp",
+        "exynos/SunlightEnhancement.cpp",
+    ],
+    cflags: ["-DEXYNOS"],
+}
+
+cc_defaults {
+    name: "livedisplay_samsung_qcom_defaults",
+    srcs: [
+        "qcom/DisplayColorCalibration.cpp",
+        "qcom/SunlightEnhancement.cpp",
+    ],
+    cflags: ["-DQCOM"],
+}
+
+cc_binary {
+    name: "lineage.livedisplay@2.0-service.samsung-generic",
+    init_rc: ["lineage.livedisplay@2.0-service.samsung-generic.rc"],
+    defaults: ["livedisplay_samsung_defaults"],
+    cflags: ["-DLIVES_IN_SYSTEM"],
+}
+
+cc_binary {
+    name: "vendor.lineage.livedisplay@2.0-service.samsung-generic",
+    init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-generic.rc"],
+    defaults: ["livedisplay_samsung_defaults"],
+    vendor: true,
+}
+
 cc_binary {
     name: "lineage.livedisplay@2.0-service.samsung-exynos",
-    init_rc: ["lineage.livedisplay@2.0-service.samsung-exynos.rc"],
-    defaults: ["livedisplay_samsung_exynos_defaults"],
+    init_rc: ["exynos/lineage.livedisplay@2.0-service.samsung-exynos.rc"],
+    defaults: [
+        "livedisplay_samsung_defaults",
+        "livedisplay_samsung_exynos_defaults",
+    ],
     cflags: ["-DLIVES_IN_SYSTEM"],
 }
 
 cc_binary {
     name: "vendor.lineage.livedisplay@2.0-service.samsung-exynos",
-    init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-exynos.rc"],
-    defaults: ["livedisplay_samsung_exynos_defaults"],
+    init_rc: ["exynos/vendor.lineage.livedisplay@2.0-service.samsung-exynos.rc"],
+    defaults: [
+        "livedisplay_samsung_defaults",
+        "livedisplay_samsung_exynos_defaults",
+    ],
     vendor: true,
 }
 
 cc_binary {
     name: "lineage.livedisplay@2.0-service.samsung-qcom",
-    init_rc: ["lineage.livedisplay@2.0-service.samsung-qcom.rc"],
-    defaults: ["livedisplay_samsung_qcom_defaults"],
+    init_rc: ["qcom/lineage.livedisplay@2.0-service.samsung-qcom.rc"],
+    defaults: [
+        "livedisplay_samsung_defaults",
+        "livedisplay_samsung_qcom_defaults",
+    ],
     cflags: ["-DLIVES_IN_SYSTEM"],
 }
 
 cc_binary {
     name: "vendor.lineage.livedisplay@2.0-service.samsung-qcom",
-    init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-qcom.rc"],
-    defaults: ["livedisplay_samsung_qcom_defaults"],
+    init_rc: ["qcom/vendor.lineage.livedisplay@2.0-service.samsung-qcom.rc"],
+    defaults: [
+        "livedisplay_samsung_defaults",
+        "livedisplay_samsung_qcom_defaults",
+    ],
     vendor: true,
 }
