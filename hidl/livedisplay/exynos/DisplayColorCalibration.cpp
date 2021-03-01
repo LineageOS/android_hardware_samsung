@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,44 +32,42 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-bool DisplayColorCalibration::isSupported() {
-    std::fstream rgb(FILE_RGB, rgb.in | rgb.out);
+static constexpr const char* kColorPath = "/sys/class/mdnie/mdnie/sensorRGB";
 
+bool DisplayColorCalibration::isSupported() {
+    std::fstream rgb(kColorPath, rgb.in | rgb.out);
     return rgb.good();
 }
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.
 Return<int32_t> DisplayColorCalibration::getMaxValue() {
-    return 32768;
-}
-
-Return<int32_t> DisplayColorCalibration::getMinValue() {
     return 255;
 }
 
-Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb _hidl_cb) {
+Return<int32_t> DisplayColorCalibration::getMinValue() {
+    return 1;
+}
+
+Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb resultCb) {
     std::vector<int32_t> rgb;
     std::string tmp;
 
-    if (ReadFileToString(FILE_RGB, &tmp)) {
+    if (ReadFileToString(kColorPath, &tmp)) {
         std::vector<std::string> colors = Split(Trim(tmp), " ");
         for (const std::string& color : colors) {
             rgb.push_back(std::stoi(color));
         }
     }
 
-    _hidl_cb(rgb);
+    resultCb(rgb);
     return Void();
 }
 
 Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>& rgb) {
     std::string contents;
-
     for (const int32_t& color : rgb) {
         contents += std::to_string(color) + " ";
     }
-
-    return WriteStringToFile(Trim(contents), FILE_RGB, true);
+    return WriteStringToFile(Trim(contents), kColorPath, true);
 }
 
 }  // namespace samsung
