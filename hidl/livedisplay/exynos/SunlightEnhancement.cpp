@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 #include <fstream>
 
-#include "SunlightEnhancementExynos.h"
+#include "SunlightEnhancement.h"
 
 using android::base::ReadFileToString;
 using android::base::Trim;
@@ -34,13 +34,13 @@ namespace samsung {
 static constexpr const char* kLUXPath = "/sys/class/mdnie/mdnie/lux";
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
-bool SunlightEnhancementExynos::isSupported() {
+bool SunlightEnhancement::isSupported() {
     std::fstream file(kLUXPath, file.in | file.out);
     return file.good();
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
-Return<bool> SunlightEnhancementExynos::isEnabled() {
+Return<bool> SunlightEnhancement::isEnabled() {
     std::string tmp;
     int32_t contents = 0;
 
@@ -51,7 +51,7 @@ Return<bool> SunlightEnhancementExynos::isEnabled() {
     return contents > 0;
 }
 
-Return<bool> SunlightEnhancementExynos::setEnabled(bool enabled) {
+Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
     /* see drivers/video/fbdev/exynos/decon_7880/panels/mdnie_lite_table*, get_hbm_index */
     return WriteStringToFile(enabled ? "40000" : "0", kLUXPath, true);
 }
