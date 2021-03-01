@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
+#if defined(EXYNOS)
+#define LOG_TAG_VARIANT "samsung-exynos"
+#elif defined(QCOM)
+#define LOG_TAG_VARIANT "samsung-qcom"
+#endif
+
 #ifdef LIVES_IN_SYSTEM
-#define LOG_TAG "lineage.livedisplay@2.0-service.samsung-qcom"
+#define LOG_TAG "lineage.livedisplay@2.0-service." LOG_TAG_VARIANT
 #else
-#define LOG_TAG "vendor.lineage.livedisplay@2.0-service.samsung-qcom"
+#define LOG_TAG "vendor.lineage.livedisplay@2.0-service." LOG_TAG_VARIANT
 #endif
 
 #include <android-base/logging.h>
@@ -25,10 +31,16 @@
 #include <hidl/HidlTransportSupport.h>
 
 #include "AdaptiveBacklight.h"
-#include "DisplayColorCalibration.h"
 #include "DisplayModes.h"
 #include "ReadingEnhancement.h"
-#include "SunlightEnhancement.h"
+
+#if defined(EXYNOS)
+#include "exynos/DisplayColorCalibration.h"
+#include "exynos/SunlightEnhancement.h"
+#elif defined(QCOM)
+#include "qcom/DisplayColorCalibration.h"
+#include "qcom/SunlightEnhancement.h"
+#endif
 
 using android::hardware::configureRpcThreadpool;
 using android::hardware::joinRpcThreadpool;
