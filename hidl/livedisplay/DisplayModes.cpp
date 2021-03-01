@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 #define LOG_TAG "DisplayModesService"
 
-#include "DisplayModes.h"
+#include <livedisplay/samsung/DisplayModes.h>
 #include <android-base/logging.h>
 #include <fstream>
 
