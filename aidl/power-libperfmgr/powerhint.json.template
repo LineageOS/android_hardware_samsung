@@ -409,10 +409,10 @@
             "Value": "585000000"
         },
         {
-            "PowerHint": "NOT_INTERACTIVE",
+            "PowerHint": "INTERACTIVE",
             "Node": "TouchscreenEnable",
             "Duration": 0,
-            "Value": "0"
+            "Value": "1"
         },
         {
             "PowerHint": "DOUBLE_TAP_TO_WAKE",
