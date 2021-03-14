@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.power@-service.pixel-libperfmgr"
+#define LOG_TAG "android.hardware.power@-service.samsung-libperfmgr"
 #define ATRACE_TAG (ATRACE_TAG_POWER | ATRACE_TAG_HAL)
 
 #include <fcntl.h>
@@ -65,15 +65,14 @@ bool InteractionHandler::Init() {
     if (mState != INTERACTION_STATE_UNINITIALIZED)
         return true;
 
-    int fd = fb_idle_open();
-    if (fd < 0)
-        return false;
-    mIdleFd = fd;
+    mIdleFd = fb_idle_open();
 
     mEventFd = eventfd(0, EFD_NONBLOCK);
     if (mEventFd < 0) {
         ALOGE("Unable to create event fd (%d)", errno);
-        close(mIdleFd);
+        if (mIdleFd >= 0) {
+            close(mIdleFd);
+        }
         return false;
     }
 
@@ -96,7 +95,9 @@ void InteractionHandler::Exit() {
     mThread->join();
 
     close(mEventFd);
-    close(mIdleFd);
+    if (mIdleFd >= 0) {
+        close(mIdleFd);
+    }
 }
 
 void InteractionHandler::PerfLock() {
@@ -209,6 +210,18 @@ void InteractionHandler::WaitForIdle(int32_t wait_ms, int32_t timeout_ms) {
         return;
     } else if (ret < 0) {
         ALOGE("%s: error in poll while waiting", __func__);
+        return;
+    }
+
+    if (mIdleFd < 0) {
+        ret = poll(pfd, 1, timeout_ms);
+        if (ret > 0) {
+            ALOGV("%s: wait for duration aborted", __func__);
+            return;
+        } else if (ret < 0) {
+            ALOGE("%s: Error on waiting for duration (%zd)", __func__, ret);
+            return;
+        }
         return;
     }
 
