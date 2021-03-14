@@ -171,10 +171,21 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
 
 ndk::ScopedAStatus Power::isModeSupported(Mode type, bool *_aidl_return) {
     bool supported = mHintManager->IsHintSupported(toString(type));
-    // LOW_POWER handled insides PowerHAL specifically
-    if (type == Mode::LOW_POWER) {
-        supported = true;
+    
+    switch (type) {
+        case Mode::LOW_POWER: // LOW_POWER handled insides PowerHAL specifically
+            supported = true;
+            break;
+        case Mode::DOUBLE_TAP_TO_WAKE:
+            supported = true;
+            break;
+        case Mode::INTERACTIVE:
+            supported = true;
+            break;
+        default:
+            break;
     }
+
     LOG(INFO) << "Power mode " << toString(type) << " isModeSupported: " << supported;
     *_aidl_return = supported;
     return ndk::ScopedAStatus::ok();
