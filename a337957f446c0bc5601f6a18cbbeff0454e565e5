@@ -22,6 +22,30 @@
       "revId": "a337957f446c0bc5601f6a18cbbeff0454e565e5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a96eb0_ecbc3e1c",
+        "filename": "aidl/power-libperfmgr/Power.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 20451
+      },
+      "writtenOn": "2021-03-20T15:08:27Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "b4365f23_cf215bb3",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 4
+      },
+      "revId": "a337957f446c0bc5601f6a18cbbeff0454e565e5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
