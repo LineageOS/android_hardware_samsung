@@ -35,11 +35,13 @@ cc_binary {
         "libbinder_ndk",
         "libperfmgr",
         "pixel-power-ext-ndk_platform",
+        "vendor.lineage.power-ndk_platform",
     ],
     srcs: [
         "service.cpp",
         "Power.cpp",
         "PowerExt.cpp",
-        "InteractionHandler.cpp"
+        "InteractionHandler.cpp",
+        "LineagePower.cpp"
     ],
 }
