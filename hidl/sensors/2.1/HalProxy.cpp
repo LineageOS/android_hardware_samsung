@@ -123,7 +123,8 @@ Return<void> HalProxy::getSensorsList_2_1(ISensorsV2_1::getSensorsList_2_1_cb _h
             dst.requiredPermission = "";
         }
 
-        if (dst.typeAsString == "com.samsung.sensor.physical_proximity") {
+        if (dst.typeAsString == "com.samsung.sensor.physical_proximity"
+            || dst.typeAsString == "com.samsung.sensor.touch_proximity") {
             ALOGI("Fixing com.samsung.sensor.physical_proximity");
             dst.type = V2_1::SensorType::PROXIMITY;
             dst.typeAsString = SENSOR_STRING_TYPE_PROXIMITY;
