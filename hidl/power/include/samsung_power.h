@@ -19,6 +19,16 @@
 #define SAMSUNG_POWER_H
 
 /*
+ * Board specific defines
+ *
+ * In case your kernel has fb notifier callback implemented in the
+ * touchscreen or touchkey driver, override this header in your device
+ * tree and uncomment these lines.
+ */
+//#define HAS_TOUCHSCREEN_FB_NOTIFIER_CALLBACK 1
+//#define HAS_TOUCHKEY_FB_NOTIFIER_CALLBACK 1
+
+/*
  * Board specific nodes
  *
  * If your kernel exposes these controls in another place, you can either

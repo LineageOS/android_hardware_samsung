@@ -21,6 +21,7 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 #include <vendor/lineage/power/1.0/ILineagePower.h>
+#include "samsung_power.h"
 
 namespace android {
 namespace hardware {
@@ -65,9 +66,13 @@ struct Power : public IPower, public ILineagePower {
     void sendBoost(int duration_us);
 
     bool initialized;
+#ifndef HAS_TOUCHKEY_FB_NOTIFIER_CALLBACK
     bool touchkeys_blocked;
     std::string sec_touchkey;
+#endif
+#ifndef HAS_TOUCHSCREEN_FB_NOTIFIER_CALLBACK
     std::string sec_touchscreen;
+#endif
     PowerProfile current_profile;
     std::vector<std::string> hispeed_freqs;
     std::vector<std::string> max_freqs;

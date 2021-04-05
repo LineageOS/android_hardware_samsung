@@ -22,7 +22,6 @@
 #include <fstream>
 #include <iostream>
 #include "samsung_lights.h"
-#include "samsung_power.h"
 
 namespace android {
 namespace hardware {
@@ -63,10 +62,13 @@ Return<void> Power::setInteractive(bool interactive) {
         }
     }
 
+#ifndef HAS_TOUCHSCREEN_FB_NOTIFIER_CALLBACK
     if (!sec_touchscreen.empty()) {
         set(sec_touchscreen, interactive ? "1" : "0");
     }
+#endif
 
+#ifndef HAS_TOUCHKEY_FB_NOTIFIER_CALLBACK
     if (!sec_touchkey.empty()) {
         if (!interactive) {
             int button_state = get(sec_touchkey, -1);
@@ -90,6 +92,7 @@ Return<void> Power::setInteractive(bool interactive) {
             set(sec_touchkey, interactive ? "1" : "0");
         }
     }
+#endif
 
 out:
     for (const std::string& interactivePath : cpuInteractivePaths) {
@@ -187,13 +190,18 @@ void Power::findInputNodes() {
         for (auto& de2 : std::filesystem::directory_iterator(de.path(), ec)) {
             if (!ec && de2.path().string().find("/name") != std::string::npos) {
                 std::string content = get<std::string>(de2.path(), "");
+#ifndef HAS_TOUCHKEY_FB_NOTIFIER_CALLBACK
                 if (content == "sec_touchkey") {
                     sec_touchkey = de.path().string().append("/enabled");
                     LOG(INFO) << "found sec_touchkey: " << sec_touchkey;
-                } else if (content == "sec_touchscreen") {
+                }
+#endif
+#ifndef HAS_TOUCHSCREEN_FB_NOTIFIER_CALLBACK
+                if (content == "sec_touchscreen") {
                     sec_touchscreen = de.path().string().append("/enabled");
                     LOG(INFO) << "found sec_touchscreen: " << sec_touchscreen;
                 }
+#endif
             }
         }
     }
