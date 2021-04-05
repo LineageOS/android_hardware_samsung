@@ -35,6 +35,14 @@ LOCAL_SHARED_LIBRARIES := \
     android.hardware.power@1.0 \
     vendor.lineage.power@1.0
 
+ifeq ($(TARGET_HAS_TOUCHSCREEN_FB_NOTIFIER_CALLBACK),true)
+    LOCAL_CFLAGS += -DHAS_TOUCHSCREEN_FB_NOTIFIER_CALLBACK
+endif
+
+ifeq ($(TARGET_HAS_TOUCHKEY_FB_NOTIFIER_CALLBACK),true)
+    LOCAL_CFLAGS += -DHAS_TOUCHKEY_FB_NOTIFIER_CALLBACK
+endif
+
 LOCAL_STATIC_LIBRARIES := libc++fs
 
 LOCAL_MODULE := android.hardware.power@1.0-service.exynos
