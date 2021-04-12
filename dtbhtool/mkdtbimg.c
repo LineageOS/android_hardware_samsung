@@ -44,6 +44,7 @@ int usage(void)
     fprintf(stderr,"usage: mkdtimg\n"
             "       --dt_dir <dtb path>\n"
             "       -o|--output <filename>\n"
+            "       -s <pagefile size>\n"
             );
     return 1;
 }
