@@ -97,6 +97,9 @@ PowerHintSession::~PowerHintSession() {
 }
 
 int PowerHintSession::setUclamp(int32_t tid, int32_t min, int32_t max) {
+    // We don't need lock as currently Power HAL is a single thread service
+    // TODO(jimmyshiu@): need set a timeout for the boost, e.g. if we didn't get actual duration sample
+    // within the timeout, we need start reduce/reset the boost.
     sched_attr attr = sched_attr();
     attr.size = sizeof(attr);
 
