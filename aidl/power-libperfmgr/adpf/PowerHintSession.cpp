@@ -59,46 +59,45 @@ using ::android::base::StringPrintf;
 
 PowerHintSession::PowerHintSession(int32_t tgid, int32_t uid, const std::vector<int32_t> &threadIds,
                                    int64_t durationNanos) {
-    ALOGD("PowerHintSession is ready to process hints");
     mDescriptor = new AppHintDesc(tgid, uid, threadIds);
     // TODO(jimmyshiu@): use better control algorithms
-    mDescriptor->dur_scale = 1.0f;
-    mDescriptor->tolerance = 0.2f;
     mDescriptor->duration = std::chrono::nanoseconds(durationNanos);
 
     if (ATRACE_ENABLED()) {
-        std::string sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-duration", mDescriptor->tgid,
-                                      mDescriptor->uid, this);
+        std::string sz =
+                StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-target", mDescriptor->tgid,
+                             mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), (int64_t)mDescriptor->duration.count());
-        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-active", mDescriptor->tgid, mDescriptor->uid,
-                          this);
+        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-active", mDescriptor->tgid,
+                          mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), mDescriptor->is_active);
     }
-    ALOGD("PowerHintSession create: %s", mDescriptor->toString().c_str());
+    ALOGV("PowerHintSession created: %s", mDescriptor->toString().c_str());
 }
 
 PowerHintSession::~PowerHintSession() {
-    ALOGD("PowerHintSession delete: %s", mDescriptor->toString().c_str());
+    close();
+    ALOGV("PowerHintSession deleted: %s", mDescriptor->toString().c_str());
     if (ATRACE_ENABLED()) {
-        std::string sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-duration", mDescriptor->tgid,
-                                      mDescriptor->uid, this);
+        std::string sz =
+                StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-target", mDescriptor->tgid,
+                             mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), 0);
-        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-min", mDescriptor->tgid, mDescriptor->uid,
-                          this);
+        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-min", mDescriptor->tgid,
+                          mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), 0);
-        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-max", mDescriptor->tgid, mDescriptor->uid,
-                          this);
+        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-max", mDescriptor->tgid,
+                          mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), 0);
-        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-actual_latest", mDescriptor->tgid,
-                          mDescriptor->uid, this);
+        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-actl_last", mDescriptor->tgid,
+                          mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), 0);
     }
     delete mDescriptor;
 }
 
 int PowerHintSession::setUclamp(int32_t tid, int32_t min, int32_t max) {
-    struct sched_attr attr;
-    memset(&attr, 0, sizeof(attr));
+    sched_attr attr = sched_attr();
     attr.size = sizeof(attr);
 
     attr.sched_flags = (SCHED_FLAG_KEEP_ALL | SCHED_FLAG_UTIL_CLAMP);
@@ -108,22 +107,23 @@ int PowerHintSession::setUclamp(int32_t tid, int32_t min, int32_t max) {
     int ret = sched_setattr(tid, &attr, 0);
     if (ret) {
         ALOGW("sched_setattr failed for thread %d, err=%d", tid, ret);
-        return EX_ILLEGAL_STATE;
+        return ret;
     }
-    ALOGD("PowerHintSession tid: %d, uclamp(%d, %d)", tid, min, max);
+    ALOGV("PowerHintSession tid: %d, uclamp(%d, %d)", tid, min, max);
     return 0;
 }
 
 ndk::ScopedAStatus PowerHintSession::pause() {
     if (!mDescriptor->is_active)
         return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_STATE);
-    for (auto tid : mDescriptor->threadIds) {
+    for (const auto tid : mDescriptor->threadIds) {
         setUclamp(tid, 0, 1024);
     }
     mDescriptor->is_active = false;
     if (ATRACE_ENABLED()) {
-        std::string sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-active", mDescriptor->tgid,
-                                      mDescriptor->uid, this);
+        std::string sz =
+                StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-active", mDescriptor->tgid,
+                             mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), mDescriptor->is_active);
     }
     return ndk::ScopedAStatus::ok();
@@ -132,20 +132,21 @@ ndk::ScopedAStatus PowerHintSession::pause() {
 ndk::ScopedAStatus PowerHintSession::resume() {
     if (mDescriptor->is_active)
         return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_STATE);
-    for (auto tid : mDescriptor->threadIds) {
+    for (const auto tid : mDescriptor->threadIds) {
         setUclamp(tid, mDescriptor->current_min, mDescriptor->current_max);
     }
     mDescriptor->is_active = true;
     if (ATRACE_ENABLED()) {
-        std::string sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-active", mDescriptor->tgid,
-                                      mDescriptor->uid, this);
+        std::string sz =
+                StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-active", mDescriptor->tgid,
+                             mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), mDescriptor->is_active);
     }
     return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus PowerHintSession::close() {
-    for (auto tid : mDescriptor->threadIds) {
+    for (const auto tid : mDescriptor->threadIds) {
         setUclamp(tid, 0, 1024);
     }
     return ndk::ScopedAStatus::ok();
@@ -156,7 +157,7 @@ ndk::ScopedAStatus PowerHintSession::updateTargetWorkDuration(int64_t targetDura
         ALOGE("Error: targetDurationNanos(%" PRId64 ") should bigger than 0", targetDurationNanos);
         return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_ARGUMENT);
     }
-    ALOGD("update target duration: %" PRId64 " ~ %" PRId64 " ns", targetDurationNanos,
+    ALOGV("update target duration: %" PRId64 " ~ %" PRId64 " ns", targetDurationNanos,
           (int64_t)(targetDurationNanos * (1.0 - mDescriptor->tolerance)));
     /* TODO(jimmyshiu@): if we have some good history then we should probably adjust
      * the utilization limits based on the difference between the old and
@@ -166,8 +167,9 @@ ndk::ScopedAStatus PowerHintSession::updateTargetWorkDuration(int64_t targetDura
     mDescriptor->duration = std::chrono::nanoseconds(targetDurationNanos);
 
     if (ATRACE_ENABLED()) {
-        std::string sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-duration", mDescriptor->tgid,
-                                      mDescriptor->uid, this);
+        std::string sz =
+                StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-target", mDescriptor->tgid,
+                             mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), (int64_t)mDescriptor->duration.count());
     }
 
@@ -205,26 +207,27 @@ ndk::ScopedAStatus PowerHintSession::reportActualWorkDuration(
     }
 
     if (ATRACE_ENABLED()) {
-        std::string sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-min", mDescriptor->tgid,
-                                      mDescriptor->uid, this);
+        std::string sz = StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-min", mDescriptor->tgid,
+                                      mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), mDescriptor->current_min);
-        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-max", mDescriptor->tgid, mDescriptor->uid,
-                          this);
+        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-max", mDescriptor->tgid,
+                          mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), mDescriptor->current_max);
-        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%p-actual_latest", mDescriptor->tgid,
-                          mDescriptor->uid, this);
+        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-actl_last", mDescriptor->tgid,
+                          mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), actualDurationNanos);
     }
 
     /* apply to all the threads in the group */
-    for (auto tid : mDescriptor->threadIds) {
+    for (const auto tid : mDescriptor->threadIds) {
         setUclamp(tid, mDescriptor->current_min, mDescriptor->current_max);
     }
     return ndk::ScopedAStatus::ok();
 }
 
 std::string AppHintDesc::toString() const {
-    std::string out = StringPrintf("session %p\n", this);
+    std::string out =
+            StringPrintf("session %" PRIxPTR "\n", reinterpret_cast<uintptr_t>(this) & 0xffff);
     const int64_t durationNanos = duration.count();
     out.append(StringPrintf("  duration: %" PRId64 " ~ %" PRId64 " ns\n", durationNanos,
                             (int64_t)(durationNanos * (1.0 - tolerance))));
