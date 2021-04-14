@@ -57,6 +57,7 @@ class Power : public ::aidl::android::hardware::power::BnPower {
     std::atomic<bool> mVRModeOn;
     std::atomic<bool> mSustainedPerfModeOn;
     const int64_t mAdpfRate;
+    // TODO(jimmyshiu@): hold weak_ptr of PowerHintSession
 };
 
 }  // namespace pixel

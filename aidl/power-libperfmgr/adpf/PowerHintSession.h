@@ -41,7 +41,9 @@ struct AppHintDesc {
           duration(0LL),
           current_min(0),
           current_max(1024),
-          is_active(true) {}
+          is_active(true),
+          dur_scale(1.0f),
+          tolerance(0.2f) {}
     std::string toString() const;
     const int32_t tgid;
     const int32_t uid;
@@ -50,9 +52,10 @@ struct AppHintDesc {
     int current_min;
     int current_max;
     bool apply;
-    float dur_scale;
-    float tolerance;
     bool is_active;
+    // TODO(jimmyshiu@): better tunable
+    const float dur_scale;
+    const float tolerance;
 };
 
 class PowerHintSession : public ::aidl::android::hardware::power::BnPowerHintSession {
