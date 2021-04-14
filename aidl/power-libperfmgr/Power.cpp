@@ -258,6 +258,7 @@ binder_status_t Power::dump(int fd, const char **, uint32_t) {
     if (!::android::base::WriteStringToFd(buf, fd)) {
         PLOG(ERROR) << "Failed to dump state to fd";
     }
+    // TODO(jimmyshiu@): dump weak_ptr of PowerHintSession
     fsync(fd);
     return STATUS_OK;
 }
