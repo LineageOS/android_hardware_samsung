@@ -51,6 +51,11 @@ struct sched_attr {
 };
 
 int sched_setattr(int pid, struct sched_attr *attr, unsigned int flags) {
+    static const bool kPowerHalAdpfUclamp =
+            ::android::base::GetBoolProperty("vendor.powerhal.adpf.uclamp", true);
+    if (!kPowerHalAdpfUclamp) {
+        return 0;
+    }
     return syscall(__NR_sched_setattr, pid, attr, flags);
 }
 }  // namespace
@@ -98,8 +103,8 @@ PowerHintSession::~PowerHintSession() {
 
 int PowerHintSession::setUclamp(int32_t tid, int32_t min, int32_t max) {
     // We don't need lock as currently Power HAL is a single thread service
-    // TODO(jimmyshiu@): need set a timeout for the boost, e.g. if we didn't get actual duration sample
-    // within the timeout, we need start reduce/reset the boost.
+    // TODO(jimmyshiu@): need set a timeout for the boost, e.g. if we didn't get actual duration
+    // sample within the timeout, we need start reduce/reset the boost.
     sched_attr attr = sched_attr();
     attr.size = sizeof(attr);
 
@@ -219,6 +224,9 @@ ndk::ScopedAStatus PowerHintSession::reportActualWorkDuration(
         sz = StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-actl_last", mDescriptor->tgid,
                           mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), actualDurationNanos);
+        sz = StringPrintf("%" PRId32 "-%" PRId32 "-%" PRIxPTR "-target", mDescriptor->tgid,
+                             mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
+        ATRACE_INT(sz.c_str(), (int64_t)mDescriptor->duration.count());
     }
 
     /* apply to all the threads in the group */
