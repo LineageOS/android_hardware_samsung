@@ -18,6 +18,7 @@
 #define LOG_TAG "android.hardware.power-service.samsung.ext-libperfmgr"
 
 #include "PowerExt.h"
+#include "PowerSessionManager.h"
 
 #include <mutex>
 
@@ -46,6 +47,7 @@ ndk::ScopedAStatus PowerExt::setMode(const std::string &mode, bool enabled) {
     } else {
         mHintManager->EndHint(mode);
     }
+    PowerSessionManager::getInstance().updateHintMode(mode, enabled);
 
     return ndk::ScopedAStatus::ok();
 }
