@@ -16,11 +16,13 @@
 
 #pragma once
 
-#include <unordered_map>
-
 #include <aidl/android/hardware/power/BnPowerHintSession.h>
 #include <aidl/android/hardware/power/WorkDuration.h>
-#include <utils/Mutex.h>
+#include <utils/Looper.h>
+#include <utils/Thread.h>
+
+#include <mutex>
+#include <unordered_map>
 
 namespace aidl {
 namespace google {
@@ -28,37 +30,43 @@ namespace hardware {
 namespace power {
 namespace impl {
 namespace pixel {
-namespace adpf {
 
+using aidl::android::hardware::power::BnPowerHintSession;
 using aidl::android::hardware::power::WorkDuration;
+using ::android::Message;
+using ::android::MessageHandler;
+using ::android::sp;
+using std::chrono::milliseconds;
 using std::chrono::nanoseconds;
+using std::chrono::steady_clock;
+using std::chrono::time_point;
 
 struct AppHintDesc {
-    AppHintDesc(int32_t tgid, int32_t uid, std::vector<int> threadIds)
+    AppHintDesc(int32_t tgid, int32_t uid, std::vector<int> threadIds, int uclamp_min)
         : tgid(tgid),
           uid(uid),
           threadIds(std::move(threadIds)),
           duration(0LL),
-          current_min(0),
-          current_max(1024),
+          current_min(uclamp_min),
           is_active(true),
-          dur_scale(1.0f),
-          tolerance(0.2f) {}
+          update_count(0),
+          integral_error(0),
+          previous_error(0) {}
     std::string toString() const;
     const int32_t tgid;
     const int32_t uid;
     const std::vector<int> threadIds;
     nanoseconds duration;
     int current_min;
-    int current_max;
-    bool apply;
-    bool is_active;
-    // TODO(jimmyshiu@): better tunable
-    const float dur_scale;
-    const float tolerance;
+    // status
+    std::atomic<bool> is_active;
+    // pid
+    uint64_t update_count;
+    int64_t integral_error;
+    int64_t previous_error;
 };
 
-class PowerHintSession : public ::aidl::android::hardware::power::BnPowerHintSession {
+class PowerHintSession : public BnPowerHintSession {
   public:
     PowerHintSession(int32_t tgid, int32_t uid, const std::vector<int32_t> &threadIds,
                      int64_t durationNanos);
@@ -69,13 +77,39 @@ class PowerHintSession : public ::aidl::android::hardware::power::BnPowerHintSes
     ndk::ScopedAStatus updateTargetWorkDuration(int64_t targetDurationNanos) override;
     ndk::ScopedAStatus reportActualWorkDuration(
             const std::vector<WorkDuration> &actualDurations) override;
+    bool isActive();
+    bool isStale();
 
   private:
-    static int setUclamp(int32_t tid, int32_t max, int32_t min);
+    class StaleHandler : public MessageHandler {
+      public:
+        StaleHandler(PowerHintSession *session, int64_t timeout_ms)
+            : kStaleTimeout(timeout_ms),
+              mSession(session),
+              mIsMonitoringStale(false),
+              mLastUpdatedTime(steady_clock::now()) {}
+        void handleMessage(const Message &message) override;
+        void updateStaleTimer();
+        time_point<steady_clock> getStaleTime();
+
+      private:
+        const milliseconds kStaleTimeout;
+        PowerHintSession *mSession;
+        std::atomic<bool> mIsMonitoringStale;
+        std::atomic<time_point<steady_clock>> mLastUpdatedTime;
+        std::mutex mStaleLock;
+    };
+
+  private:
+    void setStale();
+    void updateUniveralBoostMode();
+    int setUclamp(int32_t max, int32_t min);
     AppHintDesc *mDescriptor = nullptr;
+    sp<StaleHandler> mStaleHandler;
+    sp<MessageHandler> mPowerManagerHandler;
+    std::mutex mLock;
 };
 
-}  // namespace adpf
 }  // namespace pixel
 }  // namespace impl
 }  // namespace power
