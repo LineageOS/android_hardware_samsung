@@ -123,7 +123,7 @@
                 "aot_enable,0",
                 "aot_enable,1"
             ],
-            "DefaultIndex": 0,
+            "DefaultIndex": 0
         },
         {
             "Name": "PowerHALMainState",
