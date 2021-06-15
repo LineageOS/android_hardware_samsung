@@ -53,8 +53,8 @@ class PowerSessionManager : public MessageHandler {
     void setHintManager(std::shared_ptr<HintManager> const &hint_manager);
 
     // Singleton
-    static PowerSessionManager &getInstance() {
-        static PowerSessionManager instance;
+    static sp<PowerSessionManager> getInstance() {
+        static sp<PowerSessionManager> instance = new PowerSessionManager();
         return instance;
     }
 
@@ -80,17 +80,17 @@ class PowerHintMonitor : public Thread {
   public:
     void start();
     bool threadLoop() override;
-    Looper *getLooper();
+    sp<Looper> getLooper();
     // Singleton
-    static PowerHintMonitor &getInstance() {
-        static PowerHintMonitor instance;
+    static sp<PowerHintMonitor> getInstance() {
+        static sp<PowerHintMonitor> instance = new PowerHintMonitor();
         return instance;
     }
     PowerHintMonitor(PowerHintMonitor const &) = delete;
     void operator=(PowerHintMonitor const &) = delete;
 
   private:
-    Looper *mLooper;
+    sp<Looper> mLooper;
     // Singleton
     PowerHintMonitor() : Thread(false), mLooper(new Looper(true)) {}
 };
