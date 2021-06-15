@@ -146,7 +146,7 @@ PowerHintSession::PowerHintSession(int32_t tgid, int32_t uid, const std::vector<
     mDescriptor = new AppHintDesc(tgid, uid, threadIds, sUclampCap);
     mDescriptor->duration = std::chrono::nanoseconds(durationNanos);
     mStaleHandler = sp<StaleHandler>(new StaleHandler(this, sStaleTimeoutMs));
-    mPowerManagerHandler = sp<MessageHandler>(&PowerSessionManager::getInstance());
+    mPowerManagerHandler = PowerSessionManager::getInstance();
 
     if (ATRACE_ENABLED()) {
         std::string sz =
@@ -157,7 +157,7 @@ PowerHintSession::PowerHintSession(int32_t tgid, int32_t uid, const std::vector<
                           mDescriptor->uid, reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), mDescriptor->is_active.load());
     }
-    PowerSessionManager::getInstance().addPowerSession(this);
+    PowerSessionManager::getInstance()->addPowerSession(this);
     ALOGD("PowerHintSession created: %s", mDescriptor->toString().c_str());
 }
 
@@ -180,7 +180,7 @@ PowerHintSession::~PowerHintSession() {
 }
 
 void PowerHintSession::updateUniveralBoostMode() {
-    PowerHintMonitor::getInstance().getLooper()->sendMessage(mPowerManagerHandler, NULL);
+    PowerHintMonitor::getInstance()->getLooper()->sendMessage(mPowerManagerHandler, NULL);
 }
 
 int PowerHintSession::setUclamp(int32_t min, int32_t max) {
@@ -247,10 +247,10 @@ ndk::ScopedAStatus PowerHintSession::resume() {
 }
 
 ndk::ScopedAStatus PowerHintSession::close() {
-    PowerHintMonitor::getInstance().getLooper()->removeMessages(mStaleHandler);
+    PowerHintMonitor::getInstance()->getLooper()->removeMessages(mStaleHandler);
     // Reset to (0, 1024) uclamp value -- instead of threads' original setting.
     setUclamp(0, 1024);
-    PowerSessionManager::getInstance().removePowerSession(this);
+    PowerSessionManager::getInstance()->removePowerSession(this);
     updateUniveralBoostMode();
     return ndk::ScopedAStatus::ok();
 }
@@ -291,7 +291,7 @@ ndk::ScopedAStatus PowerHintSession::reportActualWorkDuration(
         ALOGE("Error: shouldn't report duration during pause state.");
         return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_STATE);
     }
-    if (PowerHintMonitor::getInstance().isRunning() && isStale()) {
+    if (PowerHintMonitor::getInstance()->isRunning() && isStale()) {
         if (ATRACE_ENABLED()) {
             std::string sz = StringPrintf("adpf.%" PRId32 "-%" PRId32 "-%" PRIxPTR "-stale",
                                           mDescriptor->tgid, mDescriptor->uid,
@@ -401,7 +401,7 @@ void PowerHintSession::setStale() {
 
 void PowerHintSession::StaleHandler::updateStaleTimer() {
     std::lock_guard<std::mutex> guard(mStaleLock);
-    if (PowerHintMonitor::getInstance().isRunning()) {
+    if (PowerHintMonitor::getInstance()->isRunning()) {
         auto when = getStaleTime();
         auto now = std::chrono::steady_clock::now();
         mLastUpdatedTime.store(now);
@@ -410,7 +410,7 @@ void PowerHintSession::StaleHandler::updateStaleTimer() {
         }
         if (!mIsMonitoringStale.load()) {
             auto next = getStaleTime();
-            PowerHintMonitor::getInstance().getLooper()->sendMessageDelayed(
+            PowerHintMonitor::getInstance()->getLooper()->sendMessageDelayed(
                     duration_cast<nanoseconds>(next - now).count(), this, NULL);
             mIsMonitoringStale.store(true);
         }
@@ -432,7 +432,7 @@ void PowerHintSession::StaleHandler::handleMessage(const Message &) {
         return;
     }
     // Schedule for the next checking time.
-    PowerHintMonitor::getInstance().getLooper()->sendMessageDelayed(
+    PowerHintMonitor::getInstance()->getLooper()->sendMessageDelayed(
             duration_cast<nanoseconds>(when - now).count(), this, NULL);
 }
 
