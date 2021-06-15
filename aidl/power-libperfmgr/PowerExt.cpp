@@ -47,7 +47,7 @@ ndk::ScopedAStatus PowerExt::setMode(const std::string &mode, bool enabled) {
     } else {
         mHintManager->EndHint(mode);
     }
-    PowerSessionManager::getInstance().updateHintMode(mode, enabled);
+    PowerSessionManager::getInstance()->updateHintMode(mode, enabled);
 
     return ndk::ScopedAStatus::ok();
 }

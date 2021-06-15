@@ -116,7 +116,7 @@ bool PowerHintMonitor::threadLoop() {
     return true;
 }
 
-Looper *PowerHintMonitor::getLooper() {
+sp<Looper> PowerHintMonitor::getLooper() {
     return mLooper;
 }
 
