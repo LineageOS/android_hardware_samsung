@@ -54,7 +54,8 @@ Power::Power(std::shared_ptr<HintManager> hm)
       mInteractionHandler(nullptr),
       mVRModeOn(false),
       mSustainedPerfModeOn(false),
-      mAdpfRate(::android::base::GetIntProperty(kPowerHalAdpfRateProp, kPowerHalAdpfRateDefault)) {
+      mAdpfRateNs(
+              ::android::base::GetIntProperty(kPowerHalAdpfRateProp, kPowerHalAdpfRateDefault)) {
     mInteractionHandler = std::make_unique<InteractionHandler>(mHintManager);
     mInteractionHandler->Init();
 
@@ -89,7 +90,7 @@ Power::Power(std::shared_ptr<HintManager> hm)
     }
 
     // Now start to take powerhint
-    LOG(INFO) << "PowerHAL ready to take hints, Adpf update rate: " << mAdpfRate;
+    LOG(INFO) << "PowerHAL ready to take hints, Adpf update rate: " << mAdpfRateNs;
 }
 
 ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
@@ -260,7 +261,6 @@ binder_status_t Power::dump(int fd, const char **, uint32_t) {
     if (!::android::base::WriteStringToFd(buf, fd)) {
         PLOG(ERROR) << "Failed to dump state to fd";
     }
-    // TODO(jimmyshiu@): dump weak_ptr of PowerHintSession
     fsync(fd);
     return STATUS_OK;
 }
@@ -269,7 +269,7 @@ ndk::ScopedAStatus Power::createHintSession(int32_t tgid, int32_t uid,
                                             const std::vector<int32_t> &threadIds,
                                             int64_t durationNanos,
                                             std::shared_ptr<IPowerHintSession> *_aidl_return) {
-    if (mAdpfRate == -1) {
+    if (mAdpfRateNs <= 0) {
         *_aidl_return = nullptr;
         return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
@@ -278,15 +278,15 @@ ndk::ScopedAStatus Power::createHintSession(int32_t tgid, int32_t uid,
         *_aidl_return = nullptr;
         return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_ARGUMENT);
     }
-    std::shared_ptr<IPowerHintSession> session =
-            ndk::SharedRefBase::make<PowerHintSession>(tgid, uid, threadIds, durationNanos);
+    std::shared_ptr<IPowerHintSession> session = ndk::SharedRefBase::make<PowerHintSession>(
+            tgid, uid, threadIds, durationNanos, nanoseconds(mAdpfRateNs));
     *_aidl_return = session;
     return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus Power::getHintSessionPreferredRate(int64_t *outNanoseconds) {
-    *outNanoseconds = mAdpfRate;
-    if (mAdpfRate == -1) {
+    *outNanoseconds = mAdpfRateNs;
+    if (mAdpfRateNs <= 0) {
         return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
 

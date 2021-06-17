@@ -68,8 +68,8 @@ struct AppHintDesc {
 
 class PowerHintSession : public BnPowerHintSession {
   public:
-    PowerHintSession(int32_t tgid, int32_t uid, const std::vector<int32_t> &threadIds,
-                     int64_t durationNanos);
+    explicit PowerHintSession(int32_t tgid, int32_t uid, const std::vector<int32_t> &threadIds,
+                              int64_t durationNanos, nanoseconds adpfRate);
     ~PowerHintSession();
     ndk::ScopedAStatus close() override;
     ndk::ScopedAStatus pause() override;
@@ -83,17 +83,13 @@ class PowerHintSession : public BnPowerHintSession {
   private:
     class StaleHandler : public MessageHandler {
       public:
-        StaleHandler(PowerHintSession *session, int64_t timeout_ms)
-            : kStaleTimeout(timeout_ms),
-              mSession(session),
-              mIsMonitoringStale(false),
-              mLastUpdatedTime(steady_clock::now()) {}
+        StaleHandler(PowerHintSession *session)
+            : mSession(session), mIsMonitoringStale(false), mLastUpdatedTime(steady_clock::now()) {}
         void handleMessage(const Message &message) override;
         void updateStaleTimer();
         time_point<steady_clock> getStaleTime();
 
       private:
-        const milliseconds kStaleTimeout;
         PowerHintSession *mSession;
         std::atomic<bool> mIsMonitoringStale;
         std::atomic<time_point<steady_clock>> mLastUpdatedTime;
@@ -104,10 +100,12 @@ class PowerHintSession : public BnPowerHintSession {
     void setStale();
     void updateUniveralBoostMode();
     int setUclamp(int32_t max, int32_t min);
+    std::string getIdString() const;
     AppHintDesc *mDescriptor = nullptr;
     sp<StaleHandler> mStaleHandler;
     sp<MessageHandler> mPowerManagerHandler;
     std::mutex mLock;
+    const nanoseconds kAdpfRate;
 };
 
 }  // namespace pixel

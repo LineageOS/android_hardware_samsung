@@ -37,7 +37,7 @@ void PowerSessionManager::setHintManager(std::shared_ptr<HintManager> const &hin
 }
 
 void PowerSessionManager::updateHintMode(const std::string &mode, bool enabled) {
-    ALOGD("PowerSessionManager::updateHintMode: mode: %s, enabled: %d", mode.c_str(), enabled);
+    ALOGV("PowerSessionManager::updateHintMode: mode: %s, enabled: %d", mode.c_str(), enabled);
     if (enabled && mode.compare(0, 8, "REFRESH_") == 0) {
         if (mode.compare("REFRESH_120FPS") == 0) {
             mDisplayRefreshRate = 120;
@@ -63,19 +63,31 @@ void PowerSessionManager::removePowerSession(PowerHintSession *session) {
     mSessions.erase(session);
 }
 
-bool PowerSessionManager::isAnySessionActive() {
+std::optional<bool> PowerSessionManager::isAnySessionActive() {
     std::lock_guard<std::mutex> guard(mLock);
+    bool active = false;
     for (PowerHintSession *s : mSessions) {
         // session active and not stale is actually active.
         if (s->isActive() && !s->isStale()) {
-            return true;
+            active = true;
+            break;
         }
     }
-    return false;
+    if (active == mActive) {
+        return std::nullopt;
+    } else {
+        mActive = active;
+    }
+
+    return active;
 }
 
 void PowerSessionManager::handleMessage(const Message &) {
-    if (isAnySessionActive()) {
+    auto active = isAnySessionActive();
+    if (!active.has_value()) {
+        return;
+    }
+    if (active.value()) {
         disableSystemTopAppBoost();
     } else {
         enableSystemTopAppBoost();
@@ -84,20 +96,14 @@ void PowerSessionManager::handleMessage(const Message &) {
 
 void PowerSessionManager::enableSystemTopAppBoost() {
     if (mHintManager) {
-        ALOGD("PowerSessionManager::enableSystemTopAppBoost!!");
-        if (ATRACE_ENABLED()) {
-            ATRACE_INT(kDisableBoostHintName.c_str(), 0);
-        }
+        ALOGV("PowerSessionManager::enableSystemTopAppBoost!!");
         mHintManager->EndHint(kDisableBoostHintName);
     }
 }
 
 void PowerSessionManager::disableSystemTopAppBoost() {
     if (mHintManager) {
-        ALOGD("PowerSessionManager::disableSystemTopAppBoost!!");
-        if (ATRACE_ENABLED()) {
-            ATRACE_INT(kDisableBoostHintName.c_str(), 1);
-        }
+        ALOGV("PowerSessionManager::disableSystemTopAppBoost!!");
         mHintManager->DoHint(kDisableBoostHintName);
     }
 }
