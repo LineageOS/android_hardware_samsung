@@ -23,6 +23,7 @@
 #include <utils/Looper.h>
 
 #include <mutex>
+#include <optional>
 #include <unordered_set>
 
 namespace aidl {
@@ -48,7 +49,7 @@ class PowerSessionManager : public MessageHandler {
     // monitoring session status
     void addPowerSession(PowerHintSession *session);
     void removePowerSession(PowerHintSession *session);
-    bool isAnySessionActive();
+
     void handleMessage(const Message &message) override;
     void setHintManager(std::shared_ptr<HintManager> const &hint_manager);
 
@@ -59,19 +60,22 @@ class PowerSessionManager : public MessageHandler {
     }
 
   private:
+    std::optional<bool> isAnySessionActive();
     void disableSystemTopAppBoost();
     void enableSystemTopAppBoost();
     const std::string kDisableBoostHintName;
     std::shared_ptr<HintManager> mHintManager;
-    std::unordered_set<PowerHintSession *> mSessions;
+    std::unordered_set<PowerHintSession *> mSessions;  // protected by mLock
     std::mutex mLock;
     int mDisplayRefreshRate;
+    bool mActive;  // protected by mLock
     // Singleton
     PowerSessionManager()
         : kDisableBoostHintName(::android::base::GetProperty(kPowerHalAdpfDisableTopAppBoost,
                                                              "ADPF_DISABLE_TA_BOOST")),
           mHintManager(nullptr),
-          mDisplayRefreshRate(60) {}
+          mDisplayRefreshRate(60),
+          mActive(false) {}
     PowerSessionManager(PowerSessionManager const &) = delete;
     void operator=(PowerSessionManager const &) = delete;
 };
