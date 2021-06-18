@@ -137,7 +137,7 @@ static const uint32_t sUclampGranularity =
 static const int64_t sStaleTimeFactor =
         ::android::base::GetIntProperty<int64_t>(kPowerHalAdpfStaleTimeFactor, 20);
 static const size_t sSamplingWindow =
-        ::android::base::GetUintProperty<size_t>(kPowerHalAdpfSamplingWindow, 1);
+        ::android::base::GetUintProperty<size_t>(kPowerHalAdpfSamplingWindow, 0);
 
 }  // namespace
 
@@ -303,8 +303,8 @@ ndk::ScopedAStatus PowerHintSession::reportActualWorkDuration(
     size_t length = actualDurations.size();
     size_t start = sSamplingWindow == 0 || sSamplingWindow > length ? 0 : length - sSamplingWindow;
     int64_t dt = ns_to_100us(targetDurationNanos);
-    int64_t error = 0;
-    int64_t derivative = 0;
+    int64_t err_sum = 0;
+    int64_t derivative_sum = 0;
     for (size_t i = start; i < length; i++) {
         int64_t actualDurationNanos = actualDurations[i].durationNanos;
         if (std::abs(actualDurationNanos) > targetDurationNanos * 20) {
@@ -312,13 +312,14 @@ ndk::ScopedAStatus PowerHintSession::reportActualWorkDuration(
                   actualDurationNanos, targetDurationNanos);
         }
         // PID control algorithm
-        error = ns_to_100us(actualDurationNanos - targetDurationNanos) +
-                static_cast<int64_t>(sPidOffset);
+        int64_t error = ns_to_100us(actualDurationNanos - targetDurationNanos) +
+                        static_cast<int64_t>(sPidOffset);
+        derivative_sum += error - mDescriptor->previous_error;
+        err_sum += error;
+        mDescriptor->previous_error = error;
         mDescriptor->integral_error = mDescriptor->integral_error + error * dt;
         mDescriptor->integral_error = std::min(sPidIClamp, mDescriptor->integral_error);
         mDescriptor->integral_error = std::max(-sPidIClamp, mDescriptor->integral_error);
-        derivative = (error - mDescriptor->previous_error) / dt;
-        mDescriptor->previous_error = error;
     }
     if (ATRACE_ENABLED()) {
         std::string sz = StringPrintf("adpf.%" PRId32 "-%" PRId32 "-%" PRIxPTR "-actl_last",
@@ -333,14 +334,15 @@ ndk::ScopedAStatus PowerHintSession::reportActualWorkDuration(
                           reinterpret_cast<uintptr_t>(this) & 0xffff);
         ATRACE_INT(sz.c_str(), length);
     }
-    int64_t pOut = static_cast<int64_t>(sPidP * error);
+    int64_t pOut = static_cast<int64_t>(sPidP * err_sum / (length - start));
     int64_t iOut = static_cast<int64_t>(sPidI * mDescriptor->integral_error);
-    int64_t dOut = static_cast<int64_t>(sPidD * derivative);
+    int64_t dOut = static_cast<int64_t>(sPidD * derivative_sum / dt / (length - start));
 
     int64_t output = pOut + iOut + dOut;
     TRACE_ADPF_PID(reinterpret_cast<uintptr_t>(this) & 0xffff, mDescriptor->uid, mDescriptor->tgid,
-                   mDescriptor->update_count, error, mDescriptor->integral_error, derivative, pOut,
-                   iOut, dOut, static_cast<int>(output));
+                   mDescriptor->update_count, err_sum / (length - start),
+                   mDescriptor->integral_error, derivative_sum / dt / (length - start), pOut, iOut,
+                   dOut, static_cast<int>(output));
     mDescriptor->update_count++;
 
     mStaleHandler->updateStaleTimer();
