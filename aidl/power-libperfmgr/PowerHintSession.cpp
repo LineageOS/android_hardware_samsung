@@ -136,6 +136,8 @@ PowerHintSession::PowerHintSession(int32_t tgid, int32_t uid, const std::vector<
         ATRACE_INT(sz.c_str(), mDescriptor->is_active.load());
     }
     PowerSessionManager::getInstance()->addPowerSession(this);
+    // init boost
+    setUclamp(sUclampCap, 1024);
     ALOGV("PowerHintSession created: %s", mDescriptor->toString().c_str());
 }
 
@@ -212,6 +214,8 @@ ndk::ScopedAStatus PowerHintSession::resume() {
         return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_STATE);
     mDescriptor->is_active.store(true);
     mDescriptor->integral_error = std::max(sPidIInit, mDescriptor->integral_error);
+    // resume boost
+    setUclamp(sUclampCap, 1024);
     if (ATRACE_ENABLED()) {
         const std::string idstr = getIdString();
         std::string sz = StringPrintf("adpf.%s-active", idstr.c_str());
