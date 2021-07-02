@@ -163,7 +163,7 @@ Return<int32_t> Power::getFeature(LineageFeature feature) {
 void Power::initialize() {
     findInputNodes();
 
-    current_profile = PowerProfile::BALANCED;
+    setProfile(PowerProfile::BALANCED);
 
     for (const std::string& interactivePath : cpuInteractivePaths) {
         hispeed_freqs.emplace_back(get<std::string>(interactivePath + "/hispeed_freq", ""));
@@ -225,6 +225,8 @@ void Power::setProfile(PowerProfile profile) {
         default:
             break;
     }
+
+    current_profile = profile;
 }
 
 void Power::sendBoostpulse() {
