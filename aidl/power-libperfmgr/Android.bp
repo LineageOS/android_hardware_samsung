@@ -34,6 +34,7 @@ cc_binary {
         "libutils",
         "libbinder_ndk",
         "libperfmgr",
+        "libprocessgroup",
         "pixel-power-ext-V1-ndk_platform",
     ],
     srcs: [
