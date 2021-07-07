@@ -41,13 +41,14 @@ using std::chrono::nanoseconds;
 using std::chrono::steady_clock;
 using std::chrono::time_point;
 
+static const int32_t kMaxUclampValue = 1024;
 struct AppHintDesc {
-    AppHintDesc(int32_t tgid, int32_t uid, std::vector<int> threadIds, int uclamp_min)
+    AppHintDesc(int32_t tgid, int32_t uid, std::vector<int> threadIds)
         : tgid(tgid),
           uid(uid),
           threadIds(std::move(threadIds)),
           duration(0LL),
-          current_min(uclamp_min),
+          current_min(0),
           is_active(true),
           update_count(0),
           integral_error(0),
@@ -79,6 +80,7 @@ class PowerHintSession : public BnPowerHintSession {
             const std::vector<WorkDuration> &actualDurations) override;
     bool isActive();
     bool isStale();
+    const std::vector<int> &getTidList() const;
 
   private:
     class StaleHandler : public MessageHandler {
@@ -99,7 +101,7 @@ class PowerHintSession : public BnPowerHintSession {
   private:
     void setStale();
     void updateUniveralBoostMode();
-    int setUclamp(int32_t max, int32_t min);
+    int setUclamp(int32_t min, int32_t max = kMaxUclampValue);
     std::string getIdString() const;
     AppHintDesc *mDescriptor = nullptr;
     sp<StaleHandler> mStaleHandler;
