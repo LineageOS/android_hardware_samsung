@@ -18,6 +18,7 @@
 #define ATRACE_TAG (ATRACE_TAG_POWER | ATRACE_TAG_HAL)
 
 #include <log/log.h>
+#include <processgroup/processgroup.h>
 #include <utils/Trace.h>
 
 #include "PowerSessionManager.h"
@@ -55,11 +56,39 @@ int PowerSessionManager::getDisplayRefreshRate() {
 
 void PowerSessionManager::addPowerSession(PowerHintSession *session) {
     std::lock_guard<std::mutex> guard(mLock);
+    for (auto t : session->getTidList()) {
+        if (mTidRefCountMap.find(t) == mTidRefCountMap.end()) {
+            if (!SetTaskProfiles(t, {"ResetUclampGrp"})) {
+                ALOGW("Failed to set ResetUclampGrp task profile for tid:%d", t);
+            } else {
+                mTidRefCountMap[t] = 1;
+            }
+            continue;
+        }
+        if (mTidRefCountMap[t] <= 0) {
+            ALOGE("Error! Unexpected zero/negative RefCount:%d for tid:%d", mTidRefCountMap[t], t);
+            continue;
+        }
+        mTidRefCountMap[t]++;
+    }
     mSessions.insert(session);
 }
 
 void PowerSessionManager::removePowerSession(PowerHintSession *session) {
     std::lock_guard<std::mutex> guard(mLock);
+    for (auto t : session->getTidList()) {
+        if (mTidRefCountMap.find(t) == mTidRefCountMap.end()) {
+            ALOGE("Unexpected Error! Failed to look up tid:%d in TidRefCountMap", t);
+            continue;
+        }
+        mTidRefCountMap[t]--;
+        if (mTidRefCountMap[t] <= 0) {
+            if (!SetTaskProfiles(t, {"NoResetUclampGrp"})) {
+                ALOGW("Failed to set NoResetUclampGrp task profile for tid:%d", t);
+            }
+            mTidRefCountMap.erase(t);
+        }
+    }
     mSessions.erase(session);
 }
 

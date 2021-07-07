@@ -66,6 +66,7 @@ class PowerSessionManager : public MessageHandler {
     const std::string kDisableBoostHintName;
     std::shared_ptr<HintManager> mHintManager;
     std::unordered_set<PowerHintSession *> mSessions;  // protected by mLock
+    std::unordered_map<int, int> mTidRefCountMap;      // protected by mLock
     std::mutex mLock;
     int mDisplayRefreshRate;
     bool mActive;  // protected by mLock
