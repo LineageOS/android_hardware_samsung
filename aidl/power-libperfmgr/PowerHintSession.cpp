@@ -95,10 +95,10 @@ static double getDoubleProperty(const char *prop, double value) {
     return value;
 }
 
-static double sPidPOver = getDoubleProperty(kPowerHalAdpfPidPOver, 2.0);
-static double sPidPUnder = getDoubleProperty(kPowerHalAdpfPidPUnder, 2.0);
+static double sPidPOver = getDoubleProperty(kPowerHalAdpfPidPOver, 5.0);
+static double sPidPUnder = getDoubleProperty(kPowerHalAdpfPidPUnder, 3.0);
 static double sPidI = getDoubleProperty(kPowerHalAdpfPidI, 0.001);
-static double sPidDOver = getDoubleProperty(kPowerHalAdpfPidDOver, 100.0);
+static double sPidDOver = getDoubleProperty(kPowerHalAdpfPidDOver, 500.0);
 static double sPidDUnder = getDoubleProperty(kPowerHalAdpfPidDUnder, 0.0);
 static const int64_t sPidIInit =
         (sPidI == 0) ? 0
@@ -113,7 +113,7 @@ static const int64_t sPidIHighLimit =
 static const int64_t sPidILowLimit =
         (sPidI == 0) ? 0
                      : static_cast<int64_t>(::android::base::GetIntProperty<int64_t>(
-                                                    kPowerHalAdpfPidILowLimit, -512) /
+                                                    kPowerHalAdpfPidILowLimit, -120) /
                                             sPidI);
 static const int32_t sUclampMinHighLimit =
         ::android::base::GetUintProperty<uint32_t>(kPowerHalAdpfUclampMinHighLimit, 512);
