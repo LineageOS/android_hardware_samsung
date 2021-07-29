@@ -24,6 +24,7 @@
 #include <sys/syscall.h>
 #include <time.h>
 #include <utils/Trace.h>
+#include <atomic>
 
 #include "PowerHintSession.h"
 #include "PowerSessionManager.h"
@@ -238,8 +239,11 @@ ndk::ScopedAStatus PowerHintSession::resume() {
 }
 
 ndk::ScopedAStatus PowerHintSession::close() {
+    bool sessionClosedExpectedToBe = false;
+    if (!mSessionClosed.compare_exchange_strong(sessionClosedExpectedToBe, true)) {
+        return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_STATE);
+    }
     PowerHintMonitor::getInstance()->getLooper()->removeMessages(mStaleHandler);
-    // Reset to (0, 1024) uclamp value -- instead of threads' original setting.
     setUclamp(0);
     PowerSessionManager::getInstance()->removePowerSession(this);
     updateUniveralBoostMode();
