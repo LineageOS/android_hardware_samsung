@@ -1,0 +1,7 @@
+on init
+    chown system radio /sys/class/power_supply/battery/store_mode
+
+service vendor.batterylifeextender-hal-1-0 /vendor/bin/hw/vendor.lineage.batterylifeextender@1.0-service.samsung
+    class hal
+    user system
+    group system
