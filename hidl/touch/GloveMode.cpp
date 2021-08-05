@@ -25,7 +25,7 @@ namespace V1_0 {
 namespace samsung {
 
 bool GloveMode::isSupported() {
-    std::ifstream file("/sys/class/sec/tsp/cmd_list");
+    std::ifstream file(TSP_CMD_LIST_NODE);
     if (file.is_open()) {
         std::string line;
         while (getline(file, line)) {
@@ -38,7 +38,7 @@ bool GloveMode::isSupported() {
 
 // Methods from ::vendor::lineage::touch::V1_0::IGloveMode follow.
 Return<bool> GloveMode::isEnabled() {
-    std::ifstream file("/sys/class/sec/tsp/cmd_result");
+    std::ifstream file(TSP_CMD_RESULT_NODE);
     if (file.is_open()) {
         std::string line;
         getline(file, line);
@@ -49,7 +49,7 @@ Return<bool> GloveMode::isEnabled() {
 }
 
 Return<bool> GloveMode::setEnabled(bool enabled) {
-    std::ofstream file("/sys/class/sec/tsp/cmd");
+    std::ofstream file(TSP_CMD_NODE);
     file << "glove_mode," << (enabled ? "1" : "0");
     return true;
 }
