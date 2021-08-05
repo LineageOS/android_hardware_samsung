@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0eb5b3e_19246bb8",
+        "filename": "AdvancedDisplay/Android.mk",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2021-08-05T10:57:34Z",
+      "side": 1,
+      "message": "Where are these used?",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "f2e35286bfc4b0e37998f0978652bf23e8add595",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
