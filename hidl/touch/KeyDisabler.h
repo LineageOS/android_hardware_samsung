@@ -20,6 +20,7 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 #include <vendor/lineage/touch/1.0/IKeyDisabler.h>
+#include "samsung_touch.h"
 
 namespace vendor {
 namespace lineage {

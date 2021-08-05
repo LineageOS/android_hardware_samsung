@@ -25,13 +25,13 @@ namespace V1_0 {
 namespace samsung {
 
 bool KeyDisabler::isSupported() {
-    std::ofstream file("/sys/class/sec/sec_touchkey/input/enabled");
+    std::ofstream file(KEY_DISABLER_NODE);
     return file.good();
 }
 
 // Methods from ::vendor::lineage::touch::V1_0::IKeyDisabler follow.
 Return<bool> KeyDisabler::isEnabled() {
-    std::ifstream file("/sys/class/sec/sec_touchkey/input/enabled");
+    std::ifstream file(KEY_DISABLER_NODE);
     int status = -1;
 
     if (file.is_open()) {
@@ -42,7 +42,7 @@ Return<bool> KeyDisabler::isEnabled() {
 }
 
 Return<bool> KeyDisabler::setEnabled(bool enabled) {
-    std::ofstream file("/sys/class/sec/sec_touchkey/input/enabled");
+    std::ofstream file(KEY_DISABLER_NODE);
     file << (enabled ? "0" : "1");
     return true;
 }
