@@ -679,7 +679,7 @@ bool dispatchCallForwardStatus(int serial, int slotId, int request,
         return false;
     }
 
-    RIL_CallForwardInfo cf;
+    RIL_CallForwardInfo cf = {};
     cf.status = (int) callInfo.status;
     cf.reason = callInfo.reason;
     cf.serviceClass = callInfo.serviceClass;
