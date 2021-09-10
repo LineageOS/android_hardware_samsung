@@ -16,6 +16,24 @@
       "revId": "0b1ca6135417d577c5d9833423860328b59528bb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262b5c02_bbd7a10f",
+        "filename": "ril/libril/ril_service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2021-09-10T14:35:50Z",
+      "side": 1,
+      "message": "`\u003d {};` should work and would match other instances in this file",
+      "parentUuid": "279d0666_26117a9c",
+      "revId": "0b1ca6135417d577c5d9833423860328b59528bb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
