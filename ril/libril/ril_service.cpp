@@ -680,6 +680,7 @@ bool dispatchCallForwardStatus(int serial, int slotId, int request,
     }
 
     RIL_CallForwardInfo cf;
+    memset(&cf, 0, sizeof(cf));
     cf.status = (int) callInfo.status;
     cf.reason = callInfo.reason;
     cf.serviceClass = callInfo.serviceClass;
