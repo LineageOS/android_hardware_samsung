@@ -7,7 +7,7 @@
 
     <application
         android:label="@string/app_name"
-        android:theme="@style/Theme.Main">
+        android:theme="@style/Theme.SubSettingsBase">
         <receiver android:name="org.lineageos.settings.device.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
