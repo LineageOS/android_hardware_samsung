@@ -17,6 +17,7 @@
 package org.lineageos.settings.device;
 
 public class Constants {
+
     static final String KEY_MDNIE_SCENARIO = "mdnie_scenario";
     static final String KEY_MDNIE_ACCESSIBILITY = "mdnie_accessibility";
 }
