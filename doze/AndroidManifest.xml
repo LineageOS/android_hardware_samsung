@@ -32,7 +32,7 @@
         <activity
             android:name=".SamsungDozeActivity"
             android:label="@string/ambient_display_title"
-            android:theme="@style/Theme.Main">
+            android:theme="@style/Theme.SubSettingsBase">
             <intent-filter>
                 <action android:name="org.lineageos.settings.device.DOZE_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
