@@ -343,7 +343,6 @@ void set_voice_session_volume(struct voice_session *session, float volume)
         case AUDIO_DEVICE_OUT_BLUETOOTH_SCO:
         case AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET:
         case AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT:
-        case AUDIO_DEVICE_OUT_ALL_SCO:
             sound_type = SOUND_TYPE_BTVOICE;
             break;
         default:
