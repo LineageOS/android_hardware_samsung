@@ -225,6 +225,8 @@ void Power::setProfile(PowerProfile profile) {
         default:
             break;
     }
+
+    current_profile = profile;
 }
 
 void Power::sendBoostpulse() {
