@@ -42,6 +42,7 @@ using ::vendor::lineage::power::V1_0::LineagePowerHint;
 
 // clang-format off
 enum PowerProfile {
+    INVALID = -1,
     POWER_SAVE = 0,
     BALANCED,
     HIGH_PERFORMANCE,
@@ -68,7 +69,7 @@ struct Power : public IPower, public ILineagePower {
     bool touchkeys_blocked;
     std::string sec_touchkey;
     std::string sec_touchscreen;
-    PowerProfile current_profile;
+    PowerProfile current_profile = PowerProfile::INVALID;
     std::vector<std::string> hispeed_freqs;
     std::vector<std::string> max_freqs;
 };
