@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7756b6ce_d79204a2",
+        "filename": "aidl/power-libperfmgr/service.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2021-10-14T18:01:06Z",
+      "side": 1,
+      "message": "I would use /vendor/etc/perfmgr/ or something alonge those line to make it easy with sepolicy labelling (you just label the entire folder and its files)",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "46f2f90cff544f838267363fc2e9f20e918d7f8c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
