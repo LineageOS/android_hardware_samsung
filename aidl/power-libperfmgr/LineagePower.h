@@ -17,7 +17,11 @@
 #pragma once
 
 #include <aidl/vendor/lineage/power/BnPower.h>
-#include "Power.h"
+#include <perfmgr/HintManager.h>
+
+using ::aidl::vendor::lineage::power::Boost;
+using ::aidl::vendor::lineage::power::Feature;
+using ::android::perfmgr::HintManager;
 
 namespace aidl {
 namespace vendor {
@@ -25,18 +29,26 @@ namespace lineage {
 namespace power {
 namespace impl {
 
-using aidl::google::hardware::power::impl::pixel::Power;
-using aidl::google::hardware::power::impl::pixel::PowerProfile;
+enum PowerProfile {
+  POWER_SAVE = 0,
+  BALANCED,
+  HIGH_PERFORMANCE,
+  BIAS_POWER_SAVE,
+  BIAS_PERFORMANCE,
+  MAX
+};
 
 class LineagePower : public BnPower {
   public:
-    LineagePower(std::shared_ptr<Power> power, int32_t serviceNumPerfProfiles);
+    LineagePower(std::shared_ptr<HintManager> hm);
     ndk::ScopedAStatus getFeature(Feature feature, int* _aidl_return) override;
     ndk::ScopedAStatus setBoost(Boost type, int durationMs) override;
 
   private:
-    std::shared_ptr<Power> mPower;
-    int32_t mNumPerfProfiles;
+    std::shared_ptr<HintManager> mHintManager;
+    std::atomic<PowerProfile> mCurrentPerfProfile;
+
+    void setProfile(PowerProfile profile);
 };
 
 }  // namespace impl

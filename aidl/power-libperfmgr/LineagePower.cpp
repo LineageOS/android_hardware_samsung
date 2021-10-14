@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
+#define ATRACE_TAG (ATRACE_TAG_POWER | ATRACE_TAG_HAL)
+#define LOG_TAG "android.hardware.power-service.samsung-libperfmgr"
+
 #include "LineagePower.h"
+
+#include <android-base/properties.h>
+#include <utils/Log.h>
 
 namespace aidl {
 namespace vendor {
@@ -22,14 +28,37 @@ namespace lineage {
 namespace power {
 namespace impl {
 
-LineagePower::LineagePower(std::shared_ptr<Power> power, int32_t serviceNumPerfProfiles)
-    : mPower(power), mNumPerfProfiles(serviceNumPerfProfiles) {}
+constexpr char kPowerHalProfileProp[] = "vendor.powerhal.perf_profile";
+
+LineagePower::LineagePower(std::shared_ptr<HintManager> hm)
+    : mHintManager(hm),
+      mCurrentPerfProfile(PowerProfile::BALANCED) {
+    std::string state = android::base::GetProperty(kPowerHalProfileProp, "");
+
+    if (state == "POWER_SAVE") {
+        ALOGI("Initialize with POWER_SAVE profile");
+        setProfile(PowerProfile::POWER_SAVE);
+        mCurrentPerfProfile = PowerProfile::POWER_SAVE;
+    } else if (state == "BIAS_POWER_SAVE") {
+        ALOGI("Initialize with BIAS_POWER_SAVE profile");
+        setProfile(PowerProfile::BIAS_POWER_SAVE);
+        mCurrentPerfProfile = PowerProfile::BIAS_POWER_SAVE;
+    } else if (state == "BIAS_PERFORMANCE") {
+        ALOGI("Initialize with BIAS_PERFORMANCE profile");
+        setProfile(PowerProfile::BIAS_PERFORMANCE);
+        mCurrentPerfProfile = PowerProfile::BIAS_PERFORMANCE;
+    } else if (state == "HIGH_PERFORMANCE") {
+        ALOGI("Initialize with HIGH_PERFORMANCE profile");
+        setProfile(PowerProfile::HIGH_PERFORMANCE);
+        mCurrentPerfProfile = PowerProfile::HIGH_PERFORMANCE;
+    }
+}
 
 
 ndk::ScopedAStatus LineagePower::getFeature(Feature feature, int* _aidl_return) {
     switch (feature) {
         case Feature::SUPPORTED_PROFILES:
-            *_aidl_return = mNumPerfProfiles;
+            *_aidl_return = PowerProfile::MAX;
             break;
         default:
             *_aidl_return = -1;
@@ -41,12 +70,57 @@ ndk::ScopedAStatus LineagePower::getFeature(Feature feature, int* _aidl_return) 
 ndk::ScopedAStatus LineagePower::setBoost(Boost type, int durationMs) {
     switch (type) {
         case Boost::SET_PROFILE:
-            mPower->setProfile(static_cast<PowerProfile>(durationMs));
+            setProfile(static_cast<PowerProfile>(durationMs));
+            mCurrentPerfProfile = static_cast<PowerProfile>(durationMs);
             break;
         default:
             break;
     }
     return ndk::ScopedAStatus::ok();
+}
+
+void LineagePower::setProfile(PowerProfile profile) {
+    if (mCurrentPerfProfile == profile) {
+        return;
+    }
+
+    // End previous perf profile hints
+    switch (mCurrentPerfProfile) {
+        case PowerProfile::POWER_SAVE:
+            mHintManager->EndHint("PROFILE_POWER_SAVE");
+            break;
+        case PowerProfile::BIAS_POWER_SAVE:
+            mHintManager->EndHint("PROFILE_BIAS_POWER_SAVE");
+            break;
+        case PowerProfile::BIAS_PERFORMANCE:
+            mHintManager->EndHint("PROFILE_BIAS_PERFORMANCE");
+            break;
+        case PowerProfile::HIGH_PERFORMANCE:
+            mHintManager->EndHint("PROFILE_HIGH_PERFORMANCE");
+            break;
+        default:
+            break;
+    }
+
+    // Apply perf profile hints
+    switch (profile) {
+        case PowerProfile::POWER_SAVE:
+            mHintManager->DoHint("PROFILE_POWER_SAVE");
+            break;
+        case PowerProfile::BIAS_POWER_SAVE:
+            mHintManager->DoHint("PROFILE_BIAS_POWER_SAVE");
+            break;
+        case PowerProfile::BIAS_PERFORMANCE:
+            mHintManager->DoHint("PROFILE_BIAS_PERFORMANCE");
+            break;
+        case PowerProfile::HIGH_PERFORMANCE:
+            mHintManager->DoHint("PROFILE_HIGH_PERFORMANCE");
+            break;
+        default:
+            break;
+    }
+
+    return;
 }
 
 }  // namespace impl
