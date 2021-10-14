@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84cd7886_17af6ebd",
+        "filename": "aidl/power-libperfmgr/LineagePower.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2021-10-14T17:58:20Z",
+      "side": 1,
+      "message": "No tab please, use 4 spaces for enum and leave class indentation untouched",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "ae311615f5dbff614d92ce47a9279fb34839775c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
