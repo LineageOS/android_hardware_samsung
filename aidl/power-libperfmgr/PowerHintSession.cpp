@@ -146,6 +146,8 @@ PowerHintSession::PowerHintSession(int32_t tgid, int32_t uid, const std::vector<
         ATRACE_INT(sz.c_str(), (int64_t)mDescriptor->duration.count());
         sz = StringPrintf("adpf.%s-active", idstr.c_str());
         ATRACE_INT(sz.c_str(), mDescriptor->is_active.load());
+        sz = StringPrintf("adpf.%s-stale", idstr.c_str());
+        ATRACE_INT(sz.c_str(), isStale());
     }
     PowerSessionManager::getInstance()->addPowerSession(this);
     // init boost
@@ -442,6 +444,11 @@ void PowerHintSession::StaleHandler::updateStaleTimer() {
             PowerHintMonitor::getInstance()->getLooper()->sendMessageDelayed(
                     duration_cast<nanoseconds>(next - now).count(), this, NULL);
             mIsMonitoringStale.store(true);
+        }
+        if (ATRACE_ENABLED()) {
+            const std::string idstr = mSession->getIdString();
+            std::string sz = StringPrintf("adpf.%s-stale", idstr.c_str());
+            ATRACE_INT(sz.c_str(), 0);
         }
     }
 }
