@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#define LOG_TAG "android.hardware.biometrics.fingerprint@2.1-service.samsung"
+#define LOG_TAG "android.hardware.biometrics.fingerprint@2.3-service.samsung"
 
 #include <android-base/logging.h>
 
@@ -24,6 +24,7 @@
 #include "BiometricsFingerprint.h"
 
 #include <dlfcn.h>
+#include <fstream>
 #include <inttypes.h>
 #include <unistd.h>
 
@@ -31,7 +32,7 @@ namespace android {
 namespace hardware {
 namespace biometrics {
 namespace fingerprint {
-namespace V2_1 {
+namespace V2_3 {
 namespace implementation {
 
 using RequestStatus = android::hardware::biometrics::fingerprint::V2_1::RequestStatus;
@@ -43,12 +44,29 @@ BiometricsFingerprint::BiometricsFingerprint() : mClientCallback(nullptr) {
     if (!openHal()) {
         LOG(ERROR) << "Can't open HAL module";
     }
+
+    std::ifstream in("/sys/devices/virtual/fingerprint/fingerprint/position");
+    mIsUdfps = !!in;
+    if (in)
+        in.close();
 }
 
 BiometricsFingerprint::~BiometricsFingerprint() {
     if (ss_fingerprint_close() != 0) {
         LOG(ERROR) << "Can't close HAL module";
     }
+}
+
+Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
+    return mIsUdfps;
+}
+
+Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
+    return Void();
+}
+
+Return<void> BiometricsFingerprint::onFingerUp() {
+    return Void();
 }
 
 Return<RequestStatus> BiometricsFingerprint::ErrorFilter(int32_t error) {
@@ -146,7 +164,7 @@ Return<uint64_t> BiometricsFingerprint::setNotify(
     const sp<IBiometricsFingerprintClientCallback>& clientCallback) {
     std::lock_guard<std::mutex> lock(mClientCallbackMutex);
     mClientCallback = clientCallback;
-    // This is here because HAL 2.1 doesn't have a way to propagate a
+    // This is here because HAL 2.3 doesn't have a way to propagate a
     // unique token for its driver. Subsequent versions should send a unique
     // token for each call to setNotify(). This is fine as long as there's only
     // one fingerprint device on the platform.
@@ -368,7 +386,7 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
 }
 
 }  // namespace implementation
-}  // namespace V2_1
+}  // namespace V2_3
 }  // namespace fingerprint
 }  // namespace biometrics
 }  // namespace hardware
