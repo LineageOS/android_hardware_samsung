@@ -10,10 +10,6 @@
 
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
-    <uses-sdk
-        android:minSdkVersion="24"
-        android:targetSdkVersion="26"/>
-
     <application
         android:label="@string/device_settings_app_name"
         android:persistent="true">
