@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.dap"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:sharedUserId="android.uid.system">
+
+    <application
+        android:label="SamsungDAP"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SubSettingsBase"
+        android:fullBackupOnly="true">
+
+        <activity
+            android:name="org.lineageos.dap.DolbyActivity"
+            android:exported="true"
+            android:label="@string/dolby_title">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.category"
+                       android:value="com.android.settings.category.ia.sound" />
+        </activity>
+
+        <service
+            android:name="org.lineageos.dap.DolbyTile"
+            android:icon="@drawable/ic_dolby"
+            android:label="@string/dolby_title"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+    </application>
+</manifest>
