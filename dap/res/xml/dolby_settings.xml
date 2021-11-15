@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/dolby_title">
+
+    <SwitchPreference
+        android:key="dolby_pref"
+        android:title="@string/dolby_title"
+        android:icon="@drawable/ic_dolby"
+        android:summary="@string/dolby_summary"/>
+
+    <ListPreference
+        android:key="dolby_modes"
+        android:title="@string/dolby_modes_title"
+        android:summary="@string/dolby_modes_summary"
+        android:icon="@drawable/ic_settings"
+        android:entries="@array/dolby_modes"/>
+
+    <com.android.settingslib.widget.FooterPreference
+        android:key="footer_preference"
+        android:title="@string/dolby_summary"
+        android:selectable="false" />
+
+</PreferenceScreen>
