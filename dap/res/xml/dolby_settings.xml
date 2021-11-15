@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/dolby_title">
+
+    <com.android.settingslib.widget.MainSwitchPreference
+        android:defaultValue="false"
+        android:key="dolby_enable"
+        android:title="@string/dolby_enable_title" />
+
+    <com.android.settingslib.widget.TopIntroPreference
+        android:key="dolby_top_intro"
+        android:title="@string/dolby_top_intro_summary" />
+
+    <com.android.settingslib.widget.RadioButtonPreference
+        android:defaultValue="true"
+        android:key="dolby_profile_auto"
+        android:title="@string/dolby_profile_auto" />
+
+    <com.android.settingslib.widget.RadioButtonPreference
+        android:key="dolby_profile_game"
+        android:title="@string/dolby_profile_game" />
+
+    <com.android.settingslib.widget.RadioButtonPreference
+        android:key="dolby_profile_game_1"
+        android:title="@string/dolby_profile_game_1" />
+
+    <com.android.settingslib.widget.RadioButtonPreference
+        android:key="dolby_profile_game_2"
+        android:title="@string/dolby_profile_game_2" />
+
+    <com.android.settingslib.widget.RadioButtonPreference
+        android:key="dolby_profile_movie"
+        android:title="@string/dolby_profile_movie" />
+
+    <com.android.settingslib.widget.RadioButtonPreference
+        android:key="dolby_profile_music"
+        android:title="@string/dolby_profile_music" />
+
+    <com.android.settingslib.widget.RadioButtonPreference
+        android:key="dolby_profile_off"
+        android:title="@string/dolby_profile_off" />
+
+    <com.android.settingslib.widget.RadioButtonPreference
+        android:key="dolby_profile_spacial_audio"
+        android:title="@string/dolby_profile_spacial_audio" />
+
+    <com.android.settingslib.widget.RadioButtonPreference
+        android:key="dolby_profile_voice"
+        android:title="@string/dolby_profile_voice" />
+
+</PreferenceScreen>
