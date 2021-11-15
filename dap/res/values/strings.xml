@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Title -->
+    <string name="dolby_title" translatable="false">Dolby Atmos</string>
+
+    <!-- Switch bar -->
+    <string name="dolby_enable_title">Enable Dolby Atmos</string>
+
+    <!-- Intro -->
+    <string name="dolby_top_intro_summary">Experience breakthrough audio for media playback that flows above and around you</string>
+
+    <!-- Profiles -->
+    <string name="dolby_profile_auto">Auto Profile</string>
+    <string name="dolby_profile_game">Game Profile</string>
+    <string name="dolby_profile_game_1">Game 1 Profile</string>
+    <string name="dolby_profile_game_2">Game 2 Profile</string>
+    <string name="dolby_profile_movie">Movie Profile</string>
+    <string name="dolby_profile_music">Music Profile</string>
+    <string name="dolby_profile_off">No Profile</string>
+    <string name="dolby_profile_spacial_audio">Spacial Audio Profile</string>
+    <string name="dolby_profile_voice">Voice Profile</string>
+</resources>
