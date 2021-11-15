@@ -1,0 +1,9 @@
+android_app {
+    name: "SamsungDAP",
+    srcs: ["src/**/*.kt"],
+    certificate: "platform",
+    platform_apis: true,
+    static_libs: ["androidx.preference_preference"],
+    defaults: ["SettingsLibDefaults"],
+    system_ext_specific: true,
+}

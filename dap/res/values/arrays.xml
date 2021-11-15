@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dolby_modes">
+        <item>@string/dolby_profile_auto</item>
+        <item>@string/dolby_profile_game</item>
+        <item>@string/dolby_profile_game_1</item>
+        <item>@string/dolby_profile_game_2</item>
+        <item>@string/dolby_profile_movie</item>
+        <item>@string/dolby_profile_music</item>
+        <item>@string/dolby_profile_off</item>
+        <item>@string/dolby_profile_special_audio</item>
+        <item>@string/dolby_profile_voice</item>
+    </string-array>
+</resources>
