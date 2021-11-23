@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5b07e4a_efe656f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2021-11-23T17:04:23Z",
+      "side": 1,
+      "message": "hidl/power-libperfmgr can be fully removed\n\nwill rewrite hidl/power in aidl when i get around to it",
+      "revId": "8ad39b11c59feb4a95a195be33467de0703c65b7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
