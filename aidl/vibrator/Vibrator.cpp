@@ -242,11 +242,11 @@ uint8_t Vibrator::strengthToAmplitude(EffectStrength strength, ndk::ScopedAStatu
 
     switch (strength) {
         case EffectStrength::LIGHT:
-            return 78;
+            return 64;
         case EffectStrength::MEDIUM:
             return 128;
         case EffectStrength::STRONG:
-            return 204;
+            return 255;
     }
 
     *status = ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
