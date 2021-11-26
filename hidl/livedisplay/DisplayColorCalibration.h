@@ -18,6 +18,7 @@
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYCOLORCALIBRATION_H
 
 #include <vendor/lineage/livedisplay/2.0/IDisplayColorCalibration.h>
+#include "samsung_livedisplay.h"
 
 namespace vendor {
 namespace lineage {
@@ -28,8 +29,6 @@ namespace samsung {
 using ::android::hardware::hidl_vec;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
-
-#define FILE_RGB "/sys/class/graphics/fb0/rgb"
 
 class DisplayColorCalibration : public IDisplayColorCalibration {
   public:

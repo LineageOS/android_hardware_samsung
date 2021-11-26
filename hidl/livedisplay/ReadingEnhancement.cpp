@@ -31,7 +31,7 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char* kREPath = "/sys/class/mdnie/mdnie/accessibility";
+static constexpr const char* kREPath = MDNIE_ACCESSIBILITY_NODE;
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 bool ReadingEnhancement::isSupported() {
