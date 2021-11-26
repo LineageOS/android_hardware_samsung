@@ -33,7 +33,7 @@ namespace V2_0 {
 namespace samsung {
 
 bool DisplayColorCalibration::isSupported() {
-    std::fstream rgb(FILE_RGB, rgb.in | rgb.out);
+    std::fstream rgb(RGB_NODE, rgb.in | rgb.out);
 
     return rgb.good();
 }
@@ -51,7 +51,7 @@ Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb _hidl_cb)
     std::vector<int32_t> rgb;
     std::string tmp;
 
-    if (ReadFileToString(FILE_RGB, &tmp)) {
+    if (ReadFileToString(RGB_NODE, &tmp)) {
         std::vector<std::string> colors = Split(Trim(tmp), " ");
         for (const std::string& color : colors) {
             rgb.push_back(std::stoi(color));
@@ -69,7 +69,7 @@ Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>& rg
         contents += std::to_string(color) + " ";
     }
 
-    return WriteStringToFile(Trim(contents), FILE_RGB, true);
+    return WriteStringToFile(Trim(contents), RGB_NODE, true);
 }
 
 }  // namespace samsung

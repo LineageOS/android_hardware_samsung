@@ -16,6 +16,7 @@ cc_defaults {
     name: "livedisplay_samsung_exynos_defaults",
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
+    local_include_dirs: ["include"],
     srcs: [
         "AdaptiveBacklight.cpp",
         "DisplayColorCalibrationExynos.cpp",
@@ -37,6 +38,7 @@ cc_defaults {
     name: "livedisplay_samsung_qcom_defaults",
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
+    local_include_dirs: ["include"],
     srcs: [
         "AdaptiveBacklight.cpp",
         "DisplayColorCalibration.cpp",

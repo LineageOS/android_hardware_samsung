@@ -20,6 +20,7 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 #include <vendor/lineage/livedisplay/2.0/IAdaptiveBacklight.h>
+#include "samsung_livedisplay.h"
 
 namespace vendor {
 namespace lineage {

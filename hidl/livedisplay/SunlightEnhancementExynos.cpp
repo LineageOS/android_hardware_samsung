@@ -31,7 +31,7 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char* kLUXPath = "/sys/class/mdnie/mdnie/lux";
+static constexpr const char* kLUXPath = MDNIE_LUX_NODE;
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 bool SunlightEnhancementExynos::isSupported() {

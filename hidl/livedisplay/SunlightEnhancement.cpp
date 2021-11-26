@@ -31,8 +31,8 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char* kHBMPath = "/sys/class/lcd/panel/panel/auto_brightness";
-static constexpr const char* kSREPath = "/sys/class/mdnie/mdnie/outdoor";
+static constexpr const char* kHBMPath = PANEL_AUTO_BRIGHTNESS_NODE;
+static constexpr const char* kSREPath = MDNIE_OUTDOOR_NODE;
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 bool SunlightEnhancement::isSupported() {

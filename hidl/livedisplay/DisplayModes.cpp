@@ -26,8 +26,8 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char* kModePath = "/sys/class/mdnie/mdnie/mode";
-static constexpr const char* kModeMaxPath = "/sys/class/mdnie/mdnie/mode_max";
+static constexpr const char* kModePath = MDNIE_MODE_NODE;
+static constexpr const char* kModeMaxPath = MDNIE_MODE_MAX_NODE;
 #ifdef LIVES_IN_SYSTEM
 static constexpr const char* kDefaultPath = "/data/misc/display/.displaymodedefault";
 #else
