@@ -28,6 +28,10 @@
 #include <inttypes.h>
 #include <unistd.h>
 
+#ifdef HAS_FINGERPRINT_GESTURES
+#include <fcntl.h>
+#endif
+
 namespace android {
 namespace hardware {
 namespace biometrics {
@@ -49,6 +53,42 @@ BiometricsFingerprint::BiometricsFingerprint() : mClientCallback(nullptr) {
     mIsUdfps = !!in;
     if (in)
         in.close();
+
+#ifdef HAS_FINGERPRINT_GESTURES
+    request(FINGERPRINT_REQUEST_NAVIGATION_MODE_START, 1);
+
+    uinputFd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
+    if (uinputFd < 0) {
+        LOG(ERROR) << "Unable to open uinput node";
+        return;
+    }
+
+    int err = ioctl(uinputFd, UI_SET_EVBIT, EV_KEY) |
+          ioctl(uinputFd, UI_SET_KEYBIT, KEY_UP) |
+          ioctl(uinputFd, UI_SET_KEYBIT, KEY_DOWN);
+    if (err != 0) {
+        LOG(ERROR) << "Unable to enable key events";
+        return;
+    }
+
+    struct uinput_user_dev uidev;
+    sprintf(uidev.name, "uinput-sec-fp");
+    uidev.id.bustype = BUS_VIRTUAL;
+
+    err = write(uinputFd, &uidev, sizeof(uidev));
+    if (err < 0) {
+       LOG(ERROR) << "Write user device to uinput node failed";
+       return;
+    }
+
+    err = ioctl(uinputFd, UI_DEV_CREATE);
+    if (err < 0) {
+       LOG(ERROR) << "Unable to create uinput device";
+       return;
+    }
+
+    LOG(INFO) << "Successfully registered uinput-sec-fp for fingerprint gestures";
+#endif
 }
 
 BiometricsFingerprint::~BiometricsFingerprint() {
@@ -310,6 +350,10 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
             }
         } break;
         case FINGERPRINT_ACQUIRED: {
+            if (msg->data.acquired.acquired_info > SEM_FINGERPRINT_EVENT_BASE) {
+                thisPtr->handleEvent(msg->data.acquired.acquired_info);
+                return;
+            }
             int32_t vendorCode = 0;
             FingerprintAcquiredInfo result =
                 VendorAcquiredFilter(msg->data.acquired.acquired_info, &vendorCode);
@@ -384,6 +428,55 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
                 LOG(ERROR) << "failed to invoke fingerprint onEnumerate callback";
             }
             break;
+    }
+}
+
+void BiometricsFingerprint::handleEvent(int eventCode) {
+    switch (eventCode) {
+#ifdef HAS_FINGERPRINT_GESTURES
+        case SEM_FINGERPRINT_EVENT_GESTURE_SWIPE_DOWN:
+        case SEM_FINGERPRINT_EVENT_GESTURE_SWIPE_UP:
+            struct input_event event {};
+            int keycode = eventCode == SEM_FINGERPRINT_EVENT_GESTURE_SWIPE_UP ?
+                          KEY_UP : KEY_DOWN;
+
+            // Report the key
+            event.type = EV_KEY;
+            event.code = keycode;
+            event.value = 1;
+            if (write(uinputFd, &event, sizeof(event)) < 0) {
+                LOG(ERROR) << "Write EV_KEY to uinput node failed";
+                return;
+            }
+
+            // Force a flush with an EV_SYN
+            event.type = EV_SYN;
+            event.code = SYN_REPORT;
+            event.value = 0;
+            if (write(uinputFd, &event, sizeof(event)) < 0) {
+                LOG(ERROR) << "Write EV_SYN to uinput node failed";
+                return;
+            }
+
+            // Report the key
+            event.type = EV_KEY;
+            event.code = keycode;
+            event.value = 0;
+            if (write(uinputFd, &event, sizeof(event)) < 0) {
+                LOG(ERROR) << "Write EV_KEY to uinput node failed";
+                return;
+            }
+
+            // Force a flush with an EV_SYN
+            event.type = EV_SYN;
+            event.code = SYN_REPORT;
+            event.value = 0;
+            if (write(uinputFd, &event, sizeof(event)) < 0) {
+                LOG(ERROR) << "Write EV_SYN to uinput node failed";
+                return;
+            }
+        break;
+#endif
     }
 }
 
