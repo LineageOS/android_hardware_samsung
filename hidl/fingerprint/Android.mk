@@ -44,6 +44,10 @@ ifeq ($(TARGET_SEC_FP_CALL_CANCEL_ON_ENROLL_COMPLETION),true)
     LOCAL_CFLAGS += -DCALL_CANCEL_ON_ENROLL_COMPLETION
 endif
 
+ifeq ($(TARGET_SEC_FP_HAS_FINGERPRINT_GESTURES),true)
+    LOCAL_CFLAGS += -DHAS_FINGERPRINT_GESTURES
+endif
+
 LOCAL_MODULE := android.hardware.biometrics.fingerprint@2.3-service.samsung
 LOCAL_INIT_RC := android.hardware.biometrics.fingerprint@2.3-service.samsung.rc
 LOCAL_VINTF_FRAGMENTS := android.hardware.biometrics.fingerprint@2.3-service.samsung.xml
