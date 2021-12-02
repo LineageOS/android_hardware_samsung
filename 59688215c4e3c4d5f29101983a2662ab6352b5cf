@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d03b53d0_e365d311",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28133
+      },
+      "writtenOn": "2021-12-02T20:25:13Z",
+      "side": 1,
+      "message": "Fine on chagallwifi too",
+      "revId": "59688215c4e3c4d5f29101983a2662ab6352b5cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
