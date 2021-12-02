@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b27b152b_ab5ad2bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28133
+      },
+      "writtenOn": "2021-12-02T18:45:27Z",
+      "side": 1,
+      "message": "Build and works fine on chagallwifi",
+      "revId": "7a3ae1546ddee53550eb57453d7939e56daeb357",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
