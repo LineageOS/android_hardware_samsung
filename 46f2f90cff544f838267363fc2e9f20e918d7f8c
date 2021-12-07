@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "7756b6ce_d79204a2",
         "filename": "aidl/power-libperfmgr/service.cpp",
@@ -20,8 +21,31 @@
         "endChar": 25
       },
       "revId": "46f2f90cff544f838267363fc2e9f20e918d7f8c",
-      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
-      "unresolved": true
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f936568_d74cdb1e",
+        "filename": "aidl/power-libperfmgr/service.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2021-12-07T05:55:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7756b6ce_d79204a2",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "46f2f90cff544f838267363fc2e9f20e918d7f8c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
