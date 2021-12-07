@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "84cd7886_17af6ebd",
         "filename": "aidl/power-libperfmgr/LineagePower.h",
@@ -20,8 +21,31 @@
         "endChar": 44
       },
       "revId": "ae311615f5dbff614d92ce47a9279fb34839775c",
-      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
-      "unresolved": true
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "864402db_5dcd1f97",
+        "filename": "aidl/power-libperfmgr/LineagePower.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 20451
+      },
+      "writtenOn": "2021-12-07T03:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84cd7886_17af6ebd",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "ae311615f5dbff614d92ce47a9279fb34839775c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
