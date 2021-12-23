@@ -16,6 +16,24 @@
       "message": "hidl/power-libperfmgr can be fully removed\n\nwill rewrite hidl/power in aidl when i get around to it",
       "revId": "8ad39b11c59feb4a95a195be33467de0703c65b7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "608a1ad8_4475ded5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 19907
+      },
+      "writtenOn": "2021-12-23T08:01:12Z",
+      "side": 1,
+      "message": "How about nuke both of them?\nWe can make pixel power AIDL to do the same things\nhttps://github.com/SamarV-121/android_device_samsung_universal7904-common/commit/6dc8092e94a405f7cea5685f17452452b2869b3d",
+      "parentUuid": "a5b07e4a_efe656f6",
+      "revId": "8ad39b11c59feb4a95a195be33467de0703c65b7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
