@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c090568_5b9fa9f8",
+        "filename": "hidl/power/Power.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 19057
+      },
+      "writtenOn": "2022-01-02T12:02:34Z",
+      "side": 1,
+      "message": "We start in balanced mode so setting current_profile on startup is correct.\n\nI think the bug is caused because current_profile is never updated.",
+      "revId": "a5f1b4f9320c1acbe5e2317c93838df17bf6501c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "358df9ba_47f6dc07",
+        "filename": "hidl/power/Power.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 19057
+      },
+      "writtenOn": "2022-01-02T12:02:34Z",
+      "side": 1,
+      "message": "This change isn\u0027t required. Simply setting current_profile on profile change should fix this bug.",
+      "revId": "a5f1b4f9320c1acbe5e2317c93838df17bf6501c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
