@@ -60,6 +60,8 @@ LOCAL_MODULE_RELATIVE_PATH := hw
 
 LOCAL_MODULE_TAGS := optional
 
+LOCAL_VENDOR_MODULE := true
+
 include $(BUILD_SHARED_LIBRARY)
 
 endif
