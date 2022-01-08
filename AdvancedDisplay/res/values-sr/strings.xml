@@ -17,12 +17,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Напредни екран</string>
+    <!-- Screen Preference -->
     <string name="category_screen_title">Екран</string>
     <string name="screen_colors_title">Боје</string>
+    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Сценарио</string>
     <string name="mdnie_scenario_summary_head">Постави mDNIe сценарио</string>
     <string name="mdnie_accessibility_title_head">Режим за приступачност</string>
     <string name="mdnie_accessibility_summary_head">Поставите mDNIe у режим за приступачност</string>
+    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (подразумевано)</string>
     <string name="mdnie_scenario_video">Видео</string>
     <string name="mdnie_scenario_video_warm">Видео топле боје</string>
@@ -35,10 +38,12 @@
     <string name="mdnie_scenario_ebook">еКњига</string>
     <string name="mdnie_scenario_email">Е-пошта</string>
     <string name="mdnie_scenario_tdmb">Дигитална телевизија</string>
+    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Нормално</string>
     <string name="mdnie_accessibility_inverse">Изврнуто</string>
     <string name="mdnie_accessibility_color_blind">За далтонисте</string>
     <string name="mdnie_accessibility_screen_curtain">Завеса екрана</string>
     <string name="mdnie_accessibility_grayscale">Сиво</string>
     <string name="mdnie_accessibility_gray_negative">Изврнуто сиво</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

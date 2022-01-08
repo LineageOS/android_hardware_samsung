@@ -17,12 +17,15 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Avansearre ynstellingen</string>
+    <!-- Screen Preference -->
     <string name="category_screen_title">Skerm</string>
     <string name="screen_colors_title">Kleuren</string>
+    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">Senario</string>
     <string name="mdnie_scenario_summary_head">mDNIe-senario ynstelle</string>
     <string name="mdnie_accessibility_title_head">Tagonklikheidsmodus</string>
     <string name="mdnie_accessibility_summary_head">Stel de mDNIe-tagonklikheidsmodus yn</string>
+    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (standert)</string>
     <string name="mdnie_scenario_video">Fideo</string>
     <string name="mdnie_scenario_video_warm">Fideo (waarm)</string>
@@ -35,10 +38,12 @@
     <string name="mdnie_scenario_ebook">eBook</string>
     <string name="mdnie_scenario_email">E-mail</string>
     <string name="mdnie_scenario_tdmb">Digitale televyzje</string>
+    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">Normaal</string>
     <string name="mdnie_accessibility_inverse">Omkeard</string>
     <string name="mdnie_accessibility_color_blind">Kleureblyn</string>
     <string name="mdnie_accessibility_screen_curtain">Skermgerdyn</string>
     <string name="mdnie_accessibility_grayscale">Griis</string>
     <string name="mdnie_accessibility_gray_negative">Griis (omkeard)</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

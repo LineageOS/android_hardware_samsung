@@ -16,8 +16,13 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Screen Preference -->
     <string name="category_screen_title">ეკრანი</string>
     <string name="screen_colors_title">ფერები</string>
+    <!-- mDNIe -->
+    <!-- Scenario names -->
     <string name="mdnie_scenario_tdmb">ციფრული ტელევიზია</string>
+    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_grayscale">ნაცრისფერი</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>

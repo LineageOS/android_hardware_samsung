@@ -17,11 +17,14 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">תצוגה מתקדמת</string>
+    <!-- Screen Preference -->
     <string name="category_screen_title">מסך</string>
     <string name="screen_colors_title">צבעים</string>
+    <!-- mDNIe -->
     <string name="mdnie_scenario_title_head">תרחיש</string>
     <string name="mdnie_scenario_summary_head">הגדר תרחיש mDNIe</string>
     <string name="mdnie_accessibility_title_head">מצב נגישות</string>
+    <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (ברירת מחדל)</string>
     <string name="mdnie_scenario_video">וידאו</string>
     <string name="mdnie_scenario_video_warm">וידאו חם</string>
@@ -34,7 +37,9 @@
     <string name="mdnie_scenario_ebook">ספר אלקטרוני</string>
     <string name="mdnie_scenario_email">דוא\"ל</string>
     <string name="mdnie_scenario_tdmb">טלוויזיה דיגיטלית</string>
+    <!-- Accessibility mode names -->
     <string name="mdnie_accessibility_normal">רגיל</string>
     <string name="mdnie_accessibility_inverse">הפוך</string>
     <string name="mdnie_accessibility_color_blind">עיוור צבעים</string>
+    <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
 </resources>
