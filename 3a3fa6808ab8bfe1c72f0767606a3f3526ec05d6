@@ -18,6 +18,23 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44bcd64f_6ca81022",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29161
+      },
+      "writtenOn": "2022-01-09T08:28:03Z",
+      "side": 1,
+      "message": "Tested on all S10\u0026N10 Series ",
+      "revId": "3a3fa6808ab8bfe1c72f0767606a3f3526ec05d6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a641e4b_60ef53ad",
