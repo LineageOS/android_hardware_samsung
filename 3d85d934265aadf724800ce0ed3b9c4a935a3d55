@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e79909f_ef8d7b20",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-01-09T14:30:43Z",
+      "side": 1,
+      "message": "Right now mIsUdfps will have a random value if in is false\n\n mIsUdfps \u003d !!in;\n if (in)\n     in.close()\n\nSo mIsUdfps gets also assigned on false (double negation to make sure it\u0027s a bool)",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 5
+      },
+      "revId": "3d85d934265aadf724800ce0ed3b9c4a935a3d55",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
