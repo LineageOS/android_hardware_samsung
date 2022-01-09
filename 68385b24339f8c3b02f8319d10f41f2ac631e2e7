@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2996538d_032eb60c",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-01-09T14:25:22Z",
+      "side": 1,
+      "message": "you only use this struct once, no need to put it here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 36
+      },
+      "revId": "68385b24339f8c3b02f8319d10f41f2ac631e2e7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
