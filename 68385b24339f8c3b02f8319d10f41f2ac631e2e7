@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d546b76f_6f181bed",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 25925
+      },
+      "writtenOn": "2022-01-09T16:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "836213e7_d241e46e",
+      "range": {
+        "startLine": 448,
+        "startChar": 18,
+        "endLine": 448,
+        "endChar": 57
+      },
+      "revId": "68385b24339f8c3b02f8319d10f41f2ac631e2e7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2996538d_032eb60c",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-09T14:25:22Z",
       "side": 1,
       "message": "you only use this struct once, no need to put it here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 36
+      },
+      "revId": "68385b24339f8c3b02f8319d10f41f2ac631e2e7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39b9d4d3_5444f7c3",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 25925
+      },
+      "writtenOn": "2022-01-09T16:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2996538d_032eb60c",
       "range": {
         "startLine": 97,
         "startChar": 0,
