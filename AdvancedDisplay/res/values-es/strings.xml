@@ -21,4 +21,5 @@
     <string name="screen_colors_title">Colores</string>
     <string name="mdnie_scenario_title_head">Escenario</string>
     <string name="mdnie_scenario_summary_head">Establecer el escenario mDNIe</string>
+    <string name="mdnie_scenario_ui">LineageOS (predefinido)</string>
 </resources>
