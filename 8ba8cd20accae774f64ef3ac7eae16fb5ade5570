@@ -22,6 +22,30 @@
       },
       "revId": "8ba8cd20accae774f64ef3ac7eae16fb5ade5570",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1420ae6_f78a6fc0",
+        "filename": "doze/res/values/strings.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-01-13T21:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d827c6_39e86bc4",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 62
+      },
+      "revId": "8ba8cd20accae774f64ef3ac7eae16fb5ade5570",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
