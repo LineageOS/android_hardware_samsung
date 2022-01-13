@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright (C) 2020 The LineageOS Project
 
-#ifndef SAMSUNG_FINGERPRINT_CONSTANTS_H
-#define SAMSUNG_FINGERPRINT_CONSTANTS_H
+#pragma once
 
 // Fingerprint requests
 #define FINGERPRINT_REQUEST_ENROLL_SESSION 1002
@@ -100,5 +99,3 @@
 #define SEM_SENSOR_STATUS_ERROR 100042
 #define SEM_SENSOR_STATUS_OK 100040
 #define SEM_SENSOR_STATUS_WORKING 100041
-
-#endif // SAMSUNG_FINGERPRINT_CONSTANTS_H
