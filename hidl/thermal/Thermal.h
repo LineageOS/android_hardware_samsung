@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2018 The Android Open Source Project
+ *               2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef ANDROID_HARDWARE_THERMAL_V2_0_CROSSHATCH_THERMAL_H
-#define ANDROID_HARDWARE_THERMAL_V2_0_CROSSHATCH_THERMAL_H
+
+#pragma once
 
 #include <mutex>
 #include <thread>
@@ -91,5 +92,3 @@ class Thermal : public IThermal {
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
-
-#endif  // ANDROID_HARDWARE_THERMAL_V2_0_CROSSHATCH_THERMAL_H
