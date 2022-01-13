@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The LineageOS Project
+ * Copyright (C) 2020-2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_POWERSHARE_V1_0_POWERSHARE_H
-#define VENDOR_LINEAGE_POWERSHARE_V1_0_POWERSHARE_H
+#pragma once
 
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
@@ -50,5 +49,3 @@ struct PowerShare : public IPowerShare {
 }  // namespace powershare
 }  // namespace lineage
 }  // namespace vendor
-
-#endif  // VENDOR_LINEAGE_POWERSHARE_V1_0_POWERSHARE_H
