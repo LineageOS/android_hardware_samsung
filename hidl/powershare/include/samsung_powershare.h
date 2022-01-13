@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The LineageOS Project
+ * Copyright (C) 2020-2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef SAMSUNG_POWERSHARE_H
-#define SAMSUNG_POWERSHARE_H
+#pragma once
 
 #define POWERSHARE_PATH "/sys/class/power_supply/battery/wc_tx_en"
 #define POWERSHARE_STOP_CAPACITY_PATH "/sys/class/power_supply/battery/wc_tx_stop_capacity"
-
-#endif // SAMSUNG_POWERSHARE_H
