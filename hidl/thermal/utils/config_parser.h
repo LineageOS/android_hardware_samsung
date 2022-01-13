@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef THERMAL_UTILS_CONFIG_PARSER_H__
-#define THERMAL_UTILS_CONFIG_PARSER_H__
+#pragma once
 
 #include <map>
 #include <string>
@@ -55,5 +54,3 @@ std::map<std::string, CoolingType> ParseCoolingDevice(std::string_view config_pa
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
-
-#endif  // THERMAL_UTILS_CONFIG_PARSER_H__

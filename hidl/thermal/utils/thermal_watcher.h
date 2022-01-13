@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef THERMAL_UTILS_THERMAL_WATCHER_H_
-#define THERMAL_UTILS_THERMAL_WATCHER_H_
+
+#pragma once
 
 #include <chrono>
 #include <condition_variable>
@@ -101,5 +101,3 @@ class ThermalWatcher : public ::android::Thread {
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
-
-#endif  // THERMAL_UTILS_THERMAL_WATCHER_H_

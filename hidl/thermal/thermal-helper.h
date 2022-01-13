@@ -27,8 +27,7 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef THERMAL_THERMAL_HELPER_H__
-#define THERMAL_THERMAL_HELPER_H__
+#pragma once
 
 #include <array>
 #include <chrono>
@@ -136,5 +135,3 @@ class ThermalHelper {
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
-
-#endif  // THERMAL_THERMAL_HELPER_H__
