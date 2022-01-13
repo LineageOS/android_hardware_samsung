@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The LineageOS Project
+ * Copyright (C) 2020-2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_HARDWARE_IR_V1_0_CONSUMERIR_H
-#define ANDROID_HARDWARE_IR_V1_0_CONSUMERIR_H
+#pragma once
 
 #include <android/hardware/ir/1.0/IConsumerIr.h>
 #include <hidl/MQDescriptor.h>
@@ -42,5 +41,3 @@ class ConsumerIr : public IConsumerIr {
 }  // namespace ir
 }  // namespace hardware
 }  // namespace android
-
-#endif  // ANDROID_HARDWARE_IR_V1_0_CONSUMERIR_H
