@@ -23,16 +23,13 @@
 #include <android/binder_manager.h>
 #include <android/binder_process.h>
 
-#include "LineagePower.h"
 #include "Power.h"
 #include "PowerExt.h"
 
 using aidl::google::hardware::power::impl::pixel::Power;
 using aidl::google::hardware::power::impl::pixel::PowerExt;
 using ::android::perfmgr::HintManager;
-using aidl::vendor::lineage::power::impl::LineagePower;
 
-constexpr char kPowerHalProfileNumProp[] = "vendor.powerhal.perf_profiles";
 constexpr char kPowerHalConfigPath[] = "/vendor/etc/powerhint.json";
 constexpr char kPowerHalInitProp[] = "vendor.powerhal.init";
 
@@ -44,9 +41,6 @@ int main() {
     if (!hm) {
         LOG(FATAL) << "Invalid config: " << kPowerHalConfigPath;
     }
-
-    // parse number of profiles
-    int32_t serviceNumPerfProfiles = android::base::GetIntProperty(kPowerHalProfileNumProp, 0);
 
     // single thread
     ABinderProcess_setThreadPoolMaxThreadCount(0);
@@ -64,13 +58,7 @@ int main() {
     const std::string instance = std::string() + Power::descriptor + "/default";
     binder_status_t status = AServiceManager_addService(pw->asBinder().get(), instance.c_str());
     CHECK(status == STATUS_OK);
-
-    // lineage service
-    std::shared_ptr<LineagePower> lineagePw = ndk::SharedRefBase::make<LineagePower>(pw, serviceNumPerfProfiles);
-    const std::string lineageInstance = std::string() + LineagePower::descriptor + "/default";
-    binder_status_t lineageStatus = AServiceManager_addService(lineagePw->asBinder().get(), lineageInstance.c_str());
-    CHECK(lineageStatus == STATUS_OK);
-    LOG(INFO) << "Pixel Power HAL AIDL Service with Extension & Lineage Perf Profile is started.";
+    LOG(INFO) << "Pixel Power HAL AIDL Service with Extension is started.";
 
     std::thread initThread([&]() {
         ::android::base::WaitForProperty(kPowerHalInitProp, "1");
