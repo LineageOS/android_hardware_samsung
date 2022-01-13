@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef THERMAL_UTILS_THERMAL_FILES_H_
-#define THERMAL_UTILS_THERMAL_FILES_H_
+#pragma once
 
 #include <string>
 #include <unordered_map>
@@ -51,5 +50,3 @@ class ThermalFiles {
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
-
-#endif  // THERMAL_UTILS_THERMAL_FILES_H_
