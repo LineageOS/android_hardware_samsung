@@ -1,3 +1,8 @@
+on init
+    chown system system /sys/class/timed_output/vibrator/cp_trigger_index
+    chown system system /sys/class/timed_output/vibrator/enable
+    chown system system /sys/class/timed_output/vibrator/intensity
+
 service vendor.vibrator-default /vendor/bin/hw/android.hardware.vibrator-service.samsung
     class hal
     user system
