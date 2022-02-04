@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e9b13ce_fd339544",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-02-04T20:59:03Z",
+      "side": 1,
+      "message": "Is this really enough? You are not setting android:title in the pref screen. How does it looks like?",
+      "revId": "5e4664549282649fd28401b1f2947e8dfaa7ac50",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
