@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af8a6913_fdd59930",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-02-04T20:39:16Z",
+      "side": 1,
+      "message": "Theoretically, this change should come first in the chain. Correct me if I am wrong, but it wouldn\u0027t compile without this, whereas the other change is pure UI-related.",
+      "revId": "b7e3a31ff899244553af448871a35f3ed0fc733e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
