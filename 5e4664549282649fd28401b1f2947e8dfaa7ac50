@@ -16,6 +16,24 @@
       "message": "Is this really enough? You are not setting android:title in the pref screen. How does it looks like?",
       "revId": "5e4664549282649fd28401b1f2947e8dfaa7ac50",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63aa42e3_26eab954",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2022-02-05T23:35:02Z",
+      "side": 1,
+      "message": "This is how it looks like:\n\nhttps://imgur.com/a/6C5OdLF",
+      "parentUuid": "5e9b13ce_fd339544",
+      "revId": "5e4664549282649fd28401b1f2947e8dfaa7ac50",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
