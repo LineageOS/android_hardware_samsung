@@ -1,5 +1,6 @@
 //
 // Copyright (C) 2017 The Android Open Source Project
+// Copyright (C) 2022 The LineageOS Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,26 +14,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package {
-    // See: http://go/android-license-faq
-    // A large-scale-change added 'default_applicable_licenses' to import
-    // all of the 'license_kinds' from "//device/google/gs101:device_google_gs101_license"
-    // to get the below license kinds:
-    //   SPDX-license-identifier-Apache-2.0
-    default_applicable_licenses: [
-        "//device/google/gs101:device_google_gs101_license",
-    ],
-}
-
 cc_binary {
     name: "android.hardware.usb@1.3-service.gs101",
     relative_install_path: "hw",
     init_rc: ["android.hardware.usb@1.3-service.gs101.rc"],
     vintf_fragments: [
         "android.hardware.usb@1.3-service.gs101.xml",
-        "android.hardware.usb.gadget@1.2-service.gs101.xml",
     ],
-    srcs: ["service.cpp", "Usb.cpp", "UsbGadget.cpp"],
+    srcs: ["service.cpp", "Usb.cpp"],
     cflags: ["-Wall", "-Werror"],
     shared_libs: [
         "libbase",
@@ -45,9 +34,6 @@ cc_binary {
         "android.hardware.usb@1.1",
         "android.hardware.usb@1.2",
         "android.hardware.usb@1.3",
-        "android.hardware.usb.gadget@1.0",
-        "android.hardware.usb.gadget@1.1",
-        "android.hardware.usb.gadget@1.2",
         "android.hardware.thermal@1.0",
         "android.hardware.thermal@2.0",
         "libcutils",

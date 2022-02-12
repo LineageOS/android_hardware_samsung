@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2020 The Android Open Source Project
+ * Copyright (C) 2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +36,6 @@
 #include <utils/StrongPointer.h>
 
 #include "Usb.h"
-#include "UsbGadget.h"
 
 #include <aidl/android/frameworks/stats/IStats.h>
 #include <pixelstats/StatsHelper.h>
@@ -62,11 +62,6 @@ Return<bool> Usb::enableUsbDataSignal(bool enable) {
             ALOGE("Not able to turn on usb connection notification");
             result = false;
         }
-
-        if(!WriteStringToFile(kGadgetName, PULLUP_PATH)) {
-            ALOGE("Gadget cannot be pulled up");
-            result = false;
-        }
     }
     else {
         if (!WriteStringToFile("1", ID_PATH)) {
@@ -81,11 +76,6 @@ Return<bool> Usb::enableUsbDataSignal(bool enable) {
 
         if (!WriteStringToFile("0", USB_DATA_PATH)) {
             ALOGE("Not able to turn off usb connection notification");
-            result = false;
-        }
-
-        if(!WriteStringToFile("none", PULLUP_PATH)) {
-            ALOGE("Gadget cannot be pulled down");
             result = false;
         }
     }
