@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.usb@1.3-service.gs101"
+#define LOG_TAG "android.hardware.usb@1.3-service.samsung"
 
 #include <android-base/logging.h>
 #include <android-base/properties.h>
@@ -57,16 +57,6 @@ Return<bool> Usb::enableUsbDataSignal(bool enable) {
         }
     }
     else {
-        if (!WriteStringToFile("1", ID_PATH)) {
-            ALOGE("Not able to turn off host mode");
-            result = false;
-        }
-
-        if (!WriteStringToFile("0", VBUS_PATH)) {
-            ALOGE("Not able to set Vbus state");
-            result = false;
-        }
-
         if (!WriteStringToFile("0", USB_DATA_PATH)) {
             ALOGE("Not able to turn off usb connection notification");
             result = false;
@@ -79,13 +69,10 @@ Return<bool> Usb::enableUsbDataSignal(bool enable) {
 // Set by the signal handler to destroy the thread
 volatile bool destroyThread;
 
-std::string enabledPath;
-constexpr char kHsi2cPath[] = "/sys/devices/platform/10d50000.hsi2c";
-constexpr char kI2CPath[] = "/sys/devices/platform/10d50000.hsi2c/i2c-";
-constexpr char kContaminantDetectionPath[] = "i2c-max77759tcpc/contaminant_detection";
-constexpr char kStatusPath[] = "i2c-max77759tcpc/contaminant_detection_status";
+bool moistureDetectionEnabled = true;
+constexpr char kContaminantDetectionPath[] = "/sys/devices/virtual/sec/ccic/water";
 constexpr char kTypecPath[] = "/sys/class/typec";
-constexpr char kDisableContatminantDetection[] = "vendor.usb.contaminantdisable";
+constexpr char kDisableContaminantDetection[] = "vendor.usb.contaminantdisable";
 
 int32_t readFile(const std::string &filename, std::string *contents) {
     FILE *fp;
@@ -126,29 +113,6 @@ int32_t writeFile(const std::string &filename, const std::string &contents) {
     return -1;
 }
 
-Status getContaminantDetectionNamesHelper(std::string *name) {
-    DIR *dp;
-
-    dp = opendir(kHsi2cPath);
-    if (dp != NULL) {
-        struct dirent *ep;
-
-        while ((ep = readdir(dp))) {
-            if (ep->d_type == DT_DIR) {
-                if (std::string::npos != std::string(ep->d_name).find("i2c-")) {
-                    std::strtok(ep->d_name, "-");
-                    *name = std::strtok(NULL, "-");
-                }
-            }
-        }
-        closedir(dp);
-        return Status::SUCCESS;
-    }
-
-    ALOGE("Failed to open %s", kHsi2cPath);
-    return Status::ERROR;
-}
-
 Status queryMoistureDetectionStatus(hidl_vec<PortStatus> *currentPortStatus_1_2) {
     std::string enabled, status, path, DetectedPath;
 
@@ -165,16 +129,8 @@ Status queryMoistureDetectionStatus(hidl_vec<PortStatus> *currentPortStatus_1_2)
     (*currentPortStatus_1_2)[0].supportsEnableContaminantPresenceDetection = true;
     (*currentPortStatus_1_2)[0].supportsEnableContaminantPresenceProtection = false;
 
-    getContaminantDetectionNamesHelper(&path);
-    enabledPath = kI2CPath + path + "/" + kContaminantDetectionPath;
-    if (readFile(enabledPath, &enabled)) {
-        ALOGE("Failed to open moisture_detection_enabled");
-        return Status::ERROR;
-    }
-
-    if (enabled == "1") {
-        DetectedPath = kI2CPath + path + "/" + kStatusPath;
-        if (readFile(DetectedPath, &status)) {
+    if (moistureDetectionEnabled) {
+        if (readFile(kContaminantDetectionPath, &status)) {
             ALOGE("Failed to open moisture_detected");
             return Status::ERROR;
         }
@@ -643,11 +599,10 @@ Return<void> Usb::queryPortStatus() {
 
 Return<void> Usb::enableContaminantPresenceDetection(const hidl_string & /*portName*/,
                                                      bool enable) {
-
-    std::string disable = GetProperty(kDisableContatminantDetection, "");
+    std::string disable = GetProperty(kDisableContaminantDetection, "");
 
     if (disable != "true")
-        writeFile(enabledPath, enable ? "1" : "0");
+        moistureDetectionEnabled = enable;
 
     hidl_vec<PortStatus> currentPortStatus_1_2;
 
@@ -691,8 +646,7 @@ static void uevent_event(uint32_t /*epevents*/, struct data *payload) {
             pthread_cond_signal(&payload->usb->mPartnerCV);
             pthread_mutex_unlock(&payload->usb->mPartnerLock);
         } else if (!strncmp(cp, "DEVTYPE=typec_", strlen("DEVTYPE=typec_")) ||
-                   !strncmp(cp, "DRIVER=max77759tcpc",
-                            strlen("DRIVER=max77759tcpc"))) {
+                   !strncmp(cp, "CCIC=WATER", strlen("CCIC=WATER"))) {
             hidl_vec<PortStatus> currentPortStatus_1_2;
             queryVersionHelper(payload->usb, &currentPortStatus_1_2);
 
