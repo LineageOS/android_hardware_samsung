@@ -21,7 +21,6 @@
 #include <android/hardware/usb/1.2/types.h>
 #include <android/hardware/usb/1.2/IUsbCallback.h>
 #include <hidl/Status.h>
-#include <pixelusb/UsbOverheatEvent.h>
 #include <utils/Log.h>
 
 #define UEVENT_MSG_LEN 2048
@@ -45,10 +44,6 @@ using ::android::hardware::hidl_string;
 using ::android::hardware::hidl_vec;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
-using ::android::hardware::google::pixel::usb::UsbOverheatEvent;
-using ::android::hardware::google::pixel::usb::ZoneInfo;
-using ::android::hardware::thermal::V2_0::TemperatureType;
-using ::android::hardware::thermal::V2_0::ThrottlingSeverity;
 using ::android::hardware::usb::V1_0::PortRole;
 using ::android::hardware::usb::V1_0::PortRoleType;
 using ::android::hardware::usb::V1_0::PortDataRole;
@@ -99,11 +94,6 @@ struct Usb : public IUsb {
     pthread_mutex_t mPartnerLock;
     // Variable to signal partner coming back online after type switch
     bool mPartnerUp;
-
-    // Usb Overheat object for push suez event
-    UsbOverheatEvent mOverheat;
-    // Temperature when connected
-    float mPluggedTemperatureCelsius;
 
   private:
     pthread_t mPoll;
