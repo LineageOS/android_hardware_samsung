@@ -67,11 +67,7 @@ enum class HALVersion{
     V1_3
 };
 
-#define NEW_UDC_PATH "/sys/devices/platform/11110000.usb/"
-
-#define ID_PATH NEW_UDC_PATH "dwc3_exynos_otg_id"
-#define VBUS_PATH NEW_UDC_PATH "dwc3_exynos_otg_b_sess"
-#define USB_DATA_PATH NEW_UDC_PATH "usb_data_enabled"
+#define USB_DATA_PATH "/sys/devices/virtual/usb_notify/usb_control/usb_data_enabled"
 
 struct Usb : public IUsb {
     Usb();
