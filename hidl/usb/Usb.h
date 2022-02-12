@@ -72,7 +72,6 @@ enum class HALVersion{
     V1_3
 };
 
-constexpr char kGadgetName[] = "11110000.dwc3";
 #define NEW_UDC_PATH "/sys/devices/platform/11110000.usb/"
 
 #define ID_PATH NEW_UDC_PATH "dwc3_exynos_otg_id"
