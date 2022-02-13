@@ -20,7 +20,7 @@
     <string name="category_screen_title">Bildschirm</string>
     <string name="screen_colors_title">Farben</string>
     <string name="mdnie_scenario_title_head">Szenario</string>
-    <string name="mdnie_scenario_summary_head">Wählen Sie das mDNIe-Szenario</string>
+    <string name="mdnie_scenario_summary_head">Wähle das mDNIe-Szenario</string>
     <string name="mdnie_accessibility_title_head">Barrierefreier Modus</string>
     <string name="mdnie_accessibility_summary_head">mDNIe-Modus festlegen</string>
     <string name="mdnie_scenario_ui">LineageOS (Standard)</string>

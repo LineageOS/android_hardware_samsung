@@ -16,14 +16,9 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="mdnie_scenario_ui">LineageOS (por defeutu)</string>
-    <string name="mdnie_scenario_camera">Cámara</string>
-    <string name="mdnie_scenario_navigation">Navegación</string>
-    <string name="mdnie_scenario_gallery">Galería</string>
-    <string name="mdnie_scenario_vt">Videollamada</string>
-    <string name="mdnie_scenario_browser">Restolador</string>
-    <string name="mdnie_scenario_ebook">Llibru electrónicu</string>
-    <string name="mdnie_scenario_email">Corréu electrónicu</string>
-    <string name="mdnie_scenario_tdmb">Televisión dixital</string>
-    <string name="mdnie_accessibility_normal">Normal</string>
+    <string name="app_name">Erweiderte Schierm</string>
+    <string name="category_screen_title">Schierm</string>
+    <string name="screen_colors_title">Faarwen</string>
+    <string name="mdnie_scenario_title_head">Zeenario</string>
+    <string name="mdnie_scenario_summary_head">mDNIe-Zeenario auswielen</string>
 </resources>
