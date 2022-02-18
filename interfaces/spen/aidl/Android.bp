@@ -1,0 +1,20 @@
+//
+// SPDX-FileCopyrightText: 2022 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+aidl_interface {
+    name: "vendor.samsung.hardware.spen",
+    vendor_available: true,
+    srcs: [
+        "vendor/samsung/hardware/spen/*.aidl",
+    ],
+    stability: "vintf",
+    backend: {
+        java: {
+            platform_apis: true,
+        },
+    },
+    versions: ["1"],
+    owner: "samsung",
+}
