@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name">S Pen Actions</string>
+
+    <!-- Settings -->
+    <string name="settings_title">S Pen Bluetooth Settings</string>
+
+    <string name="spen_bluetooth_enable_title">S Pen Bluetooth Connection</string>
+    <string name="spen_bluetooth_enable_summary">Connect your S Pen via Bluetooth to be able to use Air Gestures</string>
+
+    <string name="spen_mode_title">S Pen Mode</string>
+    <string name="spen_mode_navigation">Gesture Navigation</string>
+    <string name="spen_mode_camera">Camera Control</string>
+    <string name="spen_mode_media_control">Media Control</string>
+</resources>
