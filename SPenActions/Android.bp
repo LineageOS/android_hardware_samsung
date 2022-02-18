@@ -1,0 +1,26 @@
+//
+// SPDX-FileCopyrightText: 2022 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "SPenActions",
+    defaults: ["SettingsLibDefaults"],
+
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+
+    certificate: "platform",
+    platform_apis: true,
+    system_ext_specific: true,
+    privileged: true,
+    privapp_allowlist: "org.lineageos.spenactions.xml",
+
+    static_libs: [
+        "vendor.samsung.hardware.spen-V1-java",
+    ],
+
+    optimize: {
+        enabled: false,
+    },
+}
