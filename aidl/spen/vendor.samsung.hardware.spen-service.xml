@@ -1,0 +1,7 @@
+<manifest version="1.0" type="device">
+    <hal format="aidl">
+        <name>vendor.samsung.hardware.spen</name>
+        <version>1</version>
+        <fqname>ISPen/default</fqname>
+    </hal>
+</manifest>

@@ -1,0 +1,5 @@
+service vendor.spen-default /vendor/bin/hw/vendor.samsung.hardware.spen-service
+    class hal
+    user system
+    group system
+    shutdown critical
