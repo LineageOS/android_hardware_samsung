@@ -1,0 +1,21 @@
+//
+// SPDX-FileCopyrightText: 2022 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_binary {
+    name: "vendor.samsung.hardware.spen-service",
+    relative_install_path: "hw",
+    init_rc: ["vendor.samsung.hardware.spen-service.rc"],
+    vintf_fragments: ["vendor.samsung.hardware.spen-service.xml"],
+    srcs: [
+        "SPen.cpp",
+        "service.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "vendor.samsung.hardware.spen-V1-ndk",
+    ],
+    vendor: true,
+}
