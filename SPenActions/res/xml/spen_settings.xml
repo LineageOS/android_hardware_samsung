@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="spen_bluetooth_enable"
+        android:defaultValue="false"
+        android:title="@string/spen_bluetooth_enable_title"
+        android:summary="@string/spen_bluetooth_enable_summary" />
+
+    <ListPreference
+        android:key="spen_mode"
+        android:entries="@array/spen_mode_entries"
+        android:entryValues="@array/spen_mode_values"
+        android:defaultValue="0"
+        android:title="@string/spen_mode_title"
+        android:summary="%s"
+        android:dependency="spen_bluetooth_enable" />
+
+</PreferenceScreen>

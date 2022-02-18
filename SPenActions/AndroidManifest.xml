@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.spenactions"
+    android:sharedUserId="android.uid.system">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:persistent="true"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.SubSettingsBase">
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:label="@string/settings_title"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.category"
+                       android:value="com.android.settings.category.ia.gestures" />
+        </activity>
+        <receiver
+            android:name=".BootReceiver"
+            android:directBootAware="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".SPenActionsService"
+            android:enabled="true" />
+    </application>
+
+</manifest>

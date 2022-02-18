@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- SPen GATT Service UUID -->
+    <string name="config_sPenServiceUuid" translatable="false">0000fd6c-0000-1000-8000-00805f9b34fb</string>
+</resources>

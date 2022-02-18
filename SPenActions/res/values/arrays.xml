@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string-array name="spen_mode_entries" translatable="false">
+        <item>@string/spen_mode_navigation</item>
+        <item>@string/spen_mode_camera</item>
+        <item>@string/spen_mode_media_control</item>
+    </string-array>
+
+    <string-array name="spen_mode_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>
