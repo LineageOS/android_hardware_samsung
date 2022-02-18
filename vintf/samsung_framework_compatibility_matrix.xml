@@ -289,6 +289,14 @@
             <instance>default</instance>
         </interface>
     </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.samsung.hardware.spen</name>
+        <version>1</version>
+        <interface>
+            <name>ISPen</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <hal format="hidl" optional="true">
         <name>vendor.samsung.hardware.sysinput</name>
         <version>1.3</version>
