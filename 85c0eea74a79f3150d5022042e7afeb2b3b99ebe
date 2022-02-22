@@ -16,6 +16,24 @@
       "message": "possibly not a bad idea to keep that for users where this feature is broken for whatever reason",
       "revId": "85c0eea74a79f3150d5022042e7afeb2b3b99ebe",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a818a0b8_19f7ccdc",
+        "filename": "hidl/usb/Usb.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 25925
+      },
+      "writtenOn": "2022-02-22T10:31:43Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b2447bc1_495a6259",
+      "revId": "85c0eea74a79f3150d5022042e7afeb2b3b99ebe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
