@@ -16,6 +16,24 @@
       "message": "What\u0027s gs101?",
       "revId": "940ee24c7fffcd71b5ec3c39064e5aff45aacc6c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c76b896_2fbfb44b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25925
+      },
+      "writtenOn": "2022-02-24T11:40:19Z",
+      "side": 1,
+      "message": "Part of sources for Pixel 6/6 Pro",
+      "parentUuid": "6bb0e7f4_b4e8958d",
+      "revId": "940ee24c7fffcd71b5ec3c39064e5aff45aacc6c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
