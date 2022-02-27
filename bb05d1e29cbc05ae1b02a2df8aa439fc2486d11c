@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37128b18_e8b1af66",
+        "filename": "doze/src/org/lineageos/settings/doze/SamsungDozeService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-02-27T12:47:29Z",
+      "side": 1,
+      "message": "Tabs all over the place...",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 1
+      },
+      "revId": "bb05d1e29cbc05ae1b02a2df8aa439fc2486d11c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22afef14_94e2a83c",
+        "filename": "doze/src/org/lineageos/settings/doze/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-02-27T12:47:29Z",
+      "side": 1,
+      "message": "Over 100 chars",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 119
+      },
+      "revId": "bb05d1e29cbc05ae1b02a2df8aa439fc2486d11c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
