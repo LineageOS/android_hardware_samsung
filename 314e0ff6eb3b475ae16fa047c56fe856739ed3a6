@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e308cd0c_14c72a49",
+        "filename": "doze/src/org/lineageos/settings/doze/SamsungDozeService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-03-01T22:31:03Z",
+      "side": 1,
+      "message": "Remove 4 spaces of indentation in all these lines.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "314e0ff6eb3b475ae16fa047c56fe856739ed3a6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de0bf566_7c441eff",
+        "filename": "doze/src/org/lineageos/settings/doze/SamsungDozeService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-03-01T22:31:03Z",
+      "side": 1,
+      "message": "Doesn\u0027t it fit in a single line?",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 53
+      },
+      "revId": "314e0ff6eb3b475ae16fa047c56fe856739ed3a6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e48c1a9b_58e3eb94",
+        "filename": "doze/src/org/lineageos/settings/doze/SamsungDozeService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-03-01T22:31:03Z",
+      "side": 1,
+      "message": "Doesn\u0027t it fit in a single line?",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 53
+      },
+      "revId": "314e0ff6eb3b475ae16fa047c56fe856739ed3a6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
