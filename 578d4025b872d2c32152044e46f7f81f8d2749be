@@ -22,6 +22,24 @@
       },
       "revId": "578d4025b872d2c32152044e46f7f81f8d2749be",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fec7d77f_c0c97556",
+        "filename": "dap/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-03-01T22:35:41Z",
+      "side": 1,
+      "message": "something should use it tho.",
+      "parentUuid": "c822c2a8_6745596c",
+      "revId": "578d4025b872d2c32152044e46f7f81f8d2749be",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
