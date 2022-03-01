@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c822c2a8_6745596c",
+        "filename": "dap/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-03-01T22:34:38Z",
+      "side": 1,
+      "message": "Nothing uses this.",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 80
+      },
+      "revId": "578d4025b872d2c32152044e46f7f81f8d2749be",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
