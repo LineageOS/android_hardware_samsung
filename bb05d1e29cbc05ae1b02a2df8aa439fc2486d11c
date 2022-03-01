@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57391ca0_75eb9b2f",
+        "filename": "doze/src/org/lineageos/settings/doze/SamsungDozeService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2022-03-01T18:33:26Z",
+      "side": 1,
+      "message": "I should have removed all of them now. Is there any auto-formatter one can use?",
+      "parentUuid": "37128b18_e8b1af66",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 1
+      },
+      "revId": "bb05d1e29cbc05ae1b02a2df8aa439fc2486d11c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22afef14_94e2a83c",
         "filename": "doze/src/org/lineageos/settings/doze/Utils.java",
         "patchSetId": 1
