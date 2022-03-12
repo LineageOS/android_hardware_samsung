@@ -42,6 +42,18 @@
                 android:value="com.android.settings.category.ia.sound" />
         </activity>
 
+        <provider
+            android:name=".DolbySearchIndexablesProvider"
+            android:exported="true"
+            android:authorities="org.lineageos.dap"
+            android:multiprocess="false"
+            android:grantUriPermissions="true"
+            android:permission="android.permission.READ_SEARCH_INDEXABLES">
+            <intent-filter>
+                <action android:name="android.content.action.SEARCH_INDEXABLES_PROVIDER" />
+            </intent-filter>
+        </provider>
+
         <receiver
             android:name=".BootCompletedReceiver"
             android:exported="true">
