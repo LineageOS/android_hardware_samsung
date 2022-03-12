@@ -16,6 +16,24 @@
       "message": "nit: newline",
       "revId": "564dd3ba026449e825c054bd1e16c95b70423668",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2cc70ad_ec897cc2",
+        "filename": "dap/res/drawable/ic_settings.xml",
+        "patchSetId": 25
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-03-12T16:16:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae20982_221c0639",
+      "revId": "564dd3ba026449e825c054bd1e16c95b70423668",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
