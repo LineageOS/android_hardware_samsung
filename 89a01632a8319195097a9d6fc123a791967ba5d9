@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a78838b0_4b5c44fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 15661
+      },
+      "writtenOn": "2022-03-14T13:34:48Z",
+      "side": 1,
+      "message": "I think that `mark [...] as vendor module` would be a better commit message.\n\nShouldn\u0027t you also do the same thing in `hardware/samsung/ril/libsecril-client/Android.mk`?",
+      "revId": "89a01632a8319195097a9d6fc123a791967ba5d9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
