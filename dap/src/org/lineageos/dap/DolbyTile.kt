@@ -28,6 +28,7 @@ class DolbyTile : TileService() {
         set(value) {
             field = value
             qsTile.state = if (value) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+            qsTile.subtitle = DolbyCore.getProfileName(this)
             qsTile.updateTile()
         }
 

@@ -16,7 +16,10 @@
 
 package org.lineageos.dap
 
+import android.content.Context
 import android.media.audiofx.AudioEffect
+
+import org.lineageos.dap.DolbyFragment.Companion.PREF_DOLBY_MODES
 
 import java.util.UUID
 
@@ -39,6 +42,21 @@ object DolbyCore {
     private val audioEffect = runCatching {
         AudioEffect(EFFECT_TYPE_DAP, AudioEffect.EFFECT_TYPE_NULL, 0, 0)
     }.getOrNull()
+
+    fun getProfile(): Int {
+        val out = intArrayOf(PROFILE_AUTO)
+        audioEffect?.getParameter(EFFECT_PARAM_PROFILE, out)
+        return out.first()
+    }
+
+    fun getProfileName(context: Context): String {
+        val profile = getProfile()
+        val resourceName = PREF_DOLBY_MODES.filter { it.value == profile }.keys.first()
+
+        return context.resources.getString(context.resources.getIdentifier(
+                resourceName, "string", context.packageName
+        ))
+    }
 
     fun setProfile(profile: Int) {
         audioEffect?.setParameter(EFFECT_PARAM_EFF_ENAB, 1)
