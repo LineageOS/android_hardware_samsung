@@ -24,6 +24,8 @@ object DolbyCore {
     private const val EFFECT_PARAM_PROFILE = 0
     private const val EFFECT_PARAM_EFF_ENAB = 19
 
+    private val EFFECT_TYPE_DAP = UUID.fromString("46d279d9-9be7-453d-9d7c-ef937f675587")
+
     const val PROFILE_AUTO = 0
     const val PROFILE_MOVIE = 1
     const val PROFILE_MUSIC = 2
@@ -34,18 +36,18 @@ object DolbyCore {
     const val PROFILE_GAME_2 = 7
     const val PROFILE_SPACIAL_AUDIO = 8
 
-    private val audioEffect = AudioEffect(
-        UUID.fromString("46d279d9-9be7-453d-9d7c-ef937f675587"), AudioEffect.EFFECT_TYPE_NULL, 0, 0
-    )
+    private val audioEffect = runCatching {
+        AudioEffect(EFFECT_TYPE_DAP, AudioEffect.EFFECT_TYPE_NULL, 0, 0)
+    }.getOrNull()
 
     fun setProfile(profile: Int) {
-        audioEffect.setParameter(EFFECT_PARAM_EFF_ENAB, 1)
-        audioEffect.setParameter(EFFECT_PARAM_PROFILE, profile)
+        audioEffect?.setParameter(EFFECT_PARAM_EFF_ENAB, 1)
+        audioEffect?.setParameter(EFFECT_PARAM_PROFILE, profile)
     }
 
     fun setEnabled(enabled: Boolean) {
-        audioEffect.enabled = enabled
+        audioEffect?.enabled = enabled
     }
 
-    fun isEnabled() = audioEffect.enabled
+    fun isEnabled() = audioEffect?.enabled ?: false
 }
