@@ -46,7 +46,7 @@ object DolbyCore {
     fun getProfile(): Int {
         val out = intArrayOf(PROFILE_AUTO)
         audioEffect?.getParameter(EFFECT_PARAM_PROFILE, out)
-        return out.first()
+        return out.first().coerceIn(PROFILE_AUTO, PROFILE_SPACIAL_AUDIO)
     }
 
     fun getProfileName(context: Context): String {
