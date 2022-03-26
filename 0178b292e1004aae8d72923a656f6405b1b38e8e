@@ -16,6 +16,23 @@
       "message": "Try current PS, merge if it works ^^",
       "revId": "0178b292e1004aae8d72923a656f6405b1b38e8e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1afb70e3_a7f04f9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25925
+      },
+      "writtenOn": "2022-03-26T09:01:32Z",
+      "side": 1,
+      "message": "Working fine",
+      "revId": "0178b292e1004aae8d72923a656f6405b1b38e8e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
