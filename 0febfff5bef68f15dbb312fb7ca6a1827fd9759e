@@ -16,6 +16,23 @@
       "message": "what is the reason for this?",
       "revId": "0febfff5bef68f15dbb312fb7ca6a1827fd9759e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4846c1f_1776ec27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28998
+      },
+      "writtenOn": "2022-03-29T23:53:55Z",
+      "side": 1,
+      "message": "Compiler complains about this error\n\nhardware/samsung/audio/voice.c:346:14: error: case value not in enumerated type \u0027audio_devices_t\u0027 [-Werror,-Wswitch]\n        case AUDIO_DEVICE_OUT_ALL_SCO:\n\nif AUDIO_DEVICE_OUT_ALL_SCO is not removed",
+      "revId": "0febfff5bef68f15dbb312fb7ca6a1827fd9759e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
