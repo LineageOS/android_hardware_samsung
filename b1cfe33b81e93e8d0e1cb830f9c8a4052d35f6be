@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db803cab_ddf334ef",
+        "filename": "doze/src/org/lineageos/settings/doze/SamsungDozeService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2022-03-31T16:53:19Z",
+      "side": 1,
+      "message": "No tabs in java",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 1
+      },
+      "revId": "b1cfe33b81e93e8d0e1cb830f9c8a4052d35f6be",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
