@@ -22,6 +22,30 @@
       },
       "revId": "b1cfe33b81e93e8d0e1cb830f9c8a4052d35f6be",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08d63284_0486962f",
+        "filename": "doze/src/org/lineageos/settings/doze/SamsungDozeService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2022-03-31T20:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db803cab_ddf334ef",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 1
+      },
+      "revId": "b1cfe33b81e93e8d0e1cb830f9c8a4052d35f6be",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
