@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25dd9621_cf71696d",
+        "filename": "doze/src/org/lineageos/settings/doze/Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2022-04-02T13:33:45Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "fb66fff0f9beeaf8eb483697362edbb23bb46e5a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
