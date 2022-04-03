@@ -646,7 +646,8 @@ static void uevent_event(uint32_t /*epevents*/, struct data *payload) {
             pthread_cond_signal(&payload->usb->mPartnerCV);
             pthread_mutex_unlock(&payload->usb->mPartnerLock);
         } else if (!strncmp(cp, "DEVTYPE=typec_", strlen("DEVTYPE=typec_")) ||
-                   !strncmp(cp, "CCIC=WATER", strlen("CCIC=WATER"))) {
+                   !strncmp(cp, "CCIC=WATER", strlen("CCIC=WATER")) ||
+                   !strncmp(cp, "CCIC=DRY", strlen("CCIC=DRY"))) {
             hidl_vec<PortStatus> currentPortStatus_1_2;
             queryVersionHelper(payload->usb, &currentPortStatus_1_2);
 
