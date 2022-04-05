@@ -18,6 +18,8 @@
 
 #include <cinttypes>
 
+bool hasHoverProximity = false;
+
 namespace android {
 namespace hardware {
 namespace sensors {
@@ -67,6 +69,9 @@ std::vector<V2_1::Event> HalProxyCallbackBase::processEvents(const std::vector<V
     *numWakeupEvents = 0;
     std::vector<V2_1::Event> eventsOut;
     for (V2_1::Event event : events) {
+        if (hasHoverProximity && event.sensorType == V2_1::SensorType::PROXIMITY) {
+            event.u.scalar = 3 - event.u.scalar;
+        }
         event.sensorHandle = setSubHalIndex(event.sensorHandle, mSubHalIndex);
         eventsOut.push_back(event);
         const V2_1::SensorInfo& sensor = mCallback->getSensorInfo(event.sensorHandle);

@@ -31,6 +31,8 @@
 #include <functional>
 #include <thread>
 
+extern bool hasHoverProximity;
+
 namespace android {
 namespace hardware {
 namespace sensors {
@@ -123,11 +125,15 @@ Return<void> HalProxy::getSensorsList_2_1(ISensorsV2_1::getSensorsList_2_1_cb _h
             dst.requiredPermission = "";
         }
 
-        if (dst.typeAsString == "com.samsung.sensor.physical_proximity") {
-            ALOGI("Fixing com.samsung.sensor.physical_proximity");
+        if (dst.typeAsString == "com.samsung.sensor.physical_proximity" ||
+            dst.typeAsString == "com.samsung.sensor.hover_proximity") {
+            ALOGI("Fixing %s", dst.typeAsString.c_str());
+            hasHoverProximity = dst.typeAsString == "com.samsung.sensor.hover_proximity";
+            ALOGI("Has hover proximity %s", hasHoverProximity ? "true" : "false");
             dst.type = V2_1::SensorType::PROXIMITY;
             dst.typeAsString = SENSOR_STRING_TYPE_PROXIMITY;
             dst.maxRange = 1;
+            ALOGI("Proximity max range %f", dst.maxRange);
         }
 
 #ifdef VERBOSE
