@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "661fa641_58ef6413",
+        "filename": "hidl/sensors/2.1/HalProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-04-13T17:40:56Z",
+      "side": 1,
+      "message": "Wrong indentation.",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 12
+      },
+      "revId": "26d3e11f78b1147a3455965c84603b56c3c6a6f4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
