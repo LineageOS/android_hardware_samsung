@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d91e2f02_4e690ee8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29699
+      },
+      "writtenOn": "2022-04-13T13:20:03Z",
+      "side": 1,
+      "message": "working fine on Galaxy M12",
+      "revId": "afffed02db16d48acc0774270345841b96bc9d27",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
