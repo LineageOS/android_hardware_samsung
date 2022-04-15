@@ -162,6 +162,11 @@ ndk::ScopedAStatus Vibrator::setAmplitude(float amplitude) {
     if (intensity > INTENSITY_MAX) {
         intensity = INTENSITY_MAX;
     }
+
+    if (intensity == 0) {
+        return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_ARGUMENT);
+    }
+
     LOG(DEBUG) << "Setting intensity: " << intensity;
 
     if (mHasTimedOutIntensity) {
