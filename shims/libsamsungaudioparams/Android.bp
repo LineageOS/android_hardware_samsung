@@ -1,0 +1,14 @@
+/*
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+cc_library_shared {
+    name: "libshim_samsungaudioparams",
+    srcs: ["samsungaudioparams.cpp"],
+    shared_libs: [
+        "libbase",
+        "libcutils",
+    ],
+    vendor: true,
+}
