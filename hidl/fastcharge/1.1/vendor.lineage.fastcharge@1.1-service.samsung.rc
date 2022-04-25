@@ -1,0 +1,8 @@
+on init
+    chown system radio /sys/class/sec/switch/afc_disable
+    chown system radio /sys/class/power_supply/battery/pd_disable
+
+service vendor.fastcharge-hal-1-1 /vendor/bin/hw/vendor.lineage.fastcharge@1.1-service.samsung
+    class hal
+    user system
+    group system
