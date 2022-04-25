@@ -18,12 +18,12 @@
 
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
-#include <vendor/lineage/fastcharge/1.0/IFastCharge.h>
+#include <vendor/lineage/fastcharge/1.1/ISuperFastCharge.h>
 
 namespace vendor {
 namespace lineage {
 namespace fastcharge {
-namespace V1_0 {
+namespace V1_1 {
 namespace implementation {
 
 using ::android::sp;
@@ -34,18 +34,20 @@ using ::android::hardware::hidl_vec;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
 
-using ::vendor::lineage::fastcharge::V1_0::IFastCharge;
+using ::vendor::lineage::fastcharge::V1_1::ISuperFastCharge;
 
 
-struct FastCharge : public IFastCharge {
-    FastCharge();
+struct SuperFastCharge : public ISuperFastCharge {
+    SuperFastCharge();
+
+    bool isSupported();
 
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enable) override;
 };
 
 }  // namespace implementation
-}  // namespace V1_0
+}  // namespace V1_1
 }  // namespace fastcharge
 }  // namespace lineage
 }  // namespace vendor

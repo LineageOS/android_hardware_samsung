@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "fastcharge@1.0-service.samsung"
+#define LOG_TAG "fastcharge@1.1-service.samsung"
 
-#include "FastCharge.h"
+#include "SuperFastCharge.h"
 #include <android-base/logging.h>
 #include <cutils/properties.h>
 
@@ -27,10 +27,10 @@
 namespace vendor {
 namespace lineage {
 namespace fastcharge {
-namespace V1_0 {
+namespace V1_1 {
 namespace implementation {
 
-static constexpr const char* kFastChargingProp = "persist.vendor.sec.fastchg_enabled";
+static constexpr const char* kSuperFastChargingProp = "persist.vendor.sec.superfastchg_enabled";
 
 /*
  * Write value to path and close file.
@@ -75,25 +75,30 @@ static T get(const std::string& path, const T& def) {
     }
 }
 
-FastCharge::FastCharge() {
-    setEnabled(property_get_bool(kFastChargingProp, FASTCHARGE_DEFAULT_SETTING));
+SuperFastCharge::SuperFastCharge() {
+    setEnabled(property_get_bool(kSuperFastChargingProp, FASTCHARGE_DEFAULT_SETTING));
 }
 
-Return<bool> FastCharge::isEnabled() {
-    return get(FASTCHARGE_PATH, 0) < 1;
+bool SuperFastCharge::isSupported() {
+    std::fstream file(SUPER_FASTCHARGE_PATH, file.in | file.out);
+    return file.good();
 }
 
-Return<bool> FastCharge::setEnabled(bool enable) {
-    set(FASTCHARGE_PATH, enable ? 0 : 1);
+Return<bool> SuperFastCharge::isEnabled() {
+    return get(SUPER_FASTCHARGE_PATH, 0) < 1;
+}
+
+Return<bool> SuperFastCharge::setEnabled(bool enable) {
+    set(SUPER_FASTCHARGE_PATH, enable ? 0 : 1);
 
     bool enabled = isEnabled();
-    property_set(kFastChargingProp, enabled ? "true" : "false");
+    property_set(kSuperFastChargingProp, enabled ? "true" : "false");
 
     return enabled;
 }
 
 }  // namespace implementation
-}  // namespace V1_0
+}  // namespace V1_1
 }  // namespace fastcharge
 }  // namespace lineage
 }  // namespace vendor

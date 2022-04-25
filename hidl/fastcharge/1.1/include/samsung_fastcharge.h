@@ -18,3 +18,4 @@
 
 #define FASTCHARGE_DEFAULT_SETTING true
 #define FASTCHARGE_PATH "/sys/class/sec/switch/afc_disable"
+#define SUPER_FASTCHARGE_PATH "/sys/class/power_supply/battery/pd_disable"

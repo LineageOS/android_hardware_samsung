@@ -2,9 +2,13 @@
     <hal format="hidl">
         <name>vendor.lineage.fastcharge</name>
         <transport>hwbinder</transport>
-        <version>1.0</version>
+        <version>1.1</version>
         <interface>
             <name>IFastCharge</name>
+            <instance>default</instance>
+        </interface>
+        <interface>
+            <name>ISuperFastCharge</name>
             <instance>default</instance>
         </interface>
     </hal>
