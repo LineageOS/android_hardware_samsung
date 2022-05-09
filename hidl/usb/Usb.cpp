@@ -521,13 +521,13 @@ Status getPortStatusHelper(hidl_vec<PortStatus> *currentPortStatus_1_2, HALVersi
 
             if (version == HALVersion::V1_0) {
                 ALOGI("HAL version V1_0");
-                (*currentPortStatus_1_2)[i].status_1_1.status.supportedModes = V1_0::PortMode::DRP;
+                (*currentPortStatus_1_2)[i].status_1_1.status.supportedModes = V1_0::PortMode::DFP;
             } else {
                 if (version == HALVersion::V1_1)
                     ALOGI("HAL version V1_1");
                 else
                     ALOGI("HAL version V1_2");
-                (*currentPortStatus_1_2)[i].status_1_1.supportedModes = 0 | PortMode_1_1::DRP;
+                (*currentPortStatus_1_2)[i].status_1_1.supportedModes = PortMode_1_1::UFP | PortMode_1_1::DFP;
                 (*currentPortStatus_1_2)[i].status_1_1.status.supportedModes = V1_0::PortMode::NONE;
                 (*currentPortStatus_1_2)[i].status_1_1.status.currentMode = V1_0::PortMode::NONE;
             }
