@@ -421,7 +421,7 @@ struct voice_session *voice_session_init(struct audio_device *adev)
     }
 
     /* Two mic control */
-    ret = property_get_bool("audio_hal.disable_two_mic", false);
+    ret = property_get_bool("ro.vendor.audio_hal.disable_two_mic", false);
     if (ret > 0) {
         session->two_mic_disabled = true;
     }
@@ -433,7 +433,7 @@ struct voice_session *voice_session_init(struct audio_device *adev)
         return NULL;
     }
 
-    ret = property_get("audio_hal.force_voice_config", voice_config, "");
+    ret = property_get("ro.vendor.audio_hal.force_voice_config", voice_config, "");
     if (ret > 0) {
         if ((strncmp(voice_config, "narrow", 6)) == 0)
             session->wb_amr_type = 0;
