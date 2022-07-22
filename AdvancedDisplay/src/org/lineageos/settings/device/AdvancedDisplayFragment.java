@@ -28,6 +28,7 @@ import org.lineageos.internal.util.FileUtils;
 public class AdvancedDisplayFragment extends PreferenceFragment {
     private mDNIeScenario mmDNIeScenario;
     private mDNIeAccessibility mmDNIeAccessibility;
+    private mDNIeHDR mmDNIeHDR;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -42,5 +43,9 @@ public class AdvancedDisplayFragment extends PreferenceFragment {
         mmDNIeAccessibility = (mDNIeAccessibility) findPreference(Constants.KEY_MDNIE_ACCESSIBILITY);
         mmDNIeAccessibility.setEnabled(
                 FileUtils.isFileWritable(res.getString(R.string.mdnie_accessibility_sysfs_file)));
+
+        mmDNIeHDR = (mDNIeHDR) findPreference(Constants.KEY_MDNIE_HDR);
+        mmDNIeHDR.setEnabled(
+                FileUtils.isFileWritable(res.getString(R.string.mdnie_hdr_sysfs_file)));
     }
 }

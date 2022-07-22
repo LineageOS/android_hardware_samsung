@@ -22,6 +22,15 @@
                 android:entries="@array/mdnie_accessibility_entries"
                 android:entryValues="@array/mdnie_accessibility_entries_values"
                 android:defaultValue="0" />
+
+        <!-- mDNIe HDR mode -->
+        <org.lineageos.settings.device.mDNIeHDR
+                android:key="mdnie_hdr"
+                android:title="@string/mdnie_hdr_title_head"
+                android:summary="@string/mdnie_hdr_summary_head"
+                android:entries="@array/mdnie_hdr_entries"
+                android:entryValues="@array/mdnie_hdr_entries_values"
+                android:defaultValue="0" />
     </PreferenceCategory>
 
 </PreferenceScreen>

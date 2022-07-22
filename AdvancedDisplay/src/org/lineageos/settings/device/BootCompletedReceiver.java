@@ -27,5 +27,6 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         mDNIeScenario.restore(context);
         mDNIeAccessibility.restore(context);
+        mDNIeHDR.restore(context);
     }
 }

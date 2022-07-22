@@ -27,6 +27,8 @@
     <string name="mdnie_scenario_summary_head">Set the mDNIe scenario</string>
     <string name="mdnie_accessibility_title_head">Accessibility mode</string>
     <string name="mdnie_accessibility_summary_head">Set the mDNIe accessibility mode</string>
+    <string name="mdnie_hdr_title_head">HDR mode</string>
+    <string name="mdnie_hdr_summary_head">Set the mDNIe HDR mode</string>
 
     <!-- Scenario names -->
     <string name="mdnie_scenario_ui">LineageOS (default)</string>
@@ -49,6 +51,12 @@
     <string name="mdnie_accessibility_screen_curtain">Screen curtain</string>
     <string name="mdnie_accessibility_grayscale">Gray</string>
     <string name="mdnie_accessibility_gray_negative">Gray inverted</string>
+
+    <!-- HDR mode names -->
+    <string name="mdnie_hdr_off">Off</string>
+    <string name="mdnie_hdr_mode1">Mode 1</string>
+    <string name="mdnie_hdr_mode2">Mode 2</string>
+    <string name="mdnie_hdr_mode3">Mode 3</string>
 
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
     <string name="summary_empty" translatable="false"></string>

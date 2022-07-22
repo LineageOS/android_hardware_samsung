@@ -47,4 +47,18 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+
+    <string-array name="mdnie_hdr_entries" translatable="false">
+        <item>@string/mdnie_hdr_off</item>
+        <item>@string/mdnie_hdr_mode1</item>
+        <item>@string/mdnie_hdr_mode2</item>
+        <item>@string/mdnie_hdr_mode3</item>
+    </string-array>
+
+    <string-array name="mdnie_hdr_entries_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>
