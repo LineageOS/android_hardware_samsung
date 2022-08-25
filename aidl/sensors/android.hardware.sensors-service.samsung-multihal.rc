@@ -1,0 +1,7 @@
+service vendor.sensors-hal-multihal /vendor/bin/hw/android.hardware.sensors-service.samsung-multihal
+    class hal
+    user system
+    group system wakelock context_hub input
+    task_profiles ServiceCapacityLow
+    capabilities BLOCK_SUSPEND
+    rlimit rtprio 10 10
