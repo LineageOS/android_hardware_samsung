@@ -30,6 +30,8 @@
 // structures created and uvent fired.
 #define PORT_TYPE_TIMEOUT 8
 #define USB_DATA_PATH "/sys/devices/virtual/usb_notify/usb_control/usb_data_enabled"
+#define CONTAMINANT_DETECTION_PATH "/sys/devices/virtual/sec/ccic/water"
+#define DISABLE_CONTAMINANT_DETECTION "vendor.usb.contaminantdisable"
 
 namespace aidl {
 namespace android {
@@ -74,6 +76,7 @@ struct Usb : public BnUsb {
     pthread_mutex_t mPartnerLock;
     // Variable to signal partner coming back online after type switch
     bool mPartnerUp;
+    bool mMoistureDetectionEnabled;
   private:
     pthread_t mPoll;
 };
