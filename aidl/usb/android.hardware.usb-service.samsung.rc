@@ -1,0 +1,4 @@
+service vendor.usb_default /vendor/bin/hw/android.hardware.usb-service.samsung
+    class hal
+    user system
+    group system
