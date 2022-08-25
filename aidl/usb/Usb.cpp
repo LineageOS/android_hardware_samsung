@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2021 The Android Open Source Project
+ * Copyright (C) 2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,11 +59,17 @@ void queryVersionHelper(android::hardware::usb::Usb *usb,
 
 ScopedAStatus Usb::enableUsbData(const string& in_portName, bool in_enable, int64_t in_transactionId) {
     std::vector<PortStatus> currentPortStatus;
+    bool result = true;
 
     pthread_mutex_lock(&mLock);
+    if (!WriteStringToFile(in_enable ? "1" : "0", USB_DATA_PATH)) {
+        ALOGE("Not able to turn %s usb connection notification", in_enable ? "on" : "off");
+        result = false;
+    }
+
     if (mCallback != NULL) {
         ScopedAStatus ret = mCallback->notifyEnableUsbDataStatus(
-            in_portName, true, in_enable ? Status::SUCCESS : Status::ERROR, in_transactionId);
+            in_portName, true, result ? Status::SUCCESS : Status::ERROR, in_transactionId);
         if (!ret.isOk())
             ALOGE("notifyEnableUsbDataStatus error %s", ret.getDescription().c_str());
     } else {

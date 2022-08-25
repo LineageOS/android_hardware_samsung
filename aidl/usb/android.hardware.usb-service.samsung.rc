@@ -2,3 +2,14 @@ service vendor.usb_default /vendor/bin/hw/android.hardware.usb-service.samsung
     class hal
     user system
     group system
+
+on post-fs
+    chown root system /sys/class/typec/port0/power_role
+    chown root system /sys/class/typec/port0/data_role
+    chown root system /sys/class/typec/port0/port_type
+    chown root system /sys/devices/virtual/sec/ccic/water
+    chown root system /sys/devices/virtual/usb_notify/usb_control/usb_data_enabled
+    chmod 664 /sys/class/typec/port0/power_role
+    chmod 664 /sys/class/typec/port0/data_role
+    chmod 664 /sys/class/typec/port0/port_type
+    chmod 664 /sys/devices/virtual/usb_notify/usb_control/usb_data_enabled
