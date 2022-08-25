@@ -14,19 +14,20 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.sensors@2.1-service.samsung-multihal",
+    name: "android.hardware.sensors-service.samsung-multihal",
     defaults: [
         "hidl_defaults",
     ],
     vendor: true,
     relative_install_path: "hw",
     srcs: [
-	"HalProxy.cpp",
-	"HalProxyCallback.cpp",
+        "ConvertUtils.cpp",
+        "HalProxyAidl.cpp",
         "service.cpp",
     ],
-    init_rc: ["android.hardware.sensors@2.1-service.samsung-multihal.rc"],
-    vintf_fragments: ["android.hardware.sensors@2.1-samsung-multihal.xml"],
+    local_include_dirs: ["include"],
+    init_rc: ["android.hardware.sensors-service.samsung-multihal.rc"],
+    vintf_fragments: ["android.hardware.sensors-samsung-multihal.xml"],
     header_libs: [
         "android.hardware.sensors@2.X-shared-utils",
     ],
@@ -34,7 +35,9 @@ cc_binary {
         "android.hardware.sensors@2.0",
         "android.hardware.sensors@2.0-ScopedWakelock",
         "android.hardware.sensors@2.1",
+        "android.hardware.sensors-V1-ndk",
         "libbase",
+        "libbinder_ndk",
         "libcutils",
         "libfmq",
         "libhidlbase",
@@ -45,5 +48,6 @@ cc_binary {
     static_libs: [
         "android.hardware.sensors@1.0-convert",
         "android.hardware.sensors@2.X-multihal",
+        "libaidlcommonsupport",
     ],
 }
