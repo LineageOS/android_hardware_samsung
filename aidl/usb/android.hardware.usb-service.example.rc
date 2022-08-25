@@ -1,4 +1,0 @@
-service vendor.usb_default /vendor/bin/hw/android.hardware.usb-service.example
-    class hal
-    user system
-    group system
