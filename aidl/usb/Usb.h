@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2021 The Android Open Source Project
+ * Copyright (C) 2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +29,7 @@
 // Having a margin of ~3 secs for the directory and other related bookeeping
 // structures created and uvent fired.
 #define PORT_TYPE_TIMEOUT 8
+#define USB_DATA_PATH "/sys/devices/virtual/usb_notify/usb_control/usb_data_enabled"
 
 namespace aidl {
 namespace android {
