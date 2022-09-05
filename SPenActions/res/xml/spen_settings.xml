@@ -20,4 +20,8 @@
         android:summary="%s"
         android:dependency="spen_bluetooth_enable" />
 
+    <com.android.settingslib.widget.ActionButtonsPreference
+        android:key="action_buttons"
+        android:dependency="spen_bluetooth_enable" />
+
 </PreferenceScreen>

@@ -11,18 +11,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.UserHandle;
+import android.view.View;
 import android.widget.CompoundButton;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.SwitchPreference;
 
+import com.android.settingslib.widget.ActionButtonsPreference;
+
+import org.lineageos.spenactions.BluetoothUtils;
 import org.lineageos.spenactions.R;
 
 public class SPenSettingsFragment extends PreferenceFragment implements
-        Preference.OnPreferenceChangeListener, CompoundButton.OnCheckedChangeListener {
+        Preference.OnPreferenceChangeListener, CompoundButton.OnCheckedChangeListener,
+        View.OnClickListener {
 
     private SwitchPreference mEnableBluetoothPreference;
+    private ActionButtonsPreference mActionButtonsPreference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -30,6 +36,9 @@ public class SPenSettingsFragment extends PreferenceFragment implements
 
         mEnableBluetoothPreference = findPreference(SettingsUtils.SPEN_BLUETOOTH_ENABLE);
         mEnableBluetoothPreference.setOnPreferenceChangeListener(this);
+        mActionButtonsPreference = findPreference(SettingsUtils.ACTION_BUTTONS);
+        mActionButtonsPreference.setButton1Text(R.string.reset_spen);
+        mActionButtonsPreference.setButton1OnClickListener(this);
     }
 
     @Override
@@ -52,5 +61,10 @@ public class SPenSettingsFragment extends PreferenceFragment implements
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    }
+
+    @Override
+    public void onClick(View view) {
+        BluetoothUtils.resetSPenMAC(getActivity());
     }
 }
