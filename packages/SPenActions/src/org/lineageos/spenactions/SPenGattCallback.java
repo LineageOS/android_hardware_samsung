@@ -64,6 +64,7 @@ public class SPenGattCallback extends BluetoothGattCallback {
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
         if (newState == BluetoothProfile.STATE_CONNECTED) {
             Log.i(LOG_TAG, "S Pen connected");
+            mConnectionManager.onConnected();
             gatt.discoverServices();
         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
             gatt.disconnect();

@@ -61,6 +61,14 @@ public class SPenConnectionManager extends BroadcastReceiver {
         }
     }
 
+    public void onConnected() {
+        try {
+            mSPenHAL.setMACAddress(mCurrentBleSpenAddr);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void disconnect() throws RemoteException {
         if (mGatt != null) {
             mGatt.disconnect();
