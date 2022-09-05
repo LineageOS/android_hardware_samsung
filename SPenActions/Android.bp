@@ -5,6 +5,7 @@
 
 android_app {
     name: "SPenActions",
+    defaults: ["SettingsLibDefaults"],
 
     srcs: ["src/**/*.java"],
     resource_dirs: ["res"],
@@ -15,7 +16,6 @@ android_app {
     privileged: true,
 
     static_libs: [
-        "org.lineageos.settings.resources",
         "vendor.samsung.hardware.spen-V2-java",
     ],
 
