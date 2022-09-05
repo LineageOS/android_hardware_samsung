@@ -15,6 +15,16 @@ aidl_interface {
             platform_apis: true,
         },
     },
-    versions: ["1"],
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+        {
+            version: "2",
+            imports: [],
+        },
+
+    ],
     owner: "samsung",
 }

@@ -17,9 +17,10 @@ class SPen : public BnSPen {
   public:
     SPen();
 
-    ndk::ScopedAStatus setCharging(bool charging, bool* _aidl_return) override;
+    ndk::ScopedAStatus setCharging(bool in_charging, bool* _aidl_return) override;
     ndk::ScopedAStatus isCharging(bool* _aidl_return) override;
     ndk::ScopedAStatus getMACAddress(std::string* _aidl_return) override;
+    ndk::ScopedAStatus setMACAddress(const std::string& in_mac) override;
 };
 
 }  // namespace spen
