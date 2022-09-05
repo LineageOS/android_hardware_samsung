@@ -5,8 +5,10 @@
 -->
 <permissions>
     <privapp-permissions package="org.lineageos.spenactions">
+        <permission name="android.permission.ACCESS_FINE_LOCATION" />
         <permission name="android.permission.BLUETOOTH_CONNECT"/>
         <permission name="android.permission.BLUETOOTH_ADMIN" />
+        <permission name="android.permission.BLUETOOTH_SCAN" />
         <permission name="android.permission.INJECT_EVENTS" />
     </privapp-permissions>
 </permissions>
