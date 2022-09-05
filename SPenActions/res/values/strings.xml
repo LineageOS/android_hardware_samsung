@@ -16,4 +16,6 @@
     <string name="spen_mode_navigation">Gesture navigation</string>
     <string name="spen_mode_camera">Camera control</string>
     <string name="spen_mode_media_control">Media control</string>
+
+    <string name="spen_reset">Reset S Pen</string>
 </resources>
