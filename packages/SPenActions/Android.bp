@@ -17,7 +17,7 @@ android_app {
     privapp_allowlist: "org.lineageos.spenactions.xml",
 
     static_libs: [
-        "vendor.samsung.hardware.spen-V1-java",
+        "vendor.samsung.hardware.spen-V2-java",
     ],
 
     optimize: {
