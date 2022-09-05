@@ -16,7 +16,7 @@ android_app {
 
     static_libs: [
         "org.lineageos.settings.resources",
-        "vendor.samsung.hardware.spen-V1-java",
+        "vendor.samsung.hardware.spen-V2-java",
     ],
 
     required: [

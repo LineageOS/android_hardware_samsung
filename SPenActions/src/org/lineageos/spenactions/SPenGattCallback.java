@@ -65,6 +65,7 @@ public class SPenGattCallback extends BluetoothGattCallback {
 
         if (newState == BluetoothProfile.STATE_CONNECTED) {
             Log.i(LOG_TAG, "SPen connected!");
+            mConnectionManager.onConnected();
             gatt.discoverServices();
         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
             gatt.disconnect();
