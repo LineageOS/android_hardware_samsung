@@ -1,9 +1,5 @@
-package {
-    default_applicable_licenses: ["Android-Apache-2.0"],
-}
-
 cc_binary {
-    name: "android.hardware.memtrack-service.pixel",
+    name: "android.hardware.memtrack-service.samsung-mali",
     relative_install_path: "hw",
     init_rc: ["memtrack.rc"],
     vintf_fragments: ["memtrack.xml"],
@@ -12,9 +8,12 @@ cc_binary {
         "android.hardware.memtrack-V1-ndk",
         "libbase",
         "libbinder_ndk",
-        "libmemtrack-pixel",
+        "liblog",
     ],
     srcs: [
+        "Memtrack.cpp",
+        "GpuSysfsReader.cpp",
+        "filesystem.cpp",
         "main.cpp",
     ],
 }
