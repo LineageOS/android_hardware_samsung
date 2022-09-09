@@ -1,0 +1,4 @@
+service vendor.memtrack-default /vendor/bin/hw/android.hardware.memtrack-service.samsung-mali
+    class hal
+    user graphics
+    group system
