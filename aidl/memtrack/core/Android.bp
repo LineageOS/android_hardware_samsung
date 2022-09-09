@@ -1,0 +1,34 @@
+
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+cc_library_shared {
+    name: "libmemtrack-pixel",
+    vendor: true,
+    srcs: [
+        "Memtrack.cpp",
+        "GpuSysfsReader.cpp",
+        "filesystem.cpp",
+    ],
+    export_include_dirs: [
+        "include",
+    ],
+    shared_libs: [
+        "android.hardware.memtrack-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "liblog",
+    ],
+    cppflags: [
+        "-Wall",
+        "-Werror",
+        "-Wformat",
+        "-Wthread-safety",
+        "-Wunused",
+        "-Wunreachable-code",
+    ],
+    visibility: [
+        "//hardware/google/graphics/common/memtrack-pixel/service:__pkg__"
+    ],
+}

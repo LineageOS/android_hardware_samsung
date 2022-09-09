@@ -1,0 +1,20 @@
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+cc_binary {
+    name: "android.hardware.memtrack-service.pixel",
+    relative_install_path: "hw",
+    init_rc: ["memtrack.rc"],
+    vintf_fragments: ["memtrack.xml"],
+    vendor: true,
+    shared_libs: [
+        "android.hardware.memtrack-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libmemtrack-pixel",
+    ],
+    srcs: [
+        "main.cpp",
+    ],
+}
