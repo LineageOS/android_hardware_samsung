@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d9ebb76_7d771f03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 22176
+      },
+      "writtenOn": "2022-09-14T17:58:11Z",
+      "side": 1,
+      "message": "lineage-20 or lineage20.0 branch name?",
+      "revId": "251af10301301124f5ee389066e35c16f9a9f462",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
