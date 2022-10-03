@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef046917_dc6fe078",
+        "filename": "dap/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2022-10-03T02:31:14Z",
+      "side": 1,
+      "message": "itym spatial?",
+      "revId": "1f54a4ca05c23fcdbac3c58d3bd45d6e20d4169c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
