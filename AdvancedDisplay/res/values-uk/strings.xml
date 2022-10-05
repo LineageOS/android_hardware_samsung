@@ -21,4 +21,11 @@
     <string name="screen_colors_title">Кольори</string>
     <string name="mdnie_scenario_title_head">Сценарій</string>
     <string name="mdnie_scenario_summary_head">Встановити сценарій mDNIe</string>
+    <string name="mdnie_scenario_video">Відео</string>
+    <string name="mdnie_scenario_video_warm">Відео (теплі тони)</string>
+    <string name="mdnie_scenario_video_cold">Відео (холодні тони)</string>
+    <string name="mdnie_scenario_camera">Камера</string>
+    <string name="mdnie_scenario_gallery">Галерея</string>
+    <string name="mdnie_scenario_vt">Відеовиклик</string>
+    <string name="mdnie_scenario_tdmb">Цифрове телебачення</string>
 </resources>

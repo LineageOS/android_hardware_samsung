@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Dolby Atmos を有効化</string>
+    <string name="dolby_top_intro_summary">迫力ある、臨場感あふれるサウンドをお楽しみください</string>
+    <string name="dolby_profile_auto">自動</string>
+    <string name="dolby_profile_game">ゲーム</string>
+    <string name="dolby_profile_game_1">ゲーム1</string>
+    <string name="dolby_profile_game_2">ゲーム2</string>
+    <string name="dolby_profile_movie">動画</string>
+    <string name="dolby_profile_music">音楽</string>
+    <string name="dolby_profile_off">プロファイルなし</string>
+    <string name="dolby_profile_spacial_audio">スペーシャルオーディオ</string>
+    <string name="dolby_profile_voice">音声</string>
+</resources>

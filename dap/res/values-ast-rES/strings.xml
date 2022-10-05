@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_profile_game">Xuegu</string>
+    <string name="dolby_profile_game_1">Xuegu 1</string>
+    <string name="dolby_profile_game_2">Xuegu 2</string>
+    <string name="dolby_profile_movie">Filme</string>
+    <string name="dolby_profile_music">Música</string>
+    <string name="dolby_profile_voice">Voz</string>
+</resources>
