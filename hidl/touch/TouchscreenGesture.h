@@ -19,7 +19,7 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 #include <vendor/lineage/touch/1.0/ITouchscreenGesture.h>
-#include "samsung_touch.h"
+#include <string.h>
 
 namespace vendor {
 namespace lineage {
@@ -48,6 +48,8 @@ class TouchscreenGesture : public ITouchscreenGesture {
     typedef struct {
         int32_t keycode;
         const char* name;
+        const char* path;
+        const char* command;
     } GestureInfo;
     static const std::map<int32_t, GestureInfo> kGestureInfoMap;  // id -> info
 };

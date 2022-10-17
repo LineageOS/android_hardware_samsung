@@ -16,7 +16,7 @@
 
 #include <fstream>
 
-#include "TouchscreenGesture.h"
+#include "samsung_gestures.h"
 
 namespace vendor {
 namespace lineage {
@@ -24,20 +24,12 @@ namespace touch {
 namespace V1_0 {
 namespace samsung {
 
-static constexpr const char* kGeasturePath = TOUCHSCREEN_GESTURE_NODE;
+static constexpr const char* kCmdPath = TSP_CMD_NODE;
 
-const std::map<int32_t, TouchscreenGesture::GestureInfo> TouchscreenGesture::kGestureInfoMap = {
-    // clang-format off
-    {0, {0x2f1, "Swipe up stylus"}},
-    {1, {0x2f2, "Swipe down stylus"}},
-    {2, {0x2f3, "Swipe left stylus"}},
-    {3, {0x2f4, "Swipe right stylus"}},
-    {4, {0x2f5, "Long press stylus"}},
-    // clang-format on
-};
+static constexpr const char* kEpenPath = TOUCHSCREEN_GESTURE_NODE;
 
 bool TouchscreenGesture::isSupported() {
-    std::ifstream file(kGeasturePath);
+    std::ifstream file(kCmdPath);
     return file.good();
 }
 
@@ -55,18 +47,26 @@ Return<void> TouchscreenGesture::getSupportedGestures(getSupportedGestures_cb re
 
 Return<bool> TouchscreenGesture::setGestureEnabled(
     const ::vendor::lineage::touch::V1_0::Gesture& gesture, bool enabled) {
-    std::fstream file(kGeasturePath);
-    int gestureMode;
-    int mask = 1 << gesture.id;
+    const auto entry = kGestureInfoMap.find(gesture.id);
 
-    file >> gestureMode;
+    std::fstream file(entry->second.path);
 
-    if (enabled)
-        gestureMode |= mask;
-    else
-        gestureMode &= ~mask;
+    if (strcmp(entry->second.path, kEpenPath) == 0) {
+        int gestureMode;
+        int mask = 1 << gesture.id;
 
-    file << gestureMode;
+        file >> gestureMode;
+
+        if (enabled)
+            gestureMode |= mask;
+        else
+            gestureMode &= ~mask;
+
+        file << gestureMode;
+    } else {
+        file << entry->second.command << (enabled ? "1" : "0");
+    }
+
 
     return !file.fail();
 }
