@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">ჩაირთოს Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">ფაილის გაშვებისას ხმის სრულად შეგრძნება გარსშემოდენით</string>
+    <string name="dolby_profile_auto">თვითშერჩევა</string>
+    <string name="dolby_profile_game">თამაში</string>
+    <string name="dolby_profile_game_1">თამაში 1</string>
+    <string name="dolby_profile_game_2">თამაში 2</string>
+    <string name="dolby_profile_movie">ფილმი</string>
+    <string name="dolby_profile_music">მუსიკა</string>
+    <string name="dolby_profile_off">პროფილის გარეშე</string>
+    <string name="dolby_profile_spacial_audio">სივრცული ხმა</string>
+    <string name="dolby_profile_voice">ხმა</string>
+</resources>
