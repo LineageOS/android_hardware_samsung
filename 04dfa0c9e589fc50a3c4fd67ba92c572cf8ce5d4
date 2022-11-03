@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94698381_979f59f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2022-11-03T19:54:28Z",
+      "side": 1,
+      "message": "Way to waste half a day to figure out why Pixel 6 was suddenly broken...",
+      "revId": "04dfa0c9e589fc50a3c4fd67ba92c572cf8ce5d4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
