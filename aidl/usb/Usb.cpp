@@ -137,8 +137,7 @@ ScopedAStatus Usb::resetUsbPort(const string& in_portName, int64_t in_transactio
     return ScopedAStatus::ok();
 }
 
-Status queryMoistureDetectionStatus(android::hardware::usb::Usb *usb,
-                                    std::vector<PortStatus> *currentPortStatus) {
+Status queryMoistureDetectionStatus(std::vector<PortStatus> *currentPortStatus) {
     string enabled, status, path, DetectedPath;
 
     for (int i = 0; i < currentPortStatus->size(); i++) {
@@ -151,7 +150,7 @@ Status queryMoistureDetectionStatus(android::hardware::usb::Usb *usb,
         (*currentPortStatus)[i].supportsEnableContaminantPresenceDetection = true;
         (*currentPortStatus)[i].supportsEnableContaminantPresenceProtection = false;
 
-        if (usb->mMoistureDetectionEnabled) {
+        if (GetProperty(DISABLE_CONTAMINANT_DETECTION, "") != "true") {
             if (readFile(CONTAMINANT_DETECTION_PATH, &status)) {
                 ALOGE("Failed to open %s", CONTAMINANT_DETECTION_PATH);
                 return Status::ERROR;
@@ -296,8 +295,7 @@ Usb::Usb()
     : mLock(PTHREAD_MUTEX_INITIALIZER),
       mRoleSwitchLock(PTHREAD_MUTEX_INITIALIZER),
       mPartnerLock(PTHREAD_MUTEX_INITIALIZER),
-      mPartnerUp(false),
-      mMoistureDetectionEnabled(false)
+      mPartnerUp(false)
 {
     pthread_condattr_t attr;
     if (pthread_condattr_init(&attr)) {
@@ -578,7 +576,7 @@ void queryVersionHelper(android::hardware::usb::Usb *usb,
     Status status;
     pthread_mutex_lock(&usb->mLock);
     status = getPortStatusHelper(currentPortStatus);
-    queryMoistureDetectionStatus(usb, currentPortStatus);
+    queryMoistureDetectionStatus(currentPortStatus);
     if (usb->mCallback != NULL) {
         ScopedAStatus ret = usb->mCallback->notifyPortStatusChange(*currentPortStatus,
             status);
@@ -609,17 +607,14 @@ ScopedAStatus Usb::queryPortStatus(int64_t in_transactionId) {
 }
 
 ScopedAStatus Usb::enableContaminantPresenceDetection(const string& in_portName,
-        bool in_enable, int64_t in_transactionId) {
+        bool /* in_enable */, int64_t in_transactionId) {
     std::vector<PortStatus> currentPortStatus;
     std::string disable = GetProperty(DISABLE_CONTAMINANT_DETECTION, "");
-
-    if (disable != "true")
-        mMoistureDetectionEnabled = in_enable;
 
     pthread_mutex_lock(&mLock);
     if (mCallback != NULL) {
         ScopedAStatus ret = mCallback->notifyContaminantEnabledStatus(
-            in_portName, false, Status::SUCCESS, in_transactionId);
+            in_portName, true, Status::SUCCESS, in_transactionId);
         if (!ret.isOk())
             ALOGE("enableContaminantPresenceDetection  error %s", ret.getDescription().c_str());
     } else {
