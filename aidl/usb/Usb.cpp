@@ -93,7 +93,7 @@ ScopedAStatus Usb::enableUsbData(const string& in_portName, bool in_enable, int6
 
     if (mCallback != NULL) {
         ScopedAStatus ret = mCallback->notifyEnableUsbDataStatus(
-            in_portName, true, result ? Status::SUCCESS : Status::ERROR, in_transactionId);
+            in_portName, in_enable, result ? Status::SUCCESS : Status::ERROR, in_transactionId);
         if (!ret.isOk())
             ALOGE("notifyEnableUsbDataStatus error %s", ret.getDescription().c_str());
     } else {
@@ -555,14 +555,25 @@ Status getPortStatusHelper(std::vector<PortStatus> *currentPortStatus) {
                 port.second ? canSwitchRoleHelper(port.first) : false;
 
             (*currentPortStatus)[i].supportedModes.push_back(PortMode::DRP);
-            (*currentPortStatus)[i].usbDataStatus.push_back(UsbDataStatus::ENABLED);
+
+            bool dataEnabled = true;
+            string usbDataEnabled = "0";
+            if (ReadFileToString(USB_DATA_PATH, &usbDataEnabled) &&
+                stoi(Trim(usbDataEnabled)) == 0) {
+                (*currentPortStatus)[i].usbDataStatus.push_back(UsbDataStatus::DISABLED_FORCE);
+                dataEnabled = false;
+            }
+            if (dataEnabled) {
+                (*currentPortStatus)[i].usbDataStatus.push_back(UsbDataStatus::ENABLED);
+            }
 
             ALOGI("%d:%s connected:%d canChangeMode:%d canChagedata:%d canChangePower:%d "
                 "usbDataEnabled:%d",
                 i, port.first.c_str(), port.second,
                 (*currentPortStatus)[i].canChangeMode,
                 (*currentPortStatus)[i].canChangeDataRole,
-                (*currentPortStatus)[i].canChangePowerRole, 0);
+                (*currentPortStatus)[i].canChangePowerRole,
+                dataEnabled ? 1 : 0);
         }
 
         return Status::SUCCESS;
