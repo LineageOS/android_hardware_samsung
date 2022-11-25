@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_profile_auto">Otomatis</string>
+    <string name="dolby_profile_movie">Film</string>
+    <string name="dolby_profile_music">Musik</string>
+    <string name="dolby_profile_off">Tidak ada profil</string>
+    <string name="dolby_profile_voice">Suara</string>
+</resources>
