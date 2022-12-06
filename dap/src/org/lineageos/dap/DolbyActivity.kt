@@ -19,7 +19,7 @@ package org.lineageos.dap
 import android.os.Bundle
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity
-import com.android.settingslib.collapsingtoolbar.R
+import com.android.settingslib.widget.R
 
 class DolbyActivity : CollapsingToolbarBaseActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
