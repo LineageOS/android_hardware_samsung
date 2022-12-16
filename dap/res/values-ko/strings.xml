@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="dolby_enable_title">돌비 애트모스 사용</string>
     <string name="dolby_profile_auto">자동</string>
     <string name="dolby_profile_game">게임</string>
     <string name="dolby_profile_game_1">게임 1</string>
