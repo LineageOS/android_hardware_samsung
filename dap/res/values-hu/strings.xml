@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Dolby Atmos be</string>
+    <string name="dolby_top_intro_summary">Az Ön kürül hallható médialejátszások áttörő audióélménye</string>
+    <string name="dolby_profile_auto">Automatikus</string>
+    <string name="dolby_profile_game">Játék</string>
+    <string name="dolby_profile_game_1">Játék1</string>
+    <string name="dolby_profile_game_2">Játék2</string>
+    <string name="dolby_profile_movie">Mozi</string>
+    <string name="dolby_profile_music">Zene</string>
+    <string name="dolby_profile_off">Nincs profil</string>
+    <string name="dolby_profile_spacial_audio">Speciális hangzás</string>
+    <string name="dolby_profile_voice">Hang</string>
+</resources>
