@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0133091c_7fc7180f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2023-02-20T09:33:50Z",
+      "side": 1,
+      "message": "Title: 50 chars\nEmpty line\nCommit message with max. 80 chars per line\nempty line\nchangeid\n\n^ format for your commit message\n",
+      "revId": "bf8cec651abe46b031374681d1ea91c28a61aab8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
