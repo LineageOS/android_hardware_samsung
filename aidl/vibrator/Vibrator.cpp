@@ -7,6 +7,7 @@
 #include "Vibrator.h"
 
 #include <android-base/logging.h>
+#include <android-base/properties.h>
 
 #include <cmath>
 #include <fstream>
@@ -58,6 +59,9 @@ Vibrator::Vibrator() {
     mIsTimedOutVibrator = nodeExists(VIBRATOR_TIMEOUT_PATH);
     mHasTimedOutIntensity = nodeExists(VIBRATOR_INTENSITY_PATH);
     mHasTimedOutEffect = nodeExists(VIBRATOR_CP_TRIGGER_PATH);
+
+    mClickDuration = ::android::base::GetIntProperty("ro.vendor.vibrator_hal.click_duration", mClickDuration);
+    mTickDuration = ::android::base::GetIntProperty("ro.vendor.vibrator_hal.tick_duration", mTickDuration);
 }
 
 ndk::ScopedAStatus Vibrator::getCapabilities(int32_t* _aidl_return) {
@@ -277,9 +281,9 @@ uint32_t Vibrator::effectToMs(Effect effect, ndk::ScopedAStatus* status) {
     *status = ndk::ScopedAStatus::ok();
     switch (effect) {
         case Effect::CLICK:
-            return 10;
+            return mClickDuration;
         case Effect::TICK:
-            return 5;
+            return mTickDuration;
         default:
             break;
     }
