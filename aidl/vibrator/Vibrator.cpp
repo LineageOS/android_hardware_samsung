@@ -138,14 +138,13 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength, con
 }
 
 ndk::ScopedAStatus Vibrator::getSupportedEffects(std::vector<Effect>* _aidl_return) {
-    *_aidl_return = {Effect::CLICK, Effect::DOUBLE_CLICK, Effect::HEAVY_CLICK,
-                     Effect::TICK, Effect::TEXTURE_TICK, Effect::THUD, Effect::POP,
-                     Effect::RINGTONE_1, Effect::RINGTONE_2, Effect::RINGTONE_3,
-                     Effect::RINGTONE_4, Effect::RINGTONE_5, Effect::RINGTONE_6,
-                     Effect::RINGTONE_7, Effect::RINGTONE_7, Effect::RINGTONE_8,
-                     Effect::RINGTONE_9, Effect::RINGTONE_10, Effect::RINGTONE_11,
-                     Effect::RINGTONE_12, Effect::RINGTONE_13, Effect::RINGTONE_14,
-                     Effect::RINGTONE_15};
+    *_aidl_return = { Effect::CLICK, Effect::TICK };
+
+    if (mHasTimedOutEffect) {
+      for (const auto& effect : CP_TRIGGER_EFFECTS) {
+          _aidl_return->push_back(effect.first);
+      }
+    }
     return ndk::ScopedAStatus::ok();
 }
 
@@ -279,31 +278,10 @@ uint32_t Vibrator::effectToMs(Effect effect, ndk::ScopedAStatus* status) {
     switch (effect) {
         case Effect::CLICK:
             return 10;
-        case Effect::DOUBLE_CLICK:
-            return 15;
         case Effect::TICK:
-        case Effect::TEXTURE_TICK:
-        case Effect::THUD:
-        case Effect::POP:
             return 5;
-        case Effect::HEAVY_CLICK:
-            return 10;
-        case Effect::RINGTONE_1:
-        case Effect::RINGTONE_2:
-        case Effect::RINGTONE_3:
-        case Effect::RINGTONE_4:
-        case Effect::RINGTONE_5:
-        case Effect::RINGTONE_6:
-        case Effect::RINGTONE_7:
-        case Effect::RINGTONE_8:
-        case Effect::RINGTONE_9:
-        case Effect::RINGTONE_10:
-        case Effect::RINGTONE_11:
-        case Effect::RINGTONE_12:
-        case Effect::RINGTONE_13:
-        case Effect::RINGTONE_14:
-        case Effect::RINGTONE_15:
-            return 30000;
+        default:
+            break;
     }
     *status = ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     return 0;
