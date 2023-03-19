@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "5e175d0a_1648c4f8",
         "filename": "doze/src/org/lineageos/settings/doze/SamsungDozeService.java",
@@ -14,8 +15,8 @@
       "side": 1,
       "message": "might want to remove this",
       "revId": "ddb8cf60c5c99e12dbc94a5c1151c0daf615b73e",
-      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
-      "unresolved": true
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
-  ]
+  ],
+  "submitRequirementResults": []
 }
