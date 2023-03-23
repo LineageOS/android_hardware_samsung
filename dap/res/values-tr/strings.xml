@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dolby_enable_title">Dolby Atmos\'u etkinleştir</string>
+    <string name="dolby_top_intro_summary">Medya oynatma için sizi kuşatan çığır açıcı sesi deneyimleyin</string>
     <string name="dolby_profile_auto">Otomatik</string>
     <string name="dolby_profile_game">Oyun</string>
     <string name="dolby_profile_game_1">Oyun 1</string>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Galluogi Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">Cael profiad sain gofodol sy\'n llifo uwch dy ben ac o dy amgylch wrth chwarae cyfryngau.</string>
+    <string name="dolby_profile_auto">Awto</string>
+    <string name="dolby_profile_game">Gêm</string>
+    <string name="dolby_profile_game_1">Gêm 1</string>
+    <string name="dolby_profile_game_2">Gêm 2</string>
+    <string name="dolby_profile_movie">Ffilm</string>
+    <string name="dolby_profile_music">Cerddoriaeth</string>
+    <string name="dolby_profile_off">Dim proffil</string>
+    <string name="dolby_profile_spacial_audio">Sain gofodol</string>
+    <string name="dolby_profile_voice">Llais</string>
+</resources>
