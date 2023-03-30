@@ -20,6 +20,9 @@ namespace android {
 namespace hardware {
 namespace vibrator {
 
+const std::string kVibratorPropPrefix = "ro.vendor.vibrator_hal.";
+const std::string kVibratorPropDuration = "_duration";
+
 static std::map<Effect, int> CP_TRIGGER_EFFECTS {
     { Effect::CLICK, 10 },
     { Effect::DOUBLE_CLICK, 14 },
@@ -55,13 +58,14 @@ static bool nodeExists(const std::string& path) {
     return f.good();
 }
 
+static int getIntProperty(const std::string& key, int def) {
+    return ::android::base::GetIntProperty(kVibratorPropPrefix + key, def);
+}
+
 Vibrator::Vibrator() {
     mIsTimedOutVibrator = nodeExists(VIBRATOR_TIMEOUT_PATH);
     mHasTimedOutIntensity = nodeExists(VIBRATOR_INTENSITY_PATH);
     mHasTimedOutEffect = nodeExists(VIBRATOR_CP_TRIGGER_PATH);
-
-    mClickDuration = ::android::base::GetIntProperty("ro.vendor.vibrator_hal.click_duration", mClickDuration);
-    mTickDuration = ::android::base::GetIntProperty("ro.vendor.vibrator_hal.tick_duration", mTickDuration);
 }
 
 ndk::ScopedAStatus Vibrator::getCapabilities(int32_t* _aidl_return) {
@@ -142,7 +146,7 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength, con
 }
 
 ndk::ScopedAStatus Vibrator::getSupportedEffects(std::vector<Effect>* _aidl_return) {
-    *_aidl_return = { Effect::CLICK, Effect::TICK };
+    *_aidl_return = { Effect::CLICK, Effect::TICK, Effect::TEXTURE_TICK };
 
     if (mHasTimedOutEffect) {
       for (const auto& effect : CP_TRIGGER_EFFECTS) {
@@ -281,9 +285,11 @@ uint32_t Vibrator::effectToMs(Effect effect, ndk::ScopedAStatus* status) {
     *status = ndk::ScopedAStatus::ok();
     switch (effect) {
         case Effect::CLICK:
-            return mClickDuration;
+            return getIntProperty("click" + kVibratorPropDuration, 10);
         case Effect::TICK:
-            return mTickDuration;
+            return getIntProperty("tick" + kVibratorPropDuration, 5);
+        case Effect::TEXTURE_TICK:
+            return getIntProperty("texture_tick" + kVibratorPropDuration, 5);
         default:
             break;
     }

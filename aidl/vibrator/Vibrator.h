@@ -73,9 +73,6 @@ private:
     bool mIsTimedOutVibrator;
     bool mHasTimedOutIntensity;
     bool mHasTimedOutEffect;
-
-    int mClickDuration = 10;
-    int mTickDuration = 5;
 };
 
 } // namespace vibrator
