@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Abilite il Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">Gjolditi une esperience audio che ti cjape dentri dulinvie lis riproduzions di contignûts multimediâi</string>
+    <string name="dolby_profile_auto">Automatic</string>
+    <string name="dolby_profile_game">Zûc</string>
+    <string name="dolby_profile_game_1">Zûc 1</string>
+    <string name="dolby_profile_game_2">Zûc 2</string>
+    <string name="dolby_profile_movie">Film</string>
+    <string name="dolby_profile_music">Musiche</string>
+    <string name="dolby_profile_off">Nissun profîl</string>
+    <string name="dolby_profile_spacial_audio">Audio spaziâl</string>
+    <string name="dolby_profile_voice">Vôs</string>
+</resources>
