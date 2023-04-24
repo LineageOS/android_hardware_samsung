@@ -16,10 +16,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Налады экрана</string>
-    <string name="category_screen_title">Экран</string>
-    <string name="screen_colors_title">Колеры</string>
-    <string name="mdnie_scenario_title_head">Сцэнар</string>
-    <string name="mdnie_scenario_summary_head">Усталёўка сцэнара mDNIe</string>
-    <string name="mdnie_accessibility_color_blind">Дальтанізм</string>
+    <string name="category_screen_title">မျက်နှာပြင်</string>
+    <string name="screen_colors_title">အရောင်များ</string>
+    <string name="mdnie_scenario_title_head">ဇာတ်ညွှန်း</string>
 </resources>
