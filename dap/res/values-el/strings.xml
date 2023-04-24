@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Ενεργοποίηση Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">Απολαύστε πρωτοποριακό ήχο για αναπαραγωγή πολυμέσων που ρέει πάνω και γύρω σας</string>
+    <string name="dolby_profile_auto">Αυτόματο</string>
+    <string name="dolby_profile_game">Παιχνίδι</string>
+    <string name="dolby_profile_game_1">Παιχνίδι 1</string>
+    <string name="dolby_profile_game_2">Παιχνίδι 2</string>
+    <string name="dolby_profile_movie">Ταινία</string>
+    <string name="dolby_profile_music">Μουσική</string>
+    <string name="dolby_profile_off">Κανένα προφίλ</string>
+    <string name="dolby_profile_spacial_audio">Χωρικός ήχος</string>
+    <string name="dolby_profile_voice">Φωνή</string>
+</resources>

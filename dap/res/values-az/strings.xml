@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Dolby Atmos-u fəallaşdır</string>
+    <string name="dolby_top_intro_summary">Üzərinizdə və ətrafınızdan axan medianın oynadılması üçün inqilabi səsi sınaqdan keçirin</string>
+    <string name="dolby_profile_auto">Avto</string>
+    <string name="dolby_profile_game">Oyun</string>
+    <string name="dolby_profile_game_1">Oyun 1</string>
+    <string name="dolby_profile_game_2">Oyun 2</string>
+    <string name="dolby_profile_movie">Film</string>
+    <string name="dolby_profile_music">Musiqi</string>
+    <string name="dolby_profile_off">Profil yoxdur</string>
+    <string name="dolby_profile_spacial_audio">Xüsusi səs</string>
+    <string name="dolby_profile_voice">Səs</string>
+</resources>

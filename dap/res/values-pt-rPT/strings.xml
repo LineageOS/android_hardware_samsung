@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Ativar Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">Experiencie reprodução de multimédia com áudio inovador que flui em todo o seu redor</string>
+    <string name="dolby_profile_auto">Automático</string>
+    <string name="dolby_profile_game">Jogo</string>
+    <string name="dolby_profile_game_1">Jogo 1</string>
+    <string name="dolby_profile_game_2">Jogo 2</string>
+    <string name="dolby_profile_movie">Filme</string>
+    <string name="dolby_profile_music">Música</string>
+    <string name="dolby_profile_off">Sem perfil</string>
+    <string name="dolby_profile_spacial_audio">Áudio espacial</string>
+    <string name="dolby_profile_voice">Voz</string>
+</resources>

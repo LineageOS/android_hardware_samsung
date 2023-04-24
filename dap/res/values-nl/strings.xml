@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Dolby Atmos inschakelen</string>
+    <string name="dolby_profile_auto">Automatisch</string>
+    <string name="dolby_profile_game">Spel</string>
+    <string name="dolby_profile_game_1">Spel 1</string>
+    <string name="dolby_profile_game_2">Spel 1</string>
+    <string name="dolby_profile_movie">Film</string>
+    <string name="dolby_profile_music">Muziek</string>
+    <string name="dolby_profile_off">Geen profiel</string>
+    <string name="dolby_profile_spacial_audio">Ruimtelijke audio</string>
+    <string name="dolby_profile_voice">Stem</string>
+</resources>
