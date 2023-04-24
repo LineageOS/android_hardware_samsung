@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Povolit Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">Zažijte průlomový zvuk při přehrávání médií, který proudí nad vámi a kolem vás</string>
+    <string name="dolby_profile_auto">Auto</string>
+    <string name="dolby_profile_game">Hra</string>
+    <string name="dolby_profile_game_1">Hra 1</string>
+    <string name="dolby_profile_game_2">Hra 2</string>
+    <string name="dolby_profile_movie">Film</string>
+    <string name="dolby_profile_music">Hudba</string>
+    <string name="dolby_profile_off">Žádný profil</string>
+    <string name="dolby_profile_spacial_audio">Prostorový zvuk</string>
+    <string name="dolby_profile_voice">Hlas</string>
+</resources>

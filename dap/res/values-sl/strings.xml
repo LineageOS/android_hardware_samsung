@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Omogoči Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">Izkusite prodoren zvok za predvajanje predstavnosti, ki kroži nad in okoli vas</string>
+    <string name="dolby_profile_auto">Samodejno</string>
+    <string name="dolby_profile_game">Igra</string>
+    <string name="dolby_profile_game_1">Igra 1</string>
+    <string name="dolby_profile_game_2">Igra 2</string>
+    <string name="dolby_profile_movie">Film</string>
+    <string name="dolby_profile_music">Glasba</string>
+    <string name="dolby_profile_off">Brez profila</string>
+    <string name="dolby_profile_spacial_audio">Prostorski zvok</string>
+    <string name="dolby_profile_voice">Glas</string>
+</resources>

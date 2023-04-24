@@ -16,10 +16,9 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Налады экрана</string>
-    <string name="category_screen_title">Экран</string>
-    <string name="screen_colors_title">Колеры</string>
-    <string name="mdnie_scenario_title_head">Сцэнар</string>
-    <string name="mdnie_scenario_summary_head">Усталёўка сцэнара mDNIe</string>
-    <string name="mdnie_accessibility_color_blind">Дальтанізм</string>
+    <string name="app_name">Erweiderte Schierm</string>
+    <string name="category_screen_title">Schierm</string>
+    <string name="screen_colors_title">Faarwen</string>
+    <string name="mdnie_scenario_title_head">Zeenario</string>
+    <string name="mdnie_scenario_summary_head">mDNIe-Zeenario auswielen</string>
 </resources>

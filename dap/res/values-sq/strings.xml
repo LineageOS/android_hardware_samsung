@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Aktivizo Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">Përjetoni audion e re për riprodhimin e medias që rrjedh sipër dhe rreth jush</string>
+    <string name="dolby_profile_auto">Automatike</string>
+    <string name="dolby_profile_game">Lojë</string>
+    <string name="dolby_profile_game_1">Loja 1</string>
+    <string name="dolby_profile_game_2">Loja 2</string>
+    <string name="dolby_profile_movie">Film</string>
+    <string name="dolby_profile_music">Muzikë</string>
+    <string name="dolby_profile_off">Asnjë profil</string>
+    <string name="dolby_profile_spacial_audio">Audio hapësinore</string>
+    <string name="dolby_profile_voice">Zë</string>
+</resources>

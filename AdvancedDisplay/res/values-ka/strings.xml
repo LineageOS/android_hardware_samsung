@@ -16,8 +16,29 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">ეკრანის პარამეტრები</string>
     <string name="category_screen_title">ეკრანი</string>
     <string name="screen_colors_title">ფერები</string>
+    <string name="mdnie_scenario_title_head">სცენარი</string>
+    <string name="mdnie_scenario_summary_head">mDNIe-ს სცენარის დაყენება</string>
+    <string name="mdnie_accessibility_title_head">ხელმისაწვდომობა</string>
+    <string name="mdnie_accessibility_summary_head">mDNIe-ხელმისაწვდომობის მითითება</string>
+    <string name="mdnie_scenario_ui">LineageOS (ნაგულისხმევი)</string>
+    <string name="mdnie_scenario_video">ვიდეო</string>
+    <string name="mdnie_scenario_video_warm">ვიდეო თბილი ფერებით</string>
+    <string name="mdnie_scenario_video_cold">ვიდეო ცივი ფერებით</string>
+    <string name="mdnie_scenario_camera">კამერა</string>
+    <string name="mdnie_scenario_navigation">სამოძრაო</string>
+    <string name="mdnie_scenario_gallery">გალერეა</string>
+    <string name="mdnie_scenario_vt">ვიდეოზარი</string>
+    <string name="mdnie_scenario_browser">ბრაუზერი</string>
+    <string name="mdnie_scenario_ebook">ელწიგნი</string>
+    <string name="mdnie_scenario_email">ელფოსტა</string>
     <string name="mdnie_scenario_tdmb">ციფრული ტელევიზია</string>
+    <string name="mdnie_accessibility_normal">ჩვეულებრივი</string>
+    <string name="mdnie_accessibility_inverse">შებრუნებული</string>
+    <string name="mdnie_accessibility_color_blind">დალტონიზმი</string>
+    <string name="mdnie_accessibility_screen_curtain">ეკრანის დაფარვა</string>
     <string name="mdnie_accessibility_grayscale">ნაცრისფერი</string>
+    <string name="mdnie_accessibility_gray_negative">ნაცრისფერი შებრუნებული</string>
 </resources>

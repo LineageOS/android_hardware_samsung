@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">启用 Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">在您的上方和周围的媒体播放体验突破性的音频</string>
+    <string name="dolby_profile_auto">自动</string>
+    <string name="dolby_profile_game">游戏</string>
+    <string name="dolby_profile_game_1">游戏 1</string>
+    <string name="dolby_profile_game_2">游戏 2</string>
+    <string name="dolby_profile_movie">电影</string>
+    <string name="dolby_profile_music">音乐</string>
+    <string name="dolby_profile_off">没有配置文件</string>
+    <string name="dolby_profile_spacial_audio">空间音频</string>
+    <string name="dolby_profile_voice">语音</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Bật Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">Trải nghiệm âm thanh đột phá để phát lại phương tiện truyền thông bay bổng và vòng quanh bạn</string>
+    <string name="dolby_profile_auto">Tự động</string>
+    <string name="dolby_profile_game">Trò chơi</string>
+    <string name="dolby_profile_game_1">Trò chơi 1</string>
+    <string name="dolby_profile_game_2">Trò chơi 2</string>
+    <string name="dolby_profile_movie">Phim</string>
+    <string name="dolby_profile_music">Nhạc</string>
+    <string name="dolby_profile_off">Không có cấu hình</string>
+    <string name="dolby_profile_spacial_audio">Âm thanh không gian</string>
+    <string name="dolby_profile_voice">Thoại</string>
+</resources>
