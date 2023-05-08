@@ -1,11 +1,31 @@
 //
-// Copyright (C) 2021 The LineageOS Project
+// Copyright (C) 2021-2023 The LineageOS Project
 //
 // SPDX-License-Identifier: Apache-2.0
 //
 
+soong_config_module_type {
+    name: "samsung_vibrator",
+    module_type: "cc_defaults",
+    config_namespace: "samsungVibratorVars",
+    bool_variables: ["duration_amplitude"],
+    properties: ["cflags"],
+}
+
+samsung_vibrator {
+    name: "samsung_vibrator_defaults",
+    soong_config_variables: {
+        duration_amplitude: {
+            cflags: [
+                "-DVIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL",
+            ],
+        },
+    },
+}
+
 cc_binary {
     name: "android.hardware.vibrator-service.samsung",
+    defaults: ["samsung_vibrator_defaults"],
     relative_install_path: "hw",
     init_rc: ["android.hardware.vibrator-service.samsung.rc"],
     vintf_fragments: ["android.hardware.vibrator-service.samsung.xml"],

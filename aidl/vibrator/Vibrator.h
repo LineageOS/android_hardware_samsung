@@ -16,6 +16,12 @@
 #define AMPLITUDE_MEDIUM 0.5
 #define AMPLITUDE_STRONG 1
 
+#ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
+#define DURATION_AMPLITUDE_LIGHT 0.65
+#define DURATION_AMPLITUDE_MEDIUM 0.8
+#define DURATION_AMPLITUDE_STRONG 1
+#endif
+
 #define VIBRATOR_TIMEOUT_PATH "/sys/class/timed_output/vibrator/enable"
 #define VIBRATOR_INTENSITY_PATH "/sys/class/timed_output/vibrator/intensity"
 #define VIBRATOR_CP_TRIGGER_PATH "/sys/class/timed_output/vibrator/cp_trigger_index"
@@ -65,6 +71,11 @@ private:
     ndk::ScopedAStatus activate(uint32_t ms);
     uint32_t effectToMs(Effect effect, ndk::ScopedAStatus* status);
     static float strengthToAmplitude(EffectStrength strength, ndk::ScopedAStatus* status);
+
+#ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
+    static float durationAmplitude(float amplitude);
+    float mDurationAmplitude;
+#endif
 
     bool mEnabled{false};
     bool mExternalControl{false};
