@@ -303,11 +303,11 @@ uint32_t Vibrator::effectToMs(Effect effect, ndk::ScopedAStatus* status) {
     *status = ndk::ScopedAStatus::ok();
     switch (effect) {
         case Effect::CLICK:
-            return getIntProperty("click" + kVibratorPropDuration, 10);
+            return getIntProperty("click" + kVibratorPropDuration, 50);
         case Effect::TICK:
-            return getIntProperty("tick" + kVibratorPropDuration, 5);
+            return getIntProperty("tick" + kVibratorPropDuration, 45);
         case Effect::TEXTURE_TICK:
-            return getIntProperty("texture_tick" + kVibratorPropDuration, 5);
+            return getIntProperty("texture_tick" + kVibratorPropDuration, 30);
         default:
             break;
     }
