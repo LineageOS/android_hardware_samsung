@@ -31,6 +31,12 @@ static std::map<Effect, int> CP_TRIGGER_EFFECTS {
     { Effect::TICK, 50 }
 };
 
+static std::map<EffectStrength, float> DURATION_AMPLITUDE = {
+    { EffectStrength::LIGHT, DURATION_AMPLITUDE_LIGHT },
+    { EffectStrength::MEDIUM, DURATION_AMPLITUDE_MEDIUM },
+    { EffectStrength::STRONG, DURATION_AMPLITUDE_STRONG }
+};
+
 /*
  * Write value to path and close file.
  */
@@ -73,10 +79,12 @@ ndk::ScopedAStatus Vibrator::getCapabilities(int32_t* _aidl_return) {
                     IVibrator::CAP_EXTERNAL_CONTROL /*| IVibrator::CAP_COMPOSE_EFFECTS |
                     IVibrator::CAP_ALWAYS_ON_CONTROL*/;
 
-    if (mHasTimedOutIntensity) {
-        *_aidl_return = *_aidl_return | IVibrator::CAP_AMPLITUDE_CONTROL |
-                        IVibrator::CAP_EXTERNAL_AMPLITUDE_CONTROL;
-    }
+    #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
+        *_aidl_return |= IVibrator::CAP_AMPLITUDE_CONTROL | IVibrator::CAP_EXTERNAL_AMPLITUDE_CONTROL;
+    #else
+        if (mHasTimedOutIntensity)
+            *_aidl_return |= IVibrator::CAP_AMPLITUDE_CONTROL | IVibrator::CAP_EXTERNAL_AMPLITUDE_CONTROL;
+    #endif
 
     return ndk::ScopedAStatus::ok();
 }
@@ -90,6 +98,10 @@ ndk::ScopedAStatus Vibrator::on(int32_t timeoutMs, const std::shared_ptr<IVibrat
 
     if (mHasTimedOutEffect)
         writeNode(VIBRATOR_CP_TRIGGER_PATH, 0); // Clear all effects
+
+    #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
+        timeoutMs *= mDurationAmplitude;
+    #endif
 
     status = activate(timeoutMs);
 
@@ -130,6 +142,10 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength, con
             return status;
     }
 
+    #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
+        ms *= DURATION_AMPLITUDE[strength];
+    #endif
+
     status = activate(ms);
 
     if (callback != nullptr) {
@@ -162,6 +178,8 @@ ndk::ScopedAStatus Vibrator::setAmplitude(float amplitude) {
     if (amplitude <= 0.0f || amplitude > 1.0f) {
         return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_ILLEGAL_ARGUMENT));
     }
+
+    mDurationAmplitude = durationAmplitude(amplitude);
 
     LOG(DEBUG) << "Setting amplitude: " << amplitude;
 
@@ -295,6 +313,16 @@ uint32_t Vibrator::effectToMs(Effect effect, ndk::ScopedAStatus* status) {
     }
     *status = ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     return 0;
+}
+
+float Vibrator::durationAmplitude(float amplitude) {
+    if (amplitude == 1) {
+        return DURATION_AMPLITUDE_STRONG;
+    } else if (amplitude >= 0.5) {
+        return DURATION_AMPLITUDE_MEDIUM;
+    }
+
+    return DURATION_AMPLITUDE_LIGHT;
 }
 
 } // namespace vibrator
