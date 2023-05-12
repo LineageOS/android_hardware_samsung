@@ -16,6 +16,24 @@
       "message": "Checked on a52q and it does enable the vibration motor correctly, but the values written to the sysfs are by far too small to be noticeable.\n\nFor example, vibrations from the UI are around 5 to 10 usually, but nothing under ~30 is actually noticeable.",
       "revId": "1f5bb350550e77fe5232f8f6500368e82aef2d6c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fa92176_62d9e41f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25925
+      },
+      "writtenOn": "2023-05-12T15:40:33Z",
+      "side": 1,
+      "message": "You probably didn\u0027t set the new effect duration properties, e.g.:\n\nro.vendor.vibrator_hal.click_duration\u003d80\nro.vendor.vibrator_hal.tick_duration\u003d40",
+      "parentUuid": "e60ce4de_7a14c3ca",
+      "revId": "1f5bb350550e77fe5232f8f6500368e82aef2d6c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
