@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e60ce4de_7a14c3ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2023-05-12T15:04:38Z",
+      "side": 1,
+      "message": "Checked on a52q and it does enable the vibration motor correctly, but the values written to the sysfs are by far too small to be noticeable.\n\nFor example, vibrations from the UI are around 5 to 10 usually, but nothing under ~30 is actually noticeable.",
+      "revId": "1f5bb350550e77fe5232f8f6500368e82aef2d6c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
