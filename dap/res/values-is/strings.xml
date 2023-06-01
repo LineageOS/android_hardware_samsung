@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Virkja Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">Upplifðu framúrskarandi hljómgæða fyrir afspilun margmiðlunar sem flæðir fyrir ofan þig og í kring</string>
+    <string name="dolby_profile_auto">Sjálfvirkt</string>
+    <string name="dolby_profile_game">Leikur</string>
+    <string name="dolby_profile_game_1">Leikur 1</string>
+    <string name="dolby_profile_game_2">Leikur 2</string>
+    <string name="dolby_profile_movie">Kvikmynd</string>
+    <string name="dolby_profile_music">Tónlist</string>
+    <string name="dolby_profile_off">Ekkert snið</string>
+    <string name="dolby_profile_spacial_audio">Rýmishljómur</string>
+    <string name="dolby_profile_voice">Tal</string>
+</resources>
