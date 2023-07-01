@@ -22,5 +22,18 @@
     <string name="mdnie_scenario_title_head">Scenarie</string>
     <string name="mdnie_scenario_summary_head">Angiv mDNIe-scenariet</string>
     <string name="mdnie_scenario_ui">LineageOS (standard)</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_video_warm">Video varm</string>
+    <string name="mdnie_scenario_video_cold">Video kold</string>
+    <string name="mdnie_scenario_camera">Kamera</string>
+    <string name="mdnie_scenario_navigation">Navigation</string>
+    <string name="mdnie_scenario_gallery">Galleri</string>
     <string name="mdnie_scenario_vt">Videoopkald</string>
+    <string name="mdnie_scenario_browser">Browser</string>
+    <string name="mdnie_scenario_ebook">eBog</string>
+    <string name="mdnie_scenario_email">E-mail</string>
+    <string name="mdnie_accessibility_normal">Normal</string>
+    <string name="mdnie_accessibility_inverse">Inverteret</string>
+    <string name="mdnie_accessibility_color_blind">Farve blind</string>
+    <string name="mdnie_accessibility_grayscale">Grå</string>
 </resources>
