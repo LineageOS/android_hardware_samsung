@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -36,31 +36,32 @@ static T get(const std::string& path, const T& def) {
 SPen::SPen() {}
 
 ndk::ScopedAStatus SPen::setCharging(bool in_charging, bool* _aidl_return) {
-    set("/sys/class/sec/sec_epen/epen_ble_charging_mode", in_charging ? 1 : 0);
+    set(SYSFS_CHARGING_NODE, in_charging ? 1 : 0);
 
     return isCharging(_aidl_return);
 }
 
 ndk::ScopedAStatus SPen::isCharging(bool* _aidl_return) {
-    *_aidl_return =
-            get("/sys/class/sec/sec_epen/epen_ble_charging_mode", std::string("NG")) == "CHARGE";
+    *_aidl_return = get(SYSFS_CHARGING_NODE, std::string(SPEN_STATE_NG)) == SPEN_STATE_CHARGE;
 
     return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus SPen::getMACAddress(std::string* _aidl_return) {
-    std::ifstream file("/mnt/vendor/efs/spen/blespen_addr");
+    std::ifstream file(SPEN_ADDR_PATH_VENDOR);
     if (file.good()) {
-        *_aidl_return = get("/mnt/vendor/efs/spen/blespen_addr", std::string("00:00:00:00:00:00"));
+        *_aidl_return = get(SPEN_ADDR_PATH_VENDOR, std::string(SPEN_ADDR_DEFAULT));
     } else {
-        *_aidl_return = get("/efs/spen/blespen_addr", std::string("00:00:00:00:00:00"));
+        *_aidl_return = get(SPEN_ADDR_PATH, std::string(SPEN_ADDR_DEFAULT));
     }
 
     return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus SPen::setMACAddress(const std::string& in_mac) {
-    set("/mnt/vendor/efs/spen/blespen_addr", in_mac);
+    if (get(SPEN_ADDR_PATH_VENDOR, std::string(SPEN_ADDR_DEFAULT)) != in_mac) {
+        set(SPEN_ADDR_PATH_VENDOR, in_mac);
+    }
 
     return ndk::ScopedAStatus::ok();
 }
