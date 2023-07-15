@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">啟用 Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">透過突破性的音效技術，感受親臨現場的效果</string>
+    <string name="dolby_profile_auto">自動</string>
+    <string name="dolby_profile_game">遊戲</string>
+    <string name="dolby_profile_game_1">遊戲 1</string>
+    <string name="dolby_profile_game_2">遊戲 2</string>
+    <string name="dolby_profile_movie">電影</string>
+    <string name="dolby_profile_music">音樂</string>
+    <string name="dolby_profile_off">無設定檔</string>
+    <string name="dolby_profile_spacial_audio">空間音訊</string>
+    <string name="dolby_profile_voice">語音</string>
+</resources>
