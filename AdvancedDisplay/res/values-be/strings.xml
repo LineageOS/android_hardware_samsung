@@ -19,10 +19,9 @@
     <string name="app_name">Налады экрана</string>
     <string name="category_screen_title">Экран</string>
     <string name="screen_colors_title">Колеры</string>
-    <string name="mdnie_scenario_title_head">Сцэнар</string>
-    <string name="mdnie_scenario_summary_head">Усталёўка сцэнара mDNIe</string>
     <string name="mdnie_scenario_camera">Камера</string>
     <string name="mdnie_scenario_navigation">Навігацыя</string>
+    <string name="mdnie_scenario_vt">Відэавыклік</string>
     <string name="mdnie_scenario_browser">Браўзер</string>
     <string name="mdnie_scenario_tdmb">Лічбавае тэлебачанне</string>
     <string name="mdnie_accessibility_inverse">Інвертаваны</string>
