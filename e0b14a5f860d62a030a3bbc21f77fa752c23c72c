@@ -16,6 +16,92 @@
       "message": "Tested on a52sxq and a52q",
       "revId": "e0b14a5f860d62a030a3bbc21f77fa752c23c72c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "359c0447_a1955e57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2023-08-26T15:43:37Z",
+      "side": 1,
+      "message": "to be inline with already existing flags",
+      "revId": "e0b14a5f860d62a030a3bbc21f77fa752c23c72c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac1ad738_f872b562",
+        "filename": "hidl/fingerprint/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2023-08-26T15:43:37Z",
+      "side": 1,
+      "message": "rename to `TARGET_SEC_FP_REQUEST_TOUCH_EVENT`",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "e0b14a5f860d62a030a3bbc21f77fa752c23c72c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "758c9aaa_6fbbe9fb",
+        "filename": "hidl/fingerprint/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2023-08-26T15:43:37Z",
+      "side": 1,
+      "message": "REQUEST_TOUCH_EVENT",
+      "range": {
+        "startLine": 56,
+        "startChar": 22,
+        "endLine": 56,
+        "endChar": 39
+      },
+      "revId": "e0b14a5f860d62a030a3bbc21f77fa752c23c72c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4e0c299_b30831cc",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 17401
+      },
+      "writtenOn": "2023-08-26T15:43:37Z",
+      "side": 1,
+      "message": "rename to `REQUEST_TOUCH_EVENT`",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "e0b14a5f860d62a030a3bbc21f77fa752c23c72c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
