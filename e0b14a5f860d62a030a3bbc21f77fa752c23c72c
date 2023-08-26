@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fa0a1ea_bf5d2cd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2023-08-26T15:27:43Z",
+      "side": 1,
+      "message": "Tested on a52sxq and a52q",
+      "revId": "e0b14a5f860d62a030a3bbc21f77fa752c23c72c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
