@@ -58,6 +58,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af4048f0_e8e0527a",
+        "filename": "hidl/fingerprint/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2023-08-26T15:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac1ad738_f872b562",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "e0b14a5f860d62a030a3bbc21f77fa752c23c72c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "758c9aaa_6fbbe9fb",
@@ -81,6 +105,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6de204e_cc836611",
+        "filename": "hidl/fingerprint/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2023-08-26T15:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "758c9aaa_6fbbe9fb",
+      "range": {
+        "startLine": 56,
+        "startChar": 22,
+        "endLine": 56,
+        "endChar": 39
+      },
+      "revId": "e0b14a5f860d62a030a3bbc21f77fa752c23c72c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4e0c299_b30831cc",
@@ -94,6 +142,30 @@
       "writtenOn": "2023-08-26T15:43:37Z",
       "side": 1,
       "message": "rename to `REQUEST_TOUCH_EVENT`",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "e0b14a5f860d62a030a3bbc21f77fa752c23c72c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cbabc7e_8b4e0103",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2023-08-26T15:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4e0c299_b30831cc",
       "range": {
         "startLine": 105,
         "startChar": 7,
