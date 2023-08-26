@@ -102,10 +102,16 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
 }
 
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
+#ifdef IS_OPTICAL_SENSOR
+    request(SEM_REQUEST_TOUCH_EVENT, 2);
+#endif
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onFingerUp() {
+#ifdef IS_OPTICAL_SENSOR
+    request(SEM_REQUEST_TOUCH_EVENT, 1);
+#endif
     return Void();
 }
 
