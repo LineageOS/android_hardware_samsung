@@ -39,8 +39,6 @@ class GloveMode : public IGloveMode {
   public:
     GloveMode() = default;
 
-    bool isSupported();
-
     // Methods from ::vendor::lineage::touch::V1_0::IGloveMode follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;
