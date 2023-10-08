@@ -39,8 +39,6 @@ class StylusMode : public IStylusMode {
   public:
     StylusMode() = default;
 
-    bool isSupported();
-
     // Methods from ::vendor::lineage::touch::V1_0::IStylusMode follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;

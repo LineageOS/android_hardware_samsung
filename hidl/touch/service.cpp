@@ -71,13 +71,10 @@ int main() {
 
     configureRpcThreadpool(1, true /*callerWillJoin*/);
 
-    if (gloveMode->isSupported()) {
-        status = gloveMode->registerAsService();
-        if (status != OK) {
-            LOG(ERROR) << "Could not register service for Touch HAL GloveMode Iface (" << status
-                       << ")";
-            goto shutdown;
-        }
+    status = gloveMode->registerAsService();
+    if (status != OK) {
+        LOG(WARNING) << "Could not register service for Touch HAL GloveMode Iface (" << status
+                     << ")";
     }
 
     if (keyDisabler->isSupported()) {
@@ -89,13 +86,10 @@ int main() {
         }
     }
 
-    if (stylusMode->isSupported()) {
-        status = stylusMode->registerAsService();
-        if (status != OK) {
-            LOG(ERROR) << "Could not register service for Touch HAL StylusMode Iface (" << status
-                       << ")";
-            goto shutdown;
-        }
+    status = stylusMode->registerAsService();
+    if (status != OK) {
+        LOG(WARNING) << "Could not register service for Touch HAL StylusMode Iface (" << status
+                     << ")";
     }
 
     if (touchscreenGesture->isSupported()) {
