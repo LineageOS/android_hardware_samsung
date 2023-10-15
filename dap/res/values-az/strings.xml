@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dolby_enable_title">Dolby Atmos-u fəallaşdır</string>
-    <string name="dolby_top_intro_summary">Üzərinizdə və ətrafınızdan axan medianın oynadılması üçün inqilabi səsi sınaqdan keçirin</string>
+    <string name="dolby_top_intro_summary">Üzərinizdə və ətrafınızdan axan medianın oxudulması üçün inqilabi səsi sınaqdan keçirin</string>
     <string name="dolby_profile_auto">Avto</string>
     <string name="dolby_profile_game">Oyun</string>
     <string name="dolby_profile_game_1">Oyun 1</string>

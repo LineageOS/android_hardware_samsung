@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dolby_enable_title">Dolby Atmos inschakelen</string>
+    <string name="dolby_top_intro_summary">Ervaar de doorbraakaudio voor het afspelen van media die boven en om je heen stromen</string>
     <string name="dolby_profile_auto">Automatisch</string>
     <string name="dolby_profile_game">Spel</string>
     <string name="dolby_profile_game_1">Spel 1</string>
