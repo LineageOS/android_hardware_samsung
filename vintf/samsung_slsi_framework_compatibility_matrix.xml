@@ -11,6 +11,13 @@
             <instance>mdfpp</instance>
         </interface>
     </hal>
+    <hal format="aidl">
+        <name>vendor.nxp.nxpnfc_aidl</name>
+        <interface>
+            <name>INxpNfc</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <hal format="hidl" optional="true">
         <name>vendor.samsung.hardware.audio</name>
         <version>1.0</version>
