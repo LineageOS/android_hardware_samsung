@@ -40,8 +40,10 @@ cc_binary {
     "cert-*",
     "clang-analyzer-security*",
   ],
-  tidy_flags: [
-    "-warnings-as-errors=android-*,clang-analyzer-security*,cert-*"
+  tidy_checks_as_errors: [
+    "android-*",
+    "clang-analyzer-security*",
+    "cert-*",
   ],
 }
 
