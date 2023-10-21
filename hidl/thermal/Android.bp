@@ -35,13 +35,10 @@ cc_binary {
     "-Wunused",
   ],
   tidy: true,
-  tidy_checks: [
+  tidy_checks_as_errors: [
     "android-*",
     "cert-*",
     "clang-analyzer-security*",
-  ],
-  tidy_flags: [
-    "-warnings-as-errors=android-*,clang-analyzer-security*,cert-*"
   ],
 }
 
