@@ -29,9 +29,9 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libhardware \
     libhidlbase \
+    libskeymaster4device \
     libkeymaster4 \
     liblog \
-    libskeymaster4device \
     libutils
 
 LOCAL_MODULE := android.hardware.keymaster@4.0-service.samsung
