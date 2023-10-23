@@ -1,0 +1,33 @@
+cc_library_shared {
+    name: "camera.device@3.2-impl.samsung",
+    defaults: ["hidl_defaults"],
+    proprietary: true,
+    srcs: [
+        "CameraDevice.cpp",
+        "CameraDeviceSession.cpp",
+        "convert.cpp",
+    ],
+    shared_libs: [
+        "libhidlbase",
+        "libutils",
+        "libcutils",
+        "android.hardware.camera.device@3.2",
+        "android.hardware.camera.provider@2.4",
+        "android.hardware.graphics.mapper@2.0",
+        "android.hardware.graphics.mapper@3.0",
+        "android.hardware.graphics.mapper@4.0",
+        "liblog",
+        "libgralloctypes",
+        "libhardware",
+        "libcamera_metadata",
+        "libfmq",
+    ],
+    static_libs: [
+        "android.hardware.camera.common@1.0-helper",
+    ],
+    header_libs: ["libhardware_headers.camera3_samsung"],
+    export_include_dirs: ["."],
+    export_shared_lib_headers: [
+        "libfmq",
+    ],
+}

@@ -1,0 +1,9 @@
+service vendor.camera-provider-2-5 /vendor/bin/hw/android.hardware.camera.provider@2.5-service.samsung
+    interface android.hardware.camera.provider@2.5::ICameraProvider legacy/0
+    interface android.hardware.camera.provider@2.4::ICameraProvider legacy/0
+    class hal
+    user cameraserver
+    group audio camera input drmrpc
+    ioprio rt 4
+    capabilities SYS_NICE
+    task_profiles CameraServiceCapacity MaxPerformance

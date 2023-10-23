@@ -1,0 +1,88 @@
+cc_library_shared {
+    name: "android.hardware.camera.provider@2.5-legacy.samsung",
+    proprietary: true,
+    srcs: ["LegacyCameraProviderImpl_2_5.cpp"],
+    shared_libs: [
+        "android.hardware.camera.common@1.0",
+        "android.hardware.camera.device@1.0",
+        "android.hardware.camera.device@3.2",
+        "android.hardware.camera.device@3.3",
+        "android.hardware.camera.device@3.4",
+        "android.hardware.camera.device@3.5",
+        "android.hardware.camera.provider@2.4",
+        "android.hardware.camera.provider@2.4-legacy.samsung",
+        "android.hardware.camera.provider@2.5",
+        "android.hardware.graphics.mapper@2.0",
+        "android.hidl.allocator@1.0",
+        "android.hidl.memory@1.0",
+        "camera.device@1.0-impl",
+        "camera.device@3.2-impl.samsung",
+        "camera.device@3.3-impl.samsung",
+        "camera.device@3.4-impl.samsung",
+        "camera.device@3.5-impl.samsung",
+        "libcamera_metadata",
+        "libcutils",
+        "libhardware",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+    ],
+    static_libs: [
+        "android.hardware.camera.common@1.0-helper",
+    ],
+    header_libs: [
+        "camera.device@3.4-impl_headers",
+        "camera.device@3.5-impl_headers",
+    ],
+    export_include_dirs: ["."],
+}
+
+cc_defaults {
+    name: "camera_service_2_5_defaults.samsung",
+    defaults: ["hidl_defaults"],
+    proprietary: true,
+    relative_install_path: "hw",
+    srcs: ["service.cpp"],
+    shared_libs: [
+        "android.hardware.camera.common@1.0",
+        "android.hardware.camera.device@1.0",
+        "android.hardware.camera.device@3.2",
+        "android.hardware.camera.device@3.3",
+        "android.hardware.camera.device@3.4",
+        "android.hardware.camera.device@3.5",
+        "android.hardware.camera.provider@2.4",
+        "android.hardware.camera.provider@2.4-legacy.samsung",
+        "android.hardware.camera.provider@2.5",
+        "android.hardware.camera.provider@2.5-legacy.samsung",
+        "android.hardware.graphics.mapper@2.0",
+        "android.hidl.allocator@1.0",
+        "android.hidl.memory@1.0",
+        "libbinder",
+        "libcamera_metadata",
+        "libhardware",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+    ],
+    static_libs: [
+        "android.hardware.camera.common@1.0-helper",
+    ],
+    header_libs: [
+        "camera.device@3.4-impl_headers",
+        "camera.device@3.5-impl_headers"
+    ],
+}
+
+cc_binary {
+    name: "android.hardware.camera.provider@2.5-service.samsung",
+    defaults: ["camera_service_2_5_defaults.samsung"],
+    compile_multilib: "32",
+    init_rc: ["android.hardware.camera.provider@2.5-service.samsung.rc"],
+}
+
+cc_binary {
+    name: "android.hardware.camera.provider@2.5-service_64.samsung",
+    defaults: ["camera_service_2_5_defaults.samsung"],
+    compile_multilib: "64",
+    init_rc: ["android.hardware.camera.provider@2.5-service_64.samsung.rc"],
+}

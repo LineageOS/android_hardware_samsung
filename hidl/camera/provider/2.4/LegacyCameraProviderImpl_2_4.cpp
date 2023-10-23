@@ -1,0 +1,1 @@
+../../../../../../hardware/interfaces/camera/provider/2.4/default/LegacyCameraProviderImpl_2_4.cpp
