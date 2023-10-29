@@ -1,7 +1,28 @@
+soong_config_module_type {
+    name: "extra_ids",
+    module_type: "cc_defaults",
+    config_namespace: "samsungCameraVars",
+    value_variables: ["extra_ids"],
+    properties: ["cppflags"],
+}
+
+extra_ids {
+    name: "extra_id_defaults",
+    soong_config_variables: {
+        extra_ids: {
+            cppflags: ["-DEXTRA_IDS=%s"],
+        },
+    },
+}
+
 cc_library_shared {
     name: "android.hardware.camera.provider@2.5-legacy.samsung",
+    defaults: ["extra_id_defaults"],
     proprietary: true,
-    srcs: ["LegacyCameraProviderImpl_2_5.cpp"],
+    srcs: [
+        "LegacyCameraProviderImpl_2_5.cpp",
+        "SamsungCameraProvider.cpp",
+    ],
     shared_libs: [
         "android.hardware.camera.common@1.0",
         "android.hardware.camera.device@1.0",
