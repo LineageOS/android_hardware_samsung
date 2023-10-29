@@ -63,6 +63,7 @@ cc_defaults {
     defaults: ["hidl_defaults"],
     proprietary: true,
     relative_install_path: "hw",
+    vintf_fragments: ["android.hardware.camera.provider@2.5-service.samsung.xml"],
     srcs: ["service.cpp"],
     shared_libs: [
         "android.hardware.camera.common@1.0",
