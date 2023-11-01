@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dolby_enable_title">Bật Dolby Atmos</string>
-    <string name="dolby_top_intro_summary">Trải nghiệm âm thanh đột phá để phát lại phương tiện truyền thông bay bổng và vòng quanh bạn</string>
+    <string name="dolby_enable_title">Bật Công nghệ âm thanh vòm</string>
+    <string name="dolby_top_intro_summary">Trải nghiệm âm thanh đột phá cho việc phát lại phương tiện truyền thông lan tỏa từ trên cao và xung quanh bạn</string>
     <string name="dolby_profile_auto">Tự động</string>
     <string name="dolby_profile_game">Trò chơi</string>
     <string name="dolby_profile_game_1">Trò chơi 1</string>
