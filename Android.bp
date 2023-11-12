@@ -1,2 +1,6 @@
 soong_namespace {
+    imports: [
+        "hardware/google/pixel",
+        "hardware/google/interfaces",
+    ],
 }
