@@ -1,0 +1,14 @@
+on property:vendor.thermal.link_ready=1
+    # queue the trigger to start thermal-hal and continue execute
+    # per-device thermal setup "on property:vendor.thermal.link_ready=1"
+    trigger enable-thermal-hal
+
+on enable-thermal-hal
+    restart vendor.thermal-hal
+
+service vendor.thermal-hal /vendor/bin/hw/android.hardware.thermal-service.pixel
+    class hal
+    user system
+    group system
+    priority -20
+    disabled

@@ -1,0 +1,78 @@
+cc_binary {
+  name: "android.hardware.thermal-service.pixel",
+  srcs: [
+    "service.cpp",
+    "Thermal.cpp",
+    "thermal-helper.cpp",
+    "utils/thermal_throttling.cpp",
+    "utils/thermal_info.cpp",
+    "utils/thermal_files.cpp",
+    "utils/power_files.cpp",
+    "utils/powerhal_helper.cpp",
+    "utils/thermal_stats_helper.cpp",
+    "utils/thermal_watcher.cpp",
+  ],
+  vendor: true,
+  relative_install_path: "hw",
+  vintf_fragments: [
+    "android.hardware.thermal-service.pixel.xml"
+  ],
+  init_rc: [
+    "android.hardware.thermal-service.pixel.rc",
+  ],
+  shared_libs: [
+    "libbase",
+    "libcutils",
+    "libjsoncpp",
+    "libutils",
+    "libnl",
+    "libbinder_ndk",
+    "android.frameworks.stats-V1-ndk",
+    "android.hardware.power-V1-ndk",
+    "android.hardware.thermal-V1-ndk",
+    "pixel-power-ext-V1-ndk",
+    "pixelatoms-cpp",
+  ],
+  static_libs: [
+    "libpixelstats",
+  ],
+  export_shared_lib_headers: [
+    "android.frameworks.stats-V1-ndk",
+    "pixelatoms-cpp",
+  ],
+  cflags: [
+    "-Wall",
+    "-Werror",
+    "-Wextra",
+    "-Wunused",
+  ],
+  tidy: true,
+  tidy_checks: [
+    "android-*",
+    "cert-*",
+    "clang-analyzer-security*",
+  ],
+  tidy_checks_as_errors: [
+    "android-*",
+    "clang-analyzer-security*",
+    "cert-*",
+  ],
+}
+
+sh_binary {
+  name: "thermal_logd",
+  src: "init.thermal.logging.sh",
+  vendor: true,
+  init_rc: [
+    "pixel-thermal-logd.rc",
+  ],
+}
+
+sh_binary {
+  name: "thermal_symlinks",
+  src: "init.thermal.symlinks.sh",
+  vendor: true,
+  init_rc: [
+    "pixel-thermal-symlinks.rc",
+  ],
+}
