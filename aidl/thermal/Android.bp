@@ -1,5 +1,5 @@
 cc_binary {
-  name: "android.hardware.thermal-service.pixel",
+  name: "android.hardware.thermal-service.samsung",
   srcs: [
     "service.cpp",
     "Thermal.cpp",
@@ -15,10 +15,10 @@ cc_binary {
   vendor: true,
   relative_install_path: "hw",
   vintf_fragments: [
-    "android.hardware.thermal-service.pixel.xml"
+    "android.hardware.thermal-service.samsung.xml"
   ],
   init_rc: [
-    "android.hardware.thermal-service.pixel.rc",
+    "android.hardware.thermal-service.samsung.rc",
   ],
   shared_libs: [
     "libbase",
@@ -60,19 +60,19 @@ cc_binary {
 }
 
 sh_binary {
-  name: "thermal_logd",
+  name: "thermal_logd.samsung",
   src: "init.thermal.logging.sh",
   vendor: true,
   init_rc: [
-    "pixel-thermal-logd.rc",
+    "samsung-thermal-logd.rc",
   ],
 }
 
 sh_binary {
-  name: "thermal_symlinks",
+  name: "thermal_symlinks.samsung",
   src: "init.thermal.symlinks.sh",
   vendor: true,
   init_rc: [
-    "pixel-thermal-symlinks.rc",
+    "samsung-thermal-symlinks.rc",
   ],
 }

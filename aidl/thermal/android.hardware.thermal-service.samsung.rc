@@ -6,7 +6,7 @@ on property:vendor.thermal.link_ready=1
 on enable-thermal-hal
     restart vendor.thermal-hal
 
-service vendor.thermal-hal /vendor/bin/hw/android.hardware.thermal-service.pixel
+service vendor.thermal-hal /vendor/bin/hw/android.hardware.thermal-service.samsung
     class hal
     user system
     group system

@@ -4,7 +4,7 @@ on boot
     mkdir /dev/thermal/cdev-by-name 0750 system system
     start vendor.thermal.symlinks
 
-service vendor.thermal.symlinks /vendor/bin/thermal_symlinks
+service vendor.thermal.symlinks /vendor/bin/thermal_symlinks.samsung
     user system
     group system
     oneshot
