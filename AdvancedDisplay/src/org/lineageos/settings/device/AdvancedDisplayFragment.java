@@ -19,19 +19,19 @@ package org.lineageos.settings.device;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import androidx.preference.PreferenceFragment;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.lineageos.settings.device.R;
 
 import org.lineageos.internal.util.FileUtils;
 
-public class AdvancedDisplayFragment extends PreferenceFragment {
+public class AdvancedDisplayFragment extends PreferenceFragmentCompat {
     private mDNIeScenario mmDNIeScenario;
     private mDNIeAccessibility mmDNIeAccessibility;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.screen_preferences);
+        setPreferencesFromResource(R.xml.screen_preferences, rootKey);
         Resources res = getResources();
 
         /* mDNIe */
