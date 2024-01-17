@@ -20,19 +20,19 @@ import android.os.Bundle
 import android.widget.CompoundButton
 import android.widget.CompoundButton.OnCheckedChangeListener
 
-import androidx.preference.PreferenceFragment
+import androidx.preference.PreferenceFragmentCompat
 
 import com.android.settingslib.widget.MainSwitchPreference
 import com.android.settingslib.widget.SelectorWithWidgetPreference
 
 import org.lineageos.dap.R
 
-class DolbyFragment : PreferenceFragment(), OnCheckedChangeListener {
+class DolbyFragment : PreferenceFragmentCompat(), OnCheckedChangeListener {
 
     private lateinit var switchBar: MainSwitchPreference
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        addPreferencesFromResource(R.xml.dolby_settings)
+        setPreferencesFromResource(R.xml.dolby_settings, rootKey)
 
         switchBar = findPreference<MainSwitchPreference>(PREF_DOLBY_ENABLE)!!
         switchBar.addOnSwitchChangeListener(this)
