@@ -24,14 +24,14 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.PreferenceFragment;
+import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
 import com.android.settingslib.widget.MainSwitchPreference;
 
 import org.lineageos.internal.util.ScreenType;
 
-public class SamsungDozeSettings extends PreferenceFragment
+public class SamsungDozeSettings extends PreferenceFragmentCompat
         implements OnPreferenceChangeListener, OnCheckedChangeListener {
 
     private MainSwitchPreference mSwitchBar;
@@ -46,7 +46,7 @@ public class SamsungDozeSettings extends PreferenceFragment
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.gesture_panel);
+        setPreferencesFromResource(R.xml.gesture_panel, rootkey);
 
         boolean dozeEnabled = Utils.isDozeEnabled(getActivity());
 
