@@ -13,6 +13,7 @@
 #include <thread/WorkerThread.h>
 
 #include "LegacyHAL.h"
+#include "LockoutTracker.h"
 
 using ::aidl::android::hardware::biometrics::common::ICancellationSignal;
 using ::aidl::android::hardware::biometrics::common::OperationContext;
@@ -45,7 +46,7 @@ void onClientDeath(void* cookie);
 class Session : public BnSession {
 public:
     Session(LegacyHAL hal, int userId, std::shared_ptr<ISessionCallback> cb,
-            WorkerThread* worker);
+            WorkerThread* worker, LockoutTracker lockoutTracker);
     ndk::ScopedAStatus generateChallenge() override;
     ndk::ScopedAStatus revokeChallenge(int64_t challenge) override;
     ndk::ScopedAStatus enroll(const HardwareAuthToken& hat,
@@ -87,10 +88,19 @@ public:
 
 private:
     LegacyHAL mHal;
+    LockoutTracker mLockoutTracker;
 
     Error VendorErrorFilter(int32_t error, int32_t* vendorCode);
     AcquiredInfo VendorAcquiredFilter(int32_t info, int32_t* vendorCode);
     void cancel();
+    bool checkSensorLockout();
+    void clearLockout();
+    void startLockoutTimer(int64_t timeout);
+    void lockoutTimerExpired();
+
+    // lockout timer
+    bool mIsLockoutTimerStarted = false;
+    bool mIsLockoutTimerAborted = false;
 
     // Crashes the HAL if it's not currently idling because that would be an invalid state machine
     // transition. Otherwise, sets the scheduled state to the given state.

@@ -12,6 +12,7 @@ cc_binary {
     srcs: [
         "Fingerprint.cpp",
         "LegacyHAL.cpp",
+        "LockoutTracker.cpp",
         "Session.cpp",
         "service.cpp",
     ],

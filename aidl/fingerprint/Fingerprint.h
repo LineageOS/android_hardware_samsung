@@ -11,6 +11,7 @@
 #include <thread/WorkerThread.h>
 
 #include "LegacyHAL.h"
+#include "LockoutTracker.h"
 #include "Session.h"
 
 using ::aidl::android::hardware::biometrics::fingerprint::ISession;
@@ -37,6 +38,7 @@ private:
     void handleEvent(int eventCode);
 
     LegacyHAL mHal;
+    LockoutTracker mLockoutTracker;
     FingerprintSensorType mSensorType;
     int mMaxEnrollmentsPerUser;
     bool mSupportsGestures;

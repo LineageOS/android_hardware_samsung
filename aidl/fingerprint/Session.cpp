@@ -32,8 +32,9 @@ void onClientDeath(void* cookie) {
 }
 
 Session::Session(LegacyHAL hal, int userId, std::shared_ptr<ISessionCallback> cb,
-                 WorkerThread* worker)
+                 WorkerThread* worker, LockoutTracker lockoutTracker)
     : mHal(hal),
+      mLockoutTracker(lockoutTracker),
       mUserId(userId),
       mCb(cb),
       mWorker(worker),
@@ -200,7 +201,17 @@ ndk::ScopedAStatus Session::invalidateAuthenticatorId() {
 }
 
 ndk::ScopedAStatus Session::resetLockout(const HardwareAuthToken& /*hat*/) {
-    return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+    LOG(INFO) << "resetLockout";
+    scheduleStateOrCrash(SessionState::RESETTING_LOCKOUT);
+
+    mWorker->schedule(Callable::from([this] {
+        enterStateOrCrash(SessionState::RESETTING_LOCKOUT);
+        clearLockout();
+        mIsLockoutTimerAborted = true;
+        enterIdling();
+    }));
+
+    return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus Session::close() {
@@ -221,6 +232,7 @@ ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t /*x*/, 
         if (FingerprintHalProperties::request_touch_event().value_or(false)) {
             mHal.request(SEM_REQUEST_TOUCH_EVENT, 2);
         }
+        checkSensorLockout();
         enterIdling();
     }));
     return ndk::ScopedAStatus::ok();
@@ -384,6 +396,48 @@ void Session::cancel() {
     }
 }
 
+bool Session::checkSensorLockout() {
+    LockoutMode lockoutMode = mLockoutTracker.getMode();
+    if (lockoutMode == LockoutMode::PERMANENT) {
+        LOG(ERROR) << "Fail: lockout permanent";
+        mCb->onLockoutPermanent();
+        mIsLockoutTimerAborted = true;
+        return true;
+    } else if (lockoutMode == LockoutMode::TIMED) {
+        int64_t timeLeft = mLockoutTracker.getLockoutTimeLeft();
+        LOG(ERROR) << "Fail: lockout timed " << timeLeft;
+        mCb->onLockoutTimed(timeLeft);
+        if (!mIsLockoutTimerStarted) startLockoutTimer(timeLeft);
+        return true;
+    }
+    return false;
+}
+
+void Session::clearLockout() {
+    mLockoutTracker.reset();
+    mCb->onLockoutCleared();
+}
+
+void Session::startLockoutTimer(int64_t timeout) {
+    mIsLockoutTimerAborted = false;
+    std::function<void()> action =
+            std::bind(&Session::lockoutTimerExpired, this);
+    std::thread([timeout, action]() {
+        std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+        action();
+    }).detach();
+
+    mIsLockoutTimerStarted = true;
+}
+
+void Session::lockoutTimerExpired() {
+    if (!mIsLockoutTimerAborted)
+        clearLockout();
+
+    mIsLockoutTimerStarted = false;
+    mIsLockoutTimerAborted = false;
+}
+
 void Session::notify(const fingerprint_msg_t* msg) {
     switch (msg->type) {
         case FINGERPRINT_ERROR: {
@@ -441,8 +495,11 @@ void Session::notify(const fingerprint_msg_t* msg) {
                                      std::end(hat.hmac));
 
                 mCb->onAuthenticationSucceeded(msg->data.authenticated.finger.fid, authToken);
+                mLockoutTracker.reset();
             } else {
                 mCb->onAuthenticationFailed();
+                mLockoutTracker.addFailedAttempt();
+                checkSensorLockout();
             }
         } break;
         case FINGERPRINT_TEMPLATE_ENUMERATING: {
