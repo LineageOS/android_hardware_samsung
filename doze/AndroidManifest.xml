@@ -12,27 +12,32 @@
 
     <uses-sdk
         android:minSdkVersion="24"
-        android:targetSdkVersion="26"/>
+        android:targetSdkVersion="34"/>
 
     <application
         android:label="@string/device_settings_app_name"
         android:persistent="true">
 
-        <receiver android:name=".BootCompletedReceiver">
+        <receiver
+            android:name=".BootCompletedReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".SamsungDozeService"
-                 android:permission="SamsungDozeService">
+        <service
+            android:name=".SamsungDozeService"
+            android:exported="true"
+            android:permission="SamsungDozeService">
         </service>
 
         <activity
             android:name=".SamsungDozeActivity"
             android:label="@string/ambient_display_title"
-            android:theme="@style/Theme.SubSettingsBase">
+            android:theme="@style/Theme.SubSettingsBase"
+            android:exported="true">
             <intent-filter>
                 <action android:name="org.lineageos.settings.device.DOZE_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
