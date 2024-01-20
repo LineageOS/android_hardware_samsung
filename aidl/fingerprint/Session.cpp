@@ -139,8 +139,25 @@ ndk::ScopedAStatus Session::authenticate(int64_t operationId,
     return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Session::detectInteraction(std::shared_ptr<ICancellationSignal>* /*out*/) {
-    return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+ndk::ScopedAStatus Session::detectInteraction(std::shared_ptr<ICancellationSignal>* out) {
+    LOG(INFO) << "detectInteraction";
+    scheduleStateOrCrash(SessionState::DETECTING_INTERACTION);
+
+    std::promise<void> cancellationPromise;
+    auto cancFuture = cancellationPromise.get_future();
+
+    mWorker->schedule(Callable::from([this, cancFuture = std::move(cancFuture)] {
+        enterStateOrCrash(SessionState::DETECTING_INTERACTION);
+        if (shouldCancel(cancFuture)) {
+            mCb->onError(Error::CANCELED, 0 /* vendorCode */);
+        } else {
+            LOG(DEBUG) << "Detect interaction is not supported";
+            mCb->onError(Error::UNABLE_TO_PROCESS, 0 /* vendorCode */);
+        }
+    }));
+
+    *out = SharedRefBase::make<CancellationSignal>(std::move(cancellationPromise));
+    return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus Session::enumerateEnrollments() {
