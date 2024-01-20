@@ -10,17 +10,28 @@ cc_binary {
     init_rc: ["android.hardware.biometrics.fingerprint-service.samsung.rc"],
     vintf_fragments: ["android.hardware.biometrics.fingerprint-service.samsung.xml"],
     srcs: [
+        "CancellationSignal.cpp",
         "Fingerprint.cpp",
+        "LegacyHAL.cpp",
+        "LockoutTracker.cpp",
         "Session.cpp",
         "service.cpp",
     ],
     shared_libs: [
         "libbase",
         "libbinder_ndk",
+        "libhardware",
         "android.hardware.biometrics.fingerprint-V3-ndk",
         "android.hardware.biometrics.common-V3-ndk",
-        "android.hardware.biometrics.common.thread",
         "android.hardware.biometrics.common.util",
     ],
+    static_libs: ["libandroid.hardware.biometrics.fingerprint.SamsungProps"],
+    vendor: true,
+}
+
+sysprop_library {
+    name: "android.hardware.biometrics.fingerprint.SamsungProps",
+    srcs: ["fingerprint.sysprop"],
+    property_owner: "Vendor",
     vendor: true,
 }

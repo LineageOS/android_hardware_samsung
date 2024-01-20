@@ -7,6 +7,12 @@
 #pragma once
 
 #include <aidl/android/hardware/biometrics/fingerprint/BnSession.h>
+#include <aidl/android/hardware/biometrics/fingerprint/ISessionCallback.h>
+
+#include <hardware/fingerprint.h>
+
+#include "LegacyHAL.h"
+#include "LockoutTracker.h"
 
 using ::aidl::android::hardware::biometrics::common::ICancellationSignal;
 using ::aidl::android::hardware::biometrics::common::OperationContext;
@@ -19,8 +25,12 @@ namespace hardware {
 namespace biometrics {
 namespace fingerprint {
 
+void onClientDeath(void* cookie);
+
 class Session : public BnSession {
 public:
+    Session(LegacyHAL hal, int userId, std::shared_ptr<ISessionCallback> cb,
+            LockoutTracker lockoutTracker);
     ndk::ScopedAStatus generateChallenge() override;
     ndk::ScopedAStatus revokeChallenge(int64_t challenge) override;
     ndk::ScopedAStatus enroll(const HardwareAuthToken& hat,
@@ -53,6 +63,39 @@ public:
     ndk::ScopedAStatus onContextChanged(const OperationContext& context) override;
     ndk::ScopedAStatus onPointerCancelWithContext(const PointerContext& context) override;
     ndk::ScopedAStatus setIgnoreDisplayTouches(bool shouldIgnore) override;
+
+    ndk::ScopedAStatus cancel();
+    binder_status_t linkToDeath(AIBinder* binder);
+    bool isClosed();
+    void notify(
+        const fingerprint_msg_t* msg);
+
+private:
+    LegacyHAL mHal;
+    LockoutTracker mLockoutTracker;
+    bool mClosed = false;
+
+    Error VendorErrorFilter(int32_t error, int32_t* vendorCode);
+    AcquiredInfo VendorAcquiredFilter(int32_t info, int32_t* vendorCode);
+    bool checkSensorLockout();
+    void clearLockout(bool clearAttemptCounter);
+    void startLockoutTimer(int64_t timeout);
+    void lockoutTimerExpired();
+
+    // lockout timer
+    bool mIsLockoutTimerStarted = false;
+    bool mIsLockoutTimerAborted = false;
+
+    // The user ID for which this session was created.
+    int32_t mUserId;
+
+    // Callback for talking to the framework. This callback must only be called from non-binder
+    // threads to prevent nested binder calls and consequently a binder thread exhaustion.
+    // Practically, it means that this callback should always be called from the worker thread.
+    std::shared_ptr<ISessionCallback> mCb;
+
+    // Binder death handler.
+    AIBinder_DeathRecipient* mDeathRecipient;
 };
 
 } // namespace fingerprint

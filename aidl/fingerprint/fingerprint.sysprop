@@ -1,0 +1,78 @@
+# fingerprint.sysprop
+# module becomes static class (Java) / namespace (C++) for serving API
+module: "android.fingerprint.samsung.FingerprintHalProperties"
+owner: Vendor
+
+# type of fingerprint sensor
+prop {
+    prop_name: "ro.vendor.fingerprint.type"
+    type: String
+    scope: Internal
+    access: Readonly
+    enum_values: "default|rear|udfps|udfps_optical|side|home"
+    api_name: "type"
+}
+
+# max enrollments per user (default: 4)
+prop {
+    prop_name: "ro.vendor.fingerprint.max_enrollments"
+    type: Integer
+    scope: Internal
+    access: Readonly
+    api_name: "max_enrollments_per_user"
+}
+
+# supports navigation gestures
+prop {
+    prop_name: "ro.vendor.fingerprint.supports_gestures"
+    type: Boolean
+    scope: Internal
+    access: Readonly
+    api_name: "supports_gestures"
+}
+
+# sensor location
+#    <x>|<y>|<radius>|display in pixel
+prop {
+    prop_name: "ro.vendor.fingerprint.sensor_location"
+    type: String
+    scope: Internal
+    access: Readonly
+    api_name: "sensor_location"
+}
+
+# force calibration on enroll
+prop {
+    prop_name: "ro.vendor.fingerprint.force_calibrate"
+    type: Boolean
+    scope: Internal
+    access: Readonly
+    api_name: "force_calibrate"
+}
+
+# send touch events to HAL
+prop {
+    prop_name: "ro.vendor.fingerprint.request_touch_event"
+    type: Boolean
+    scope: Internal
+    access: Readonly
+    api_name: "request_touch_event"
+}
+
+# uses percentage samples
+prop {
+    prop_name: "ro.vendor.fingerprint.uses_percentage_samples"
+    type: Boolean
+    scope: Internal
+    access: Readonly
+    api_name: "uses_percentage_samples"
+}
+
+# cancel on completed enrollment
+prop {
+    prop_name: "ro.vendor.fingerprint.cancel_on_enroll_completion"
+    type: Boolean
+    scope: Internal
+    access: Readonly
+    api_name: "cancel_on_enroll_completion"
+}
