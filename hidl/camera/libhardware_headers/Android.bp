@@ -1,3 +1,26 @@
+soong_config_module_type {
+    name: "samsung_camera3",
+    module_type: "cc_defaults",
+    config_namespace: "samsungCameraVars",
+    bool_variables: [
+        "needs_sec_reserved_field",
+        "usage_64bit",
+    ],
+    properties: ["cflags"],
+}
+
+samsung_camera3 {
+    name: "samsung_camera3_defaults",
+    soong_config_variables: {
+        needs_sec_reserved_field: {
+            cflags: ["-DCAMERA_NEEDS_SEC_RESERVED_FIELD"],
+        },
+        usage_64bit: {
+            cflags: ["-DCAMERA_64BIT_USAGE"],
+        },
+    },
+}
+
 cc_library_headers {
     name: "libhardware_headers.camera3_samsung",
     export_include_dirs: ["include"],
