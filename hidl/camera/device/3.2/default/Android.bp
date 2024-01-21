@@ -1,6 +1,9 @@
 cc_library_shared {
     name: "camera.device@3.2-impl.samsung",
-    defaults: ["hidl_defaults"],
+    defaults: [
+        "hidl_defaults",
+        "samsung_camera3_defaults",
+    ],
     proprietary: true,
     srcs: [
         "CameraDevice.cpp",
