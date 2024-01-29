@@ -412,9 +412,12 @@ void Session::notify(const fingerprint_msg_t* msg) {
             LOG(DEBUG) << "onEnumerate(fid=" << msg->data.enumerated.finger.fid
                        << ", gid=" << msg->data.enumerated.finger.gid
                        << ", rem=" << msg->data.enumerated.remaining_templates << ")";
-            std::vector<int> enrollments;
+            static std::vector<int> enrollments;
             enrollments.push_back(msg->data.enumerated.finger.fid);
-            mCb->onEnrollmentsEnumerated(enrollments);
+            if (msg->data.enumerated.remaining_templates == 0) {
+                mCb->onEnrollmentsEnumerated(enrollments);
+                enrollments.clear();
+            }
         } break;
     }
 }
