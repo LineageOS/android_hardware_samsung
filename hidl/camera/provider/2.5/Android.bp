@@ -49,11 +49,12 @@ cc_library_shared {
         "libutils",
     ],
     static_libs: [
-        "android.hardware.camera.common@1.0-helper",
+        "android.hardware.camera.common@1.0-helper.samsung",
     ],
     header_libs: [
         "camera.device@3.4-impl_headers",
         "camera.device@3.5-impl_headers",
+        "libhardware_headers.camera3_samsung"
     ],
     export_include_dirs: ["."],
 }
@@ -87,11 +88,12 @@ cc_defaults {
         "libutils",
     ],
     static_libs: [
-        "android.hardware.camera.common@1.0-helper",
+        "android.hardware.camera.common@1.0-helper.samsung",
     ],
     header_libs: [
         "camera.device@3.4-impl_headers",
-        "camera.device@3.5-impl_headers"
+        "camera.device@3.5-impl_headers",
+        "libhardware_headers.camera3_samsung"
     ],
 }
 

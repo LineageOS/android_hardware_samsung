@@ -26,7 +26,7 @@ cc_library_shared {
         "libfmq",
     ],
     static_libs: [
-        "android.hardware.camera.common@1.0-helper",
+        "android.hardware.camera.common@1.0-helper.samsung",
     ],
     header_libs: ["libhardware_headers.camera3_samsung"],
     export_include_dirs: ["."],

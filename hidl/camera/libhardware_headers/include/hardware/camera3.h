@@ -18,7 +18,7 @@
 #define ANDROID_INCLUDE_CAMERA3_H
 
 #include <system/camera_metadata.h>
-#include <hardware/camera_common.h>
+#include "camera_common.h"
 
 /**
  * Camera device HAL 3.6[ CAMERA_DEVICE_API_VERSION_3_6 ]
