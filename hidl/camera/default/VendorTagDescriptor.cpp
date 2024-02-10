@@ -1,0 +1,1 @@
+../../../../../hardware/interfaces/camera/common/default/VendorTagDescriptor.cpp

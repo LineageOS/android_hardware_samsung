@@ -1,0 +1,43 @@
+cc_library_static {
+    name: "android.hardware.camera.common-helper.samsung",
+    vendor_available: true,
+    defaults: [
+        "hidl_defaults",
+        "samsung_camera3_defaults",
+    ],
+    srcs: [
+        "CameraModule.cpp",
+        "CameraMetadata.cpp",
+        "CameraParameters.cpp",
+        "VendorTagDescriptor.cpp",
+        "HandleImporter.cpp",
+        "Exif.cpp",
+        "SimpleThread.cpp",
+    ],
+    cflags: [
+        "-Werror",
+        "-Wextra",
+        "-Wall",
+    ],
+    shared_libs: [
+        "liblog",
+        "libgralloctypes",
+        "libhardware",
+        "libcamera_metadata",
+        "android.hardware.graphics.mapper@2.0",
+        "android.hardware.graphics.mapper@3.0",
+        "android.hardware.graphics.mapper@4.0",
+        "libexif",
+    ],
+    include_dirs: ["system/media/private/camera/include"],
+    header_libs: ["libhardware_headers.camera3_samsung"],
+    export_include_dirs: ["include"],
+}
+
+// NOTE: Deprecated module kept for compatibility reasons.
+// Depend on "android.hardware.camera.common-helper.samsung" instead
+cc_library_static {
+    name: "android.hardware.camera.common@1.0-helper.samsung",
+    vendor_available: true,
+    whole_static_libs: ["android.hardware.camera.common-helper.samsung"],
+}
