@@ -904,6 +904,23 @@ typedef struct camera_module {
      *   to manage number of external cameras.
      */
     int (*get_number_of_cameras)(void);
+
+#ifdef CAMERA_NEEDS_SEC_GET_CAM_POS_V1
+   /**
+     * get_cam_pos:
+     *
+     * Unknown. Needed by prebuilt camera module from the Samsung GTO device.
+     *
+     * Return values found so far:
+     *
+     * 0:           On a successful operation
+     *
+     * -EINVAL:     The input arguments are invalid
+     *
+     */
+    int (*get_cam_pos)(void);
+#endif
+
     /**
      * get_camera_info:
      *
@@ -929,6 +946,22 @@ typedef struct camera_module {
      *   static metadata (camera_info.static_camera_characteristics).
      */
     int (*get_camera_info)(int camera_id, struct camera_info *info);
+
+#ifdef CAMERA_NEEDS_SEC_GET_CAM_POS_V2
+   /**
+     * get_cam_pos:
+     *
+     * Unknown. Needed by prebuilt camera module from the Samsung GTA4L device.
+     *
+     * Return values found so far:
+     *
+     * 0:           On a successful operation
+     *
+     * -EINVAL:     The input arguments are invalid
+     *
+     */
+    int (*get_cam_pos)(void);
+#endif
 
     /**
      * set_callbacks:
