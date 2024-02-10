@@ -930,6 +930,9 @@ typedef struct camera_module {
      */
     int (*get_camera_info)(int camera_id, struct camera_info *info);
 
+#ifdef CAMERA_NEEDS_SEC_FUNCTION1
+    void (*sec_function1)();
+#endif
     /**
      * set_callbacks:
      *
