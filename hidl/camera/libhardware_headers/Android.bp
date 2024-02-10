@@ -3,6 +3,8 @@ soong_config_module_type {
     module_type: "cc_defaults",
     config_namespace: "samsungCameraVars",
     bool_variables: [
+        "needs_sec_get_cam_pos_v1",
+        "needs_sec_get_cam_pos_v2",
         "needs_sec_reserved_field",
         "usage_64bit",
     ],
@@ -12,6 +14,12 @@ soong_config_module_type {
 samsung_camera3 {
     name: "samsung_camera3_defaults",
     soong_config_variables: {
+        needs_sec_get_cam_pos_v1: {
+            cflags: ["-DCAMERA_NEEDS_SEC_GET_CAM_POS_V1"],
+        },
+        needs_sec_get_cam_pos_v2: {
+            cflags: ["-DCAMERA_NEEDS_SEC_GET_CAM_POS_V2"],
+        },
         needs_sec_reserved_field: {
             cflags: ["-DCAMERA_NEEDS_SEC_RESERVED_FIELD"],
         },
