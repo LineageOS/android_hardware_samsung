@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68e52f7e_3117f7e8",
+        "filename": "aidl/fingerprint/Session.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-02-21T19:22:43Z",
+      "side": 0,
+      "message": "you could just put `static` here.",
+      "revId": "cde582d00c3d3aab864c61037a813f47c9cc1cec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
