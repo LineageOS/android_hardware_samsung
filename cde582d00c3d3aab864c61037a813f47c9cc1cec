@@ -16,6 +16,24 @@
       "message": "you could just put `static` here.",
       "revId": "cde582d00c3d3aab864c61037a813f47c9cc1cec",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcc92226_a366e03e",
+        "filename": "aidl/fingerprint/Session.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 25925
+      },
+      "writtenOn": "2024-02-22T06:00:24Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "68e52f7e_3117f7e8",
+      "revId": "cde582d00c3d3aab864c61037a813f47c9cc1cec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
