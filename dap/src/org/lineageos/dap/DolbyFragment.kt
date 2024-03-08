@@ -17,17 +17,17 @@
 package org.lineageos.dap
 
 import android.os.Bundle
-import android.widget.Switch
+import android.widget.CompoundButton
+import android.widget.CompoundButton.OnCheckedChangeListener
 
 import androidx.preference.PreferenceFragment
 
 import com.android.settingslib.widget.MainSwitchPreference
-import com.android.settingslib.widget.OnMainSwitchChangeListener
 import com.android.settingslib.widget.RadioButtonPreference
 
 import org.lineageos.dap.R
 
-class DolbyFragment : PreferenceFragment(), OnMainSwitchChangeListener {
+class DolbyFragment : PreferenceFragment(), OnCheckedChangeListener {
 
     private lateinit var switchBar: MainSwitchPreference
 
@@ -47,7 +47,7 @@ class DolbyFragment : PreferenceFragment(), OnMainSwitchChangeListener {
         }
     }
 
-    override fun onSwitchChanged(switchView: Switch, isChecked: Boolean) {
+    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         DolbyCore.setEnabled(isChecked)
     }
 
