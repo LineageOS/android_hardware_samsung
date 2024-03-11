@@ -45,6 +45,7 @@ cc_library_shared {
         "libhardware",
         "libcamera_metadata",
         "libfmq",
+        "libui",
     ],
     static_libs: [
         "android.hardware.camera.common@1.0-helper.samsung",
