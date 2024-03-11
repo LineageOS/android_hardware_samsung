@@ -28,10 +28,12 @@ cc_library_static {
         "android.hardware.graphics.mapper@3.0",
         "android.hardware.graphics.mapper@4.0",
         "libexif",
+        "libui",
     ],
     include_dirs: ["system/media/private/camera/include"],
     header_libs: ["libhardware_headers.camera3_samsung"],
     export_include_dirs: ["include"],
+    export_shared_lib_headers: ["libui"],
 }
 
 // NOTE: Deprecated module kept for compatibility reasons.
