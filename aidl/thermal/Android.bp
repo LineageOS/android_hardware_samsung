@@ -27,7 +27,7 @@ cc_binary {
     "libutils",
     "libnl",
     "libbinder_ndk",
-    "android.frameworks.stats-V1-ndk",
+    "android.frameworks.stats-V2-ndk",
     "android.hardware.power-V1-ndk",
     "android.hardware.thermal-V1-ndk",
     "pixel-power-ext-V1-ndk",
@@ -37,7 +37,7 @@ cc_binary {
     "libpixelstats",
   ],
   export_shared_lib_headers: [
-    "android.frameworks.stats-V1-ndk",
+    "android.frameworks.stats-V2-ndk",
     "pixelatoms-cpp",
   ],
   cflags: [
