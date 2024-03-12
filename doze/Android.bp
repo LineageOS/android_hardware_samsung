@@ -1,0 +1,28 @@
+//
+// Copyright (C) 2024 The Pixel Experience Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "SamsungDoze",
+    defaults: ["SettingsLibDefaults"],
+
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+
+    certificate: "platform",
+    platform_apis: true,
+    system_ext_specific: true,
+
+    static_libs: [
+        "androidx.window.extensions",
+        "androidx.window.sidecar",
+        "org.lineageos.platform.internal",
+        "org.lineageos.settings.resources",
+    ],
+
+    optimize: {
+        proguard_flags_files: ["proguard.flags"],
+    },
+}
