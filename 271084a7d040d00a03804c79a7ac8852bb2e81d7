@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcbc9293_7f37165b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5911
+      },
+      "writtenOn": "2024-03-12T21:10:56Z",
+      "side": 1,
+      "message": "if you copy the file and copyright notice from pixel experience, you may as well preserve the original author\u0027s metadata... unless the original author was you :P",
+      "revId": "271084a7d040d00a03804c79a7ac8852bb2e81d7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
