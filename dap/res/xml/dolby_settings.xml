@@ -12,40 +12,40 @@
         android:key="dolby_top_intro"
         android:title="@string/dolby_top_intro_summary" />
 
-    <com.android.settingslib.widget.RadioButtonPreference
+    <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:defaultValue="true"
         android:key="dolby_profile_auto"
         android:title="@string/dolby_profile_auto" />
 
-    <com.android.settingslib.widget.RadioButtonPreference
+    <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:key="dolby_profile_game"
         android:title="@string/dolby_profile_game" />
 
-    <com.android.settingslib.widget.RadioButtonPreference
+    <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:key="dolby_profile_game_1"
         android:title="@string/dolby_profile_game_1" />
 
-    <com.android.settingslib.widget.RadioButtonPreference
+    <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:key="dolby_profile_game_2"
         android:title="@string/dolby_profile_game_2" />
 
-    <com.android.settingslib.widget.RadioButtonPreference
+    <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:key="dolby_profile_movie"
         android:title="@string/dolby_profile_movie" />
 
-    <com.android.settingslib.widget.RadioButtonPreference
+    <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:key="dolby_profile_music"
         android:title="@string/dolby_profile_music" />
 
-    <com.android.settingslib.widget.RadioButtonPreference
+    <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:key="dolby_profile_off"
         android:title="@string/dolby_profile_off" />
 
-    <com.android.settingslib.widget.RadioButtonPreference
+    <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:key="dolby_profile_spacial_audio"
         android:title="@string/dolby_profile_spacial_audio" />
 
-    <com.android.settingslib.widget.RadioButtonPreference
+    <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:key="dolby_profile_voice"
         android:title="@string/dolby_profile_voice" />
 
