@@ -34,6 +34,24 @@
       "parentUuid": "86234cfc_3adb1763",
       "revId": "c8c352faa0c512020b26f89d520941bb2ab4c264",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cec3e5b6_8299b520",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31815
+      },
+      "writtenOn": "2024-03-20T14:51:16Z",
+      "side": 1,
+      "message": "\u003e The Lineage team never does that.  I think he forgot that there was such a commit before or there was a mistake\n\nif u took 2 seconds to look at the timestamps u can see he pushed this himself and then 1 min later, abandoned my commit. if you look at the commits themselves, theres no changes between the 2 commits, except the commit id. if lineage team never does this, explain how they have done it this time. dont jump to blindly defend anyone without looking at the facts.",
+      "parentUuid": "e37da3d1_3d895d92",
+      "revId": "c8c352faa0c512020b26f89d520941bb2ab4c264",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
