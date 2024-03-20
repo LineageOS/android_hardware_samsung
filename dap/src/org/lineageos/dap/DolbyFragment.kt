@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 The LineageOS Project
+ * Copyright (C) 2022-2024 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener
 import androidx.preference.PreferenceFragment
 
 import com.android.settingslib.widget.MainSwitchPreference
-import com.android.settingslib.widget.RadioButtonPreference
+import com.android.settingslib.widget.SelectorWithWidgetPreference
 
 import org.lineageos.dap.R
 
@@ -39,7 +39,7 @@ class DolbyFragment : PreferenceFragment(), OnCheckedChangeListener {
         switchBar.isChecked = DolbyCore.isEnabled()
 
         for ((key, value) in PREF_DOLBY_MODES) {
-            val preference = findPreference<RadioButtonPreference>(key)!!
+            val preference = findPreference<SelectorWithWidgetPreference>(key)!!
             preference.setOnPreferenceClickListener {
                 setProfile(value)
                 true
@@ -55,7 +55,7 @@ class DolbyFragment : PreferenceFragment(), OnCheckedChangeListener {
         DolbyCore.setProfile(profile)
 
         for ((key, value) in PREF_DOLBY_MODES) {
-            val preference = findPreference<RadioButtonPreference>(key)!!
+            val preference = findPreference<SelectorWithWidgetPreference>(key)!!
             preference.isChecked = value == profile
         }
     }
