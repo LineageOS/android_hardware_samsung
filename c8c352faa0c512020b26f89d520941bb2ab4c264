@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86234cfc_3adb1763",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31815
+      },
+      "writtenOn": "2024-03-20T13:15:07Z",
+      "side": 1,
+      "message": "Damn you really gonna steal my commit and not give me so much as a sign-off because u didnt like a randomly generated string?\n\nhttps://review.lineageos.org/c/LineageOS/android_hardware_samsung/+/385871\n\nHeck of a job team lineage.",
+      "revId": "c8c352faa0c512020b26f89d520941bb2ab4c264",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
