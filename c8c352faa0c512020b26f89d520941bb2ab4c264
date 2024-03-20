@@ -87,6 +87,24 @@
       "message": "I don\u0027t see where\u0027s the problem here, especially since you didn\u0027t maintain the original commit ID / details, a standard practice in Gerrit (which you\u0027d be aware of as a PE maintainer, supposedly). Bruno clearly indicated a series of commits that referenced the original commit ID (+ the respective description, which you also removed) and were made before yours. What\u0027s the basis of your complaint?",
       "revId": "c8c352faa0c512020b26f89d520941bb2ab4c264",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72b259bb_63cc8be6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31815
+      },
+      "writtenOn": "2024-03-20T15:50:15Z",
+      "side": 1,
+      "message": "i did just check again, and it does seem like all the other commits using that same commit id were also dropped which werent when i saw it first, im sorry for the quick reaction.",
+      "parentUuid": "f5e62c4e_e45f5a7f",
+      "revId": "c8c352faa0c512020b26f89d520941bb2ab4c264",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
