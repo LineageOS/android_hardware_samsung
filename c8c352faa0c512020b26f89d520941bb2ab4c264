@@ -16,6 +16,24 @@
       "message": "Damn you really gonna steal my commit and not give me so much as a sign-off because u didnt like a randomly generated string?\n\nhttps://review.lineageos.org/c/LineageOS/android_hardware_samsung/+/385871\n\nHeck of a job team lineage.",
       "revId": "c8c352faa0c512020b26f89d520941bb2ab4c264",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e37da3d1_3d895d92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 22176
+      },
+      "writtenOn": "2024-03-20T14:24:45Z",
+      "side": 1,
+      "message": "The Lineage team never does that.  I think he forgot that there was such a commit before or there was a mistake",
+      "parentUuid": "86234cfc_3adb1763",
+      "revId": "c8c352faa0c512020b26f89d520941bb2ab4c264",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
