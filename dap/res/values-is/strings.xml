@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dolby_enable_title">Virkja Dolby Atmos</string>
-    <string name="dolby_top_intro_summary">Upplifðu framúrskarandi hljómgæða fyrir afspilun margmiðlunar sem flæðir fyrir ofan þig og í kring</string>
+    <string name="dolby_top_intro_summary">Upplifðu framúrskarandi hljómgæði fyrir afspilun margmiðlunar sem flæðir fyrir ofan þig og í kring</string>
     <string name="dolby_profile_auto">Sjálfvirkt</string>
     <string name="dolby_profile_game">Leikur</string>
     <string name="dolby_profile_game_1">Leikur 1</string>
