@@ -22,4 +22,10 @@ android_app {
     platform_apis: true,
     static_libs: ["androidx.preference_preference"],
     system_ext_specific: true,
+
+    optimize: {
+        optimize: true,
+        proguard_flags_files: ["proguard.flags"],
+        shrink_resources: true,
+    },
 }
