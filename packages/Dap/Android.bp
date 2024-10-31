@@ -22,4 +22,9 @@ android_app {
     platform_apis: true,
     static_libs: ["androidx.preference_preference"],
     system_ext_specific: true,
+
+    optimize: {
+        optimize: true,
+        shrink_resources: true,
+    },
 }
