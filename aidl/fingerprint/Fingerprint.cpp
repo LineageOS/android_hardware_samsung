@@ -66,6 +66,13 @@ Fingerprint::Fingerprint() {
     mSupportsGestures =
             FingerprintHalProperties::supports_gestures().value_or(SUPPORTS_NAVIGATION_GESTURES);
 
+    if (sensorTypeProp == "udfps_optical" || sensorTypeProp == "udfps") {
+        mUdfpsHandler = std::make_unique<UdfpsHandler>();
+        LOG(INFO) << "UdfpsHandler initialized for udfps sensor";
+        std::string fod_rect = FingerprintHalProperties::rectangular_sensor_location().value_or("");
+        mUdfpsHandler->setFodRect(fod_rect);
+    }
+
     if (mSupportsGestures) {
         mHal.request(FINGERPRINT_REQUEST_NAVIGATION_MODE_START, 1);
 

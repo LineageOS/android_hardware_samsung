@@ -11,6 +11,7 @@
 #include "LegacyHAL.h"
 #include "LockoutTracker.h"
 #include "Session.h"
+#include "UdfpsHandler.h"
 
 using ::aidl::android::hardware::biometrics::fingerprint::ISession;
 using ::aidl::android::hardware::biometrics::fingerprint::ISessionCallback;
@@ -43,6 +44,7 @@ private:
     int uinputFd;
 
     std::shared_ptr<Session> mSession;
+    std::unique_ptr<UdfpsHandler> mUdfpsHandler;
 };
 
 } // namespace fingerprint

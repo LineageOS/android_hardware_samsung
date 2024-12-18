@@ -15,3 +15,21 @@ cc_library_static {
         "frameworks/native/services/surfaceflinger/CompositionEngine/include",
     ],
 }
+
+cc_library_static {
+    name: "libudfpshandler.samsung",
+    srcs: ["UdfpsHandler.cpp"],
+    shared_libs: [
+        "libbase",
+    ],
+    vendor: true,
+    header_libs: ["samsungfingerprint_headers"],
+}
+
+cc_library_headers {
+    name: "samsungfingerprint_headers",
+    export_include_dirs: ["include"],
+    vendor: true,
+    header_libs: ["libhardware_headers"],
+    export_header_lib_headers: ["libhardware_headers"],
+}
