@@ -7,7 +7,10 @@
 cc_library_static {
     name: "libudfps_extension.samsung",
     srcs: ["UdfpsExtension.cpp"],
-    cflags: select(soong_config_variable("samsungUdfpsVars", "udfps_zorder"), {
+    cflags: select(soong_config_variable("samsungUdfpsVars", "dim_layer_zorder"), {
+        any @ dim_layer_zorder: ["-DUDFPS_DIM_LAYER_ZORDER=" + dim_layer_zorder],
+        default: [],
+    }) + select(soong_config_variable("samsungUdfpsVars", "udfps_zorder"), {
         any @ zorder: ["-DUDFPS_PRESSED_LAYER_ZORDER=" + zorder],
         default: [],
     }),
