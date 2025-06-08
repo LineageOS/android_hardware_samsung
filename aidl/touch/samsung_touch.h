@@ -13,7 +13,7 @@
  * device tree.
  */
 
-// For GloveMode and StylusMode
+// For GloveMode, HighTouchPollingRate and StylusMode
 #define TSP_CMD_LIST_NODE "/sys/class/sec/tsp/cmd_list"
 #define TSP_CMD_RESULT_NODE "/sys/class/sec/tsp/cmd_result"
 #define TSP_CMD_NODE "/sys/class/sec/tsp/cmd"

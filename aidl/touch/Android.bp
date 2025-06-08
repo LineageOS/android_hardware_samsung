@@ -11,6 +11,7 @@ cc_binary {
     proprietary: true,
     srcs: [
         "GloveMode.cpp",
+        "HighTouchPollingRate.cpp",
         "KeyDisabler.cpp",
         "StylusMode.cpp",
         "TouchscreenGesture.cpp",
