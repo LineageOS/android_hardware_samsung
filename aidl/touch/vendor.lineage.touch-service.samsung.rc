@@ -1,0 +1,4 @@
+service vendor.touch-hal /vendor/bin/hw/vendor.lineage.touch-service.samsung
+    class hal
+    user system
+    group system

@@ -1,0 +1,26 @@
+//
+// SPDX-FileCopyrightText: 2025 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_binary {
+    name: "vendor.lineage.touch-service.samsung",
+    defaults: ["samsung_header_path_defaults"],
+    init_rc: ["vendor.lineage.touch-service.samsung.rc"],
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: [
+        "GloveMode.cpp",
+        "KeyDisabler.cpp",
+        "StylusMode.cpp",
+        "TouchscreenGesture.cpp",
+        "service.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "libbinder_ndk",
+        "libutils",
+        "vendor.lineage.touch-V1-ndk",
+    ],
+}
