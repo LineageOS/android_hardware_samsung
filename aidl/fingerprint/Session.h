@@ -13,6 +13,7 @@
 
 #include "LegacyHAL.h"
 #include "LockoutTracker.h"
+#include "SecUdfpsHelper.h"
 
 #define FINGERPRINT_DATA_DIR "/data/vendor/biometrics/fp/User_%d/"
 
@@ -96,6 +97,8 @@ class Session : public BnSession {
 
     // Binder death handler.
     AIBinder_DeathRecipient* mDeathRecipient;
+
+    std::unique_ptr<SecUdfpsHelper> mSecUdfpsHelper;
 };
 
 }  // namespace fingerprint
