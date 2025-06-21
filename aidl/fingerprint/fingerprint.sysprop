@@ -41,6 +41,16 @@ prop {
     api_name: "sensor_location"
 }
 
+# rectangular sensor location
+#    <x1>,<y1>,<x2>,<y2>
+prop {
+    prop_name: "ro.vendor.fingerprint.rectangular_sensor_location"
+    type: String
+    scope: Internal
+    access: Readonly
+    api_name: "rectangular_sensor_location"
+}
+
 # force calibration on enroll
 prop {
     prop_name: "ro.vendor.fingerprint.force_calibrate"
