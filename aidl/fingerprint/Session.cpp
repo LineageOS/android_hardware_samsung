@@ -37,6 +37,22 @@ void onClientDeath(void* cookie) {
 Session::Session(LegacyHAL hal, int userId, std::shared_ptr<ISessionCallback> cb,
                  LockoutTracker lockoutTracker)
     : mHal(hal), mLockoutTracker(lockoutTracker), mUserId(userId), mCb(cb) {
+    std::string sensorTypeProp = FingerprintHalProperties::type().value_or("");
+    if (sensorTypeProp == "udfps_optical" || sensorTypeProp == "udfps") {
+        auto sehInput = getSehSysInputDev();
+        mSecUdfpsHelper = std::make_unique<SecUdfpsHelper>(sehInput);
+        LOG(INFO) << "SecUdfpsHelper has been initialized";
+        if (mSecUdfpsHelper) {
+            std::string fodRect =
+                    FingerprintHalProperties::rectangular_sensor_location().value_or("");
+#if USE_SYSINPUT_HAL
+            mSecUdfpsHelper->runCmd("set_fod_rect," + fodRect);
+#else
+            mSecUdfpsHelper->setFodRect(fodRect);
+#endif
+        }
+    }
+
     mDeathRecipient = AIBinder_DeathRecipient_new(onClientDeath);
 
     char filename[64];
@@ -56,6 +72,17 @@ ndk::ScopedAStatus Session::generateChallenge() {
 ndk::ScopedAStatus Session::revokeChallenge(int64_t challenge) {
     LOG(INFO) << "revokeChallenge";
 
+    if (mSecUdfpsHelper) {
+#if USE_SYSINPUT_HAL
+        int32_t error = mSecUdfpsHelper->setFodEnable(0);
+        if (error) {
+            LOG(ERROR) << UDFPS_TAG << "Failed to set command FOD_ENABLE";
+        }
+#else
+        mSecUdfpsHelper->setFodEnable(false);
+#endif
+    }
+
     mHal.ss_fingerprint_post_enroll();
     mCb->onChallengeRevoked(challenge);
 
@@ -65,6 +92,17 @@ ndk::ScopedAStatus Session::revokeChallenge(int64_t challenge) {
 ndk::ScopedAStatus Session::enroll(const HardwareAuthToken& hat,
                                    std::shared_ptr<ICancellationSignal>* out) {
     LOG(INFO) << "enroll";
+
+    if (mSecUdfpsHelper) {
+#if USE_SYSINPUT_HAL
+        int32_t error = mSecUdfpsHelper->setFodEnable(1, 1, 0);
+        if (error) {
+            LOG(ERROR) << UDFPS_TAG << "Failed to set command FOD_ENABLE";
+        }
+#else
+        mSecUdfpsHelper->setFodEnable(true);
+#endif
+    }
 
     if (FingerprintHalProperties::force_calibrate().value_or(false)) {
         mCaptureReady = false;
@@ -93,6 +131,17 @@ ndk::ScopedAStatus Session::enroll(const HardwareAuthToken& hat,
 ndk::ScopedAStatus Session::authenticate(int64_t operationId,
                                          std::shared_ptr<ICancellationSignal>* out) {
     LOG(INFO) << "authenticate";
+
+    if (mSecUdfpsHelper) {
+#if USE_SYSINPUT_HAL
+        int32_t error = mSecUdfpsHelper->setFodEnable(1, 1, 0);
+        if (error) {
+            LOG(ERROR) << UDFPS_TAG << "Failed to set command FOD_ENABLE";
+        }
+#else
+        mSecUdfpsHelper->setFodEnable(true);
+#endif
+    }
 
     int32_t error = mHal.ss_fingerprint_authenticate(operationId, mUserId);
     if (error) {
@@ -174,6 +223,17 @@ ndk::ScopedAStatus Session::invalidateAuthenticatorId() {
 
 ndk::ScopedAStatus Session::resetLockout(const HardwareAuthToken& /*hat*/) {
     LOG(INFO) << "resetLockout";
+
+    if (mSecUdfpsHelper) {
+#if USE_SYSINPUT_HAL
+        int32_t error = mSecUdfpsHelper->setFodEnable(0);
+        if (error) {
+            LOG(ERROR) << UDFPS_TAG << "Failed to set command FOD_ENABLE";
+        }
+#else
+        mSecUdfpsHelper->setFodEnable(false);
+#endif
+    }
 
     clearLockout(true);
     mIsLockoutTimerAborted = true;
@@ -422,6 +482,17 @@ void Session::notify(const fingerprint_msg_t* msg) {
                 const hw_auth_token_t hat = msg->data.authenticated.hat;
                 HardwareAuthToken authToken;
                 translate(hat, authToken);
+
+                if (mSecUdfpsHelper) {
+#if USE_SYSINPUT_HAL
+                    int32_t error = mSecUdfpsHelper->setFodEnable(1, 1, 0);
+                    if (error) {
+                        LOG(ERROR) << UDFPS_TAG << "Failed to set command FOD_ENABLE";
+                    }
+#else
+                    mSecUdfpsHelper->setFodEnable(false);
+#endif
+                }
 
                 mCb->onAuthenticationSucceeded(msg->data.authenticated.finger.fid, authToken);
                 mLockoutTracker.reset(true);
