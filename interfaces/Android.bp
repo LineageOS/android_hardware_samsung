@@ -12,14 +12,11 @@ aidl_interface {
     owner: "samsung",
 
     backend: {
+        cpp: {
+            enabled: true,
+        },
         java: {
             sdk_version: "module_current",
-            min_sdk_version: "30",
-            lint: {
-                // Disable linter to avoid error about fixed size arrays.
-                // Interface will only be accessed on devices >= U.
-                enabled: false,
-            },
         },
     },
     versions_with_info: [
