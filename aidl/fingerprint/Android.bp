@@ -14,6 +14,7 @@ cc_binary {
         "Fingerprint.cpp",
         "LegacyHAL.cpp",
         "LockoutTracker.cpp",
+        "SecUdfpsHelper.cpp",
         "Session.cpp",
         "service.cpp",
     ],
@@ -24,7 +25,17 @@ cc_binary {
         "android.hardware.biometrics.fingerprint-V4-ndk",
         "android.hardware.biometrics.common-V4-ndk",
         "android.hardware.biometrics.common.util",
+        "vendor.samsung.hardware.sysinput-V2-ndk",
     ],
+
+    cflags: select(soong_config_variable("SAMSUNG_FINGERPRINT_HAL", "USE_SYSINPUT_HAL"), {
+        "true": ["-DUSE_SYSINPUT_HAL=true"],
+        default: ["-DUSE_SYSINPUT_HAL=false"],
+    }) + select(soong_config_variable("SAMSUNG_FINGERPRINT_HAL", "IS_QCOM_HBM"), {
+        "true": ["-DIS_QCOM_HBM=true"],
+        default: ["-DIS_QCOM_HBM=false"],
+    }),
+
     static_libs: ["libandroid.hardware.biometrics.fingerprint.SamsungProps"],
     vendor: true,
 }
