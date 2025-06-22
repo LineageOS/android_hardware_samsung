@@ -300,6 +300,14 @@
             <instance>default</instance>
         </interface>
     </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.samsung.hardware.sysinput</name>
+        <version>2</version>
+        <interface>
+            <name>ISehSysInputDev</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <hal format="hidl" optional="true">
         <name>vendor.samsung.hardware.thermal</name>
         <version>1.0</version>
