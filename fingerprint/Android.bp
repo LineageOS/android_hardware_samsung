@@ -10,6 +10,9 @@ cc_library_static {
     cflags: select(soong_config_variable("samsungUdfpsVars", "dim_layer_zorder"), {
         any @ dim_layer_zorder: ["-DFOD_DIM_LAYER_ZORDER=" + dim_layer_zorder],
         default: ["-DFOD_DIM_LAYER_ZORDER=0"],
+    }) + select(soong_config_variable("samsungUdfpsVars", "overwrite_usagebits"), {
+        "true": ["-DOVERWRITE_USAGEBITS=true"],
+        default: ["-DOVERWRITE_USAGEBITS=false"],
     }) + select(soong_config_variable("samsungUdfpsVars", "udfps_zorder"), {
         any @ zorder: ["-DFOD_PRESSED_LAYER_ZORDER=" + zorder],
         default: ["-DFOD_PRESSED_LAYER_ZORDER=0"],
