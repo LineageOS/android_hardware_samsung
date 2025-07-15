@@ -194,6 +194,23 @@
       "parentUuid": "e61a65cb_e57ac39c",
       "revId": "e332d3478355881241a52bb19ebe755a3bf66750",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9f6de6f_18a92ce6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-07-15T22:54:47Z",
+      "side": 1,
+      "message": "Can we move this forward, please? This is required for 23.0, since touch hidl is gone.",
+      "revId": "e332d3478355881241a52bb19ebe755a3bf66750",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
