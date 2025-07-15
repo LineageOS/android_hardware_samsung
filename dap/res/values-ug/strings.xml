@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">Dolby Atmos نى قوزغات</string>
+    <string name="dolby_top_intro_summary">ئۈستى ۋە ئەتراپىڭىزدىكى ۋاسىتە قويۇش تەسىراتى ئالاھىدە كۈچلۈك بولغان ئاۋاز</string>
+    <string name="dolby_profile_auto">ئاپتوماتىك</string>
+    <string name="dolby_profile_game">ئويۇن</string>
+    <string name="dolby_profile_game_1">ئويۇن 1</string>
+    <string name="dolby_profile_game_2">ئويۇن 2</string>
+    <string name="dolby_profile_movie">كىنو</string>
+    <string name="dolby_profile_music">نەغمە</string>
+    <string name="dolby_profile_off">سەپلىمە ھۆججەت يوق</string>
+    <string name="dolby_profile_spacial_audio">بوشلۇقتىكى ئاۋاز</string>
+    <string name="dolby_profile_voice">ئاۋاز</string>
+</resources>

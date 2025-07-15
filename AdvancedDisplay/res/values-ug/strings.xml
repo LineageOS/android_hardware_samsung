@@ -21,4 +21,24 @@
     <string name="screen_colors_title">رەڭلەر</string>
     <string name="mdnie_scenario_title_head">كۆرۈنۈش</string>
     <string name="mdnie_scenario_summary_head">mDNIe لايىھە تەڭشىكى</string>
+    <string name="mdnie_accessibility_title_head">ئاجىزلار ھالىتى</string>
+    <string name="mdnie_accessibility_summary_head">mDNIe نى ئاجىزلار ھالىتىگە تەڭشەيدۇ</string>
+    <string name="mdnie_scenario_ui">LineageOS (كۆڭۈلدىكى)</string>
+    <string name="mdnie_scenario_video">سىن</string>
+    <string name="mdnie_scenario_video_warm">سىن ئىسسىق</string>
+    <string name="mdnie_scenario_video_cold">سىن سوغۇق</string>
+    <string name="mdnie_scenario_camera">كامېرا</string>
+    <string name="mdnie_scenario_navigation">يولباشچى</string>
+    <string name="mdnie_scenario_gallery">سۈرەتدان</string>
+    <string name="mdnie_scenario_vt">سىن چاقىرىش</string>
+    <string name="mdnie_scenario_browser">تور كۆرگۈچ</string>
+    <string name="mdnie_scenario_ebook">ئې-كىتاب</string>
+    <string name="mdnie_scenario_email">ئېلخەت</string>
+    <string name="mdnie_scenario_tdmb">رەقەملىك تېلېۋىزور</string>
+    <string name="mdnie_accessibility_normal">ئادەتتىكى</string>
+    <string name="mdnie_accessibility_inverse">تەتۈر</string>
+    <string name="mdnie_accessibility_color_blind">رەڭ قارىغۇسى</string>
+    <string name="mdnie_accessibility_screen_curtain">ئېكران توسۇش</string>
+    <string name="mdnie_accessibility_grayscale">كۈلرەڭ</string>
+    <string name="mdnie_accessibility_gray_negative">ئەكسى كۈلرەڭ</string>
 </resources>
