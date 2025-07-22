@@ -247,6 +247,24 @@
       "parentUuid": "5b1e499d_7fccb4e1",
       "revId": "e332d3478355881241a52bb19ebe755a3bf66750",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bec194a0_793e754b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2025-07-22T10:01:03Z",
+      "side": 1,
+      "message": "Alright, i\u0027ll get to testing on e2s soon, and i\u0027ll try to add support for touchscreen gestures.",
+      "parentUuid": "2c4bb6de_1ec18a6e",
+      "revId": "e332d3478355881241a52bb19ebe755a3bf66750",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
