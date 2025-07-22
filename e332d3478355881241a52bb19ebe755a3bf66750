@@ -229,6 +229,24 @@
       "parentUuid": "b9f6de6f_18a92ce6",
       "revId": "e332d3478355881241a52bb19ebe755a3bf66750",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c4bb6de_1ec18a6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-07-22T09:59:10Z",
+      "side": 1,
+      "message": "I only want some progress here, don\u0027t really have any strong opinion on 432682. Can even abandon it, move to aidl and leave the manifests as is.",
+      "parentUuid": "5b1e499d_7fccb4e1",
+      "revId": "e332d3478355881241a52bb19ebe755a3bf66750",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
