@@ -211,6 +211,24 @@
       "message": "Can we move this forward, please? This is required for 23.0, since touch hidl is gone.",
       "revId": "e332d3478355881241a52bb19ebe755a3bf66750",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b1e499d_7fccb4e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2025-07-22T09:55:32Z",
+      "side": 1,
+      "message": "Will test on e2s, though only game mode is supported. Maybe we could add support for touchscreen gestures too? Also, can you respond to my concerns on 432682?",
+      "parentUuid": "b9f6de6f_18a92ce6",
+      "revId": "e332d3478355881241a52bb19ebe755a3bf66750",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
