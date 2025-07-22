@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7635ed11_ad2c81fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35667
+      },
+      "writtenOn": "2025-07-22T15:26:26Z",
+      "side": 1,
+      "message": "Alr, tested on 990 and 9820, it compiles and boots",
+      "revId": "60c28a403ef8f48ba31ffcb25dfab0cf5af8ca0f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
