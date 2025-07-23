@@ -69,4 +69,9 @@ int main(int argc, char *argv[]) {
     } else {
         LOG(WARNING) << "Could not read " << prop << "!";
     }
+
+    content = android::base::GetProperty("ro.multisim.simslotcount", "");
+    if (!content.empty()) {
+        LoadProperties("ro.telephony.sim_slots.count=" + content);
+    }
 }
