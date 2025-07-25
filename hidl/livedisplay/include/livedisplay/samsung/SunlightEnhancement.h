@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2022 The LineageOS Project
+ * Copyright (C) 2019-2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,10 +41,6 @@ class SunlightEnhancement : public ISunlightEnhancement {
     // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;
-
-    // Methods from ::android::hidl::base::V1_0::IBase follow.
-  private:
-    bool mHasHBM = false;
 };
 
 }  // namespace samsung
