@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2022 The LineageOS Project
+ * Copyright (C) 2019-2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
-#include <vendor/lineage/livedisplay/2.0/IDisplayColorCalibration.h>
+#include <vendor/lineage/livedisplay/2.0/IReadingEnhancement.h>
 
 namespace vendor {
 namespace lineage {
@@ -34,17 +34,13 @@ using ::android::hardware::hidl_vec;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
 
-class DisplayColorCalibrationExynos : public IDisplayColorCalibration {
+class ReadingEnhancementExynos : public IReadingEnhancement {
   public:
     bool isSupported();
 
-    // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.
-    Return<int32_t> getMaxValue() override;
-    Return<int32_t> getMinValue() override;
-    Return<void> getCalibration(getCalibration_cb resultCb) override;
-    Return<bool> setCalibration(const hidl_vec<int32_t>& rgb) override;
-
-    // Methods from ::android::hidl::base::V1_0::IBase follow.
+    // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
+    Return<bool> isEnabled() override;
+    Return<bool> setEnabled(bool) override;
 };
 
 }  // namespace samsung
