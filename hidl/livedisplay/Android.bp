@@ -1,4 +1,4 @@
-// Copyright (C) 2019 The LineageOS Project
+// Copyright (C) 2019-2025 The LineageOS Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@ cc_defaults {
     relative_install_path: "hw",
     srcs: [
         "AdaptiveBacklight.cpp",
-        "DisplayColorCalibrationExynos.cpp",
+        "DisplayColorCalibration.cpp",
         "DisplayModes.cpp",
-        "ReadingEnhancement.cpp",
+        "ReadingEnhancementExynos.cpp",
         "SunlightEnhancementExynos.cpp",
         "serviceExynos.cpp",
     ],
@@ -41,7 +41,6 @@ cc_defaults {
         "AdaptiveBacklight.cpp",
         "DisplayColorCalibration.cpp",
         "DisplayModes.cpp",
-        "ReadingEnhancement.cpp",
         "SunlightEnhancement.cpp",
         "service.cpp",
     ],
@@ -65,6 +64,7 @@ cc_binary {
     name: "vendor.lineage.livedisplay@2.0-service.samsung-exynos",
     defaults: ["livedisplay_samsung_exynos_defaults"],
     init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-exynos.rc"],
+    vintf_fragments: ["vendor.lineage.livedisplay@2.0-service.samsung-exynos.xml"],
     vendor: true,
 }
 
@@ -79,5 +79,6 @@ cc_binary {
     name: "vendor.lineage.livedisplay@2.0-service.samsung-qcom",
     defaults: ["livedisplay_samsung_qcom_defaults"],
     init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-qcom.rc"],
+    vintf_fragments: ["vendor.lineage.livedisplay@2.0-service.samsung-qcom.xml"],
     vendor: true,
 }

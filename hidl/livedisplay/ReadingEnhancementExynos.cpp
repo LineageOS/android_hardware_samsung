@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 #include <fstream>
 
-#include "ReadingEnhancement.h"
+#include "ReadingEnhancementExynos.h"
 
 using android::base::ReadFileToString;
 using android::base::Trim;
@@ -34,13 +34,13 @@ namespace samsung {
 static constexpr const char* kREPath = "/sys/class/mdnie/mdnie/accessibility";
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
-bool ReadingEnhancement::isSupported() {
+bool ReadingEnhancementExynos::isSupported() {
     std::fstream re(kREPath, re.in | re.out);
     return re.good();
 }
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
-Return<bool> ReadingEnhancement::isEnabled() {
+// Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancementExynos follow.
+Return<bool> ReadingEnhancementExynos::isEnabled() {
     std::string contents;
 
     if (ReadFileToString(kREPath, &contents)) {
@@ -50,7 +50,7 @@ Return<bool> ReadingEnhancement::isEnabled() {
     return !contents.compare("Current accessibility : DSI0 : GRAYSCALE") || !contents.compare("4");
 }
 
-Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
+Return<bool> ReadingEnhancementExynos::setEnabled(bool enabled) {
     return WriteStringToFile(enabled ? "4" : "0", kREPath, true);
 }
 
