@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 #include "AdaptiveBacklight.h"
 #include "DisplayColorCalibration.h"
 #include "DisplayModes.h"
-#include "ReadingEnhancement.h"
 #include "SunlightEnhancement.h"
 
 using android::OK;
@@ -35,14 +34,12 @@ using android::hardware::joinRpcThreadpool;
 using vendor::lineage::livedisplay::V2_0::samsung::AdaptiveBacklight;
 using vendor::lineage::livedisplay::V2_0::samsung::DisplayColorCalibration;
 using vendor::lineage::livedisplay::V2_0::samsung::DisplayModes;
-using vendor::lineage::livedisplay::V2_0::samsung::ReadingEnhancement;
 using vendor::lineage::livedisplay::V2_0::samsung::SunlightEnhancement;
 
 int main() {
     sp<AdaptiveBacklight> adaptiveBacklight;
     sp<DisplayColorCalibration> displayColorCalibration;
     sp<DisplayModes> displayModes;
-    sp<ReadingEnhancement> readingEnhancement;
     sp<SunlightEnhancement> sunlightEnhancement;
     status_t status;
 
@@ -65,13 +62,6 @@ int main() {
     displayModes = new DisplayModes();
     if (displayModes == nullptr) {
         LOG(ERROR) << "Can not create an instance of LiveDisplay HAL DisplayModes Iface, exiting.";
-        goto shutdown;
-    }
-
-    readingEnhancement = new ReadingEnhancement();
-    if (readingEnhancement == nullptr) {
-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL ReadingEnhancement Iface, "
-                      "exiting.";
         goto shutdown;
     }
 
@@ -108,16 +98,6 @@ int main() {
         if (status != OK) {
             LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
                        << status << ")";
-            goto shutdown;
-        }
-    }
-
-    if (readingEnhancement->isSupported()) {
-        status = readingEnhancement->registerAsService();
-        if (status != OK) {
-            LOG(ERROR)
-                    << "Could not register service for LiveDisplay HAL ReadingEnhancement Iface ("
-                    << status << ")";
             goto shutdown;
         }
     }
