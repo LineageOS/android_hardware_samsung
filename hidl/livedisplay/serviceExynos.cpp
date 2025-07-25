@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,9 @@
 #include <hidl/HidlTransportSupport.h>
 
 #include "AdaptiveBacklight.h"
-#include "DisplayColorCalibrationExynos.h"
+#include "DisplayColorCalibration.h"
 #include "DisplayModes.h"
-#include "ReadingEnhancement.h"
+#include "ReadingEnhancementExynos.h"
 #include "SunlightEnhancementExynos.h"
 
 using android::hardware::configureRpcThreadpool;
@@ -37,16 +37,16 @@ using android::status_t;
 using android::OK;
 
 using vendor::lineage::livedisplay::V2_0::samsung::AdaptiveBacklight;
-using vendor::lineage::livedisplay::V2_0::samsung::DisplayColorCalibrationExynos;
+using vendor::lineage::livedisplay::V2_0::samsung::DisplayColorCalibration;
 using vendor::lineage::livedisplay::V2_0::samsung::DisplayModes;
-using vendor::lineage::livedisplay::V2_0::samsung::ReadingEnhancement;
+using vendor::lineage::livedisplay::V2_0::samsung::ReadingEnhancementExynos;
 using vendor::lineage::livedisplay::V2_0::samsung::SunlightEnhancementExynos;
 
 int main() {
     sp<AdaptiveBacklight> adaptiveBacklight;
-    sp<DisplayColorCalibrationExynos> displayColorCalibrationExynos;
+    sp<DisplayColorCalibration> displayColorCalibration;
     sp<DisplayModes> displayModes;
-    sp<ReadingEnhancement> readingEnhancement;
+    sp<ReadingEnhancementExynos> readingEnhancementExynos;
     sp<SunlightEnhancementExynos> sunlightEnhancementExynos;
     status_t status;
 
@@ -59,8 +59,8 @@ int main() {
         goto shutdown;
     }
 
-    displayColorCalibrationExynos = new DisplayColorCalibrationExynos();
-    if (displayColorCalibrationExynos == nullptr) {
+    displayColorCalibration = new DisplayColorCalibration();
+    if (displayColorCalibration == nullptr) {
         LOG(ERROR) << "Can not create an instance of LiveDisplay HAL DisplayColorCalibration "
                       "Iface, exiting.";
         goto shutdown;
@@ -72,8 +72,8 @@ int main() {
         goto shutdown;
     }
 
-    readingEnhancement = new ReadingEnhancement();
-    if (readingEnhancement == nullptr) {
+    readingEnhancementExynos = new ReadingEnhancementExynos();
+    if (readingEnhancementExynos == nullptr) {
         LOG(ERROR)
             << "Can not create an instance of LiveDisplay HAL ReadingEnhancement Iface, exiting.";
         goto shutdown;
@@ -97,8 +97,8 @@ int main() {
         }
     }
 
-    if (displayColorCalibrationExynos->isSupported()) {
-        status = displayColorCalibrationExynos->registerAsService();
+    if (displayColorCalibration->isSupported()) {
+        status = displayColorCalibration->registerAsService();
         if (status != OK) {
             LOG(ERROR)
                 << "Could not register service for LiveDisplay HAL DisplayColorCalibration Iface ("
@@ -116,8 +116,8 @@ int main() {
         }
     }
 
-    if (readingEnhancement->isSupported()) {
-        status = readingEnhancement->registerAsService();
+    if (readingEnhancementExynos->isSupported()) {
+        status = readingEnhancementExynos->registerAsService();
         if (status != OK) {
             LOG(ERROR)
                 << "Could not register service for LiveDisplay HAL ReadingEnhancement Iface ("

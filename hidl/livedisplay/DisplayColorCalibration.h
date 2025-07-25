@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2022 The LineageOS Project
+ * Copyright (C) 2019-2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 #pragma once
 
+#include <hidl/MQDescriptor.h>
+#include <hidl/Status.h>
 #include <vendor/lineage/livedisplay/2.0/IDisplayColorCalibration.h>
 
 namespace vendor {
@@ -24,11 +26,13 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
+using ::android::hardware::hidl_array;
+using ::android::hardware::hidl_memory;
+using ::android::hardware::hidl_string;
 using ::android::hardware::hidl_vec;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
-
-#define FILE_RGB "/sys/class/graphics/fb0/rgb"
+using ::android::sp;
 
 class DisplayColorCalibration : public IDisplayColorCalibration {
   public:
@@ -37,8 +41,10 @@ class DisplayColorCalibration : public IDisplayColorCalibration {
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.
     Return<int32_t> getMaxValue() override;
     Return<int32_t> getMinValue() override;
-    Return<void> getCalibration(getCalibration_cb _hidl_cb) override;
+    Return<void> getCalibration(getCalibration_cb resultCb) override;
     Return<bool> setCalibration(const hidl_vec<int32_t>& rgb) override;
+
+    // Methods from ::android::hidl::base::V1_0::IBase follow.
 };
 
 }  // namespace samsung
