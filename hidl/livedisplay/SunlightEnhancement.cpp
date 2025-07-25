@@ -30,42 +30,27 @@ namespace livedisplay {
 namespace V2_0 {
 namespace samsung {
 
-static constexpr const char* kHBMPath = "/sys/class/lcd/panel/panel/auto_brightness";
+// Note: Exynos method is also available on Qualcomm
 static constexpr const char* kSREPath = "/sys/class/mdnie/mdnie/outdoor";
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 bool SunlightEnhancement::isSupported() {
     std::fstream sre(kSREPath, sre.in | sre.out);
-    std::fstream hbm(kHBMPath, hbm.in | hbm.out);
-
-    if (hbm.good()) {
-        mHasHBM = true;
-    }
-
     return sre.good();
 }
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
+// Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 Return<bool> SunlightEnhancement::isEnabled() {
     std::string tmp;
     int32_t statusSRE = 0;
-    int32_t statusHBM = 0;
+
     if (ReadFileToString(kSREPath, &tmp)) {
         statusSRE = std::stoi(Trim(tmp));
     }
 
-    if (mHasHBM && ReadFileToString(kHBMPath, &tmp)) {
-        statusHBM = std::stoi(Trim(tmp));
-    }
-
-    return ((statusSRE == 1 && statusHBM == 6) || statusSRE == 1);
+    return statusSRE == 1;
 }
 
 Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
-    if (mHasHBM) {
-        WriteStringToFile(enabled ? "6" : "0", kHBMPath, true);
-    }
-
     return WriteStringToFile(enabled ? "1" : "0", kSREPath, true);
 }
 
