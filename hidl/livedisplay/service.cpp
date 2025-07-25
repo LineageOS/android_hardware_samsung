@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 
-#ifdef LIVES_IN_SYSTEM
-#define LOG_TAG "lineage.livedisplay@2.0-service.samsung-qcom"
-#else
 #define LOG_TAG "vendor.lineage.livedisplay@2.0-service.samsung-qcom"
-#endif
 
 #include <android-base/logging.h>
 #include <binder/ProcessState.h>

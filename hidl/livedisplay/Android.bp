@@ -54,25 +54,11 @@ cc_defaults {
 }
 
 cc_binary {
-    name: "lineage.livedisplay@2.0-service.samsung-exynos",
-    defaults: ["livedisplay_samsung_exynos_defaults"],
-    init_rc: ["lineage.livedisplay@2.0-service.samsung-exynos.rc"],
-    cflags: ["-DLIVES_IN_SYSTEM"],
-}
-
-cc_binary {
     name: "vendor.lineage.livedisplay@2.0-service.samsung-exynos",
     defaults: ["livedisplay_samsung_exynos_defaults"],
     init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-exynos.rc"],
     vintf_fragments: ["vendor.lineage.livedisplay@2.0-service.samsung-exynos.xml"],
     vendor: true,
-}
-
-cc_binary {
-    name: "lineage.livedisplay@2.0-service.samsung-qcom",
-    defaults: ["livedisplay_samsung_qcom_defaults"],
-    init_rc: ["lineage.livedisplay@2.0-service.samsung-qcom.rc"],
-    cflags: ["-DLIVES_IN_SYSTEM"],
 }
 
 cc_binary {
