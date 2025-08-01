@@ -37,6 +37,11 @@ __BEGIN_DECLS
 #define CAMERA_HARDWARE_MODULE_ID "camera"
 
 /**
+ * The id of Samsung UniHAL module
+ */
+#define SEC_CAMERA_HARDWARE_MODULE_ID "camera.unihal"
+
+/**
  * Module versioning information for the Camera hardware module, based on
  * camera_module_t.common.module_api_version. The two most significant hex
  * digits represent the major version, and the two least significant represent
