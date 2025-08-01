@@ -183,10 +183,13 @@ bool CameraProvider::initCamera(int id) {
 
 bool CameraProvider::initialize() {
     camera_module_t* rawModule;
-    int err = hw_get_module(CAMERA_HARDWARE_MODULE_ID, (const hw_module_t**)&rawModule);
+    int err = hw_get_module(SEC_CAMERA_HARDWARE_MODULE_ID, (const hw_module_t**)&rawModule);
     if (err < 0) {
-        ALOGE("Could not load camera HAL module: %d (%s)", err, strerror(-err));
-        return true;
+        err = hw_get_module(CAMERA_HARDWARE_MODULE_ID, (const hw_module_t**)&rawModule);
+        if (err < 0) {
+            ALOGE("Could not load camera HAL module: %d (%s)", err, strerror(-err));
+            return true;
+        }
     }
 
     mModule = new SamsungCameraModule(rawModule);
