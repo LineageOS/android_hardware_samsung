@@ -813,6 +813,34 @@ typedef struct camera_stream_combination {
 } camera_stream_combination_t;
 
 /**
+ * cameraid_stream_combination:
+ *
+ * A structure of stream definitions, used by isConcurrentStreamCombinationSupported(). This
+ * structure defines all the input & output streams for specific camera use case. Since this
+ * is used for concurrent cameras, framework camera ID info is added to the existing
+ * camera_stream_combination_t structure.
+ */
+typedef struct cameraid_stream_combination {
+    uint32_t fwkCameraId; ///< Framework camera Id for a given stream combination
+    camera_stream_combination_t* streamConfig; ///< Pointer to a given camera stream combination
+} cameraid_stream_combination_t;
+
+
+const uint32_t MaxConcurrentCameraSupported = 2;
+
+/**
+ * concurrent_camera_combination_t:
+ *
+ * A structure to fill up concurrent camera combination list. This information is
+ * used by getConcurrentStreamingCameraIds() API to send out the list of entries to
+ * camera framework.
+ */
+ typedef struct concurrent_camera_combination {
+    uint32_t numCameras; ///< No of concurrent cameras supported in each combination
+    uint32_t concurrentCamArray[MaxConcurrentCameraSupported]; ///< Array of concurrent camera combinations
+} concurrent_camera_combination_t;
+
+/**
  * device_state_t:
  *
  * Possible physical states of the overall device, for use with
@@ -1273,6 +1301,66 @@ typedef struct camera_module {
     int (*get_camera_device_version)(int camera_id, uint32_t *version);
 
     /**
+     * get_concurrent_streaming_camera_ids:
+     *
+     * Check for device support of specific camera stream combination concurrently.
+     *
+     * Get a vector of combinations of camera device ids that are able to
+     * configure streams concurrently. Each camera device advertised in a
+     * combination MUST at the very least support 720p YUV streams while
+     * streaming concurrently with the other camera ids in the combination.
+     *
+     * Caller needs to deallocate "ppConcCamArray" using delete [].
+     *
+     * Return values:
+     *
+     * 0:           In case if at least one stream combination is supported.
+     *
+     * -EINVAL:     In case the stream combination is not supported.
+     *
+     * -ENOSYS:     In case stream combination query is not supported.
+     *
+     * Version information (based on camera_module_t.common.module_api_version):
+     *
+     * CAMERA_MODULE_API_VERSION_1_x/2_0/2_1/2_2/2_3/2_4/2_5:
+     *   Not provided by HAL module. Framework will not call this function.
+     *
+     * CAMERA_MODULE_API_VERSION_2_6 or higher:
+     *   Valid to be called by the framework.
+     */
+    int (*get_concurrent_streaming_camera_ids)(uint32_t* pConcCamArrayLength,
+        concurrent_camera_combination_t** ppConcCamArray);
+
+    /**
+     * is_concurrent_stream_combination_supported:
+     *
+     * Check for device support of specific camera stream combination concurrently.
+     *
+     * Get a vector of combinations of camera device ids that are able to
+     * configure streams concurrently. Each camera device advertised in a
+     * combination MUST at the very least support 720p YUV streams while
+     * streaming concurrently with the other camera ids in the combination.
+     *
+     * Return values:
+     *
+     * 0:           In case if at least one stream combination is supported.
+     *
+     * -EINVAL:     In case the stream combination is not supported.
+     *
+     * -ENOSYS:     In case stream combination query is not supported.
+     *
+     * Version information (based on camera_module_t.common.module_api_version):
+     *
+     * CAMERA_MODULE_API_VERSION_1_x/2_0/2_1/2_2/2_3/2_4/2_5:
+     *   Not provided by HAL module. Framework will not call this function.
+     *
+     * CAMERA_MODULE_API_VERSION_2_6 or higher:
+     *   Valid to be called by the framework.
+     */
+    int (*is_concurrent_stream_combination_supported)(uint32_t numCombinations,
+        const cameraid_stream_combination_t* pCameraIdComb);
+
+    /**
      * set_torch_mode_strength:
      *
      * Same as set_torch_mode but with support for specifying the strength level.
@@ -1281,7 +1369,7 @@ typedef struct camera_module {
     int (*set_torch_mode_strength)(const char* camera_id, bool enabled, int32_t strength);
 
     /* reserved for future use */
-    void* reserved[2];
+    void* reserved[1];
 } camera_module_t;
 
 __END_DECLS

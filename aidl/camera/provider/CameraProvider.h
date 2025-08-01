@@ -45,10 +45,10 @@ class CameraProvider : public BnCameraProvider, protected camera_module_callback
             std::shared_ptr<ICameraDevice>* _aidl_return) override;
     ndk::ScopedAStatus notifyDeviceStateChange(int64_t in_deviceState) override;
     ndk::ScopedAStatus getConcurrentCameraIds(
-            std::vector<ConcurrentCameraIdCombination>* _aidl_return) override;
+            std::vector<ConcurrentCameraIdCombination>* concurrent_camera_ids) override;
     ndk::ScopedAStatus isConcurrentStreamCombinationSupported(
             const std::vector<CameraIdAndStreamCombination>& in_configs,
-            bool* _aidl_return) override;
+            bool* support) override;
 
   protected:
     Mutex mCbLock;

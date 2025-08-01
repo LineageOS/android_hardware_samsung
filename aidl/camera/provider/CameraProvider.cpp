@@ -445,22 +445,118 @@ ndk::ScopedAStatus CameraProvider::notifyDeviceStateChange(int64_t newState) {
 }
 
 ndk::ScopedAStatus CameraProvider::getConcurrentCameraIds(
-        std::vector<ConcurrentCameraIdCombination>* _aidl_return) {
-    if (_aidl_return == nullptr) {
+        std::vector<ConcurrentCameraIdCombination>* concurrent_camera_ids) {
+    if (concurrent_camera_ids == nullptr) {
+        ALOGE("%s: concurrent_camera_ids is nullptr. ", __FUNCTION__);
         return fromStatus(Status::ILLEGAL_ARGUMENT);
     }
-    *_aidl_return = {};
-    return fromStatus(Status::OK);
+    concurrent_camera_ids->clear();
+
+    concurrent_camera_combination_t *pConcCamArray = NULL;
+    uint32_t concCamArrayLength = 0;
+    Status status = Status::OPERATION_NOT_SUPPORTED;
+    int res = mModule->getConcurrentStreamingCameraIds(&concCamArrayLength, &pConcCamArray);
+    if ((OK == res) && (0 != concCamArrayLength) && (NULL != pConcCamArray))
+    {
+        (*concurrent_camera_ids).resize(concCamArrayLength);
+        int camIdComboIndex = 0;
+        for (int camIdComboIndex = 0; camIdComboIndex < concCamArrayLength; ++camIdComboIndex)
+        {
+            std::vector<std::string> aidlCombination(pConcCamArray[camIdComboIndex].numCameras);
+            for (int camIndex = 0; camIndex < pConcCamArray[camIdComboIndex].numCameras; ++camIndex)
+            {
+                aidlCombination[camIndex] = std::to_string(pConcCamArray[camIdComboIndex].concurrentCamArray[camIndex]);
+            }
+            (*concurrent_camera_ids)[camIdComboIndex].combination = aidlCombination;
+        }
+
+        // Memory allocated by caller needs to be freed
+        delete [] pConcCamArray;
+        status = Status::OK;
+    }
+
+    ALOGI("%s called, number of concurrent combinations supported is %d", __FUNCTION__, concCamArrayLength);
+    return fromStatus(status);
 }
 
 ndk::ScopedAStatus CameraProvider::isConcurrentStreamCombinationSupported(
-        const std::vector<CameraIdAndStreamCombination>&, bool* _aidl_return) {
-    if (_aidl_return == nullptr) {
-        return fromStatus(Status::ILLEGAL_ARGUMENT);
+        const std::vector<CameraIdAndStreamCombination>& in_configs,
+        bool* support)
+{
+    Status status = Status::OK;
+    bool queryStatus = false;
+    size_t numEntries = in_configs.size();
+    int res = NO_ERROR;
+
+    std::vector<cameraid_stream_combination_t> cameraIdStreamComboVec;
+    for (const auto &camIdStreamCombo : in_configs)
+    {
+        cameraid_stream_combination_t cameraIdStreamComboEntry = {};
+        cameraIdStreamComboEntry.streamConfig = new camera_stream_combination_t;
+        camera_stream_combination_t* pStreamComb = cameraIdStreamComboEntry.streamConfig;
+        if (NULL == pStreamComb)
+        {
+            res = NO_MEMORY;
+            break;
+        }
+
+        pStreamComb->operation_mode = static_cast<uint32_t> (camIdStreamCombo.streamConfiguration.operationMode);
+        pStreamComb->num_streams = camIdStreamCombo.streamConfiguration.streams.size();
+        pStreamComb->streams = new camera_stream_t[pStreamComb->num_streams];
+        if (NULL == pStreamComb->streams)
+        {
+            delete pStreamComb;
+            res = NO_MEMORY;
+            break;
+        }
+
+        camera_stream_t* pStreamBuffer = pStreamComb->streams;
+        size_t strmIndex = 0;
+        for (const auto &it : camIdStreamCombo.streamConfiguration.streams)
+        {
+            pStreamBuffer[strmIndex].stream_type = static_cast<int> (it.streamType);
+            pStreamBuffer[strmIndex].width = it.width;
+            pStreamBuffer[strmIndex].height = it.height;
+            pStreamBuffer[strmIndex].format = static_cast<int> (it.format);
+            pStreamBuffer[strmIndex].data_space = static_cast<android_dataspace_t> (it.dataSpace);
+            pStreamBuffer[strmIndex].usage = static_cast<uint32_t> (it.usage);
+            pStreamBuffer[strmIndex].physical_camera_id = it.physicalCameraId.c_str();
+            pStreamBuffer[strmIndex++].rotation = static_cast<int> (it.rotation);
+        }
+        cameraIdStreamComboVec.push_back(cameraIdStreamComboEntry);
     }
-    // No concurrent stream combinations are supported
-    *_aidl_return = false;
-    return fromStatus(Status::OK);
+
+    if (NO_ERROR == res)
+    {
+        res = mModule->isConcurrentStreamCombinationSupported(cameraIdStreamComboVec);
+    }
+
+    switch (res)
+    {
+        case NO_ERROR:
+            queryStatus = true;
+            status = Status::OK;
+            break;
+        case BAD_VALUE:
+            status = Status::OK;
+            break;
+        case INVALID_OPERATION:
+            status = Status::OPERATION_NOT_SUPPORTED;
+            break;
+        default:
+            ALOGE("%s: Unexpected error: %d", __FUNCTION__, res);
+            status = Status::INTERNAL_ERROR;
+    };
+
+    for (auto &camIdStreamCombo : cameraIdStreamComboVec)
+    {
+        delete [] camIdStreamCombo.streamConfig->streams;
+        delete camIdStreamCombo.streamConfig;
+    }
+
+    *support = queryStatus;
+    ALOGI("%s called, queryStatus %d, status %d, number of concurrent Cameras %zu", __FUNCTION__, queryStatus, status, numEntries);
+    return fromStatus(status);
 }
 
 }  // namespace implementation

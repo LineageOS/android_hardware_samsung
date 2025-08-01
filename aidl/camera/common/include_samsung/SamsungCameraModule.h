@@ -21,6 +21,8 @@ class SamsungCameraModule : public CameraModule {
 
     int getCameraDeviceVersion(int cameraId, uint32_t* version);
     int sehGetDeviceVersion(int cameraId);
+    int getConcurrentStreamingCameraIds(uint32_t *pConcCamArrayLength, concurrent_camera_combination_t  **ppConcCamArray);
+    int isConcurrentStreamCombinationSupported(const std::vector<cameraid_stream_combination_t>& rCameraIdStreamComboVec);
     bool isSetTorchModeStrengthSupported();
     int setTorchModeStrength(const char* camera_id, bool enable, int strength);
 
