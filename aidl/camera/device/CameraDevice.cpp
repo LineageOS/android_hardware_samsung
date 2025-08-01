@@ -35,7 +35,7 @@ CameraDevice::CameraDevice(
         ALOGI("%s: Adding a new camera id: %s", __FUNCTION__, mCameraId.c_str());
     }
 
-    mDeviceVersion = mModule->getDeviceVersion(mCameraIdInt);
+    mDeviceVersion = mModule->sehGetDeviceVersion(mCameraIdInt);
     if (mDeviceVersion < CAMERA_DEVICE_API_VERSION_3_2) {
         ALOGE("%s: Camera id %s does not support HAL3.2+", __FUNCTION__, mCameraId.c_str());
         mInitFail = true;

@@ -1247,6 +1247,32 @@ typedef struct camera_module {
     void (*notify_device_state_change)(uint64_t deviceState);
 
     /**
+     * get_camera_device_version:
+     *
+     * Return the device version for a given camera device. This value may not change for a camera
+     * device. The version returned here must be the same as the one from get_camera_info.
+     *
+     * Return values:
+     *
+     * 0:           On a successful operation
+     *
+     * -ENODEV:     The information cannot be provided due to an internal
+     *              error.
+     *
+     * -EINVAL:     The input arguments are invalid, i.e. the id is invalid,
+     *              and/or the module is invalid.
+     *
+     * Version information (based on camera_module_t.common.module_api_version):
+     *
+     * CAMERA_MODULE_API_VERSION_2_5 or higher:
+     *
+     *   When a camera is disconnected, its camera id becomes invalid. Calling this
+     *   this method with this invalid camera id will get -EINVAL and NULL camera
+     *   static metadata (camera_info.static_camera_characteristics).
+     */
+    int (*get_camera_device_version)(int camera_id, uint32_t *version);
+
+    /**
      * set_torch_mode_strength:
      *
      * Same as set_torch_mode but with support for specifying the strength level.

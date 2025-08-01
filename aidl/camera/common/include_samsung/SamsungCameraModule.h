@@ -19,11 +19,14 @@ class SamsungCameraModule : public CameraModule {
     explicit SamsungCameraModule(camera_module_t* module);
     virtual ~SamsungCameraModule();
 
+    int getCameraDeviceVersion(int cameraId, uint32_t* version);
+    int sehGetDeviceVersion(int cameraId);
     bool isSetTorchModeStrengthSupported();
     int setTorchModeStrength(const char* camera_id, bool enable, int strength);
 
   private:
     camera_module_t* mModule;
+    KeyedVector<int, int> mDeviceVersionMap;
 };
 
 }  // namespace helper

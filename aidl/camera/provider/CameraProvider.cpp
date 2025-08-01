@@ -60,7 +60,7 @@ void CameraProvider::addDeviceNames(int camera_id, CameraDeviceStatus status, bo
     mCameraIds.add(cameraIdStr);
 
     // initialize mCameraDeviceNames
-    int deviceVersion = mModule->getDeviceVersion(camera_id);
+    int deviceVersion = mModule->sehGetDeviceVersion(camera_id);
     auto deviceNamePair = std::make_pair(cameraIdStr, getAidlDeviceName(cameraIdStr));
     mCameraDeviceNames.add(deviceNamePair);
     if (cam_new) {
@@ -73,7 +73,7 @@ void CameraProvider::removeDeviceNames(int camera_id) {
 
     mCameraIds.remove(cameraIdStr);
 
-    int deviceVersion = mModule->getDeviceVersion(camera_id);
+    int deviceVersion = mModule->sehGetDeviceVersion(camera_id);
     auto deviceNamePair = std::make_pair(cameraIdStr, getAidlDeviceName(cameraIdStr));
     mCameraDeviceNames.remove(deviceNamePair);
     mCallbacks->cameraDeviceStatusChange(deviceNamePair.second, CameraDeviceStatus::NOT_PRESENT);
