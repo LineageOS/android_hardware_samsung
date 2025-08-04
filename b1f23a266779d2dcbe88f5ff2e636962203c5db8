@@ -22,6 +22,30 @@
       },
       "revId": "b1f23a266779d2dcbe88f5ff2e636962203c5db8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f843ff9_1bff3e39",
+        "filename": "aidl/camera/provider/CameraProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-04T06:48:30Z",
+      "side": 1,
+      "message": "I thought the same thing. Done.",
+      "parentUuid": "6aa94e5d_6be2d203",
+      "range": {
+        "startLine": 186,
+        "startChar": 29,
+        "endLine": 186,
+        "endChar": 42
+      },
+      "revId": "b1f23a266779d2dcbe88f5ff2e636962203c5db8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
