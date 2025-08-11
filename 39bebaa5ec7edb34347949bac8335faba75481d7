@@ -53,6 +53,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c281433_7e68101a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-11T10:03:51Z",
+      "side": 1,
+      "message": "Even if it seemed ok, this is more proper. Provided that all devices with radio ship this binary.",
+      "parentUuid": "7b5300a1_6ea70667",
+      "revId": "39bebaa5ec7edb34347949bac8335faba75481d7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b64e390c_10fd1a84",
