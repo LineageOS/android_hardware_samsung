@@ -16,6 +16,23 @@
       "message": "but like, why not just set the overlay like everyone else?",
       "revId": "39bebaa5ec7edb34347949bac8335faba75481d7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d630d0b_cfbdfa35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-11T07:58:38Z",
+      "side": 1,
+      "message": "Because different variants has different sim slot numbers. Mostly Korean devices.",
+      "revId": "39bebaa5ec7edb34347949bac8335faba75481d7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
