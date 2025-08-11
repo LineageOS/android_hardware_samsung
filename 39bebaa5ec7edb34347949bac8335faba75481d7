@@ -33,6 +33,52 @@
       "message": "Because different variants has different sim slot numbers. Mostly Korean devices.",
       "revId": "39bebaa5ec7edb34347949bac8335faba75481d7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b64e390c_10fd1a84",
+        "filename": "ril/secril_config_svc/secril_config_svc.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-08-11T09:27:03Z",
+      "side": 1,
+      "message": "should be migrated to android::base::SetProperty.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 59
+      },
+      "revId": "39bebaa5ec7edb34347949bac8335faba75481d7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e1389e1_ef2b6f32",
+        "filename": "ril/secril_config_svc/secril_config_svc.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-08-11T09:27:03Z",
+      "side": 1,
+      "message": "and then this should be updated as well.",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 22
+      },
+      "revId": "39bebaa5ec7edb34347949bac8335faba75481d7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
