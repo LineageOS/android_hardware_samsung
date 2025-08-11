@@ -16,6 +16,24 @@
       "message": "Someone with SLSI NFC should take the lead. I can\u0027t continue any further due to lack of any SLSI NFC device.",
       "revId": "990b915b7b1a41ca91f8f6b9b88c078eedba9c03",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "507a8706_f575c2ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2025-08-11T17:25:14Z",
+      "side": 1,
+      "message": "In the commit message please could you provide some necessary context on where you got the code from and maybe an overview of changes you made to that code if any. Thanks.",
+      "parentUuid": "53c4249b_fb7fd4f5",
+      "revId": "990b915b7b1a41ca91f8f6b9b88c078eedba9c03",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
