@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53c4249b_fb7fd4f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-11T11:40:32Z",
+      "side": 1,
+      "message": "Someone with SLSI NFC should take the lead. I can\u0027t continue any further due to lack of any SLSI NFC device.",
+      "revId": "990b915b7b1a41ca91f8f6b9b88c078eedba9c03",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
