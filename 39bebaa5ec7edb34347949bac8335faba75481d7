@@ -35,6 +35,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b5300a1_6ea70667",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-08-11T09:29:55Z",
+      "side": 1,
+      "message": "btw I tried overlay set to 2 on device where i forced ssss on and it seemed ok regardless.",
+      "parentUuid": "9d630d0b_cfbdfa35",
+      "revId": "39bebaa5ec7edb34347949bac8335faba75481d7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b64e390c_10fd1a84",
