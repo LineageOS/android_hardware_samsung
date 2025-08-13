@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The LineageOS Project
+ * Copyright (C) 2024-2025 The LineageOS Project
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -83,7 +83,6 @@ static const auto gHidlHalDeathRecipient = sp<RilHidlDeathRecipient>::make();
 
 int main() {
     ABinderProcess_setThreadPoolMaxThreadCount(0);
-    ABinderProcess_startThreadPool();
 
     std::string content;
     if (!ReadFileToString("/vendor/etc/sehradiomanager.conf", &content)) {

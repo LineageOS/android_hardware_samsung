@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2022 The Android Open Source Project
- * Copyright (C) 2024 The LineageOS Project
+ * Copyright (C) 2024-2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ int main() {
     ALOGI("CameraProvider: samsung service is starting.");
 
     ABinderProcess_setThreadPoolMaxThreadCount(HWBINDER_THREAD_COUNT);
+    ABinderProcess_startThreadPool();
 
     std::shared_ptr<CameraProvider> defaultProvider = ndk::SharedRefBase::make<CameraProvider>();
     const std::string serviceName = std::string(CameraProvider::descriptor) + "/internal/0";
