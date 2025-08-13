@@ -76,3 +76,12 @@ prop {
     access: Readonly
     api_name: "cancel_on_enroll_completion"
 }
+
+# amount of miliseconds by which onPointerDown will be delayed during screen off UDFPS (default: 0)
+prop {
+    prop_name: "ro.vendor.fingerprint.screen_off_press_delay"
+    type: Integer
+    scope: Internal
+    access: Readonly
+    api_name: "screen_off_press_delay"
+}
