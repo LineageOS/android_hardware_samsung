@@ -35,6 +35,7 @@ int main() {
     ALOGI("CameraProvider: samsung service is starting.");
 
     ABinderProcess_setThreadPoolMaxThreadCount(HWBINDER_THREAD_COUNT);
+    ABinderProcess_startThreadPool();
 
     std::shared_ptr<CameraProvider> defaultProvider = ndk::SharedRefBase::make<CameraProvider>();
     const std::string serviceName = std::string(CameraProvider::descriptor) + "/internal/0";
