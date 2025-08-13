@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The LineageOS Project
+ * Copyright (C) 2024-2026 The LineageOS Project
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -17,6 +17,7 @@
 #define FINGERPRINT_DATA_DIR "/data/vendor/biometrics/fp/User_%d/"
 
 using ::aidl::android::hardware::biometrics::common::ICancellationSignal;
+using ::aidl::android::hardware::biometrics::common::DisplayState;
 using ::aidl::android::hardware::biometrics::common::OperationContext;
 using ::aidl::android::hardware::biometrics::fingerprint::PointerContext;
 using ::aidl::android::hardware::keymaster::HardwareAuthToken;
@@ -96,6 +97,8 @@ class Session : public BnSession {
 
     // Binder death handler.
     AIBinder_DeathRecipient* mDeathRecipient;
+
+    DisplayState mDisplayState;
 };
 
 }  // namespace fingerprint
