@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The LineageOS Project
+ * Copyright (C) 2024-2026 The LineageOS Project
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -25,6 +25,8 @@ namespace android {
 namespace hardware {
 namespace biometrics {
 namespace fingerprint {
+
+constexpr int SCREEN_OFF_DELAY_PRESS_MS = 0;
 
 void onClientDeath(void* cookie) {
     LOG(INFO) << "FingerprintService has died";
@@ -243,6 +245,14 @@ ndk::ScopedAStatus Session::detectInteractionWithContext(
 }
 
 ndk::ScopedAStatus Session::onPointerDownWithContext(const PointerContext& context) {
+    int screenOffDelayPressMs = FingerprintHalProperties::screen_off_delay_press().value_or(SCREEN_OFF_DELAY_PRESS_MS);
+
+    if (screenOffDelayPressMs > SCREEN_OFF_DELAY_PRESS_MS) {
+        if (context.isAod && mDisplayState == DisplayState::NO_UI) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(screenOffDelayPressMs));
+        }
+    }
+
     return onPointerDown(context.pointerId, context.x, context.y, context.minor, context.major);
 }
 
@@ -250,7 +260,8 @@ ndk::ScopedAStatus Session::onPointerUpWithContext(const PointerContext& context
     return onPointerUp(context.pointerId);
 }
 
-ndk::ScopedAStatus Session::onContextChanged(const OperationContext& /*context*/) {
+ndk::ScopedAStatus Session::onContextChanged(const OperationContext& context) {
+    mDisplayState = context.displayState;
     return ndk::ScopedAStatus::ok();
 }
 
