@@ -21,8 +21,8 @@
     <string name="screen_colors_title">Rənglər</string>
     <string name="mdnie_scenario_title_head">Ekran rejimi</string>
     <string name="mdnie_scenario_summary_head">mDNle ssenarisini ayarla</string>
-    <string name="mdnie_accessibility_title_head">Əlçatımlılıq rejimi</string>
-    <string name="mdnie_accessibility_summary_head">mDNIe əlçatımlılıq rejimini ayarla</string>
+    <string name="mdnie_accessibility_title_head">Erişiləbilənlik rejimi</string>
+    <string name="mdnie_accessibility_summary_head">mDNIe erişiləbilənlik rejimini ayarla</string>
     <string name="mdnie_scenario_ui">LineageOS (ilkin)</string>
     <string name="mdnie_scenario_video">Video</string>
     <string name="mdnie_scenario_video_warm">Video - isti</string>
