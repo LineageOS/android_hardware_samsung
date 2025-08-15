@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9f30dee_47631ef1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-15T09:31:05Z",
+      "side": 1,
+      "message": "Provider loads UniHAL without any issue. There are no issues with taking photos on r8q when UniHAL libraries available in vendor.",
+      "revId": "39ecdfb888a48c5052e1eac4c396db1f0efd6419",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
