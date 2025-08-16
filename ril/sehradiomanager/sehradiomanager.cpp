@@ -83,6 +83,7 @@ static const auto gHidlHalDeathRecipient = sp<RilHidlDeathRecipient>::make();
 
 int main() {
     ABinderProcess_setThreadPoolMaxThreadCount(0);
+    ABinderProcess_startThreadPool();
 
     std::string content;
     if (!ReadFileToString("/vendor/etc/sehradiomanager.conf", &content)) {
