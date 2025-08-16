@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38c6d97f_83ad8865",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-16T17:41:08Z",
+      "side": 1,
+      "message": "My users started to report cell signal problems due to this change. It would be great to merge this before it affects other devices.",
+      "revId": "2a636fb2f2ee5a631c0ebd6f5fc0224b05cdd6f3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
