@@ -16,6 +16,24 @@
       "message": "Since you were looking into this, help out migrating to AIDL. See https://review.lineageos.org/q/topic:%22livedisplay-aidl%22",
       "revId": "dd1c2b40e1ea287f227d6ea7eb130a8e9dacb4bc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ffbfca3_c7a9d4f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-17T12:23:44Z",
+      "side": 1,
+      "message": "Here, only compile tested: https://review.lineageos.org/c/LineageOS/android_hardware_samsung/+/442939/",
+      "parentUuid": "9ace6292_59c8f55b",
+      "revId": "dd1c2b40e1ea287f227d6ea7eb130a8e9dacb4bc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
