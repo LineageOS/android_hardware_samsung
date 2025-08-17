@@ -33,25 +33,25 @@ cc_defaults {
     relative_install_path: "hw",
     shared_libs: [
         "libbase",
+        "libbinder_ndk",
         "libbinder",
-        "libhidlbase",
         "libutils",
-        "vendor.lineage.livedisplay@2.0",
+        "vendor.lineage.livedisplay-V1-ndk",
     ],
 }
 
 cc_binary {
-    name: "vendor.lineage.livedisplay@2.0-service.samsung-exynos",
+    name: "vendor.lineage.livedisplay-service.samsung-exynos",
     defaults: ["livedisplay_samsung_defaults"],
-    init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-exynos.rc"],
+    init_rc: ["vendor.lineage.livedisplay-service.samsung-exynos.rc"],
     srcs: [":vendor.lineage.livedisplay-samsung-exynos"],
     vendor: true,
 }
 
 cc_binary {
-    name: "vendor.lineage.livedisplay@2.0-service.samsung-qcom",
+    name: "vendor.lineage.livedisplay-service.samsung-qcom",
     defaults: ["livedisplay_samsung_defaults"],
-    init_rc: ["vendor.lineage.livedisplay@2.0-service.samsung-qcom.rc"],
+    init_rc: ["vendor.lineage.livedisplay-service.samsung-qcom.rc"],
     srcs: [":vendor.lineage.livedisplay-samsung-qcom"],
     vendor: true,
 }
