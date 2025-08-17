@@ -31,14 +31,14 @@ static constexpr const char* kModeMaxPath = "/sys/class/mdnie/mdnie/mode_max";
 static constexpr const char* kDefaultPath = "/data/vendor/display/.displaymodedefault";
 
 const std::map<int32_t, std::string> DisplayModes::kModeMap = {
-    // clang-format off
+        // clang-format off
     {0, "Dynamic"},
     {1, "Standard"},
     {2, "Natural"},
     {3, "Cinema"},
     {4, "Adaptive"},
     {5, "Reading"},
-    // clang-format on
+        // clang-format on
 };
 
 DisplayModes::DisplayModes() : mDefaultModeId(0) {
