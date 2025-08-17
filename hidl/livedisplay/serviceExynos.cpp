@@ -19,12 +19,11 @@
 #include <android-base/logging.h>
 #include <binder/ProcessState.h>
 #include <hidl/HidlTransportSupport.h>
-
-#include "AdaptiveBacklight.h"
-#include "DisplayColorCalibrationExynos.h"
-#include "DisplayModes.h"
-#include "ReadingEnhancement.h"
-#include "SunlightEnhancementExynos.h"
+#include <livedisplay/samsung/AdaptiveBacklight.h>
+#include <livedisplay/samsung/DisplayColorCalibrationExynos.h>
+#include <livedisplay/samsung/DisplayModes.h>
+#include <livedisplay/samsung/ReadingEnhancement.h>
+#include <livedisplay/samsung/SunlightEnhancementExynos.h>
 
 using android::OK;
 using android::sp;

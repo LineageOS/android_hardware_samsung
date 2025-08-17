@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,11 @@
 #include <android-base/logging.h>
 #include <binder/ProcessState.h>
 #include <hidl/HidlTransportSupport.h>
-
-#include "AdaptiveBacklight.h"
-#include "DisplayColorCalibration.h"
-#include "DisplayModes.h"
-#include "ReadingEnhancement.h"
-#include "SunlightEnhancement.h"
+#include <livedisplay/samsung/AdaptiveBacklight.h>
+#include <livedisplay/samsung/DisplayColorCalibration.h>
+#include <livedisplay/samsung/DisplayModes.h>
+#include <livedisplay/samsung/ReadingEnhancement.h>
+#include <livedisplay/samsung/SunlightEnhancement.h>
 
 using android::OK;
 using android::sp;
