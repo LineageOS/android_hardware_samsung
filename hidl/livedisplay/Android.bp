@@ -38,6 +38,15 @@ cc_defaults {
         "libutils",
         "vendor.lineage.livedisplay@2.0",
     ],
+    header_libs: [
+        "vendor.lineage.livedisplay-samsung-headers",
+    ],
+}
+
+cc_library_headers {
+    name: "vendor.lineage.livedisplay-samsung-headers",
+    vendor_available: true,
+    export_include_dirs: ["include"],
 }
 
 cc_binary {
