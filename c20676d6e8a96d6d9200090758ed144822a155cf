@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "850f2ddf_ae22d5fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-17T14:18:48Z",
+      "side": 1,
+      "message": "I left VINTF fragments out of this change since that would require changes on every device using this.",
+      "revId": "c20676d6e8a96d6d9200090758ed144822a155cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
