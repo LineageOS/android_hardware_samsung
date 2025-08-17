@@ -1,0 +1,7 @@
+on post-fs-data
+    mkdir /data/vendor/display 0770 system system
+
+service vendor.livedisplay-hal-samsung-exynos /vendor/bin/hw/vendor.lineage.livedisplay-service.samsung-exynos
+    class hal
+    user system
+    group system

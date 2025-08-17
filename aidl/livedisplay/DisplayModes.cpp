@@ -1,17 +1,6 @@
 /*
- * Copyright (C) 2019-2025 The LineageOS Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-FileCopyrightText: 2019-2025 The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 #define LOG_TAG "DisplayModesService"
@@ -21,10 +10,10 @@
 
 #include <fstream>
 
+namespace aidl {
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
-namespace V2_0 {
 namespace samsung {
 
 static constexpr const char* kModePath = "/sys/class/mdnie/mdnie/mode";
@@ -68,7 +57,7 @@ bool DisplayModes::isSupported() {
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
-Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb resultCb) {
+ndk::ScopedAStatus DisplayModes::getDisplayModes(std::vector<DisplayMode>* _aidl_return) {
     std::ifstream maxModeFile(kModeMaxPath);
     int value;
     std::vector<DisplayMode> modes;
@@ -80,11 +69,12 @@ Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb resultCb) {
     for (const auto& entry : kModeMap) {
         if (entry.first < value) modes.push_back({entry.first, entry.second});
     }
-    resultCb(modes);
-    return Void();
+
+    *_aidl_return = modes;
+    return ndk::ScopedAStatus::ok();
 }
 
-Return<void> DisplayModes::getCurrentDisplayMode(getCurrentDisplayMode_cb resultCb) {
+ndk::ScopedAStatus DisplayModes::getCurrentDisplayMode(DisplayMode* _aidl_return) {
     int32_t currentModeId = mDefaultModeId;
     std::ifstream modeFile(kModePath);
     int value;
@@ -97,41 +87,40 @@ Return<void> DisplayModes::getCurrentDisplayMode(getCurrentDisplayMode_cb result
             }
         }
     }
-    resultCb({currentModeId, kModeMap.at(currentModeId)});
-    return Void();
+
+    *_aidl_return = DisplayMode{currentModeId, kModeMap.at(currentModeId)};
+    return ndk::ScopedAStatus::ok();
 }
 
-Return<void> DisplayModes::getDefaultDisplayMode(getDefaultDisplayMode_cb resultCb) {
-    resultCb({mDefaultModeId, kModeMap.at(mDefaultModeId)});
-    return Void();
+ndk::ScopedAStatus DisplayModes::getDefaultDisplayMode(DisplayMode* _aidl_return) {
+    *_aidl_return = DisplayMode{mDefaultModeId, kModeMap.at(mDefaultModeId)};
+    return ndk::ScopedAStatus::ok();
 }
 
-Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
+ndk::ScopedAStatus DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
     const auto iter = kModeMap.find(modeID);
     if (iter == kModeMap.end()) {
-        return false;
+        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
     std::ofstream modeFile(kModePath);
     modeFile << iter->first;
     if (modeFile.fail()) {
-        return false;
+        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
 
     if (makeDefault) {
         std::ofstream defaultFile(kDefaultPath);
         defaultFile << iter->first;
         if (defaultFile.fail()) {
-            return false;
+            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
         }
         mDefaultModeId = iter->first;
     }
-    return true;
+    return ndk::ScopedAStatus::ok();
 }
 
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
 }  // namespace samsung
-}  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
+}  // namespace aidl
