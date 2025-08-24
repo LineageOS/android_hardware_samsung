@@ -1,0 +1,70 @@
+//
+// SPDX-FileCopyrightText: 2025 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_binary {
+    name: "samsung.software.media.c2@1.0-service",
+    vendor: true,
+    relative_install_path: "hw",
+
+    init_rc: [
+        "samsung.software.media.c2@1.0-service.rc",
+    ],
+
+// To-Do: Add support for default0 instance
+    vintf_fragments: [
+        "sec_c2_manifest_default.xml",
+    ],
+
+    defaults: [
+        "libcodec2-hidl-defaults",
+    ],
+    srcs: [
+        "vendor.cpp",
+    ],
+
+    shared_libs: [
+        "libavservices_minijail",
+        "libbinder",
+    ]
+     + select(soong_config_variable("samsungVars", "target_componentstore_library"), {
+        any @ flag_val: [flag_val],
+        default: [],
+    }),
+
+    required: [
+        "samsung.software.media.c2-base-policy",
+        "samsung.software.media.c2-ext-policy",
+    ],
+}
+
+prebuilt_etc {
+    name: "samsung.software.media.c2-base-policy",
+    vendor: true,
+    sub_dir: "seccomp_policy",
+
+    arch: {
+        arm: {
+            src: "seccomp_policy/samsung.software.media.c2-base-arm.policy",
+        },
+        arm64: {
+            src: "seccomp_policy/samsung.software.media.c2-base-arm64.policy",
+        },
+    },
+}
+
+prebuilt_etc {
+    name: "samsung.software.media.c2-ext-policy",
+    vendor: true,
+    sub_dir: "seccomp_policy",
+
+    arch: {
+        arm: {
+            src: "seccomp_policy/samsung.software.media.c2-ext-arm.policy",
+        },
+        arm64: {
+            src: "seccomp_policy/samsung.software.media.c2-ext-arm64.policy",
+        },
+    },
+}
