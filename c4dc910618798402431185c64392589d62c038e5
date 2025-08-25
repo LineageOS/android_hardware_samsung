@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c1082a1_1e4d4a02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2025-08-25T16:31:12Z",
+      "side": 1,
+      "message": "builds and boots exy 850. Livedisplay looks and functions the same in settings so idk what this HAL even does.",
+      "revId": "c4dc910618798402431185c64392589d62c038e5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
