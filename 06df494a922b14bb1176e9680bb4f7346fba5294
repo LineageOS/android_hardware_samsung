@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a9f0792_5d128a44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-26T10:08:18Z",
+      "side": 1,
+      "message": "Please import plain AOSP\u0027s example AIDL service first, then apply edits for Samsung in a follow-up change.",
+      "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d65e89cc_a9b0d35d",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-26T10:08:18Z",
+      "side": 1,
+      "message": "Replace with runHidlService",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9239e288_12107476",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-26T10:08:18Z",
+      "side": 1,
+      "message": "Move the LEGACY_COMPONENT_STORE ifdef here.",
+      "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25277c43_432c9855",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-26T10:08:18Z",
+      "side": 1,
+      "message": "I think you need to call runAidlService() from AOSP\u0027s example AIDL service first, to set, start and finally join thread pool.",
+      "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
