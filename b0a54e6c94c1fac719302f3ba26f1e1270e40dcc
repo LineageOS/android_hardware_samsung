@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59d811c0_005e686a",
+        "filename": "aidl/codec2/Android.bp",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-26T18:04:15Z",
+      "side": 1,
+      "message": "```suggestion\n        default: [\"samsung_media_c2_default.xml\"],\n```",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "b0a54e6c94c1fac719302f3ba26f1e1270e40dcc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
