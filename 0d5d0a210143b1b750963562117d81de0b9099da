@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6540669f_3659586f",
+        "filename": "aidl/codec2/Android.bp",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-26T14:15:08Z",
+      "side": 1,
+      "message": "Convert this to select().",
+      "revId": "0d5d0a210143b1b750963562117d81de0b9099da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
