@@ -6,13 +6,13 @@
       <version>1.2</version>
       <interface>
           <name>IComponentStore</name>
-          <instance>default</instance>
+          <instance>default0</instance>
       </interface>
   </hal>
   <!-- AIDL fragment -->
   <hal format="aidl">
     <name>android.hardware.media.c2</name>
     <version>1</version>
-    <fqname>IComponentStore/default</fqname>
+    <fqname>IComponentStore/default1</fqname>
   </hal>
 </manifest>
