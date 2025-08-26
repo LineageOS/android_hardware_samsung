@@ -16,6 +16,24 @@
       "message": "Convert this to select().",
       "revId": "0d5d0a210143b1b750963562117d81de0b9099da",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e1d95ec_9ae43396",
+        "filename": "aidl/codec2/Android.bp",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-26T16:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6540669f_3659586f",
+      "revId": "0d5d0a210143b1b750963562117d81de0b9099da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
