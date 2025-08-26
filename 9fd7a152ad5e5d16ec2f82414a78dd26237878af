@@ -47,6 +47,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18636fdb_93288afa",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-26T13:51:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0c9120ce_b415623d",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "9fd7a152ad5e5d16ec2f82414a78dd26237878af",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28d06512_defe7024",
@@ -70,6 +94,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbacdd38_f5803a5e",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-26T13:51:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "28d06512_defe7024",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "9fd7a152ad5e5d16ec2f82414a78dd26237878af",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00c5f4fd_d7c5f8c2",
@@ -83,6 +131,30 @@
       "writtenOn": "2025-08-26T12:54:05Z",
       "side": 1,
       "message": "Unused?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "9fd7a152ad5e5d16ec2f82414a78dd26237878af",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ef5cf92_a937da41",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-26T13:51:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "00c5f4fd_d7c5f8c2",
       "range": {
         "startLine": 37,
         "startChar": 0,
