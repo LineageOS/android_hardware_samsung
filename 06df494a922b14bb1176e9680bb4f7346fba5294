@@ -82,6 +82,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "920df5ce_2cc37577",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-26T12:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9239e288_12107476",
+      "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25277c43_432c9855",
@@ -113,6 +131,24 @@
       "side": 1,
       "message": "Binary from S24/25 doesn\u0027t include any thread pool calls. They\u0027re implemented to component store library.",
       "parentUuid": "25277c43_432c9855",
+      "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef013dcf_0411633b",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-26T12:24:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d7c474b8_4d829ad9",
       "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
