@@ -41,6 +41,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "192f36ed_d0245725",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-26T12:08:27Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d65e89cc_a9b0d35d",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9239e288_12107476",
@@ -71,6 +95,24 @@
       "writtenOn": "2025-08-26T10:08:18Z",
       "side": 1,
       "message": "I think you need to call runAidlService() from AOSP\u0027s example AIDL service first, to set, start and finally join thread pool.",
+      "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7c474b8_4d829ad9",
+        "filename": "aidl/codec2/vendor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-26T12:08:27Z",
+      "side": 1,
+      "message": "Binary from S24/25 doesn\u0027t include any thread pool calls. They\u0027re implemented to component store library.",
+      "parentUuid": "25277c43_432c9855",
       "revId": "06df494a922b14bb1176e9680bb4f7346fba5294",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
