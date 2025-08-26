@@ -1,0 +1,7 @@
+service android-hardware-media-c2-hal /vendor/bin/hw/android.hardware.media.c2-default-service
+    class hal
+    user mediacodec
+    group camera mediadrm drmrpc
+    ioprio rt 4
+    task_profiles ProcessCapacityHigh
+
