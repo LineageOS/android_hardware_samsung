@@ -1,0 +1,84 @@
+soong_config_module_type {
+    name: "SamsungCodec2_cc_defaults",
+    module_type: "cc_defaults",
+    config_namespace: "SamsungCodec2Vars",
+    bool_variables: ["uses_legacy_component_store"],
+    variables: ["c2_instance_type"],
+    properties: ["cflags", "vintf_fragments"],
+}
+
+soong_config_string_variable {
+    name: "c2_instance_type",
+    values: ["legacy_default", "legacy_default0", "default"],
+}
+
+SamsungCodec2_cc_defaults {
+    name: "SamsungCodec2_defaults",
+
+    soong_config_variables: {
+        uses_legacy_component_store: {
+            cflags: ["-DLEGACY_COMPONENT_STORE"],
+        },
+
+        c2_instance_type: {
+            legacy_default: {
+                vintf_fragments: ["samsung_media_c2_legacy_default.xml"],
+            },
+            legacy_default0: {
+                vintf_fragments: ["samsung_media_c2_legacy_default0.xml"],
+            },
+            default: {
+                vintf_fragments: ["samsung_media_c2_default.xml"],
+            },
+        },
+    },
+}
+
+cc_binary {
+    name: "android.software.media.c2-service.samsung",
+    vendor: true,
+    relative_install_path: "hw",
+
+    init_rc: ["android.software.media.c2-service.samsung.rc"],
+
+    defaults: [
+        "libcodec2-hidl-defaults",
+        "libcodec2-aidl-defaults",
+        "SamsungCodec2_defaults",
+    ],
+
+    srcs: [
+        "vendor.cpp",
+    ],
+
+    // minijail is used to protect against unexpected system calls.
+    shared_libs: [
+        "libavservices_minijail",
+        "libbinder",
+        "libbinder_ndk",
+    ]
+     + select(soong_config_variable("SamsungCodec2Vars", "target_componentstore_library"), {
+        any @ flag_val: [flag_val],
+        default: [],
+    }),
+    required: ["android.software.media.c2-default-seccomp_policy"],
+}
+
+prebuilt_etc {
+    name: "android.software.media.c2-default-seccomp_policy",
+    vendor: true,
+    sub_dir: "seccomp_policy",
+
+    // If a specific architecture is targeted, multiple choices are not needed.
+    arch: {
+        arm: {
+            src: "seccomp_policy/android.software.media.c2-default-arm.policy",
+        },
+        arm64: {
+            src: "seccomp_policy/android.software.media.c2-default-arm64.policy",
+        },
+    },
+
+    // This may be removed.
+    required: ["crash_dump.policy"],
+}
