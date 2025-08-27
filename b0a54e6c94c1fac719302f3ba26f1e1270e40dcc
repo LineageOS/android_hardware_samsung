@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd03f608_9e70541b",
+        "filename": "aidl/codec2/Android.bp",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-27T08:40:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d811c0_005e686a",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "b0a54e6c94c1fac719302f3ba26f1e1270e40dcc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5103362_2e2f788f",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-08-26T18:17:18Z",
       "side": 1,
       "message": "```suggestion\n        \"true\": [\"-DLEGACY_COMPONENT_STORE\" ],\n```",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "b0a54e6c94c1fac719302f3ba26f1e1270e40dcc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3100f47e_96b9db94",
+        "filename": "aidl/codec2/Android.bp",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-27T08:40:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5103362_2e2f788f",
       "range": {
         "startLine": 50,
         "startChar": 8,
