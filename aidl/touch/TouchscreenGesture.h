@@ -6,8 +6,9 @@
 #pragma once
 
 #include <aidl/vendor/lineage/touch/BnTouchscreenGesture.h>
-#include <map>
 #include <samsung_touch.h>
+#include <fstream>
+#include <map>
 
 namespace aidl {
 namespace vendor {
@@ -27,6 +28,10 @@ class TouchscreenGesture : public BnTouchscreenGesture {
         const char* name;
     } GestureInfo;
     static const std::map<int32_t, GestureInfo> kGestureInfoMap;  // id -> info
+    static const std::pair<int32_t, GestureInfo> kSingleTapEntry;
+
+    bool mHasEpenGestureNode = std::ifstream(EPEN_GESTURE_NODE).good();
+    bool mHasTspCmdNode = std::ifstream(TSP_CMD_NODE).good();
 };
 
 }  // namespace touch
