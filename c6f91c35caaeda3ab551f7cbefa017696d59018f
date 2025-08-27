@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0d1a8db_f3ad2013",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-08-27T21:20:27Z",
+      "side": 1,
+      "message": "Verified on a device that supports the TSP node, but not the EPEN node.",
+      "revId": "c6f91c35caaeda3ab551f7cbefa017696d59018f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
