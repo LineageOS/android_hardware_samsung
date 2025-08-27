@@ -23,7 +23,7 @@ const std::map<int32_t, TouchscreenGesture::GestureInfo> TouchscreenGesture::kGe
 };
 
 bool TouchscreenGesture::isSupported() {
-    std::ifstream file(TOUCHSCREEN_GESTURE_NODE);
+    std::ifstream file(EPEN_GESTURE_NODE);
     return file.good();
 }
 
@@ -39,7 +39,7 @@ ndk::ScopedAStatus TouchscreenGesture::getSupportedGestures(std::vector<Gesture>
 }
 
 ndk::ScopedAStatus TouchscreenGesture::setGestureEnabled(const Gesture& gesture, bool enabled) {
-    std::fstream file(TOUCHSCREEN_GESTURE_NODE);
+    std::fstream file(EPEN_GESTURE_NODE);
     int gestureMode;
     int mask = 1 << gesture.id;
 
