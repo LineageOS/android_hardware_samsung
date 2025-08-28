@@ -34,6 +34,24 @@
       "parentUuid": "bb6aebcb_ee433a38",
       "revId": "7890bc680a70d9e585ec091f4c9a805564abf58f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "658b82e2_07b8aca3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-08-28T14:50:57Z",
+      "side": 1,
+      "message": "Missing support*",
+      "parentUuid": "d2d3be6e_2ff5eb09",
+      "revId": "7890bc680a70d9e585ec091f4c9a805564abf58f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
