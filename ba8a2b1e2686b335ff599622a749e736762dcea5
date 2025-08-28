@@ -33,6 +33,24 @@
       "message": "AIDL also looking fine but since I got qti.c2@1.0, it failed to register. Calls to AIDL componentstore seems fine though.",
       "revId": "ba8a2b1e2686b335ff599622a749e736762dcea5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a50eb8ed_9aa88b98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-28T16:38:34Z",
+      "side": 1,
+      "message": "As long as you\u0027re sure that set, create and join thread pool is not required for new devices I am fine with it.",
+      "parentUuid": "58584b42_438950a7",
+      "revId": "ba8a2b1e2686b335ff599622a749e736762dcea5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
