@@ -6,6 +6,7 @@
 #define LOG_TAG "vendor.lineage.touch-service.samsung"
 
 #include "GloveMode.h"
+#include "HighTouchPollingRate.h"
 #include "KeyDisabler.h"
 #include "StylusMode.h"
 #include "TouchscreenGesture.h"
@@ -15,6 +16,7 @@
 #include <android/binder_process.h>
 
 using aidl::vendor::lineage::touch::GloveMode;
+using aidl::vendor::lineage::touch::HighTouchPollingRate;
 using aidl::vendor::lineage::touch::KeyDisabler;
 using aidl::vendor::lineage::touch::StylusMode;
 using aidl::vendor::lineage::touch::TouchscreenGesture;
@@ -29,6 +31,13 @@ int main() {
         const std::string gm_instance = std::string(GloveMode::descriptor) + "/default";
         status = AServiceManager_addService(gm->asBinder().get(), gm_instance.c_str());
         CHECK_EQ(status, STATUS_OK) << "Failed to add service " << gm_instance << " " << status;
+    }
+
+    std::shared_ptr<HighTouchPollingRate> htpr = ndk::SharedRefBase::make<HighTouchPollingRate>();
+    if (htpr->isSupported()) {
+        const std::string htpr_instance = std::string(HighTouchPollingRate::descriptor) + "/default";
+        status = AServiceManager_addService(htpr->asBinder().get(), htpr_instance.c_str());
+        CHECK_EQ(status, STATUS_OK) << "Failed to add service " << htpr_instance << " " << status;
     }
 
     std::shared_ptr<KeyDisabler> kd = ndk::SharedRefBase::make<KeyDisabler>();
