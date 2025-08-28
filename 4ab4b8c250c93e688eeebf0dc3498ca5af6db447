@@ -51,6 +51,24 @@
       "parentUuid": "86c03c62_586fb54d",
       "revId": "4ab4b8c250c93e688eeebf0dc3498ca5af6db447",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4059c65_abffbfc9",
+        "filename": "aidl/touch/TouchscreenGesture.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-28T19:51:13Z",
+      "side": 1,
+      "message": "Will check at a later stage.",
+      "parentUuid": "3f2db6d2_fcad0365",
+      "revId": "4ab4b8c250c93e688eeebf0dc3498ca5af6db447",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
