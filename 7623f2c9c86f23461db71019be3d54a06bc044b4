@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7b0f2b1_ec715ff3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-28T19:27:07Z",
+      "side": 1,
+      "message": "Let\u0027s merge into 22.2 first. Quite a few devices can start using this now.",
+      "revId": "7623f2c9c86f23461db71019be3d54a06bc044b4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
