@@ -51,6 +51,23 @@
       "parentUuid": "58584b42_438950a7",
       "revId": "ba8a2b1e2686b335ff599622a749e736762dcea5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a92635a4_90147c1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-08-28T16:43:54Z",
+      "side": 1,
+      "message": "I\u0027m sure. pa1q binary doesn\u0027t show any joinRpcThreadpool with strings while dm1q (legacy) does.",
+      "revId": "ba8a2b1e2686b335ff599622a749e736762dcea5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
