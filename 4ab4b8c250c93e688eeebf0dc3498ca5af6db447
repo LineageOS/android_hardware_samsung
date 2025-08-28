@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fa9090f_1656f85f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-08-28T13:59:00Z",
+      "side": 1,
+      "message": "@bgcngm@gmail.com The compilation broke after this\nhttps://review.lineageos.org/c/LineageOS/android_hardware_samsung/+/445841/2..3/aidl/touch/TouchscreenGesture.cpp",
+      "revId": "4ab4b8c250c93e688eeebf0dc3498ca5af6db447",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86c03c62_586fb54d",
