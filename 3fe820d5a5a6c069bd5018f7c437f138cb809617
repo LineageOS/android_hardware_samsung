@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06a9a0f4_8adf3567",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-08-28T15:38:02Z",
+      "side": 1,
+      "message": "This change does not have support for the set_scan_rate SEC TSP command, which is used by devices like the S20-S22 Series (non-FE), although newer ones might do as well. Current set_game_mode CMD is for devices with a melfas touchscreen like the S20 FE (r8s/r8q).",
+      "revId": "3fe820d5a5a6c069bd5018f7c437f138cb809617",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
