@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfa010b3_fcb49486",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2025-08-31T07:44:37Z",
+      "side": 1,
+      "message": "Doesn\u0027t this remove the use for mHasTspCmdNode?",
+      "revId": "c0be10782f03296f3364b5e0a6d646ffefbaeacb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
