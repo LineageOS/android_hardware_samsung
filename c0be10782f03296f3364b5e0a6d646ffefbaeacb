@@ -87,6 +87,24 @@
       "parentUuid": "c77e3de5_985649dc",
       "revId": "c0be10782f03296f3364b5e0a6d646ffefbaeacb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0dbdade_dce62e56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-08-31T13:25:55Z",
+      "side": 1,
+      "message": "Yeah. I\u0027d make it only check for singletap being supported if the node exists.",
+      "parentUuid": "c77e3de5_985649dc",
+      "revId": "c0be10782f03296f3364b5e0a6d646ffefbaeacb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
