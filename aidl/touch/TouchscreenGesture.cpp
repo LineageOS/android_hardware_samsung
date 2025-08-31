@@ -28,7 +28,19 @@ const std::pair<int32_t, TouchscreenGesture::GestureInfo> TouchscreenGesture::kS
 int32_t count = 0;
 
 bool TouchscreenGesture::isSupported() {
-    return mHasEpenGestureNode || mHasTspCmdNode;
+    std::ifstream file(TSP_CMD_LIST_NODE);
+    if (file.is_open()) {
+        std::string line;
+        while (getline(file, line)) {
+            if (!line.compare("singletap_enable")) {
+                mIsTspCmdSupported = true;
+                break;
+            }
+        }
+        file.close();
+    }
+
+    return mHasEpenGestureNode || mIsTspCmdSupported;
 }
 
 ndk::ScopedAStatus TouchscreenGesture::getSupportedGestures(std::vector<Gesture>* _aidl_return) {
@@ -40,7 +52,7 @@ ndk::ScopedAStatus TouchscreenGesture::getSupportedGestures(std::vector<Gesture>
             count++;
         }
     }
-    if (mHasTspCmdNode) {
+    if (mIsTspCmdSupported) {
         gestures.push_back({count, kSingleTapEntry.second.name, kSingleTapEntry.second.keycode});
     }
 
@@ -49,7 +61,7 @@ ndk::ScopedAStatus TouchscreenGesture::getSupportedGestures(std::vector<Gesture>
 }
 
 ndk::ScopedAStatus TouchscreenGesture::setGestureEnabled(const Gesture& gesture, bool enabled) {
-    if (mHasTspCmdNode && (gesture.id == count)) {
+    if (mIsTspCmdSupported && (gesture.id == count)) {
         std::fstream file(TSP_CMD_NODE);
         file << "singletap_enable," << (enabled ? "1" : "0");
     } else {

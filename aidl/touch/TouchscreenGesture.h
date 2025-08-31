@@ -31,7 +31,7 @@ class TouchscreenGesture : public BnTouchscreenGesture {
     static const std::pair<int32_t, GestureInfo> kSingleTapEntry;
 
     bool mHasEpenGestureNode = std::ifstream(EPEN_GESTURE_NODE).good();
-    bool mHasTspCmdNode = std::ifstream(TSP_CMD_NODE).good();
+    bool mIsTspCmdSupported = false;
 };
 
 }  // namespace touch
