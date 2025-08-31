@@ -140,6 +140,24 @@
       "message": "If mHasTspCmdNode check for singletap and set if supported, then return mHasEpenGestureNode || mIsTspCmdSupported",
       "revId": "c0be10782f03296f3364b5e0a6d646ffefbaeacb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8e175a0_c43153be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-31T13:42:52Z",
+      "side": 1,
+      "message": "TSP_CMD_NODE can be opened, but cmd (listed in TSP_CMD_LIST_NODE) not supported.",
+      "parentUuid": "c3f6260b_cf580090",
+      "revId": "c0be10782f03296f3364b5e0a6d646ffefbaeacb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
