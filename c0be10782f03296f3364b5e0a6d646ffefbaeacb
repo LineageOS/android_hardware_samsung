@@ -105,6 +105,24 @@
       "parentUuid": "c77e3de5_985649dc",
       "revId": "c0be10782f03296f3364b5e0a6d646ffefbaeacb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3f6260b_cf580090",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2025-08-31T13:26:46Z",
+      "side": 1,
+      "message": "No, the same exact node is opened to check for singletap. If it can\u0027t be opened, it can\u0027t be supported.",
+      "parentUuid": "7719cd2b_413950bd",
+      "revId": "c0be10782f03296f3364b5e0a6d646ffefbaeacb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
