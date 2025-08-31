@@ -32,6 +32,7 @@ class TouchscreenGesture : public BnTouchscreenGesture {
 
     bool mHasEpenGestureNode = std::ifstream(EPEN_GESTURE_NODE).good();
     bool mHasTspCmdNode = std::ifstream(TSP_CMD_NODE).good();
+    bool mIsTspCmdSupported = false;
 };
 
 }  // namespace touch
