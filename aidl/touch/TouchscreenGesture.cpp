@@ -28,7 +28,15 @@ const std::pair<int32_t, TouchscreenGesture::GestureInfo> TouchscreenGesture::kS
 int32_t count = 0;
 
 bool TouchscreenGesture::isSupported() {
-    return mHasEpenGestureNode || mHasTspCmdNode;
+    std::ifstream file(TSP_CMD_LIST_NODE);
+    if (file.is_open()) {
+        std::string line;
+        while (getline(file, line)) {
+            if (!line.compare("singletap_enable")) return true;
+        }
+        file.close();
+    }
+    return mHasEpenGestureNode;
 }
 
 ndk::ScopedAStatus TouchscreenGesture::getSupportedGestures(std::vector<Gesture>* _aidl_return) {
