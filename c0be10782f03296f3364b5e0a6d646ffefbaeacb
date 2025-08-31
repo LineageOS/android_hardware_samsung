@@ -123,6 +123,23 @@
       "parentUuid": "7719cd2b_413950bd",
       "revId": "c0be10782f03296f3364b5e0a6d646ffefbaeacb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e96fed7_37ab4107",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-08-31T13:27:19Z",
+      "side": 1,
+      "message": "If mHasTspCmdNode check for singletap and set if supported, then return mHasEpenGestureNode || mIsTspCmdSupported",
+      "revId": "c0be10782f03296f3364b5e0a6d646ffefbaeacb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
