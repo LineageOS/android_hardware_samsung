@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c18492d5_ce1b1b0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-08-31T00:25:30Z",
+      "side": 1,
+      "message": "Fixes wrong detection on devices without single tap support.",
+      "revId": "09c5d6d5ba20fcccb69108254e9b946f327ae8fd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
