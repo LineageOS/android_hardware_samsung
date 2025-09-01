@@ -34,6 +34,24 @@
       "parentUuid": "f18ed3d9_1eded615",
       "revId": "e596e677e04e413879c6bbcf5226bf39166b346a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c17f21ca_8694c44f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-09-01T10:55:22Z",
+      "side": 1,
+      "message": "IDisplayColorCalibration, IDisplayModes, IReadingEnhancement, ISunlightEnhancement",
+      "parentUuid": "e89593d8_6f2aa056",
+      "revId": "e596e677e04e413879c6bbcf5226bf39166b346a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
