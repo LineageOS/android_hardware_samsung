@@ -28,6 +28,10 @@ cc_defaults {
     static_libs: [
         "libhealth_aidl_impl",
     ],
+    cflags: select(soong_config_variable("samsungHealthVars", "disable_suspend"), {
+        true: ["-DCHARGER_ENABLE_SUSPEND=true"],
+        default: ["-DCHARGER_ENABLE_SUSPEND=false"],
+    }),
 }
 
 cc_binary {
