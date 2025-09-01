@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad4ca7f2_f9a440c1",
+        "filename": "aidl/health/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-09-01T10:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c36c954c_e35cb05a",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 7
+      },
+      "revId": "d6ad1174ad21084555cc03a213adeec4614c5a6c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a99cfed0_baed9f2b",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-09-01T10:15:39Z",
       "side": 1,
       "message": "```suggestion\n      return CHARGER_ENABLE_SUSPEND;\n```",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 6
+      },
+      "revId": "d6ad1174ad21084555cc03a213adeec4614c5a6c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7cee03c_3396f1eb",
+        "filename": "aidl/health/Health.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-09-01T10:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a99cfed0_baed9f2b",
       "range": {
         "startLine": 48,
         "startChar": 0,
