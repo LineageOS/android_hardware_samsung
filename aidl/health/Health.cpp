@@ -44,7 +44,9 @@ namespace aidl::android::hardware::health {
 class ChargerCallbackImpl : public ChargerCallback {
 public:
     using ChargerCallback::ChargerCallback;
-    bool ChargerEnableSuspend() override { return true; }
+    bool ChargerEnableSuspend() override {
+      return CHARGER_ENABLE_SUSPEND;
+  }
 };
 } // namespace aidl::android::hardware::health
 #endif
