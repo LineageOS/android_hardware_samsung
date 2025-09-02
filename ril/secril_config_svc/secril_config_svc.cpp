@@ -63,9 +63,9 @@ int main(int argc, char *argv[]) {
         LoadProperties(content.c_str());
     } else if (android::base::EndsWith(prop, FACTORY_PROP)) {
         LOG(WARNING) << "Could not read " << prop << ", setting defaults!";
-        LoadProperties("ro.multisim.simslotcount=1");
-        LoadProperties("ro.vendor.multisim.simslotcount=1");
-        LoadProperties("persist.radio.multisim.config=ss");
+        android::base::SetProperty("ro.multisim.simslotcount", "1");
+        android::base::SetProperty("ro.vendor.multisim.simslotcount", "1");
+        android::base::SetProperty("persist.radio.multisim.config", "ss");
     } else {
         LOG(WARNING) << "Could not read " << prop << "!";
     }
