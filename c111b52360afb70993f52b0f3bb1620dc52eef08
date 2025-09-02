@@ -106,6 +106,24 @@
       "parentUuid": "d97acd7e_7cbea088",
       "revId": "c111b52360afb70993f52b0f3bb1620dc52eef08",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eba88aae_dd591d62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-09-02T21:30:17Z",
+      "side": 1,
+      "message": "Why though? Exynos can make use of this as well.",
+      "parentUuid": "542792c9_8648b195",
+      "revId": "c111b52360afb70993f52b0f3bb1620dc52eef08",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
