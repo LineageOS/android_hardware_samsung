@@ -34,6 +34,24 @@
       "parentUuid": "e69bfe94_3355651e",
       "revId": "c111b52360afb70993f52b0f3bb1620dc52eef08",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "522c9d61_6c2517f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-09-02T21:19:43Z",
+      "side": 1,
+      "message": "Okay, this works. Should be added into sepolicy then.\nhttps://pastebin.com/GsTQTRgX",
+      "parentUuid": "4758f5e7_b278dc8d",
+      "revId": "c111b52360afb70993f52b0f3bb1620dc52eef08",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
