@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e69bfe94_3355651e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-09-02T21:14:23Z",
+      "side": 1,
+      "message": "Dysfunctional on my x1s, actually even worse than before the fix. It seems that the properties aren\u0027t being set at all with the new SetProperty method. Weirdly enough, Ion\u0027t see anything in logs about this.",
+      "revId": "c111b52360afb70993f52b0f3bb1620dc52eef08",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
