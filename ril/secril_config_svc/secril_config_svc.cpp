@@ -74,4 +74,10 @@ int main(int argc, char *argv[]) {
     if (!content.empty()) {
         android::base::SetProperty("ro.telephony.sim_slots.count", content);
     }
+
+    content = android::base::GetProperty("persist.radio.def_network", "");
+    std::string val = android::base::GetProperty("ro.vendor.radio.default_network", "");
+    if (!content.empty() && val.empty()) {
+        android::base::SetProperty("ro.vendor.radio.default_network", content);
+    }
 }
