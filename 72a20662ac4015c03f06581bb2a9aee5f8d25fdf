@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf923bf4_e4e2d9cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35835
+      },
+      "writtenOn": "2025-09-03T14:22:30Z",
+      "side": 1,
+      "message": "Tested on a53x, works correctly (5g is in settings)",
+      "revId": "72a20662ac4015c03f06581bb2a9aee5f8d25fdf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
