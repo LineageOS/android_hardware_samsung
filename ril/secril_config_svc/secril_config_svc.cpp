@@ -43,10 +43,9 @@ void LoadProperties(std::string data) {
 }
 
 int main(int argc, char *argv[]) {
-    std::string prop = FACTORY_PROP;
+    bool isNetworkConfig = (argc > 1 && std::string(argv[1]) == "NetworkConfig");
 
-    if (argc > 1 && std::string(argv[1]) == "NetworkConfig")
-        prop = TELEPHONY_PROP;
+    std::string prop = isNetworkConfig ? TELEPHONY_PROP : FACTORY_PROP;
 
     std::ifstream in(EFS_NEW + prop);
     if (in.good()) {
@@ -61,7 +60,7 @@ int main(int argc, char *argv[]) {
     std::string content;
     if (android::base::ReadFileToString(prop, &content)) {
         LoadProperties(content.c_str());
-    } else if (android::base::EndsWith(prop, FACTORY_PROP)) {
+    } else if (!isNetworkConfig) {
         LOG(WARNING) << "Could not read " << prop << ", setting defaults!";
         android::base::SetProperty("ro.multisim.simslotcount", "1");
         android::base::SetProperty("ro.vendor.multisim.simslotcount", "1");
@@ -70,13 +69,15 @@ int main(int argc, char *argv[]) {
         LOG(WARNING) << "Could not read " << prop << "!";
     }
 
-    content = android::base::GetProperty("ro.multisim.simslotcount", "");
-    if (!content.empty()) {
-        android::base::SetProperty("ro.telephony.sim_slots.count", content);
-    }
-
-    content = android::base::GetProperty("persist.radio.def_network", "");
-    if (!content.empty()) {
-        android::base::SetProperty("ro.vendor.radio.default_network", content);
+    if (isNetworkConfig) {
+        content = android::base::GetProperty("persist.radio.def_network", "");
+        if (!content.empty()) {
+            android::base::SetProperty("ro.vendor.radio.default_network", content);
+        }
+    } else {
+        content = android::base::GetProperty("ro.multisim.simslotcount", "");
+        if (!content.empty()) {
+            android::base::SetProperty("ro.telephony.sim_slots.count", content);
+        }
     }
 }
