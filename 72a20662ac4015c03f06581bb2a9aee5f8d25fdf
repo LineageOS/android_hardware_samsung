@@ -69,6 +69,24 @@
       "parentUuid": "aa97f6ca_9ffe410f",
       "revId": "72a20662ac4015c03f06581bb2a9aee5f8d25fdf",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b452009_cc789978",
+        "filename": "ril/secril_config_svc/secril_config_svc.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-09-04T20:34:32Z",
+      "side": 1,
+      "message": "Oh yeah, my bad. Well I guess there are no official devices that set it then.",
+      "parentUuid": "9b05c02e_28c451a4",
+      "revId": "72a20662ac4015c03f06581bb2a9aee5f8d25fdf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
