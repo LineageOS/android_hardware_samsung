@@ -27,7 +27,7 @@ cc_binary {
 // legacy_default0 -> For devices that already have a c2@1.0 service in their vendor (QTI c2, Samsung hardware c2 etc.)
 // legacy_default -> For devices without a c2 service in their vendor
 //
-    vintf_fragments: select(soong_config_variable("SamsungCodec2Vars", "c2_instance_type"), {
+    vintf_fragments: select(soong_config_variable("samsungCodec2Vars", "c2_instance_type"), {
         any @ fragment: ["samsung_media_c2_" + fragment + ".xml"],
         default: ["samsung_media_c2_default.xml"],
     }),
@@ -46,12 +46,12 @@ cc_binary {
         "libavservices_minijail",
         "libbinder",
         "libbinder_ndk",
-    ] + select(soong_config_variable("SamsungCodec2Vars", "target_componentstore_library"), {
+    ] + select(soong_config_variable("samsungCodec2Vars", "target_componentstore_library"), {
         any @ flag_val: [flag_val],
         default: [],
     }),
 
-    cflags: select(soong_config_variable("SamsungCodec2Vars", "uses_legacy_component_store"), {
+    cflags: select(soong_config_variable("samsungCodec2Vars", "uses_legacy_component_store"), {
         "true": ["-DLEGACY_COMPONENT_STORE" ],
         default: [],
     }),
