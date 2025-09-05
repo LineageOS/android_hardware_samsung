@@ -22,6 +22,30 @@
       },
       "revId": "239608f347c7c01856c0b64231e540f83068dda0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "693bf3f8_ef1dd020",
+        "filename": "ril/secril_config_svc/secril_config_svc.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-09-05T13:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1c922ab_3f681930",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 9
+      },
+      "revId": "239608f347c7c01856c0b64231e540f83068dda0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
