@@ -42,6 +42,29 @@ void LoadProperties(std::string data) {
     }
 }
 
+std::string ReadProperty(const std::string& prop_file, const std::string& property) {
+    std::ifstream in(prop_file);
+    if (!in.is_open()) {
+        LOG(INFO) << "Cannot open file: " << prop_file;
+        return "";
+    }
+
+    std::string line;
+    while (std::getline(in, line)) {
+        if (line.empty() || line[0] == '#') continue;
+        auto pos = line.find('=');
+        if (pos == std::string::npos) continue;
+
+        std::string key = android::base::Trim(line.substr(0, pos));
+        std::string val = android::base::Trim(line.substr(pos + 1));
+        if (key == property) {
+            return val;
+        }
+    }
+
+    return "";
+}
+
 int main(int argc, char *argv[]) {
     bool isNetworkConfig = (argc > 1 && std::string(argv[1]) == "NetworkConfig");
 
@@ -70,12 +93,12 @@ int main(int argc, char *argv[]) {
     }
 
     if (isNetworkConfig) {
-        content = android::base::GetProperty("persist.radio.def_network", "");
+        content = ReadProperty(prop, "persist.radio.def_network");
         if (!content.empty()) {
             android::base::SetProperty("ro.vendor.radio.default_network", content);
         }
     } else {
-        content = android::base::GetProperty("ro.multisim.simslotcount", "");
+        content = ReadProperty(prop, "ro.multisim.simslotcount");
         if (!content.empty()) {
             android::base::SetProperty("ro.telephony.sim_slots.count", content);
         }
