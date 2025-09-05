@@ -1,0 +1,2 @@
+on property:ro.vendor.radio.multisim.simslotcount=*
+    setprop ro.telephony.sim_slots.count ${ro.vendor.radio.multisim.simslotcount}
