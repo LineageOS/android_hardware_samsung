@@ -22,20 +22,21 @@
 #include <android-base/strings.h>
 
 #include <fstream>
+#include <map>
 
 #define EFS_OLD "/efs/"
 #define EFS_NEW "/mnt/vendor/efs/"
 #define FACTORY_PROP "factory.prop"
 #define TELEPHONY_PROP "telephony.prop"
 
-void LoadProperties(std::string data) {
+void LoadProperties(std::string data, std::map<std::string, std::string>& properties) {
     for (std::string line : android::base::Split(data, "\n")) {
         if (line == "\0") break;
 
         std::vector<std::string> parts = android::base::Split(line, "=");
         if (parts.size() == 2) {
-            LOG(INFO) << "Setting property: " << line;
-            android::base::SetProperty(parts.at(0), parts.at(1));
+            LOG(INFO) << "Loading property: " << line;
+            properties[parts.at(0)] = parts.at(1);
         } else {
             LOG(ERROR) << "Invalid data: " << line;
         }
@@ -58,26 +59,30 @@ int main(int argc, char *argv[]) {
     LOG(INFO) << "Loading properties from " << prop;
 
     std::string content;
+    std::map<std::string, std::string> properties;
     if (android::base::ReadFileToString(prop, &content)) {
-        LoadProperties(content.c_str());
+        LoadProperties(content.c_str(), properties);
     } else if (!isNetworkConfig) {
         LOG(WARNING) << "Could not read " << prop << ", setting defaults!";
-        android::base::SetProperty("ro.multisim.simslotcount", "1");
-        android::base::SetProperty("ro.vendor.multisim.simslotcount", "1");
-        android::base::SetProperty("persist.radio.multisim.config", "ss");
+        properties["ro.multisim.simslotcount"] = "1";
     } else {
         LOG(WARNING) << "Could not read " << prop << "!";
     }
 
     if (isNetworkConfig) {
-        content = android::base::GetProperty("persist.radio.def_network", "");
+        content = properties["persist.radio.def_network"];
         if (!content.empty()) {
+            android::base::SetProperty("persist.radio.def_network", content);
             android::base::SetProperty("ro.vendor.radio.default_network", content);
         }
     } else {
-        content = android::base::GetProperty("ro.multisim.simslotcount", "");
+        content = properties["ro.multisim.simslotcount"];
         if (!content.empty()) {
+            std::string simconfig = content == "2" ? "dsds" : "ss";
+
+            android::base::SetProperty("persist.radio.multisim.config", simconfig);
             android::base::SetProperty("ro.telephony.sim_slots.count", content);
+            android::base::SetProperty("ro.vendor.multisim.simslotcount", content);
         }
     }
 }
