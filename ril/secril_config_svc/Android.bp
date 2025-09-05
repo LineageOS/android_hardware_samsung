@@ -16,6 +16,7 @@
 
 cc_binary {
     name: "secril_config_svc",
+    init_rc: ["secril_config_svc.rc"],
     vendor: true,
     srcs: ["secril_config_svc.cpp"],
     shared_libs: [
