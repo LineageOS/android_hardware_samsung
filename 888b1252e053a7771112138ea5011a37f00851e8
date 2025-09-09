@@ -3,6 +3,29 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "207a9288_27856bc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-09-09T15:32:10Z",
+      "side": 1,
+      "message": "This is true, indeed.",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 44
+      },
+      "revId": "888b1252e053a7771112138ea5011a37f00851e8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b6044b26_d9f3ab8f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
