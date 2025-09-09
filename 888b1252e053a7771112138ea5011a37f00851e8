@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6044b26_d9f3ab8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25925
+      },
+      "writtenOn": "2025-09-09T15:14:52Z",
+      "side": 1,
+      "message": "Additional information: While I could verify the original issue on gta4xlswifi (s5e8825) on 22.2, I couldn\u0027t reproduce it on 23.0 while not having this soong config set on either branch.",
+      "revId": "888b1252e053a7771112138ea5011a37f00851e8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
