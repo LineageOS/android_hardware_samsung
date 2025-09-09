@@ -278,7 +278,7 @@ Status UsbGadget::setupFunctions(long functions,
     if ((functions == GadgetFunction::ADB) || ((functions & GadgetFunction::MTP) != 0)) {
         ALOGI("setCurrentUsbFunctions mass_storage");
         if (linkFunction("mass_storage.0", i++))
-            ALOGW("%s: Failed to link mass_storage", __FUNCTION__);
+            return Status::ERROR;
     }
 
     // Pull up the gadget right away when there are no ffs functions.
