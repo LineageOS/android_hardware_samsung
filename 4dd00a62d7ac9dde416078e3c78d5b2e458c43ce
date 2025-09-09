@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5d2f768_078276a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-09-09T15:29:36Z",
+      "side": 1,
+      "message": "I found this harmless, but if you prefer to revert it, fine by me.",
+      "revId": "4dd00a62d7ac9dde416078e3c78d5b2e458c43ce",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
