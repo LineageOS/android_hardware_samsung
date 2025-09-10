@@ -113,26 +113,37 @@ ndk::ScopedAStatus Fingerprint::getSensorProps(std::vector<SensorProps>* out) {
     common::CommonProps commonProps = {SENSOR_ID, SENSOR_STRENGTH,
                                        mMaxEnrollmentsPerUser, componentInfo};
 
-    SensorLocation sensorLocation;
+    std::vector<SensorLocation> sensorLocations;
     std::string loc = FingerprintHalProperties::sensor_location().value_or("");
-    std::vector<std::string> dim = Split(loc, "|");
-    if (dim.size() >= 3 && dim.size() <= 4) {
-        ParseInt(dim[0], &sensorLocation.sensorLocationX);
-        ParseInt(dim[1], &sensorLocation.sensorLocationY);
-        ParseInt(dim[2], &sensorLocation.sensorRadius);
+    std::vector<std::string> sensors = Split(loc, ";");
 
-        if (dim.size() >= 4)
-            sensorLocation.display = dim[3];
-    } else if(loc.length() > 0) {
-        LOG(WARNING) << "Invalid sensor location input (x|y|radius|display): " << loc;
+    for (const auto& sensor : sensors) {
+        std::vector<std::string> dim = Split(sensor, "|");
+        if (dim.size() >= 3 && dim.size() <= 4) {
+            SensorLocation sensorLocation;
+            ParseInt(dim[0], &sensorLocation.sensorLocationX);
+            ParseInt(dim[1], &sensorLocation.sensorLocationY);
+            ParseInt(dim[2], &sensorLocation.sensorRadius);
+
+            if (dim.size() == 4) {
+                sensorLocation.display = dim[3];
+            }
+
+            sensorLocations.push_back(sensorLocation);
+        } else if (!sensor.empty()) {
+            LOG(WARNING) << "Invalid sensor location input (x|y|radius|display): " << sensor;
+        }
     }
 
     LOG(INFO) << "Sensor type: " << ::android::internal::ToString(mSensorType)
-              << " location: " << sensorLocation.toString();
+              << " locations:";
+    for (const auto& sensorLocation : sensorLocations) {
+        LOG(INFO) << sensorLocation.toString();
+    }
 
     *out = {{commonProps,
              mSensorType,
-             {sensorLocation},
+             sensorLocations,
              mSupportsGestures,
              false,
              false,
