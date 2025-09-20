@@ -50,6 +50,23 @@
       "message": "exynos9820 uses ultrasonic udfps so no updates required here either.",
       "revId": "6ebc6c4e66c1e4c0f3ab6cee233ba720bbde9aa0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a21566f_295b4818",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2025-09-20T12:46:55Z",
+      "side": 1,
+      "message": "Done for my devices",
+      "revId": "6ebc6c4e66c1e4c0f3ab6cee233ba720bbde9aa0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
