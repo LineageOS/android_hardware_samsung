@@ -22,6 +22,7 @@
     <string name="mdnie_scenario_title_head">תרחיש</string>
     <string name="mdnie_scenario_summary_head">הגדר תרחיש mDNIe</string>
     <string name="mdnie_accessibility_title_head">מצב נגישות</string>
+    <string name="mdnie_accessibility_summary_head">הגדרת מצב הנגישות mDNIe</string>
     <string name="mdnie_scenario_ui">LineageOS (ברירת מחדל)</string>
     <string name="mdnie_scenario_video">וידאו</string>
     <string name="mdnie_scenario_video_warm">וידאו חם</string>
@@ -37,4 +38,7 @@
     <string name="mdnie_accessibility_normal">רגיל</string>
     <string name="mdnie_accessibility_inverse">הפוך</string>
     <string name="mdnie_accessibility_color_blind">עיוור צבעים</string>
+    <string name="mdnie_accessibility_screen_curtain">וילון מסך</string>
+    <string name="mdnie_accessibility_grayscale">אפור</string>
+    <string name="mdnie_accessibility_gray_negative">אפור הפוך</string>
 </resources>
