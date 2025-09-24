@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">הפעלת Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">חווית אודיו מדהימה לניגון מדיה שזורמת מעליך ומסביבך</string>
+    <string name="dolby_profile_auto">אוטומטי</string>
+    <string name="dolby_profile_game">משחק</string>
+    <string name="dolby_profile_game_1">משחק 1</string>
+    <string name="dolby_profile_game_2">משחק 2</string>
+    <string name="dolby_profile_movie">סרט</string>
+    <string name="dolby_profile_music">מוזיקה</string>
+    <string name="dolby_profile_off">אין פרופיל</string>
+    <string name="dolby_profile_spacial_audio">שמע מרחבי</string>
+    <string name="dolby_profile_voice">קול</string>
+</resources>
