@@ -9,10 +9,10 @@ cc_library_static {
     srcs: ["UdfpsExtension.cpp"],
     cflags: select(soong_config_variable("samsungUdfpsVars", "dim_layer_zorder"), {
         any @ dim_layer_zorder: ["-DUDFPS_DIM_LAYER_ZORDER=" + dim_layer_zorder],
-        default: [],
+        default: ["-DUDFPS_DIM_LAYER_ZORDER=0"],
     }) + select(soong_config_variable("samsungUdfpsVars", "udfps_zorder"), {
         any @ zorder: ["-DUDFPS_PRESSED_LAYER_ZORDER=" + zorder],
-        default: [],
+        default: ["-DUDFPS_PRESSED_LAYER_ZORDER=0"],
     }),
     include_dirs: [
         "frameworks/native/services/surfaceflinger/CompositionEngine/include",
