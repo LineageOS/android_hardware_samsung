@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "Fingerprint.h"
 #include "LockoutTracker.h"
+#include "Fingerprint.h"
 
 #include <util/Util.h>
 
@@ -57,8 +57,8 @@ int64_t LockoutTracker::getLockoutTimeLeft() {
     return res;
 }
 
-} // namespace fingerprint
-} // namespace biometrics
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace fingerprint
+}  // namespace biometrics
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl

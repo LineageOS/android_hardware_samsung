@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "Session.h"
 #include "CancellationSignal.h"
 #include "Legacy2Aidl.h"
-#include "Session.h"
 #include "VendorConstants.h"
 
 #include <fingerprint.sysprop.h>
@@ -36,10 +36,7 @@ void onClientDeath(void* cookie) {
 
 Session::Session(LegacyHAL hal, int userId, std::shared_ptr<ISessionCallback> cb,
                  LockoutTracker lockoutTracker)
-    : mHal(hal),
-      mLockoutTracker(lockoutTracker),
-      mUserId(userId),
-      mCb(cb) {
+    : mHal(hal), mLockoutTracker(lockoutTracker), mUserId(userId), mCb(cb) {
     mDeathRecipient = AIBinder_DeathRecipient_new(onClientDeath);
 
     char filename[64];
@@ -198,8 +195,8 @@ ndk::ScopedAStatus Session::close() {
     return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t /*x*/, int32_t /*y*/, float /*minor*/,
-                                          float /*major*/) {
+ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t /*x*/, int32_t /*y*/,
+                                          float /*minor*/, float /*major*/) {
     LOG(INFO) << "onPointerDown";
 
     if (FingerprintHalProperties::request_touch_event().value_or(false)) {
@@ -228,9 +225,9 @@ ndk::ScopedAStatus Session::onUiReady() {
     return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Session::authenticateWithContext(
-        int64_t operationId, const OperationContext& /*context*/,
-        std::shared_ptr<ICancellationSignal>* out) {
+ndk::ScopedAStatus Session::authenticateWithContext(int64_t operationId,
+                                                    const OperationContext& /*context*/,
+                                                    std::shared_ptr<ICancellationSignal>* out) {
     return authenticate(operationId, out);
 }
 
@@ -240,8 +237,8 @@ ndk::ScopedAStatus Session::enrollWithContext(const HardwareAuthToken& hat,
     return enroll(hat, out);
 }
 
-ndk::ScopedAStatus Session::detectInteractionWithContext(const OperationContext& /*context*/,
-                                              std::shared_ptr<ICancellationSignal>* out) {
+ndk::ScopedAStatus Session::detectInteractionWithContext(
+        const OperationContext& /*context*/, std::shared_ptr<ICancellationSignal>* out) {
     return detectInteraction(out);
 }
 
@@ -371,8 +368,7 @@ void Session::clearLockout(bool clearAttemptCounter) {
 
 void Session::startLockoutTimer(int64_t timeout) {
     mIsLockoutTimerAborted = false;
-    std::function<void()> action =
-            std::bind(&Session::lockoutTimerExpired, this);
+    std::function<void()> action = std::bind(&Session::lockoutTimerExpired, this);
     std::thread([timeout, action]() {
         std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
         action();
@@ -401,14 +397,14 @@ void Session::notify(const fingerprint_msg_t* msg) {
         case FINGERPRINT_ACQUIRED: {
             int32_t vendorCode = 0;
             AcquiredInfo result =
-                VendorAcquiredFilter(msg->data.acquired.acquired_info, &vendorCode);
+                    VendorAcquiredFilter(msg->data.acquired.acquired_info, &vendorCode);
             LOG(DEBUG) << "onAcquired(" << static_cast<int>(result) << ")";
             mCb->onAcquired(result, vendorCode);
         } break;
         case FINGERPRINT_TEMPLATE_ENROLLING:
             if (FingerprintHalProperties::uses_percentage_samples().value_or(false)) {
                 const_cast<fingerprint_msg_t*>(msg)->data.enroll.samples_remaining =
-                    100 - msg->data.enroll.samples_remaining;
+                        100 - msg->data.enroll.samples_remaining;
             }
             if (FingerprintHalProperties::cancel_on_enroll_completion().value_or(false)) {
                 if (msg->data.enroll.samples_remaining == 0) {
@@ -463,8 +459,8 @@ void Session::onCaptureReady() {
     mCaptureReady = true;
 }
 
-} // namespace fingerprint
-} // namespace biometrics
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace fingerprint
+}  // namespace biometrics
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl
