@@ -23,16 +23,16 @@ namespace biometrics {
 namespace fingerprint {
 
 class Fingerprint : public BnFingerprint {
-public:
+  public:
     Fingerprint();
     ndk::ScopedAStatus getSensorProps(std::vector<SensorProps>* _aidl_return) override;
     ndk::ScopedAStatus createSession(int32_t sensorId, int32_t userId,
                                      const std::shared_ptr<ISessionCallback>& cb,
                                      std::shared_ptr<ISession>* out) override;
 
-private:
+  private:
     static void notify(
-        const fingerprint_msg_t* msg); /* Static callback for legacy HAL implementation */
+            const fingerprint_msg_t* msg); /* Static callback for legacy HAL implementation */
     void handleEvent(int eventCode);
 
     LegacyHAL mHal;
@@ -45,8 +45,8 @@ private:
     std::shared_ptr<Session> mSession;
 };
 
-} // namespace fingerprint
-} // namespace biometrics
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace fingerprint
+}  // namespace biometrics
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl
