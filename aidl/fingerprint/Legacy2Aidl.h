@@ -36,15 +36,13 @@ inline void translate(const hw_auth_token_t& hat, HardwareAuthToken& authToken) 
     authToken.authenticatorId = hat.authenticator_id;
     // these are in network order: translate to host
     authToken.authenticatorType =
-            static_cast<keymaster::HardwareAuthenticatorType>(
-                    be32toh(hat.authenticator_type));
+            static_cast<keymaster::HardwareAuthenticatorType>(be32toh(hat.authenticator_type));
     authToken.timestamp.milliSeconds = be64toh(hat.timestamp);
-    authToken.mac.insert(authToken.mac.begin(), std::begin(hat.hmac),
-                         std::end(hat.hmac));
+    authToken.mac.insert(authToken.mac.begin(), std::begin(hat.hmac), std::end(hat.hmac));
 }
 
-} // namespace fingerprint
-} // namespace biometrics
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace fingerprint
+}  // namespace biometrics
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl
