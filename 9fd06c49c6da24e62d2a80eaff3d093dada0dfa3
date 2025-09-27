@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cda8538_bc5c7e8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-09-27T11:15:40Z",
+      "side": 1,
+      "message": "Raised issues addressed with https://review.lineageos.org/c/LineageOS/android_hardware_samsung/+/453062/.",
+      "revId": "9fd06c49c6da24e62d2a80eaff3d093dada0dfa3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
