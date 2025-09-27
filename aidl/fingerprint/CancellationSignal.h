@@ -19,16 +19,16 @@ namespace biometrics {
 namespace fingerprint {
 
 class CancellationSignal : public BnCancellationSignal {
-public:
+  public:
     CancellationSignal(Session* session);
     ndk::ScopedAStatus cancel() override;
 
-private:
+  private:
     Session* mSession;
 };
 
-} // namespace fingerprint
-} // namespace biometrics
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace fingerprint
+}  // namespace biometrics
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl
