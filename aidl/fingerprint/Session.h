@@ -30,7 +30,7 @@ namespace fingerprint {
 void onClientDeath(void* cookie);
 
 class Session : public BnSession {
-public:
+  public:
     Session(LegacyHAL hal, int userId, std::shared_ptr<ISessionCallback> cb,
             LockoutTracker lockoutTracker);
     ndk::ScopedAStatus generateChallenge() override;
@@ -39,8 +39,7 @@ public:
                               std::shared_ptr<ICancellationSignal>* out) override;
     ndk::ScopedAStatus authenticate(int64_t operationId,
                                     std::shared_ptr<ICancellationSignal>* out) override;
-    ndk::ScopedAStatus detectInteraction(
-            std::shared_ptr<ICancellationSignal>* out) override;
+    ndk::ScopedAStatus detectInteraction(std::shared_ptr<ICancellationSignal>* out) override;
     ndk::ScopedAStatus enumerateEnrollments() override;
     ndk::ScopedAStatus removeEnrollments(const std::vector<int32_t>& enrollmentIds) override;
     ndk::ScopedAStatus getAuthenticatorId() override;
@@ -51,15 +50,13 @@ public:
                                      float major) override;
     ndk::ScopedAStatus onPointerUp(int32_t pointerId) override;
     ndk::ScopedAStatus onUiReady() override;
-    ndk::ScopedAStatus authenticateWithContext(
-            int64_t operationId, const OperationContext& context,
-            std::shared_ptr<ICancellationSignal>* out) override;
-    ndk::ScopedAStatus enrollWithContext(
-            const HardwareAuthToken& hat, const OperationContext& context,
-            std::shared_ptr<ICancellationSignal>* out) override;
+    ndk::ScopedAStatus authenticateWithContext(int64_t operationId, const OperationContext& context,
+                                               std::shared_ptr<ICancellationSignal>* out) override;
+    ndk::ScopedAStatus enrollWithContext(const HardwareAuthToken& hat,
+                                         const OperationContext& context,
+                                         std::shared_ptr<ICancellationSignal>* out) override;
     ndk::ScopedAStatus detectInteractionWithContext(
-            const OperationContext& context,
-            std::shared_ptr<ICancellationSignal>* out) override;
+            const OperationContext& context, std::shared_ptr<ICancellationSignal>* out) override;
     ndk::ScopedAStatus onPointerDownWithContext(const PointerContext& context) override;
     ndk::ScopedAStatus onPointerUpWithContext(const PointerContext& context) override;
     ndk::ScopedAStatus onContextChanged(const OperationContext& context) override;
@@ -69,11 +66,10 @@ public:
     ndk::ScopedAStatus cancel();
     binder_status_t linkToDeath(AIBinder* binder);
     bool isClosed();
-    void notify(
-        const fingerprint_msg_t* msg);
+    void notify(const fingerprint_msg_t* msg);
     void onCaptureReady();
 
-private:
+  private:
     LegacyHAL mHal;
     LockoutTracker mLockoutTracker;
     bool mClosed = false;
@@ -102,8 +98,8 @@ private:
     AIBinder_DeathRecipient* mDeathRecipient;
 };
 
-} // namespace fingerprint
-} // namespace biometrics
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace fingerprint
+}  // namespace biometrics
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl
