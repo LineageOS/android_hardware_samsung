@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "Fingerprint.h"
 #include "LockoutTracker.h"
+#include "Fingerprint.h"
 
 #include <util/Util.h>
 
@@ -16,8 +16,7 @@ namespace biometrics {
 namespace fingerprint {
 
 void LockoutTracker::reset(bool clearAttemptCounter) {
-    if (clearAttemptCounter)
-        mFailedCount = 0;
+    if (clearAttemptCounter) mFailedCount = 0;
     mLockoutTimedStart = 0;
     mCurrentMode = LockoutMode::NONE;
 }
@@ -56,8 +55,8 @@ int64_t LockoutTracker::getLockoutTimeLeft() {
     return res;
 }
 
-} // namespace fingerprint
-} // namespace biometrics
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace fingerprint
+}  // namespace biometrics
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl

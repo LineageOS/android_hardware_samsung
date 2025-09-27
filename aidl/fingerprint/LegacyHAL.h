@@ -15,7 +15,7 @@ namespace biometrics {
 namespace fingerprint {
 
 class LegacyHAL {
-public:
+  public:
     bool openHal(fingerprint_notify_t notify);
     int request(int cmd, int param);
 
@@ -32,11 +32,12 @@ public:
     int (*ss_fingerprint_remove)(uint32_t gid, uint32_t fid);
     int (*ss_fingerprint_set_active_group)(uint32_t gid, const char* store_path);
     int (*ss_fingerprint_authenticate)(uint64_t operation_id, uint32_t gid);
-    int (*ss_fingerprint_request)(uint32_t cmd, char *inBuf, uint32_t inBuf_length, char *outBuf, uint32_t outBuf_length, uint32_t param);
+    int (*ss_fingerprint_request)(uint32_t cmd, char* inBuf, uint32_t inBuf_length, char* outBuf,
+                                  uint32_t outBuf_length, uint32_t param);
 };
 
-} // namespace fingerprint
-} // namespace biometrics
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace fingerprint
+}  // namespace biometrics
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl
