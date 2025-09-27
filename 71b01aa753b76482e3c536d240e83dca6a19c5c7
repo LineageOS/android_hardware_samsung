@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db50efa7_81ea47bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-09-27T12:25:35Z",
+      "side": 1,
+      "message": "Do you still want this for 22.2 or shall we move to 23.0?",
+      "revId": "71b01aa753b76482e3c536d240e83dca6a19c5c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
