@@ -16,6 +16,24 @@
       "message": "I don\u0027t think any foldable has fod, though.",
       "revId": "789764b6c8e71ad94e438d5cc62c2ba22c3877d3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6721fd7c_e20b6043",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-10-03T07:58:08Z",
+      "side": 1,
+      "message": "Looks like it can be possible: https://review.lineageos.org/c/LineageOS/android_hardware_samsung/+/451347",
+      "parentUuid": "609ec87e_f2d544f5",
+      "revId": "789764b6c8e71ad94e438d5cc62c2ba22c3877d3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
