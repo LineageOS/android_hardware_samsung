@@ -16,6 +16,41 @@
       "message": "Do you still want this for 22.2 or shall we move to 23.0?",
       "revId": "71b01aa753b76482e3c536d240e83dca6a19c5c7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cd1d2e5_26568caf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29914
+      },
+      "writtenOn": "2025-10-07T10:27:19Z",
+      "side": 1,
+      "message": "@bgcngm@gmail.com we can move this to 23.0",
+      "revId": "71b01aa753b76482e3c536d240e83dca6a19c5c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7546286_397e89d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29914
+      },
+      "writtenOn": "2025-10-07T10:27:19Z",
+      "side": 1,
+      "message": "Well i will be building 22.2 until 23.0 can be built without repopicks, then i will probably switch. In any case it will be needed there as well",
+      "parentUuid": "db50efa7_81ea47bc",
+      "revId": "71b01aa753b76482e3c536d240e83dca6a19c5c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
