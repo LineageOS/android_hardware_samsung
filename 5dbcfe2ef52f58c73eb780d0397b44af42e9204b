@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d32cbc7_0f535389",
+        "filename": "fingerprint/UdfpsExtension.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-10-15T20:25:14Z",
+      "side": 1,
+      "message": "Better make this configurable (UDFPS_USAGE_BITS) instead and default to 0.",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "5dbcfe2ef52f58c73eb780d0397b44af42e9204b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
