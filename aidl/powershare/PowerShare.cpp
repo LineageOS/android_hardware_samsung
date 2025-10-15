@@ -51,6 +51,11 @@ ndk::ScopedAStatus PowerShare::setEnabled(bool enable) {
         return ndk::ScopedAStatus::fromExceptionCode(EX_SERVICE_SPECIFIC);
     }
 
+    if (!WriteStringToFile(WIRELESS_CHARGER_COMMAND + value, TSP_CMD_PATH)) {
+        LOG(ERROR) << "Failed to write Touchscreen command";
+        return ndk::ScopedAStatus::fromExceptionCode(EX_SERVICE_SPECIFIC);
+    }
+
     return ndk::ScopedAStatus::ok();
 }
 
