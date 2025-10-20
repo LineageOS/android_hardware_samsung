@@ -16,6 +16,24 @@
       "message": "Can we get this going?",
       "revId": "f168719eb5115e44f81473634ee7154cb2d77b98",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2aeaf537_8c36d69e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29914
+      },
+      "writtenOn": "2025-10-20T16:23:38Z",
+      "side": 1,
+      "message": "@bgcngm@gmail.com unfortunately i can\u0027t test it on 23.0 at the moment since i am having issues with outer display on 23. As soon as i will be able to, i will let you know",
+      "parentUuid": "367fc340_4c1f07f2",
+      "revId": "f168719eb5115e44f81473634ee7154cb2d77b98",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
