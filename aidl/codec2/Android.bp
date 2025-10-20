@@ -72,5 +72,17 @@ prebuilt_etc {
         arm64: {
             src: "seccomp_policy/android.software.media.c2-default-arm64.policy",
         },
+        riscv64: {
+            src: "seccomp_policy/android.software.media.c2-default-riscv64.policy",
+        },
+        x86: {
+            src: "seccomp_policy/android.software.media.c2-default-x86.policy",
+        },
+        x86_64: {
+            src: "seccomp_policy/android.software.media.c2-default-x86_64.policy",
+        },
     },
+
+    // This may be removed.
+    required: ["crash_dump.policy"],
 }
