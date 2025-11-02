@@ -1,0 +1,13 @@
+
+//
+// Copyright (C) 2025 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+java_library {
+    name: "samsung-fwk",
+    installable: true,
+    srcs: [
+        "src/**/*.java",
+    ],
+}
