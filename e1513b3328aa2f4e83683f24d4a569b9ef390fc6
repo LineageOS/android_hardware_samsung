@@ -103,6 +103,23 @@
       "parentUuid": "efe0d76b_7b627ea4",
       "revId": "e1513b3328aa2f4e83683f24d4a569b9ef390fc6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "309c068b_96da9a0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-11-09T12:00:35Z",
+      "side": 1,
+      "message": "Well in this case I\u0027d rather drop the change and keep it in my device tree instead, there is no need to add a new FCM in hw_samsung for one device\u0027s NFC chip.",
+      "revId": "e1513b3328aa2f4e83683f24d4a569b9ef390fc6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
