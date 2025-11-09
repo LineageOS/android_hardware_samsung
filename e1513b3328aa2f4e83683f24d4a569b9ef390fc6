@@ -68,6 +68,23 @@
       "parentUuid": "513e2223_7ac86dfa",
       "revId": "e1513b3328aa2f4e83683f24d4a569b9ef390fc6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "600c930b_3605fa56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-11-09T11:57:36Z",
+      "side": 1,
+      "message": "Nevermind, FCM fragments don\u0027t seem to be possible.",
+      "revId": "e1513b3328aa2f4e83683f24d4a569b9ef390fc6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
