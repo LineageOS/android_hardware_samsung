@@ -390,36 +390,4 @@
             <instance>default</instance>
         </interface>
     </hal>
-    <hal format="hidl" optional="true">
-        <name>vendor.samsung_slsi.hardware.audio_dump</name>
-        <version>1.0</version>
-        <interface>
-            <name>IAudioDump</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl" optional="true">
-        <name>vendor.samsung_slsi.hardware.epic</name>
-        <version>1.0</version>
-        <interface>
-            <name>IEpicRequest</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl" optional="true">
-        <name>vendor.samsung_slsi.hardware.ExynosA2DPOffload</name>
-        <version>3.0</version>
-        <interface>
-            <name>IExynosA2DPOffload</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl" optional="true">
-        <name>vendor.samsung_slsi.hardware.ExynosHWCServiceTW</name>
-        <version>1.0</version>
-        <interface>
-            <name>IExynosHWCServiceTW</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
 </compatibility-matrix>
