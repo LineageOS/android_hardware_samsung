@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b1ab284_9590284e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-11-09T11:30:54Z",
+      "side": 1,
+      "message": "I don\u0027t think you can put it here considering it\u0027s already in caf-common.\n\nBesides, it\u0027s not properly sorted.",
+      "revId": "dafb39738ddb435d2c149e004df538a23f524d16",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
