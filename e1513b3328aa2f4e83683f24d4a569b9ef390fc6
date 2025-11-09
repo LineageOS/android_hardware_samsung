@@ -50,6 +50,24 @@
       "message": "As a matter of fact, this could even go to android_hardware_samsung_slsi-linaro_exynos.",
       "revId": "e1513b3328aa2f4e83683f24d4a569b9ef390fc6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efe0d76b_7b627ea4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-11-09T11:54:10Z",
+      "side": 1,
+      "message": "Maybe we should fix the NXP service instead?",
+      "parentUuid": "513e2223_7ac86dfa",
+      "revId": "e1513b3328aa2f4e83683f24d4a569b9ef390fc6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
