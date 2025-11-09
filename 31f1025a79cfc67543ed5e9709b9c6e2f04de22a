@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50af941d_e3ca583b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-11-09T11:42:37Z",
+      "side": 1,
+      "message": "https://review.lineageos.org/c/LineageOS/android_hardware_samsung/+/459567\n\nRemove whatever doesn\u0027t apply to Exynos.",
+      "revId": "31f1025a79cfc67543ed5e9709b9c6e2f04de22a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
