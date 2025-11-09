@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f3bdc9b_ab0282fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-11-09T11:45:12Z",
+      "side": 1,
+      "message": "Should we really duplicate the whole FCM just for an NFC entry? At this point I\u0027d rather just define it in my device tree.",
+      "revId": "1dd6ddca42082ef5ecc21cffd1dc53b0c5ab8a0a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
