@@ -52,6 +52,24 @@
       "parentUuid": "d374a458_b407ebb0",
       "revId": "dafb39738ddb435d2c149e004df538a23f524d16",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7249eb37_4a639c6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-11-09T11:38:33Z",
+      "side": 1,
+      "message": "Do you mean one for Exynos / non-QCOM platforms? I\u0027m not sure I see the point considering that we have ExynosHWCServiceTW here also. Unless FCM entries cannot be duplicated, is that the case?",
+      "parentUuid": "ef6ae997_31659ae4",
+      "revId": "dafb39738ddb435d2c149e004df538a23f524d16",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
