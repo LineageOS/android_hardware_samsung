@@ -92,6 +92,7 @@ Vibrator::Vibrator() {
                 if (strcmp("sec_vibrator_inputff", name) == 0) {
                     mVibratorFd = fd;
                     mIsForceFeedbackVibrator = true;
+                    writeNode("/sys/class/sec_vib_inputff/control/use_sep_index", 1);
                     break;
                 }
                 close(fd);
@@ -340,7 +341,6 @@ ndk::ScopedAStatus Vibrator::activate(uint32_t timeoutMs) {
             .code = 0,
             .value = timeoutMs != 0,
         };
-        writeNode("/sys/class/sec_vib_inputff/control/use_sep_index", 1);
         if (write(mVibratorFd, &event, sizeof(event)) == -1)
             return ndk::ScopedAStatus::fromExceptionCode(STATUS_UNKNOWN_ERROR);
         return ndk::ScopedAStatus::ok();
