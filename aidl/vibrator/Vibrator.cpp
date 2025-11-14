@@ -132,7 +132,7 @@ ndk::ScopedAStatus Vibrator::on(int32_t timeoutMs, const std::shared_ptr<IVibrat
         writeNode(VIBRATOR_CP_TRIGGER_PATH, 0); // Clear all effects
 
     if (mIsForceFeedbackVibrator)
-        uploadFFEffect(0, timeoutMs);
+        uploadFFEffect({0}, timeoutMs);
 
 #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
     timeoutMs *= mDurationAmplitude;
@@ -172,7 +172,7 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength, con
     } else if (mIsForceFeedbackVibrator) {
         if (FF_EFFECT_IDS.find(effect) == FF_EFFECT_IDS.end())
             return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
-        uploadFFEffect(FF_EFFECT_IDS[effect], 0);
+        uploadFFEffect({0, FF_EFFECT_IDS.at(effect)}, 0);
     } else {
         if (mHasTimedOutEffect)
             writeNode(VIBRATOR_CP_TRIGGER_PATH, 0); // Clear previous effect
@@ -348,8 +348,7 @@ ndk::ScopedAStatus Vibrator::activate(uint32_t timeoutMs) {
     return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
-ndk::ScopedAStatus Vibrator::uploadFFEffect(short effectId, int timeoutMs) {
-    int16_t data[2] = {0, effectId};
+ndk::ScopedAStatus Vibrator::uploadFFEffect(std::vector<int16_t> effectData, int timeoutMs) {
     int ret;
 
     // Remove previously uploaded effect in case it exists
@@ -361,29 +360,13 @@ ndk::ScopedAStatus Vibrator::uploadFFEffect(short effectId, int timeoutMs) {
     struct ff_effect effect = {
         .type = FF_PERIODIC,
         .id = -1,
-        .direction = 0,
-        .trigger = {
-            .button = 0,
-            .interval = 0,
-        },
         .replay = {
             .length = static_cast<uint16_t>(timeoutMs),
-            .delay = 0,
         },
         .u.periodic = {
             .waveform = FF_CUSTOM,
-            .period = 0,
-            .magnitude = 0,
-            .offset = 0,
-            .phase = 0,
-            .envelope = {
-                .attack_length = 0,
-                .attack_level = 0,
-                .fade_length = 0,
-                .fade_level = 0,
-            },
-            .custom_len = 2,
-            .custom_data = data,
+            .custom_len = static_cast<uint32_t>(effectData.size()),
+            .custom_data = effectData.data(),
         },
     };
 

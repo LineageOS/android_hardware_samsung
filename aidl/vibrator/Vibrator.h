@@ -69,7 +69,7 @@ public:
 
 private:
     ndk::ScopedAStatus activate(uint32_t ms);
-    ndk::ScopedAStatus uploadFFEffect(short effectId, int timeoutMs);
+    ndk::ScopedAStatus uploadFFEffect(std::vector<int16_t> effectData, int timeoutMs);
     uint32_t effectToMs(Effect effect, ndk::ScopedAStatus* status);
     static float strengthToAmplitude(EffectStrength strength, ndk::ScopedAStatus* status);
 
