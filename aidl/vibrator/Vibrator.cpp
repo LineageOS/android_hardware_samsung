@@ -5,6 +5,9 @@
  */
 
 #include "Vibrator.h"
+extern "C" {
+#include "owt.h"
+}
 
 #include <android-base/file.h>
 #include <android-base/logging.h>
@@ -40,6 +43,14 @@ static std::map<Effect, std::pair<short, int>> FF_EFFECT_IDS{{Effect::CLICK, {1,
                                                              {Effect::TICK, {41, 25}},
                                                              {Effect::HEAVY_CLICK, {14, 100}},
                                                              {Effect::TEXTURE_TICK, {41, 25}}};
+
+std::map<CompositePrimitive, std::pair<short, int>> FF_PRIMITIVE_IDS{
+        {CompositePrimitive::NOOP, {0, 0}},           {CompositePrimitive::CLICK, {1, 20}},
+        {CompositePrimitive::THUD, {140, 300}},       {CompositePrimitive::SPIN, {139, 130}},
+        {CompositePrimitive::QUICK_RISE, {137, 150}}, {CompositePrimitive::SLOW_RISE, {138, 500}},
+        {CompositePrimitive::QUICK_FALL, {136, 100}}, {CompositePrimitive::LIGHT_TICK, {50, 20}},
+        {CompositePrimitive::LOW_TICK, {135, 20}},
+};
 
 #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
 static std::map<EffectStrength, float> DURATION_AMPLITUDE = {
@@ -98,6 +109,10 @@ Vibrator::Vibrator() {
                         } else {
                             writeNode("/sys/class/sec_vib_inputff/control/use_sep_index", 1);
                         }
+                        if (ReadFileToString(VIBRATOR_FUNCTIONS_PATH, &contents) &&
+                            contents.find("PRIMITIVE_EFFECT_COMPOSE") != std::string::npos) {
+                            mSupportsPrimitives = true;
+                        }
                     }
                     break;
                 }
@@ -125,6 +140,9 @@ ndk::ScopedAStatus Vibrator::getCapabilities(int32_t* _aidl_return) {
 
     if (mIsForceFeedbackVibrator) {
         *_aidl_return |= IVibrator::CAP_AMPLITUDE_CONTROL;
+        if (mSupportsPrimitives && !mUsesCommonFFInterface) {
+            *_aidl_return |= IVibrator::CAP_COMPOSE_EFFECTS;
+        }
     }
 
     return ndk::ScopedAStatus::ok();
@@ -292,27 +310,89 @@ ndk::ScopedAStatus Vibrator::setExternalControl(bool enabled) {
     return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Vibrator::getCompositionDelayMax(int32_t* /*_aidl_return*/) {
-    return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+ndk::ScopedAStatus Vibrator::getCompositionDelayMax(int32_t* _aidl_return) {
+    if (!mIsForceFeedbackVibrator)
+        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+
+    *_aidl_return = 1000;
+    return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Vibrator::getCompositionSizeMax(int32_t* /*_aidl_return*/) {
-    return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+ndk::ScopedAStatus Vibrator::getCompositionSizeMax(int32_t* _aidl_return) {
+    if (!mIsForceFeedbackVibrator)
+        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+
+    *_aidl_return = 10;
+    return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Vibrator::getSupportedPrimitives(
-        std::vector<CompositePrimitive>* /*_aidl_return*/) {
-    return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+ndk::ScopedAStatus Vibrator::getSupportedPrimitives(std::vector<CompositePrimitive>* _aidl_return) {
+    if (!mIsForceFeedbackVibrator || primitive == CompositePrimitive::NOOP)
+        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+
+    for (auto primitive : FF_PRIMITIVE_IDS)
+        _aidl_return->push_back(primitive.first);
+
+    return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Vibrator::getPrimitiveDuration(CompositePrimitive /*primitive*/,
-                                                  int32_t* /*_aidl_return*/) {
-    return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+ndk::ScopedAStatus Vibrator::getPrimitiveDuration(CompositePrimitive primitive,
+                                                  int32_t* _aidl_return) {
+    if (!mIsForceFeedbackVibrator)
+        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+
+    *_aidl_return = FF_PRIMITIVE_IDS.at(primitive).second;
+    return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Vibrator::compose(const std::vector<CompositeEffect>& /*composite*/,
-                                     const std::shared_ptr<IVibratorCallback>& /*callback*/) {
-    return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+ndk::ScopedAStatus Vibrator::compose(const std::vector<CompositeEffect>& composite,
+                                     const std::shared_ptr<IVibratorCallback>& callback) {
+    if (!mIsForceFeedbackVibrator || !mSupportsPrimitives)
+        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+
+    // TEMP
+    if (mUsesCommonFFInterface) {
+        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+    }
+
+    int16_t data[WT_TYPE12_PWLE_SINGLE_PACKED_MAX / 2];
+    std::string effect_str;
+    int len, ms = 0;
+
+    for (auto segment : composite) {
+        if (FF_PRIMITIVE_IDS.find(segment.primitive) == FF_PRIMITIVE_IDS.end() ||
+            segment.scale < 0 || segment.scale > 1)
+            return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_ARGUMENT);
+
+        // Consider 15% the lowest "feelable" amplitude
+        int scale = round(segment.scale * 85 + 15);
+
+        effect_str.append(
+                segment.delayMs == 0
+                        ? std::format("{}.{} ", FF_PRIMITIVE_IDS.at(segment.primitive), scale)
+                        : std::format("{} {}.{} ", segment.delayMs,
+                                      FF_PRIMITIVE_IDS.at(segment.primitive), scale));
+        int duration = 0;
+        getPrimitiveDuration(segment.primitive, &duration);
+        ms += duration + segment.delayMs;
+    }
+
+    if (!mUsesCommonFFInterface) {
+        len = get_owt_data(effect_str.data(), (uint8_t*)data);
+        if (!len) return ndk::ScopedAStatus::fromExceptionCode(EX_SERVICE_SPECIFIC);
+        std::vector<int16_t> effectData(data, data + len);
+        uploadFFEffect(effectData, 0);
+        activate(1);
+    }
+
+    if (callback != nullptr) {
+        std::thread([=] {
+            usleep(ms * 1000);
+            callback->onComplete();
+        }).detach();
+    }
+
+    return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus Vibrator::getSupportedAlwaysOnEffects(std::vector<Effect>* /*_aidl_return*/) {

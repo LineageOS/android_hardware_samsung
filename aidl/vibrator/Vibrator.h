@@ -93,6 +93,7 @@ class Vibrator : public BnVibrator {
     bool mIsTimedOutVibrator;
     bool mIsForceFeedbackVibrator{false};
     bool mUsesCommonFFInterface{false};
+    bool mSupportsPrimitives{false};
     bool mHasTimedOutIntensity;
     bool mHasTimedOutEffect;
 
