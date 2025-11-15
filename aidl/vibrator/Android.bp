@@ -31,6 +31,7 @@ cc_binary {
     vintf_fragments: ["android.hardware.vibrator-service.samsung.xml"],
     srcs: [
         "Vibrator.cpp",
+        "owt.c",
         "service.cpp",
     ],
     shared_libs: [
