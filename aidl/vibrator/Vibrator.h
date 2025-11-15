@@ -27,6 +27,22 @@
 #define VIBRATOR_CP_TRIGGER_PATH "/sys/class/timed_output/vibrator/cp_trigger_index"
 #define VIBRATOR_FUNCTIONS_PATH "/sys/class/vib_info_class/vib_support_info/functions"
 
+#define MAX_COMPOSE_EFFECT (32)
+
+// include/linux/vibrator/sec_vibrator_inputff.h
+struct common_inputff_effect {
+    int type;
+    int effect_id;
+    int scale;
+    int duration;
+    int frequency;
+};
+struct common_inputff_effects {
+    struct common_inputff_effect effects[MAX_COMPOSE_EFFECT];
+    int num_of_effects;
+    int repeat = 0;  // always 0
+};
+
 using ::aidl::android::hardware::vibrator::Braking;
 using ::aidl::android::hardware::vibrator::CompositeEffect;
 using ::aidl::android::hardware::vibrator::CompositePrimitive;
@@ -79,6 +95,7 @@ class Vibrator : public BnVibrator {
     ndk::ScopedAStatus activate(uint32_t ms);
     ndk::ScopedAStatus uploadFFEffect(std::vector<int16_t> effectData, int timeoutMs);
     static float strengthToAmplitude(EffectStrength strength, ndk::ScopedAStatus* status);
+    uint32_t cirrusEffectId(uint32_t id);
 
 #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
     static float durationAmplitude(float amplitude);
@@ -92,6 +109,7 @@ class Vibrator : public BnVibrator {
     bool mIsTimedOutVibrator;
     bool mIsForceFeedbackVibrator{false};
     bool mUsesCommonFFInterface{false};
+    bool mSupportsPrimitives{false};
     bool mHasTimedOutIntensity;
     bool mHasTimedOutEffect;
 
