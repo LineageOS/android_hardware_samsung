@@ -19,13 +19,13 @@ package org.lineageos.settings.device;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import androidx.preference.PreferenceFragmentCompat;
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 
 import org.lineageos.settings.device.R;
 
 import org.lineageos.internal.util.FileUtils;
 
-public class AdvancedDisplayFragment extends PreferenceFragmentCompat {
+public class AdvancedDisplayFragment extends SettingsBasePreferenceFragment {
     private mDNIeScenario mmDNIeScenario;
     private mDNIeAccessibility mmDNIeAccessibility;
 
