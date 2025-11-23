@@ -52,7 +52,7 @@ cc_binary {
     }),
 
     cflags: select(soong_config_variable("samsungCodec2Vars", "uses_legacy_component_store"), {
-        "true": ["-DLEGACY_COMPONENT_STORE" ],
+        true: ["-DLEGACY_COMPONENT_STORE" ],
         default: [],
     }),
 
