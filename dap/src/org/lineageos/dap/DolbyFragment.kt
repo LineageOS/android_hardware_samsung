@@ -20,14 +20,14 @@ import android.os.Bundle
 
 import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
-import androidx.preference.PreferenceFragmentCompat
 
 import com.android.settingslib.widget.MainSwitchPreference
 import com.android.settingslib.widget.SelectorWithWidgetPreference
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 
 import org.lineageos.dap.R
 
-class DolbyFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener {
+class DolbyFragment : SettingsBasePreferenceFragment(), OnPreferenceChangeListener {
 
     private lateinit var switchBar: MainSwitchPreference
 
