@@ -22,14 +22,14 @@ import android.os.Handler;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.settingslib.widget.MainSwitchPreference;
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 
 import org.lineageos.internal.util.ScreenType;
 
-public class SamsungDozeSettings extends PreferenceFragmentCompat
+public class SamsungDozeSettings extends SettingsBasePreferenceFragment
         implements OnPreferenceChangeListener {
 
     private MainSwitchPreference mSwitchBar;
