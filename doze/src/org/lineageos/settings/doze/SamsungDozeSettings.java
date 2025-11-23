@@ -19,20 +19,18 @@ package org.lineageos.settings.doze;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.settingslib.widget.MainSwitchPreference;
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 
 import org.lineageos.internal.util.ScreenType;
 
-public class SamsungDozeSettings extends PreferenceFragmentCompat
-        implements OnPreferenceChangeListener, OnCheckedChangeListener {
+public class SamsungDozeSettings extends SettingsBasePreferenceFragment
+        implements OnPreferenceChangeListener, OnPreferenceChangeListener {
 
     private MainSwitchPreference mSwitchBar;
 
@@ -51,7 +49,7 @@ public class SamsungDozeSettings extends PreferenceFragmentCompat
         boolean dozeEnabled = Utils.isDozeEnabled(getActivity());
 
         mSwitchBar = (MainSwitchPreference) findPreference(Utils.DOZE_ENABLE);
-        mSwitchBar.addOnSwitchChangeListener(this);
+        mSwitchBar.setOnPreferenceChangeListener(this);
         mSwitchBar.setChecked(dozeEnabled);
 
         mAlwaysOnDisplayPreference = findPreference(Utils.ALWAYS_ON_DISPLAY);
@@ -102,27 +100,26 @@ public class SamsungDozeSettings extends PreferenceFragmentCompat
             Utils.enableAlwaysOn(getActivity(), (Boolean) newValue);
         }
 
-        mHandler.post(() -> Utils.checkDozeService(getActivity()));
+        if (Utils.DOZE_ENABLE.equals(preference.getKey())) {
+            Utils.enableDoze(getActivity(), newValue);
+            Utils.checkDozeService(getActivity());
+        }
 
-        return true;
-    }
+        mSwitchBar.setChecked(newValue);
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Utils.enableDoze(getActivity(), isChecked);
-        Utils.checkDozeService(getActivity());
-
-        mSwitchBar.setChecked(isChecked);
-
-        if (!isChecked) {
+        if (!newValue) {
             Utils.enableAlwaysOn(getActivity(), false);
             mAlwaysOnDisplayPreference.setChecked(false);
         }
-        mAlwaysOnDisplayPreference.setEnabled(isChecked);
+        mAlwaysOnDisplayPreference.setEnabled(newValue);
 
-        mHandwavePreference.setEnabled(isChecked);
-        mPickUpPreference.setEnabled(isChecked);
-        mPocketPreference.setEnabled(isChecked);
-        mWakeOnGesturePreference.setEnabled(isChecked);
+        mHandwavePreference.setEnabled(newValue);
+        mPickUpPreference.setEnabled(newValue);
+        mPocketPreference.setEnabled(newValue);
+        mWakeOnGesturePreference.setEnabled(newValue);
+
+        mHandler.post(() -> Utils.checkDozeService(getActivity()));
+
+        return true;
     }
 }
