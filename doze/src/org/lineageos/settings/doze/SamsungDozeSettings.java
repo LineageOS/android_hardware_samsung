@@ -24,14 +24,14 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.PreferenceFragment;
 import androidx.preference.SwitchPreference;
 
 import com.android.settingslib.widget.MainSwitchPreference;
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 
 import org.lineageos.internal.util.ScreenType;
 
-public class SamsungDozeSettings extends PreferenceFragment
+public class SamsungDozeSettings extends SettingsBasePreferenceFragment
         implements OnPreferenceChangeListener, OnCheckedChangeListener {
 
     private MainSwitchPreference mSwitchBar;
