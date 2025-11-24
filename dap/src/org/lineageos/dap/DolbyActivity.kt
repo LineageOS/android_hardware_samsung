@@ -23,7 +23,7 @@ import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity
 class DolbyActivity : CollapsingToolbarBaseActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fragmentManager.beginTransaction().replace(
+        supportFragmentManager.beginTransaction().replace(
                 com.android.settingslib.collapsingtoolbar.R.id.content_frame,
                 DolbyFragment()
         ).commit()
