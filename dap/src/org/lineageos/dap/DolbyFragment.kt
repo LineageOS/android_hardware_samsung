@@ -20,14 +20,13 @@ import android.os.Bundle
 import android.widget.CompoundButton
 import android.widget.CompoundButton.OnCheckedChangeListener
 
-import androidx.preference.PreferenceFragment
-
 import com.android.settingslib.widget.MainSwitchPreference
 import com.android.settingslib.widget.SelectorWithWidgetPreference
+import com.android.settingslib.widget.SettingsBasePreferenceFragment
 
 import org.lineageos.dap.R
 
-class DolbyFragment : PreferenceFragment(), OnCheckedChangeListener {
+class DolbyFragment : SettingsBasePreferenceFragment(), OnCheckedChangeListener {
 
     private lateinit var switchBar: MainSwitchPreference
 
