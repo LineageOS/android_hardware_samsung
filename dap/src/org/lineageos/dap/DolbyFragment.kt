@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2024 The LineageOS Project
+ * Copyright (C) 2022-2025 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,7 @@
 package org.lineageos.dap
 
 import android.os.Bundle
-import android.widget.CompoundButton
-import android.widget.CompoundButton.OnCheckedChangeListener
-
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 
 import com.android.settingslib.widget.MainSwitchPreference
@@ -27,7 +25,7 @@ import com.android.settingslib.widget.SelectorWithWidgetPreference
 
 import org.lineageos.dap.R
 
-class DolbyFragment : PreferenceFragmentCompat(), OnCheckedChangeListener {
+class DolbyFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
 
     private lateinit var switchBar: MainSwitchPreference
 
@@ -35,7 +33,7 @@ class DolbyFragment : PreferenceFragmentCompat(), OnCheckedChangeListener {
         setPreferencesFromResource(R.xml.dolby_settings, rootKey)
 
         switchBar = findPreference<MainSwitchPreference>(PREF_DOLBY_ENABLE)!!
-        switchBar.addOnSwitchChangeListener(this)
+        switchBar.onPreferenceChangeListener = this
         switchBar.isChecked = DolbyCore.isEnabled()
 
         for ((key, value) in PREF_DOLBY_MODES) {
@@ -47,8 +45,11 @@ class DolbyFragment : PreferenceFragmentCompat(), OnCheckedChangeListener {
         }
     }
 
-    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-        DolbyCore.setEnabled(isChecked)
+    override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
+        if (preference == switchBar) {
+            DolbyCore.setEnabled(newValue as Boolean)
+        }
+        return true
     }
 
     private fun setProfile(profile: Int) {
