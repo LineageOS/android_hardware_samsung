@@ -19,8 +19,6 @@ package org.lineageos.settings.doze;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
@@ -32,7 +30,7 @@ import com.android.settingslib.widget.MainSwitchPreference;
 import org.lineageos.internal.util.ScreenType;
 
 public class SamsungDozeSettings extends PreferenceFragmentCompat
-        implements OnPreferenceChangeListener, OnCheckedChangeListener {
+        implements OnPreferenceChangeListener {
 
     private MainSwitchPreference mSwitchBar;
 
@@ -51,7 +49,7 @@ public class SamsungDozeSettings extends PreferenceFragmentCompat
         boolean dozeEnabled = Utils.isDozeEnabled(getActivity());
 
         mSwitchBar = (MainSwitchPreference) findPreference(Utils.DOZE_ENABLE);
-        mSwitchBar.addOnSwitchChangeListener(this);
+        mSwitchBar.setOnPreferenceChangeListener(this);
         mSwitchBar.setChecked(dozeEnabled);
 
         mAlwaysOnDisplayPreference = findPreference(Utils.ALWAYS_ON_DISPLAY);
@@ -98,31 +96,31 @@ public class SamsungDozeSettings extends PreferenceFragmentCompat
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        boolean val = (Boolean) newValue;
         if (Utils.ALWAYS_ON_DISPLAY.equals(preference.getKey())) {
-            Utils.enableAlwaysOn(getActivity(), (Boolean) newValue);
+            Utils.enableAlwaysOn(getActivity(), val);
+        }
+
+        if (Utils.DOZE_ENABLE.equals(preference.getKey())) {
+            Utils.enableDoze(getActivity(), val);
+            Utils.checkDozeService(getActivity());
+
+            mSwitchBar.setChecked(val);
+
+            if (!val) {
+                Utils.enableAlwaysOn(getActivity(), false);
+                mAlwaysOnDisplayPreference.setChecked(false);
+            }
+            mAlwaysOnDisplayPreference.setEnabled(val);
+
+            mHandwavePreference.setEnabled(val);
+            mPickUpPreference.setEnabled(val);
+            mPocketPreference.setEnabled(val);
+            mWakeOnGesturePreference.setEnabled(val);
         }
 
         mHandler.post(() -> Utils.checkDozeService(getActivity()));
 
         return true;
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Utils.enableDoze(getActivity(), isChecked);
-        Utils.checkDozeService(getActivity());
-
-        mSwitchBar.setChecked(isChecked);
-
-        if (!isChecked) {
-            Utils.enableAlwaysOn(getActivity(), false);
-            mAlwaysOnDisplayPreference.setChecked(false);
-        }
-        mAlwaysOnDisplayPreference.setEnabled(isChecked);
-
-        mHandwavePreference.setEnabled(isChecked);
-        mPickUpPreference.setEnabled(isChecked);
-        mPocketPreference.setEnabled(isChecked);
-        mWakeOnGesturePreference.setEnabled(isChecked);
     }
 }
