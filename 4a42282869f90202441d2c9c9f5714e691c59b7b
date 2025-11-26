@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e030dd2d_f6cb47d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-11-26T22:27:08Z",
+      "side": 1,
+      "message": "At least for Doze, pick the original: https://review.lineageos.org/c/LineageOS/android_hardware_oneplus/+/461968.\n\nYou will also need the changes around addOnSwitchChangeListener deprecation.",
+      "revId": "4a42282869f90202441d2c9c9f5714e691c59b7b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
