@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d82dd0cc_f34b00cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-11-27T20:20:14Z",
+      "side": 1,
+      "message": "No need to do it programatically. You can make the preferences dependent on main switch (in dolby_settings.xml).",
+      "revId": "3211b0e1287b75dbc766f01e46bb522545bd7a40",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
