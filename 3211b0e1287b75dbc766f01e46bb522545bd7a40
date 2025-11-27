@@ -16,6 +16,24 @@
       "message": "No need to do it programatically. You can make the preferences dependent on main switch (in dolby_settings.xml).",
       "revId": "3211b0e1287b75dbc766f01e46bb522545bd7a40",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99067e25_28d37ec9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-11-27T20:35:18Z",
+      "side": 1,
+      "message": "Done. But I kinda broke the chain because of the branch change.",
+      "parentUuid": "d82dd0cc_f34b00cf",
+      "revId": "3211b0e1287b75dbc766f01e46bb522545bd7a40",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
