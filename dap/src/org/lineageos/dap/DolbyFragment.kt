@@ -40,6 +40,7 @@ class DolbyFragment : SettingsBasePreferenceFragment(), OnPreferenceChangeListen
 
         for ((key, value) in PREF_DOLBY_MODES) {
             val preference = findPreference<SelectorWithWidgetPreference>(key)!!
+            preference.isEnabled = DolbyCore.isEnabled()
             preference.setOnPreferenceClickListener {
                 setProfile(value)
                 true
@@ -50,6 +51,10 @@ class DolbyFragment : SettingsBasePreferenceFragment(), OnPreferenceChangeListen
     override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
         if (preference.key == PREF_DOLBY_ENABLE) {
             DolbyCore.setEnabled(newValue as Boolean)
+
+            for ((key, _) in PREF_DOLBY_MODES) {
+                findPreference<SelectorWithWidgetPreference>(key)?.isEnabled = newValue as Boolean
+            }
         }
         return true
     }
