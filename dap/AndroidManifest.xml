@@ -41,6 +41,9 @@
             <meta-data
                 android:name="com.android.settings.category"
                 android:value="com.android.settings.category.ia.sound" />
+            <meta-data
+                android:name="com.android.settings.group_key"
+                android:value="system_sounds_and_vibrations_category" />
         </activity>
 
         <provider
