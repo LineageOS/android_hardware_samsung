@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/dolby_title">
 
+    <com.android.settingslib.widget.TopIntroPreference
+        android:key="dolby_top_intro"
+        android:title="@string/dolby_top_intro_summary" />
+
     <com.android.settingslib.widget.MainSwitchPreference
         android:defaultValue="false"
         android:key="dolby_enable"
         android:title="@string/dolby_enable_title" />
-
-    <com.android.settingslib.widget.TopIntroPreference
-        android:key="dolby_top_intro"
-        android:title="@string/dolby_top_intro_summary" />
 
     <com.android.settingslib.widget.SelectorWithWidgetPreference
         android:defaultValue="true"
