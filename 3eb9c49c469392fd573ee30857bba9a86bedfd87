@@ -16,6 +16,23 @@
       "message": "Please review whole chain.",
       "revId": "3eb9c49c469392fd573ee30857bba9a86bedfd87",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61a01666_58351026",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2025-11-27T20:06:33Z",
+      "side": 1,
+      "message": "Do you want the branch changed on all of them?",
+      "revId": "3eb9c49c469392fd573ee30857bba9a86bedfd87",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
