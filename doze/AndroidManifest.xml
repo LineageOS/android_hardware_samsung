@@ -12,7 +12,8 @@
 
     <application
         android:label="@string/device_settings_app_name"
-        android:persistent="true">
+        android:persistent="true"
+        android:theme="@style/Theme.SubSettingsBase.Expressive">
 
         <receiver
             android:name=".BootCompletedReceiver"
@@ -32,7 +33,6 @@
         <activity
             android:name=".SamsungDozeActivity"
             android:label="@string/ambient_display_title"
-            android:theme="@style/Theme.SubSettingsBase"
             android:exported="true">
             <intent-filter>
                 <action android:name="org.lineageos.settings.device.DOZE_SETTINGS" />
