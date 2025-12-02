@@ -7,7 +7,7 @@
 
     <application
         android:label="@string/app_name"
-        android:theme="@style/Theme.SubSettingsBase">
+        android:theme="@style/Theme.SubSettingsBase.Expressive">
         <receiver
             android:name="org.lineageos.settings.device.BootCompletedReceiver"
             android:exported="true">
