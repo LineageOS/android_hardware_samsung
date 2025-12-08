@@ -14,6 +14,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+vintf_fragment {
+    name: "android.hardware.sensors-samsung-multihal.xml",
+    src: "android.hardware.sensors-samsung-multihal.xml",
+    vendor: true,
+}
+
 cc_binary {
     name: "android.hardware.sensors-service.samsung-multihal",
     vendor: true,
@@ -23,7 +29,7 @@ cc_binary {
         "service.cpp",
     ],
     init_rc: ["android.hardware.sensors-service.samsung-multihal.rc"],
-    vintf_fragments: ["android.hardware.sensors-samsung-multihal.xml"],
+    vintf_fragment_modules: ["android.hardware.sensors-samsung-multihal.xml"],
     header_libs: [
         "android.hardware.sensors@2.X-multihal.header",
         "android.hardware.sensors@2.X-shared-utils",
