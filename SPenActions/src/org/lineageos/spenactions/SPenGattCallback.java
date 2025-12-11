@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2021-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -189,7 +189,7 @@ public class SPenGattCallback extends BluetoothGattCallback {
                 InputDevice.SOURCE_KEYBOARD);
 
         ev.setDisplayId(mContext.getDisplay().getDisplayId());
-        return InputManager.getInstance()
+        return getSystemService(InputManager.class)
                 .injectInputEvent(ev, InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
     }
 
