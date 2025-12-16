@@ -21,6 +21,7 @@ public class SemDisplayStateListener {
 
     private final Context mContext;
     private final IStatusBarService mStatusBarService;
+    private final SemFodModeController mFodController;
 
     private final IBiometricContextListener mContextListener =
             new IBiometricContextListener.Stub() {
@@ -33,6 +34,7 @@ public class SemDisplayStateListener {
                 public void onDisplayStateChanged(int displayState) {
                     Log.i(TAG, "Display state changed: " + displayState);
                     handleDisplayState(displayState);
+                    mFodController.onDisplayStateChanged(displayState);
                 }
 
                 @Override
@@ -41,8 +43,10 @@ public class SemDisplayStateListener {
                 }
             };
 
-    public SemDisplayStateListener(Context context) {
+    public SemDisplayStateListener(Context context,
+                                   SemFodModeController fodController) {
         mContext = context;
+        mFodController = fodController;
         mStatusBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService("statusbar"));
     }

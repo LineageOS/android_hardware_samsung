@@ -22,13 +22,15 @@ public class SemBiometricStateListener {
 
     @NonNull
     private final Context mContext;
+    private final SemFodModeController mFodController;
 
     private FingerprintManager mFingerprintManager;
     private BiometricStateListener mListener;
     private final AtomicBoolean mRegistered = new AtomicBoolean(false);
 
-    public SemBiometricStateListener(@NonNull Context context) {
+    public SemBiometricStateListener(@NonNull Context context, SemFodModeController fodController) {
         mContext = context;
+        mFodController = fodController;
     }
 
     public void register() {
@@ -50,6 +52,7 @@ public class SemBiometricStateListener {
                 @Override
                 public void onStateChanged(@BiometricStateListener.State int newState) {
                     handleBiometricState(newState);
+                    mFodController.onBiometricStateChanged(newState);
                 }
 
                 @Override
