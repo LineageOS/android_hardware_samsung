@@ -16,15 +16,20 @@ public class BiometricObserverService extends Service {
 
     private SemDisplayStateListener mDisplayObserver;
     private SemBiometricStateListener mBiometricObserver;
+    private SemFodModeController mFodController;
+    private SemFodRectCalculator mFodRectCalculator;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.i(TAG, "BiometricObserverService created");
 
-        mDisplayObserver = new SemDisplayStateListener(this);
-        mBiometricObserver = new SemBiometricStateListener(this);
+        mFodController = new SemFodModeController();
+        mFodRectCalculator = new SemFodRectCalculator(this);
+        mDisplayObserver = new SemDisplayStateListener(this, mFodController);
+        mBiometricObserver = new SemBiometricStateListener(this, mFodController);
 
+        mFodRectCalculator.writeFodRect();
         mDisplayObserver.register();
         mBiometricObserver.register();
     }
