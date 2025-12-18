@@ -16,6 +16,24 @@
       "message": "Move to SPDX copyrights in all files you add.",
       "revId": "4eb9893bef526b73f5668980d1d9e34f9a3295e9",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d2350f0_309db692",
+        "filename": "samsung-fwk/src/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2025-12-18T13:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1ba774_506deeb5",
+      "revId": "4eb9893bef526b73f5668980d1d9e34f9a3295e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
