@@ -19,10 +19,16 @@ public class DisplaySolution {
     
     private final float[] mGammaArray;
 
+    private final float mUdfpsBrightness;
+    private final float mUdfpsNits;
+
     public DisplaySolution(Context context) {
         mBrightnessBacklightValueStringArray = context.getResources().getStringArray(org.lineageos.samsung.biometrics.R.array.config_Screen_Brightness_Backlight_Value);
         mBrightnessNitsValueStringArray = context.getResources().getStringArray(org.lineageos.samsung.biometrics.R.array.config_Screen_Brightness_Nits_Value);
         mGammaStringArray = context.getResources().getStringArray(org.lineageos.samsung.biometrics.R.array.config_Display_Solution_Gamma_Value);
+
+        mUdfpsBrightness = context.getResources().getString(org.lineageos.samsung.biometrics.R.array.config_Display_Solution_Udfps_Brightness);
+        mUdfpsNits = context.getResources().getString(org.lineageos.samsung.biometrics.R.array.config_Display_Solution_Udfps_Nits);
 
         if (mGammaStringArray != null) {
             mGammaArray = new float[mGammaStringArray.length];
@@ -36,6 +42,14 @@ public class DisplaySolution {
             }
         } else {
             mGammaArray = new float[]{2.2f}; // Safe default
+        }
+
+        if (mUdfpsBrightness <= 0.0f) {
+            mUdfpsBrightness = 319.0f
+        }
+
+        if (mUdfpsNits <= 0.0f) {
+            mUdfpsNits = 525.0f
         }
     }
 
