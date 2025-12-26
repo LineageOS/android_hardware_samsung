@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2025 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Array of screen brightness backlight values.
+         Used for dimming alpha and HBM brightness calculations.
+    -->
+    <string-array name="config_Screen_Brightness_Backlight_Value">
+        <item>0.0</item>
+    </string-array>
+
+    <!-- Array of screen brightness nits values.
+         Used for dimming alpha and HBM brightness calculations.
+    -->
+    <string-array name="config_Screen_Brightness_Nits_Value">
+        <item>0</item>
+    </string-array>
+
+    <!-- Array of display gamma correction values
+         Used for dimming alpha calculations.
+    -->
+    <string-array name="config_Display_Solution_Gamma_Value">
+        <item>2.2</item>
+    </string-array>
+</resources>
