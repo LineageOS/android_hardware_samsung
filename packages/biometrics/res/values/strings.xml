@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2025 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Value of UDFPS brightness. Default is 319.0 on OneUI framework.
+    -->
+    <string name="config_Display_Solution_Udfps_Brightness" translatable="false">0.0</string>
+
+    <!-- Value of UDFPS nits. Default is 525.0 on OneUI framework.
+    -->
+    <string name="config_Display_Solution_Udfps_Nits" translatable="false">0.0</string>
+</resources>
