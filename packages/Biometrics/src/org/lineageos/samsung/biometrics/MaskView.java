@@ -108,6 +108,7 @@ public final class MaskView implements DisplayBrightnessMonitor.OnBrightnessList
                 PixelFormat.TRANSLUCENT
         );
 
+        lp.flags &= ~WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR;
         lp.privateFlags =
                 WindowManager.LayoutParams.PRIVATE_FLAG_TRUSTED_OVERLAY
                         | WindowManager.LayoutParams.PRIVATE_FLAG_IS_ROUNDED_CORNERS_OVERLAY;
