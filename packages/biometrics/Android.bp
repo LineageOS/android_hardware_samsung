@@ -1,0 +1,23 @@
+/*
+ * Copyright (C) 2025 The LineageOS Project
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+android_app {
+    name: "SamsungBiometrics",
+    srcs: [
+        "src/**/*.java",
+    ],
+
+    aidl: {
+        include_dirs: [
+            "frameworks/base/core/java",
+        ],
+    },
+
+    certificate: "platform",
+    platform_apis: true,
+    privileged: true,
+    system_ext_specific: true,
+}
