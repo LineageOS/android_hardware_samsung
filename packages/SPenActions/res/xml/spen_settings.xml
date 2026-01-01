@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+     SPDX-FileCopyrightText: 2021-2026 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreferenceCompat
-        android:key="spen_bluetooth_enable"
+    <com.android.settingslib.widget.TopIntroPreference
+        android:key="spen_bluetooth_top_intro"
+        android:title="@string/spen_bluetooth_enable_summary"/>
+
+    <com.android.settingslib.widget.MainSwitchPreference
         android:defaultValue="false"
-        android:title="@string/spen_bluetooth_enable_title"
-        android:summary="@string/spen_bluetooth_enable_summary" />
+        android:key="spen_bluetooth_enable"
+        android:title="@string/spen_bluetooth_enable_title" />
 
     <ListPreference
         android:key="spen_mode"
@@ -18,10 +21,6 @@
         android:defaultValue="0"
         android:title="@string/spen_mode_title"
         android:summary="%s"
-        android:dependency="spen_bluetooth_enable" />
-
-    <com.android.settingslib.widget.ActionButtonsPreference
-        android:key="action_buttons"
         android:dependency="spen_bluetooth_enable" />
 
 </PreferenceScreen>
