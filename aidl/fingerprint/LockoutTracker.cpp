@@ -16,8 +16,9 @@ namespace biometrics {
 namespace fingerprint {
 
 void LockoutTracker::reset(bool clearAttemptCounter) {
-    if (clearAttemptCounter)
+    if (clearAttemptCounter) {
         mFailedCount = 0;
+    }
     mLockoutTimedStart = 0;
     mCurrentMode = LockoutMode::NONE;
 }
@@ -25,9 +26,9 @@ void LockoutTracker::reset(bool clearAttemptCounter) {
 void LockoutTracker::addFailedAttempt() {
     mFailedCount++;
 
-    if (mFailedCount >= LOCKOUT_PERMANENT_THRESHOLD)
+    if (mFailedCount >= LOCKOUT_PERMANENT_THRESHOLD) {
         mCurrentMode = LockoutMode::PERMANENT;
-    else if (mFailedCount >= LOCKOUT_TIMED_THRESHOLD) {
+    } else if (mFailedCount >= LOCKOUT_TIMED_THRESHOLD) {
         mCurrentMode = LockoutMode::TIMED;
         mLockoutTimedStart = Util::getSystemNanoTime();
     }
