@@ -34,6 +34,24 @@
       "parentUuid": "ea77adb6_c928cebe",
       "revId": "7571236e0e7ec3cc9e838a85c658e3eab97b3735",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5717dce_8f42a5fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32210
+      },
+      "writtenOn": "2026-01-01T21:50:18Z",
+      "side": 1,
+      "message": "This patch still applies to upstream and there was conflicts. But this implementation is needed for my galaxy tab s9 for it to be able to turn the fingerprint mask on",
+      "parentUuid": "3c1f4b76_8bfc36be",
+      "revId": "7571236e0e7ec3cc9e838a85c658e3eab97b3735",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
