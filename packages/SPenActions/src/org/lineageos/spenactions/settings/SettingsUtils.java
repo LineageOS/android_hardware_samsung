@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2021-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,7 +13,6 @@ public class SettingsUtils {
 
     public static final String SPEN_BLUETOOTH_ENABLE = "spen_bluetooth_enable";
     public static final String SPEN_MODE = "spen_mode";
-    public static final String ACTION_BUTTONS = "action_buttons";
 
     public static boolean isEnabled(Context context, String pref, boolean defValue) {
         return PreferenceManager.getDefaultSharedPreferences(context)
