@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2021-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -10,37 +10,48 @@ import android.bluetooth.BluetoothManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.UserHandle;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.SwitchPreferenceCompat;
 
-import com.android.settingslib.widget.ActionButtonsPreference;
+import com.android.settingslib.widget.MainSwitchPreference;
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 
 import org.lineageos.spenactions.BluetoothUtils;
 import org.lineageos.spenactions.R;
 
-public class SettingsFragment extends PreferenceFragmentCompat
-        implements Preference.OnPreferenceChangeListener, View.OnClickListener {
+public class SettingsFragment extends SettingsBasePreferenceFragment
+        implements Preference.OnPreferenceChangeListener {
+
+    private static final int MENU_RESET = Menu.FIRST;
 
     @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.spen_settings, rootKey);
-
-        ActionButtonsPreference actionButtonsPreference =
-                findPreference(SettingsUtils.ACTION_BUTTONS);
-        actionButtonsPreference.setButton1Text(R.string.spen_reset);
-        actionButtonsPreference.setButton1OnClickListener(this);
-
-        SwitchPreferenceCompat enableBluetoothPreference =
-                findPreference(SettingsUtils.SPEN_BLUETOOTH_ENABLE);
-        enableBluetoothPreference.setOnPreferenceChangeListener(this);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.add(0, MENU_RESET, 0, R.string.spen_reset)
+                .setAlphabeticShortcut('r')
+                .setEnabled(true)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
     }
 
     @Override
-    public void onClick(View view) {
-        BluetoothUtils.resetSPenMAC(getActivity());
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setHasOptionsMenu(true);
+        setPreferencesFromResource(R.xml.spen_settings, rootKey);
+
+        MainSwitchPreference switchBar = findPreference(SettingsUtils.SPEN_BLUETOOTH_ENABLE);
+        switchBar.setOnPreferenceChangeListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == MENU_RESET) {
+            BluetoothUtils.resetSPenMAC(getActivity());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
