@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_profile_auto">Auto</string>
+    <string name="dolby_profile_game">Giogu</string>
+    <string name="dolby_profile_game_1">Giogu 1</string>
+    <string name="dolby_profile_game_2">Giogu 2</string>
+    <string name="dolby_profile_movie">Film</string>
+    <string name="dolby_profile_music">Mùsica</string>
+    <string name="dolby_profile_off">Nissunu profilu</string>
+    <string name="dolby_profile_spacial_audio">Àudio ispatziale</string>
+    <string name="dolby_profile_voice">Boghe</string>
+</resources>
