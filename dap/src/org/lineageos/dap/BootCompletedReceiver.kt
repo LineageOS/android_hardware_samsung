@@ -19,9 +19,7 @@ package org.lineageos.dap
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-
 import androidx.preference.PreferenceManager
-
 import org.lineageos.dap.DolbyFragment.Companion.PREF_DOLBY_ENABLE
 import org.lineageos.dap.DolbyFragment.Companion.PREF_DOLBY_MODES
 

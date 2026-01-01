@@ -69,11 +69,11 @@ int main(int argc, char** argv)
             return usage();
         }
     }
-    
+
     if (filename == NULL) {
         return usage();
     }
-    
+
     int total_read = 0;
     FILE* f = fopen(filename, "rb");
     boot_img_hdr header;
@@ -103,16 +103,16 @@ int main(int argc, char** argv)
     printf("BOARD_PAGE_SIZE %d\n", header.page_size);
     printf("BOARD_SECOND_SIZE %d\n", header.second_size);
     printf("BOARD_DT_SIZE %d\n", header.dt_size);
-    
+
     if (pagesize == 0) {
         pagesize = header.page_size;
     }
-    
+
     //printf("cmdline...\n");
     sprintf(tmp, "%s/%s", directory, basename(filename));
     strcat(tmp, "-cmdline");
     write_string_to_file(tmp, header.cmdline);
-    
+
     //printf("base...\n");
     sprintf(tmp, "%s/%s", directory, basename(filename));
     strcat(tmp, "-base");
@@ -147,7 +147,7 @@ int main(int argc, char** argv)
     char pagesizetmp[200];
     sprintf(pagesizetmp, "%d", header.page_size);
     write_string_to_file(tmp, pagesizetmp);
-    
+
     total_read += sizeof(header);
     //printf("total read: %d\n", total_read);
     total_read += read_padding(f, sizeof(header), pagesize);
@@ -216,7 +216,7 @@ int main(int argc, char** argv)
     fclose(fsig);
 
     fclose(f);
-    
+
     //printf("Total Read: %d\n", total_read);
     return 0;
 }
