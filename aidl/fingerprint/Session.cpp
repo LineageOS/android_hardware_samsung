@@ -122,8 +122,9 @@ ndk::ScopedAStatus Session::enumerateEnrollments() {
 
     if (mHal.ss_fingerprint_enumerate) {
         int32_t error = mHal.ss_fingerprint_enumerate();
-        if (error)
+        if (error) {
             LOG(ERROR) << "ss_fingerprint_enumerate failed: " << error;
+        }
     } else {
         std::vector<int> enrollments;
         char filename[64];
@@ -135,8 +136,9 @@ ndk::ScopedAStatus Session::enumerateEnrollments() {
             while ((entry = readdir(directory))) {
                 int uid, fid;
                 if (sscanf(entry->d_name, "User_%d_%dtmpl.dat", &uid, &fid)) {
-                    if (uid == mUserId)
+                    if (uid == mUserId) {
                         enrollments.push_back(fid);
+                    }
                 }
             }
             closedir(directory);
@@ -155,8 +157,9 @@ ndk::ScopedAStatus Session::removeEnrollments(const std::vector<int32_t>& enroll
 
     for (int32_t enrollment : enrollmentIds) {
         int32_t error = mHal.ss_fingerprint_remove(mUserId, enrollment);
-        if (error)
+        if (error) {
             LOG(ERROR) << "ss_fingerprint_remove failed: " << error;
+        }
     }
 
     return ndk::ScopedAStatus::ok();
@@ -379,8 +382,9 @@ void Session::startLockoutTimer(int64_t timeout) {
 }
 
 void Session::lockoutTimerExpired() {
-    if (!mIsLockoutTimerAborted)
+    if (!mIsLockoutTimerAborted) {
         clearLockout(false);
+    }
 
     mIsLockoutTimerStarted = false;
     mIsLockoutTimerAborted = false;
@@ -407,8 +411,9 @@ void Session::notify(const fingerprint_msg_t* msg) {
                     100 - msg->data.enroll.samples_remaining;
             }
             if (FingerprintHalProperties::cancel_on_enroll_completion().value_or(false)) {
-                if (msg->data.enroll.samples_remaining == 0)
+                if (msg->data.enroll.samples_remaining == 0) {
                     mHal.ss_fingerprint_cancel();
+                }
             }
             LOG(DEBUG) << "onEnrollResult(fid=" << msg->data.enroll.finger.fid
                        << ", gid=" << msg->data.enroll.finger.gid
