@@ -18,9 +18,7 @@ package org.lineageos.dap
 
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-
 import androidx.preference.PreferenceManager
-
 import org.lineageos.dap.DolbyFragment.Companion.PREF_DOLBY_ENABLE
 
 class DolbyTile : TileService() {
@@ -41,8 +39,8 @@ class DolbyTile : TileService() {
         isEnabled = !isEnabled
         DolbyCore.setEnabled(isEnabled)
         PreferenceManager.getDefaultSharedPreferences(this)
-                .edit()
-                .putBoolean(PREF_DOLBY_ENABLE, isEnabled)
-                .commit()
+            .edit()
+            .putBoolean(PREF_DOLBY_ENABLE, isEnabled)
+            .commit()
     }
 }

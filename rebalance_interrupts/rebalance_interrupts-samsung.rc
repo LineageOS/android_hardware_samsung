@@ -9,4 +9,3 @@ on early-boot
 
 on property:sys.boot_completed=1
     start vendor.rebalance_interrupts-samsung
-

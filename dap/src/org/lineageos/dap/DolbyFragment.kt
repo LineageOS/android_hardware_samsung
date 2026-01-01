@@ -19,11 +19,8 @@ package org.lineageos.dap
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-
 import com.android.settingslib.widget.MainSwitchPreference
 import com.android.settingslib.widget.SelectorWithWidgetPreference
-
-import org.lineageos.dap.R
 
 class DolbyFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
 
@@ -64,7 +61,8 @@ class DolbyFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeL
     companion object {
         const val PREF_DOLBY_ENABLE = "dolby_enable"
 
-        val PREF_DOLBY_MODES = mapOf(
+        val PREF_DOLBY_MODES =
+            mapOf(
                 "dolby_profile_auto" to DolbyCore.PROFILE_AUTO,
                 "dolby_profile_movie" to DolbyCore.PROFILE_MOVIE,
                 "dolby_profile_music" to DolbyCore.PROFILE_MUSIC,
@@ -74,6 +72,6 @@ class DolbyFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeL
                 "dolby_profile_game_1" to DolbyCore.PROFILE_GAME_1,
                 "dolby_profile_game_2" to DolbyCore.PROFILE_GAME_2,
                 "dolby_profile_spacial_audio" to DolbyCore.PROFILE_SPACIAL_AUDIO,
-        )
+            )
     }
 }

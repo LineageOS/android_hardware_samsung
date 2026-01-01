@@ -133,4 +133,3 @@ Android - Table of Device Tree
           |                  |
           |                  |
           +------------------+
-

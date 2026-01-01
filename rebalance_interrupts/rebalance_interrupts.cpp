@@ -278,4 +278,3 @@ int main(int /* argc */, char* /* argv */[]) {
   // Distribute the rebalancable IRQs across all cores.
   return RebalanceIrqs(action_to_irqs) ? 0 : 1;
 }
-

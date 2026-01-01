@@ -17,15 +17,14 @@
 package org.lineageos.dap
 
 import android.os.Bundle
-
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity
 
 class DolbyActivity : CollapsingToolbarBaseActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportFragmentManager.beginTransaction().replace(
-                com.android.settingslib.collapsingtoolbar.R.id.content_frame,
-                DolbyFragment()
-        ).commit()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(com.android.settingslib.collapsingtoolbar.R.id.content_frame, DolbyFragment())
+            .commit()
     }
 }
