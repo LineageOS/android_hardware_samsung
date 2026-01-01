@@ -18,7 +18,7 @@
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true"
         android:label="@string/app_name"
-        android:theme="@style/Theme.SubSettingsBase">
+        android:theme="@style/Theme.SubSettingsBase.Expressive">
 
         <activity
             android:name=".settings.SettingsActivity"
