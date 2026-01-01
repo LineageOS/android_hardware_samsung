@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2021-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,15 +13,15 @@ import android.os.UserHandle;
 import android.view.View;
 
 import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.settingslib.widget.ActionButtonsPreference;
+import com.android.settingslib.widget.MainSwitchPreference;
+import com.android.settingslib.widget.SettingsBasePreferenceFragment;
 
 import org.lineageos.spenactions.BluetoothUtils;
 import org.lineageos.spenactions.R;
 
-public class SettingsFragment extends PreferenceFragmentCompat
+public class SettingsFragment extends SettingsBasePreferenceFragment
         implements Preference.OnPreferenceChangeListener, View.OnClickListener {
 
     @Override
@@ -33,9 +33,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
         actionButtonsPreference.setButton1Text(R.string.reset_spen);
         actionButtonsPreference.setButton1OnClickListener(this);
 
-        SwitchPreferenceCompat enableBluetoothPreference =
-                findPreference(SettingsUtils.SPEN_BLUETOOTH_ENABLE);
-        enableBluetoothPreference.setOnPreferenceChangeListener(this);
+        MainSwitchPreference switchBar = findPreference(SettingsUtils.SPEN_BLUETOOTH_ENABLE);
+        switchBar.setOnPreferenceChangeListener(this);
     }
 
     @Override
