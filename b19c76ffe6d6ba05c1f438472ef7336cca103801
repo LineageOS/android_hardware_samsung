@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d0ea20e_a42acd05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-01-02T01:15:49Z",
+      "side": 1,
+      "message": "Galaxy Tab S7/S7+ has READING_MODE.",
+      "revId": "b19c76ffe6d6ba05c1f438472ef7336cca103801",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
