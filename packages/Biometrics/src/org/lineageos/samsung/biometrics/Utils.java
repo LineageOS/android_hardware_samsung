@@ -16,29 +16,26 @@ public class Utils {
     private static final String TAG = "SB_Utils";
 
     public static byte[] readFile(File file) throws IOException {
-        byte[] bArr = null;
         if (!file.exists()) {
             Slog.i(TAG, "Invalid file info, " + file);
             return null;
         }
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            bArr = new byte[(int) file.length()];
-            fileInputStream.read(bArr);
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            byte[] data = new byte[(int) file.length()];
+            fileInputStream.read(data);
             fileInputStream.close();
-            return bArr;
+            return data;
         } catch (IOException e) {
             Slog.w(TAG, "failed to read file", e);
-            return bArr;
+            return null;
         }
     }
 
-    public static void writeFile(File file, byte[] bArr) throws IOException {
+    public static void writeFile(File file, byte[] bArr) {
         if (bArr == null) {
             return;
         }
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(bArr);
             fileOutputStream.close();
         } catch (IOException e) {
