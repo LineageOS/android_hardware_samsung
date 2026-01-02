@@ -22,7 +22,6 @@ import android.widget.FrameLayout;
 public final class MaskView implements DisplayBrightnessMonitor.OnBrightnessListener {
     private static final String TAG = "SB_MaskView";
     private static final int DEFAULT_BRIGHTNESS = 127;
-    private static final float TARGET_BRIGHTNESS = 319.0f; // Hardcoded!!!
     private static final float BRIGHTNESS_CONTROL_FACTOR = 1.0f;
 
     private final Context mContext;
@@ -33,12 +32,22 @@ public final class MaskView implements DisplayBrightnessMonitor.OnBrightnessList
 
     private View mRoot;
     private boolean mAdded;
+    private float mUdfpsBrightness;
+    private float mUdfpsNits;
 
     public MaskView(Context context) {
         mContext = context;
         mWm = context.getSystemService(WindowManager.class);
         mDisplayBrightnessMonitor = DisplayBrightnessMonitor.getInstance();
         mDisplaySolution = new DisplaySolution(context);
+    }
+
+    public void setUdfpsParams(float brightness, float nits) {
+        mUdfpsBrightness = brightness;
+        mUdfpsNits = nits;
+    }
+
+    public void start() {
         mDisplayBrightnessMonitor.registerListener(this);
     }
 
@@ -133,11 +142,11 @@ public final class MaskView implements DisplayBrightnessMonitor.OnBrightnessList
             displayBrightness = DEFAULT_BRIGHTNESS;
         }
 
-        float alpha = mDisplaySolution.getAlphaMaskLevel(displayBrightness, TARGET_BRIGHTNESS, BRIGHTNESS_CONTROL_FACTOR);
+        float alpha = mDisplaySolution.getAlphaMaskLevel(displayBrightness, mUdfpsBrightness, BRIGHTNESS_CONTROL_FACTOR);
         int maskAlpha = (int) (255f * alpha);
         int argb = (maskAlpha << 24);
 
-        Log.i(TAG, "updateBackgroundColor: " + Integer.toHexString(argb) + ", " + TARGET_BRIGHTNESS + ", " + maskAlpha);
+        Log.i(TAG, "updateBackgroundColor: " + Integer.toHexString(argb) + ", " + mUdfpsBrightness + ", " + maskAlpha);
         mRoot.setBackgroundColor(argb);
     }
 }

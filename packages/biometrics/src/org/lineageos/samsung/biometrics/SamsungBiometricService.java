@@ -14,15 +14,22 @@ import android.util.Log;
 public class SamsungBiometricService extends Service {
     private static final String TAG = "SB_Service";
 
+    private SamsungOpticalUdfpsService mSamsungOpticalUdfpsService;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Log.i(TAG, "SamsungBiometricService is alive");
+
+        mSamsungOpticalUdfpsService = new SamsungOpticalUdfpsService(this);
     }
 
     @Override
     public void onDestroy() {
         Log.i(TAG, "SamsungBiometricService is killed");
+        if (mSamsungOpticalUdfpsService != null) {
+            mSamsungOpticalUdfpsService.destroy();
+        }
         super.onDestroy();
     }
 
