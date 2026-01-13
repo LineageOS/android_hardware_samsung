@@ -77,7 +77,7 @@ ndk::ScopedAStatus Memtrack::getGpuDeviceInfo(std::vector<DeviceInfo>* _aidl_ret
     return ndk::ScopedAStatus::ok();
 }
 
-} // namespace memtrack
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace memtrack
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl

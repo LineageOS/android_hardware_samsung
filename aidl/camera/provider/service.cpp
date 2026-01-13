@@ -42,8 +42,7 @@ int main() {
 
     binder_exception_t ret =
             AServiceManager_addService(defaultProvider->asBinder().get(), serviceName.c_str());
-    LOG_ALWAYS_FATAL_IF(ret != EX_NONE, "Error while registering camera provider service: %d",
-                        ret);
+    LOG_ALWAYS_FATAL_IF(ret != EX_NONE, "Error while registering camera provider service: %d", ret);
 
     ABinderProcess_joinThreadPool();
     return EXIT_FAILURE;  // should not reach

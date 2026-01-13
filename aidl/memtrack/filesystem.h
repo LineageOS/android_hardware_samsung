@@ -16,13 +16,12 @@
 
 namespace filesystem {
 class path {
-public:
+  public:
     path(const std::string _path) : strPath(_path) {}
 
     path filename() const {
         auto pos = strPath.rfind('/');
-        if (pos == std::string::npos)
-            return path(strPath);
+        if (pos == std::string::npos) return path(strPath);
 
         pos++;
         auto l = strPath.size();
@@ -31,19 +30,17 @@ public:
 
     std::string string() const { return strPath; }
 
-private:
+  private:
     std::string strPath;
 };
 
 class directory_entry {
-public:
+  public:
     directory_entry(const std::string _path) : p(_path) {}
 
-    class path path() {
-        return p;
-    }
+    class path path() { return p; }
 
-private:
+  private:
     class path p;
 };
 
@@ -57,4 +54,4 @@ path read_symlink(const path& p);
 
 // Vector is easier to create than an iterator and serves our purposes well
 std::vector<directory_entry> directory_iterator(const path& p);
-} // namespace filesystem
+}  // namespace filesystem
