@@ -38,8 +38,7 @@ ndk::ScopedAStatus DisplayColorCalibration::getMinValue(int32_t* _aidl_return) {
     return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus DisplayColorCalibration::getCalibration(
-        std::vector<int32_t>* _aidl_return) {
+ndk::ScopedAStatus DisplayColorCalibration::getCalibration(std::vector<int32_t>* _aidl_return) {
     std::vector<int32_t> rgb;
     std::string tmp;
 
