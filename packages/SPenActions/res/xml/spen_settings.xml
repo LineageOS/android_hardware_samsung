@@ -3,7 +3,9 @@
      SPDX-FileCopyrightText: 2021-2026 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.android.settingslib.widget.TopIntroPreference
         android:key="spen_bluetooth_top_intro"
@@ -19,8 +21,8 @@
         android:entries="@array/spen_mode_entries"
         android:entryValues="@array/spen_mode_values"
         android:defaultValue="0"
+        android:dependency="spen_bluetooth_enable"
         android:title="@string/spen_mode_title"
-        android:summary="%s"
-        android:dependency="spen_bluetooth_enable" />
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>
