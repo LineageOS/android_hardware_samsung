@@ -17,15 +17,15 @@
 
 #pragma once
 
-#include <android-base/file.h>
-#include <android-base/properties.h>
-#include <android-base/unique_fd.h>
-#include <android-base/strings.h>
 #include <aidl/android/hardware/usb/gadget/BnUsbGadget.h>
 #include <aidl/android/hardware/usb/gadget/BnUsbGadgetCallback.h>
 #include <aidl/android/hardware/usb/gadget/GadgetFunction.h>
 #include <aidl/android/hardware/usb/gadget/IUsbGadget.h>
 #include <aidl/android/hardware/usb/gadget/IUsbGadgetCallback.h>
+#include <android-base/file.h>
+#include <android-base/properties.h>
+#include <android-base/strings.h>
+#include <android-base/unique_fd.h>
 #include <pixelusb/UsbGadgetAidlCommon.h>
 #include <sched.h>
 #include <sys/epoll.h>
@@ -44,15 +44,15 @@ namespace usb {
 namespace gadget {
 
 using ::aidl::android::hardware::usb::gadget::GadgetFunction;
-using ::aidl::android::hardware::usb::gadget::IUsbGadgetCallback;
 using ::aidl::android::hardware::usb::gadget::IUsbGadget;
+using ::aidl::android::hardware::usb::gadget::IUsbGadgetCallback;
 using ::aidl::android::hardware::usb::gadget::Status;
 using ::aidl::android::hardware::usb::gadget::UsbSpeed;
 using ::android::base::GetProperty;
-using ::android::base::SetProperty;
-using ::android::base::unique_fd;
 using ::android::base::ReadFileToString;
+using ::android::base::SetProperty;
 using ::android::base::Trim;
+using ::android::base::unique_fd;
 using ::android::base::WriteStringToFile;
 using ::android::hardware::google::pixel::usb::addAdb;
 using ::android::hardware::google::pixel::usb::addEpollFd;
@@ -86,28 +86,28 @@ struct UsbGadget : public BnUsbGadget {
     UsbSpeed mUsbSpeed;
 
     ScopedAStatus setCurrentUsbFunctions(long functions,
-            const shared_ptr<IUsbGadgetCallback> &callback,
-            int64_t timeout, int64_t in_transactionId) override;
+                                         const shared_ptr<IUsbGadgetCallback>& callback,
+                                         int64_t timeout, int64_t in_transactionId) override;
 
-    ScopedAStatus getCurrentUsbFunctions(const shared_ptr<IUsbGadgetCallback> &callback,
-	    int64_t in_transactionId) override;
+    ScopedAStatus getCurrentUsbFunctions(const shared_ptr<IUsbGadgetCallback>& callback,
+                                         int64_t in_transactionId) override;
 
-    ScopedAStatus reset(const shared_ptr<IUsbGadgetCallback> &callback,
-	    int64_t in_transactionId) override;
+    ScopedAStatus reset(const shared_ptr<IUsbGadgetCallback>& callback,
+                        int64_t in_transactionId) override;
 
-    ScopedAStatus getUsbSpeed(const shared_ptr<IUsbGadgetCallback> &callback,
-	    int64_t in_transactionId) override;
+    ScopedAStatus getUsbSpeed(const shared_ptr<IUsbGadgetCallback>& callback,
+                              int64_t in_transactionId) override;
 
-    ScopedAStatus setVidPid(const char *vid,const char *pid);
+    ScopedAStatus setVidPid(const char* vid, const char* pid);
 
   private:
     Status tearDownGadget();
-    Status setupFunctions(long functions, const shared_ptr<IUsbGadgetCallback> &callback,
-            uint64_t timeout, int64_t in_transactionId);
+    Status setupFunctions(long functions, const shared_ptr<IUsbGadgetCallback>& callback,
+                          uint64_t timeout, int64_t in_transactionId);
 };
 
 }  // namespace gadget
 }  // namespace usb
 }  // namespace hardware
 }  // namespace android
-}  // aidl
+}  // namespace aidl
