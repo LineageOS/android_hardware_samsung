@@ -43,7 +43,7 @@ void LoadProperties(std::string data, std::map<std::string, std::string>& proper
     }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     bool isNetworkConfig = (argc > 1 && std::string(argv[1]) == "NetworkConfig");
 
     std::string prop = isNetworkConfig ? TELEPHONY_PROP : FACTORY_PROP;
