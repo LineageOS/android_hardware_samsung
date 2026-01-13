@@ -20,20 +20,20 @@
 
 #define SAMSUNG_CAMERA_DEBUG
 
-using ::android::hardware::camera::provider::V2_5::implementation::LegacyCameraProviderImpl_2_5;
 using ::android::hardware::Return;
+using ::android::hardware::camera::provider::V2_5::implementation::LegacyCameraProviderImpl_2_5;
 
 class SamsungCameraProvider : public LegacyCameraProviderImpl_2_5 {
-public:
+  public:
     SamsungCameraProvider();
     ~SamsungCameraProvider();
 
-private:
+  private:
     std::vector<int> mExtraIDs = {
 #ifdef EXTRA_IDS
-        EXTRA_IDS
+            EXTRA_IDS
 #endif
     };
 };
 
-#endif // SAMSUNG_CAMERA_PROVIDER_H
+#endif  // SAMSUNG_CAMERA_PROVIDER_H
