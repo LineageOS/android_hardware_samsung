@@ -18,8 +18,7 @@ namespace memtrack {
 
 ndk::ScopedAStatus Memtrack::getMemory(int pid, MemtrackType type,
                                        std::vector<MemtrackRecord>* _aidl_return) {
-    if (pid < 0)
-        return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_ILLEGAL_ARGUMENT));
+    if (pid < 0) return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_ILLEGAL_ARGUMENT));
 
     if (type != MemtrackType::OTHER && type != MemtrackType::GL && type != MemtrackType::GRAPHICS &&
         type != MemtrackType::MULTIMEDIA && type != MemtrackType::CAMERA)
@@ -28,12 +27,10 @@ ndk::ScopedAStatus Memtrack::getMemory(int pid, MemtrackType type,
     _aidl_return->clear();
 
     // Other types are retained only for backward compatibility
-    if (type != MemtrackType::GL && type != MemtrackType::GRAPHICS)
-        return ndk::ScopedAStatus::ok();
+    if (type != MemtrackType::GL && type != MemtrackType::GRAPHICS) return ndk::ScopedAStatus::ok();
 
     // pid 0 is only supported for GL type to report total private memory
-    if (pid == 0 && type != MemtrackType::GL)
-        return ndk::ScopedAStatus::ok();
+    if (pid == 0 && type != MemtrackType::GL) return ndk::ScopedAStatus::ok();
 
     uint64_t size = 0;
     switch (type) {
@@ -73,7 +70,7 @@ ndk::ScopedAStatus Memtrack::getGpuDeviceInfo(std::vector<DeviceInfo>* _aidl_ret
     return ndk::ScopedAStatus::ok();
 }
 
-} // namespace memtrack
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace memtrack
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl

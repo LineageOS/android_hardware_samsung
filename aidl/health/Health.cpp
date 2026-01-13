@@ -42,11 +42,11 @@ static constexpr std::string_view gChargerArg{"--charger"};
 #if !CHARGER_FORCE_NO_UI
 namespace aidl::android::hardware::health {
 class ChargerCallbackImpl : public ChargerCallback {
-public:
+  public:
     using ChargerCallback::ChargerCallback;
     bool ChargerEnableSuspend() override { return true; }
 };
-} // namespace aidl::android::hardware::health
+}  // namespace aidl::android::hardware::health
 #endif
 
 int main(int argc, char** argv) {
@@ -64,7 +64,9 @@ int main(int argc, char** argv) {
         // If charger shouldn't have UI for your device, simply drop the line below
         // for your service implementation. This corresponds to
         // ro.charger.no_ui=true
-        return ChargerModeMain(binder, std::make_shared<aidl::android::hardware::health::ChargerCallbackImpl>(binder));
+        return ChargerModeMain(
+                binder,
+                std::make_shared<aidl::android::hardware::health::ChargerCallbackImpl>(binder));
 #endif
 
         LOG(INFO) << "Starting charger mode without UI.";
