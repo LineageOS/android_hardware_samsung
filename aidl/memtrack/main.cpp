@@ -19,5 +19,5 @@ int main() {
     CHECK(status == STATUS_OK);
 
     ABinderProcess_joinThreadPool();
-    return EXIT_FAILURE; // Unreachable
+    return EXIT_FAILURE;  // Unreachable
 }
