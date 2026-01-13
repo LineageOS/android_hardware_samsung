@@ -395,7 +395,7 @@ void CameraDeviceSession::cleanupInflightFences(std::vector<int>& allFences, siz
 
 CameraDeviceSession::ResultBatcher::ResultBatcher(
         const std::shared_ptr<ICameraDeviceCallback>& callback)
-    : mCallback(callback){};
+    : mCallback(callback) {};
 
 bool CameraDeviceSession::ResultBatcher::InflightBatch::allDelivered() const {
     if (!mShutterDelivered) return false;

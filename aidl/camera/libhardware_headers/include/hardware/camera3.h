@@ -1573,7 +1573,6 @@ typedef enum camera3_stream_configuration_mode {
  * types) see the usage field below.
  */
 typedef struct camera3_stream {
-
     /*****
      * Set by framework before configure_streams()
      */
@@ -1674,7 +1673,7 @@ typedef struct camera3_stream {
      * A handle to HAL-private information for the stream. Will not be inspected
      * by the framework code.
      */
-    void *priv;
+    void* priv;
 
     /**
      * A field that describes the contents of the buffer. The format and buffer
@@ -1760,7 +1759,7 @@ typedef struct camera3_stream {
     const char* physical_camera_id;
 
     /* reserved for future use */
-    void *reserved[6];
+    void* reserved[6];
 
 #ifdef CAMERA_NEEDS_SEC_RESERVED_FIELD
     char reserved_sec[0x28];
@@ -1793,7 +1792,7 @@ typedef struct camera3_stream_configuration {
      * At least one output-capable stream must be defined (OUTPUT or
      * BIDIRECTIONAL).
      */
-    camera3_stream_t **streams;
+    camera3_stream_t** streams;
 
     /**
      * >= CAMERA_DEVICE_API_VERSION_3_3:
@@ -1821,7 +1820,7 @@ typedef struct camera3_stream_configuration {
      * the parameter values and configure its internal camera pipeline
      * accordingly.
      */
-    const camera_metadata_t *session_parameters;
+    const camera_metadata_t* session_parameters;
 } camera3_stream_configuration_t;
 
 /**
@@ -1858,12 +1857,12 @@ typedef struct camera3_stream_buffer {
     /**
      * The handle of the stream this buffer is associated with
      */
-    camera3_stream_t *stream;
+    camera3_stream_t* stream;
 
     /**
      * The native handle to the buffer
      */
-    buffer_handle_t *buffer;
+    buffer_handle_t* buffer;
 
     /**
      * Current state of the buffer, one of the camera3_buffer_status_t
@@ -1899,7 +1898,7 @@ typedef struct camera3_stream_buffer {
      * fences should be handled similarly to the way they are handled for output
      * buffers.
      */
-     int acquire_fence;
+    int acquire_fence;
 
     /**
      * The release sync fence for this buffer. The HAL must set this fence when
@@ -1947,7 +1946,7 @@ typedef struct camera3_stream_buffer_set {
     /**
      * The stream handle for the stream these buffers belong to
      */
-    camera3_stream_t *stream;
+    camera3_stream_t* stream;
 
     /**
      * The number of buffers in this stream. It is guaranteed to be at least
@@ -1961,7 +1960,7 @@ typedef struct camera3_stream_buffer_set {
      * should inspect the passed-in buffers to determine any platform-private
      * pixel format information.
      */
-    buffer_handle_t **buffers;
+    buffer_handle_t** buffers;
 
 } camera3_stream_buffer_set_t;
 
@@ -2105,7 +2104,7 @@ typedef struct camera3_error_msg {
      * Pointer to the stream that had a failure. NULL if the stream isn't
      * applicable to the error.
      */
-    camera3_stream_t *error_stream;
+    camera3_stream_t* error_stream;
 
     /**
      * The code for this error; one of the CAMERA_MSG_ERROR enum values.
@@ -2140,7 +2139,6 @@ typedef struct camera3_shutter_msg {
  * The message structure sent to camera3_callback_ops_t.notify()
  */
 typedef struct camera3_notify_msg {
-
     /**
      * The message type. One of camera3_notify_msg_type, or a private extension.
      */
@@ -2165,7 +2163,6 @@ typedef struct camera3_notify_msg {
     } message;
 
 } camera3_notify_msg_t;
-
 
 /**********************************************************************
  *
@@ -2278,7 +2275,7 @@ typedef struct camera3_buffer_request {
     /**
      * The stream HAL wants to request buffer from
      */
-    camera3_stream_t *stream;
+    camera3_stream_t* stream;
 
     /**
      * The number of buffers HAL requested
@@ -2290,7 +2287,7 @@ typedef struct camera3_stream_buffer_ret {
     /**
      * The stream HAL wants to request buffer from
      */
-    camera3_stream_t *stream;
+    camera3_stream_t* stream;
 
     /**
      * The status of buffer request of this stream
@@ -2309,9 +2306,8 @@ typedef struct camera3_stream_buffer_ret {
      * Caller of request_stream_buffers() should supply this with enough memory
      * (num_buffers_requested * sizeof(camera3_stream_buffer_t))
      */
-    camera3_stream_buffer_t *output_buffers;
+    camera3_stream_buffer_t* output_buffers;
 } camera3_stream_buffer_ret_t;
-
 
 /**********************************************************************
  *
@@ -2410,7 +2406,7 @@ typedef struct camera3_capture_request {
      * NULL buffer cannot be used as the first submitted request after a
      * configure_streams() call.
      */
-    const camera_metadata_t *settings;
+    const camera_metadata_t* settings;
 
     /**
      * The input stream buffer to use for this request, if any.
@@ -2436,7 +2432,7 @@ typedef struct camera3_capture_request {
      * The buffers will not have been pre-registered with the HAL.
      * Subsequent requests may reuse buffers, or provide entirely new buffers.
      */
-    camera3_stream_buffer_t *input_buffer;
+    camera3_stream_buffer_t* input_buffer;
 
     /**
      * The number of output buffers for this capture request. Must be at least
@@ -2463,7 +2459,7 @@ typedef struct camera3_capture_request {
      * Any or all of the buffers included here may be brand new in this
      * request (having never before seen by the HAL).
      */
-    const camera3_stream_buffer_t *output_buffers;
+    const camera3_stream_buffer_t* output_buffers;
 
     /**
      * <= CAMERA_DEVICE_API_VERISON_3_4:
@@ -2488,7 +2484,7 @@ typedef struct camera3_capture_request {
      *    In case some id is invalid, the process capture request must fail and return
      *    -EINVAL.
      */
-    const char **physcam_id;
+    const char** physcam_id;
 
     /**
      * <= CAMERA_DEVICE_API_VERISON_3_4:
@@ -2501,7 +2497,7 @@ typedef struct camera3_capture_request {
      *    case the settings at some particular index are empty, the process capture
      *    request must fail and return -EINVAL.
      */
-    const camera_metadata_t **physcam_settings;
+    const camera_metadata_t** physcam_settings;
 
 } camera3_capture_request_t;
 
@@ -2554,7 +2550,7 @@ typedef struct camera3_capture_result {
      * submitted request to uniquely identify this capture. It is also used to
      * identify the request in asynchronous notifications sent to
      * camera3_callback_ops_t.notify().
-    */
+     */
     uint32_t frame_number;
 
     /**
@@ -2582,7 +2578,7 @@ typedef struct camera3_capture_result {
      * If notify has been called with ERROR_RESULT, all further partial
      * results for that frame are ignored by the framework.
      */
-    const camera_metadata_t *result;
+    const camera_metadata_t* result;
 
     /**
      * The number of output buffers returned in this result structure. Must be
@@ -2632,84 +2628,84 @@ typedef struct camera3_capture_result {
      * via a SHUTTER notify() call. It is highly recommended to
      * dispatch that call as early as possible.
      */
-     const camera3_stream_buffer_t *output_buffers;
+    const camera3_stream_buffer_t* output_buffers;
 
-     /**
-      * >= CAMERA_DEVICE_API_VERSION_3_2:
-      *
-      * The handle for the input stream buffer for this capture. It may not
-      * yet be consumed at the time the HAL calls process_capture_result(); the
-      * framework will wait on the release sync fences provided by the HAL before
-      * reusing the buffer.
-      *
-      * The HAL should handle the sync fences the same way they are done for
-      * output_buffers.
-      *
-      * Only one input buffer is allowed to be sent per request. Similarly to
-      * output buffers, the ordering of returned input buffers must be
-      * maintained by the HAL.
-      *
-      * Performance considerations:
-      *
-      * The input buffer should be returned as early as possible. If the HAL
-      * supports sync fences, it can call process_capture_result to hand it back
-      * with sync fences being set appropriately. If the sync fences are not
-      * supported, the buffer can only be returned when it is consumed, which
-      * may take long time; the HAL may choose to copy this input buffer to make
-      * the buffer return sooner.
-      */
-      const camera3_stream_buffer_t *input_buffer;
+    /**
+     * >= CAMERA_DEVICE_API_VERSION_3_2:
+     *
+     * The handle for the input stream buffer for this capture. It may not
+     * yet be consumed at the time the HAL calls process_capture_result(); the
+     * framework will wait on the release sync fences provided by the HAL before
+     * reusing the buffer.
+     *
+     * The HAL should handle the sync fences the same way they are done for
+     * output_buffers.
+     *
+     * Only one input buffer is allowed to be sent per request. Similarly to
+     * output buffers, the ordering of returned input buffers must be
+     * maintained by the HAL.
+     *
+     * Performance considerations:
+     *
+     * The input buffer should be returned as early as possible. If the HAL
+     * supports sync fences, it can call process_capture_result to hand it back
+     * with sync fences being set appropriately. If the sync fences are not
+     * supported, the buffer can only be returned when it is consumed, which
+     * may take long time; the HAL may choose to copy this input buffer to make
+     * the buffer return sooner.
+     */
+    const camera3_stream_buffer_t* input_buffer;
 
-     /**
-      * >= CAMERA_DEVICE_API_VERSION_3_2:
-      *
-      * In order to take advantage of partial results, the HAL must set the
-      * static metadata android.request.partialResultCount to the number of
-      * partial results it will send for each frame.
-      *
-      * Each new capture result with a partial result must set
-      * this field (partial_result) to a distinct inclusive value between
-      * 1 and android.request.partialResultCount.
-      *
-      * HALs not wishing to take advantage of this feature must not
-      * set an android.request.partialResultCount or partial_result to a value
-      * other than 1.
-      *
-      * This value must be set to 0 when a capture result contains buffers only
-      * and no metadata.
-      */
-     uint32_t partial_result;
+    /**
+     * >= CAMERA_DEVICE_API_VERSION_3_2:
+     *
+     * In order to take advantage of partial results, the HAL must set the
+     * static metadata android.request.partialResultCount to the number of
+     * partial results it will send for each frame.
+     *
+     * Each new capture result with a partial result must set
+     * this field (partial_result) to a distinct inclusive value between
+     * 1 and android.request.partialResultCount.
+     *
+     * HALs not wishing to take advantage of this feature must not
+     * set an android.request.partialResultCount or partial_result to a value
+     * other than 1.
+     *
+     * This value must be set to 0 when a capture result contains buffers only
+     * and no metadata.
+     */
+    uint32_t partial_result;
 
-     /**
-      * >= CAMERA_DEVICE_API_VERSION_3_5:
-      *
-      * Specifies the number of physical camera metadata this capture result
-      * contains. It must be equal to the number of physical cameras being
-      * requested from.
-      *
-      * If the current camera device is not a logical multi-camera, or the
-      * corresponding capture_request doesn't request on any physical camera,
-      * this field must be 0.
-      */
-     uint32_t num_physcam_metadata;
+    /**
+     * >= CAMERA_DEVICE_API_VERSION_3_5:
+     *
+     * Specifies the number of physical camera metadata this capture result
+     * contains. It must be equal to the number of physical cameras being
+     * requested from.
+     *
+     * If the current camera device is not a logical multi-camera, or the
+     * corresponding capture_request doesn't request on any physical camera,
+     * this field must be 0.
+     */
+    uint32_t num_physcam_metadata;
 
-     /**
-      * >= CAMERA_DEVICE_API_VERSION_3_5:
-      *
-      * An array of strings containing the physical camera ids for the returned
-      * physical camera metadata. The length of the array is
-      * num_physcam_metadata.
-      */
-     const char **physcam_ids;
+    /**
+     * >= CAMERA_DEVICE_API_VERSION_3_5:
+     *
+     * An array of strings containing the physical camera ids for the returned
+     * physical camera metadata. The length of the array is
+     * num_physcam_metadata.
+     */
+    const char** physcam_ids;
 
-     /**
-      * >= CAMERA_DEVICE_API_VERSION_3_5:
-      *
-      * The array of physical camera metadata for the physical cameras being
-      * requested upon. This array should have a 1-to-1 mapping with the
-      * physcam_ids. The length of the array is num_physcam_metadata.
-      */
-     const camera_metadata_t **physcam_metadata;
+    /**
+     * >= CAMERA_DEVICE_API_VERSION_3_5:
+     *
+     * The array of physical camera metadata for the physical cameras being
+     * requested upon. This array should have a 1-to-1 mapping with the
+     * physcam_ids. The length of the array is num_physcam_metadata.
+     */
+    const camera_metadata_t** physcam_metadata;
 
 } camera3_capture_result_t;
 
@@ -2726,7 +2722,6 @@ typedef struct camera3_capture_result {
  *
  */
 typedef struct camera3_callback_ops {
-
     /**
      * process_capture_result:
      *
@@ -2794,8 +2789,8 @@ typedef struct camera3_callback_ops {
      * 4 frame intervals, and must be less than or equal to 8 frame intervals.
      *
      */
-    void (*process_capture_result)(const struct camera3_callback_ops *,
-            const camera3_capture_result_t *result);
+    void (*process_capture_result)(const struct camera3_callback_ops*,
+                                   const camera3_capture_result_t* result);
 
     /**
      * notify:
@@ -2827,8 +2822,7 @@ typedef struct camera3_callback_ops {
      *
      * This is a non-blocking call. The framework will return this call in 5ms.
      */
-    void (*notify)(const struct camera3_callback_ops *,
-            const camera3_notify_msg_t *msg);
+    void (*notify)(const struct camera3_callback_ops*, const camera3_notify_msg_t* msg);
 
     /**
      * request_stream_buffers:
@@ -2864,11 +2858,10 @@ typedef struct camera3_callback_ops {
      * ready to fill the buffer.
      */
     camera3_buffer_request_status_t (*request_stream_buffers)(
-            const struct camera3_callback_ops *,
-            uint32_t num_buffer_reqs,
-            const camera3_buffer_request_t *buffer_reqs,
-            /*out*/uint32_t *num_returned_buf_reqs,
-            /*out*/camera3_stream_buffer_ret_t *returned_buf_reqs);
+            const struct camera3_callback_ops*, uint32_t num_buffer_reqs,
+            const camera3_buffer_request_t* buffer_reqs,
+            /*out*/ uint32_t* num_returned_buf_reqs,
+            /*out*/ camera3_stream_buffer_ret_t* returned_buf_reqs);
 
     /**
      * return_stream_buffers:
@@ -2884,10 +2877,8 @@ typedef struct camera3_callback_ops {
      * If this method is called during a configure_streams() call, it will be
      * blocked until camera service finishes the ongoing configure_streams() call.
      */
-    void (*return_stream_buffers)(
-            const struct camera3_callback_ops *,
-            uint32_t num_buffers,
-            const camera3_stream_buffer_t* const* buffers);
+    void (*return_stream_buffers)(const struct camera3_callback_ops*, uint32_t num_buffers,
+                                  const camera3_stream_buffer_t* const* buffers);
 
 } camera3_callback_ops_t;
 
@@ -2897,7 +2888,6 @@ typedef struct camera3_callback_ops {
  *
  */
 typedef struct camera3_device_ops {
-
     /**
      * initialize:
      *
@@ -2917,8 +2907,7 @@ typedef struct camera3_device_ops {
      * -ENODEV: If initialization fails. Only close() can be called successfully
      *          by the framework after this.
      */
-    int (*initialize)(const struct camera3_device *,
-            const camera3_callback_ops_t *callback_ops);
+    int (*initialize)(const struct camera3_device*, const camera3_callback_ops_t* callback_ops);
 
     /**********************************************************************
      * Stream management
@@ -3156,8 +3145,8 @@ typedef struct camera3_device_ops {
      *          operational. Only close() can be called successfully by the
      *          framework after this error is returned.
      */
-    int (*configure_streams)(const struct camera3_device *,
-            camera3_stream_configuration_t *stream_list);
+    int (*configure_streams)(const struct camera3_device*,
+                             camera3_stream_configuration_t* stream_list);
 
     /**
      * register_stream_buffers:
@@ -3210,8 +3199,8 @@ typedef struct camera3_device_ops {
      *          operational. Only close() can be called successfully by the
      *          framework after this error is returned.
      */
-    int (*register_stream_buffers)(const struct camera3_device *,
-            const camera3_stream_buffer_set_t *buffer_set);
+    int (*register_stream_buffers)(const struct camera3_device*,
+                                   const camera3_stream_buffer_set_t* buffer_set);
 
     /**********************************************************************
      * Request creation and submission
@@ -3246,9 +3235,8 @@ typedef struct camera3_device_ops {
      *                   the close() method can be called successfully by the
      *                   framework.
      */
-    const camera_metadata_t* (*construct_default_request_settings)(
-            const struct camera3_device *,
-            int type);
+    const camera_metadata_t* (*construct_default_request_settings)(const struct camera3_device*,
+                                                                   int type);
 
     /**
      * process_capture_request:
@@ -3316,8 +3304,8 @@ typedef struct camera3_device_ops {
      *          called by the framework.
      *
      */
-    int (*process_capture_request)(const struct camera3_device *,
-            camera3_capture_request_t *request);
+    int (*process_capture_request)(const struct camera3_device*,
+                                   camera3_capture_request_t* request);
 
     /**********************************************************************
      * Miscellaneous methods
@@ -3338,8 +3326,7 @@ typedef struct camera3_device_ops {
      *    NULL by the HAL.  Please implement get_vendor_tag_ops in camera_common.h
      *    instead.
      */
-    void (*get_metadata_vendor_tag_ops)(const struct camera3_device*,
-            vendor_tag_query_ops_t* ops);
+    void (*get_metadata_vendor_tag_ops)(const struct camera3_device*, vendor_tag_query_ops_t* ops);
 
     /**
      * dump:
@@ -3359,7 +3346,7 @@ typedef struct camera3_device_ops {
      * Any synchronization primitives used (such as mutex locks or semaphores)
      * should be acquired with a timeout.
      */
-    void (*dump)(const struct camera3_device *, int fd);
+    void (*dump)(const struct camera3_device*, int fd);
 
     /**
      * flush:
@@ -3432,10 +3419,10 @@ typedef struct camera3_device_ops {
      *         need to call process_capture_result with NULL metadata or equivalent.
      *
      * 4. If a flush() is invoked while a process_capture_request() invocation is active, that
-     *    process call should return as soon as possible. In addition, if a process_capture_request()
-     *    call is made after flush() has been invoked but before flush() has returned, the
-     *    capture request provided by the late process_capture_request call should be treated like
-     *    a pending request in case #2 above.
+     *    process call should return as soon as possible. In addition, if a
+     * process_capture_request() call is made after flush() has been invoked but before flush() has
+     * returned, the capture request provided by the late process_capture_request call should be
+     * treated like a pending request in case #2 above.
      *
      * flush() should only return when there are no more outstanding buffers or
      * requests left in the HAL. The framework may call configure_streams (as
@@ -3465,7 +3452,7 @@ typedef struct camera3_device_ops {
      *          error is returned, only the close() method can be successfully
      *          called by the framework.
      */
-    int (*flush)(const struct camera3_device *);
+    int (*flush)(const struct camera3_device*);
 
     /**
      * signal_stream_flush:
@@ -3487,9 +3474,8 @@ typedef struct camera3_device_ops {
      * skip calling this if all buffers are already returned.
      *
      */
-    void (*signal_stream_flush)(const struct camera3_device*,
-            uint32_t num_streams,
-            const camera3_stream_t* const* streams);
+    void (*signal_stream_flush)(const struct camera3_device*, uint32_t num_streams,
+                                const camera3_stream_t* const* streams);
 
     /**
      * is_reconfiguration_required:
@@ -3538,11 +3524,11 @@ typedef struct camera3_device_ops {
      *                       reconfiguration query.
      */
     int (*is_reconfiguration_required)(const struct camera3_device*,
-            const camera_metadata_t* old_session_params,
-            const camera_metadata_t* new_session_params);
+                                       const camera_metadata_t* old_session_params,
+                                       const camera_metadata_t* new_session_params);
 
     /* reserved for future use */
-    void *reserved[6];
+    void* reserved[6];
 } camera3_device_ops_t;
 
 /**********************************************************************
@@ -3563,8 +3549,8 @@ typedef struct camera3_device {
      *
      */
     hw_device_t common;
-    camera3_device_ops_t *ops;
-    void *priv;
+    camera3_device_ops_t* ops;
+    void* priv;
 } camera3_device_t;
 
 __END_DECLS

@@ -41,10 +41,12 @@ Lights::Lights() {
     mLights.emplace(LightType::BACKLIGHT,
                     std::bind(&Lights::handleBacklight, this, std::placeholders::_1));
 #ifdef BUTTON_BRIGHTNESS_NODE
-    mLights.emplace(LightType::BUTTONS, std::bind(&Lights::handleButtons, this, std::placeholders::_1));
+    mLights.emplace(LightType::BUTTONS,
+                    std::bind(&Lights::handleButtons, this, std::placeholders::_1));
 #endif /* BUTTON_BRIGHTNESS_NODE */
 #ifdef LED_BLINK_NODE
-    mLights.emplace(LightType::BATTERY, std::bind(&Lights::handleBattery, this, std::placeholders::_1));
+    mLights.emplace(LightType::BATTERY,
+                    std::bind(&Lights::handleBattery, this, std::placeholders::_1));
     mLights.emplace(LightType::NOTIFICATIONS,
                     std::bind(&Lights::handleNotifications, this, std::placeholders::_1));
     mLights.emplace(LightType::ATTENTION,
@@ -147,7 +149,7 @@ void Lights::setNotificationLED() {
 
     state.color = calibrateColor(state.color & COLOR_MASK, adjusted_brightness);
     set(LED_BLINK_NODE, ::android::base::StringPrintf("0x%08x %d %d", state.color, state.flashOnMs,
-                                                    state.flashOffMs));
+                                                      state.flashOffMs));
 
 #ifdef LED_BLN_NODE
     if (bln) {
@@ -168,7 +170,7 @@ uint32_t Lights::calibrateColor(uint32_t color, int32_t brightness) {
 
 #define AutoHwLight(light) {.id = (int32_t)light, .type = light, .ordinal = 0}
 
-ndk::ScopedAStatus Lights::getLights(std::vector<HwLight> *_aidl_return) {
+ndk::ScopedAStatus Lights::getLights(std::vector<HwLight>* _aidl_return) {
     for (auto const& light : mLights) {
         _aidl_return->push_back(AutoHwLight(light.first));
     }
@@ -179,11 +181,12 @@ ndk::ScopedAStatus Lights::getLights(std::vector<HwLight> *_aidl_return) {
 uint32_t Lights::rgbToBrightness(const HwLightState& state) {
     uint32_t color = state.color & COLOR_MASK;
 
-    return ((77 * ((color >> 16) & 0xff)) + (150 * ((color >> 8) & 0xff)) + (29 * (color & 0xff))) >>
+    return ((77 * ((color >> 16) & 0xff)) + (150 * ((color >> 8) & 0xff)) +
+            (29 * (color & 0xff))) >>
            8;
 }
 
-} // namespace light
-} // namespace hardware
-} // namespace android
-} // namespace aidl
+}  // namespace light
+}  // namespace hardware
+}  // namespace android
+}  // namespace aidl

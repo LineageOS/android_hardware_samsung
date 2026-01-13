@@ -13,13 +13,13 @@ namespace lineage {
 namespace touch {
 
 const std::map<int32_t, TouchscreenGesture::GestureInfo> TouchscreenGesture::kGestureInfoMap = {
-    // clang-format off
+        // clang-format off
     {0, {0x2f1, "Swipe up stylus"}},
     {1, {0x2f2, "Swipe down stylus"}},
     {2, {0x2f3, "Swipe left stylus"}},
     {3, {0x2f4, "Swipe right stylus"}},
     {4, {0x2f5, "Long press stylus"}},
-    // clang-format on
+        // clang-format on
 };
 
 const std::pair<int32_t, TouchscreenGesture::GestureInfo> TouchscreenGesture::kSingleTapEntry = {
