@@ -71,4 +71,4 @@ std::vector<directory_entry> directory_iterator(const path& p) {
     return out;
 }
 
-} // namespace filesystem
+}  // namespace filesystem
