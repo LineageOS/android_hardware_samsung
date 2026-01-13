@@ -31,5 +31,5 @@ int main() {
     CHECK(status == STATUS_OK);
 
     ABinderProcess_joinThreadPool();
-    return -1; // Should never be reached
+    return -1;  // Should never be reached
 }

@@ -38,11 +38,15 @@ uint64_t readNode(const std::string node, pid_t pid) {
 
     return out;
 }
-} // namespace
+}  // namespace
 
-uint64_t GpuSysfsReader::getDmaBufGpuMem(pid_t pid) { return readNode(kDmaBufGpuMemNode, pid); }
+uint64_t GpuSysfsReader::getDmaBufGpuMem(pid_t pid) {
+    return readNode(kDmaBufGpuMemNode, pid);
+}
 
-uint64_t GpuSysfsReader::getGpuMemTotal(pid_t pid) { return readNode(kTotalGpuMemNode, pid); }
+uint64_t GpuSysfsReader::getGpuMemTotal(pid_t pid) {
+    return readNode(kTotalGpuMemNode, pid);
+}
 
 uint64_t GpuSysfsReader::getPrivateGpuMem(pid_t pid) {
     auto dma_buf_size = getDmaBufGpuMem(pid);

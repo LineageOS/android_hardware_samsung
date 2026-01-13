@@ -19,15 +19,15 @@
 #ifndef ANDROID_INCLUDE_CAMERA_COMMON_H
 #define ANDROID_INCLUDE_CAMERA_COMMON_H
 
-#include <stdint.h>
+#include <cutils/native_handle.h>
+#include <hardware/gralloc.h>
+#include <hardware/hardware.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <sys/cdefs.h>
 #include <sys/types.h>
-#include <cutils/native_handle.h>
 #include <system/camera.h>
 #include <system/camera_vendor_tags.h>
-#include <hardware/hardware.h>
-#include <hardware/gralloc.h>
 
 __BEGIN_DECLS
 
@@ -162,11 +162,11 @@ __BEGIN_DECLS
  * All device versions <= HARDWARE_DEVICE_API_VERSION(1, 0xFF) must be treated
  * as CAMERA_DEVICE_API_VERSION_1_0
  */
-#define CAMERA_DEVICE_API_VERSION_1_0 HARDWARE_DEVICE_API_VERSION(1, 0) // DEPRECATED
-#define CAMERA_DEVICE_API_VERSION_2_0 HARDWARE_DEVICE_API_VERSION(2, 0) // NO LONGER SUPPORTED
-#define CAMERA_DEVICE_API_VERSION_2_1 HARDWARE_DEVICE_API_VERSION(2, 1) // NO LONGER SUPPORTED
-#define CAMERA_DEVICE_API_VERSION_3_0 HARDWARE_DEVICE_API_VERSION(3, 0) // NO LONGER SUPPORTED
-#define CAMERA_DEVICE_API_VERSION_3_1 HARDWARE_DEVICE_API_VERSION(3, 1) // NO LONGER SUPPORTED
+#define CAMERA_DEVICE_API_VERSION_1_0 HARDWARE_DEVICE_API_VERSION(1, 0)  // DEPRECATED
+#define CAMERA_DEVICE_API_VERSION_2_0 HARDWARE_DEVICE_API_VERSION(2, 0)  // NO LONGER SUPPORTED
+#define CAMERA_DEVICE_API_VERSION_2_1 HARDWARE_DEVICE_API_VERSION(2, 1)  // NO LONGER SUPPORTED
+#define CAMERA_DEVICE_API_VERSION_3_0 HARDWARE_DEVICE_API_VERSION(3, 0)  // NO LONGER SUPPORTED
+#define CAMERA_DEVICE_API_VERSION_3_1 HARDWARE_DEVICE_API_VERSION(3, 1)  // NO LONGER SUPPORTED
 #define CAMERA_DEVICE_API_VERSION_3_2 HARDWARE_DEVICE_API_VERSION(3, 2)
 #define CAMERA_DEVICE_API_VERSION_3_3 HARDWARE_DEVICE_API_VERSION(3, 3)
 #define CAMERA_DEVICE_API_VERSION_3_4 HARDWARE_DEVICE_API_VERSION(3, 4)
@@ -262,7 +262,7 @@ typedef struct camera_info {
      *    otherwise.
      *
      */
-    const camera_metadata_t *static_camera_characteristics;
+    const camera_metadata_t* static_camera_characteristics;
 
     /**
      * The total resource "cost" of using this camera, represented as an integer
@@ -616,7 +616,6 @@ typedef enum torch_mode_status {
 
  */
 typedef struct camera_module_callbacks {
-
     /**
      * camera_device_status_change:
      *
@@ -637,9 +636,8 @@ typedef struct camera_module_callbacks {
      *   or a platform-specific status.
      *
      */
-    void (*camera_device_status_change)(const struct camera_module_callbacks*,
-            int camera_id,
-            int new_status);
+    void (*camera_device_status_change)(const struct camera_module_callbacks*, int camera_id,
+                                        int new_status);
 
     /**
      * torch_mode_status_change:
@@ -660,10 +658,8 @@ typedef struct camera_module_callbacks {
      *
      * new_status: The new status code, one of the torch_mode_status_t enums.
      */
-    void (*torch_mode_status_change)(const struct camera_module_callbacks*,
-            const char* camera_id,
-            int new_status);
-
+    void (*torch_mode_status_change)(const struct camera_module_callbacks*, const char* camera_id,
+                                     int new_status);
 
 } camera_module_callbacks_t;
 
@@ -801,7 +797,7 @@ typedef struct camera_stream_combination {
      *
      * At least one output-capable stream must be defined.
      */
-    camera_stream_t *streams;
+    camera_stream_t* streams;
 
     /**
      * The operation mode of streams in this stream combination, one of the value
@@ -911,7 +907,7 @@ typedef struct camera_module {
     int (*get_number_of_cameras)(void);
 
 #ifdef CAMERA_NEEDS_SEC_GET_CAM_POS_V1
-   /**
+    /**
      * get_cam_pos:
      *
      * Unknown. Needed by prebuilt camera module from the Samsung GTO device.
@@ -950,10 +946,10 @@ typedef struct camera_module {
      *   this method with this invalid camera id will get -EINVAL and NULL camera
      *   static metadata (camera_info.static_camera_characteristics).
      */
-    int (*get_camera_info)(int camera_id, struct camera_info *info);
+    int (*get_camera_info)(int camera_id, struct camera_info* info);
 
 #ifdef CAMERA_NEEDS_SEC_GET_CAM_POS_V2
-   /**
+    /**
      * get_cam_pos:
      *
      * Unknown. Needed by prebuilt camera module from the Samsung GTA4L device.
@@ -997,7 +993,7 @@ typedef struct camera_module {
      * -EINVAL:     The input arguments are invalid, i.e. the callbacks are
      *              null
      */
-    int (*set_callbacks)(const camera_module_callbacks_t *callbacks);
+    int (*set_callbacks)(const camera_module_callbacks_t* callbacks);
 
     /**
      * get_vendor_tag_ops:
@@ -1063,8 +1059,8 @@ typedef struct camera_module {
      *              opened concurrently were opened already, either by
      *              this method or common.methods->open method.
      */
-    int (*open_legacy)(const struct hw_module_t* module, const char* id,
-            uint32_t halVersion, struct hw_device_t** device);
+    int (*open_legacy)(const struct hw_module_t* module, const char* id, uint32_t halVersion,
+                       struct hw_device_t** device);
 
     /**
      * set_torch_mode:
@@ -1180,8 +1176,7 @@ typedef struct camera_module {
      *   framework. Calling this function with invalid physical_camera_id will
      *   get -EINVAL, and NULL static_metadata.
      */
-    int (*get_physical_camera_info)(int physical_camera_id,
-            camera_metadata_t **static_metadata);
+    int (*get_physical_camera_info)(int physical_camera_id, camera_metadata_t** static_metadata);
 
     /**
      * is_stream_combination_supported:
@@ -1205,7 +1200,7 @@ typedef struct camera_module {
      *   Valid to be called by the framework.
      */
     int (*is_stream_combination_supported)(int camera_id,
-            const camera_stream_combination_t *streams);
+                                           const camera_stream_combination_t* streams);
 
     /**
      * notify_device_state_change:
