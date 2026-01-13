@@ -23,14 +23,14 @@
  * You need to extract the values for your target manually.
  */
 
-#if 0 // DUMMY
-#define DTBH_MAGIC         "DTBH"
-#define DTBH_VERSION       2
-#define DTBH_PLATFORM      "k3g"
-#define DTBH_SUBTYPE       "k3g_eur_open"
+#if 0  // DUMMY
+#define DTBH_MAGIC "DTBH"
+#define DTBH_VERSION 2
+#define DTBH_PLATFORM "k3g"
+#define DTBH_SUBTYPE "k3g_eur_open"
 /* Hardcoded entry */
 #define DTBH_PLATFORM_CODE 0x1e92
-#define DTBH_SUBTYPE_CODE  0x7d64f612
+#define DTBH_SUBTYPE_CODE 0x7d64f612
 
 /* DTBH_MAGIC + DTBH_VERSION + DTB counts */
 #define DT_HEADER_PHYS_SIZE 12
@@ -39,6 +39,6 @@
  * keep the eight uint32_t entries first in this struct so we can memcpy them to the file
  */
 #define DT_ENTRY_PHYS_SIZE (sizeof(uint32_t) * 8)
-#endif // DUMMY
+#endif  // DUMMY
 
-#endif // _SAMSUNG_DTBH_H_
+#endif  // _SAMSUNG_DTBH_H_

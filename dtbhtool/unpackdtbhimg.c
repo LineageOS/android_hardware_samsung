@@ -20,9 +20,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #define DEFAULT_PAGE_SIZE 2048
 #define DT_NAME_LEN 64
@@ -46,15 +46,15 @@ struct dtbh_header {
     struct dt_entry entries[];
 };
 
-static void show_dt_entry(struct dt_entry *ent) {
+static void show_dt_entry(struct dt_entry* ent) {
     printf("chip: %u, platform: 0x%x, subtype: 0x%x, hw_rev: %u, hw_rev_end: %u, offset: %u, "
-            "size: %u, space: %u\n", ent->chip, ent->platform, ent->subtype, ent->hw_rev,
-            ent->hw_rev_end, ent->offset, ent->size, ent->space);
+           "size: %u, space: %u\n",
+           ent->chip, ent->platform, ent->subtype, ent->hw_rev, ent->hw_rev_end, ent->offset,
+           ent->size, ent->space);
 }
 
-static void dump_dtb(void *buffer, uint32_t size, char *dest)
-{
-    FILE *output;
+static void dump_dtb(void* buffer, uint32_t size, char* dest) {
+    FILE* output;
     ssize_t len;
 
     output = fopen(dest, "wb");
@@ -74,31 +74,30 @@ static void dump_dtb(void *buffer, uint32_t size, char *dest)
     printf("Successfully dumped %s (size=%zu)\n", dest, size);
 }
 
-int usage(void)
-{
-    fprintf(stderr,"usage: unpackdtbhimg\n"
+int usage(void) {
+    fprintf(stderr,
+            "usage: unpackdtbhimg\n"
             "       -i|--input <dtbh image path>\n"
             "       -o|--output <directory>\n"
-            "       -p|--pagesize <pagesize>\n"
-            );
+            "       -p|--pagesize <pagesize>\n");
     return 1;
 }
 
-int main(int argc, char *argv[]) {
-    char *dtbhimg = 0;
-    char *output_dir = 0;
-    FILE *dtbhimg_fp;
+int main(int argc, char* argv[]) {
+    char* dtbhimg = 0;
+    char* output_dir = 0;
+    FILE* dtbhimg_fp;
     ssize_t len;
     int page_size = DEFAULT_PAGE_SIZE;
-    struct dtbh_header *header;
-    void *dt_blob;
+    struct dtbh_header* header;
+    void* dt_blob;
 
     argc--;
     argv++;
 
-    while (argc > 0){
-        char *arg = argv[0];
-        char *val = argv[1];
+    while (argc > 0) {
+        char* arg = argv[0];
+        char* val = argv[1];
         if (argc < 1) {
             return usage();
         }
@@ -114,12 +113,12 @@ int main(int argc, char *argv[]) {
     }
 
     if (dtbhimg == 0) {
-        fprintf(stderr,"error: no input filename specified\n");
+        fprintf(stderr, "error: no input filename specified\n");
         return usage();
     }
 
     if (output_dir == 0) {
-        fprintf(stderr,"error: no output path specified\n");
+        fprintf(stderr, "error: no output path specified\n");
         return usage();
     }
 
