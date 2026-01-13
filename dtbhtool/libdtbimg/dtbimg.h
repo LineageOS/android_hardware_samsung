@@ -25,6 +25,6 @@
  * pagesize: board pagesize
  * _sz: size of the resulting dt image
  */
-void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz);
+void* load_dtbh_block(const char* dtb_path, unsigned pagesize, unsigned* _sz);
 
-#endif // _DTBIMG_H_
+#endif  // _DTBIMG_H_
