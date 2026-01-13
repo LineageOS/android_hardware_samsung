@@ -14,4 +14,4 @@ constexpr char kProcessDir[] = "kprcs";
 constexpr char kMappedDmaBufsDir[] = "dma_bufs";
 constexpr char kTotalGpuMemNode[] = "total_gpu_mem";
 constexpr char kDmaBufGpuMemNode[] = "dma_buf_gpu_mem";
-} // namespace GpuSysfsReader
+}  // namespace GpuSysfsReader

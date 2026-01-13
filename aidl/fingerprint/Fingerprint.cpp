@@ -180,7 +180,7 @@ void Fingerprint::handleEvent(int eventCode) {
         case SEM_FINGERPRINT_EVENT_GESTURE_SWIPE_UP: {
             if (!mSupportsGestures) return;
 
-            struct input_event event {};
+            struct input_event event{};
             int keycode = eventCode == SEM_FINGERPRINT_EVENT_GESTURE_SWIPE_UP ? KEY_UP : KEY_DOWN;
 
             // Report the key
