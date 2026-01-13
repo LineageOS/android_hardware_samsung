@@ -54,8 +54,8 @@ struct Radio : public IRadio {
 
     // Methods from ::android::hardware::radio::V1_0::IRadio follow.
     Return<void> setResponseFunctions(
-        const sp<::android::hardware::radio::V1_0::IRadioResponse>& radioResponse,
-        const sp<::android::hardware::radio::V1_0::IRadioIndication>& radioIndication) override;
+            const sp<::android::hardware::radio::V1_0::IRadioResponse>& radioResponse,
+            const sp<::android::hardware::radio::V1_0::IRadioIndication>& radioIndication) override;
     Return<void> getIccCardStatus(int32_t serial) override;
     Return<void> supplyIccPinForApp(int32_t serial, const hidl_string& pin,
                                     const hidl_string& aid) override;
@@ -90,11 +90,12 @@ struct Radio : public IRadio {
     Return<void> sendSms(int32_t serial,
                          const ::android::hardware::radio::V1_0::GsmSmsMessage& message) override;
     Return<void> sendSMSExpectMore(
-        int32_t serial, const ::android::hardware::radio::V1_0::GsmSmsMessage& message) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_0::GsmSmsMessage& message) override;
     Return<void> setupDataCall(
-        int32_t serial, ::android::hardware::radio::V1_0::RadioTechnology radioTechnology,
-        const ::android::hardware::radio::V1_0::DataProfileInfo& dataProfileInfo,
-        bool modemCognitive, bool roamingAllowed, bool isRoaming) override;
+            int32_t serial, ::android::hardware::radio::V1_0::RadioTechnology radioTechnology,
+            const ::android::hardware::radio::V1_0::DataProfileInfo& dataProfileInfo,
+            bool modemCognitive, bool roamingAllowed, bool isRoaming) override;
     Return<void> iccIOForApp(int32_t serial,
                              const ::android::hardware::radio::V1_0::IccIo& iccIo) override;
     Return<void> sendUssd(int32_t serial, const hidl_string& ussd) override;
@@ -102,14 +103,16 @@ struct Radio : public IRadio {
     Return<void> getClir(int32_t serial) override;
     Return<void> setClir(int32_t serial, int32_t status) override;
     Return<void> getCallForwardStatus(
-        int32_t serial, const ::android::hardware::radio::V1_0::CallForwardInfo& callInfo) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_0::CallForwardInfo& callInfo) override;
     Return<void> setCallForward(
-        int32_t serial, const ::android::hardware::radio::V1_0::CallForwardInfo& callInfo) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_0::CallForwardInfo& callInfo) override;
     Return<void> getCallWaiting(int32_t serial, int32_t serviceClass) override;
     Return<void> setCallWaiting(int32_t serial, bool enable, int32_t serviceClass) override;
     Return<void> acknowledgeLastIncomingGsmSms(
-        int32_t serial, bool success,
-        ::android::hardware::radio::V1_0::SmsAcknowledgeFailCause cause) override;
+            int32_t serial, bool success,
+            ::android::hardware::radio::V1_0::SmsAcknowledgeFailCause cause) override;
     Return<void> acceptCall(int32_t serial) override;
     Return<void> deactivateDataCall(int32_t serial, int32_t cid, bool reasonRadioShutDown) override;
     Return<void> getFacilityLockForApp(int32_t serial, const hidl_string& facility,
@@ -136,7 +139,8 @@ struct Radio : public IRadio {
     Return<void> getDataCallList(int32_t serial) override;
     Return<void> setSuppServiceNotifications(int32_t serial, bool enable) override;
     Return<void> writeSmsToSim(
-        int32_t serial, const ::android::hardware::radio::V1_0::SmsWriteArgs& smsWriteArgs) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_0::SmsWriteArgs& smsWriteArgs) override;
     Return<void> deleteSmsOnSim(int32_t serial, int32_t index) override;
     Return<void> setBandMode(int32_t serial,
                              ::android::hardware::radio::V1_0::RadioBandMode mode) override;
@@ -147,16 +151,18 @@ struct Radio : public IRadio {
     Return<void> handleStkCallSetupRequestFromSim(int32_t serial, bool accept) override;
     Return<void> explicitCallTransfer(int32_t serial) override;
     Return<void> setPreferredNetworkType(
-        int32_t serial, ::android::hardware::radio::V1_0::PreferredNetworkType nwType) override;
+            int32_t serial, ::android::hardware::radio::V1_0::PreferredNetworkType nwType) override;
     Return<void> getPreferredNetworkType(int32_t serial) override;
     Return<void> getNeighboringCids(int32_t serial) override;
     Return<void> setLocationUpdates(int32_t serial, bool enable) override;
     Return<void> setCdmaSubscriptionSource(
-        int32_t serial, ::android::hardware::radio::V1_0::CdmaSubscriptionSource cdmaSub) override;
+            int32_t serial,
+            ::android::hardware::radio::V1_0::CdmaSubscriptionSource cdmaSub) override;
     Return<void> setCdmaRoamingPreference(
-        int32_t serial, ::android::hardware::radio::V1_0::CdmaRoamingType type) override;
+            int32_t serial, ::android::hardware::radio::V1_0::CdmaRoamingType type) override;
     Return<void> getCdmaRoamingPreference(int32_t serial) override;
-    Return<void> setTTYMode(int32_t serial, ::android::hardware::radio::V1_0::TtyMode mode) override;
+    Return<void> setTTYMode(int32_t serial,
+                            ::android::hardware::radio::V1_0::TtyMode mode) override;
     Return<void> getTTYMode(int32_t serial) override;
     Return<void> setPreferredVoicePrivacy(int32_t serial, bool enable) override;
     Return<void> getPreferredVoicePrivacy(int32_t serial) override;
@@ -166,22 +172,23 @@ struct Radio : public IRadio {
     Return<void> sendCdmaSms(int32_t serial,
                              const ::android::hardware::radio::V1_0::CdmaSmsMessage& sms) override;
     Return<void> acknowledgeLastIncomingCdmaSms(
-        int32_t serial, const ::android::hardware::radio::V1_0::CdmaSmsAck& smsAck) override;
+            int32_t serial, const ::android::hardware::radio::V1_0::CdmaSmsAck& smsAck) override;
     Return<void> getGsmBroadcastConfig(int32_t serial) override;
     Return<void> setGsmBroadcastConfig(
-        int32_t serial,
-        const hidl_vec<::android::hardware::radio::V1_0::GsmBroadcastSmsConfigInfo>& configInfo)
-        override;
+            int32_t serial,
+            const hidl_vec<::android::hardware::radio::V1_0::GsmBroadcastSmsConfigInfo>& configInfo)
+            override;
     Return<void> setGsmBroadcastActivation(int32_t serial, bool activate) override;
     Return<void> getCdmaBroadcastConfig(int32_t serial) override;
     Return<void> setCdmaBroadcastConfig(
-        int32_t serial,
-        const hidl_vec<::android::hardware::radio::V1_0::CdmaBroadcastSmsConfigInfo>& configInfo)
-        override;
+            int32_t serial,
+            const hidl_vec<::android::hardware::radio::V1_0::CdmaBroadcastSmsConfigInfo>&
+                    configInfo) override;
     Return<void> setCdmaBroadcastActivation(int32_t serial, bool activate) override;
     Return<void> getCDMASubscription(int32_t serial) override;
     Return<void> writeSmsToRuim(
-        int32_t serial, const ::android::hardware::radio::V1_0::CdmaSmsWriteArgs& cdmaSms) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_0::CdmaSmsWriteArgs& cdmaSms) override;
     Return<void> deleteSmsOnRuim(int32_t serial, int32_t index) override;
     Return<void> getDeviceIdentity(int32_t serial) override;
     Return<void> exitEmergencyCallbackMode(int32_t serial) override;
@@ -198,17 +205,19 @@ struct Radio : public IRadio {
     Return<void> getCellInfoList(int32_t serial) override;
     Return<void> setCellInfoListRate(int32_t serial, int32_t rate) override;
     Return<void> setInitialAttachApn(
-        int32_t serial, const ::android::hardware::radio::V1_0::DataProfileInfo& dataProfileInfo,
-        bool modemCognitive, bool isRoaming) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_0::DataProfileInfo& dataProfileInfo,
+            bool modemCognitive, bool isRoaming) override;
     Return<void> getImsRegistrationState(int32_t serial) override;
-    Return<void> sendImsSms(int32_t serial,
-                            const ::android::hardware::radio::V1_0::ImsSmsMessage& message) override;
+    Return<void> sendImsSms(
+            int32_t serial,
+            const ::android::hardware::radio::V1_0::ImsSmsMessage& message) override;
     Return<void> iccTransmitApduBasicChannel(
-        int32_t serial, const ::android::hardware::radio::V1_0::SimApdu& message) override;
+            int32_t serial, const ::android::hardware::radio::V1_0::SimApdu& message) override;
     Return<void> iccOpenLogicalChannel(int32_t serial, const hidl_string& aid, int32_t p2) override;
     Return<void> iccCloseLogicalChannel(int32_t serial, int32_t channelId) override;
     Return<void> iccTransmitApduLogicalChannel(
-        int32_t serial, const ::android::hardware::radio::V1_0::SimApdu& message) override;
+            int32_t serial, const ::android::hardware::radio::V1_0::SimApdu& message) override;
     Return<void> nvReadItem(int32_t serial,
                             ::android::hardware::radio::V1_0::NvItem itemId) override;
     Return<void> nvWriteItem(int32_t serial,
@@ -217,81 +226,87 @@ struct Radio : public IRadio {
     Return<void> nvResetConfig(int32_t serial,
                                ::android::hardware::radio::V1_0::ResetNvType resetType) override;
     Return<void> setUiccSubscription(
-        int32_t serial, const ::android::hardware::radio::V1_0::SelectUiccSub& uiccSub) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_0::SelectUiccSub& uiccSub) override;
     Return<void> setDataAllowed(int32_t serial, bool allow) override;
     Return<void> getHardwareConfig(int32_t serial) override;
     Return<void> requestIccSimAuthentication(int32_t serial, int32_t authContext,
                                              const hidl_string& authData,
                                              const hidl_string& aid) override;
     Return<void> setDataProfile(
-        int32_t serial, const hidl_vec<::android::hardware::radio::V1_0::DataProfileInfo>& profiles,
-        bool isRoaming) override;
+            int32_t serial,
+            const hidl_vec<::android::hardware::radio::V1_0::DataProfileInfo>& profiles,
+            bool isRoaming) override;
     Return<void> requestShutdown(int32_t serial) override;
     Return<void> getRadioCapability(int32_t serial) override;
     Return<void> setRadioCapability(
-        int32_t serial, const ::android::hardware::radio::V1_0::RadioCapability& rc) override;
+            int32_t serial, const ::android::hardware::radio::V1_0::RadioCapability& rc) override;
     Return<void> startLceService(int32_t serial, int32_t reportInterval, bool pullMode) override;
     Return<void> stopLceService(int32_t serial) override;
     Return<void> pullLceData(int32_t serial) override;
     Return<void> getModemActivityInfo(int32_t serial) override;
     Return<void> setAllowedCarriers(
-        int32_t serial, bool allAllowed,
-        const ::android::hardware::radio::V1_0::CarrierRestrictions& carriers) override;
+            int32_t serial, bool allAllowed,
+            const ::android::hardware::radio::V1_0::CarrierRestrictions& carriers) override;
     Return<void> getAllowedCarriers(int32_t serial) override;
     Return<void> sendDeviceState(int32_t serial,
                                  ::android::hardware::radio::V1_0::DeviceStateType deviceStateType,
                                  bool state) override;
     Return<void> setIndicationFilter(
-        int32_t serial,
-        hidl_bitfield<::android::hardware::radio::V1_2::IndicationFilter> indicationFilter) override;
+            int32_t serial,
+            hidl_bitfield<::android::hardware::radio::V1_2::IndicationFilter> indicationFilter)
+            override;
     Return<void> setSimCardPower(int32_t serial, bool powerUp) override;
     Return<void> responseAcknowledgement() override;
 
     // Methods from ::android::hardware::radio::V1_1::IRadio follow.
     Return<void> setCarrierInfoForImsiEncryption(
-        int32_t serial,
-        const ::android::hardware::radio::V1_1::ImsiEncryptionInfo& imsiEncryptionInfo) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_1::ImsiEncryptionInfo& imsiEncryptionInfo)
+            override;
     Return<void> setSimCardPower_1_1(
-        int32_t serial, ::android::hardware::radio::V1_1::CardPowerState powerUp) override;
+            int32_t serial, ::android::hardware::radio::V1_1::CardPowerState powerUp) override;
     Return<void> startNetworkScan(
-        int32_t serial,
-        const ::android::hardware::radio::V1_1::NetworkScanRequest& request) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_1::NetworkScanRequest& request) override;
     Return<void> stopNetworkScan(int32_t serial) override;
     Return<void> startKeepalive(
-        int32_t serial,
-        const ::android::hardware::radio::V1_1::KeepaliveRequest& keepalive) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_1::KeepaliveRequest& keepalive) override;
     Return<void> stopKeepalive(int32_t serial, int32_t sessionHandle) override;
 
     // Methods from ::android::hardware::radio::V1_2::IRadio follow.
     Return<void> startNetworkScan_1_2(
-        int32_t serial,
-        const ::android::hardware::radio::V1_2::NetworkScanRequest& request) override;
+            int32_t serial,
+            const ::android::hardware::radio::V1_2::NetworkScanRequest& request) override;
     Return<void> setIndicationFilter_1_2(
-        int32_t serial,
-        hidl_bitfield<::android::hardware::radio::V1_2::IndicationFilter> indicationFilter) override;
+            int32_t serial,
+            hidl_bitfield<::android::hardware::radio::V1_2::IndicationFilter> indicationFilter)
+            override;
     Return<void> setSignalStrengthReportingCriteria(
-        int32_t serial, int32_t hysteresisMs, int32_t hysteresisDb,
-        const hidl_vec<int32_t>& thresholdsDbm,
-        ::android::hardware::radio::V1_2::AccessNetwork accessNetwork) override;
+            int32_t serial, int32_t hysteresisMs, int32_t hysteresisDb,
+            const hidl_vec<int32_t>& thresholdsDbm,
+            ::android::hardware::radio::V1_2::AccessNetwork accessNetwork) override;
     Return<void> setLinkCapacityReportingCriteria(
-        int32_t serial, int32_t hysteresisMs, int32_t hysteresisDlKbps, int32_t hysteresisUlKbps,
-        const hidl_vec<int32_t>& thresholdsDownlinkKbps,
-        const hidl_vec<int32_t>& thresholdsUplinkKbps,
-        ::android::hardware::radio::V1_2::AccessNetwork accessNetwork) override;
+            int32_t serial, int32_t hysteresisMs, int32_t hysteresisDlKbps,
+            int32_t hysteresisUlKbps, const hidl_vec<int32_t>& thresholdsDownlinkKbps,
+            const hidl_vec<int32_t>& thresholdsUplinkKbps,
+            ::android::hardware::radio::V1_2::AccessNetwork accessNetwork) override;
     Return<void> setupDataCall_1_2(
-        int32_t serial, ::android::hardware::radio::V1_2::AccessNetwork accessNetwork,
-        const ::android::hardware::radio::V1_0::DataProfileInfo& dataProfileInfo,
-        bool modemCognitive, bool roamingAllowed, bool isRoaming,
-        ::android::hardware::radio::V1_2::DataRequestReason reason,
-        const hidl_vec<hidl_string>& addresses, const hidl_vec<hidl_string>& dnses) override;
+            int32_t serial, ::android::hardware::radio::V1_2::AccessNetwork accessNetwork,
+            const ::android::hardware::radio::V1_0::DataProfileInfo& dataProfileInfo,
+            bool modemCognitive, bool roamingAllowed, bool isRoaming,
+            ::android::hardware::radio::V1_2::DataRequestReason reason,
+            const hidl_vec<hidl_string>& addresses, const hidl_vec<hidl_string>& dnses) override;
     Return<void> deactivateDataCall_1_2(
-        int32_t serial, int32_t cid,
-        ::android::hardware::radio::V1_2::DataRequestReason reason) override;
+            int32_t serial, int32_t cid,
+            ::android::hardware::radio::V1_2::DataRequestReason reason) override;
 
     // Methods from ::android::hardware::radio::V1_3::IRadio follow.
     Return<void> setSystemSelectionChannels(
-        int32_t serial, bool specifyChannels,
-        const hidl_vec<::android::hardware::radio::V1_1::RadioAccessSpecifier>& specifiers) override;
+            int32_t serial, bool specifyChannels,
+            const hidl_vec<::android::hardware::radio::V1_1::RadioAccessSpecifier>& specifiers)
+            override;
     Return<void> enableModem(int32_t serial, bool on) override;
     Return<void> getModemStackStatus(int32_t serial) override;
 };
