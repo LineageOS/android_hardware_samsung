@@ -66,13 +66,16 @@ ndk::ScopedAStatus CameraDevice::getCameraCharacteristics(CameraMetadata* _aidl_
         struct camera_info info;
         int ret = mModule->getCameraInfo(mCameraIdInt, &info);
         if (ret == OK && info.static_camera_characteristics != NULL) {
-            common::helper::CameraMetadata metadata = (camera_metadata_t*)info.static_camera_characteristics;
+            common::helper::CameraMetadata metadata =
+                    (camera_metadata_t*)info.static_camera_characteristics;
             camera_metadata_entry_t entry = metadata.find(ANDROID_FLASH_INFO_AVAILABLE);
-            if (entry.count > 0 && *entry.data.u8 != 0 && mModule->isSetTorchModeStrengthSupported()) {
+            if (entry.count > 0 && *entry.data.u8 != 0 &&
+                mModule->isSetTorchModeStrengthSupported()) {
                 // Samsung always has 5 supported torch strength levels
                 int32_t defaultTorchStrength = 1;
                 int32_t torchStrengthLevels = 5;
-                metadata.update(ANDROID_FLASH_INFO_STRENGTH_DEFAULT_LEVEL, &defaultTorchStrength, 1);
+                metadata.update(ANDROID_FLASH_INFO_STRENGTH_DEFAULT_LEVEL, &defaultTorchStrength,
+                                1);
                 metadata.update(ANDROID_FLASH_INFO_STRENGTH_MAXIMUM_LEVEL, &torchStrengthLevels, 1);
             }
 
