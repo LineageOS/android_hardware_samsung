@@ -21,40 +21,36 @@
 ** Adjust to dtbToolCM call syntax.
 */
 
+#include <errno.h>
+#include <fcntl.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <limits.h>
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <arpa/inet.h>
 #include <assert.h>
 #include <dirent.h>
 #include <err.h>
 #include <stdint.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include <dtbimg.h>
 
-int usage(void)
-{
-    fprintf(stderr,"usage: mkdtimg\n"
+int usage(void) {
+    fprintf(stderr,
+            "usage: mkdtimg\n"
             "       --dt_dir <dtb path>\n"
-            "       -o|--output <filename>\n"
-            );
+            "       -o|--output <filename>\n");
     return 1;
 }
 
-
-
-int main(int argc, char **argv)
-{
-    char *dtimg = 0;
-    char *dt_dir = 0;
-    void *dt_data = 0;
+int main(int argc, char** argv) {
+    char* dtimg = 0;
+    char* dt_dir = 0;
+    void* dt_data = 0;
     unsigned pagesize = 0;
     unsigned default_pagesize = 2048;
     uint32_t dt_size;
@@ -64,15 +60,15 @@ int main(int argc, char **argv)
     argc--;
     argv++;
 
-    while(argc > 0){
-        char *arg = argv[0];
-        char *val = argv[1];
-        if(argc < 1) {
+    while (argc > 0) {
+        char* arg = argv[0];
+        char* val = argv[1];
+        if (argc < 1) {
             return usage();
         }
         argc -= 2;
         argv += 2;
-        if(!strcmp(arg, "--output") || !strcmp(arg, "-o")) {
+        if (!strcmp(arg, "--output") || !strcmp(arg, "-o")) {
             dtimg = val;
         } else if (!strcmp(arg, "--dt_dir")) {
             dt_dir = val;
@@ -80,24 +76,22 @@ int main(int argc, char **argv)
             // Ignore this parameter
         } else if (!strcmp(arg, "-s")) {
             pagesize = strtol(val, NULL, 10);
-            if (pagesize == 0)
-                pagesize = default_pagesize;
+            if (pagesize == 0) pagesize = default_pagesize;
         } else {
             // Check if this is the dtb path
             int err = stat(arg, &sbuf);
-            if (err != 0 || !S_ISDIR(sbuf.st_mode))
-                return usage();
+            if (err != 0 || !S_ISDIR(sbuf.st_mode)) return usage();
             dt_dir = arg;
         }
     }
 
-    if(dtimg == 0) {
-        fprintf(stderr,"error: no output filename specified\n");
+    if (dtimg == 0) {
+        fprintf(stderr, "error: no output filename specified\n");
         return usage();
     }
 
-    if(dt_dir == 0) {
-        fprintf(stderr,"error: no dtb path specified\n");
+    if (dt_dir == 0) {
+        fprintf(stderr, "error: no dtb path specified\n");
         return usage();
     }
 
@@ -108,19 +102,18 @@ int main(int argc, char **argv)
     }
 
     fd = open(dtimg, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-    if(fd < 0) {
-        fprintf(stderr,"error: could not create '%s'\n", dtimg);
+    if (fd < 0) {
+        fprintf(stderr, "error: could not create '%s'\n", dtimg);
         return 1;
     }
 
-    if(write(fd, dt_data, dt_size) != dt_size) goto fail;
+    if (write(fd, dt_data, dt_size) != dt_size) goto fail;
 
     return 0;
 
 fail:
     unlink(dtimg);
     close(fd);
-    fprintf(stderr,"error: failed writing '%s': %s\n", dtimg,
-            strerror(errno));
+    fprintf(stderr, "error: failed writing '%s': %s\n", dtimg, strerror(errno));
     return 1;
 }
