@@ -4,7 +4,8 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.android.settingslib.widget.TopIntroPreference
         android:key="spen_bluetooth_top_intro"
@@ -22,6 +23,6 @@
         android:defaultValue="0"
         android:dependency="spen_bluetooth_enable"
         android:title="@string/spen_mode_title"
-        android:summary="%s" />
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>
