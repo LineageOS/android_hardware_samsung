@@ -224,7 +224,7 @@ bool CameraProvider::initialize() {
     }
     std::vector<int> extraIDs = {
 #ifdef EXTRA_IDS
-        EXTRA_IDS
+            EXTRA_IDS
 #endif
     };
     for (int i : extraIDs) {
