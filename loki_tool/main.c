@@ -30,7 +30,7 @@ static int print_help(const char* cmd) {
     return 1;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     printf("Loki tool v%s\n", VERSION);
 
     if (argc == 6 && strcmp(argv[1], "patch") == 0) {

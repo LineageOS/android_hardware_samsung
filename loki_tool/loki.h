@@ -7,9 +7,9 @@
 #define BOOT_NAME_SIZE 16
 #define BOOT_ARGS_SIZE 512
 
-#define BOOT_PARTITION      "/dev/block/platform/msm_sdcc.1/by-name/boot"
-#define RECOVERY_PARTITION  "/dev/block/platform/msm_sdcc.1/by-name/recovery"
-#define ABOOT_PARTITION     "/dev/block/platform/msm_sdcc.1/by-name/aboot"
+#define BOOT_PARTITION "/dev/block/platform/msm_sdcc.1/by-name/boot"
+#define RECOVERY_PARTITION "/dev/block/platform/msm_sdcc.1/by-name/recovery"
+#define ABOOT_PARTITION "/dev/block/platform/msm_sdcc.1/by-name/aboot"
 
 #define PATTERN1 "\xf0\xb5\x8f\xb0\x06\x46\xf0\xf7"
 #define PATTERN2 "\xf0\xb5\x8f\xb0\x07\x46\xf0\xf7"
@@ -25,64 +25,66 @@
 
 struct boot_img_hdr {
     unsigned char magic[BOOT_MAGIC_SIZE];
-    unsigned kernel_size;   /* size in bytes */
-    unsigned kernel_addr;   /* physical load addr */
-    unsigned ramdisk_size;  /* size in bytes */
-    unsigned ramdisk_addr;  /* physical load addr */
-    unsigned second_size;   /* size in bytes */
-    unsigned second_addr;   /* physical load addr */
-    unsigned tags_addr;     /* physical addr for kernel tags */
-    unsigned page_size;     /* flash page size we assume */
-    unsigned dt_size;       /* device_tree in bytes */
-    unsigned unused;        /* future expansion: should be 0 */
-    unsigned char name[BOOT_NAME_SIZE];    /* asciiz product name */
+    unsigned kernel_size;               /* size in bytes */
+    unsigned kernel_addr;               /* physical load addr */
+    unsigned ramdisk_size;              /* size in bytes */
+    unsigned ramdisk_addr;              /* physical load addr */
+    unsigned second_size;               /* size in bytes */
+    unsigned second_addr;               /* physical load addr */
+    unsigned tags_addr;                 /* physical addr for kernel tags */
+    unsigned page_size;                 /* flash page size we assume */
+    unsigned dt_size;                   /* device_tree in bytes */
+    unsigned unused;                    /* future expansion: should be 0 */
+    unsigned char name[BOOT_NAME_SIZE]; /* asciiz product name */
     unsigned char cmdline[BOOT_ARGS_SIZE];
-    unsigned id[8];         /* timestamp / checksum / sha1 / etc */
+    unsigned id[8]; /* timestamp / checksum / sha1 / etc */
 };
 
 struct loki_hdr {
-    unsigned char magic[4];     /* 0x494b4f4c */
-    unsigned int recovery;      /* 0 = boot.img, 1 = recovery.img */
-    char build[128];   /* Build number */
+    unsigned char magic[4]; /* 0x494b4f4c */
+    unsigned int recovery;  /* 0 = boot.img, 1 = recovery.img */
+    char build[128];        /* Build number */
 
     unsigned int orig_kernel_size;
     unsigned int orig_ramdisk_size;
     unsigned int ramdisk_addr;
 };
 
-int loki_patch(const char* partition_label, const char* aboot_image, const char* in_image, const char* out_image);
+int loki_patch(const char* partition_label, const char* aboot_image, const char* in_image,
+               const char* out_image);
 int loki_flash(const char* partition_label, const char* loki_image);
 int loki_find(const char* aboot_image);
 int loki_unlok(const char* in_image, const char* out_image);
 
-#define PATCH	"\xfe\xb5"			\
-				"\x0d\x4d"			\
-				"\xd5\xf8"			\
-				"\x88\x04"			\
-				"\xab\x68"			\
-				"\x98\x42"			\
-				"\x12\xd0"			\
-				"\xd5\xf8"			\
-				"\x90\x64"			\
-				"\x0a\x4c"			\
-				"\xd5\xf8"			\
-				"\x8c\x74"			\
-				"\x07\xf5\x80\x57"	\
-				"\x0f\xce"			\
-				"\x0f\xc4"			\
-				"\x10\x3f"			\
-				"\xfb\xdc"			\
-				"\xd5\xf8"			\
-				"\x88\x04"			\
-				"\x04\x49"			\
-				"\xd5\xf8"			\
-				"\x8c\x24"			\
-				"\xa8\x60"			\
-				"\x69\x61"			\
-				"\x2a\x61"			\
-				"\x00\x20"			\
-				"\xfe\xbd"			\
-				"\xff\xff\xff\xff"	\
-				"\xee\xee\xee\xee"
+#define PATCH          \
+    "\xfe\xb5"         \
+    "\x0d\x4d"         \
+    "\xd5\xf8"         \
+    "\x88\x04"         \
+    "\xab\x68"         \
+    "\x98\x42"         \
+    "\x12\xd0"         \
+    "\xd5\xf8"         \
+    "\x90\x64"         \
+    "\x0a\x4c"         \
+    "\xd5\xf8"         \
+    "\x8c\x74"         \
+    "\x07\xf5\x80\x57" \
+    "\x0f\xce"         \
+    "\x0f\xc4"         \
+    "\x10\x3f"         \
+    "\xfb\xdc"         \
+    "\xd5\xf8"         \
+    "\x88\x04"         \
+    "\x04\x49"         \
+    "\xd5\xf8"         \
+    "\x8c\x24"         \
+    "\xa8\x60"         \
+    "\x69\x61"         \
+    "\x2a\x61"         \
+    "\x00\x20"         \
+    "\xfe\xbd"         \
+    "\xff\xff\xff\xff" \
+    "\xee\xee\xee\xee"
 
-#endif //__LOKI_H_
+#endif  //__LOKI_H_
