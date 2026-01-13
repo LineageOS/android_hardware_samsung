@@ -37,7 +37,7 @@ IKeymasterDevice* CreateSKeymasterDevice(SecurityLevel securityLevel);
 
 int main() {
     IKeymasterDevice* keymaster =
-        skeymaster::CreateSKeymasterDevice(SecurityLevel::TRUSTED_ENVIRONMENT);
+            skeymaster::CreateSKeymasterDevice(SecurityLevel::TRUSTED_ENVIRONMENT);
 
     configureRpcThreadpool(1, true);
 
