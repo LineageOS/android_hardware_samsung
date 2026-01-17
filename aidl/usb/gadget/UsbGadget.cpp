@@ -94,8 +94,9 @@ ScopedAStatus UsbGadget::getUsbSpeed(const shared_ptr<IUsbGadgetCallback> &callb
     if (callback) {
         ScopedAStatus ret = callback->getUsbSpeedCb(mUsbSpeed, in_transactionId);
 
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("Call to getUsbSpeedCb failed %s", ret.getDescription().c_str());
+        }
     }
 
     return ScopedAStatus::ok();
@@ -232,8 +233,9 @@ ScopedAStatus UsbGadget::reset(const shared_ptr<IUsbGadgetCallback> &callback,
 
     if (!WriteStringToFile("none", PULLUP_PATH)) {
         ALOGI("Gadget cannot be pulled down");
-        if (callback)
+        if (callback) {
             callback->resetCb(Status::ERROR, in_transactionId);
+        }
         return ScopedAStatus::fromServiceSpecificErrorWithMessage(
                 -1, "Gadget cannot be pulled down");
     }
@@ -242,13 +244,15 @@ ScopedAStatus UsbGadget::reset(const shared_ptr<IUsbGadgetCallback> &callback,
 
     if (!WriteStringToFile(kGadgetName, PULLUP_PATH)) {
         ALOGI("Gadget cannot be pulled up");
-        if (callback)
+        if (callback) {
             callback->resetCb(Status::ERROR, in_transactionId);
+        }
         return ScopedAStatus::fromServiceSpecificErrorWithMessage(
                 -1, "Gadget cannot be pulled up");
     }
-    if (callback)
+    if (callback) {
         callback->resetCb(Status::SUCCESS, in_transactionId);
+    }
 
     return ScopedAStatus::ok();
 }
@@ -260,8 +264,9 @@ Status UsbGadget::setupFunctions(long functions,
     int i = 0;
 
     if (Status(addGenericAndroidFunctions(&monitorFfs, functions, &ffsEnabled, &i)) !=
-        Status::SUCCESS)
+        Status::SUCCESS) {
         return Status::ERROR;
+    }
 
     if ((functions & GadgetFunction::ADB) != 0) {
         ffsEnabled = true;
@@ -271,17 +276,20 @@ Status UsbGadget::setupFunctions(long functions,
 
     if ((functions & GadgetFunction::NCM) != 0) {
         ALOGI("setCurrentUsbFunctions ncm");
-        if (linkFunction("ncm.gs9", i++))
+        if (linkFunction("ncm.gs9", i++)) {
             return Status::ERROR;
+        }
     }
 
     // Pull up the gadget right away when there are no ffs functions.
     if (!ffsEnabled) {
-        if (!WriteStringToFile(kGadgetName, PULLUP_PATH))
+        if (!WriteStringToFile(kGadgetName, PULLUP_PATH)) {
             return Status::ERROR;
+        }
         mCurrentUsbFunctionsApplied = true;
-        if (callback)
+        if (callback) {
             callback->setCurrentUsbFunctionsCb(functions, Status::SUCCESS, in_transactionId);
+        }
         return Status::SUCCESS;
     }
 
@@ -291,8 +299,9 @@ Status UsbGadget::setupFunctions(long functions,
     // dies and restarts.
     monitorFfs.startMonitor();
 
-    if (kDebug)
+    if (kDebug) {
         ALOGI("Mainthread in Cv");
+    }
 
     if (callback) {
         bool pullup = monitorFfs.waitForPullUp(timeout);
@@ -330,12 +339,14 @@ ScopedAStatus UsbGadget::setCurrentUsbFunctions(long functions,
     usleep(kDisconnectWaitUs);
 
     if (functions == GadgetFunction::NONE) {
-        if (callback == NULL)
+        if (callback == NULL) {
             return ScopedAStatus::fromServiceSpecificErrorWithMessage(
                 -1, "callback == NULL");
+        }
         ScopedAStatus ret = callback->setCurrentUsbFunctionsCb(functions, status, in_transactionId);
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("Error while calling setCurrentUsbFunctionsCb %s", ret.getDescription().c_str());
+        }
         return ScopedAStatus::fromServiceSpecificErrorWithMessage(
                 -1, "Error while calling setCurrentUsbFunctionsCb");
     }
@@ -356,12 +367,14 @@ ScopedAStatus UsbGadget::setCurrentUsbFunctions(long functions,
 
 error:
     ALOGI("Usb Gadget setcurrent functions failed");
-    if (callback == NULL)
+    if (callback == NULL) {
         return ScopedAStatus::fromServiceSpecificErrorWithMessage(
                 -1, "Usb Gadget setcurrent functions failed");
+    }
     ScopedAStatus ret = callback->setCurrentUsbFunctionsCb(functions, status, in_transactionId);
-    if (!ret.isOk())
+    if (!ret.isOk()) {
         ALOGE("Error while calling setCurrentUsbFunctionsCb %s", ret.getDescription().c_str());
+    }
     return ScopedAStatus::fromServiceSpecificErrorWithMessage(
                 -1, "Error while calling setCurrentUsbFunctionsCb");
 }
