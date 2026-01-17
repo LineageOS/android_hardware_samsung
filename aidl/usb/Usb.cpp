@@ -64,8 +64,9 @@ int32_t readFile(const std::string &filename, std::string *contents) {
     if (fp != NULL) {
         if ((read = getline(&line, &len, fp)) != -1) {
             char *pos;
-            if ((pos = strchr(line, '\n')) != NULL)
+            if ((pos = strchr(line, '\n')) != NULL) {
                 *pos = '\0';
+            }
             *contents = line;
         }
         free(line);
@@ -94,8 +95,9 @@ ScopedAStatus Usb::enableUsbData(const string& in_portName, bool in_enable, int6
     if (mCallback != NULL) {
         ScopedAStatus ret = mCallback->notifyEnableUsbDataStatus(
             in_portName, in_enable, result ? Status::SUCCESS : Status::ERROR, in_transactionId);
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("notifyEnableUsbDataStatus error %s", ret.getDescription().c_str());
+        }
     } else {
         ALOGE("Not notifying the userspace. Callback is not set");
     }
@@ -111,8 +113,9 @@ ScopedAStatus Usb::enableUsbDataWhileDocked(const string& in_portName, int64_t i
     if (mCallback != NULL) {
         ScopedAStatus ret = mCallback->notifyEnableUsbDataWhileDockedStatus(
             in_portName, Status::NOT_SUPPORTED, in_transactionId);
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("notifyEnableUsbDataWhileDockedStatus error %s", ret.getDescription().c_str());
+        }
     } else {
         ALOGE("Not notifying the userspace. Callback is not set");
     }
@@ -204,15 +207,19 @@ string convertRoletoString(PortRole role) {
         else if (role.get<PortRole::powerRole>() == PortPowerRole::SINK)
             return "sink";
     } else if (role.getTag() == PortRole::dataRole) {
-        if (role.get<PortRole::dataRole>() == PortDataRole::HOST)
+        if (role.get<PortRole::dataRole>() == PortDataRole::HOST) {
             return "host";
-        if (role.get<PortRole::dataRole>() == PortDataRole::DEVICE)
+        }
+        if (role.get<PortRole::dataRole>() == PortDataRole::DEVICE) {
             return "device";
+        }
     } else if (role.getTag() == PortRole::mode) {
-        if (role.get<PortRole::mode>() == PortMode::UFP)
+        if (role.get<PortRole::mode>() == PortMode::UFP) {
             return "sink";
-        if (role.get<PortRole::mode>() == PortMode::DFP)
+        }
+        if (role.get<PortRole::mode>() == PortMode::DFP) {
             return "source";
+        }
     }
     return "none";
 }
@@ -237,8 +244,9 @@ void switchToDrp(const string &portName) {
         if (fp != NULL) {
             int ret = fputs("dual", fp);
             fclose(fp);
-            if (ret == EOF)
+            if (ret == EOF) {
                 ALOGE("Fatal: Error while switching back to drp");
+            }
         } else {
             ALOGE("Fatal: Cannot open file to switch back to drp");
         }
@@ -294,8 +302,9 @@ bool switchMode(const string &portName, const PortRole &in_role, struct Usb *usb
         pthread_mutex_unlock(&usb->mPartnerLock);
     }
 
-    if (!roleSwitch)
+    if (!roleSwitch) {
         switchToDrp(string(portName.c_str()));
+    }
 
     return roleSwitch;
 }
@@ -369,8 +378,9 @@ ScopedAStatus Usb::switchRole(const string& in_portName,
     if (mCallback != NULL) {
          ScopedAStatus ret = mCallback->notifyRoleSwitchStatus(
             in_portName, in_role, roleSwitch ? Status::SUCCESS : Status::ERROR, in_transactionId);
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("RoleSwitchStatus error %s", ret.getDescription().c_str());
+        }
     } else {
         ALOGE("Not notifying the userspace. Callback is not set");
     }
@@ -388,8 +398,9 @@ ScopedAStatus Usb::limitPowerTransfer(const string& in_portName, bool /*in_limit
     if (mCallback != NULL && in_transactionId >= 0) {
         ScopedAStatus ret = mCallback->notifyLimitPowerTransferStatus(
                 in_portName, false, Status::NOT_SUPPORTED, in_transactionId);
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("limitPowerTransfer error %s", ret.getDescription().c_str());
+        }
     } else {
         ALOGE("Not notifying the userspace. Callback is not set");
     }
@@ -430,8 +441,9 @@ Status getCurrentRoleHelper(const string &portName, bool connected, PortRole *cu
         return Status::ERROR;
     }
 
-    if (!connected)
+    if (!connected) {
         return Status::SUCCESS;
+    }
 
     if (currentRole->getTag() == PortRole::mode) {
         if (getAccessoryConnected(portName, &accessory) != Status::SUCCESS) {
@@ -600,8 +612,9 @@ void queryVersionHelper(android::hardware::usb::Usb *usb,
     if (usb->mCallback != NULL) {
         ScopedAStatus ret = usb->mCallback->notifyPortStatusChange(*currentPortStatus,
             status);
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("queryPortStatus error %s", ret.getDescription().c_str());
+        }
     } else {
         ALOGI("Notifying userspace skipped. Callback is NULL");
     }
@@ -616,8 +629,9 @@ ScopedAStatus Usb::queryPortStatus(int64_t in_transactionId) {
     if (mCallback != NULL) {
         ScopedAStatus ret = mCallback->notifyQueryPortStatus(
             "all", Status::SUCCESS, in_transactionId);
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("notifyQueryPortStatus error %s", ret.getDescription().c_str());
+        }
     } else {
         ALOGE("Not notifying the userspace. Callback is not set");
     }
@@ -658,10 +672,13 @@ static void uevent_event(uint32_t /*epevents*/, struct data *payload) {
     int n;
 
     n = uevent_kernel_multicast_recv(payload->uevent_fd, msg, UEVENT_MSG_LEN);
-    if (n <= 0)
+    if (n <= 0) {
         return;
-    if (n >= UEVENT_MSG_LEN) /* overflow -- discard */
+    }
+    if (n >= UEVENT_MSG_LEN) {
+        // overflow -- discard
         return;
+    }
 
     msg[n] = '\0';
     msg[n + 1] = '\0';
@@ -739,16 +756,18 @@ void *work(void *param) {
 
         nevents = epoll_wait(epoll_fd, events, UEVENT_MAX_EVENTS, -1);
         if (nevents == -1) {
-            if (errno == EINTR)
+            if (errno == EINTR) {
                 continue;
+            }
             ALOGE("usb epoll_wait failed; errno=%d", errno);
             break;
         }
 
         for (int n = 0; n < nevents; ++n) {
-            if (events[n].data.ptr)
+            if (events[n].data.ptr) {
                 (*(void (*)(int, struct data *payload))events[n].data.ptr)(events[n].events,
                                                                            &payload);
+            }
         }
     }
 
@@ -756,8 +775,9 @@ void *work(void *param) {
 error:
     close(uevent_fd);
 
-    if (epoll_fd >= 0)
+    if (epoll_fd >= 0) {
         close(epoll_fd);
+    }
 
     return NULL;
 }
