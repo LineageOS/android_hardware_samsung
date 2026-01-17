@@ -600,8 +600,9 @@ void queryVersionHelper(android::hardware::usb::Usb *usb,
     if (usb->mCallback != NULL) {
         ScopedAStatus ret = usb->mCallback->notifyPortStatusChange(*currentPortStatus,
             status);
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("queryPortStatus error %s", ret.getDescription().c_str());
+        }
     } else {
         ALOGI("Notifying userspace skipped. Callback is NULL");
     }
@@ -616,8 +617,9 @@ ScopedAStatus Usb::queryPortStatus(int64_t in_transactionId) {
     if (mCallback != NULL) {
         ScopedAStatus ret = mCallback->notifyQueryPortStatus(
             "all", Status::SUCCESS, in_transactionId);
-        if (!ret.isOk())
+        if (!ret.isOk()) {
             ALOGE("notifyQueryPortStatus error %s", ret.getDescription().c_str());
+        }
     } else {
         ALOGE("Not notifying the userspace. Callback is not set");
     }
@@ -658,10 +660,13 @@ static void uevent_event(uint32_t /*epevents*/, struct data *payload) {
     int n;
 
     n = uevent_kernel_multicast_recv(payload->uevent_fd, msg, UEVENT_MSG_LEN);
-    if (n <= 0)
+    if (n <= 0) {
         return;
-    if (n >= UEVENT_MSG_LEN) /* overflow -- discard */
+    }
+    if (n >= UEVENT_MSG_LEN) {
+        // overflow -- discard
         return;
+    }
 
     msg[n] = '\0';
     msg[n + 1] = '\0';
@@ -739,16 +744,18 @@ void *work(void *param) {
 
         nevents = epoll_wait(epoll_fd, events, UEVENT_MAX_EVENTS, -1);
         if (nevents == -1) {
-            if (errno == EINTR)
+            if (errno == EINTR) {
                 continue;
+            }
             ALOGE("usb epoll_wait failed; errno=%d", errno);
             break;
         }
 
         for (int n = 0; n < nevents; ++n) {
-            if (events[n].data.ptr)
+            if (events[n].data.ptr) {
                 (*(void (*)(int, struct data *payload))events[n].data.ptr)(events[n].events,
                                                                            &payload);
+            }
         }
     }
 
@@ -756,8 +763,9 @@ void *work(void *param) {
 error:
     close(uevent_fd);
 
-    if (epoll_fd >= 0)
+    if (epoll_fd >= 0) {
         close(epoll_fd);
+    }
 
     return NULL;
 }
