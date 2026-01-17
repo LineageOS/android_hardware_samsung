@@ -115,8 +115,9 @@ ndk::ScopedAStatus Vibrator::getCapabilities(int32_t* _aidl_return) {
         *_aidl_return |= IVibrator::CAP_AMPLITUDE_CONTROL | IVibrator::CAP_EXTERNAL_AMPLITUDE_CONTROL;
 #endif
 
-    if (mIsForceFeedbackVibrator)
+    if (mIsForceFeedbackVibrator) {
         *_aidl_return |= IVibrator::CAP_AMPLITUDE_CONTROL;
+    }
 
     return ndk::ScopedAStatus::ok();
 }
@@ -128,11 +129,13 @@ ndk::ScopedAStatus Vibrator::off() {
 ndk::ScopedAStatus Vibrator::on(int32_t timeoutMs, const std::shared_ptr<IVibratorCallback>& callback) {
     ndk::ScopedAStatus status;
 
-    if (mHasTimedOutEffect)
+    if (mHasTimedOutEffect) {
         writeNode(VIBRATOR_CP_TRIGGER_PATH, 0); // Clear all effects
+    }
 
-    if (mIsForceFeedbackVibrator)
+    if (mIsForceFeedbackVibrator) {
         uploadFFEffect({0}, timeoutMs);
+    }
 
 #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
     timeoutMs *= mDurationAmplitude;
@@ -159,11 +162,13 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength, con
     float amplitude = strengthToAmplitude(strength, &status);
     uint32_t ms = 1000;
 
-    if (!status.isOk())
+    if (!status.isOk()) {
         return status;
+    }
 
-    if (mIsTimedOutVibrator)
+    if (mIsTimedOutVibrator) {
         activate(0);
+    }
 
     setAmplitude(amplitude);
 
@@ -174,13 +179,15 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength, con
             return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
         uploadFFEffect({0, FF_EFFECT_IDS.at(effect)}, 0);
     } else {
-        if (mHasTimedOutEffect)
+        if (mHasTimedOutEffect) {
             writeNode(VIBRATOR_CP_TRIGGER_PATH, 0); // Clear previous effect
+        }
 
         ms = effectToMs(effect, &status);
 
-        if (!status.isOk())
+        if (!status.isOk()) {
             return status;
+        }
     }
 
 #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
