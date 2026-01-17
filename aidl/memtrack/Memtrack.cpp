@@ -18,22 +18,26 @@ namespace memtrack {
 
 ndk::ScopedAStatus Memtrack::getMemory(int pid, MemtrackType type,
                                        std::vector<MemtrackRecord>* _aidl_return) {
-    if (pid < 0)
+    if (pid < 0) {
         return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_ILLEGAL_ARGUMENT));
+    }
 
     if (type != MemtrackType::OTHER && type != MemtrackType::GL && type != MemtrackType::GRAPHICS &&
-        type != MemtrackType::MULTIMEDIA && type != MemtrackType::CAMERA)
+        type != MemtrackType::MULTIMEDIA && type != MemtrackType::CAMERA) {
         return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_UNSUPPORTED_OPERATION));
+    }
 
     _aidl_return->clear();
 
     // Other types are retained only for backward compatibility
-    if (type != MemtrackType::GL && type != MemtrackType::GRAPHICS)
+    if (type != MemtrackType::GL && type != MemtrackType::GRAPHICS) {
         return ndk::ScopedAStatus::ok();
+    }
 
     // pid 0 is only supported for GL type to report total private memory
-    if (pid == 0 && type != MemtrackType::GL)
+    if (pid == 0 && type != MemtrackType::GL) {
         return ndk::ScopedAStatus::ok();
+    }
 
     uint64_t size = 0;
     switch (type) {
