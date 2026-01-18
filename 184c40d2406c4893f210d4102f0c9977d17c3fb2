@@ -16,6 +16,23 @@
       "message": "Verified on sm8250, with \"needs_sec_reserved_field\".",
       "revId": "184c40d2406c4893f210d4102f0c9977d17c3fb2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "508c4ecd_f9ae1f35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-01-18T15:55:17Z",
+      "side": 1,
+      "message": "EXTRA_IDS should not be parsed as string",
+      "revId": "184c40d2406c4893f210d4102f0c9977d17c3fb2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
