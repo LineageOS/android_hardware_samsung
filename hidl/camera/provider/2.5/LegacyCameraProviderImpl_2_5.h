@@ -1,1 +1,0 @@
-../../../../../../hardware/interfaces/camera/provider/2.5/default/LegacyCameraProviderImpl_2_5.h
