@@ -1,3 +1,8 @@
+//
+// SPDX-FileCopyrightText: 2024-2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
 cc_library_static {
     name: "android.hardware.camera.common-helper.samsung",
     defaults: [
@@ -35,12 +40,4 @@ cc_library_static {
         "include_samsung",
     ],
     export_shared_lib_headers: ["libui"],
-}
-
-// NOTE: Deprecated module kept for compatibility reasons.
-// Depend on "android.hardware.camera.common-helper.samsung" instead
-cc_library_static {
-    name: "android.hardware.camera.common@1.0-helper.samsung",
-    vendor_available: true,
-    whole_static_libs: ["android.hardware.camera.common-helper.samsung"],
 }
