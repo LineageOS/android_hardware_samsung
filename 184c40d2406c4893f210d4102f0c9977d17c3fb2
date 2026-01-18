@@ -33,6 +33,23 @@
       "message": "EXTRA_IDS should not be parsed as string",
       "revId": "184c40d2406c4893f210d4102f0c9977d17c3fb2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2564239f_17137892",
+        "filename": "aidl/camera/provider/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-01-18T15:56:03Z",
+      "side": 1,
+      "message": "any @ flag_val: [\"-DEXTRA_IDS\u003d\" + flag_val],",
+      "revId": "184c40d2406c4893f210d4102f0c9977d17c3fb2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
