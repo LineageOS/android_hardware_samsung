@@ -35,6 +35,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10ca338f_c9ef5856",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-01-18T15:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508c4ecd_f9ae1f35",
+      "revId": "184c40d2406c4893f210d4102f0c9977d17c3fb2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2564239f_17137892",
@@ -65,6 +83,42 @@
       "writtenOn": "2026-01-18T15:57:55Z",
       "side": 1,
       "message": "```suggestion\n        any @ flag_val: [\"-DEXTRA_IDS\u003d\" + flag_val],\n```",
+      "revId": "184c40d2406c4893f210d4102f0c9977d17c3fb2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "508ed1ac_25ca1bf4",
+        "filename": "aidl/camera/provider/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-01-18T15:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a9858a_2bf5d87d",
+      "revId": "184c40d2406c4893f210d4102f0c9977d17c3fb2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e38e809b_382e0e10",
+        "filename": "aidl/camera/provider/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-01-18T15:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2564239f_17137892",
       "revId": "184c40d2406c4893f210d4102f0c9977d17c3fb2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
