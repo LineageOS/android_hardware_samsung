@@ -18,7 +18,7 @@ cc_library_shared {
     name: "camera.device@3.5-impl.samsung",
     defaults: [
         "hidl_defaults",
-        "samsung_camera3_defaults",
+        "samsung_camera3_hidl_defaults",
     ],
     proprietary: true,
     vendor: true,

@@ -1,7 +1,10 @@
 cc_library_shared {
     name: "android.hardware.camera.provider@2.5-legacy.samsung",
-    defaults: ["extra_id_defaults"],
     proprietary: true,
+    cppflags: select(soong_config_variable("samsungCameraVars", "extra_ids"), {
+        any @ flag_val: ["-DEXTRA_IDS=\"" + flag_val + "\""],
+        default: [],
+    }),
     srcs: [
         "LegacyCameraProviderImpl_2_5.cpp",
         "SamsungCameraProvider.cpp",
