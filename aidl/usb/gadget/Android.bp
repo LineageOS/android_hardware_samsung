@@ -1,6 +1,6 @@
 //
 // Copyright (C) 2021 The Android Open Source Project
-// Copyright (C) 2024 The LineageOS Project
+// Copyright (C) 2024-2026 The LineageOS Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,26 +14,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-soong_config_module_type {
-    name: "gadget_name",
-    module_type: "cc_defaults",
-    config_namespace: "samsungUsbGadgetVars",
-    value_variables: ["gadget_name"],
-    properties: ["cppflags"],
-}
-
-gadget_name {
-    name: "gadget_name_defaults",
-    soong_config_variables: {
-        gadget_name: {
-            cppflags: ["-DGADGET_NAME=\"%s\""],
-        },
-    },
-}
-
 cc_binary {
     name: "android.hardware.usb.gadget-service.samsung",
-    defaults: ["gadget_name_defaults"],
     relative_install_path: "hw",
     init_rc: ["android.hardware.usb.gadget-service.samsung.rc"],
     vintf_fragments: [
@@ -44,10 +26,13 @@ cc_binary {
         "service_gadget.cpp",
         "UsbGadget.cpp",
     ],
-    cflags: [
+    cppflags: [
         "-Wall",
         "-Werror",
-    ],
+    ] + select(soong_config_variable("samsungUsbGadgetVars", "gadget_name"), {
+        any @ flag_val: ["-DGADGET_NAME=\"" + flag_val + "\""],
+        default: [],
+    }),
     shared_libs: [
         "libbase",
         "liblog",
