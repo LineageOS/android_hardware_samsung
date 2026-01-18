@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6686089a_101dc9d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-01-18T15:20:16Z",
+      "side": 1,
+      "message": "Verified on sm8250, with \"needs_sec_reserved_field\".",
+      "revId": "184c40d2406c4893f210d4102f0c9977d17c3fb2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
