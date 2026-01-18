@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "459d6f8e_89dd4c81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-01-18T15:26:11Z",
+      "side": 1,
+      "message": "Maybe remove this HAL completely? Not used by anything, even the Pixels where it\u0027s from.",
+      "revId": "69a821ddb9f894b9ee1ef521e5e95193db42015e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
