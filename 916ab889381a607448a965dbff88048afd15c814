@@ -33,6 +33,24 @@
       "message": "Move to SPDX copyrights in all files you add.",
       "revId": "916ab889381a607448a965dbff88048afd15c814",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f7d8e81_f29b40d5",
+        "filename": "packages/SamsungBiometrics/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-01-18T17:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f13a632e_e4e85821",
+      "revId": "916ab889381a607448a965dbff88048afd15c814",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
