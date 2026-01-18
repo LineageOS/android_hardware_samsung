@@ -1,0 +1,22 @@
+//
+// Copyright (C) 2026 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_defaults {
+    name: "samsung_camera3_aidl_defaults",
+    cppflags: select(soong_config_variable("samsungCameraVars", "needs_sec_get_cam_pos_v1"), {
+        true: ["-DCAMERA_NEEDS_SEC_GET_CAM_POS_V1"],
+        default: [],
+    }) + select(soong_config_variable("samsungCameraVars", "needs_sec_get_cam_pos_v2"), {
+        true: ["-DCAMERA_NEEDS_SEC_GET_CAM_POS_V2"],
+        default: [],
+    }) + select(soong_config_variable("samsungCameraVars", "needs_sec_reserved_field"), {
+        true: ["-DCAMERA_NEEDS_SEC_RESERVED_FIELD"],
+        default: [],
+    }) + select(soong_config_variable("samsungCameraVars", "usage_64bit"), {
+        true: ["-DCAMERA_64BIT_USAGE"],
+        default: [],
+    }),
+}

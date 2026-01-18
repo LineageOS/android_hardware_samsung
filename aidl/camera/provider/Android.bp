@@ -1,35 +1,19 @@
 //
-// Copyright (C) 2024 The LineageOS Project
+// Copyright (C) 2024-2026 The LineageOS Project
 //
 // SPDX-License-Identifier: Apache-2.0
 //
 
-soong_config_module_type {
-    name: "extra_ids",
-    module_type: "cc_defaults",
-    config_namespace: "samsungCameraVars",
-    value_variables: ["extra_ids"],
-    properties: ["cppflags"],
-}
-
-extra_ids {
-    name: "extra_id_defaults",
-    soong_config_variables: {
-        extra_ids: {
-            cppflags: ["-DEXTRA_IDS=%s"],
-        },
-    },
-}
-
 cc_defaults {
     name: "camera_service_aidl_defaults.samsung",
-    defaults: [
-        "extra_id_defaults",
-        "samsung_camera3_defaults",
-    ],
+    defaults: ["samsung_camera3_aidl_defaults"],
     vintf_fragments: ["android.hardware.camera.provider-service.samsung.xml"],
     vendor: true,
     relative_install_path: "hw",
+    cppflags: select(soong_config_variable("samsungCameraVars", "extra_ids"), {
+        any @ flag_val: ["-DEXTRA_IDS=\"" + flag_val + "\""],
+        default: [],
+    }),
     srcs: [
         "service.cpp",
         "CameraProvider.cpp",

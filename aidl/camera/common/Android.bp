@@ -1,8 +1,14 @@
+//
+// Copyright (C) 2024-2026 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
 cc_library_static {
     name: "android.hardware.camera.common-helper.samsung",
     defaults: [
         "hidl_defaults",
-        "samsung_camera3_defaults",
+        "samsung_camera3_aidl_defaults",
     ],
     vendor_available: true,
     srcs: [
