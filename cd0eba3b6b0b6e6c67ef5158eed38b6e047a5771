@@ -34,6 +34,24 @@
       "parentUuid": "1d605360_b7274570",
       "revId": "cd0eba3b6b0b6e6c67ef5158eed38b6e047a5771",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d6c9ff7_1263d826",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-01-18T15:18:54Z",
+      "side": 1,
+      "message": "I don\u0027t see any device using HIDL camera device impl/provider.",
+      "parentUuid": "650c8b34_edea663a",
+      "revId": "cd0eba3b6b0b6e6c67ef5158eed38b6e047a5771",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
