@@ -1,0 +1,13 @@
+<!--
+  Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+  Copyright (C) 2024 The LineageOS Project
+  SPDX-License-Identifier: BSD-3-Clause-Clear
+-->
+
+<manifest version="1.0" type="device">
+    <hal format="aidl">
+        <name>android.hardware.health</name>
+        <version>1</version>
+        <fqname>IHealth/default</fqname>
+    </hal>
+</manifest>

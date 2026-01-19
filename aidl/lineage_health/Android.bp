@@ -1,0 +1,119 @@
+/*
+ * Copyright (C) 2022-2025 The LineageOS Project
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+cc_defaults {
+    name: "android.hardware.health-service.samsung.batteryless-defaults",
+    relative_install_path: "hw",
+    vintf_fragments: ["android.hardware.health-service.samsung.batteryless.xml"],
+    vendor: true,
+    recovery_available: true,
+
+    defaults: [
+        "libhealth_aidl_impl_user",
+    ],
+
+    include_dirs: [
+        "system/core/healthd",
+        "system/core/healthd/include",
+        "system/core/healthd/include_charger"
+    ],
+
+    static_libs: [
+        "libhealth_aidl_impl",
+    ],
+
+    srcs: [
+        "service-batteryless.cpp",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}
+
+cc_binary {
+    name: "android.hardware.health-service.samsung.batteryless",
+    recovery: false,
+    vendor: true,
+    defaults: ["android.hardware.health-service.samsung.batteryless-defaults"],
+    init_rc: ["android.hardware.health-service.samsung.batteryless.rc"],
+    overrides: ["charger"],
+}
+
+cc_binary {
+    name: "android.hardware.health-service.samsung.batteryless_recovery",
+    vendor: false,
+    recovery: true,
+    defaults: ["android.hardware.health-service.samsung.batteryless-defaults"],
+    init_rc: ["android.hardware.health-service.samsung.batteryless_recovery.rc"],
+    overrides: ["charger.recovery"],
+}
+
+cc_binary {
+    name: "vendor.lineage.health-service.samsung.default",
+    vendor: true,
+    relative_install_path: "hw",
+    init_rc: ["vendor.lineage.health-service.samsung.default.rc"],
+    vintf_fragments: ["vendor.lineage.health-service.samsung.default.xml"],
+    cflags: select(soong_config_variable("lineage_health", "charging_control_charging_path"), {
+        any @ flag_val: ["-DHEALTH_CHARGING_CONTROL_CHARGING_PATH=\"" + flag_val + "\""],
+        default: [],
+    }) + select(soong_config_variable("lineage_health", "charging_control_deadline_path"), {
+        any @ flag_val: ["-DHEALTH_CHARGING_CONTROL_DEADLINE_PATH=\"" + flag_val + "\""],
+        default: [],
+    }) + select(soong_config_variable("lineage_health", "charging_control_limit_start_path"), {
+        any @ flag_val: ["-DHEALTH_CHARGING_CONTROL_LIMIT_START_PATH=\"" + flag_val + "\""],
+        default: [],
+    }) + select(soong_config_variable("lineage_health", "charging_control_limit_stop_path"), {
+        any @ flag_val: ["-DHEALTH_CHARGING_CONTROL_LIMIT_STOP_PATH=\"" + flag_val + "\""],
+        default: [],
+    }) + select(soong_config_variable("lineage_health", "charging_control_charging_enabled"), {
+        any @ flag_val: ["-DHEALTH_CHARGING_CONTROL_CHARGING_ENABLED=\"" + flag_val + "\""],
+        default: ["-DHEALTH_CHARGING_CONTROL_CHARGING_ENABLED=\"1\""],
+    }) + select(soong_config_variable("lineage_health", "charging_control_charging_disabled"), {
+        any @ flag_val: ["-DHEALTH_CHARGING_CONTROL_CHARGING_DISABLED=\"" + flag_val + "\""],
+        default: ["-DHEALTH_CHARGING_CONTROL_CHARGING_DISABLED=\"0\""],
+    }) + select(soong_config_variable("lineage_health", "charging_control_supports_bypass"), {
+        true: ["-DHEALTH_CHARGING_CONTROL_SUPPORTS_BYPASS"],
+        false: [],
+        default: ["-DHEALTH_CHARGING_CONTROL_SUPPORTS_BYPASS"],
+    }) + select(soong_config_variable("lineage_health", "charging_control_supports_deadline"), {
+        true: ["-DHEALTH_CHARGING_CONTROL_SUPPORTS_DEADLINE"],
+        false: [],
+        default: [],
+    }) + select(soong_config_variable("lineage_health", "charging_control_supports_limit"), {
+        true: ["-DHEALTH_CHARGING_CONTROL_SUPPORTS_LIMIT"],
+        false: [],
+        default: [],
+    }) + select(soong_config_variable("lineage_health", "charging_control_supports_toggle"), {
+        true: ["-DHEALTH_CHARGING_CONTROL_SUPPORTS_TOGGLE"],
+        false: [],
+        default: ["-DHEALTH_CHARGING_CONTROL_SUPPORTS_TOGGLE"],
+    }) + select(soong_config_variable("lineage_health", "fast_charge_node"), {
+        any @ flag_val: ["-DHEALTH_FAST_CHARGE_NODE=\"" + flag_val + "\""],
+        default: ["-DHEALTH_FAST_CHARGE_NODE="],
+    }) + select(soong_config_variable("lineage_health", "fast_charge_value_none"), {
+        any @ flag_val: ["-DHEALTH_FAST_CHARGE_VALUE_NONE=\"" + flag_val + "\""],
+        default: ["-DHEALTH_FAST_CHARGE_VALUE_NONE="],
+    }) + select(soong_config_variable("lineage_health", "fast_charge_value_fast_charge"), {
+        any @ flag_val: ["-DHEALTH_FAST_CHARGE_VALUE_FAST_CHARGE=\"" + flag_val + "\""],
+        default: ["-DHEALTH_FAST_CHARGE_VALUE_FAST_CHARGE="],
+    }) + select(soong_config_variable("lineage_health", "fast_charge_value_super_fast_charge"), {
+        any @ flag_val: ["-DHEALTH_FAST_CHARGE_VALUE_SUPER_FAST_CHARGE=\"" + flag_val + "\""],
+        default: ["-DHEALTH_FAST_CHARGE_VALUE_SUPER_FAST_CHARGE="],
+    }),
+    srcs: [
+        "service.cpp",
+        "ChargingControl.cpp",
+        "FastCharge.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "vendor.lineage.health-V2-ndk",
+    ],
+}

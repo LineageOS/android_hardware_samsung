@@ -1,0 +1,4 @@
+service vendor.lineage_health /vendor/bin/hw/vendor.lineage.health-service.default
+    class hal
+    user system
+    group system
