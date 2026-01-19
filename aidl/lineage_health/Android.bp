@@ -1,0 +1,22 @@
+//
+// SPDX-FileCopyrightText: 2022-2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_binary {
+    name: "vendor.lineage.health-service.samsung",
+    vendor: true,
+    relative_install_path: "hw",
+    init_rc: ["vendor.lineage.health-service.samsung.rc"],
+    vintf_fragments: ["vendor.lineage.health-service.samsung.xml"],
+    srcs: [
+        "service.cpp",
+        "ChargingControl.cpp",
+        "FastCharge.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "vendor.lineage.health-V2-ndk",
+    ],
+}
