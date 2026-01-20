@@ -7,6 +7,7 @@
 #pragma once
 
 #include <aidl/vendor/lineage/health/BnFastCharge.h>
+#include <fstream>
 
 namespace aidl {
 namespace vendor {
@@ -15,42 +16,24 @@ namespace health {
 
 class FastChargeConfig {
   public:
-    FastChargeConfig() : supportedModes(supportedModesInternal()) {}
+    FastChargeConfig()
+        : AFCNode("/sys/class/sec/switch/afc_disable"),
+          SFCNode("/sys/class/power_supply/battery/pd_disable"),
+          supportedModes(supportedModesInternal(*AFCNode, *SFCNode)) {}
 
-    std::optional<FastChargeMode> modeToValue(const std::string& value) const {
-        if (value == valueNone) return FastChargeMode::NONE;
-        if (value == valueFastCharge) return FastChargeMode::FAST_CHARGE;
-        if (value == valueSuperFastCharge) return FastChargeMode::SUPER_FAST_CHARGE;
-        return {};
-    }
-
-    std::optional<std::string> valueToMode(FastChargeMode mode) const {
-        switch (mode) {
-            case FastChargeMode::NONE:
-                return valueNone;
-            case FastChargeMode::FAST_CHARGE:
-                return valueFastCharge;
-            case FastChargeMode::SUPER_FAST_CHARGE:
-                return valueSuperFastCharge;
-            default:
-                return {};
-        }
-    }
-
-    std::optional<std::string> node{HEALTH_FAST_CHARGE_NODE};
-    std::optional<std::string> valueNone{HEALTH_FAST_CHARGE_VALUE_NONE};
-    std::optional<std::string> valueFastCharge{HEALTH_FAST_CHARGE_VALUE_FAST_CHARGE};
-    std::optional<std::string> valueSuperFastCharge{HEALTH_FAST_CHARGE_VALUE_SUPER_FAST_CHARGE};
+    std::optional<std::string> AFCNode, SFCNode;
     int64_t supportedModes;
 
   private:
-    int64_t supportedModesInternal() const {
-        int64_t ret = 0;
+    int64_t supportedModesInternal(const std::string& AFCNode, const std::string& SFCNode) const {
+        int64_t ret = static_cast<int>(FastChargeMode::NONE);
 
-        if (node) {
-            if (valueNone) ret |= static_cast<int>(FastChargeMode::NONE);
-            if (valueFastCharge) ret |= static_cast<int>(FastChargeMode::FAST_CHARGE);
-            if (valueSuperFastCharge) ret |= static_cast<int>(FastChargeMode::SUPER_FAST_CHARGE);
+        if (std::ifstream(AFCNode)) {
+            ret |= static_cast<int64_t>(FastChargeMode::FAST_CHARGE);
+        }
+
+        if (std::ifstream(SFCNode)) {
+            ret |= static_cast<int64_t>(FastChargeMode::SUPER_FAST_CHARGE);
         }
 
         return ret;
