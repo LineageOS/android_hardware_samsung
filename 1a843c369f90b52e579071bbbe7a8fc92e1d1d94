@@ -16,6 +16,23 @@
       "message": "Hold for future chained commits",
       "revId": "1a843c369f90b52e579071bbbe7a8fc92e1d1d94",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0e14f32_71ee45db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2026-01-20T01:16:33Z",
+      "side": 1,
+      "message": "Is the default hal with all its soong config flags not enough for you?",
+      "revId": "1a843c369f90b52e579071bbbe7a8fc92e1d1d94",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
