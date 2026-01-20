@@ -30,34 +30,52 @@ ndk::ScopedAStatus FastCharge::getFastChargeMode(FastChargeMode* _aidl_return) {
         return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
 
-    std::string content;
-    if (!android::base::ReadFileToString(*fastChargeConfig.node, &content, true)) {
-        LOG(ERROR) << "Failed to read current fast charging value";
-        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
-    }
-    content = android::base::Trim(content);
+    bool SFCEnabled = false, AFCEnabled = false;
 
-    auto mode = fastChargeConfig.modeToValue(content);
-    if (!mode) {
-        LOG(ERROR) << "Failed to parse current fast charging value: " << content;
-        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+    if (fastChargeConfig.supportedModes & static_cast<int64_t>(FastChargeMode::SUPER_FAST_CHARGE)) {
+        if (!fastChargeConfig.readEnabledStateFromNode(*fastChargeConfig.SFCNode, &SFCEnabled)) {
+            LOG(ERROR) << "Failed to read current fast charging value";
+            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+        }
     }
 
-    *_aidl_return = *mode;
+    if (fastChargeConfig.supportedModes & static_cast<int64_t>(FastChargeMode::FAST_CHARGE)) {
+        if (!fastChargeConfig.readEnabledStateFromNode(*fastChargeConfig.AFCNode, &AFCEnabled)) {
+            LOG(ERROR) << "Failed to read current fast charging value";
+            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+        }
+    }
+
+    if (SFCEnabled && AFCEnabled)
+        *_aidl_return = FastChargeMode::SUPER_FAST_CHARGE;
+    else if (AFCEnabled)
+        *_aidl_return = FastChargeMode::FAST_CHARGE;
+    else
+        *_aidl_return = FastChargeMode::NONE;
 
     return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus FastCharge::setFastChargeMode(FastChargeMode in_mode,
                                                  FastChargeMode* _aidl_return) {
-    auto value = fastChargeConfig.valueToMode(in_mode);
-    if (!value) {
-        LOG(ERROR) << "Unsupported fast charge mode: " << static_cast<int>(in_mode);
-        return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+    bool success = true;
+    if (in_mode >= FastChargeMode::FAST_CHARGE) {
+        success &= android::base::WriteStringToFile("0", *fastChargeConfig.AFCNode);
+
+        if (in_mode >= FastChargeMode::SUPER_FAST_CHARGE) {
+            success &= android::base::WriteStringToFile("0", *fastChargeConfig.SFCNode);
+        }
+
+        else {
+            success &= android::base::WriteStringToFile("1", *fastChargeConfig.SFCNode);
+        }
+    } else {
+        success &= android::base::WriteStringToFile("1", *fastChargeConfig.AFCNode);
+        success &= android::base::WriteStringToFile("1", *fastChargeConfig.SFCNode);
     }
 
-    if (!android::base::WriteStringToFile(*value, *fastChargeConfig.node)) {
-        LOG(ERROR) << "Failed to write to fast charge node: " << strerror(errno);
+    if (!success) {
+        LOG(ERROR) << "Failed to write to fast charge nodes: " << strerror(errno);
         return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
 
