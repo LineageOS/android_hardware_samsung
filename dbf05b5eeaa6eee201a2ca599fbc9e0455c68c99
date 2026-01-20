@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff10d873_983ce66c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2026-01-20T16:48:24Z",
+      "side": 1,
+      "message": "Can\u0027t you just use lineage hal for charging control and samsung hal for fastcharge?",
+      "revId": "dbf05b5eeaa6eee201a2ca599fbc9e0455c68c99",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
