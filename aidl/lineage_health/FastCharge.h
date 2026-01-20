@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <fstream>
 #include <aidl/vendor/lineage/health/BnFastCharge.h>
 
 namespace aidl {
@@ -17,42 +18,28 @@ class FastChargeConfig {
   public:
     FastChargeConfig() : supportedModes(supportedModesInternal()) {}
 
-    std::optional<FastChargeMode> modeToValue(const std::string& value) const {
-        if (value == valueNone) return FastChargeMode::NONE;
-        if (value == valueFastCharge) return FastChargeMode::FAST_CHARGE;
-        if (value == valueSuperFastCharge) return FastChargeMode::SUPER_FAST_CHARGE;
-        return {};
-    }
-
-    std::optional<std::string> valueToMode(FastChargeMode mode) const {
-        switch (mode) {
-            case FastChargeMode::NONE:
-                return valueNone;
-            case FastChargeMode::FAST_CHARGE:
-                return valueFastCharge;
-            case FastChargeMode::SUPER_FAST_CHARGE:
-                return valueSuperFastCharge;
-            default:
-                return {};
-        }
-    }
-
-    std::optional<std::string> node{HEALTH_FAST_CHARGE_NODE};
-    std::optional<std::string> valueNone{HEALTH_FAST_CHARGE_VALUE_NONE};
-    std::optional<std::string> valueFastCharge{HEALTH_FAST_CHARGE_VALUE_FAST_CHARGE};
-    std::optional<std::string> valueSuperFastCharge{HEALTH_FAST_CHARGE_VALUE_SUPER_FAST_CHARGE};
+    std::optional<std::string> AFCNode{"/sys/class/sec/switch/afc_disable"};
+    std::optional<std::string> SFCNode{"/sys/class/power_supply/battery/pd_disable"};
     int64_t supportedModes;
 
   private:
     int64_t supportedModesInternal() const {
-        int64_t ret = 0;
-
-        if (node) {
-            if (valueNone) ret |= static_cast<int>(FastChargeMode::NONE);
-            if (valueFastCharge) ret |= static_cast<int>(FastChargeMode::FAST_CHARGE);
-            if (valueSuperFastCharge) ret |= static_cast<int>(FastChargeMode::SUPER_FAST_CHARGE);
+        int64_t ret = static_cast<int>(FastChargeMode::NONE);
+        std::ifstream file;
+        
+        file.open("/sys/class/sec/switch/afc_disable");
+        if (file.is_open()) {
+            ret |= static_cast<int>(FastChargeMode::FAST_CHARGE);
+            file.close();
         }
 
+        file.open("/sys/class/power_supply/battery/pd_disable");
+        if (file.is_open()) {
+            ret |= static_cast<int>(FastChargeMode::SUPER_FAST_CHARGE);
+            file.close();
+        }
+
+        ret |= static_cast<int>(FastChargeMode::SUPER_FAST_CHARGE);
         return ret;
     }
 };
