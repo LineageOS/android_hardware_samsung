@@ -51,6 +51,23 @@
       "parentUuid": "81750388_b0fbefb3",
       "revId": "38df597d8f19edda4a26505accc90fa421e87cb0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c0acab6_10e03935",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2026-01-21T09:21:14Z",
+      "side": 1,
+      "message": "just the guard the code for samsung in the common HAL tho??",
+      "revId": "38df597d8f19edda4a26505accc90fa421e87cb0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
