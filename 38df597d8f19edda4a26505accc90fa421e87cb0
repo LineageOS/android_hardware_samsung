@@ -33,6 +33,24 @@
       "message": "im with Mike and nolen on this one, i think we should try to do this in the common HAL",
       "revId": "38df597d8f19edda4a26505accc90fa421e87cb0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "479e3cad_08b33fa0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-01-21T09:06:53Z",
+      "side": 1,
+      "message": "It\u0027d clutter it up too much imo... And what\u0027s the point when only Samsung does this? After all we don\u0027t have common LiveDisplay HALs for example either.",
+      "parentUuid": "81750388_b0fbefb3",
+      "revId": "38df597d8f19edda4a26505accc90fa421e87cb0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
