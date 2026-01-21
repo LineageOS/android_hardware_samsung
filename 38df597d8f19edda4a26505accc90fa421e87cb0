@@ -68,6 +68,24 @@
       "message": "just the guard the code for samsung in the common HAL tho??",
       "revId": "38df597d8f19edda4a26505accc90fa421e87cb0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec7c3b29_7d53fc40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-01-21T09:34:52Z",
+      "side": 1,
+      "message": "\u003e just the guard the code for samsung in the common HAL tho??\nAre you sure? The code is completely different from what\u0027s in common so it wouldn\u0027t fit well imho.",
+      "parentUuid": "4c0acab6_10e03935",
+      "revId": "38df597d8f19edda4a26505accc90fa421e87cb0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
