@@ -16,6 +16,23 @@
       "message": "Functions as intended on x1s.",
       "revId": "38df597d8f19edda4a26505accc90fa421e87cb0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81750388_b0fbefb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2026-01-21T09:04:46Z",
+      "side": 1,
+      "message": "im with Mike and nolen on this one, i think we should try to do this in the common HAL",
+      "revId": "38df597d8f19edda4a26505accc90fa421e87cb0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
