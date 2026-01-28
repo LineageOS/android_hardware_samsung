@@ -203,6 +203,7 @@ ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t /*x*/, 
         mHal.request(SEM_REQUEST_TOUCH_EVENT, 2);
     }
     checkSensorLockout();
+    mCb->onAcquired(AcquiredInfo::START, 0);
 
     return ndk::ScopedAStatus::ok();
 }
