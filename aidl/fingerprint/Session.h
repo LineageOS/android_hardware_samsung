@@ -96,6 +96,8 @@ class Session : public BnSession {
 
     // Binder death handler.
     AIBinder_DeathRecipient* mDeathRecipient;
+
+    bool mIsUdfps;
 };
 
 }  // namespace fingerprint

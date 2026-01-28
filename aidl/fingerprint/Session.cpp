@@ -11,6 +11,7 @@
 
 #include <fingerprint.sysprop.h>
 
+#include <android-base/file.h>
 #include <android-base/logging.h>
 
 #include <dirent.h>
@@ -19,6 +20,9 @@
 
 using namespace ::android::fingerprint::samsung;
 using namespace ::std::chrono_literals;
+
+using ::aidl::android::hardware::biometrics::common::OperationState;
+using ::android::base::unique_fd;
 
 namespace aidl {
 namespace android {
@@ -37,6 +41,8 @@ void onClientDeath(void* cookie) {
 Session::Session(LegacyHAL hal, int userId, std::shared_ptr<ISessionCallback> cb,
                  LockoutTracker lockoutTracker)
     : mHal(hal), mLockoutTracker(lockoutTracker), mUserId(userId), mCb(cb) {
+    std::string sensorType = FingerprintHalProperties::type().value_or("");
+    mIsUdfps = sensorType == "udfps" || sensorType == "udfps_optical";
     mDeathRecipient = AIBinder_DeathRecipient_new(onClientDeath);
 
     char filename[64];
@@ -250,7 +256,20 @@ ndk::ScopedAStatus Session::onPointerUpWithContext(const PointerContext& context
     return onPointerUp(context.pointerId);
 }
 
-ndk::ScopedAStatus Session::onContextChanged(const OperationContext& /*context*/) {
+ndk::ScopedAStatus Session::onContextChanged(const OperationContext& context) {
+    LOG(INFO) << "onContextChanged";
+    if (!mIsUdfps) return ndk::ScopedAStatus::ok();
+
+    OperationState::FingerprintOperationState state =
+            context.operationState->get<OperationState::fingerprintOperationState>();
+    unique_fd fd(open("/sys/class/sec/tsp/cmd", O_WRONLY));
+
+    if (fd.ok()) {
+        if (!WriteStringToFd(
+                    state.isHardwareIgnoringTouches ? "fod_enable,0,1,0" : "fod_enable,1,1,0", fd))
+            LOG(WARNING) << "Failed to write to /sys/class/sec/tsp/cmd: " << strerror(errno);
+    }
+
     return ndk::ScopedAStatus::ok();
 }
 
