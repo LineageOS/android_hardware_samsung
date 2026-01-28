@@ -11,6 +11,7 @@
 
 #include <fingerprint.sysprop.h>
 
+#include <android-base/file.h>
 #include <android-base/logging.h>
 
 #include <dirent.h>
@@ -19,6 +20,11 @@
 
 using namespace ::android::fingerprint::samsung;
 using namespace ::std::chrono_literals;
+
+using ::aidl::android::hardware::biometrics::common::DisplayState;
+using ::aidl::android::hardware::biometrics::common::OperationReason;
+using ::aidl::android::hardware::biometrics::common::OperationState;
+using ::android::base::unique_fd;
 
 namespace aidl {
 namespace android {
@@ -37,6 +43,9 @@ void onClientDeath(void* cookie) {
 Session::Session(LegacyHAL hal, int userId, std::shared_ptr<ISessionCallback> cb,
                  LockoutTracker lockoutTracker)
     : mHal(hal), mLockoutTracker(lockoutTracker), mUserId(userId), mCb(cb) {
+    std::string sensorType = FingerprintHalProperties::type().value_or("");
+    mIsUdfps = sensorType == "udfps" || sensorType == "udfps_optical";
+    if (mIsUdfps) mTspCmdHandler = TspCmdHandler();
     mDeathRecipient = AIBinder_DeathRecipient_new(onClientDeath);
 
     char filename[64];
@@ -226,8 +235,10 @@ ndk::ScopedAStatus Session::onUiReady() {
 }
 
 ndk::ScopedAStatus Session::authenticateWithContext(int64_t operationId,
-                                                    const OperationContext& /*context*/,
+                                                    const OperationContext& context,
                                                     std::shared_ptr<ICancellationSignal>* out) {
+    if (context.reason == OperationReason::BIOMETRIC_PROMPT && mIsUdfps)
+        mTspCmdHandler.sendCommand("fod_enable", 1, 1, 0);
     return authenticate(operationId, out);
 }
 
@@ -259,7 +270,23 @@ ndk::ScopedAStatus Session::onPointerUpWithContext(const PointerContext& context
 }
 
 ndk::ScopedAStatus Session::onContextChanged(const OperationContext& context) {
+<<<<<<< PATCH SET (70b0f3a59714e60f924b65c27e08662fb36466d5 aidl: fingerprint: Handle fod_enable commands)
+    LOG(INFO) << "onContextChanged";
+    if (!mIsUdfps || !mTspCmdHandler.isCommandSupported("fod_enable"))
+        return ndk::ScopedAStatus::ok();
+    if (!context.operationState.has_value()) return ndk::ScopedAStatus::ok();
+
+    OperationState::FingerprintOperationState state =
+            context.operationState->get<OperationState::fingerprintOperationState>();
+
+    if (!mTspCmdHandler.sendCommand("fod_enable", (int)!state.isHardwareIgnoringTouches,
+                                    (int)(context.displayState != DisplayState::NO_UI &&
+                                          context.displayState != DisplayState::AOD),
+                                    0))
+        LOG(ERROR) << "Failed to send command to tsp: " << strerror(errno);
+=======
     mDisplayState = context.displayState;
+>>>>>>> BASE      (7e3c9bc6a53a07a68a7ee047ccd3de47677c8d98 Add library for sending commands to the tsp)
     return ndk::ScopedAStatus::ok();
 }
 
@@ -272,6 +299,7 @@ ndk::ScopedAStatus Session::setIgnoreDisplayTouches(bool /*shouldIgnore*/) {
 }
 
 ndk::ScopedAStatus Session::cancel() {
+    if (mIsUdfps) mTspCmdHandler.sendCommand("fod_enable", 0, 0, 0);
     int32_t ret = mHal.ss_fingerprint_cancel();
 
     if (ret == 0) {
@@ -359,6 +387,7 @@ bool Session::checkSensorLockout() {
         LOG(ERROR) << "Fail: lockout permanent";
         mCb->onLockoutPermanent();
         mIsLockoutTimerAborted = true;
+        if (mIsUdfps) mTspCmdHandler.sendCommand("fod_enable", 0, 0, 0);
         return true;
     } else if (lockoutMode == LockoutMode::TIMED) {
         int64_t timeLeft = mLockoutTracker.getLockoutTimeLeft();
@@ -444,6 +473,7 @@ void Session::notify(const fingerprint_msg_t* msg) {
 
                 mCb->onAuthenticationSucceeded(msg->data.authenticated.finger.fid, authToken);
                 mLockoutTracker.reset(true);
+                if (mIsUdfps) mTspCmdHandler.sendCommand("fod_enable", 0, 0, 0);
             } else {
                 mCb->onAuthenticationFailed();
                 mLockoutTracker.addFailedAttempt();

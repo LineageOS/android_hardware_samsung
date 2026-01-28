@@ -11,6 +11,8 @@
 
 #include <hardware/fingerprint.h>
 
+#include <tspcmd.h>
+
 #include "LegacyHAL.h"
 #include "LockoutTracker.h"
 
@@ -98,7 +100,12 @@ class Session : public BnSession {
     // Binder death handler.
     AIBinder_DeathRecipient* mDeathRecipient;
 
+<<<<<<< PATCH SET (70b0f3a59714e60f924b65c27e08662fb36466d5 aidl: fingerprint: Handle fod_enable commands)
+    TspCmdHandler mTspCmdHandler;
+    bool mIsUdfps;
+=======
     DisplayState mDisplayState;
+>>>>>>> BASE      (7e3c9bc6a53a07a68a7ee047ccd3de47677c8d98 Add library for sending commands to the tsp)
 };
 
 }  // namespace fingerprint
