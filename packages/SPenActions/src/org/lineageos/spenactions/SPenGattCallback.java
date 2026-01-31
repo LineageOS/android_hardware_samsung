@@ -139,35 +139,56 @@ public class SPenGattCallback extends BluetoothGattCallback {
     }
 
     private void handleButtonEvent(byte[] data) {
+        if (data == null || data.length == 0) {
+            return;
+        }
+
         int type = data[0] & 0xFF;
 
         if (DEBUG) Log.d(LOG_TAG, "BUTTON_EVENT raw: len=" + data.length +
                 " data=" + Arrays.toString(data));
 
-        ButtonAction button = ButtonAction.fromType(type);
-        if (button != null) {
-            switch (button.getAction()) {
-                case DOWN:
-                    mButtonDownTime = SystemClock.uptimeMillis();
-                    break;
-                case UP:
-                    if (!mButtonHadGesture) {
-                        SPenMode mode = SPenMode.valueOfPref(SettingsUtils.getSwitchPreference(
-                                mContext, SettingsUtils.SPEN_MODE, "0"));
-                        // Can be used for e.g taking photos
-                        sendEvent(mButtonDownTime, KeyEvent.ACTION_DOWN, mode.getButtonKey());
-                        sendEvent(KeyEvent.ACTION_UP, mode.getButtonKey());
-                    }
-                    mButtonHadGesture = false;
-                    break;
-                default:
-                    break;
+        // Batched packets (newer firmware)
+        if (type == 0xF0 && data.length >= 8) {
+            // Motion records start at offset 2
+            for (int i = 2; i + 5 < data.length; i += 6) {
+                MotionEvent move = MotionEvent.fromData(data, i);
+                handleGesture(move);
             }
             return;
         }
 
-        MotionEvent move = MotionEvent.fromTypeData(type, data);
-        handleGesture(move);
+        // Legacy motion handling (for old firmware)
+        if (type == 0x0F && data.length >= 5) {
+            MotionEvent move = MotionEvent.fromData(data, 0);
+            handleGesture(move);
+            return;
+        }
+
+        // Button events (single-byte packets)
+        ButtonAction button = ButtonAction.fromType(type);
+        if (button == null) {
+            Log.w(LOG_TAG, "Unknown BUTTON_EVENT type: " + type);
+            return;
+        }
+
+        switch (button.getAction()) {
+            case DOWN:
+                mButtonDownTime = SystemClock.uptimeMillis();
+                break;
+            case UP:
+                if (!mButtonHadGesture) {
+                    SPenMode mode = SPenMode.valueOfPref(SettingsUtils.getSwitchPreference(
+                            mContext, SettingsUtils.SPEN_MODE, "0"));
+                    // Can be used for e.g taking photos
+                    sendEvent(mButtonDownTime, KeyEvent.ACTION_DOWN, mode.getButtonKey());
+                    sendEvent(KeyEvent.ACTION_UP, mode.getButtonKey());
+                }
+                mButtonHadGesture = false;
+                break;
+            default:
+                break;
+        }
     }
 
     private void handleGesture(MotionEvent move) {
