@@ -50,6 +50,24 @@
       "message": "Squashed where to?",
       "revId": "86cfb17ec8845bc5366bf92741e0298b069cb0a0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bdd985b_2ca01c7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-01-31T12:36:34Z",
+      "side": 1,
+      "message": "Vince squashed it into 468936",
+      "parentUuid": "27010416_a456e0de",
+      "revId": "86cfb17ec8845bc5366bf92741e0298b069cb0a0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": [
