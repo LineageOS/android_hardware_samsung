@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021-2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2021-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -37,13 +37,18 @@ public class MotionEvent {
         return mDy;
     }
 
-    public static MotionEvent fromTypeData(int type, byte[] data) {
+    public static MotionEvent fromData(byte[] data, int offset) {
+        if (data == null || data.length < offset + 5) {
+            return null;
+        }
+
+        int type = data[offset] & 0xFF;
         if (type != 0x0F) {
             return null;
         }
 
-        short dx = extractShortValue(data, 1);
-        short dy = extractShortValue(data, 3);
+        short dx = extractShortValue(data, offset + 1);
+        short dy = extractShortValue(data, offset + 3);
 
         return new MotionEvent(Action.MOVE, dx, dy);
     }
