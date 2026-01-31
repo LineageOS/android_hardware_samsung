@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021-2025 The LineageOS Project
+ * SPDX-FileCopyrightText: 2021-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -24,12 +24,14 @@ import android.view.KeyEvent;
 import org.lineageos.spenactions.settings.SettingsUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 public class SPenGattCallback extends BluetoothGattCallback {
 
     private static final String LOG_TAG = "SPenActions/SPenGattCallback";
+    private static final boolean DEBUG = false;
 
     // GATT characteristics UUIDs
     private static final UUID BATTERY_LEVEL = UUID.fromString("5a87b4ef-3bfa-76a8-e642-92933c31434f");
@@ -135,48 +137,86 @@ public class SPenGattCallback extends BluetoothGattCallback {
     }
 
     private void handleButtonEvent(byte[] data) {
-        int type = data[0] & 0xFF;
-        ButtonAction button = ButtonAction.fromType(type);
+        if (data == null || data.length == 0) {
+            return;
+        }
 
-        if (button != null) {
-            switch (button.getAction()) {
-                case DOWN:
-                    mButtonDownTime = SystemClock.uptimeMillis();
-                    break;
-                case UP:
-                    if (!mButtonHadGesture) {
-                        SPenMode mode = SPenMode.valueOfPref(SettingsUtils.getSwitchPreference(
-                                mContext, SettingsUtils.SPEN_MODE, "0"));
-                        // Can be used for e.g taking photos
-                        sendEvent(mButtonDownTime, KeyEvent.ACTION_DOWN, mode.getButtonKey());
-                        sendEvent(KeyEvent.ACTION_UP, mode.getButtonKey());
-                    }
-                    mButtonHadGesture = false;
-                    break;
-                default:
-                    break;
+        int type = data[0] & 0xFF;
+
+        if (DEBUG) Log.d(LOG_TAG, "BUTTON_EVENT raw: len=" + data.length +
+                " data=" + Arrays.toString(data));
+
+        // Batched packets (newer firmware)
+        if (type == 0xF0 && data.length >= 8) {
+            // Motion records start at offset 2
+            for (int i = 2; i + 5 < data.length; i += 6) {
+                MotionEvent move = MotionEvent.fromData(data, i);
+                handleGesture(move);
             }
             return;
         }
 
-        MotionEvent move = MotionEvent.fromTypeData(type, data);
-        if (move != null
-                && (Math.abs(move.getDX()) > 500 || Math.abs(move.getDY()) > 500)) {
-            SPenMode mode = SPenMode.valueOfPref(SettingsUtils.getSwitchPreference(
-                    mContext, SettingsUtils.SPEN_MODE, "0"));
-            int key;
-            if (Math.abs(move.getDX()) > Math.abs(move.getDY())) { // right/left
-                key = mode.getGestureKey(move.getDX() > 0 ?
-                        SPenDirection.POSITIVE_X : SPenDirection.NEGATIVE_X);
-            } else { // up/down (NOTE: negative Y is actually up while positive Y is down!)
-                key = mode.getGestureKey(move.getDY() > 0 ?
-                        SPenDirection.POSITIVE_Y : SPenDirection.NEGATIVE_Y);
-            }
-
-            sendEvent(KeyEvent.ACTION_DOWN, key);
-            sendEvent(KeyEvent.ACTION_UP, key);
-            mButtonHadGesture = true;
+        // Legacy motion handling (for old firmware)
+        if (data.length >= 5 && type == 0x0F) {
+            MotionEvent move = MotionEvent.fromData(data, 0);
+            handleGesture(move);
+            return;
         }
+
+        // Button events (single-byte packets)
+        ButtonAction button = ButtonAction.fromType(type);
+        if (button == null) {
+            Log.w(LOG_TAG, "Unknown BUTTON_EVENT type: " + type);
+            return;
+        }
+
+        switch (button.getAction()) {
+            case DOWN:
+                mButtonDownTime = SystemClock.uptimeMillis();
+                break;
+            case UP:
+                if (!mButtonHadGesture) {
+                    SPenMode mode = SPenMode.valueOfPref(SettingsUtils.getSwitchPreference(
+                            mContext, SettingsUtils.SPEN_MODE, "0"));
+                    // Can be used for e.g taking photos
+                    sendEvent(mButtonDownTime, KeyEvent.ACTION_DOWN, mode.getButtonKey());
+                    sendEvent(KeyEvent.ACTION_UP, mode.getButtonKey());
+                }
+                mButtonHadGesture = false;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void handleGesture(MotionEvent move) {
+        if (move == null) {
+            return;
+        }
+
+        int key;
+        short dx = move.getDX();
+        short dy = move.getDY();
+
+        if (DEBUG) Log.d(LOG_TAG, "Motion sample dx=" + dx + " dy=" + dy);
+
+        SPenMode mode = SPenMode.valueOfPref(
+                SettingsUtils.getSwitchPreference(
+                        mContext, SettingsUtils.SPEN_MODE, "0"));
+
+        if (Math.abs(dx) > Math.abs(dy)) {
+            key = mode.getGestureKey(dx > 0
+                    ? SPenDirection.POSITIVE_X
+                    : SPenDirection.NEGATIVE_X);
+        } else {
+            key = mode.getGestureKey(dy > 0
+                    ? SPenDirection.POSITIVE_Y
+                    : SPenDirection.NEGATIVE_Y);
+        }
+
+        sendEvent(KeyEvent.ACTION_DOWN, key);
+        sendEvent(KeyEvent.ACTION_UP, key);
+        mButtonHadGesture = true;
     }
 
     private boolean sendEvent(long when, int action, int code) {
