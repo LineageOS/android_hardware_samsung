@@ -68,6 +68,23 @@
       "parentUuid": "27010416_a456e0de",
       "revId": "86cfb17ec8845bc5366bf92741e0298b069cb0a0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16b551a2_062b3f6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-01-31T12:39:56Z",
+      "side": 1,
+      "message": "I am blind then...",
+      "revId": "86cfb17ec8845bc5366bf92741e0298b069cb0a0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": [
