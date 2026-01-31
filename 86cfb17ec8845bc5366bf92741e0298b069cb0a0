@@ -16,6 +16,23 @@
       "message": "The chain is borked.",
       "revId": "86cfb17ec8845bc5366bf92741e0298b069cb0a0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eabb34df_82449268",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-01-31T11:03:58Z",
+      "side": 1,
+      "message": "Also, might as well just move this to 23.2 at this point.",
+      "revId": "86cfb17ec8845bc5366bf92741e0298b069cb0a0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
