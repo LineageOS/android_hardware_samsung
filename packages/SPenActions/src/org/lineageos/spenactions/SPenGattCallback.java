@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2021-2025 The LineageOS Project
+ * SPDX-FileCopyrightText: 2021-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -24,12 +24,14 @@ import android.view.KeyEvent;
 import org.lineageos.spenactions.settings.SettingsUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 public class SPenGattCallback extends BluetoothGattCallback {
 
     private static final String LOG_TAG = "SPenActions/SPenGattCallback";
+    private static final boolean DEBUG = false;
 
     private static final int MOTION_THRESHOLD = 500;
 
@@ -139,6 +141,9 @@ public class SPenGattCallback extends BluetoothGattCallback {
     private void handleButtonEvent(byte[] data) {
         int type = data[0] & 0xFF;
 
+        if (DEBUG) Log.d(LOG_TAG, "BUTTON_EVENT raw: len=" + data.length +
+                " data=" + Arrays.toString(data));
+
         ButtonAction button = ButtonAction.fromType(type);
         if (button != null) {
             switch (button.getAction()) {
@@ -173,6 +178,8 @@ public class SPenGattCallback extends BluetoothGattCallback {
         int key;
         short dx = move.getDX();
         short dy = move.getDY();
+
+        if (DEBUG) Log.d(LOG_TAG, "Motion sample dx=" + dx + " dy=" + dy);
 
         if (Math.abs(dx) <= MOTION_THRESHOLD && Math.abs(dy) <= MOTION_THRESHOLD) {
             return;
