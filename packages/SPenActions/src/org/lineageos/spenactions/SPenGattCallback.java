@@ -33,7 +33,7 @@ public class SPenGattCallback extends BluetoothGattCallback {
     private static final String LOG_TAG = "SPenActions/SPenGattCallback";
     private static final boolean DEBUG = false;
 
-    private static final int MOTION_THRESHOLD = 500;
+    private static final int MOTION_THRESHOLD = 100;
 
     // GATT characteristics UUIDs
     private static final UUID BATTERY_LEVEL = UUID.fromString("5a87b4ef-3bfa-76a8-e642-92933c31434f");
