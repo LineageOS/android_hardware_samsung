@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f481de04_a39ddd60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-02-01T13:38:16Z",
+      "side": 1,
+      "message": "Devices with optical Goodix UDFPS like a52q and a73xq fail screen off UDFPS unlocking with TOO_FAST due to the UI + HBM not being ready yet. Egistec sensors (a52sxq, a72q) seem unaffected for now.",
+      "revId": "747bd7ae5fdda855bd2c168f46c4f22c305c5d36",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
