@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dedcb7f3_9989738b",
+        "filename": "packages/SPenActions/src/org/lineageos/spenactions/SPenIdentity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-02-01T10:33:05Z",
+      "side": 1,
+      "message": "```suggestion\n            UUID.fromString(\"0000fd6c-0000-1000-8000-00805f9b34fb\"), // EXT1/CANVAS/STICKY\n```",
+      "revId": "34433d3e2c6a82719c1112ebcc70856e2d6e3b79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c0c36b3_cfe6ec4d",
+        "filename": "packages/SPenActions/src/org/lineageos/spenactions/SPenIdentity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-02-01T10:33:05Z",
+      "side": 1,
+      "message": "```suggestion\n            UUID.fromString(\"dc6bb0a8-202e-487c-8f1b-53b37cc837c6\"), DAVINCI\n```",
+      "revId": "34433d3e2c6a82719c1112ebcc70856e2d6e3b79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72a0c394_f6d771dd",
+        "filename": "packages/SPenActions/src/org/lineageos/spenactions/SPenIdentity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-02-01T10:33:05Z",
+      "side": 1,
+      "message": "```suggestion\n            UUID.fromString(\"edfec62e-9910-0bac-5241-d8bda6932a2f\"), // GENERIC_BUNDLED/CROWN\n```",
+      "revId": "34433d3e2c6a82719c1112ebcc70856e2d6e3b79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c763184b_e71a6f7f",
+        "filename": "packages/SPenActions/src/org/lineageos/spenactions/SPenIdentity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-02-01T10:33:05Z",
+      "side": 1,
+      "message": "```suggestion\n            UUID.fromString(\"edfec62e-9910-0bac-5241-d8bda6932a30\")  // GENERIC_UNBUNDLED\n```",
+      "revId": "34433d3e2c6a82719c1112ebcc70856e2d6e3b79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
