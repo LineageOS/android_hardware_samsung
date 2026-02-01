@@ -76,3 +76,12 @@ prop {
     access: Readonly
     api_name: "cancel_on_enroll_completion"
 }
+
+# wait for UI to be ready
+prop {
+    prop_name: "ro.vendor.fingerprint.wait_ui_ready"
+    type: Boolean
+    scope: Internal
+    access: Readonly
+    api_name: "wait_ui_ready"
+}
