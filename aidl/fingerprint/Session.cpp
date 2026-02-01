@@ -96,6 +96,7 @@ ndk::ScopedAStatus Session::authenticate(int64_t operationId,
 
     int32_t error = mHal.ss_fingerprint_authenticate(operationId, mUserId);
     if (error) {
+	mUiReady = false;
         LOG(ERROR) << "ss_fingerprint_authenticate failed: " << error;
         mCb->onError(Error::UNABLE_TO_PROCESS, error);
     }
@@ -199,6 +200,12 @@ ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t /*x*/, 
                                           float /*minor*/, float /*major*/) {
     LOG(INFO) << "onPointerDown";
 
+    if (FingerprintHalProperties::wait_ui_ready().value_or(false)) {
+        for (int i = 0; i < 100 && !mUiReady.load(); ++i) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(2));
+        }
+    }
+
     if (FingerprintHalProperties::request_touch_event().value_or(false)) {
         mHal.request(SEM_REQUEST_TOUCH_EVENT, 2);
     }
@@ -210,6 +217,8 @@ ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t /*x*/, 
 ndk::ScopedAStatus Session::onPointerUp(int32_t /*pointerId*/) {
     LOG(INFO) << "onPointerUp";
 
+    mUiReady = false;
+
     if (FingerprintHalProperties::request_touch_event().value_or(false)) {
         mHal.request(SEM_REQUEST_TOUCH_EVENT, 1);
     }
@@ -219,6 +228,8 @@ ndk::ScopedAStatus Session::onPointerUp(int32_t /*pointerId*/) {
 
 ndk::ScopedAStatus Session::onUiReady() {
     LOG(INFO) << "onUiReady";
+
+    mUiReady = true;
 
     // TODO: stub
 
@@ -264,6 +275,8 @@ ndk::ScopedAStatus Session::setIgnoreDisplayTouches(bool /*shouldIgnore*/) {
 
 ndk::ScopedAStatus Session::cancel() {
     int32_t ret = mHal.ss_fingerprint_cancel();
+
+    mUiReady = false;
 
     if (ret == 0) {
         mCb->onError(Error::CANCELED, 0 /* vendorCode */);
@@ -392,6 +405,7 @@ void Session::notify(const fingerprint_msg_t* msg) {
             int32_t vendorCode = 0;
             Error result = VendorErrorFilter(msg->data.error, &vendorCode);
             LOG(DEBUG) << "onError(" << static_cast<int>(result) << ")";
+            mUiReady = false;
             mCb->onError(result, vendorCode);
         } break;
         case FINGERPRINT_ACQUIRED: {
@@ -440,6 +454,7 @@ void Session::notify(const fingerprint_msg_t* msg) {
                 mLockoutTracker.addFailedAttempt();
                 checkSensorLockout();
             }
+            mUiReady = false;
         } break;
         case FINGERPRINT_TEMPLATE_ENUMERATING: {
             LOG(DEBUG) << "onEnumerate(fid=" << msg->data.enumerated.finger.fid
