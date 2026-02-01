@@ -48,7 +48,8 @@ public class SPenGattCallback extends BluetoothGattCallback {
     private final Context mContext;
     private final SPenConnectionManager mConnectionManager;
     private final List<UUID> mEnableCharacteristics = new ArrayList<>();
-    private final UUID mServiceUUID;
+
+    private UUID mServiceUUID;
 
     private boolean mButtonHadGesture = false;
     private long mButtonDownTime = 0;
@@ -59,9 +60,6 @@ public class SPenGattCallback extends BluetoothGattCallback {
 
         mEnableCharacteristics.add(BATTERY_LEVEL);
         mEnableCharacteristics.add(BUTTON_EVENT);
-
-        mServiceUUID = UUID.fromString(
-                context.getResources().getString(R.string.config_sPenServiceUuid));
     }
 
     @Override
@@ -85,13 +83,21 @@ public class SPenGattCallback extends BluetoothGattCallback {
 
     @Override
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-        BluetoothGattService service = gatt.getService(mServiceUUID);
-        if (service != null) {
+        for (BluetoothGattService service : gatt.getServices()) {
+            UUID uuid = service.getUuid();
+            if (SPenIdentity.isSPenService(uuid)) {
+                mServiceUUID = uuid;
+                break;
+            }
+        }
+
+        if (mServiceUUID != null) {
             Log.i(LOG_TAG, "Found S Pen GATT service: " + mServiceUUID);
             if (mEnableCharacteristics.size() > 0) {
                 Log.i(LOG_TAG, "Enabling characteristic notifications");
                 setCharacteristicNotification(gatt,
-                        service.getCharacteristic(mEnableCharacteristics.get(0)), true);
+                        gatt.getService(mServiceUUID)
+                                .getCharacteristic(mEnableCharacteristics.get(0)), true);
             }
         } else {
             Log.e(LOG_TAG, "Unable to find S Pen GATT service!");
