@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -22,6 +22,7 @@ import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,15 +63,17 @@ public class BluetoothUtils {
                 simulateReconnection(context);
             }
         };
-        ScanFilter filter = new ScanFilter.Builder()
-                .setServiceUuid(new ParcelUuid(UUID.fromString(
-                        context.getResources().getString(R.string.config_sPenServiceUuid))))
-                .build();
+        List<ScanFilter> filters = new ArrayList<>();
+        for (UUID uuid : SPenIdentity.getServiceUUIDs()) {
+            filters.add(new ScanFilter.Builder()
+                    .setServiceUuid(new ParcelUuid(uuid))
+                    .build());
+        }
         ScanSettings settings = new ScanSettings.Builder()
                 .setCallbackType(ScanSettings.CALLBACK_TYPE_FIRST_MATCH)
                 .build();
 
-        scanner.startScan(List.of(filter), settings, callback);
+        scanner.startScan(filters, settings, callback);
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             scanner.stopScan(callback);
         }, 60 * 1000); // Cancel scan after 60s
