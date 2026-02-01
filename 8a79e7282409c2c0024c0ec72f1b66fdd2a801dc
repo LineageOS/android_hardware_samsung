@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfa41346_d1e3498f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-02-01T01:31:25Z",
+      "side": 1,
+      "message": "@tim@linux4.de can you re-test this chain on your device? I did some cleaning over your initial implementation of the app and on top I have now added support for new firmware versions and models.",
+      "revId": "8a79e7282409c2c0024c0ec72f1b66fdd2a801dc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
