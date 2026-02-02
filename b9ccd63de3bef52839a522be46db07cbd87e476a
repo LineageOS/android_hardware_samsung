@@ -39,6 +39,24 @@
       "message": "This is a hack. We should either revert https://android.googlesource.com/platform/frameworks/base/+/2e82f90d77eb0b028822d37dc0c7d37a1bb1f6a1 (as it\u0027s likely the cause for this to begin with) or wait for the display state to be on.",
       "revId": "b9ccd63de3bef52839a522be46db07cbd87e476a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79a39b64_6df0eb4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-02-02T18:18:27Z",
+      "side": 1,
+      "message": "Do you have a suggestion on how to do that? (waiting for the display state to be on)",
+      "parentUuid": "da4df823_0e580efd",
+      "revId": "b9ccd63de3bef52839a522be46db07cbd87e476a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
