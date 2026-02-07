@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10845985_436da628",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-02-07T22:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cacfff90_2fe90fd9",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 37
+      },
+      "revId": "b9ccd63de3bef52839a522be46db07cbd87e476a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da4df823_0e580efd",
@@ -73,6 +97,24 @@
       "side": 1,
       "message": "You can look into my patch for enabling/disabling fod in the panel driver as a reference; Maybe we could add logic in onPointerDownWithContext to skip waiting if isAod is false, and wait for a relevant displayState with onContextChanged (not sure what that display state would be, maybe you could add some logging in that function to see).",
       "parentUuid": "79a39b64_6df0eb4c",
+      "revId": "b9ccd63de3bef52839a522be46db07cbd87e476a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e6abcdf_71a4e502",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-02-07T22:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "261dcc9c_8968cfbf",
       "revId": "b9ccd63de3bef52839a522be46db07cbd87e476a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
