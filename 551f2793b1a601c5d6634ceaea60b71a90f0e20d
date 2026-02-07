@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef339e29_d27ea3f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-02-07T23:04:26Z",
+      "side": 1,
+      "message": "Previous attempt with mUiReady does not actually work because onUiReady would be called only after onPointerDown() finishes. Instead it just runs trought the for loop until it finishes that and ignores mUiReady, so that\u0027s essentially useless.\n\nApart from that I dont think there\u0027s a reliable way to tell if the UI is \"ready\" (or better said if the screen is on) prior to onPointerDown being called, so \"waiting\" for that to happen is not an option in my opinion",
+      "revId": "551f2793b1a601c5d6634ceaea60b71a90f0e20d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
