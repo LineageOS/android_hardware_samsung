@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d717bbc_53434791",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-02-08T12:33:45Z",
+      "side": 1,
+      "message": "Tested by setting ro.vendor.fingerprint.screen_off_press_delay\u003d200 and could successfully unlock with screen off UDFPS. Setting to 0 or not setting it at all will fully ignore the delay part. Can we get this going?",
+      "revId": "e631521511bd4a4b571122fae57a49ad8ac43537",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
