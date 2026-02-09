@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16da8983_faf62e51",
+        "filename": "aidl/fingerprint/fingerprint.sysprop",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-02-09T19:32:12Z",
+      "side": 1,
+      "message": "```suggestion\n# amount of milliseconds by which onPointerDown will be delayed during screen off UDFPS (default: 0)\n```",
+      "revId": "99b0e91cac2ac10f4dada03b65bcf375ad423848",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
