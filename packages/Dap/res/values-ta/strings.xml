@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dolby_enable_title">டால்பி அட்மாஸை இயக்குக</string>
-    <string name="dolby_top_intro_summary">உங்களைச் சுற்றிலும் பாயும் ஊடக இயக்கத்திற்கான திருப்புமுனை ஒலியைப் பட்டறிக</string>
+    <string name="dolby_enable_title">டால்பி அட்மாஸைச் செயற்படுத்துக</string>
+    <string name="dolby_top_intro_summary">உம்மைச் சுற்றிலும், மேலெழும்பியும் பாயும் ஊடக இயக்கத்திற்கான அதிநவீன ஒலியை அனுபவிக்க</string>
     <string name="dolby_profile_auto">தன்னியக்கம்</string>
     <string name="dolby_profile_game">ஆட்டம்</string>
     <string name="dolby_profile_game_1">ஆட்டம் 1</string>
