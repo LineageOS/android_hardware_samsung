@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The CyanogenMod Project
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-         http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
+<!--
+     SPDX-FileCopyrightText: 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
 -->
 
-<!-- These resources are around just to allow their values to be customized
-     for different hardware and product builds. -->
+<!--
+     Default app-to-mDNIe-scenario mappings.
+
+     Scenario index reference
+       0  UI / Default   (no entry needed)
+       1  Video
+       2  Video Warm (deprecated)
+       3  Video Cold (deprecated)
+       4  Camera
+       5  Navigation
+       6  Gallery
+       7  Video Call
+-->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- MDNIE -->
+    <!-- Mdnie Sysfs -->
     <string name="mdnie_scenario_sysfs_file" translatable="false">"/sys/class/mdnie/mdnie/scenario"</string>
-    <string name="mdnie_accessibility_sysfs_file" translatable="false">"/sys/class/mdnie/mdnie/negative"</string>
+
+    <string-array name="mdnie_video_apps" translatable="false">
+        <item>com.google.android.youtube</item>
+        <item>org.videolan.vlc</item>
+    </string-array>
+
+    <string-array name="mdnie_camera_apps" translatable="false">
+        <item>org.lineageos.aperture</item>
+    </string-array>
+
+    <string-array name="mdnie_navigation_apps" translatable="false">
+        <item>com.google.android.apps.maps</item>
+    </string-array>
+
+    <string-array name="mdnie_gallery_apps" translatable="false">
+        <item>org.lineageos.glimpse</item>
+    </string-array>
+
+    <string-array name="mdnie_vcall_apps" translatable="false">
+    </string-array>
 
 </resources>

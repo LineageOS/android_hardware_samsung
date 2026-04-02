@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2020-2021 The LineageOS Project
+// Copyright (C) 2026 The LineageOS Project
 //
 // SPDX-License-Identifier: Apache-2.0
 //
@@ -14,7 +14,6 @@ android_app {
 
     static_libs: [
         "org.lineageos.platform.internal",
-        "org.lineageos.settings.resources",
     ],
 
     optimize: {
