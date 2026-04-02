@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- mDNIe driver scenario mappings. Please refer to your kernel for
+         correct configuration. -->
+    <integer name="config_scenario_ui_mode">0</integer>
+    <integer name="config_scenario_video_mode">1</integer>
+    <integer name="config_scenario_camera_mode">4</integer>
+    <integer name="config_scenario_navigation_mode">5</integer>
+    <integer name="config_scenario_gallery_mode">6</integer>
+    <integer name="config_scenario_videocall_mode">7</integer>
+    
+    <!-- Debounce latency values in milliseconds, taken from
+         OneUI resources. -->
+    <integer name="config_scenario_ui_debounce_ms">0</integer>
+    <integer name="config_scenario_video_debounce_ms">400</integer>
+    <integer name="config_scenario_camera_debounce_ms">200</integer>
+    <integer name="config_scenario_gallery_debounce_ms">200</integer>
+    <integer name="config_scenario_generic_debounce_ms">100</integer>
+    <integer name="config_scenario_rescan_debounce_ms">300</integer>
+</resources>
