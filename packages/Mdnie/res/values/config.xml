@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+
+<!--
+     Default app-to-mDNIe-scenario mappings.
+
+     Scenario index reference
+       0  UI / Default   (no entry needed)
+       1  Video
+       2  Video Warm (deprecated)
+       3  Video Cold (deprecated)
+       4  Camera
+       5  Navigation
+       6  Gallery
+       7  Video Call
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Mdnie Sysfs -->
+    <string name="mdnie_scenario_sysfs_file" translatable="false">"/sys/class/mdnie/mdnie/scenario"</string>
+
+    <string-array name="mdnie_video_apps" translatable="false">
+        <item>com.google.android.youtube</item>
+        <item>org.videolan.vlc</item>
+    </string-array>
+
+    <string-array name="mdnie_camera_apps" translatable="false">
+        <item>org.lineageos.aperture</item>
+    </string-array>
+
+    <string-array name="mdnie_navigation_apps" translatable="false">
+        <item>com.google.android.apps.maps</item>
+    </string-array>
+
+    <string-array name="mdnie_gallery_apps" translatable="false">
+        <item>org.lineageos.glimpse</item>
+    </string-array>
+
+    <string-array name="mdnie_vcall_apps" translatable="false">
+    </string-array>
+
+</resources>
