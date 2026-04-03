@@ -16,6 +16,24 @@
       "message": "Can\u0027t you simply repurpose AdvancedDisplay?",
       "revId": "af5de9872b09436e2520138785c4c649460cefe8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f424f7a4_26e5cbfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2026-04-03T14:54:46Z",
+      "side": 1,
+      "message": "I wanted to keep the commit history clear but if I can add more display features, why not? Also AdvancedDisplay naming is just a bit too generic for just a mDNIe control app imo.",
+      "parentUuid": "2f335ff7_10cc4ef1",
+      "revId": "af5de9872b09436e2520138785c4c649460cefe8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
