@@ -407,6 +407,14 @@
         </interface>
     </hal>
     <hal format="hidl" optional="true">
+        <name>vendor.samsung_slsi.hardware.eden_runtime</name>
+        <version>1.0</version>
+        <interface>
+            <name>IEdenruntime</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
         <name>vendor.samsung_slsi.hardware.epic</name>
         <version>1.0</version>
         <interface>
