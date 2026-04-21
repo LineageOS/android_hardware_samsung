@@ -249,6 +249,14 @@
             <instance>default</instance>
         </interface>
     </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.samsung_slsi.hardware.enn_aidl</name>
+        <version>1</version>
+        <interface>
+            <name>IEnnInterfaceAidl</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <hal format="hidl" optional="true">
         <name>vendor.samsung.hardware.security.skpm</name>
         <version>1.0</version>
@@ -403,6 +411,22 @@
         <version>1.0</version>
         <interface>
             <name>IAudioDump</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.samsung_slsi.hardware.eden_runtime</name>
+        <version>1.0</version>
+        <interface>
+            <name>IEdenruntime</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.samsung_slsi.hardware.enn</name>
+        <version>1.0</version>
+        <interface>
+            <name>IEnnInterface</name>
             <instance>default</instance>
         </interface>
     </hal>
