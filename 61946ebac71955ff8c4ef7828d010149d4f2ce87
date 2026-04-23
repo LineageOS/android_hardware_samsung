@@ -16,6 +16,24 @@
       "message": "It makes no sense to put this here",
       "revId": "61946ebac71955ff8c4ef7828d010149d4f2ce87",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cafc4656_ba9c4283",
+        "filename": "vintf/samsung_framework_compatibility_matrix.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-04-23T15:45:31Z",
+      "side": 1,
+      "message": "What exactly?",
+      "parentUuid": "6b8911ca_49849105",
+      "revId": "61946ebac71955ff8c4ef7828d010149d4f2ce87",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
