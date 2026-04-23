@@ -34,6 +34,24 @@
       "parentUuid": "6b8911ca_49849105",
       "revId": "61946ebac71955ff8c4ef7828d010149d4f2ce87",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7905d9ae_092613fb",
+        "filename": "vintf/samsung_framework_compatibility_matrix.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 36705
+      },
+      "writtenOn": "2026-04-23T16:34:29Z",
+      "side": 1,
+      "message": "I misread how entries are sorted here. Done.",
+      "parentUuid": "cafc4656_ba9c4283",
+      "revId": "61946ebac71955ff8c4ef7828d010149d4f2ce87",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
