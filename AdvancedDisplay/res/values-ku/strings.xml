@@ -16,9 +16,29 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">پیشاندانی پێشکه‌وتوو</string>
-    <string name="category_screen_title">شاشە</string>
-    <string name="screen_colors_title">ڕه‌نگه‌کان</string>
+    <string name="app_name">پیشاندانی پێشکەوتوو</string>
+    <string name="category_screen_title">ڕوونما</string>
+    <string name="screen_colors_title">ڕەنگەکان</string>
     <string name="mdnie_scenario_title_head">سیناریۆ</string>
-    <string name="mdnie_scenario_summary_head">دانانی دۆخی mDNIe سیناریۆ</string>
+    <string name="mdnie_scenario_summary_head">دانانی سیناریۆی mDNIe</string>
+    <string name="mdnie_accessibility_title_head">دۆخی گەیشتن (Accessibility)</string>
+    <string name="mdnie_accessibility_summary_head">دانانی دۆخی گەیشتنی mDNIe</string>
+    <string name="mdnie_scenario_ui">LineageOS (بنەڕەتی)</string>
+    <string name="mdnie_scenario_video">ڤیدیۆ</string>
+    <string name="mdnie_scenario_video_warm">ڤیدیۆی گەرم</string>
+    <string name="mdnie_scenario_video_cold">ڤیدیۆی سارد</string>
+    <string name="mdnie_scenario_camera">کامێرا</string>
+    <string name="mdnie_scenario_navigation">ڕێدۆزی (Navigation)</string>
+    <string name="mdnie_scenario_gallery">پێشانگا</string>
+    <string name="mdnie_scenario_vt">پەیوەندی ڤیدیۆیی</string>
+    <string name="mdnie_scenario_browser">وێبگەڕ</string>
+    <string name="mdnie_scenario_ebook">کتێبی ئەلیکترۆنی</string>
+    <string name="mdnie_scenario_email">ئیمەیڵ</string>
+    <string name="mdnie_scenario_tdmb">تەلەفزیۆنی دیجیتاڵی</string>
+    <string name="mdnie_accessibility_normal">ئاسایی</string>
+    <string name="mdnie_accessibility_inverse">پێچەوانەکراو</string>
+    <string name="mdnie_accessibility_color_blind">کوێرە ڕەنگ</string>
+    <string name="mdnie_accessibility_screen_curtain">پەردەی ڕوونما</string>
+    <string name="mdnie_accessibility_grayscale">ڕەش و سپی</string>
+    <string name="mdnie_accessibility_gray_negative">ڕەش و سپی پێچەوانەکراو</string>
 </resources>
