@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dolby_enable_title">چالاککردنی Dolby Atmos</string>
+    <string name="dolby_top_intro_summary">ئەزموونی دەنگێکی ناوازە بکە بۆ لێدانی میدیا کە لە دەوروپشت و سەرووی تۆوە دێت</string>
+    <string name="dolby_profile_auto">خۆکار</string>
+    <string name="dolby_profile_game">یاری</string>
+    <string name="dolby_profile_game_1">یاری ١</string>
+    <string name="dolby_profile_game_2">یاری ٢</string>
+    <string name="dolby_profile_movie">فیلم</string>
+    <string name="dolby_profile_music">مۆسیقا</string>
+    <string name="dolby_profile_off">بێ پرۆفایل</string>
+    <string name="dolby_profile_spacial_audio">دەنگی تایبەت</string>
+    <string name="dolby_profile_voice">دەنگ (Voice)</string>
+</resources>
