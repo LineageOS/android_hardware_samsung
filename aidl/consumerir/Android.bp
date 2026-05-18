@@ -1,0 +1,25 @@
+//
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_binary {
+    name: "android.hardware.ir-service.samsung",
+    defaults: ["samsung_header_path_defaults"],
+    relative_install_path: "hw",
+    init_rc: ["android.hardware.ir-service.samsung.rc"],
+    vintf_fragments: ["android.hardware.ir-service.samsung.xml"],
+    srcs: [
+        "ConsumerIr.cpp",
+        "service.cpp",
+    ],
+    shared_libs: [
+        "android.hardware.ir-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "libhardware",
+        "libutils",
+    ],
+    vendor: true,
+}
