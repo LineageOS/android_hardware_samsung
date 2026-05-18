@@ -1,0 +1,7 @@
+on boot
+    chown system system /dev/ttyHSL1
+
+service vendor.ir-default /vendor/bin/hw/android.hardware.ir-service.samsung
+    class hal
+    user system
+    group system
