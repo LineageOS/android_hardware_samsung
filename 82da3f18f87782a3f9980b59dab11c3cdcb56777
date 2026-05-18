@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49ce7012_ba557564",
+        "filename": "aidl/consumerir/main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 19979
+      },
+      "writtenOn": "2026-05-18T16:33:26Z",
+      "side": 1,
+      "message": "Remove newline",
+      "revId": "82da3f18f87782a3f9980b59dab11c3cdcb56777",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f1831bc_810ec82c",
+        "filename": "aidl/consumerir/main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 19979
+      },
+      "writtenOn": "2026-05-18T16:33:26Z",
+      "side": 1,
+      "message": "Remove additional newline and whitespace",
+      "revId": "82da3f18f87782a3f9980b59dab11c3cdcb56777",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20a42099_1e7c0e1a",
+        "filename": "aidl/consumerir/main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 19979
+      },
+      "writtenOn": "2026-05-18T16:33:26Z",
+      "side": 1,
+      "message": "Remove newline",
+      "revId": "82da3f18f87782a3f9980b59dab11c3cdcb56777",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
