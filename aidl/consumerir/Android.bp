@@ -1,0 +1,103 @@
+// Copyright (C) 2021 The Android Open Source Project
+// Copyright (C) 2026 j0sh1x<aljoshua.hell@gmail.com>
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+soong_config_module_type {
+    name: "samsung_ir_hal_cc_defaults",
+    module_type: "cc_defaults",
+    config_namespace: "SAMSUNG_IR_HAL",
+    value_variables: ["INCLUDE_DIR"],
+    properties: ["include_dirs"],
+}
+
+samsung_ir_hal_cc_defaults {
+    name: "samsung_ir_hal_defaults",
+    soong_config_variables: {
+        INCLUDE_DIR: {
+            include_dirs: ["%s"],
+        },
+    },
+}
+
+cc_binary {
+    name: "android.hardware.ir-service.samsung",
+    relative_install_path: "hw",
+    init_rc: ["android.hardware.ir-service.samsung.rc"],
+    vendor: true,
+    vintf_fragments: ["android.hardware.ir-service.samsung.xml"],
+    defaults: [
+        "samsung_ir_hal_defaults",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "liblog",
+        "libutils",
+        "android.hardware.ir-V1-ndk",
+        "libhardware",
+    ],
+
+    srcs: ["main.cpp"],
+}
+
+prebuilt_etc {
+    name: "android.hardware.ir-service.samsung.rc",
+    src: ":gen-android.hardware.ir-service.samsung.rc",
+    installable: false,
+}
+
+genrule {
+    name: "gen-android.hardware.ir-service.samsung.rc",
+    srcs: ["android.hardware.ir-service.samsung.rc"],
+    out: ["android.hardware.ir-service.samsung.apex.rc"],
+    cmd: "sed -e 's@/vendor/bin/@/apex/com.android.hardware.ir/bin/@' $(in) > $(out)",
+}
+
+prebuilt_etc {
+    name: "android.hardware.ir-service.samsung.xml",
+    src: "android.hardware.ir-service.samsung.xml",
+    sub_dir: "vintf",
+    installable: false,
+}
+
+filegroup {
+    name: "com.android.hardware.ir_file_contexts",
+    srcs: ["apex_file_contexts"],
+}
+
+filegroup {
+    name: "com.android.hardware.ir_apex_manifest.json",
+    srcs: ["apex_manifest.json"],
+}
+
+apex_defaults {
+    name: "com.android.hardware.ir",
+    // Reference to the filegroup instead of direct path since
+    // paths in defaults don't work in a different directory.
+    file_contexts: ":com.android.hardware.ir_file_contexts",
+    manifest: ":com.android.hardware.ir_apex_manifest.json",
+
+    updatable: false,
+    vendor: true,
+
+    binaries: [
+        "android.hardware.ir-service.samsung",
+    ],
+    prebuilts: [
+        "android.hardware.ir-service.samsung.rc",
+        "android.hardware.ir-service.samsung.xml",
+        "android.hardware.consumerir.prebuilt.xml", // feature
+    ],
+}
