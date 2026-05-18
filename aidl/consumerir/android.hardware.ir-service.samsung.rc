@@ -1,0 +1,4 @@
+service vendor.ir-default /vendor/bin/hw/android.hardware.ir-service.samsung
+    class hal
+    user system
+    group system
