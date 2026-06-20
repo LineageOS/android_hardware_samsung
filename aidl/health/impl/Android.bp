@@ -11,6 +11,9 @@ cc_library_static {
     export_static_lib_headers: [
         "libbatterymonitor",
     ],
+    shared_libs: [
+        "android.hardware.thermal-V3-ndk",
+    ],
     srcs: [
         "ChargerUtils.cpp",
         "health-convert.cpp",
@@ -22,6 +25,9 @@ cc_library_static {
         recovery: {
             exclude_srcs: [
                 "ChargerUtils.cpp",
+            ],
+            exclude_shared_libs: [
+                "android.hardware.thermal-V3-ndk",
             ],
         },
     },
