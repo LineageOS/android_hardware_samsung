@@ -1,3 +1,7 @@
+on boot
+    chown system radio /sys/class/power_supply/battery/lrp
+    chmod 0664 /sys/class/power_supply/battery/lrp
+
 service vendor.health-samsung /vendor/bin/hw/android.hardware.health-service.samsung
     class hal
     user system
