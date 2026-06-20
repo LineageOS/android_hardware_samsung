@@ -271,6 +271,46 @@ void Health::UpdateHealthInfo(HealthInfo* /* health_info */) {
     */
 }
 
+#ifndef __ANDROID_RECOVERY__
+void Health::UpdateLrpSysfs() {
+    ndk::SpAIBinder thermalBinder(
+            AServiceManager_getService("android.hardware.thermal.IThermal/default"));
+    if (thermalBinder.get() == nullptr) {
+        LOG(ERROR) << "thermalBinder.get() is null";
+        return;
+    }
+
+    auto thermalSvc = ::aidl::android::hardware::thermal::IThermal::fromBinder(thermalBinder);
+    if (thermalSvc == nullptr) {
+        LOG(ERROR) << "thermalSvc.get() is null";
+        return;
+    }
+
+    std::vector<::aidl::android::hardware::thermal::Temperature> temps;
+    auto status = thermalSvc->getTemperaturesWithType(
+            ::aidl::android::hardware::thermal::TemperatureType::BATTERY, &temps);
+    if (!status.isOk() || temps.empty()) {
+        LOG(ERROR) << "UpdateLrpSysfs() - getTemperaturesWithType, temps.size() == 0";
+        return;
+    }
+
+    float maxTemp = temps[0].value;
+    for (const auto& t : temps) maxTemp = std::max(maxTemp, t.value);
+
+    int fd = open("/sys/class/power_supply/battery/lrp", O_WRONLY);
+    if (fd < 0) {
+        LOG(ERROR) << "Could not open /sys/class/power_supply/battery/lrp";
+        return;
+    }
+    std::string value = std::to_string(static_cast<int>(maxTemp * 10.0f));
+    LOG(VERBOSE) << "UpdateLrpSysfs: write: " << static_cast<int>(maxTemp * 10.0f);
+    if (write(fd, value.c_str(), value.size()) < 0) {
+        LOG(ERROR) << "Could not write /sys/class/power_supply/battery/lrp";
+    }
+    close(fd);
+}
+#endif
+
 //
 // Methods that handle callbacks.
 //
@@ -368,6 +408,10 @@ void Health::OnHealthInfoChanged(const HealthInfo& health_info) {
         }
     }
     lock.unlock();
+
+#ifndef __ANDROID_RECOVERY__
+    UpdateLrpSysfs();
+#endif
 
     // Let HalHealthLoop::OnHealthInfoChanged() adjusts uevent / wakealarm periods
 }
