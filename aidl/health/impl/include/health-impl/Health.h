@@ -27,6 +27,10 @@
 #include <healthd/BatteryMonitor.h>
 #include <healthd/healthd.h>
 
+#ifndef __ANDROID_RECOVERY__
+#include <aidl/android/hardware/thermal/IThermal.h>
+#endif
+
 namespace aidl::android::hardware::health {
 
 class LinkedCallback;
@@ -84,6 +88,10 @@ class Health : public BnHealth, public HalHealthLoopCallback {
     // HalHealthLoopCallback implementation.
     void OnInit(HalHealthLoop* hal_health_loop, struct healthd_config* config) override;
     void OnHealthInfoChanged(const HealthInfo& health_info) override;
+
+#ifndef __ANDROID_RECOVERY__
+    void UpdateLrpSysfs();
+#endif
 
     // A subclass may override this if it wants to handle binder events differently.
     virtual void BinderEvent(uint32_t epevents);
