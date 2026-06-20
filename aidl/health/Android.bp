@@ -26,7 +26,7 @@ cc_defaults {
         "Health.cpp",
     ],
     static_libs: [
-        "libhealth_aidl_impl",
+        "libhealth_samsung_aidl_impl",
     ],
 }
 

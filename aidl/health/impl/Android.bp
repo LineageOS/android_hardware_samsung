@@ -1,0 +1,28 @@
+
+cc_library_static {
+    name: "libhealth_samsung_aidl_impl",
+    defaults: [
+        "libhealth_aidl_common_defaults",
+        "libhealth_aidl_charger_defaults",
+    ],
+    vendor: true,
+    recovery_available: true,
+    export_include_dirs: ["include"],
+    export_static_lib_headers: [
+        "libbatterymonitor",
+    ],
+    srcs: [
+        "ChargerUtils.cpp",
+        "health-convert.cpp",
+        "HalHealthLoop.cpp",
+        "Health.cpp",
+        "LinkedCallback.cpp",
+    ],
+    target: {
+        recovery: {
+            exclude_srcs: [
+                "ChargerUtils.cpp",
+            ],
+        },
+    },
+}
