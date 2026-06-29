@@ -16,6 +16,23 @@
       "message": "Working fine with O1S. Battery driver is now aware of the battery temperature.",
       "revId": "9a5d5d31e450240a1031f5265c6199ad79fc6633",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fff715fe_79a35a78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2026-06-29T17:57:52Z",
+      "side": 1,
+      "message": "Do not merge without 490958",
+      "revId": "9a5d5d31e450240a1031f5265c6199ad79fc6633",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
