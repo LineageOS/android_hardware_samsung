@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72db4e6e_95527e7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-07-04T14:27:42Z",
+      "side": 1,
+      "message": "Do we wait for 24 to be close to shipping to not diverge?",
+      "revId": "b03c9487519e20a9040821297de51d1297e19b7b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
