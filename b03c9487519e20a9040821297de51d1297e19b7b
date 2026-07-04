@@ -16,6 +16,24 @@
       "message": "Do we wait for 24 to be close to shipping to not diverge?",
       "revId": "b03c9487519e20a9040821297de51d1297e19b7b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4956ee0_a133cea0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-07-04T14:29:18Z",
+      "side": 1,
+      "message": "I guess it doesn\u0027t matter anymore. Sooner or later it diverges.",
+      "parentUuid": "72db4e6e_95527e7a",
+      "revId": "b03c9487519e20a9040821297de51d1297e19b7b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
