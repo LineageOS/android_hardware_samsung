@@ -37,6 +37,7 @@ cc_binary {
     init_rc: ["android.hardware.health-service.samsung.rc"],
     shared_libs: [
         "android.hardware.thermal-V3-ndk",
+        "vendor.samsung.hardware.health-V1-ndk",
     ],
     overrides: ["charger"],
 }

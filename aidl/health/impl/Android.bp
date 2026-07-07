@@ -13,6 +13,7 @@ cc_library_static {
     ],
     shared_libs: [
         "android.hardware.thermal-V3-ndk",
+        "vendor.samsung.hardware.health-V1-ndk",
     ],
     srcs: [
         "ChargerUtils.cpp",
@@ -20,14 +21,21 @@ cc_library_static {
         "HalHealthLoop.cpp",
         "Health.cpp",
         "LinkedCallback.cpp",
+        "SecBatteryMonitor.cpp",
+        "SehHealth.cpp",
+        "SehLinkedCallback.cpp",
     ],
     target: {
         recovery: {
             exclude_srcs: [
                 "ChargerUtils.cpp",
+                "SecBatteryMonitor.cpp",
+                "SehHealth.cpp",
+                "SehLinkedCallback.cpp",
             ],
             exclude_shared_libs: [
                 "android.hardware.thermal-V3-ndk",
+                "vendor.samsung.hardware.health-V1-ndk",
             ],
         },
     },
