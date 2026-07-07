@@ -1,0 +1,58 @@
+//
+// SPDX-FileCopyrightText: 2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+aidl_interface {
+    name: "vendor.samsung.hardware.health",
+    vendor_available: true,
+    srcs: [
+        "vendor/samsung/hardware/health/*.aidl",
+    ],
+    stability: "vintf",
+    owner: "samsung",
+    imports: [
+        "android.hardware.health-V4",
+    ],
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            // The framework consumes the V4 view below instead; see
+            // vendor.samsung.hardware.health.framework.
+            enabled: false,
+        },
+    },
+    frozen: true,
+    versions_with_info: [
+        {
+            version: "1",
+            imports: ["android.hardware.health-V4"],
+        },
+    ],
+}
+
+aidl_interface {
+    name: "vendor.samsung.hardware.health.framework",
+    srcs: [
+        "vendor/samsung/hardware/health/*.aidl",
+    ],
+    stability: "vintf",
+    owner: "samsung",
+    imports: [
+        "android.hardware.health-V4",
+    ],
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        ndk: {
+            enabled: false,
+        },
+        java: {
+            sdk_version: "module_current",
+        },
+    },
+    frozen: false,
+}
