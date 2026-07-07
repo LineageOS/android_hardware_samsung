@@ -26,6 +26,12 @@
 #include "LinkedCallback.h"
 #include "health-convert.h"
 
+#ifndef __ANDROID_RECOVERY__
+#include <mutex>
+
+#include <health-impl/SecBatteryMonitor.h>
+#endif
+
 using std::string_literals::operator""s;
 
 namespace aidl::android::hardware::health {
@@ -259,16 +265,15 @@ std::optional<bool> Health::ShouldKeepScreenOn() {
 // Subclass helpers / overrides
 //
 
-void Health::UpdateHealthInfo(HealthInfo* /* health_info */) {
-    /*
-        // Sample code for a subclass to implement this:
-        // If you need to modify values (e.g. batteryChargeTimeToFullNowSeconds), do it here.
-        health_info->batteryChargeTimeToFullNowSeconds = calculate_charge_time_seconds();
-
-        // If you need to call healthd_board_battery_update, modify its signature
-        // and implementation to operate on HealthInfo directly, then call:
-        healthd_board_battery_update(health_info);
-    */
+void Health::UpdateHealthInfo(HealthInfo* health_info) {
+#ifndef __ANDROID_RECOVERY__
+    static ::aidl::vendor::samsung::hardware::health::SecBatteryMonitor sec_monitor;
+    static std::once_flag restore_once;
+    std::call_once(restore_once, [] { sec_monitor.Restore(); });
+    sec_monitor.Persist(*health_info);
+#else
+    (void)health_info;
+#endif
 }
 
 #ifndef __ANDROID_RECOVERY__
