@@ -20,6 +20,11 @@
 #include <health-impl/Health.h>
 #include <health/utils.h>
 
+#ifndef __ANDROID_RECOVERY__
+#include <android/binder_ibinder.h>
+#include <health-impl/SehHealth.h>
+#endif
+
 #ifndef CHARGER_FORCE_NO_UI
 #define CHARGER_FORCE_NO_UI 0
 #endif
@@ -29,7 +34,13 @@
 #endif
 
 using aidl::android::hardware::health::HalHealthLoop;
+using aidl::android::hardware::health::HalHealthLoopCallback;
 using aidl::android::hardware::health::Health;
+using aidl::android::hardware::health::HealthInfo;
+
+#ifndef __ANDROID_RECOVERY__
+using aidl::vendor::samsung::hardware::health::SehHealth;
+#endif
 
 #if !CHARGER_FORCE_NO_UI
 using aidl::android::hardware::health::charger::ChargerCallback;
@@ -47,6 +58,30 @@ class ChargerCallbackImpl : public ChargerCallback {
     bool ChargerEnableSuspend() override { return true; }
 };
 }  // namespace aidl::android::hardware::health
+#endif
+
+#ifndef __ANDROID_RECOVERY__
+namespace {
+class SehLoopCallback : public HalHealthLoopCallback {
+  public:
+    SehLoopCallback(std::shared_ptr<Health> health, std::shared_ptr<SehHealth> seh_health)
+        : health_(std::move(health)), seh_health_(std::move(seh_health)) {}
+
+    void OnInit(HalHealthLoop* hal_health_loop, struct healthd_config* config) override {
+        health_->OnInit(hal_health_loop, config);
+    }
+    void OnHeartbeat() override { health_->OnHeartbeat(); }
+    int OnPrepareToWait() override { return health_->OnPrepareToWait(); }
+    void OnHealthInfoChanged(const HealthInfo& health_info) override {
+        health_->OnHealthInfoChanged(health_info);
+        seh_health_->OnHealthInfoChanged(health_info);
+    }
+
+  private:
+    std::shared_ptr<Health> health_;
+    std::shared_ptr<SehHealth> seh_health_;
+};
+}  // namespace
 #endif
 
 int main(int argc, char** argv) {
@@ -71,9 +106,19 @@ int main(int argc, char** argv) {
 
         LOG(INFO) << "Starting charger mode without UI.";
     } else {
-        LOG(INFO) << "Starting health HAL.";
+        LOG(INFO) << "Starting seh health HAL.";
     }
 
-    auto hal_health_loop = std::make_shared<HalHealthLoop>(binder, binder);
+    std::shared_ptr<HalHealthLoopCallback> loop_callback = binder;
+
+#ifndef __ANDROID_RECOVERY__
+    auto seh_health = ndk::SharedRefBase::make<SehHealth>(gInstanceName, binder);
+    CHECK_EQ(STATUS_OK,
+             AIBinder_setExtension(binder->asBinder().get(), seh_health->asBinder().get()))
+            << "Failed to set ISehHealth as an extension of IHealth";
+    loop_callback = std::make_shared<SehLoopCallback>(binder, seh_health);
+#endif
+
+    auto hal_health_loop = std::make_shared<HalHealthLoop>(binder, loop_callback);
     return hal_health_loop->StartLoop();
 }
