@@ -251,6 +251,13 @@ Status UsbGadget::setupFunctions(long functions, const shared_ptr<IUsbGadgetCall
     bool ffsEnabled = false;
     int i = 0;
 
+    if (!linkFunction("ss_mon.0", i)) {
+        ALOGI("Linked ss_mon.0");
+        i++;
+    } else {
+        ALOGW("ss_mon.0 not available");
+    }
+
     if (Status(addGenericAndroidFunctions(&monitorFfs, functions, &ffsEnabled, &i)) !=
         Status::SUCCESS) {
         return Status::ERROR;
