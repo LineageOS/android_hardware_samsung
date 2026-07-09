@@ -251,6 +251,22 @@ Status UsbGadget::setupFunctions(long functions, const shared_ptr<IUsbGadgetCall
     bool ffsEnabled = false;
     int i = 0;
 
+    std::string ssMonFunction;
+    if ((functions & GadgetFunction::MTP) != 0) {
+        ssMonFunction = "ss_mon.mtp";
+    } else if ((functions & GadgetFunction::PTP) != 0) {
+        ssMonFunction = "ss_mon.ptp";
+    } else {
+        ssMonFunction = "ss_mon.etc";
+    }
+
+    if (!linkFunction(ssMonFunction.c_str(), i)) {
+        ALOGI("Linked %s", ssMonFunction.c_str());
+        i++;
+    } else {
+        ALOGW("%s not available", ssMonFunction.c_str());
+    }
+
     if (Status(addGenericAndroidFunctions(&monitorFfs, functions, &ffsEnabled, &i)) !=
         Status::SUCCESS) {
         return Status::ERROR;
