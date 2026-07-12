@@ -1764,7 +1764,7 @@ typedef struct camera3_stream {
 #ifdef CAMERA_NEEDS_SEC_RESERVED_FIELD
     char reserved_sec[0x28];
 #endif
-
+    char reserved_sec2[0x10];
 } camera3_stream_t;
 
 /**
