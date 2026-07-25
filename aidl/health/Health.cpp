@@ -28,8 +28,21 @@
 #include <health-impl/ChargerUtils.h>
 #endif
 
+#ifndef __ANDROID_RECOVERY__
+#include <samsung-health/BatteryData.h>
+#include <samsung-health/ShortDetection.h>
+#endif
+
+using aidl::android::hardware::health::BatteryChargingPolicy;
+using aidl::android::hardware::health::BatteryHealthData;
 using aidl::android::hardware::health::HalHealthLoop;
 using aidl::android::hardware::health::Health;
+using aidl::android::hardware::health::HealthInfo;
+
+#ifndef __ANDROID_RECOVERY__
+static hardware::samsung::health::BatteryData batteryData;
+static hardware::samsung::health::ShortDetection shortDetection;
+#endif
 
 #if !CHARGER_FORCE_NO_UI
 using aidl::android::hardware::health::charger::ChargerCallback;
@@ -38,6 +51,72 @@ using aidl::android::hardware::health::charger::ChargerModeMain;
 
 static constexpr const char* gInstanceName = "default";
 static constexpr std::string_view gChargerArg{"--charger"};
+
+#ifdef __ANDROID_RECOVERY__
+void private_healthd_board_init() {}
+int private_healthd_board_battery_update(HealthInfo*) {
+    return 0;
+}
+#else   // !__ANDROID__RECOVERY__
+void private_healthd_board_init() {
+    batteryData.RestoreBattType();
+    batteryData.RestoreRtcStatus();
+    shortDetection.RestoreCisdData();
+    batteryData.UpdateCapacityMax();
+    batteryData.RestoreErrWthm();
+    batteryData.InitCableCount();
+}
+
+int private_healthd_board_battery_update(HealthInfo* health_info) {
+    shortDetection.UpdateCableCount(*health_info);
+    shortDetection.UpdateCisdData();
+    batteryData.UpdatePrevBattData();
+    batteryData.UpdateAgingHistory(*health_info);
+    batteryData.UpdateErrWthm();
+    return 0;
+}
+
+namespace aidl::android::hardware::health::implementation {
+
+class SamsungHealth : public Health {
+  public:
+    SamsungHealth(std::string_view instance_name, std::unique_ptr<healthd_config>&& config,
+                  ::hardware::samsung::health::BatteryData* battery_data)
+        : Health(std::move(instance_name), std::move(config)), battery_data_(battery_data) {}
+
+    void UpdateHealthInfo(HealthInfo* health_info) override {
+        private_healthd_board_battery_update(health_info);
+    }
+
+    ndk::ScopedAStatus getChargingPolicy(BatteryChargingPolicy* out) override {
+        if (!battery_data_) {
+            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+        }
+        int val = battery_data_->GetChargingPolicy();
+        *out = static_cast<BatteryChargingPolicy>(val);
+        return ndk::ScopedAStatus::ok();
+    }
+
+    ndk::ScopedAStatus setChargingPolicy(BatteryChargingPolicy in_value) override {
+        if (!battery_data_) {
+            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+        }
+        int ret = battery_data_->SetChargingPolicy(static_cast<int>(in_value));
+        if (ret == -ENOENT) {
+            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+        }
+        if (ret != 0) {
+            return ndk::ScopedAStatus::fromStatus(STATUS_BAD_VALUE);
+        }
+        return ndk::ScopedAStatus::ok();
+    }
+
+  private:
+    ::hardware::samsung::health::BatteryData* battery_data_;
+};
+
+}  // namespace aidl::android::hardware::health::implementation
+#endif  // __ANDROID_RECOVERY__
 
 #if !CHARGER_FORCE_NO_UI
 namespace aidl::android::hardware::health {
@@ -58,6 +137,8 @@ int main(int argc, char** argv) {
     auto config = std::make_unique<healthd_config>();
     ::android::hardware::health::InitHealthdConfig(config.get());
     auto binder = ndk::SharedRefBase::make<Health>(gInstanceName, std::move(config));
+
+    private_healthd_board_init();
 
     if (argc >= 2 && argv[1] == gChargerArg) {
 #if !CHARGER_FORCE_NO_UI
