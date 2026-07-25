@@ -1,0 +1,25 @@
+cc_library {
+    name: "libsamsunghealth",
+    vendor: true,
+    export_include_dirs: ["include"],
+
+    srcs: [
+        "BatteryData.cpp",
+        "ShortDetection.cpp",
+        "Utils.cpp",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+    export_shared_lib_headers: [
+        "android.hardware.health-V5-ndk",
+    ],
+
+    shared_libs: [
+        "android.hardware.health-V5-ndk",
+        "libbase",
+    ],
+}
