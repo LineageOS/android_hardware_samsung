@@ -35,6 +35,9 @@ cc_binary {
     defaults: ["android.hardware.health-service.samsung-defaults"],
     vendor: true,
     init_rc: ["android.hardware.health-service.samsung.rc"],
+    shared_libs: [
+        "libsamsunghealth",
+    ],
     overrides: ["charger"],
 }
 
