@@ -28,8 +28,21 @@
 #include <health-impl/ChargerUtils.h>
 #endif
 
+#ifndef __ANDROID_RECOVERY__
+#include <samsung-health/BatteryData.h>
+#include <samsung-health/BatteryInfo.h>
+#include <samsung-health/ShortDetection.h>
+#endif
+
+using aidl::android::hardware::health::HealthInfo;
 using aidl::android::hardware::health::HalHealthLoop;
 using aidl::android::hardware::health::Health;
+
+#ifndef __ANDROID_RECOVERY__
+static hardware::samsung::health::BatteryData batteryData;
+static hardware::samsung::health::BatteryInfo batteryInfo;
+static hardware::samsung::health::ShortDetection shortDetection;
+#endif
 
 #if !CHARGER_FORCE_NO_UI
 using aidl::android::hardware::health::charger::ChargerCallback;
@@ -38,6 +51,41 @@ using aidl::android::hardware::health::charger::ChargerModeMain;
 
 static constexpr const char* gInstanceName = "default";
 static constexpr std::string_view gChargerArg{"--charger"};
+
+#ifdef __ANDROID_RECOVERY__
+void private_healthd_board_init() {}
+int private_healthd_board_battery_update(HealthInfo *) { return 0; }
+#else // !__ANDROID__RECOVERY__
+void private_healthd_board_init() {
+    batteryInfo.RestoreBattType();
+    batteryData.RestoreRtcStatus();
+    shortDetection.RestoreCisdData();
+    batteryData.UpdateCapacityMax();
+}
+
+int private_healthd_board_battery_update(HealthInfo *health_info) {
+    shortDetection.UpdateCableCount(*health_info);
+    shortDetection.UpdateCisdData();
+    batteryData.UpdatePrevBattData();
+    batteryData.UpdateAgingHistory(*health_info);
+    return 0;
+}
+#endif // __ANDROID_RECOVERY__
+
+namespace aidl::android::hardware::health::implementation {
+class SehHealthImpl : public Health {
+  public:
+    SehHealthImpl(std::string_view instance_name, std::unique_ptr<healthd_config>&& config)
+        : Health(std::move(instance_name), std::move(config)) {}
+
+    void UpdateHealthInfo(HealthInfo* health_info) override;
+};
+
+void SehHealthImpl::UpdateHealthInfo(HealthInfo* health_info) {
+  private_healthd_board_battery_update(health_info);
+}
+
+}  // namespace aidl::android::hardware::health::implementation
 
 #if !CHARGER_FORCE_NO_UI
 namespace aidl::android::hardware::health {
@@ -58,6 +106,8 @@ int main(int argc, char** argv) {
     auto config = std::make_unique<healthd_config>();
     ::android::hardware::health::InitHealthdConfig(config.get());
     auto binder = ndk::SharedRefBase::make<Health>(gInstanceName, std::move(config));
+
+    private_healthd_board_init();
 
     if (argc >= 2 && argv[1] == gChargerArg) {
 #if !CHARGER_FORCE_NO_UI
