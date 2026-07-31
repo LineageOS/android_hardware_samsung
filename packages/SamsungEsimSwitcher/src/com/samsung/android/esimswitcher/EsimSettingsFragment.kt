@@ -68,6 +68,16 @@ class EsimSettingsFragment :
                 return false
             }
 
+            if (isChecked && esimController.hasPhysicalSimInHybridSlot()) {
+                AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.esim_psim_slot_title)
+                    .setMessage(R.string.esim_psim_slot_message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setCancelable(false)
+                    .show()
+                return false
+            }
+
             val gen = requestGen.incrementAndGet()
             switchBar.isEnabled = false
             footerPref.title = getString(R.string.esim_switching)

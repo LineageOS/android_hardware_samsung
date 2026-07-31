@@ -96,6 +96,22 @@ class EsimController private constructor(private val context: Context) {
         return false
     }
 
+    /**
+     * True when the hybrid tray (physical slot [EUICC_PHYSICAL_SLOT]) holds a present
+     * physical SIM. Enabling eSIM would remux that slot to the built-in eUICC and
+     * drop the pSIM — callers should ask the user to move it to the other slot first.
+     */
+    fun hasPhysicalSimInHybridSlot(): Boolean {
+        if (isSlotTypeEsim()) return false
+        val slots = telephonyManager?.uiccSlotsInfo ?: return false
+        if (EUICC_PHYSICAL_SLOT >= slots.size) return false
+        val slot = slots[EUICC_PHYSICAL_SLOT] ?: return false
+        if (slot.cardStateInfo != UiccSlotInfo.CARD_STATE_INFO_PRESENT) return false
+        if (slot.isEuicc) return false
+        if (DEBUG) Log.d(TAG, "Physical SIM present in hybrid slot $EUICC_PHYSICAL_SLOT")
+        return true
+    }
+
     fun isSlotTypeEsim(): Boolean {
         val type1 = SystemProperties.get(PROP_SIM_SLOT_TYPE_1, "0")
         val type2 = SystemProperties.get(PROP_SIM_SLOT_TYPE_2, "0")
