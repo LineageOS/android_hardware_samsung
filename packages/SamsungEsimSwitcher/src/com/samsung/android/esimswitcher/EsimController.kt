@@ -38,7 +38,8 @@ class EsimController private constructor(private val context: Context) {
 
         private const val READY_TIMEOUT_MS = 90_000L
         private const val READY_POLL_MS = 200L
-        private const val EID_WAIT_MS = 45_000L
+        private const val EID_WAIT_MS = 15_000L
+        private const val SIM_POWER_CYCLE_MS = 400L
 
         @Volatile private var instance: EsimController? = null
 
@@ -100,6 +101,10 @@ class EsimController private constructor(private val context: Context) {
      * True when the hybrid tray (physical slot [EUICC_PHYSICAL_SLOT]) holds a present
      * physical SIM. Enabling eSIM would remux that slot to the built-in eUICC and
      * drop the pSIM — callers should ask the user to move it to the other slot first.
+     *
+     * After remux to pSIM with an empty tray, RIL often still reports slot 1 as
+     * PRESENT with isEuicc=false, isRemovable=false and an empty/EID cardId. That
+     * is built-in eUICC residue, not a tray SIM — do not block on it.
      */
     fun hasPhysicalSimInHybridSlot(): Boolean {
         if (isSlotTypeEsim()) return false
@@ -108,7 +113,17 @@ class EsimController private constructor(private val context: Context) {
         val slot = slots[EUICC_PHYSICAL_SLOT] ?: return false
         if (slot.cardStateInfo != UiccSlotInfo.CARD_STATE_INFO_PRESENT) return false
         if (slot.isEuicc) return false
-        if (DEBUG) Log.d(TAG, "Physical SIM present in hybrid slot $EUICC_PHYSICAL_SLOT")
+        // Tray pSIM is removable; built-in eUICC residue is not.
+        if (!slot.isRemovable) return false
+        val cardId = slot.cardId
+        // Real pSIM has an ICCID; empty or EID-shaped ids are not tray SIMs.
+        if (cardId.isNullOrEmpty() || isValidEid(cardId)) return false
+        if (DEBUG) {
+            Log.d(
+                TAG,
+                "Physical SIM present in hybrid slot $EUICC_PHYSICAL_SLOT cardId=$cardId",
+            )
+        }
         return true
     }
 
@@ -136,6 +151,28 @@ class EsimController private constructor(private val context: Context) {
         return if (isValidEid(cardId)) cardId else null
     }
 
+    private fun syncPersistToHardware() {
+        val want = if (isSlotTypeEsim()) "1" else "0"
+        if (SystemProperties.get(PROP_ESIM_SWITCH, "") != want) {
+            Log.w(TAG, "reverting $PROP_ESIM_SWITCH to $want (matches hardware)")
+            SystemProperties.set(PROP_ESIM_SWITCH, want)
+        }
+    }
+
+    private fun maybeRefreshEidAsync(reason: String) {
+        if (getEuiccSlotCardId() != null) {
+            Log.i(TAG, "EID already present; skip refresh ($reason)")
+            return
+        }
+        Thread({
+            try {
+                refreshEuiccCardEid(reason)
+            } catch (t: Throwable) {
+                Log.w(TAG, "async eid refresh failed ($reason)", t)
+            }
+        }, "esim-eid-$reason").start()
+    }
+
     /**
      * Power-cycle the hybrid eUICC slot so EuiccCard is recreated and loadEid
      * runs against the shim's synthetic GetEID response.
@@ -150,7 +187,7 @@ class EsimController private constructor(private val context: Context) {
             return false
         }
         try {
-            Thread.sleep(1500)
+            Thread.sleep(SIM_POWER_CYCLE_MS)
         } catch (_: InterruptedException) {
             return false
         }
@@ -181,6 +218,7 @@ class EsimController private constructor(private val context: Context) {
     /**
      * Requests eSIM enable/disable and waits until hardware matches.
      * Returns true when slot type matches the request (or already matched).
+     * On failure, persist is reverted to match hardware so the UI cannot lie.
      */
     fun setEsimEnabled(isEnabled: Boolean): Boolean {
         val value = if (isEnabled) "1" else "0"
@@ -194,8 +232,8 @@ class EsimController private constructor(private val context: Context) {
         SystemProperties.set(PROP_ESIM_SWITCH, value)
 
         if (isEnabled && isSlotTypeEsim()) {
-            Log.i(TAG, "eSIM slot already active; refreshing EID")
-            refreshEuiccCardEid("already-active")
+            Log.i(TAG, "eSIM slot already active")
+            maybeRefreshEidAsync("already-active")
             return true
         }
         if (!isEnabled && !isSlotTypeEsim()) {
@@ -204,16 +242,16 @@ class EsimController private constructor(private val context: Context) {
         }
 
         val deadline = System.currentTimeMillis() + READY_TIMEOUT_MS
-        var flipped = false
         while (System.currentTimeMillis() < deadline) {
             if (SystemProperties.get(PROP_ESIM_SWITCH, "") != value) {
                 Log.w(TAG, "persist changed during wait; aborting")
+                syncPersistToHardware()
                 return false
             }
-            if (isEnabled && isSlotTypeEsim()) {
-                Log.i(TAG, "eSIM enabled (simslottype*=1)")
-                flipped = true
-                break
+            if (isEnabled && isEsimReady()) {
+                Log.i(TAG, "eSIM enabled (type + ready)")
+                maybeRefreshEidAsync("after-switch")
+                return true
             }
             if (!isEnabled && !isSlotTypeEsim()) {
                 Log.i(TAG, "eSIM disabled")
@@ -226,12 +264,10 @@ class EsimController private constructor(private val context: Context) {
             }
         }
 
-        if (isEnabled && flipped) {
-            refreshEuiccCardEid("after-switch")
-            return true
+        val ok = if (isEnabled) isEsimReady() else !isSlotTypeEsim()
+        if (!ok) {
+            syncPersistToHardware()
         }
-
-        val ok = if (isEnabled) isSlotTypeEsim() else !isSlotTypeEsim()
         Log.w(
             TAG,
             "setEsimEnabled wait finished ok=$ok type2=${SystemProperties.get(PROP_SIM_SLOT_TYPE_2, "0")} " +
