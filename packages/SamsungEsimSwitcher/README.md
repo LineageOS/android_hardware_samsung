@@ -78,9 +78,14 @@ Otherwise the Settings tile stays disabled/hidden via component state.
 2. If an **embedded subscription is already active** and the user is trying to
    turn the hybrid slot off, show a blocking dialog
    (“disable or remove your current eSIM profile first”) and abort.
-3. Otherwise disable the switch UI, set footer to “Switching…”, and call
-   `EsimController.setEsimEnabled` on a background executor.
-4. When done, re-enable the switch to match `persist.sys.esim_switch` and restore
+3. If enabling and a **physical SIM is in the hybrid slot** (active non-embedded
+   sub on slot 1, or PRESENT + port ICCID), show a dialog: move the SIM to the
+   other slot, or **Enable eSIM** to proceed (disconnects that pSIM). Cancel
+   leaves the switch off.
+4. Otherwise (or after Proceed) disable the switch UI, set footer to
+   “Switching…”, and call `EsimController.setEsimEnabled` on a background
+   executor.
+5. When done, re-enable the switch to match `persist.sys.esim_switch` and restore
    the footer (or show a timeout message).
 
 ### `EsimController.setEsimEnabled`
@@ -114,6 +119,7 @@ without another toggle.
 | `getEsimEnabled()` | Persist prop is `1` |
 | `isSlotTypeEsim()` | `ril.simslottype1` or `ril.simslottype2` is `1` |
 | `isEsimReady()` | Slot type is eSIM **and** `vendor.calls.esim_ready=1` |
+| `hasPhysicalSimInHybridSlot()` | Active pSIM sub / port ICCID on physical slot 1 |
 | `getEsimActive()` | Any active subscription with `isEmbedded` |
 | `getEuiccSlotCardId()` | Valid EID from `uiccSlotsInfo[1].cardId` |
 
