@@ -72,37 +72,47 @@ class EsimSettingsFragment :
                 AlertDialog.Builder(requireContext())
                     .setTitle(R.string.esim_psim_slot_title)
                     .setMessage(R.string.esim_psim_slot_message)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setCancelable(false)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(R.string.esim_psim_slot_proceed) { _, _ ->
+                        if (!isAdded) return@setPositiveButton
+                        startEsimSwitch(true)
+                    }
+                    .setCancelable(true)
                     .show()
+                // Keep the switch off until the user chooses Proceed.
                 return false
             }
 
-            val gen = requestGen.incrementAndGet()
-            switchBar.isEnabled = false
-            footerPref.title = getString(R.string.esim_switching)
-            executor.execute {
-                var ok = false
-                try {
-                    ok = esimController.setEsimEnabled(isChecked)
-                } catch (t: Throwable) {
-                    Log.e(TAG, "setEsimEnabled failed", t)
-                }
-                mainHandler.post {
-                    if (!isAdded || gen != requestGen.get()) return@post
-                    switchBar.isEnabled = true
-                    switchBar.isChecked = esimController.getEsimEnabled()
-                    footerPref.title =
-                        if (ok) {
-                            getString(R.string.esim_footer_note)
-                        } else {
-                            getString(R.string.esim_switch_failed)
-                        }
-                }
-            }
+            startEsimSwitch(isChecked)
             // Optimistic UI; corrected when background work finishes.
             return true
         }
         return true
+    }
+
+    private fun startEsimSwitch(isChecked: Boolean) {
+        val gen = requestGen.incrementAndGet()
+        switchBar.isChecked = isChecked
+        switchBar.isEnabled = false
+        footerPref.title = getString(R.string.esim_switching)
+        executor.execute {
+            var ok = false
+            try {
+                ok = esimController.setEsimEnabled(isChecked)
+            } catch (t: Throwable) {
+                Log.e(TAG, "setEsimEnabled failed", t)
+            }
+            mainHandler.post {
+                if (!isAdded || gen != requestGen.get()) return@post
+                switchBar.isEnabled = true
+                switchBar.isChecked = esimController.getEsimEnabled()
+                footerPref.title =
+                    if (ok) {
+                        getString(R.string.esim_footer_note)
+                    } else {
+                        getString(R.string.esim_switch_failed)
+                    }
+            }
+        }
     }
 }

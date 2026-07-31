@@ -9,6 +9,7 @@ import android.content.Context
 import android.os.SystemProperties
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
+import android.telephony.UiccPortInfo
 import android.telephony.UiccSlotInfo
 import android.util.Log
 
@@ -100,31 +101,83 @@ class EsimController private constructor(private val context: Context) {
     /**
      * True when the hybrid tray (physical slot [EUICC_PHYSICAL_SLOT]) holds a present
      * physical SIM. Enabling eSIM would remux that slot to the built-in eUICC and
-     * drop the pSIM — callers should ask the user to move it to the other slot first.
+     * drop the pSIM — callers should warn before proceeding.
+     *
+     * Prefer an active non-embedded subscription on this physical slot: that is what
+     * the user loses. Slot flags alone are unreliable on Samsung (hybrid tray often
+     * reports isRemovable=false because the built-in eUICC shares the port).
      *
      * After remux to pSIM with an empty tray, RIL often still reports slot 1 as
      * PRESENT with isEuicc=false, isRemovable=false and an empty/EID cardId. That
-     * is built-in eUICC residue, not a tray SIM — do not block on it.
+     * is built-in eUICC residue, not a tray SIM — do not warn on it.
      */
     fun hasPhysicalSimInHybridSlot(): Boolean {
         if (isSlotTypeEsim()) return false
+        if (hasActivePhysicalSubscriptionOnSlot(EUICC_PHYSICAL_SLOT)) {
+            Log.i(TAG, "Physical SIM active on hybrid slot $EUICC_PHYSICAL_SLOT")
+            return true
+        }
+
         val slots = telephonyManager?.uiccSlotsInfo ?: return false
         if (EUICC_PHYSICAL_SLOT >= slots.size) return false
         val slot = slots[EUICC_PHYSICAL_SLOT] ?: return false
         if (slot.cardStateInfo != UiccSlotInfo.CARD_STATE_INFO_PRESENT) return false
         if (slot.isEuicc) return false
-        // Tray pSIM is removable; built-in eUICC residue is not.
-        if (!slot.isRemovable) return false
+
+        // Active port with ICCID (or redacted ICCID) means a tray SIM is bound.
+        for (port in slot.ports) {
+            val iccid = port.iccId
+            if (iccid.isNullOrEmpty()) continue
+            if (isValidEid(iccid)) continue
+            if (port.isActive || iccid != UiccPortInfo.ICCID_REDACTED) {
+                Log.i(
+                    TAG,
+                    "Physical SIM present in hybrid slot $EUICC_PHYSICAL_SLOT " +
+                        "port=${port.portIndex} active=${port.isActive}",
+                )
+                return true
+            }
+        }
+
+        // Last resort: removable slot with ICCID-shaped cardId (not EID residue).
         val cardId = slot.cardId
-        // Real pSIM has an ICCID; empty or EID-shaped ids are not tray SIMs.
-        if (cardId.isNullOrEmpty() || isValidEid(cardId)) return false
+        if (slot.isRemovable && !cardId.isNullOrEmpty() && !isValidEid(cardId)) {
+            Log.i(TAG, "Physical SIM present in hybrid slot $EUICC_PHYSICAL_SLOT cardId=$cardId")
+            return true
+        }
         if (DEBUG) {
             Log.d(
                 TAG,
-                "Physical SIM present in hybrid slot $EUICC_PHYSICAL_SLOT cardId=$cardId",
+                "No tray pSIM on hybrid slot: present=${slot.cardStateInfo} " +
+                    "euicc=${slot.isEuicc} removable=${slot.isRemovable} cardId=${slot.cardId}",
             )
         }
-        return true
+        return false
+    }
+
+    /** Active non-embedded subscription whose logical slot maps to [physicalSlot]. */
+    private fun hasActivePhysicalSubscriptionOnSlot(physicalSlot: Int): Boolean {
+        val slots = telephonyManager?.uiccSlotsInfo ?: return false
+        if (physicalSlot >= slots.size) return false
+        val slot = slots[physicalSlot] ?: return false
+        if (slot.isEuicc) return false
+
+        val logicalSlots =
+            slot.ports
+                .map { it.logicalSlotIndex }
+                .filter { it != SubscriptionManager.INVALID_SIM_SLOT_INDEX }
+                .toSet()
+        if (logicalSlots.isEmpty()) return false
+
+        val subscriptionManager =
+            context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as? SubscriptionManager
+                ?: return false
+        val subscriptionInfoList = subscriptionManager.activeSubscriptionInfoList ?: return false
+        for (subscriptionInfo in subscriptionInfoList) {
+            if (subscriptionInfo.isEmbedded) continue
+            if (subscriptionInfo.simSlotIndex in logicalSlots) return true
+        }
+        return false
     }
 
     fun isSlotTypeEsim(): Boolean {
