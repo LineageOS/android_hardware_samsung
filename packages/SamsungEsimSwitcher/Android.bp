@@ -11,10 +11,20 @@ android_app {
     privileged: true,
     privapp_allowlist: "privapp_whitelist_com.samsung.android.esimswitcher.xml",
     system_ext_specific: true,
+    required: [
+        "init.esim_switch.rc",
+    ],
     static_libs: [
         "androidx.core_core",
         "androidx.preference_preference",
         "org.lineageos.settings.resources",
         "SettingsLib",
     ],
+}
+
+prebuilt_etc {
+    name: "init.esim_switch.rc",
+    src: "init.esim_switch.rc",
+    sub_dir: "init",
+    vendor: true,
 }
