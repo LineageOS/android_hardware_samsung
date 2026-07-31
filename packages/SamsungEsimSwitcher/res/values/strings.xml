@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name">eSIM Switcher</string>
+    <string name="esim_title">eSIM</string>
+    <string name="esim_enable_name">Enable eSIM</string>
+    <string name="esim_warning_title">eSIM in use</string>
+    <string name="esim_warning_message">Please disable or remove your current eSIM profile before proceeding</string>
+    <string name="esim_footer_note">Enabling eSIM switches the hybrid SIM tray slot to the built-in eUICC (tsds2). The physical SIM in that slot will be unavailable while eSIM is enabled.</string>
+    <string name="esim_switching">Switching SIM slot…</string>
+    <!-- Not used as a preference title in XML so Settings search does not index it. -->
+    <string name="esim_switch_failed">Slot switch timed out. Wait a few seconds, toggle again if needed, then add your eSIM.</string>
+</resources>

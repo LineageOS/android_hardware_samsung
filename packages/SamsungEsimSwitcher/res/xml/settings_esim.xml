@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/esim_title">
+
+    <com.android.settingslib.widget.MainSwitchPreference
+        android:key="esim_enable"
+        android:title="@string/esim_enable_name"
+        android:enabled="false" />
+
+    <com.android.settingslib.widget.FooterPreference
+        android:key="esim_footer"
+        android:title="@string/esim_footer_note"
+        android:selectable="false" />
+
+</PreferenceScreen>

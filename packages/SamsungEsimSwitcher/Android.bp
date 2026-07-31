@@ -1,0 +1,20 @@
+//
+// SPDX-FileCopyrightText: 2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "SamsungEsimSwitcher",
+    certificate: "platform",
+    srcs: ["src/**/*.kt"],
+    platform_apis: true,
+    privileged: true,
+    privapp_allowlist: "privapp_whitelist_com.samsung.android.esimswitcher.xml",
+    system_ext_specific: true,
+    static_libs: [
+        "androidx.core_core",
+        "androidx.preference_preference",
+        "org.lineageos.settings.resources",
+        "SettingsLib",
+    ],
+}
