@@ -2,13 +2,12 @@
 
 Privileged Settings entry that flips Samsung's **tsds2** hybrid SIM tray between
 the physical SIM and the built-in eUICC, then makes sure telephony sees a valid
-EID so Google LPA can manage profiles.
+EID so the LPA app (GoogleEuicc, OpenEUICC) can manage profiles.
 
 Package: `com.samsung.android.esimswitcher`
 Module: `SamsungEsimSwitcher` (`system_ext`, platform-signed, `android.uid.system`)
 
-It does **not** download or activate eSIM profiles itself. That is Google
-EuiccGoogle / the platform LPA. This app only exposes the hardware slot switch
+It does **not** download or activate eSIM profiles itself. That is the platform LPA. This app only exposes the hardware slot switch
 and kicks EuiccCard into loading the EID.
 
 ## Why it exists
@@ -42,7 +41,7 @@ SamsungEsimSwitcher (after flip)
              ▼
 EuiccCard.loadEid → shim GetEID synth from /efs/FactoryApp/eID
              │
-Google LPA can download / enable / disable profiles
+LPA app can download / enable / disable profiles
 ```
 
 ## Components
@@ -137,6 +136,6 @@ without another toggle.
 ## What it does **not** do
 
 - No ES10 APDU crafting (CLA fix / MEP port inject live in the RIL shim).
-- No profile download / enable / delete UI (Google LPA).
+- No profile download / enable / delete UI (EuiccGoogle/OpenEUICC LPA).
 - No framework patches to `EuiccCard` / telephony-common.
 - Does not switch slot 0 (primary SIM).
