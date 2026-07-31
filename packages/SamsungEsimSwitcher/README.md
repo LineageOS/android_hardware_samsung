@@ -29,7 +29,7 @@ modem work lives in the device-tree `libsec-ril` shim (e.g.
 Settings → SamsungEsimSwitcher
              │  set persist.sys.esim_switch = 0|1
              ▼
-init.esim_switch.rc (device tree)
+init.esim_switch.rc (/vendor/etc/init)
              │  set vendor.calls.esim_switch = 0|1
              ▼
 libsec-ril shim (rild)
@@ -129,7 +129,7 @@ without another toggle.
 | Property | Writer | Purpose |
 |----------|--------|---------|
 | `persist.sys.esim_switch` | SamsungEsimSwitcher | User intent; survives reboot |
-| `vendor.calls.esim_switch` | init | Vendor-side copy for rild |
+| `vendor.calls.esim_switch` | `init.esim_switch.rc` | Vendor-side copy for rild |
 | `vendor.calls.esim_ready` | libsec-ril shim | Hardware switch completed |
 | `ril.simslottype2` | RIL | `1` = hybrid slot is eUICC |
 | `persist.ril.esim.slotswitch` | device tree / vendor | Must be `tsds2` for support detection |

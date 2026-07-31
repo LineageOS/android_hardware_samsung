@@ -1,0 +1,6 @@
+# Bridge system-writable persist.sys prop into vendor.calls.* for rild shim.
+on property:persist.sys.esim_switch=1
+    setprop vendor.calls.esim_switch 1
+
+on property:persist.sys.esim_switch=0
+    setprop vendor.calls.esim_switch 0
