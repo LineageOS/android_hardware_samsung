@@ -19,16 +19,17 @@ On these devices, slot 2 is a hybrid port:
 - On-board eUICC
 
 Stock Samsung uses OEM RIL hooks (`SEC_SIM_LOW_LEVEL_CONTROL`) to switch. AOSP
-has no UI for that. EsimSwitcher is the user-facing control; the actual modem
-work lives in the [`libsec-ril` shim](../../shims/libsec-ril/README.md).
+has no UI for that. SamsungEsimSwitcher is the user-facing control; the actual
+modem work lives in the device-tree `libsec-ril` shim (e.g.
+`device/samsung/sm8650-common/shims/libsec-ril`).
 
 ## Architecture
 
 ```text
-Settings → EsimSwitcher
+Settings → SamsungEsimSwitcher
              │  set persist.sys.esim_switch = 0|1
              ▼
-init.esim_switch.rc
+init.esim_switch.rc (device tree)
              │  set vendor.calls.esim_switch = 0|1
              ▼
 libsec-ril shim (rild)
@@ -36,7 +37,7 @@ libsec-ril shim (rild)
              ▼
 ril.simslottype2 = 1 (eSIM) or 0 (pSIM)
              │
-EsimSwitcher (after flip)
+SamsungEsimSwitcher (after flip)
              │  setSimPowerStateForSlot(1, DOWN/UP)
              ▼
 EuiccCard.loadEid → shim GetEID synth from /efs/FactoryApp/eID
@@ -127,7 +128,7 @@ without another toggle.
 
 | Property | Writer | Purpose |
 |----------|--------|---------|
-| `persist.sys.esim_switch` | EsimSwitcher | User intent; survives reboot |
+| `persist.sys.esim_switch` | SamsungEsimSwitcher | User intent; survives reboot |
 | `vendor.calls.esim_switch` | init | Vendor-side copy for rild |
 | `vendor.calls.esim_ready` | libsec-ril shim | Hardware switch completed |
 | `ril.simslottype2` | RIL | `1` = hybrid slot is eUICC |
