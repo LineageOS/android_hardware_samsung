@@ -119,20 +119,11 @@ bool CameraDeviceSession::initialize() {
         return true;
     }
 
-    // "ro.camera" properties are no longer supported on vendor side.
-    //  Support a fall back for the fmq size override that uses "ro.vendor.camera"
-    //  properties.
     int32_t resFMQSize = property_get_int32("ro.vendor.camera.res.fmq.size", /*default*/ -1);
     if (resFMQSize < 0) {
-        resFMQSize = property_get_int32("ro.camera.res.fmq.size", /*default*/ -1);
-        if (resFMQSize < 0) {
-            resFMQSize = CAMERA_RESULT_METADATA_QUEUE_SIZE;
-        } else {
-            ALOGV("%s: result FMQ size overridden to %d", __FUNCTION__, resFMQSize);
-        }
+        resFMQSize = CAMERA_RESULT_METADATA_QUEUE_SIZE;
     } else {
-        ALOGV("%s: result FMQ size overridden to %d via fallback property", __FUNCTION__,
-              resFMQSize);
+        ALOGV("%s: result FMQ size overridden to %d", __FUNCTION__, resFMQSize);
     }
 
     mResultMetadataQueue = std::make_shared<RequestMetadataQueue>(static_cast<size_t>(resFMQSize),
