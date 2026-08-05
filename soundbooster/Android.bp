@@ -1,0 +1,39 @@
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+
+// SoundBooster Plus effect library.
+
+cc_library_shared {
+    name: "libsamsungSoundbooster_plus",
+    vendor: true,
+    soc_specific: true,
+    relative_install_path: "soundfx",
+    compile_multilib: "64",
+
+    srcs: [
+        "SoundBoosterEffect.cpp",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libc++",
+        "libc",
+        "libm",
+        "libdl",
+    ] + select(soong_config_variable("samsungAudioVars", "soundbooster_dsp_library"), {
+        any @ flag_val: [flag_val],
+        default: [],
+    }),
+
+    header_libs: [
+        "libeffects_headers",
+        "libaudio_system_headers",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+    ],
+}
