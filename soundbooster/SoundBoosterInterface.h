@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <dlfcn.h>
+#include <log/log.h>
 #include <stdint.h>
 
 enum BitDepth {
@@ -50,6 +52,33 @@ class ISoundBooster {
 
 class SoundBoosterFactory {
   public:
-    static ISoundBooster* Create(int mode, int fmFlag);
-    static void Destroy(ISoundBooster* booster);
+    static inline ISoundBooster* Create(int mode, int fmFlag = 0) {
+        typedef ISoundBooster* (*CreateFn2)(int, int);
+        typedef ISoundBooster* (*CreateFn1)(int);
+
+        CreateFn2 fn2 = reinterpret_cast<CreateFn2>(
+                dlsym(RTLD_DEFAULT, "_ZN30SoundBooster_Interface_Factory6CreateEii"));
+        if (fn2 != nullptr) {
+            return fn2(mode, fmFlag);
+        }
+
+        CreateFn1 fn1 = reinterpret_cast<CreateFn1>(
+                dlsym(RTLD_DEFAULT, "_ZN30SoundBooster_Interface_Factory6CreateEi"));
+        if (fn1 != nullptr) {
+            return fn1(mode);
+        }
+
+        ALOGE("SoundBoosterFactory::Create symbol not found");
+        return nullptr;
+    }
+
+    static inline void Destroy(ISoundBooster* interface) {
+        typedef void (*DestroyFn)(ISoundBooster*);
+        DestroyFn fnDestroy = reinterpret_cast<DestroyFn>(
+                dlsym(RTLD_DEFAULT,
+                      "_ZN30SoundBooster_Interface_Factory7DestroyEP24SoundBooster_Interface_IF"));
+        if (fnDestroy != nullptr) {
+            fnDestroy(interface);
+        }
+    }
 };
