@@ -51,10 +51,39 @@ class SoundBooster_Interface_IF {
     ~SoundBooster_Interface_IF() {}
 };
 
+#include <dlfcn.h>
+#include <log/log.h>
+
 class SoundBooster_Interface_Factory {
   public:
-    static SoundBooster_Interface_IF* Create(int mode, int fmFlag);
-    static void Destroy(SoundBooster_Interface_IF* interface);
+    static inline SoundBooster_Interface_IF* Create(int mode, int fmFlag = 0) {
+        typedef SoundBooster_Interface_IF* (*CreateFn2)(int, int);
+        typedef SoundBooster_Interface_IF* (*CreateFn1)(int);
+
+        CreateFn2 fn2 = reinterpret_cast<CreateFn2>(
+            dlsym(RTLD_DEFAULT, "_ZN30SoundBooster_Interface_Factory6CreateEii"));
+        if (fn2 != nullptr) {
+            return fn2(mode, fmFlag);
+        }
+
+        CreateFn1 fn1 = reinterpret_cast<CreateFn1>(
+            dlsym(RTLD_DEFAULT, "_ZN30SoundBooster_Interface_Factory6CreateEi"));
+        if (fn1 != nullptr) {
+            return fn1(mode);
+        }
+
+        ALOGE("SoundBooster_Interface_Factory::Create symbol not found");
+        return nullptr;
+    }
+
+    static inline void Destroy(SoundBooster_Interface_IF* interface) {
+        typedef void (*DestroyFn)(SoundBooster_Interface_IF*);
+        DestroyFn fnDestroy = reinterpret_cast<DestroyFn>(
+            dlsym(RTLD_DEFAULT, "_ZN30SoundBooster_Interface_Factory7DestroyEP24SoundBooster_Interface_IF"));
+        if (fnDestroy != nullptr) {
+            fnDestroy(interface);
+        }
+    }
 };
 
 #endif /* SOUNDBOOSTER_INTERFACE_H */
