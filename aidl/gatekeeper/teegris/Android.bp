@@ -1,0 +1,27 @@
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+cc_binary {
+    name: "android.hardware.gatekeeper-service.teegris",
+    cflags: [
+        "-fvisibility=hidden",
+        "-Wall",
+        "-Werror",
+    ],
+    relative_install_path: "hw",
+    init_rc: ["android.hardware.gatekeeper-service.teegris.rc"],
+    vintf_fragments: ["android.hardware.gatekeeper-service.teegris.xml"],
+    shared_libs: [
+        "android.hardware.gatekeeper-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libgatekeeper",
+    ],
+    header_libs: ["libhardware_headers"],
+    srcs: [
+        "GateKeeper.cpp",
+        "service.cpp",
+    ],
+    vendor: true,
+}
