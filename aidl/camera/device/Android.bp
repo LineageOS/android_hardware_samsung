@@ -4,6 +4,14 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+//cc_defaults {
+//    name: "samsung_camera_device_defaults",
+//    cppflags: select(soong_config_variable("samsungCameraVars", "needs_torch_workaround"), {
+//        true: ["-DCAMERA_NEEDS_TORCH_WORKAROUND"],
+//        default: [],
+//    })
+//}
+
 cc_library_shared {
     name: "camera.device-impl.samsung",
     defaults: [
@@ -11,6 +19,10 @@ cc_library_shared {
         "samsung_camera3_defaults",
     ],
     vendor: true,
+    cppflags: select(soong_config_variable("samsungCameraVars", "needs_torch_workaround"), {
+        true: ["-DCAMERA_NEEDS_TORCH_WORKAROUND"],
+        default: [],
+    }),
     srcs: [
         "CameraDevice.cpp",
         "CameraDeviceSession.cpp",
