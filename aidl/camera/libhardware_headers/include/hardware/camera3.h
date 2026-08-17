@@ -1761,6 +1761,13 @@ typedef struct camera3_stream {
     /* reserved for future use */
     void* reserved[6];
 
+#ifdef CAMERA_NEEDS_FPS_FIELD
+    struct {
+        int min;
+        int max;
+    } fps;
+#endif
+
 #ifdef CAMERA_NEEDS_SEC_RESERVED_FIELD
     char reserved_sec[0x28];
 #endif
