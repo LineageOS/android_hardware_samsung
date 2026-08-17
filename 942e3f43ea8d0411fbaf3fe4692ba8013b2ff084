@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0848405_34d07ec5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-08-17T18:53:05Z",
+      "side": 1,
+      "message": "Sounds good.\n\n@extremext@lineageos.org, it\u0027s the recommended practice and properties aren\u0027t only for runtime configurables.",
+      "parentUuid": "d0531b5a_433e98c4",
+      "revId": "942e3f43ea8d0411fbaf3fe4692ba8013b2ff084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e85f2a37_ec4d1197",
         "filename": "aidl/camera/device/Android.bp",
         "patchSetId": 1
