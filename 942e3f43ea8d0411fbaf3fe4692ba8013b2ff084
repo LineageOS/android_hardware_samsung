@@ -146,6 +146,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed230d70_11a42a3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-08-17T19:07:27Z",
+      "side": 1,
+      "message": "We don\u0027t need zero overhead, negligible overhead is enough and properties provide that.",
+      "parentUuid": "ddda7d36_af79b5ee",
+      "revId": "942e3f43ea8d0411fbaf3fe4692ba8013b2ff084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e85f2a37_ec4d1197",
         "filename": "aidl/camera/device/Android.bp",
         "patchSetId": 1
