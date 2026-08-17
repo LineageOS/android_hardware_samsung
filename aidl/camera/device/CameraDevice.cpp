@@ -9,6 +9,7 @@
 #include "CameraDevice.h"
 #include "convert.h"
 
+#include <cutils/properties.h>
 #include <cutils/trace.h>
 
 namespace android {
@@ -353,15 +354,26 @@ ndk::ScopedAStatus CameraDevice::openInjectionSession(const std::shared_ptr<ICam
 }
 
 ndk::ScopedAStatus CameraDevice::setTorchMode(bool in_on) {
-    if (!mModule->isSetTorchModeSupported()) {
-        return fromStatus(Status::OPERATION_NOT_SUPPORTED);
-    }
+    Status status;
+    if (in_on) {
+        status = static_cast<Status>(
+                turnOnTorchWithStrengthLevel(mTorchStrengthLevel).getServiceSpecificError());
+        if (status == Status::OPERATION_NOT_SUPPORTED) {
+            goto fallback;
+        }
+    } else {
+    fallback:
+        if (!mModule->isSetTorchModeSupported()) {
+            return fromStatus(Status::OPERATION_NOT_SUPPORTED);
+        }
 
-    Status status = initStatus();
-    if (status == Status::OK) {
-        status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
+        status = initStatus();
         if (status == Status::OK) {
-            mTorchStrengthLevel = 1;
+            status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
+            if (status == Status::OK) {
+                mTorchStrengthLevel = 1;
+                status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
+            }
         }
     }
     return fromStatus(status);
