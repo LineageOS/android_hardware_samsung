@@ -9,6 +9,7 @@
 #include "CameraDevice.h"
 #include "convert.h"
 
+#include <cutils/properties.h>
 #include <cutils/trace.h>
 
 namespace android {
@@ -359,7 +360,10 @@ ndk::ScopedAStatus CameraDevice::setTorchMode(bool in_on) {
 
     Status status = initStatus();
     if (status == Status::OK) {
-        status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
+        if (in_on && property_get_bool("ro.vendor.camera.torch_workaround", 0))
+            status = getAidlStatus(mModule->setTorchModeStrength(mCameraId.c_str(), in_on, 1));
+        else
+            status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
         if (status == Status::OK) {
             mTorchStrengthLevel = 1;
         }
