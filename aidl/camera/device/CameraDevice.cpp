@@ -359,8 +359,14 @@ ndk::ScopedAStatus CameraDevice::setTorchMode(bool in_on) {
 
     Status status = initStatus();
     if (status == Status::OK) {
+        if (in_on && mModule->isSetTorchModeStrengthSupported()) {
+            return turnOnTorchWithStrengthLevel(mTorchStrengthLevel);
+        }
+
         status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
-        if (status == Status::OK) {
+        if (!in_on && status == Status::OK) {
+            // The API dictates that whenever the torch is turned off,
+            // the brightness should reset to the default level
             mTorchStrengthLevel = 1;
         }
     }
