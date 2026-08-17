@@ -11,6 +11,10 @@ cc_library_shared {
         "samsung_camera3_defaults",
     ],
     vendor: true,
+    cppflags: select(soong_config_variable("samsungCameraVars", "needs_torch_workaround"), {
+        true: ["-DCAMERA_NEEDS_TORCH_WORKAROUND"],
+        default: [],
+    }),
     srcs: [
         "CameraDevice.cpp",
         "CameraDeviceSession.cpp",

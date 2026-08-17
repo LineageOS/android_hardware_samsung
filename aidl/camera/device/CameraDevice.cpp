@@ -359,7 +359,12 @@ ndk::ScopedAStatus CameraDevice::setTorchMode(bool in_on) {
 
     Status status = initStatus();
     if (status == Status::OK) {
-        status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
+#ifdef CAMERA_NEEDS_TORCH_WORKAROUND
+        if(in_on)
+            status = getAidlStatus(mModule->setTorchModeStrength(mCameraId.c_str(), in_on, in_on));
+        else
+#endif
+            status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
         if (status == Status::OK) {
             mTorchStrengthLevel = 1;
         }
