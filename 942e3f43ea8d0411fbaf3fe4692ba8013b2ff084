@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0531b5a_433e98c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37560
+      },
+      "writtenOn": "2026-08-17T18:49:02Z",
+      "side": 1,
+      "message": "What should it be called, would you be fine with ro.vendor.camera.torch_workaround ?",
+      "parentUuid": "7d9c0233_84dae0ec",
+      "revId": "942e3f43ea8d0411fbaf3fe4692ba8013b2ff084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e85f2a37_ec4d1197",
         "filename": "aidl/camera/device/Android.bp",
         "patchSetId": 1
