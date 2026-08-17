@@ -128,6 +128,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ddda7d36_af79b5ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-08-17T19:06:31Z",
+      "side": 1,
+      "message": "Maybe compared to other ways, but how can a property read have less overhead than hardcoding the code via configs? Maybe if we cache it in the constructor, but still",
+      "parentUuid": "6510936e_782004ed",
+      "revId": "942e3f43ea8d0411fbaf3fe4692ba8013b2ff084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e85f2a37_ec4d1197",
         "filename": "aidl/camera/device/Android.bp",
         "patchSetId": 1
