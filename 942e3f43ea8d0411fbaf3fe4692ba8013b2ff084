@@ -34,6 +34,41 @@
       "parentUuid": "d7537fed_e5c6bdb4",
       "revId": "942e3f43ea8d0411fbaf3fe4692ba8013b2ff084",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac266b08_effe5b9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-08-17T18:48:30Z",
+      "side": 1,
+      "message": "Don\u0027t see the point personally, given that it\u0027s hardware-based and the code will never have to change on the same platform.",
+      "parentUuid": "7d9c0233_84dae0ec",
+      "revId": "942e3f43ea8d0411fbaf3fe4692ba8013b2ff084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e85f2a37_ec4d1197",
+        "filename": "aidl/camera/device/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-08-17T18:48:30Z",
+      "side": 1,
+      "message": "What\u0027s with these comments?",
+      "revId": "942e3f43ea8d0411fbaf3fe4692ba8013b2ff084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
