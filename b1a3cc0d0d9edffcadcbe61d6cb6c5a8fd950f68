@@ -16,6 +16,24 @@
       "message": "Squash into previous.",
       "revId": "b1a3cc0d0d9edffcadcbe61d6cb6c5a8fd950f68",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "162dded8_55462c2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-08-20T15:54:13Z",
+      "side": 1,
+      "message": "Can\u0027t do that from Gerrit WebUI, could you do it please?",
+      "parentUuid": "1e611ef0_abf7b0bc",
+      "revId": "b1a3cc0d0d9edffcadcbe61d6cb6c5a8fd950f68",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
