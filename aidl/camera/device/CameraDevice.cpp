@@ -357,20 +357,18 @@ ndk::ScopedAStatus CameraDevice::setTorchMode(bool in_on) {
     if (in_on) {
         status = static_cast<Status>(
                 turnOnTorchWithStrengthLevel(mTorchStrengthLevel).getServiceSpecificError());
-        if (status == Status::OPERATION_NOT_SUPPORTED) goto fallback;
-    } else {
-    fallback:
-        if (!mModule->isSetTorchModeSupported()) {
-            return fromStatus(Status::OPERATION_NOT_SUPPORTED);
-        }
+        if (status != Status::OPERATION_NOT_SUPPORTED) return fromStatus(status);
+    }
 
-        status = initStatus();
+    if (!mModule->isSetTorchModeSupported()) {
+        return fromStatus(Status::OPERATION_NOT_SUPPORTED);
+    }
+
+    status = initStatus();
+    if (status == Status::OK) {
+        status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
         if (status == Status::OK) {
-            status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
-            if (status == Status::OK) {
-                mTorchStrengthLevel = 1;
-                status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
-            }
+            mTorchStrengthLevel = 1;
         }
     }
     return fromStatus(status);
