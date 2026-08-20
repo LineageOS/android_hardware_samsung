@@ -1,5 +1,46 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92e49d5a_551e837c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-08-20T10:56:31Z",
+      "side": 1,
+      "message": "You could do better.",
+      "revId": "664605175943c19d07fcb2cee1ea0bffb0c1c163",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df6be9d4_e4bc9c28",
+        "filename": "aidl/camera/device/CameraDevice.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-08-20T10:56:31Z",
+      "side": 1,
+      "message": "...",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 13
+      },
+      "revId": "664605175943c19d07fcb2cee1ea0bffb0c1c163",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
