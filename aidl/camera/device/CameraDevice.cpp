@@ -353,24 +353,20 @@ ndk::ScopedAStatus CameraDevice::openInjectionSession(const std::shared_ptr<ICam
 }
 
 ndk::ScopedAStatus CameraDevice::setTorchMode(bool in_on) {
-    Status status;
-    if (in_on) {
-        status = static_cast<Status>(
-                turnOnTorchWithStrengthLevel(mTorchStrengthLevel).getServiceSpecificError());
-        if (status == Status::OPERATION_NOT_SUPPORTED) goto fallback;
-    } else {
-    fallback:
-        if (!mModule->isSetTorchModeSupported()) {
-            return fromStatus(Status::OPERATION_NOT_SUPPORTED);
+    if (!mModule->isSetTorchModeSupported()) {
+        return fromStatus(Status::OPERATION_NOT_SUPPORTED);
+    }
+    Status status = initStatus();
+    if (status == Status::OK) {
+        if (in_on && mModule->isSetTorchModeStrengthSupported()) {
+            return turnOnTorchWithStrengthLevel(mTorchStrengthLevel);
         }
 
-        status = initStatus();
-        if (status == Status::OK) {
-            status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
-            if (status == Status::OK) {
-                mTorchStrengthLevel = 1;
-                status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
-            }
+        status = getAidlStatus(mModule->setTorchMode(mCameraId.c_str(), in_on));
+        if (!in_on && status == Status::OK) {
+            // The API dictates that whenever the torch is turned off, the brightness should reset
+            // to the default level.
+            mTorchStrengthLevel = 1;
         }
     }
     return fromStatus(status);
