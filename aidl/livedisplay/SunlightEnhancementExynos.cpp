@@ -41,8 +41,8 @@ ndk::ScopedAStatus SunlightEnhancementExynos::getEnabled(bool* _aidl_return) {
 }
 
 ndk::ScopedAStatus SunlightEnhancementExynos::setEnabled(bool enabled) {
-    /* see drivers/video/fbdev/exynos/decon_7880/panels/mdnie_lite_table*, get_hbm_index */
-    if (!WriteStringToFile(enabled ? "40000" : "0", kLUXPath, true)) {
+    /* see drivers/gpu/drm/samsung/panel_decon/s6e3hae/s6e3hae_rainbow_b0_panel_mdnie.h*, hbm_ce_lux */
+    if (!WriteStringToFile(enabled ? "50000" : "0", kLUXPath, true)) {
         return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
 
