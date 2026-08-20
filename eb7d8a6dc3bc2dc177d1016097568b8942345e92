@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cd47f8d_6d6eb62f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-08-20T22:09:05Z",
+      "side": 1,
+      "message": "Should we use INT_MAX instead for the future or is this OK for now?",
+      "revId": "eb7d8a6dc3bc2dc177d1016097568b8942345e92",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
