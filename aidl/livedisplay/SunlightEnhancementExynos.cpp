@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2019-2025 The LineageOS Project
+ * SPDX-FileCopyrightText: 2019-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -7,6 +7,7 @@
 #include <android-base/strings.h>
 #include <livedisplay/samsung/SunlightEnhancementExynos.h>
 
+#include <climits>
 #include <fstream>
 
 using android::base::ReadFileToString;
@@ -41,8 +42,7 @@ ndk::ScopedAStatus SunlightEnhancementExynos::getEnabled(bool* _aidl_return) {
 }
 
 ndk::ScopedAStatus SunlightEnhancementExynos::setEnabled(bool enabled) {
-    /* see drivers/video/fbdev/exynos/decon_7880/panels/mdnie_lite_table*, get_hbm_index */
-    if (!WriteStringToFile(enabled ? "40000" : "0", kLUXPath, true)) {
+    if (!WriteStringToFile(enabled ? std::to_string(INT_MAX).c_str() : "0", kLUXPath, true)) {
         return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
 
