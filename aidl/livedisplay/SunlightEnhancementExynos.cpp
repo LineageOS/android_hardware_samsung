@@ -41,8 +41,7 @@ ndk::ScopedAStatus SunlightEnhancementExynos::getEnabled(bool* _aidl_return) {
 }
 
 ndk::ScopedAStatus SunlightEnhancementExynos::setEnabled(bool enabled) {
-    /* see drivers/video/fbdev/exynos/decon_7880/panels/mdnie_lite_table*, get_hbm_index */
-    if (!WriteStringToFile(enabled ? "40000" : "0", kLUXPath, true)) {
+    if (!WriteStringToFile(enabled ? "2147483647" : "0", kLUXPath, true)) {
         return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
 
