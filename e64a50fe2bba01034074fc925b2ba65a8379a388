@@ -16,6 +16,24 @@
       "message": "```suggestion\n    }\n\n```",
       "revId": "e64a50fe2bba01034074fc925b2ba65a8379a388",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "169742c2_dd01fc05",
+        "filename": "aidl/camera/device/CameraDevice.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-08-20T15:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e928a5d_cb4d5898",
+      "revId": "e64a50fe2bba01034074fc925b2ba65a8379a388",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
