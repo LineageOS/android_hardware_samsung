@@ -87,6 +87,30 @@
       },
       "revId": "664605175943c19d07fcb2cee1ea0bffb0c1c163",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ca00dbd_d5ba75e5",
+        "filename": "aidl/camera/device/CameraDevice.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-08-20T12:17:14Z",
+      "side": 1,
+      "message": "I don\u0027t see the problem of using the unconditional jump in this case as it\u0027s a small snippet of code. Even the Linux kernel uses them pretty often.",
+      "parentUuid": "d5ab4366_b473e1e7",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 13
+      },
+      "revId": "664605175943c19d07fcb2cee1ea0bffb0c1c163",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": [
