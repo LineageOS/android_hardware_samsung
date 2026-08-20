@@ -1,0 +1,4 @@
+service vendor.gnss-2-1_samsung /vendor/bin/hw/android.hardware.gnss@2.1-service.samsung
+    class main
+    user system
+    group system gps
