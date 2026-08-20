@@ -16,6 +16,24 @@
       "message": "Unfortunately we cannot commonize this because at least one function is different between platforms.",
       "revId": "0aed4607f5471d044872a6b846705ef016c5eb9e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d2bbec3_25439fd3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-08-20T14:02:13Z",
+      "side": 1,
+      "message": "If it just takes different inputs, it\u0027s an entirely different symbol and therefore can be commonized.",
+      "parentUuid": "67c787e7_25263740",
+      "revId": "0aed4607f5471d044872a6b846705ef016c5eb9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": [
