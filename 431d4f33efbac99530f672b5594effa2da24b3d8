@@ -51,6 +51,24 @@
       "message": "Squash",
       "revId": "431d4f33efbac99530f672b5594effa2da24b3d8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fd674a3_4126afe6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-08-20T15:52:50Z",
+      "side": 1,
+      "message": "Squash the follow-up here. The branch has diverged already.",
+      "parentUuid": "f467ff49_d03ef79e",
+      "revId": "431d4f33efbac99530f672b5594effa2da24b3d8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
