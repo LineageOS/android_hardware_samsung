@@ -63,6 +63,30 @@
       },
       "revId": "664605175943c19d07fcb2cee1ea0bffb0c1c163",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5ab4366_b473e1e7",
+        "filename": "aidl/camera/device/CameraDevice.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-08-20T12:09:46Z",
+      "side": 1,
+      "message": "isSetTorchModeStrengthSupported be checked instead of this.\n\nInstead of using a label, the fallback could be moved out of the else branch, and setTorchMode could return if the hack succeeds and simply not get that far.\n\nAnd what\u0027s the second call to setTorchMode?",
+      "parentUuid": "97f85b06_8e731823",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 13
+      },
+      "revId": "664605175943c19d07fcb2cee1ea0bffb0c1c163",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": [
