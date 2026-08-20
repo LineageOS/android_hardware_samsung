@@ -111,6 +111,30 @@
       },
       "revId": "664605175943c19d07fcb2cee1ea0bffb0c1c163",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a34b671_f5466e6c",
+        "filename": "aidl/camera/device/CameraDevice.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-08-20T15:51:49Z",
+      "side": 1,
+      "message": "https://review.lineageos.org/c/LineageOS/android_hardware_samsung/+/497772",
+      "parentUuid": "8ca00dbd_d5ba75e5",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 13
+      },
+      "revId": "664605175943c19d07fcb2cee1ea0bffb0c1c163",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": [
