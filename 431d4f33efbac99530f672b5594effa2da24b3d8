@@ -34,6 +34,23 @@
       "parentUuid": "18b3a02a_94ab362f",
       "revId": "431d4f33efbac99530f672b5594effa2da24b3d8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f467ff49_d03ef79e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-08-20T15:52:15Z",
+      "side": 1,
+      "message": "Squash",
+      "revId": "431d4f33efbac99530f672b5594effa2da24b3d8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
