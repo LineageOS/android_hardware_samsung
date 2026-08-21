@@ -1,0 +1,41 @@
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+// A non-secure implementation of Gatekeeper in C++, which also implements the
+// `ISharedSecret` HAL.
+//
+// A real device is required to run the TA code in a secure environment, as
+// per CDD 9.11 [C-1-3]: "MUST perform the lock screen authentication in the
+// isolated execution environment".
+cc_binary {
+    name: "android.hardware.gatekeeper-service.nonsecure",
+    init_rc: ["android.hardware.gatekeeper-service.nonsecure.rc"],
+    vintf_fragments: ["android.hardware.gatekeeper-service.nonsecure.xml", "android.hardware.security.sharedsecret-gatekeeper.xml"],
+    cflags: [
+        "-fvisibility=hidden",
+        "-Wall",
+        "-Werror",
+    ],
+    relative_install_path: "hw",
+    shared_libs: [
+        "android.hardware.gatekeeper-V1-ndk",
+        "android.hardware.security.sharedsecret-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libcrypto",
+        "libcutils",
+        "libgatekeeper",
+        "libhardware",
+        "libkeymaster_portable",
+        "liblog",
+        "libutils",
+    ],
+    srcs: [
+        "GateKeeper.cpp",
+        "SharedSecret.cpp",
+        "service.cpp",
+    ],
+    static_libs: ["libscrypt_static"],
+    vendor: true,
+}
