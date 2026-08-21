@@ -1,0 +1,26 @@
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+
+android_app {
+    name: "SoundBoosterStage",
+    srcs: ["src/**/*.java"],
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    platform_apis: true,
+    required: ["privapp-permissions-soundbooster-stage.xml"],
+    optimize: {
+        enabled: false,
+    },
+    dex_preopt: {
+        enabled: true,
+    },
+}
+
+prebuilt_etc {
+    name: "privapp-permissions-soundbooster-stage.xml",
+    src: "privapp-permissions-soundbooster-stage.xml",
+    sub_dir: "permissions",
+    system_ext_specific: true,
+    filename_from_src: true,
+}
