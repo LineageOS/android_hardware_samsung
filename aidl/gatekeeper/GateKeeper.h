@@ -18,13 +18,18 @@
 #include <aidl/android/hardware/gatekeeper/BnGatekeeper.h>
 #include <gatekeeper/gatekeeper_messages.h>
 
-#include "SoftGateKeeper.h"
+#include <android-base/memory.h>
+#include <gatekeeper/gatekeeper.h>
+#include <hardware/gatekeeper.h>
+#include <hardware/hardware.h>
 
 namespace aidl::android::hardware::gatekeeper {
 
-class SoftGateKeeperDevice : public BnGatekeeper {
+class SGatekeeper : public BnGatekeeper {
   public:
-    SoftGateKeeperDevice(::gatekeeper::SoftGateKeeper&);
+    SGatekeeper();
+    ~SGatekeeper();
+
     /**
      * Enrolls password_payload, which should be derived from a user selected pin
      * or password, with the authentication factor private key used only for
@@ -60,7 +65,8 @@ class SoftGateKeeperDevice : public BnGatekeeper {
     ::ndk::ScopedAStatus deleteUser(int32_t uid) override;
 
   private:
-    ::gatekeeper::SoftGateKeeper& impl_;
+    gatekeeper_device_t* device;
+    const hw_module_t* module;
 };
 
 }  // namespace aidl::android::hardware::gatekeeper
