@@ -1,30 +1,19 @@
 package {
-    // See: http://go/android-license-faq
-    // A large-scale-change added 'default_applicable_licenses' to import
-    // all of the 'license_kinds' from "hardware_interfaces_license"
-    // to get the below license kinds:
-    //   SPDX-license-identifier-Apache-2.0
-    default_applicable_licenses: ["hardware_interfaces_license"],
+    default_applicable_licenses: ["Android-Apache-2.0"],
 }
 
-// A non-secure implementation of Gatekeeper in C++, which also implements the
-// `ISharedSecret` HAL.
-//
-// A real device is required to run the TA code in a secure environment, as
-// per CDD 9.11 [C-1-3]: "MUST perform the lock screen authentication in the
-// isolated execution environment".
 cc_binary {
-    name: "android.hardware.gatekeeper-service.nonsecure",
+    name: "android.hardware.gatekeeper-service.samsung",
+    init_rc: ["android.hardware.gatekeeper-service.samsung.rc"],
+    vintf_fragments: ["android.hardware.gatekeeper-service.samsung.xml"],
     cflags: [
         "-fvisibility=hidden",
         "-Wall",
         "-Werror",
     ],
-    installable: false, // installed in APEX
     relative_install_path: "hw",
     shared_libs: [
         "android.hardware.gatekeeper-V1-ndk",
-        "android.hardware.security.sharedsecret-V1-ndk",
         "libbase",
         "libbinder_ndk",
         "libcrypto",
@@ -37,40 +26,8 @@ cc_binary {
     ],
     srcs: [
         "GateKeeper.cpp",
-        "SharedSecret.cpp",
         "service.cpp",
     ],
     static_libs: ["libscrypt_static"],
-    vendor: true,
-}
-
-prebuilt_etc {
-    name: "gatekeeper_nonsecure_vintf",
-    srcs: [
-        "android.hardware.gatekeeper-service.nonsecure.xml",
-        "android.hardware.security.sharedsecret-gatekeeper.xml",
-    ],
-    sub_dir: "vintf",
-    installable: false,
-}
-
-prebuilt_etc {
-    name: "android.hardware.gatekeeper-service.nonsecure.rc",
-    src: "android.hardware.gatekeeper-service.nonsecure.rc",
-    installable: false,
-}
-
-apex {
-    name: "com.android.hardware.gatekeeper.nonsecure",
-    binaries: ["android.hardware.gatekeeper-service.nonsecure"],
-    certificate: ":com.google.cf.apex.certificate",
-    file_contexts: "file_contexts",
-    key: "com.google.cf.apex.key",
-    manifest: "manifest.json",
-    prebuilts: [
-        "gatekeeper_nonsecure_vintf",
-        "android.hardware.gatekeeper-service.nonsecure.rc",
-    ],
-    updatable: false,
     vendor: true,
 }
