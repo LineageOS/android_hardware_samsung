@@ -16,6 +16,24 @@
       "message": "Remove aidl/gatekeeper/rust from this import since you\u0027re deleting verything in the follow-up.",
       "revId": "ef461e058efb6a1a76e72c9c3c621f9f3601dac6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40736617_78062f19",
+        "filename": "aidl/gatekeeper/rust/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-08-21T14:40:29Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "434b7999_d3306617",
+      "revId": "ef461e058efb6a1a76e72c9c3c621f9f3601dac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }

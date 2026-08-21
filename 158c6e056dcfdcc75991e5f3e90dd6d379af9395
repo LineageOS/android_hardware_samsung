@@ -16,6 +16,24 @@
       "message": "Add the android tag.",
       "revId": "158c6e056dcfdcc75991e5f3e90dd6d379af9395",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f00b524d_12198474",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-08-21T14:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e89205ac_b3352c98",
+      "revId": "158c6e056dcfdcc75991e5f3e90dd6d379af9395",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
