@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "434b7999_d3306617",
+        "filename": "aidl/gatekeeper/rust/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-08-21T13:56:24Z",
+      "side": 0,
+      "message": "Remove aidl/gatekeeper/rust from this import since you\u0027re deleting verything in the follow-up.",
+      "revId": "ef461e058efb6a1a76e72c9c3c621f9f3601dac6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
