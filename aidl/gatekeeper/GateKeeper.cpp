@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#define LOG_TAG "android.hardware.gatekeeper-service.nonsecure"
+#define LOG_TAG "android.hardware.gatekeeper-service.samsung"
 
 #include <endian.h>
 
 #include <android-base/logging.h>
+#include <dlfcn.h>
 
 #include "GateKeeper.h"
 
@@ -31,19 +32,32 @@ using ::gatekeeper::VerifyResponse;
 
 namespace aidl::android::hardware::gatekeeper {
 
-SizedBuffer vec2sized_buffer(const std::vector<uint8_t>& vec) {
-    if (vec.size() == 0 || vec.size() > std::numeric_limits<uint32_t>::max()) {
-        return {};
+SGatekeeper::SGatekeeper() {
+    int ret = hw_get_module_by_class(GATEKEEPER_HARDWARE_MODULE_ID, NULL, &module);
+    device = NULL;
+
+    if (!ret) {
+        ret = gatekeeper_open(module, &device);
     }
-    auto unused = new uint8_t[vec.size()];
-    std::copy(vec.begin(), vec.end(), unused);
-    return {unused, static_cast<uint32_t>(vec.size())};
+    if (ret < 0) {
+        LOG(ERROR) << "Unable to open GateKeeper HAL: " << ret;
+        abort();
+    }
 }
 
-void sizedBuffer2AidlHWToken(SizedBuffer& buffer,
+SGatekeeper::~SGatekeeper() {
+    if (device != nullptr) {
+        int ret = gatekeeper_close(device);
+        if (ret < 0) {
+            LOG(ERROR) << "Unable to close GateKeeper HAL";
+        }
+    }
+    dlclose(module->dso);
+}
+
+void sizedBuffer2AidlHWToken(const uint8_t* buffer,
                              android::hardware::security::keymint::HardwareAuthToken* aidlToken) {
-    const hw_auth_token_t* authToken =
-            reinterpret_cast<const hw_auth_token_t*>(buffer.Data<uint8_t>());
+    const hw_auth_token_t* authToken = reinterpret_cast<const hw_auth_token_t*>(buffer);
     aidlToken->challenge = authToken->challenge;
     aidlToken->userId = authToken->user_id;
     aidlToken->authenticatorId = authToken->authenticator_id;
@@ -56,13 +70,11 @@ void sizedBuffer2AidlHWToken(SizedBuffer& buffer,
                           std::end(authToken->hmac));
 }
 
-SoftGateKeeperDevice::SoftGateKeeperDevice(::gatekeeper::SoftGateKeeper& impl) : impl_(impl) {}
-
-::ndk::ScopedAStatus SoftGateKeeperDevice::enroll(int32_t uid,
-                                                  const std::vector<uint8_t>& currentPasswordHandle,
-                                                  const std::vector<uint8_t>& currentPassword,
-                                                  const std::vector<uint8_t>& desiredPassword,
-                                                  GatekeeperEnrollResponse* rsp) {
+::ndk::ScopedAStatus SGatekeeper::enroll(int32_t uid,
+                                         const std::vector<uint8_t>& currentPasswordHandle,
+                                         const std::vector<uint8_t>& currentPassword,
+                                         const std::vector<uint8_t>& desiredPassword,
+                                         GatekeeperEnrollResponse* rsp) {
     if (desiredPassword.size() == 0) {
         LOG(ERROR) << "Desired password size is 0";
         return ndk::ScopedAStatus(AStatus_fromServiceSpecificError(ERROR_GENERAL_FAILURE));
@@ -75,33 +87,35 @@ SoftGateKeeperDevice::SoftGateKeeperDevice(::gatekeeper::SoftGateKeeper& impl) :
         }
     }
 
-    EnrollRequest request(uid, vec2sized_buffer(currentPasswordHandle),
-                          vec2sized_buffer(desiredPassword), vec2sized_buffer(currentPassword));
-    EnrollResponse response;
-    impl_.Enroll(request, &response);
-    if (response.error == ERROR_RETRY) {
+    uint8_t* enrolled_password_handle = nullptr;
+    uint32_t enrolled_password_handle_length = 0;
+
+    int ret = device->enroll(device, uid, currentPasswordHandle.data(),
+                             currentPasswordHandle.size(), currentPassword.data(),
+                             currentPassword.size(), desiredPassword.data(), desiredPassword.size(),
+                             &enrolled_password_handle, &enrolled_password_handle_length);
+
+    if (ret > 0) {
         LOG(ERROR) << "Enroll response has a retry error";
-        *rsp = {ERROR_RETRY_TIMEOUT, static_cast<int32_t>(response.retry_timeout), 0, {}};
+        *rsp = {ERROR_RETRY_TIMEOUT, static_cast<int32_t>(ret), 0, {}};
         return ndk::ScopedAStatus::ok();
-    } else if (response.error != ERROR_NONE) {
-        LOG(ERROR) << "Enroll response has an error: " << response.error;
+    } else if (ret != ERROR_NONE) {
+        LOG(ERROR) << "Enroll response has an error: " << ret;
         return ndk::ScopedAStatus(AStatus_fromServiceSpecificError(ERROR_GENERAL_FAILURE));
     } else {
-        const ::gatekeeper::password_handle_t* password_handle =
-                response.enrolled_password_handle.Data<::gatekeeper::password_handle_t>();
-        *rsp = {STATUS_OK,
-                0,
-                static_cast<int64_t>(password_handle->user_id),
-                {response.enrolled_password_handle.Data<uint8_t>(),
-                 (response.enrolled_password_handle.Data<uint8_t>() +
-                  response.enrolled_password_handle.size())}};
+        const auto* password_handle =
+                reinterpret_cast<const ::gatekeeper::password_handle_t*>(enrolled_password_handle);
+        *rsp = {STATUS_OK, 0, static_cast<int64_t>(password_handle->user_id),
+                std::vector<uint8_t>(enrolled_password_handle,
+                                     enrolled_password_handle + enrolled_password_handle_length)};
     }
     return ndk::ScopedAStatus::ok();
 }
 
-::ndk::ScopedAStatus SoftGateKeeperDevice::verify(
-        int32_t uid, int64_t challenge, const std::vector<uint8_t>& enrolledPasswordHandle,
-        const std::vector<uint8_t>& providedPassword, GatekeeperVerifyResponse* rsp) {
+::ndk::ScopedAStatus SGatekeeper::verify(int32_t uid, int64_t challenge,
+                                         const std::vector<uint8_t>& enrolledPasswordHandle,
+                                         const std::vector<uint8_t>& providedPassword,
+                                         GatekeeperVerifyResponse* rsp) {
     if (enrolledPasswordHandle.size() == 0) {
         LOG(ERROR) << "Enrolled password size is 0";
         return ndk::ScopedAStatus(AStatus_fromServiceSpecificError(ERROR_GENERAL_FAILURE));
@@ -114,34 +128,38 @@ SoftGateKeeperDevice::SoftGateKeeperDevice(::gatekeeper::SoftGateKeeper& impl) :
         }
     }
 
-    VerifyRequest request(uid, challenge, vec2sized_buffer(enrolledPasswordHandle),
-                          vec2sized_buffer(providedPassword));
-    VerifyResponse response;
-    impl_.Verify(request, &response);
+    uint8_t* auth_token = nullptr;
+    uint32_t auth_token_length = 0;
+    bool request_reenroll = false;
 
-    if (response.error == ERROR_RETRY) {
+    int ret = device->verify(device, uid, challenge, enrolledPasswordHandle.data(),
+                             enrolledPasswordHandle.size(), providedPassword.data(),
+                             providedPassword.size(), &auth_token, &auth_token_length,
+                             &request_reenroll);
+
+    if (ret > 0) {
         LOG(ERROR) << "Verify request response gave retry error";
-        *rsp = {ERROR_RETRY_TIMEOUT, static_cast<int32_t>(response.retry_timeout), {}};
+        *rsp = {ERROR_RETRY_TIMEOUT, static_cast<int32_t>(ret), {}};
         return ndk::ScopedAStatus::ok();
-    } else if (response.error != ERROR_NONE) {
-        LOG(ERROR) << "Verify request response gave error: " << response.error;
+    } else if (ret != ERROR_NONE) {
+        LOG(ERROR) << "Verify request response gave error: " << ret;
         return ndk::ScopedAStatus(AStatus_fromServiceSpecificError(ERROR_GENERAL_FAILURE));
     } else {
         // On Success, return GatekeeperVerifyResponse with Success Status, timeout{0} and
         // valid HardwareAuthToken.
-        *rsp = {response.request_reenroll ? STATUS_REENROLL : STATUS_OK, 0, {}};
+        *rsp = {request_reenroll ? STATUS_REENROLL : STATUS_OK, 0, {}};
         // Convert the hw_auth_token_t to HardwareAuthToken in the response.
-        sizedBuffer2AidlHWToken(response.auth_token, &rsp->hardwareAuthToken);
+        sizedBuffer2AidlHWToken(auth_token, &rsp->hardwareAuthToken);
     }
     return ndk::ScopedAStatus::ok();
 }
 
-::ndk::ScopedAStatus SoftGateKeeperDevice::deleteUser(int32_t /*uid*/) {
+::ndk::ScopedAStatus SGatekeeper::deleteUser(int32_t /*uid*/) {
     LOG(ERROR) << "deleteUser is unimplemented";
     return ndk::ScopedAStatus(AStatus_fromServiceSpecificError(ERROR_NOT_IMPLEMENTED));
 }
 
-::ndk::ScopedAStatus SoftGateKeeperDevice::deleteAllUsers() {
+::ndk::ScopedAStatus SGatekeeper::deleteAllUsers() {
     LOG(ERROR) << "deleteAllUsers is unimplemented";
     return ndk::ScopedAStatus(AStatus_fromServiceSpecificError(ERROR_NOT_IMPLEMENTED));
 }

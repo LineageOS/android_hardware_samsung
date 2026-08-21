@@ -1,4 +1,0 @@
-service vendor.gatekeeper_nonsecure /apex/com.android.hardware.gatekeeper/bin/hw/android.hardware.gatekeeper-service.nonsecure
-    class early_hal
-    user system
-    group system
