@@ -1,0 +1,8 @@
+on post-fs-data
+    mkdir /data/vendor/gatekeeper 0700 system system
+    mkdir /data/vendor/gatekeeper/nonsecure 0700 system system
+
+service vendor.gatekeeper_nonsecure /apex/com.android.hardware.gatekeeper/bin/hw/android.hardware.gatekeeper-service.rust.nonsecure
+    class hal
+    user system
+    group system
