@@ -1,0 +1,7 @@
+service vendor.gatekeeper_samsung /vendor/bin/hw/android.hardware.gatekeeper-service.samsung
+    class hal
+    user system
+    group system
+
+on post-fs-data
+    mkdir /data/vendor/gatekeeper 0770 system system
