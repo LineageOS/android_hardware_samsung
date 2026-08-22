@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#pragma once
-
 #include <aidl/android/hardware/gatekeeper/BnGatekeeper.h>
+#include <gatekeeper/gatekeeper.h>
 #include <gatekeeper/gatekeeper_messages.h>
 
 #include "SoftGateKeeper.h"
