@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#define LOG_TAG "android.hardware.gatekeeper-service.nonsecure"
+#define LOG_TAG "android.hardware.gatekeeper-service.teegris"
 
 #include <android-base/logging.h>
 #include <android/binder_manager.h>
@@ -21,15 +21,15 @@
 
 #include "GateKeeper.h"
 
-using aidl::android::hardware::gatekeeper::SoftGateKeeperDevice;
+using aidl::android::hardware::gatekeeper::TeegrisGateKeeperDevice;
 
 int main(int, char** argv) {
     ::android::base::InitLogging(argv, ::android::base::KernelLogger);
     ABinderProcess_setThreadPoolMaxThreadCount(0);
 
-    ::gatekeeper::SoftGateKeeper implementation;
-    auto gatekeeper = ndk::SharedRefBase::make<SoftGateKeeperDevice>(implementation);
-    const std::string instance = SoftGateKeeperDevice::descriptor + std::string("/default");
+    ::gatekeeper::TeegrisGateKeeper implementation;
+    auto gatekeeper = ndk::SharedRefBase::make<TeegrisGateKeeperDevice>(implementation);
+    const std::string instance = TeegrisGateKeeperDevice::descriptor + std::string("/default");
     auto status = AServiceManager_addService(gatekeeper->asBinder().get(), instance.c_str());
     CHECK_EQ(status, STATUS_OK);
 

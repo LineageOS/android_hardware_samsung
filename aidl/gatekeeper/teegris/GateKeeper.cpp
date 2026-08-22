@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#define LOG_TAG "android.hardware.gatekeeper-service.nonsecure"
+#define LOG_TAG "android.hardware.gatekeeper-service.teegris"
 
 #include <endian.h>
 
@@ -56,9 +56,9 @@ void sizedBuffer2AidlHWToken(SizedBuffer& buffer,
                           std::end(authToken->hmac));
 }
 
-SoftGateKeeperDevice::SoftGateKeeperDevice(::gatekeeper::SoftGateKeeper& impl) : impl_(impl) {}
+TeegrisGateKeeperDevice::TeegrisGateKeeperDevice(::gatekeeper::TeegrisGateKeeper& impl) : impl_(impl) {}
 
-::ndk::ScopedAStatus SoftGateKeeperDevice::enroll(int32_t uid,
+::ndk::ScopedAStatus TeegrisGateKeeperDevice::enroll(int32_t uid,
                                                   const std::vector<uint8_t>& currentPasswordHandle,
                                                   const std::vector<uint8_t>& currentPassword,
                                                   const std::vector<uint8_t>& desiredPassword,
@@ -99,7 +99,7 @@ SoftGateKeeperDevice::SoftGateKeeperDevice(::gatekeeper::SoftGateKeeper& impl) :
     return ndk::ScopedAStatus::ok();
 }
 
-::ndk::ScopedAStatus SoftGateKeeperDevice::verify(
+::ndk::ScopedAStatus TeegrisGateKeeperDevice::verify(
         int32_t uid, int64_t challenge, const std::vector<uint8_t>& enrolledPasswordHandle,
         const std::vector<uint8_t>& providedPassword, GatekeeperVerifyResponse* rsp) {
     if (enrolledPasswordHandle.size() == 0) {
@@ -136,12 +136,12 @@ SoftGateKeeperDevice::SoftGateKeeperDevice(::gatekeeper::SoftGateKeeper& impl) :
     return ndk::ScopedAStatus::ok();
 }
 
-::ndk::ScopedAStatus SoftGateKeeperDevice::deleteUser(int32_t /*uid*/) {
+::ndk::ScopedAStatus TeegrisGateKeeperDevice::deleteUser(int32_t /*uid*/) {
     LOG(ERROR) << "deleteUser is unimplemented";
     return ndk::ScopedAStatus(AStatus_fromServiceSpecificError(ERROR_NOT_IMPLEMENTED));
 }
 
-::ndk::ScopedAStatus SoftGateKeeperDevice::deleteAllUsers() {
+::ndk::ScopedAStatus TeegrisGateKeeperDevice::deleteAllUsers() {
     LOG(ERROR) << "deleteAllUsers is unimplemented";
     return ndk::ScopedAStatus(AStatus_fromServiceSpecificError(ERROR_NOT_IMPLEMENTED));
 }

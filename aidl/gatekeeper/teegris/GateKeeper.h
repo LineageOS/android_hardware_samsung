@@ -17,13 +17,13 @@
 #include <gatekeeper/gatekeeper.h>
 #include <gatekeeper/gatekeeper_messages.h>
 
-#include "SoftGateKeeper.h"
+#include "TeegrisGateKeeper.h"
 
 namespace aidl::android::hardware::gatekeeper {
 
-class SoftGateKeeperDevice : public BnGatekeeper {
+class TeegrisGateKeeperDevice : public BnGatekeeper {
   public:
-    SoftGateKeeperDevice(::gatekeeper::SoftGateKeeper&);
+    TeegrisGateKeeperDevice(::gatekeeper::TeegrisGateKeeper&);
     /**
      * Enrolls password_payload, which should be derived from a user selected pin
      * or password, with the authentication factor private key used only for
@@ -59,7 +59,7 @@ class SoftGateKeeperDevice : public BnGatekeeper {
     ::ndk::ScopedAStatus deleteUser(int32_t uid) override;
 
   private:
-    ::gatekeeper::SoftGateKeeper& impl_;
+    ::gatekeeper::TeegrisGateKeeper& impl_;
 };
 
 }  // namespace aidl::android::hardware::gatekeeper
