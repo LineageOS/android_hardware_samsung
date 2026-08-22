@@ -15,6 +15,8 @@ cc_binary {
         "-Werror",
     ],
     relative_install_path: "hw",
+    init_rc: ["android.hardware.gatekeeper-service.nonsecure.rc"],
+    vintf_fragments: ["android.hardware.gatekeeper-service.nonsecure.xml"],
     shared_libs: [
         "android.hardware.gatekeeper-V1-ndk",
         "libbase",
@@ -27,17 +29,4 @@ cc_binary {
         "service.cpp",
     ],
     vendor: true,
-}
-
-prebuilt_etc {
-    name: "gatekeeper_nonsecure_vintf",
-    srcs: [
-        "android.hardware.gatekeeper-service.nonsecure.xml",
-    ],
-    sub_dir: "vintf",
-}
-
-prebuilt_etc {
-    name: "android.hardware.gatekeeper-service.nonsecure.rc",
-    src: "android.hardware.gatekeeper-service.nonsecure.rc",
 }
