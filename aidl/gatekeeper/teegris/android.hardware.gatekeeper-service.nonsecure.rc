@@ -1,4 +1,0 @@
-service vendor.gatekeeper_nonsecure /vendor/bin/hw/android.hardware.gatekeeper-service.nonsecure
-    class hal
-    user system
-    group system

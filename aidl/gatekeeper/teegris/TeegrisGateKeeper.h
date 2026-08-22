@@ -17,10 +17,10 @@
 
 namespace gatekeeper {
 
-class SoftGateKeeper {
+class TeegrisGateKeeper {
   public:
-    SoftGateKeeper() {}
-    ~SoftGateKeeper() {}
+    TeegrisGateKeeper() {}
+    ~TeegrisGateKeeper() {}
     void Enroll(const EnrollRequest& request __unused, EnrollResponse* response __unused) {}
     void Verify(const VerifyRequest& request __unused, VerifyResponse* response __unused) {}
 };
