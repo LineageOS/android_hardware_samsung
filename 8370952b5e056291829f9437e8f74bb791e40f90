@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17589f1b_6fa351a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-08-22T15:28:24Z",
+      "side": 1,
+      "message": "Verified on a25x (s5e8825, uses SB v1130).",
+      "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
