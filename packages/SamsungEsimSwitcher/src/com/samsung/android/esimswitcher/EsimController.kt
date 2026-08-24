@@ -6,12 +6,16 @@
 package com.samsung.android.esimswitcher
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemProperties
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
 import android.telephony.UiccPortInfo
 import android.telephony.UiccSlotInfo
 import android.util.Log
+import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Drives Samsung tsds2 hybrid-slot switch via libsec-ril shim.
@@ -22,6 +26,11 @@ import android.util.Log
  * OEM flip we power-cycle physical slot 1 so telephony recreates EuiccCard and re-runs loadEid.
  */
 class EsimController private constructor(private val context: Context) {
+
+    /** Notified on the main thread when a switch requested earlier finishes. */
+    fun interface SwitchCallback {
+        fun onSwitchFinished(ok: Boolean)
+    }
 
     companion object {
         private const val TAG = "EsimController"
@@ -59,22 +68,58 @@ class EsimController private constructor(private val context: Context) {
     private val telephonyManager: TelephonyManager?
         get() = context.getSystemService(TelephonyManager::class.java)
 
+    private val mainHandler = Handler(Looper.getMainLooper())
+
+    // Owned by the singleton, not by the UI: a switch takes up to READY_TIMEOUT_MS
+    // and must finish even if the user leaves Settings. See requestEsimEnabled.
+    private val switchExecutor =
+        Executors.newSingleThreadExecutor { runnable -> Thread(runnable, "esim-switch") }
+    private val switchInFlight = AtomicBoolean(false)
+    private val eidRefreshInFlight = AtomicBoolean(false)
+
+    @Volatile private var switchCallback: SwitchCallback? = null
+
     fun onBootCompleted() {
         if (DEBUG) Log.d(TAG, "onBootCompleted, enabled=${getEsimEnabled()}")
         if (getEsimEnabled() && isSlotTypeEsim()) {
             // Re-trigger EuiccCard loadEid after boot so shim GetEID synth runs.
-            Thread(
-                    {
-                        try {
-                            refreshEuiccCardEid("boot")
-                        } catch (t: Throwable) {
-                            Log.w(TAG, "boot eid refresh failed", t)
-                        }
-                    },
-                    "esim-eid-boot",
-                )
-                .start()
+            refreshEidAsync("boot")
         }
+    }
+
+    fun isSwitchInProgress(): Boolean = switchInFlight.get()
+
+    /** Registers the observer for an in-flight switch; pass null to detach. */
+    fun setSwitchCallback(callback: SwitchCallback?) {
+        switchCallback = callback
+    }
+
+    /**
+     * Starts a switch on a background thread owned by this singleton and returns whether it was
+     * accepted (false when one is already running).
+     *
+     * The work deliberately outlives the caller's lifecycle. Interrupting a half-finished switch
+     * leaves persist and hardware disagreeing, and the RIL shim would then drive the slot back to
+     * match the reverted property.
+     */
+    fun requestEsimEnabled(isEnabled: Boolean): Boolean {
+        if (!switchInFlight.compareAndSet(false, true)) {
+            Log.w(TAG, "switch already in progress; ignoring request $isEnabled")
+            return false
+        }
+        switchExecutor.execute {
+            var ok = false
+            try {
+                ok = setEsimEnabled(isEnabled)
+            } catch (t: Throwable) {
+                Log.e(TAG, "setEsimEnabled failed", t)
+            } finally {
+                switchInFlight.set(false)
+            }
+            val result = ok
+            mainHandler.post { switchCallback?.onSwitchFinished(result) }
+        }
+        return true
     }
 
     fun hasSlotSwitch(): Boolean {
@@ -218,12 +263,26 @@ class EsimController private constructor(private val context: Context) {
             Log.i(TAG, "EID already present; skip refresh ($reason)")
             return
         }
+        refreshEidAsync(reason)
+    }
+
+    /**
+     * Power-cycles the eUICC slot on a background thread. Refuses to overlap with an existing
+     * refresh: two concurrent cycles would fight over slot power.
+     */
+    private fun refreshEidAsync(reason: String) {
+        if (!eidRefreshInFlight.compareAndSet(false, true)) {
+            Log.i(TAG, "EID refresh already running; skip ($reason)")
+            return
+        }
         Thread(
                 {
                     try {
                         refreshEuiccCardEid(reason)
                     } catch (t: Throwable) {
                         Log.w(TAG, "async eid refresh failed ($reason)", t)
+                    } finally {
+                        eidRefreshInFlight.set(false)
                     }
                 },
                 "esim-eid-$reason",
@@ -278,7 +337,7 @@ class EsimController private constructor(private val context: Context) {
      * matches the request (or already matched). On failure, persist is reverted to match hardware
      * so the UI cannot lie.
      */
-    fun setEsimEnabled(isEnabled: Boolean): Boolean {
+    private fun setEsimEnabled(isEnabled: Boolean): Boolean {
         val value = if (isEnabled) "1" else "0"
         Log.i(
             TAG,
@@ -289,7 +348,9 @@ class EsimController private constructor(private val context: Context) {
 
         SystemProperties.set(PROP_ESIM_SWITCH, value)
 
-        if (isEnabled && isSlotTypeEsim()) {
+        // Require the shim's ready signal, not just the slot type: the type flag
+        // alone can already read as eSIM while the shim is still mid-sequence.
+        if (isEnabled && isEsimReady()) {
             Log.i(TAG, "eSIM slot already active")
             maybeRefreshEidAsync("already-active")
             return true
