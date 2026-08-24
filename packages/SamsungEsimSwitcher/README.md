@@ -4,7 +4,8 @@ Privileged Settings entry that flips Samsung's **tsds2** hybrid SIM tray between
 the physical SIM and the built-in eUICC, then makes sure telephony sees a valid
 EID so the LPA app (GoogleEuicc, OpenEUICC) can manage profiles.
 
-Package: `com.samsung.android.esimswitcher`  
+Package: `com.samsung.android.esimswitcher`
+
 Module: `SamsungEsimSwitcher` (`system_ext`, platform-signed, `android.uid.system`)
 
 It does **not** download or activate eSIM profiles itself. That is the platform LPA. This app only exposes the hardware slot switch
@@ -83,28 +84,39 @@ Otherwise the Settings tile stays disabled/hidden via component state.
    other slot, or **Enable eSIM** to proceed (disconnects that pSIM). Cancel
    leaves the switch off.
 4. Otherwise (or after Proceed) disable the switch UI, set footer to
-   “Switching…”, and call `EsimController.setEsimEnabled` on a background
-   executor.
+   “Switching…”, and call `EsimController.requestEsimEnabled`.
 5. When done, re-enable the switch to match `persist.sys.esim_switch` and restore
-   the footer (or show a timeout message).
+   the footer (or show a failure message).
 
-### `EsimController.setEsimEnabled`
+The switch runs on an executor owned by the `EsimController` singleton, not by
+the fragment. A switch can take up to 90 s, so the user may well leave Settings
+while it runs; aborting midway would leave persist and hardware disagreeing, and
+the RIL shim would then drive the slot back to match the reverted property. On
+re-entry the fragment restores the “Switching…” state from
+`isSwitchInProgress()`, and a concurrent request is rejected rather than queued.
+
+### `EsimController.requestEsimEnabled`
 
 1. Write `persist.sys.esim_switch` to `1` or `0`.
 2. Init bridges that into `vendor.calls.esim_switch`; the RIL shim performs the
    OEM slot switch.
-3. Poll up to **90s** (200 ms steps) until `ril.simslottype1` or
-   `ril.simslottype2` is `1` (enable) or neither is (disable).
+3. Poll up to **90 s** (200 ms steps) until `isEsimReady()` (enable) or the
+   slot type is no longer eSIM (disable). Enable deliberately waits for the
+   shim's `vendor.calls.esim_ready` signal rather than the slot-type flag
+   alone, which can already read as eSIM while the shim is still mid-sequence.
 4. On successful **enable**, call `refreshEuiccCardEid`:
    - `TelephonyManager.setSimPowerStateForSlot(1, CARD_POWER_DOWN)`
-   - sleep 1.5 s
+   - sleep 400 ms
    - `CARD_POWER_UP`
-   - poll up to **45 s** until `UiccSlotInfo.cardId` for physical slot **1** is a
+   - poll up to **15 s** until `UiccSlotInfo.cardId` for physical slot **1** is a
      valid 32-char hex EID
 
 Power-cycling slot 1 forces telephony to recreate `EuiccCard` and re-run
 `loadEid`, which hits the shim's synthetic GetEID response. Without that,
 LPA may see the eUICC slot but no usable card id.
+
+Only one EID refresh runs at a time; two overlapping refreshes would fight
+over slot power.
 
 ### Boot path
 

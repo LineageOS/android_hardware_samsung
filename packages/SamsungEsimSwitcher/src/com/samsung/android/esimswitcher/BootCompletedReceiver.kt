@@ -30,11 +30,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
                         .isNotEmpty()
             Log.i(TAG, "eSIM slot switch supported: $supported")
 
-            setComponentEnabled(
-                context,
-                EsimSettingsActivity::class.java.name,
-                supported,
-            )
+            setComponentEnabled(context, EsimSettingsActivity::class.java.name, supported)
 
             if (supported) {
                 controller.onBootCompleted()
