@@ -6,6 +6,7 @@
 
 #include "Vibrator.h"
 
+#include <android-base/file.h>
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 
@@ -17,6 +18,8 @@
 #include <thread>
 
 #include <linux/input.h>
+
+using android::base::ReadFileToString;
 
 namespace aidl {
 namespace android {
@@ -88,6 +91,13 @@ Vibrator::Vibrator() {
                     mVibratorFd = fd;
                     mIsForceFeedbackVibrator = true;
                     writeNode("/sys/class/sec_vib_inputff/control/use_sep_index", 1);
+                    if (nodeExists(VIBRATOR_FUNCTIONS_PATH)) {
+                        std::string contents;
+                        if (ReadFileToString(VIBRATOR_FUNCTIONS_PATH, &contents) &&
+                            contents.find("COMMON_INPUTFF_INTERFACE") != std::string::npos) {
+                            mUsesCommonFFInterface = true;
+                        }
+                    }
                     break;
                 }
                 close(fd);
@@ -177,7 +187,11 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength,
     } else if (mIsForceFeedbackVibrator) {
         if (FF_EFFECT_IDS.find(effect) == FF_EFFECT_IDS.end())
             return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
-        uploadFFEffect({0, FF_EFFECT_IDS.at(effect)}, 0);
+        if (mUsesCommonFFInterface) {
+            uploadFFEffect({FF_EFFECT_IDS.at(effect)}, 0);
+        } else {
+            uploadFFEffect({0, FF_EFFECT_IDS.at(effect)}, 0);
+        }
     } else {
         if (mHasTimedOutEffect) {
             writeNode(VIBRATOR_CP_TRIGGER_PATH, 0);  // Clear previous effect
@@ -370,19 +384,20 @@ ndk::ScopedAStatus Vibrator::uploadFFEffect(std::vector<int16_t> effectData, int
     }
 
     struct ff_effect effect = {
-            .type = FF_PERIODIC,
             .id = -1,
-            .replay =
-                    {
-                            .length = static_cast<uint16_t>(timeoutMs),
-                    },
-            .u.periodic =
-                    {
-                            .waveform = FF_CUSTOM,
-                            .custom_len = static_cast<uint32_t>(effectData.size()),
-                            .custom_data = effectData.data(),
-                    },
+            .replay.length = static_cast<uint16_t>(timeoutMs),
     };
+
+    if (mUsesCommonFFInterface && effectData[0] == 0) {
+        effect.type = FF_CONSTANT;
+    } else {
+        effect.type = FF_PERIODIC;
+        effect.u.periodic = {
+                .waveform = FF_CUSTOM,
+                .custom_len = static_cast<uint32_t>(effectData.size()),
+                .custom_data = effectData.data(),
+        };
+    }
 
     ret = ioctl(mVibratorFd, EVIOCSFF, &effect);
     if (ret == -1) {
