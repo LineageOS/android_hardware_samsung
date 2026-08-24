@@ -25,6 +25,7 @@
 #define VIBRATOR_TIMEOUT_PATH "/sys/class/timed_output/vibrator/enable"
 #define VIBRATOR_INTENSITY_PATH "/sys/class/timed_output/vibrator/intensity"
 #define VIBRATOR_CP_TRIGGER_PATH "/sys/class/timed_output/vibrator/cp_trigger_index"
+#define VIBRATOR_FUNCTIONS_PATH "/sys/class/vib_info_class/vib_support_info/functions"
 
 using ::aidl::android::hardware::vibrator::Braking;
 using ::aidl::android::hardware::vibrator::CompositeEffect;
@@ -76,7 +77,7 @@ class Vibrator : public BnVibrator {
 
   private:
     ndk::ScopedAStatus activate(uint32_t ms);
-    ndk::ScopedAStatus uploadFFEffect(std::vector<int16_t> effectData, int timeoutMs);
+    ndk::ScopedAStatus uploadFFEffect(std::vector<int16_t> effectData, int timeoutMs, uint16_t effectType);
     uint32_t effectToMs(Effect effect, ndk::ScopedAStatus* status);
     static float strengthToAmplitude(EffectStrength strength, ndk::ScopedAStatus* status);
 
@@ -91,6 +92,7 @@ class Vibrator : public BnVibrator {
 
     bool mIsTimedOutVibrator;
     bool mIsForceFeedbackVibrator{false};
+    bool mUsesCommonFFInterface{false};
     bool mHasTimedOutIntensity;
     bool mHasTimedOutEffect;
 
