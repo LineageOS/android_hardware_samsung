@@ -23,8 +23,7 @@
 
 using aidl::android::hardware::gatekeeper::TeegrisGateKeeperDevice;
 
-int main(int, char** argv) {
-    ::android::base::InitLogging(argv, ::android::base::KernelLogger);
+int main() {
     ABinderProcess_setThreadPoolMaxThreadCount(0);
 
     ::gatekeeper::TeegrisGateKeeper implementation;
