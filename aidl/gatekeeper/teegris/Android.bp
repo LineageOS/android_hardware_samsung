@@ -17,8 +17,12 @@ cc_binary {
         "libbase",
         "libbinder_ndk",
         "libgatekeeper",
+        "libteecl",
     ],
-    header_libs: ["libhardware_headers"],
+    header_libs: [
+        "libhardware_headers",
+        "libteecl_headers",
+    ],
     srcs: [
         "GateKeeper.cpp",
         "service.cpp",
