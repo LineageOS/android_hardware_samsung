@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c767b349_5e769509",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33120
+      },
+      "writtenOn": "2026-08-25T16:23:07Z",
+      "side": 1,
+      "message": "Tested on S24 Ultra with SB v2000",
+      "revId": "010c1b4b82185fed0dc346f83d013cf6ce1ab4e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
