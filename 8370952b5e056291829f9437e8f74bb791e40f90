@@ -52,6 +52,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5767718_b14bee60",
+        "filename": "soundbooster/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-08-25T19:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8acd97c_dbfd7a8f",
+      "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd4b8499_8ff758e8",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-08-25T18:03:12Z",
       "side": 1,
       "message": "Remove",
+      "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a642952_1dc70e87",
+        "filename": "soundbooster/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-08-25T19:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd4b8499_8ff758e8",
       "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
@@ -86,6 +122,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23e3fb0e_3b2361ce",
+        "filename": "soundbooster/SoundBoosterEffect.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-08-25T19:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5adaf6de_d0517e31",
+      "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6140be4a_01e3d5b3",
@@ -103,6 +157,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b152c6e_f29cb196",
+        "filename": "soundbooster/SoundBoosterInterface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-08-25T19:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6140be4a_01e3d5b3",
+      "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6718e603_e2cbfd4c",
@@ -116,6 +188,24 @@
       "writtenOn": "2026-08-25T18:03:12Z",
       "side": 1,
       "message": "Use pragma once directive",
+      "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78257635_4ee3c2c7",
+        "filename": "soundbooster/SoundBoosterInterface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-08-25T19:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6718e603_e2cbfd4c",
       "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
