@@ -16,6 +16,23 @@
       "message": "Tested on S24 Ultra with SB v2000",
       "revId": "a2a8f39de120139d856440da2db1158fa6996dc7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b94fb323_819d059c",
+        "filename": "packages/SoundBoosterStage/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-08-25T18:05:48Z",
+      "side": 1,
+      "message": "// before and // after the SPDX header",
+      "revId": "a2a8f39de120139d856440da2db1158fa6996dc7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
