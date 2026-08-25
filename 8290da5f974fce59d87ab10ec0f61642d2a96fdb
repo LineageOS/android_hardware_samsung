@@ -16,6 +16,23 @@
       "message": "Verified with SB v1130.",
       "revId": "8290da5f974fce59d87ab10ec0f61642d2a96fdb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a208676e_513fba2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33120
+      },
+      "writtenOn": "2026-08-25T16:23:25Z",
+      "side": 1,
+      "message": "Tested on S24 Ultra with SB v2000",
+      "revId": "8290da5f974fce59d87ab10ec0f61642d2a96fdb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
