@@ -16,6 +16,23 @@
       "message": "Verified on a25x (s5e8825, uses SB v1130).",
       "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9828167d_f0f5bef0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33120
+      },
+      "writtenOn": "2026-08-25T16:22:46Z",
+      "side": 1,
+      "message": "Tested on S24 Ultra with SB v2000",
+      "revId": "8370952b5e056291829f9437e8f74bb791e40f90",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
