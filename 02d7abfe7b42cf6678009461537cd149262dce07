@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c6b6bb6_e625e4a5",
+        "filename": "packages/SoundBoosterStage/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-08-31T21:29:14Z",
+      "side": 1,
+      "message": "```suggestion\n        enabled: true,\n```\nNo reason to not enable it",
+      "revId": "02d7abfe7b42cf6678009461537cd149262dce07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
