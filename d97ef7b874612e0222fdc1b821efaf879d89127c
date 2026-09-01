@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e74783a3_69a94a4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2026-09-01T11:20:01Z",
+      "side": 1,
+      "message": "Did you use AI in this code? I have some suspicions about code quality and some of the patterns seems similar to AI coding agent behaviours.\n\nPlease declare which AI agent is used if there is any contributions from AI. No need to hide if the change includes AI contributions.",
+      "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7aaa78e9_9ce7536b",
         "filename": "soundbooster/SoundBoosterEffect.cpp",
         "patchSetId": 5
