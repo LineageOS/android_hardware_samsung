@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3265cde_2f620f17",
+        "filename": "packages/SoundBoosterStage/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T00:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6b6bb6_e625e4a5",
+      "revId": "02d7abfe7b42cf6678009461537cd149262dce07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0c7c5e0_fdd49bcd",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-08-31T21:36:15Z",
       "side": 1,
       "message": "Ditto",
+      "revId": "02d7abfe7b42cf6678009461537cd149262dce07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16870268_c68e1fab",
+        "filename": "packages/SoundBoosterStage/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T00:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0c7c5e0_fdd49bcd",
       "revId": "02d7abfe7b42cf6678009461537cd149262dce07",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
@@ -52,6 +88,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0a9c425_81f944a1",
+        "filename": "packages/SoundBoosterStage/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T00:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ea34e6_b1619357",
+      "revId": "02d7abfe7b42cf6678009461537cd149262dce07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39588721_03b1ad81",
@@ -69,6 +123,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f664f450_a5a0bdf6",
+        "filename": "packages/SoundBoosterStage/privapp-permissions-soundbooster-stage.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T00:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39588721_03b1ad81",
+      "revId": "02d7abfe7b42cf6678009461537cd149262dce07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8262abee_f7896b18",
@@ -82,6 +154,30 @@
       "writtenOn": "2026-08-31T21:39:51Z",
       "side": 1,
       "message": "There\u0027s no need for reflection at all here.",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 68
+      },
+      "revId": "02d7abfe7b42cf6678009461537cd149262dce07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65fdfaa4_ebb3e536",
+        "filename": "packages/SoundBoosterStage/src/com/samsung/android/soundbooster/stage/SoundBoosterStageService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T00:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8262abee_f7896b18",
       "range": {
         "startLine": 180,
         "startChar": 0,
@@ -115,6 +211,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bfb8f53_1000f8af",
+        "filename": "packages/SoundBoosterStage/src/com/samsung/android/soundbooster/stage/SoundBoosterStageService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T00:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e46e9f6_9d484f29",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 288,
+        "endChar": 40
+      },
+      "revId": "02d7abfe7b42cf6678009461537cd149262dce07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0842738_2430dde3",
@@ -128,6 +248,30 @@
       "writtenOn": "2026-08-31T21:39:51Z",
       "side": 1,
       "message": "There\u0027s no need for reflection at all here.",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 48
+      },
+      "revId": "02d7abfe7b42cf6678009461537cd149262dce07",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d60b3f1_e4821be6",
+        "filename": "packages/SoundBoosterStage/src/com/samsung/android/soundbooster/stage/SoundBoosterStageService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T00:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0842738_2430dde3",
       "range": {
         "startLine": 299,
         "startChar": 0,
