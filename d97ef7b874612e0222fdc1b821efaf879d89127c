@@ -54,6 +54,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61ea6aa3_f694bdaa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T17:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f7c2437_94ecc986",
+      "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aaa78e9_9ce7536b",
@@ -67,6 +85,24 @@
       "writtenOn": "2026-09-01T08:50:39Z",
       "side": 1,
       "message": "Would it be possible to put 2 into a meaningful define ?",
+      "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb305f32_aaee8825",
+        "filename": "soundbooster/SoundBoosterEffect.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T17:22:23Z",
+      "side": 1,
+      "message": "Suggestion implemented.",
+      "parentUuid": "7aaa78e9_9ce7536b",
       "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
@@ -88,6 +124,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a11de96_d53783fe",
+        "filename": "soundbooster/SoundBoosterEffect.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T17:22:23Z",
+      "side": 1,
+      "message": "Suggestion implemented.",
+      "parentUuid": "31e6e4f9_62034387",
+      "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75dc4117_555cd39e",
@@ -101,6 +155,24 @@
       "writtenOn": "2026-09-01T08:50:39Z",
       "side": 1,
       "message": "Would it be possible to put the values that paramid can get into defines or into an enum for clarity ?",
+      "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "220ec339_460bae05",
+        "filename": "soundbooster/SoundBoosterEffect.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-01T17:22:23Z",
+      "side": 1,
+      "message": "Suggestion implemented.",
+      "parentUuid": "75dc4117_555cd39e",
       "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
