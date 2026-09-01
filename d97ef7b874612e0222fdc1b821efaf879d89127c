@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aaa78e9_9ce7536b",
+        "filename": "soundbooster/SoundBoosterEffect.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2026-09-01T08:50:39Z",
+      "side": 1,
+      "message": "Would it be possible to put 2 into a meaningful define ?",
+      "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31e6e4f9_62034387",
+        "filename": "soundbooster/SoundBoosterEffect.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2026-09-01T08:50:39Z",
+      "side": 1,
+      "message": "This is used in various part of the code. Would it be possible to put 2 into a define ?",
+      "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75dc4117_555cd39e",
+        "filename": "soundbooster/SoundBoosterEffect.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 24387
+      },
+      "writtenOn": "2026-09-01T08:50:39Z",
+      "side": 1,
+      "message": "Would it be possible to put the values that paramid can get into defines or into an enum for clarity ?",
+      "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
