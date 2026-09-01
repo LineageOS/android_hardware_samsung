@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5f7c2437_94ecc986",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36705
+      },
+      "writtenOn": "2026-09-01T15:40:03Z",
+      "side": 1,
+      "message": "\u003e What is the standard way to declare AI usage in commits here?\n\nhttps://github.com/LineageOS/charter/blob/main/ai-coding-assistants.md",
+      "parentUuid": "78dffd6d_e1ff3873",
+      "revId": "d97ef7b874612e0222fdc1b821efaf879d89127c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7aaa78e9_9ce7536b",
         "filename": "soundbooster/SoundBoosterEffect.cpp",
         "patchSetId": 5
