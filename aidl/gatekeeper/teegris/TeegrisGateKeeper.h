@@ -21,19 +21,20 @@
 #define TRUSTLET_PATH "/vendor/tee/00000000-0000-0000-0000-474154454b45"
 #define TRUSTLET_ID "\0\0\0\0\0\0\0\0\0\0GATEKE"
 
-extern void (*TEEC_AllocateSharedMemory)(void**, void*);
 extern void (*TEEC_CloseSession)(void**);
 extern void (*TEEC_FinalizeContext)(void**);
 extern void (*TEEC_InitializeContext)(void*, void**);
 extern void (*TEEC_InvokeCommand)(void**, int, void*, int*);
 extern void (*TEEC_ReleaseSharedMemory)(void*);
+extern void (*TEEC_RegisterSharedMemory)(void**, void*);
 extern void (*TEECS_OpenSession)(void**, void**, const char[], void*, size_t, int, void*, void*,
                                  int*);
 
 namespace gatekeeper {
 
+template <typename T>
 struct shared_mem {
-    uint8_t* ptr;
+    T* ptr;
     size_t size;
     uint32_t mode;
     uint32_t reserved[3];
@@ -44,15 +45,6 @@ struct sized_buffer {
     T* ptr;
     uint32_t size;
     uint32_t reserved[3];
-};
-
-struct __attribute__((packed)) info_verify {
-    uint64_t challenge;
-    uint32_t auth_token_length;
-    bool request_reenroll;
-    gatekeeper_error_t error;
-    uint32_t retry_timeout;
-    uint32_t user_id;
 };
 
 class TeegrisGateKeeper {
@@ -75,22 +67,16 @@ class TeegrisGateKeeper {
         TEECS_OpenSession(&context, &session, TRUSTLET_ID, data, size, 0, NULL, NULL, NULL);
         free(data);
 
-        TEEC_AllocateSharedMemory(&context, &shmem_sz_cmd);
-        TEEC_AllocateSharedMemory(&context, &shmem_sz_pwd_handle);
-        TEEC_AllocateSharedMemory(&context, &shmem_sz_pwd);
-
         msg_enroll.buffer.ptr = &mem_enroll;
+        shmem_sz_cmd.ptr = &mem_verify;
+        TEEC_RegisterSharedMemory(&context, &shmem_sz_cmd);
         msg_verify.buffer.ptr = &shmem_sz_cmd.ptr;
         msg_verify.enrolled_password_handle.ptr = &shmem_sz_pwd_handle.ptr;
         msg_verify.provided_password.ptr = &shmem_sz_pwd.ptr;
-
-        inf_verify = (struct info_verify*)(shmem_sz_cmd.ptr + 0x400);
     }
 
     ~TeegrisGateKeeper() {
         TEEC_ReleaseSharedMemory(&shmem_sz_cmd);
-        TEEC_ReleaseSharedMemory(&shmem_sz_pwd_handle);
-        TEEC_ReleaseSharedMemory(&shmem_sz_pwd);
         TEEC_CloseSession(&session);
         TEEC_FinalizeContext(&context);
     }
@@ -125,36 +111,39 @@ class TeegrisGateKeeper {
     void Verify(const VerifyRequest& request, VerifyResponse* response) {
         uint8_t* auth_token;
 
-        inf_verify->challenge = request.challenge;
-        inf_verify->auth_token_length = 0x400;
-        inf_verify->user_id = request.user_id;
+        mem_verify.challenge = request.challenge;
+        mem_verify.auth_token_length = 0x400;
+        mem_verify.user_id = request.user_id;
 
-        msg_verify.enrolled_password_handle.size = request.password_handle.size();
-        msg_verify.provided_password.size = request.provided_password.size();
-        memcpy(shmem_sz_pwd_handle.ptr, request.password_handle.Data<uint8_t>(),
-               msg_verify.enrolled_password_handle.size);
-        memcpy(shmem_sz_pwd.ptr, request.provided_password.Data<uint8_t>(),
-               msg_verify.provided_password.size);
+        shmem_sz_pwd_handle.ptr = request.password_handle.Data<uint8_t>();
+        shmem_sz_pwd_handle.size = request.password_handle.size();
+        msg_verify.enrolled_password_handle.size = shmem_sz_pwd_handle.size;
+        shmem_sz_pwd.ptr = request.provided_password.Data<uint8_t>();
+        shmem_sz_pwd.size = request.provided_password.size();
+        msg_verify.provided_password.size = shmem_sz_pwd.size;
 
+        TEEC_RegisterSharedMemory(&context, &shmem_sz_pwd_handle);
+        TEEC_RegisterSharedMemory(&context, &shmem_sz_pwd);
         TEEC_InvokeCommand(&session, 0x7e, &msg_verify, NULL);
-        response->error = inf_verify->error;
+        TEEC_ReleaseSharedMemory(&shmem_sz_pwd_handle);
+        TEEC_ReleaseSharedMemory(&shmem_sz_pwd);
+        response->error = mem_verify.error;
 
         if (response->error == ERROR_NONE) {
-            auth_token = (uint8_t*)malloc(inf_verify->auth_token_length);
-            memcpy(auth_token, shmem_sz_cmd.ptr, inf_verify->auth_token_length);
-            response->SetVerificationToken(SizedBuffer(auth_token, inf_verify->auth_token_length));
-            response->request_reenroll = inf_verify->request_reenroll;
+            auth_token = (uint8_t*)malloc(mem_verify.auth_token_length);
+            memcpy(auth_token, shmem_sz_cmd.ptr, mem_verify.auth_token_length);
+            response->SetVerificationToken(SizedBuffer(auth_token, mem_verify.auth_token_length));
+            response->request_reenroll = mem_verify.request_reenroll;
         } else if (response->error == ERROR_RETRY) {
-            response->retry_timeout = inf_verify->retry_timeout;
+            response->retry_timeout = mem_verify.retry_timeout;
         }
     }
 
   private:
     void *context, *session;
-    shared_mem shmem_sz_cmd = {.size = 0x419, .mode = 3};
-    shared_mem shmem_sz_pwd_handle = {.size = 0x40, .mode = 1};
-    shared_mem shmem_sz_pwd = {.size = 0x80, .mode = 1};
-    info_verify* inf_verify;
+    shared_mem<void> shmem_sz_cmd = {.size = sizeof(mem_verify), .mode = 3};
+    shared_mem<const uint8_t> shmem_sz_pwd_handle = {.mode = 1};
+    shared_mem<const uint8_t> shmem_sz_pwd = {.mode = 1};
 
     struct {
         uint8_t password_handle_buffer[0x400];
@@ -163,6 +152,16 @@ class TeegrisGateKeeper {
         uint32_t retry_timeout;
         uint32_t user_id;
     } mem_enroll;
+
+    struct __attribute__((packed)) {
+        uint8_t password_handle_buffer[0x400];
+        uint64_t challenge;
+        uint32_t auth_token_length;
+        bool request_reenroll;
+        gatekeeper_error_t error;
+        uint32_t retry_timeout;
+        uint32_t user_id;
+    } mem_verify;
 
     struct {
         uint64_t type = 0x555700000000;
@@ -175,9 +174,9 @@ class TeegrisGateKeeper {
 
     struct {
         uint64_t type = 0xddf00000000;
-        sized_buffer<uint8_t*> buffer = {.size = 0x419};
-        sized_buffer<uint8_t*> enrolled_password_handle;
-        sized_buffer<uint8_t*> provided_password;
+        sized_buffer<void*> buffer = {.size = sizeof(mem_verify)};
+        sized_buffer<const uint8_t*> enrolled_password_handle;
+        sized_buffer<const uint8_t*> provided_password;
     } msg_verify;
 };
 
