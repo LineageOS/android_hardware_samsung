@@ -22,12 +22,12 @@
 
 #include "GateKeeper.h"
 
-void (*TEEC_AllocateSharedMemory)(void**, void*);
 void (*TEEC_CloseSession)(void**);
 void (*TEEC_FinalizeContext)(void**);
 void (*TEEC_InitializeContext)(void*, void**);
 void (*TEEC_InvokeCommand)(void**, int, void*, int*);
 void (*TEEC_ReleaseSharedMemory)(void*);
+void (*TEEC_RegisterSharedMemory)(void**, void*);
 void (*TEECS_OpenSession)(void**, void**, const char[], void*, size_t, int, void*, void*, int*);
 
 using aidl::android::hardware::gatekeeper::TeegrisGateKeeperDevice;
@@ -35,8 +35,6 @@ using aidl::android::hardware::gatekeeper::TeegrisGateKeeperDevice;
 int main() {
     void* libteecl_handle = dlopen("/vendor/lib64/libteecl.so", RTLD_NOW);
 
-    TEEC_AllocateSharedMemory =
-            (void (*)(void**, void*))dlsym(libteecl_handle, "TEEC_AllocateSharedMemory");
     TEEC_CloseSession = (void (*)(void**))dlsym(libteecl_handle, "TEEC_CloseSession");
     TEEC_FinalizeContext = (void (*)(void**))dlsym(libteecl_handle, "TEEC_FinalizeContext");
     TEEC_InitializeContext =
@@ -44,6 +42,8 @@ int main() {
     TEEC_InvokeCommand =
             (void (*)(void**, int, void*, int*))dlsym(libteecl_handle, "TEEC_InvokeCommand");
     TEEC_ReleaseSharedMemory = (void (*)(void*))dlsym(libteecl_handle, "TEEC_ReleaseSharedMemory");
+    TEEC_RegisterSharedMemory =
+            (void (*)(void**, void*))dlsym(libteecl_handle, "TEEC_RegisterSharedMemory");
     TEECS_OpenSession = (void (*)(void**, void**, const char[], void*, size_t, int, void*, void*,
                                   int*))dlsym(libteecl_handle, "TEECS_OpenSession");
 
