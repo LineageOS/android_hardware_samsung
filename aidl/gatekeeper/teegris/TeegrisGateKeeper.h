@@ -28,8 +28,9 @@
 
 namespace gatekeeper {
 
+template <typename T>
 struct shared_mem {
-    uint8_t* buffer;
+    T* buffer;
     size_t size;
     uint32_t flags;
     uint32_t reserved[3];
@@ -42,15 +43,6 @@ struct sized_buffer {
     uint32_t reserved[3];
 };
 
-struct __attribute__((packed)) verify_info {
-    uint64_t challenge;
-    uint32_t auth_token_length;
-    bool request_reenroll;
-    gatekeeper_error_t error;
-    uint32_t retry_timeout;
-    uint32_t user_id;
-};
-
 class TeegrisGateKeeper {
   public:
     TeegrisGateKeeper();
@@ -60,10 +52,10 @@ class TeegrisGateKeeper {
 
   private:
     void *context, *session;
-    shared_mem shmem_sz_cmd = {.size = 0x419, .flags = TEEC_VALUE_INPUT | TEEC_VALUE_OUTPUT};
-    shared_mem shmem_sz_pwd_handle = {.size = 0x40, .flags = TEEC_VALUE_INPUT};
-    shared_mem shmem_sz_pwd = {.size = 0x80, .flags = TEEC_VALUE_INPUT};
-    verify_info* verify_inf;
+    shared_mem<void> shmem_sz_cmd = {.size = sizeof(verify_mem),
+                                     .flags = TEEC_VALUE_INPUT | TEEC_VALUE_OUTPUT};
+    shared_mem<const uint8_t> shmem_sz_pwd_handle = {.flags = TEEC_VALUE_INPUT};
+    shared_mem<const uint8_t> shmem_sz_pwd = {.flags = TEEC_VALUE_INPUT};
 
     struct {
         uint8_t password_handle_buffer[0x400];
@@ -83,12 +75,22 @@ class TeegrisGateKeeper {
         uint64_t reserved;
     } enroll_payload;
 
+    struct __attribute__((packed)) {
+        uint8_t auth_token_buffer[0x400];
+        uint64_t challenge;
+        uint32_t auth_token_length;
+        bool request_reenroll;
+        gatekeeper_error_t error;
+        uint32_t retry_timeout;
+        uint32_t user_id;
+    } verify_mem;
+
     struct {
         uint32_t started;
         uint32_t paramTypes = TZ_VERIFY_PAYLOAD_TYPE;
-        sized_buffer<uint8_t*> inout = {.size = 0x419};
-        sized_buffer<uint8_t*> enrolled_password_handle;
-        sized_buffer<uint8_t*> provided_password;
+        sized_buffer<void*> inout = {.size = sizeof(verify_mem)};
+        sized_buffer<const uint8_t*> enrolled_password_handle;
+        sized_buffer<const uint8_t*> provided_password;
     } verify_payload;
 };
 
