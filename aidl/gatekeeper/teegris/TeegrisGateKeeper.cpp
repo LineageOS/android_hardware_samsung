@@ -40,22 +40,16 @@ TeegrisGateKeeper::TeegrisGateKeeper() {
     TEECS_OpenSession(&context, &session, TA_UUID, data, size, 0, NULL, NULL, NULL);
     free(data);
 
-    TEEC_AllocateSharedMemory(&context, &shmem_sz_cmd);
-    TEEC_AllocateSharedMemory(&context, &shmem_sz_pwd_handle);
-    TEEC_AllocateSharedMemory(&context, &shmem_sz_pwd);
-
     enroll_payload.inout.buffer = &enroll_mem;
+    shmem_sz_cmd.buffer = &verify_mem;
+    TEEC_RegisterSharedMemory(&context, &shmem_sz_cmd);
     verify_payload.inout.buffer = &shmem_sz_cmd.buffer;
     verify_payload.enrolled_password_handle.buffer = &shmem_sz_pwd_handle.buffer;
     verify_payload.provided_password.buffer = &shmem_sz_pwd.buffer;
-
-    verify_inf = (verify_info*)(shmem_sz_cmd.buffer + 0x400);
 }
 
 TeegrisGateKeeper::~TeegrisGateKeeper() {
     TEEC_ReleaseSharedMemory(&shmem_sz_cmd);
-    TEEC_ReleaseSharedMemory(&shmem_sz_pwd_handle);
-    TEEC_ReleaseSharedMemory(&shmem_sz_pwd);
     TEEC_CloseSession(&session);
     TEEC_FinalizeContext(&context);
 }
@@ -90,27 +84,31 @@ void TeegrisGateKeeper::Enroll(const EnrollRequest& request, EnrollResponse* res
 void TeegrisGateKeeper::Verify(const VerifyRequest& request, VerifyResponse* response) {
     uint8_t* auth_token;
 
-    verify_inf->challenge = request.challenge;
-    verify_inf->auth_token_length = 0x400;
-    verify_inf->user_id = request.user_id;
+    verify_mem.challenge = request.challenge;
+    verify_mem.auth_token_length = sizeof(verify_mem.auth_token_buffer);
+    verify_mem.user_id = request.user_id;
 
-    verify_payload.enrolled_password_handle.size = request.password_handle.size();
-    verify_payload.provided_password.size = request.provided_password.size();
-    memcpy(shmem_sz_pwd_handle.buffer, request.password_handle.Data<uint8_t>(),
-           verify_payload.enrolled_password_handle.size);
-    memcpy(shmem_sz_pwd.buffer, request.provided_password.Data<uint8_t>(),
-           verify_payload.provided_password.size);
+    shmem_sz_pwd_handle.buffer = request.password_handle.Data<uint8_t>();
+    shmem_sz_pwd_handle.size = request.password_handle.size();
+    verify_payload.enrolled_password_handle.size = shmem_sz_pwd_handle.size;
+    shmem_sz_pwd.buffer = request.provided_password.Data<uint8_t>();
+    shmem_sz_pwd.size = request.provided_password.size();
+    verify_payload.provided_password.size = shmem_sz_pwd.size;
 
+    TEEC_RegisterSharedMemory(&context, &shmem_sz_pwd_handle);
+    TEEC_RegisterSharedMemory(&context, &shmem_sz_pwd);
     TEEC_InvokeCommand(&session, TZ_VERIFY_CMD, &verify_payload, NULL);
-    response->error = verify_inf->error;
+    TEEC_ReleaseSharedMemory(&shmem_sz_pwd_handle);
+    TEEC_ReleaseSharedMemory(&shmem_sz_pwd);
+    response->error = verify_mem.error;
 
     if (response->error == ERROR_NONE) {
-        auth_token = (uint8_t*)malloc(verify_inf->auth_token_length);
-        memcpy(auth_token, shmem_sz_cmd.buffer, verify_inf->auth_token_length);
-        response->SetVerificationToken(SizedBuffer(auth_token, verify_inf->auth_token_length));
-        response->request_reenroll = verify_inf->request_reenroll;
+        auth_token = (uint8_t*)malloc(verify_mem.auth_token_length);
+        memcpy(auth_token, shmem_sz_cmd.buffer, verify_mem.auth_token_length);
+        response->SetVerificationToken(SizedBuffer(auth_token, verify_mem.auth_token_length));
+        response->request_reenroll = verify_mem.request_reenroll;
     } else if (response->error == ERROR_RETRY) {
-        response->retry_timeout = verify_inf->retry_timeout;
+        response->retry_timeout = verify_mem.retry_timeout;
     }
 }
 
