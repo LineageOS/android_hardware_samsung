@@ -1,0 +1,14 @@
+//
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_headers {
+    name: "libteecl_headers",
+    export_include_dirs: ["."],
+}
+
+cc_library_shared {
+    name: "libteecl",
+    vendor: true,
+}
