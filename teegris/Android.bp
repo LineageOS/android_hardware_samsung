@@ -1,0 +1,9 @@
+cc_library_headers {
+    name: "libteecl_headers",
+    export_include_dirs: ["."],
+}
+
+cc_library_shared {
+    name: "libteecl",
+    vendor: true,
+}
