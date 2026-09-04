@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "399121de_89d37bba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T14:43:47Z",
+      "side": 1,
+      "message": "Added NOOP primitive and Common InputFF vibrator support + code cleanup over original patch.\n\nTested on: CS40L26 - b0s (OWT), ZM918 - a55x (common) and AW8622X - r11s (common).",
+      "revId": "6d5b0e10e7be18402c54c92c09ac81c8944ec764",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
