@@ -196,6 +196,24 @@
       "parentUuid": "302a76cf_f1f074d6",
       "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3302847a_da2d3467",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37560
+      },
+      "writtenOn": "2026-09-04T15:56:47Z",
+      "side": 1,
+      "message": "To add to what Extreme said, it\u0027s also not usable by kinibi TEE Exynos devices, really only TEEGRIS",
+      "parentUuid": "c89c4c11_61bfe7ad",
+      "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
