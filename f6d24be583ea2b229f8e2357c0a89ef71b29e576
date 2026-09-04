@@ -124,6 +124,24 @@
       "parentUuid": "35b1ab20_dcf15012",
       "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "302a76cf_f1f074d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37560
+      },
+      "writtenOn": "2026-09-04T15:52:03Z",
+      "side": 1,
+      "message": "Anything that loads a trustlet on TEEGRIS devices uses libteecl so that would be keymint, gatekeeper, hermesd, tzdaemon and tzts_daemon in my case. That\u0027s why I don\u0027t think it\u0027s directly gatekeeper related",
+      "parentUuid": "833e93ad_79c0058a",
+      "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
