@@ -1,0 +1,3 @@
+service hermesd /vendor/bin/hermesd
+    class core
+    user system
