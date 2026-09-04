@@ -52,6 +52,24 @@
       "parentUuid": "e771073b_1ed58328",
       "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a40840f_c3abcad4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37560
+      },
+      "writtenOn": "2026-09-04T15:46:16Z",
+      "side": 1,
+      "message": "Why does it still apply? tzts_daemon and hermesd don\u0027t belong to Gatekeeper so I don\u0027t understand",
+      "parentUuid": "d2091137_8324c63d",
+      "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
