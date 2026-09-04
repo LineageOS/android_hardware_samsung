@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d3599e9_a937e47e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-04T15:39:35Z",
+      "side": 1,
+      "message": "Maybe put this inside a \"gatekeeper\" dir so that we can keep things consistent (we have \"ril\" and \"sensors\".",
+      "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
