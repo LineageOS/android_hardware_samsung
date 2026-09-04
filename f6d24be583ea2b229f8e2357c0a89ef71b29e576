@@ -160,6 +160,24 @@
       "parentUuid": "302a76cf_f1f074d6",
       "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3277f70d_af67a1eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T15:55:38Z",
+      "side": 1,
+      "message": "That would imply that QCOM can also use it while in reality it\u0027s Exynos only",
+      "parentUuid": "b872307e_cbb2243d",
+      "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
