@@ -88,6 +88,24 @@
       "parentUuid": "9a40840f_c3abcad4",
       "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35b1ab20_dcf15012",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-04T15:47:45Z",
+      "side": 1,
+      "message": "Isn\u0027t libteecl gatekeeper related?",
+      "parentUuid": "9a40840f_c3abcad4",
+      "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
