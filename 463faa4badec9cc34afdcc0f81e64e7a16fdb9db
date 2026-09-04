@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a5b0b9d_f76459f1",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-09-04T14:47:55Z",
+      "side": 1,
+      "message": "Only this should be a part of this commit, the rest should be a separate patch and expanded to timed_output devices as well.",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 2
+      },
+      "revId": "463faa4badec9cc34afdcc0f81e64e7a16fdb9db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
