@@ -35,11 +35,11 @@ static std::map<Effect, int> CP_TRIGGER_EFFECTS{{Effect::CLICK, 10},
                                                 {Effect::TEXTURE_TICK, 50},
                                                 {Effect::TICK, 50}};
 
-static std::map<Effect, short> FF_EFFECT_IDS{{Effect::CLICK, 1},
-                                             {Effect::DOUBLE_CLICK, 5},
-                                             {Effect::TICK, 41},
-                                             {Effect::HEAVY_CLICK, 14},
-                                             {Effect::TEXTURE_TICK, 41}};
+static std::map<Effect, std::pair<short, int>> FF_EFFECT_IDS{{Effect::CLICK, {1, 50}},
+                                                             {Effect::DOUBLE_CLICK, {5, 250}},
+                                                             {Effect::TICK, {41, 25}},
+                                                             {Effect::HEAVY_CLICK, {14, 100}},
+                                                             {Effect::TEXTURE_TICK, {41, 25}}};
 
 #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
 static std::map<EffectStrength, float> DURATION_AMPLITUDE = {
@@ -90,12 +90,13 @@ Vibrator::Vibrator() {
                 if (strcmp("sec_vibrator_inputff", name) == 0) {
                     mVibratorFd = fd;
                     mIsForceFeedbackVibrator = true;
-                    writeNode("/sys/class/sec_vib_inputff/control/use_sep_index", 1);
                     if (nodeExists(VIBRATOR_FUNCTIONS_PATH)) {
                         std::string contents;
                         if (ReadFileToString(VIBRATOR_FUNCTIONS_PATH, &contents) &&
                             contents.find("COMMON_INPUTFF_INTERFACE") != std::string::npos) {
                             mUsesCommonFFInterface = true;
+                        } else {
+                            writeNode("/sys/class/sec_vib_inputff/control/use_sep_index", 1);
                         }
                     }
                     break;
@@ -188,10 +189,11 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength,
         if (FF_EFFECT_IDS.find(effect) == FF_EFFECT_IDS.end())
             return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
         if (mUsesCommonFFInterface) {
-            uploadFFEffect({FF_EFFECT_IDS.at(effect)}, 0);
+            uploadFFEffect({FF_EFFECT_IDS.at(effect).first}, 0);
         } else {
-            uploadFFEffect({0, FF_EFFECT_IDS.at(effect)}, 0);
+            uploadFFEffect({0, FF_EFFECT_IDS.at(effect).first}, 0);
         }
+        ms = FF_EFFECT_IDS.at(effect).second;
     } else {
         if (mHasTimedOutEffect) {
             writeNode(VIBRATOR_CP_TRIGGER_PATH, 0);  // Clear previous effect
@@ -231,6 +233,13 @@ ndk::ScopedAStatus Vibrator::getSupportedEffects(std::vector<Effect>* _aidl_retu
             _aidl_return->push_back(effect.first);
         }
     }
+
+    if (mIsForceFeedbackVibrator) {
+        for (const auto& effect : FF_EFFECT_IDS) {
+            _aidl_return->push_back(effect.first);
+        }
+    }
+
     return ndk::ScopedAStatus::ok();
 }
 
