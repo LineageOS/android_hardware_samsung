@@ -50,6 +50,23 @@
       "message": "error: build/soong/fsgen/Android.bp:41:1: module \"lineage_x1s_generated_vendor_image\" variant \"android_common\" (created by module \"soong_filesystem_creator\" variant \"android_common\"): packaging conflict at lib64/libteecl.so:\n{lib64/libteecl.so {{{.intermediates/vendor/samsung/universal9830-common/libteecl/android_vendor_arm64_armv8-2a-dotprod_cortex-a55_shared/libteecl.so libteecl.so} out/soong out/soong/.intermediates/vendor/samsung/universal9830-common/libteecl/android_vendor_arm64_armv8-2a-dotprod_cortex-a55_shared/libteecl.so}}  false {\u003cnil\u003e} vendor false {\u003cnil\u003e} {arm64 Arm64 lib64} {\u003cnil\u003e} libteecl true {{target/product/x1s/vendor/lib64/libteecl.so libteecl.so} out/soong target/product/x1s/vendor vendor true out/target/product/x1s/vendor/lib64/libteecl.so} false android_vendor_arm64_armv8-2a-dotprod_cortex-a55_shared false {\u003cnil\u003e }}\n{lib64/libteecl.so {{{.intermediates/vendor/samsung/x1s/prebuilt_libteecl/android_vendor_arm64_armv8-2a-dotprod_cortex-a55_shared/libteecl.so libteecl.so} out/soong out/soong/.intermediates/vendor/samsung/x1s/prebuilt_libteecl/android_vendor_arm64_armv8-2a-dotprod_cortex-a55_shared/libteecl.so}}  false {\u003cnil\u003e} vendor false {\u003cnil\u003e} {arm64 Arm64 lib64} {\u003cnil\u003e} prebuilt_libteecl true {{target/product/x1s/vendor/lib64/libteecl.so libteecl.so} out/soong target/product/x1s/vendor vendor true out/target/product/x1s/vendor/lib64/libteecl.so} false android_vendor_arm64_armv8-2a-dotprod_cortex-a55_shared true {\u003cnil\u003e }}",
       "revId": "66a6d450fc1bf28bcb65313be0c3f049f0c219aa",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "825317d3_c0e1f2e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T22:25:58Z",
+      "side": 1,
+      "message": "Fixed tree-side.",
+      "revId": "66a6d450fc1bf28bcb65313be0c3f049f0c219aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
