@@ -22,6 +22,30 @@
       },
       "revId": "463faa4badec9cc34afdcc0f81e64e7a16fdb9db",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c63e2458_150328cb",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-04T15:06:54Z",
+      "side": 1,
+      "message": "Or maybe not, if you don\u0027t call this a fixup!",
+      "parentUuid": "2a5b0b9d_f76459f1",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 2
+      },
+      "revId": "463faa4badec9cc34afdcc0f81e64e7a16fdb9db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
