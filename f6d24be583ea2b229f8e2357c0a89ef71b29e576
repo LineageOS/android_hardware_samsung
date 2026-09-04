@@ -16,6 +16,24 @@
       "message": "Maybe put this inside a \"gatekeeper\" dir so that we can keep things consistent (we have \"ril\" and \"sensors\".",
       "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e771073b_1ed58328",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T15:43:14Z",
+      "side": 1,
+      "message": "No, because it is used by other services as well (e.g. hermesd which will be commonized soon)",
+      "parentUuid": "5d3599e9_a937e47e",
+      "revId": "f6d24be583ea2b229f8e2357c0a89ef71b29e576",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
