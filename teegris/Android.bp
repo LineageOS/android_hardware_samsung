@@ -7,3 +7,12 @@ cc_library_shared {
     name: "libteecl",
     vendor: true,
 }
+
+cc_binary {
+    name: "hermesd",
+    init_rc: ["hermesd.rc"],
+    shared_libs: ["libteecl"],
+    header_libs: ["libteecl_headers"],
+    srcs: ["hermes.c"],
+    vendor: true,
+}
