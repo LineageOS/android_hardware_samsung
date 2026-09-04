@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "915bb64b_0ff30b73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-04T15:08:06Z",
+      "side": 1,
+      "message": "This is a proper commit message for two separate changes. Commit as such and avoid fixup!\u0027s. I hate seeing that.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "463faa4badec9cc34afdcc0f81e64e7a16fdb9db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2a5b0b9d_f76459f1",
         "filename": "aidl/vibrator/Vibrator.cpp",
         "patchSetId": 4
