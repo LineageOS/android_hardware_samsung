@@ -29,17 +29,17 @@ namespace vibrator {
 const std::string kVibratorPropPrefix = "ro.vendor.vibrator_hal.";
 const std::string kVibratorPropDuration = "_duration";
 
-static std::map<Effect, int> CP_TRIGGER_EFFECTS{{Effect::CLICK, 10},
-                                                {Effect::DOUBLE_CLICK, 14},
-                                                {Effect::HEAVY_CLICK, 23},
-                                                {Effect::TEXTURE_TICK, 50},
-                                                {Effect::TICK, 50}};
+static std::map<Effect, HapticEffect> CP_TRIGGER_EFFECTS{{Effect::CLICK, {10, 10}},
+                                                         {Effect::TEXTURE_TICK, {50, 5}},
+                                                         {Effect::TICK, {50, 5}},
+                                                         {Effect::DOUBLE_CLICK, {14, 0}},
+                                                         {Effect::HEAVY_CLICK, {23, 0}}};
 
-static std::map<Effect, short> FF_EFFECT_IDS{{Effect::CLICK, 1},
-                                             {Effect::DOUBLE_CLICK, 5},
-                                             {Effect::TICK, 41},
-                                             {Effect::HEAVY_CLICK, 14},
-                                             {Effect::TEXTURE_TICK, 41}};
+static std::map<Effect, HapticEffect> FF_EFFECT_IDS{{Effect::CLICK, {1, 50}},
+                                                    {Effect::DOUBLE_CLICK, {5, 250}},
+                                                    {Effect::TICK, {41, 25}},
+                                                    {Effect::HEAVY_CLICK, {14, 100}},
+                                                    {Effect::TEXTURE_TICK, {41, 25}}};
 
 #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
 static std::map<EffectStrength, float> DURATION_AMPLITUDE = {
@@ -81,7 +81,13 @@ static int getIntProperty(const std::string& key, int def) {
 
 Vibrator::Vibrator() {
     mIsTimedOutVibrator = nodeExists(VIBRATOR_TIMEOUT_PATH);
-    if (!mIsTimedOutVibrator) {
+    if (mIsTimedOutVibrator) {
+        CP_TRIGGER_EFFECTS[Effect::CLICK].second =
+                getIntProperty("click" + kVibratorPropDuration, 10);
+        CP_TRIGGER_EFFECTS[Effect::TICK].second = getIntProperty("tick" + kVibratorPropDuration, 5);
+        CP_TRIGGER_EFFECTS[Effect::TEXTURE_TICK].second =
+                getIntProperty("texture_tick" + kVibratorPropDuration, 5);
+    } else {
         for (const auto& file : std::filesystem::directory_iterator("/dev/input")) {
             auto fd = open(file.path().c_str(), O_RDWR);
             if (fd != -1) {
@@ -183,25 +189,25 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength,
     setAmplitude(amplitude);
 
     if (mHasTimedOutEffect && CP_TRIGGER_EFFECTS.find(effect) != CP_TRIGGER_EFFECTS.end()) {
-        writeNode(VIBRATOR_CP_TRIGGER_PATH, CP_TRIGGER_EFFECTS[effect]);
+        writeNode(VIBRATOR_CP_TRIGGER_PATH, CP_TRIGGER_EFFECTS[effect].first);
     } else if (mIsForceFeedbackVibrator) {
         if (FF_EFFECT_IDS.find(effect) == FF_EFFECT_IDS.end())
             return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
         if (mUsesCommonFFInterface) {
-            uploadFFEffect({FF_EFFECT_IDS.at(effect)}, 0);
+            uploadFFEffect({FF_EFFECT_IDS.at(effect).first}, 0);
         } else {
-            uploadFFEffect({0, FF_EFFECT_IDS.at(effect)}, 0);
+            uploadFFEffect({0, FF_EFFECT_IDS.at(effect).first}, 0);
         }
+        ms = FF_EFFECT_IDS.at(effect).second;
     } else {
         if (mHasTimedOutEffect) {
             writeNode(VIBRATOR_CP_TRIGGER_PATH, 0);  // Clear previous effect
         }
 
-        ms = effectToMs(effect, &status);
-
-        if (!status.isOk()) {
-            return status;
+        if (effect == EFFECT::DoubleClick || effect == EFFECT::HEAVY_CLICK) {
+            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
         }
+        ms = CP_TRIGGER_EFFECTS[effect].second;
     }
 
 #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
@@ -419,22 +425,6 @@ float Vibrator::strengthToAmplitude(EffectStrength strength, ndk::ScopedAStatus*
             return AMPLITUDE_STRONG;
     }
 
-    *status = ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
-    return 0;
-}
-
-uint32_t Vibrator::effectToMs(Effect effect, ndk::ScopedAStatus* status) {
-    *status = ndk::ScopedAStatus::ok();
-    switch (effect) {
-        case Effect::CLICK:
-            return getIntProperty("click" + kVibratorPropDuration, 10);
-        case Effect::TICK:
-            return getIntProperty("tick" + kVibratorPropDuration, 5);
-        case Effect::TEXTURE_TICK:
-            return getIntProperty("texture_tick" + kVibratorPropDuration, 5);
-        default:
-            break;
-    }
     *status = ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     return 0;
 }
