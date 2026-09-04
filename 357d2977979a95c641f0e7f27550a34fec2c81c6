@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d38837a_c91847cf",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T20:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6efc6b8c_9f22fc1c",
+      "range": {
+        "startLine": 111,
+        "startChar": 28,
+        "endLine": 111,
+        "endChar": 83
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b86bdc9b_d94b20b9",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-09-04T15:48:31Z",
       "side": 1,
       "message": "OWT: 10000 - https://github.com/CirrusLogic/cirrus-hal/blob/a8e5c2386ef7273809c997181b2029ab3e4834ac/owt/owt.h#L27\n\nCommon: I have no idea what the limiting factor for this one is, could be up to the unsigned 16-bit integer limit?",
+      "range": {
+        "startLine": 316,
+        "startChar": 20,
+        "endLine": 316,
+        "endChar": 24
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e61f6ae5_c12d4bdd",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T20:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b86bdc9b_d94b20b9",
       "range": {
         "startLine": 316,
         "startChar": 20,
@@ -70,6 +118,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32529f24_49024b31",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T20:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30c803c5_9244f3ec",
+      "range": {
+        "startLine": 324,
+        "startChar": 20,
+        "endLine": 324,
+        "endChar": 22
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f813576b_f51d8dd8",
@@ -83,6 +155,30 @@
       "writtenOn": "2026-09-04T15:48:31Z",
       "side": 1,
       "message": "Should rename to something less broad, e.g. totalDuration.",
+      "range": {
+        "startLine": 356,
+        "startChar": 13,
+        "endLine": 356,
+        "endChar": 15
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c14ca809_eaf7c840",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T20:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f813576b_f51d8dd8",
       "range": {
         "startLine": 356,
         "startChar": 13,
@@ -116,6 +212,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7681f989_c044ac71",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T20:35:22Z",
+      "side": 1,
+      "message": "Done (applied it for OWT as well).",
+      "parentUuid": "2c182236_937ac87e",
+      "range": {
+        "startLine": 393,
+        "startChar": 69,
+        "endLine": 393,
+        "endChar": 77
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdc51163_06fe80ce",
@@ -129,6 +249,30 @@
       "writtenOn": "2026-09-04T15:48:31Z",
       "side": 1,
       "message": "Not specific to common interface.",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 2
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3420aefc_911422a9",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T20:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdc51163_06fe80ce",
       "range": {
         "startLine": 403,
         "startChar": 0,
@@ -162,6 +306,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "988ba445_07d4fc5f",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T20:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee889ed_47a3d226",
+      "range": {
+        "startLine": 407,
+        "startChar": 0,
+        "endLine": 407,
+        "endChar": 2
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aef92eab_eb163efe",
@@ -185,6 +353,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e763aeb_ab83f8bb",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T20:35:22Z",
+      "side": 1,
+      "message": "Avoid setting FF_CONSTANT when calling from compose; used kernel\u0027s check as per suggestion.",
+      "parentUuid": "aef92eab_eb163efe",
+      "range": {
+        "startLine": 507,
+        "startChar": 8,
+        "endLine": 507,
+        "endChar": 63
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "255aabc2_216a5724",
@@ -198,6 +390,30 @@
       "writtenOn": "2026-09-04T15:48:31Z",
       "side": 1,
       "message": "Should just compare to raw numbers (as that\u0027s what stock does), this has a very high potential for bugs.",
+      "range": {
+        "startLine": 559,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 2
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eddfa3d_d88a01af",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-04T20:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "255aabc2_216a5724",
       "range": {
         "startLine": 559,
         "startChar": 0,
