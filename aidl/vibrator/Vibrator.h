@@ -35,6 +35,11 @@ using ::aidl::android::hardware::vibrator::EffectStrength;
 using ::aidl::android::hardware::vibrator::IVibratorCallback;
 using ::aidl::android::hardware::vibrator::PrimitivePwle;
 
+struct HapticEffectSpec {
+    short id;
+    int durationMs;
+};
+
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -78,7 +83,6 @@ class Vibrator : public BnVibrator {
   private:
     ndk::ScopedAStatus activate(uint32_t ms);
     ndk::ScopedAStatus uploadFFEffect(std::vector<int16_t> effectData, int timeoutMs);
-    uint32_t effectToMs(Effect effect, ndk::ScopedAStatus* status);
     static float strengthToAmplitude(EffectStrength strength, ndk::ScopedAStatus* status);
 
 #ifdef VIBRATOR_SUPPORTS_DURATION_AMPLITUDE_CONTROL
