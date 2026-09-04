@@ -229,6 +229,13 @@ ndk::ScopedAStatus Vibrator::getSupportedEffects(std::vector<Effect>* _aidl_retu
             _aidl_return->push_back(effect.first);
         }
     }
+
+    if (mIsForceFeedbackVibrator) {
+        for (const auto& effect : FF_EFFECT_IDS) {
+            _aidl_return->push_back(effect.first);
+        }
+    }
+
     return ndk::ScopedAStatus::ok();
 }
 
