@@ -16,6 +16,24 @@
       "message": "also here.",
       "revId": "142e07889be539151607317dec0daca87c7d3b99",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b01c30d_444850ff",
+        "filename": "teegris/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 37560
+      },
+      "writtenOn": "2026-09-05T11:43:14Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "f97c1d2a_362f2f74",
+      "revId": "142e07889be539151607317dec0daca87c7d3b99",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
