@@ -1,0 +1,7 @@
+bootstrap_go_package {
+    name: "soong-hardware_samsung",
+    deps: ["soong-android", "soong-cc", "blueprint", "blueprint-proptools"],
+    pkgPath: "hardware_samsung",
+    srcs: ["main.go"],
+    pluginFor: ["soong_build"],
+}
