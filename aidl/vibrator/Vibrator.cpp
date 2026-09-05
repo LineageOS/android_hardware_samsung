@@ -182,10 +182,10 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength,
 
     setAmplitude(amplitude);
 
-    if (mHasTimedOutEffect && CP_TRIGGER_EFFECTS.find(effect) != CP_TRIGGER_EFFECTS.end()) {
+    if (mHasTimedOutEffect && CP_TRIGGER_EFFECTS.contains(effect)) {
         writeNode(VIBRATOR_CP_TRIGGER_PATH, CP_TRIGGER_EFFECTS[effect]);
     } else if (mIsForceFeedbackVibrator) {
-        if (FF_EFFECT_IDS.find(effect) == FF_EFFECT_IDS.end())
+        if (!FF_EFFECT_IDS.contains(effect))
             return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
         if (mUsesCommonFFInterface) {
             uploadFFEffect({FF_EFFECT_IDS.at(effect)}, 0);
