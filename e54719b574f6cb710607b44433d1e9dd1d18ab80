@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fe79a83_6241cf01",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-05T13:44:39Z",
+      "side": 1,
+      "message": "Done (used WT_MAX_SECTIONS / 2 because one primitive contains two sections: a waveform and a delay. We are not using the other ones.)\n\nenum wt_type10_comp_specifier {\n    COMP_SPEC_OUTER_LOOP,\n    COMP_SPEC_INNER_LOOP_START,\n    COMP_SPEC_INNER_LOOP_STOP,\n    COMP_SPEC_OUTER_LOOP_REPETITION,\n    COMP_SPEC_EP_DATA_START,\n    COMP_SPEC_WVFRM,\n    COMP_SPEC_DELAY,\n    COMP_SPEC_INVALID,\n};",
+      "parentUuid": "f829b8fa_25b88f5a",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 323,
+        "endChar": 2
+      },
+      "revId": "e54719b574f6cb710607b44433d1e9dd1d18ab80",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "814b9e83_21d1c6ec",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-09-05T10:38:07Z",
       "side": 1,
       "message": "Depends on the interface used.",
+      "range": {
+        "startLine": 349,
+        "startChar": 48,
+        "endLine": 349,
+        "endChar": 66
+      },
+      "revId": "e54719b574f6cb710607b44433d1e9dd1d18ab80",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7706171b_78bd33e7",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-05T13:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "814b9e83_21d1c6ec",
       "range": {
         "startLine": 349,
         "startChar": 48,
