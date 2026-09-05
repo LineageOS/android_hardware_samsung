@@ -284,6 +284,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d7ae54e_6f2993c6",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-05T14:29:13Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "b8559e20_362fb9f5",
+      "range": {
+        "startLine": 393,
+        "startChar": 69,
+        "endLine": 393,
+        "endChar": 77
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdc51163_06fe80ce",

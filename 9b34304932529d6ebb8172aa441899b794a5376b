@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7db6ad1a_5fd301e3",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-05T14:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4226a005_d8ab9636",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 2
+      },
+      "revId": "9b34304932529d6ebb8172aa441899b794a5376b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "885b07a5_1312c930",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-09-05T14:06:45Z",
       "side": 1,
       "message": "This is just undefined, and we should check the interface-specific value here.",
+      "range": {
+        "startLine": 349,
+        "startChar": 48,
+        "endLine": 349,
+        "endChar": 66
+      },
+      "revId": "9b34304932529d6ebb8172aa441899b794a5376b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff2893fb_95b3bba5",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-05T14:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "885b07a5_1312c930",
       "range": {
         "startLine": 349,
         "startChar": 48,
