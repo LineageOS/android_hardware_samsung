@@ -21,3 +21,26 @@ cc_library_shared {
     name: "libteecl",
     vendor: true,
 }
+<<<<<<< PATCH SET (8ec91517863c1c323c6094eaa39ef59d3bdfec35 teegris: Reimplement 'tzts_daemon')
+
+cc_binary {
+    name: "hermesd",
+    init_rc: ["hermesd.rc"],
+    shared_libs: ["libteecl"],
+    header_libs: ["libteecl_headers"],
+    srcs: ["hermes.c"],
+    vendor: true,
+}
+
+cc_binary {
+    name: "tzts_daemon",
+    shared_libs: [
+        "libcutils",
+        "libteecl",
+    ],
+    header_libs: ["libteecl_headers"],
+    srcs: ["tzts.c"],
+    vendor: true,
+}
+=======
+>>>>>>> BASE      (3b57512747ae4f92fe5f5363b0eb177030548964 teegris: Provide alternative 'hermesd')
