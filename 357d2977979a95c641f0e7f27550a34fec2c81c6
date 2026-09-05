@@ -238,6 +238,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c79b6cf1_97095958",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-09-05T10:43:32Z",
+      "side": 1,
+      "message": "Not applied for OWT as far as i can tell.",
+      "parentUuid": "7681f989_c044ac71",
+      "range": {
+        "startLine": 393,
+        "startChar": 69,
+        "endLine": 393,
+        "endChar": 77
+      },
+      "revId": "357d2977979a95c641f0e7f27550a34fec2c81c6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fdc51163_06fe80ce",
         "filename": "aidl/vibrator/Vibrator.cpp",
         "patchSetId": 20
