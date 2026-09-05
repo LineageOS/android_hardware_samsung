@@ -12,6 +12,17 @@ cc_binary {
     vendor: true,
 }
 
+cc_binary {
+    name: "tzts_daemon",
+    shared_libs: [
+        "libcutils",
+        "libteecl",
+    ],
+    header_libs: ["libteecl_headers"],
+    srcs: ["tzts.c"],
+    vendor: true,
+}
+
 cc_library_headers {
     name: "libteecl_headers",
     export_include_dirs: ["."],
