@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4226a005_d8ab9636",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-09-05T14:06:45Z",
+      "side": 1,
+      "message": "Maybe we should return an exception instead of crashing if a (currently nonexistent) unsupported primitive\u0027s duration is queried.",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 2
+      },
+      "revId": "9b34304932529d6ebb8172aa441899b794a5376b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "885b07a5_1312c930",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-09-05T14:06:45Z",
+      "side": 1,
+      "message": "This is just undefined, and we should check the interface-specific value here.",
+      "range": {
+        "startLine": 349,
+        "startChar": 48,
+        "endLine": 349,
+        "endChar": 66
+      },
+      "revId": "9b34304932529d6ebb8172aa441899b794a5376b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}

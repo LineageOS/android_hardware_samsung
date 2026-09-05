@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "478b8d5f_9f0373b7",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-09-05T14:06:45Z",
+      "side": 1,
+      "message": "Each section can contain a waveform and a delay after it, so if we don\u0027t want to divide by 2, we can subtract 1 and switch to an index-based for-loop in compose() (since we need to attach the next section\u0027s delay after the current section\u0027s waveform).",
+      "parentUuid": "5fe79a83_6241cf01",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 323,
+        "endChar": 2
+      },
+      "revId": "e54719b574f6cb710607b44433d1e9dd1d18ab80",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "814b9e83_21d1c6ec",
         "filename": "aidl/vibrator/Vibrator.cpp",
         "patchSetId": 29
