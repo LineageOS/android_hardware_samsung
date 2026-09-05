@@ -1,0 +1,12 @@
+go 1.27.0
+
+use (
+	.
+	../../../build/blueprint
+	../../../build/soong
+)
+
+replace (
+	android/soong/android v0.0.0 => ../../../build/soong
+	github.com/google/blueprint v0.0.0 => ../../../build/blueprint
+)
