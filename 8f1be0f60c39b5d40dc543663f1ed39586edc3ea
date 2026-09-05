@@ -72,6 +72,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af779def_5d7845dd",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-05T14:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05838425_3fefb86e",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 2
+      },
+      "revId": "8f1be0f60c39b5d40dc543663f1ed39586edc3ea",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "faa709ee_9914ab98",
@@ -85,6 +109,30 @@
       "writtenOn": "2026-09-05T10:20:25Z",
       "side": 1,
       "message": "To avoid ambiguity, i\u0027d maybe switch this for a custom structure.",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 46
+      },
+      "revId": "8f1be0f60c39b5d40dc543663f1ed39586edc3ea",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ca7c52c_fb7ad23e",
+        "filename": "aidl/vibrator/Vibrator.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-05T14:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faa709ee_9914ab98",
       "range": {
         "startLine": 35,
         "startChar": 24,
