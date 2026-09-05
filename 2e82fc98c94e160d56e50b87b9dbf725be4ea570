@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92b0e8f8_6ea9500e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36705
+      },
+      "writtenOn": "2026-09-05T16:28:20Z",
+      "side": 1,
+      "message": "Works as expected on SB v1050 (m52xq) after ps 7 in 498136 and once again, fine on SB v1100.",
+      "revId": "2e82fc98c94e160d56e50b87b9dbf725be4ea570",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
