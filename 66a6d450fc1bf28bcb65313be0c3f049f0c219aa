@@ -67,6 +67,23 @@
       "message": "Fixed tree-side.",
       "revId": "66a6d450fc1bf28bcb65313be0c3f049f0c219aa",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01300891_f6c94ea7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-05T10:40:15Z",
+      "side": 1,
+      "message": "Add Lineage SPDX copyright header.",
+      "revId": "66a6d450fc1bf28bcb65313be0c3f049f0c219aa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
