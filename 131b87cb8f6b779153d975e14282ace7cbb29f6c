@@ -33,6 +33,24 @@
       "message": "This mixes several naming styles and has some redundant C/C++-style suffixes such as _T, _IF, and _Interface. Fix that please.",
       "revId": "131b87cb8f6b779153d975e14282ace7cbb29f6c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "984caf39_9fecbb8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-06T20:15:06Z",
+      "side": 1,
+      "message": "Addressed in patchset 9.",
+      "parentUuid": "36b35b7c_c9439930",
+      "revId": "131b87cb8f6b779153d975e14282ace7cbb29f6c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }

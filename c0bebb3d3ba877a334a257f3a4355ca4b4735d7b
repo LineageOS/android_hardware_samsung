@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "180975c1_bc901c4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-06T20:15:06Z",
+      "side": 1,
+      "message": "Code style improvements and a small bugfix for EFFECT_CMD_SET_VOLUME that was ignoring right channel vol.",
+      "revId": "c0bebb3d3ba877a334a257f3a4355ca4b4735d7b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
