@@ -16,6 +16,29 @@
       "message": "Tested and works fine on a55x (ZM918)",
       "revId": "1534424208b7121b41cd4887efac8381dc19ec0f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd85b46a_45fa3d1c",
+        "filename": "aidl/vibrator/Vibrator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-09-06T20:05:39Z",
+      "side": 1,
+      "message": "We should change these to exact lengths, e.g. int16_t and uint32_t",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "1534424208b7121b41cd4887efac8381dc19ec0f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
