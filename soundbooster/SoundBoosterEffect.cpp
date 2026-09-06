@@ -132,12 +132,12 @@ int SoundBooster::process(void* in, void* out, size_t frames, float volume) {
         return 0;
     }
     mEnabled = true;
-    return mInterface->Exe(in, out, static_cast<int>(frames), volume);
+    return compatExe(mInterface, in, out, static_cast<int>(frames), volume);
 }
 
 void SoundBooster::clear() {
     if (mInterface != nullptr) {
-        mInterface->BuffClear();
+        compatBuffClear(mInterface);
     }
 }
 
