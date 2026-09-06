@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad66ff82_1ce39531",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 42
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-06T19:47:27Z",
+      "side": 1,
+      "message": "Tested on: CS40L26 - b0s (OWT), ZM918 - a55x (common) and AW8622X - r11s (common), CS40L25 - x1s (Timed Output).",
+      "revId": "c1f952a258fdf7a2345adbc335df237bef5451ef",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
