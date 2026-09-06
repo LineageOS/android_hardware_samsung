@@ -197,6 +197,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeb7f51f_d54231e5",
+        "filename": "aidl/consumerir/ConsumerIr.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-06T20:18:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5d77468a_67419e41",
+      "revId": "0189896ebde40011e7fd3241d6da326cc481d0e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a01464c5_f8d63198",
