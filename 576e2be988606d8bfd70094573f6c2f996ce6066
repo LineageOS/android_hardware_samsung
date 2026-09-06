@@ -16,6 +16,23 @@
       "message": "Improved device detection so it can never activate on non-speaker outputs.",
       "revId": "576e2be988606d8bfd70094573f6c2f996ce6066",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98241c6b_33d676cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37406
+      },
+      "writtenOn": "2026-09-06T20:36:09Z",
+      "side": 1,
+      "message": "Will rework the non-speaker device check to flip the logic and not check each external device.",
+      "revId": "576e2be988606d8bfd70094573f6c2f996ce6066",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
