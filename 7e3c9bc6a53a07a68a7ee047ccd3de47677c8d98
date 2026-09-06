@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eafebe39_cd8f68a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-06T21:57:54Z",
+      "side": 1,
+      "message": "Make Touch HAL use this? Also sensor HAL for scrub_pos?",
+      "revId": "7e3c9bc6a53a07a68a7ee047ccd3de47677c8d98",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
