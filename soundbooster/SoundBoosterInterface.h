@@ -72,13 +72,51 @@ class SoundBoosterFactory {
         return nullptr;
     }
 
-    static inline void Destroy(ISoundBooster* interface) {
+    static inline void Destroy(ISoundBooster* booster) {
         typedef void (*DestroyFn)(ISoundBooster*);
-        DestroyFn fnDestroy = reinterpret_cast<DestroyFn>(
-                dlsym(RTLD_DEFAULT,
-                      "_ZN30SoundBooster_Interface_Factory7DestroyEP24SoundBooster_Interface_IF"));
+        static const auto fnDestroy = []() -> DestroyFn {
+            auto fn = reinterpret_cast<DestroyFn>(dlsym(
+                    RTLD_DEFAULT,
+                    "_ZN30SoundBooster_Interface_Factory7DestroyEP25SoundBooster_Interface_IF"));
+            if (fn == nullptr) {
+                fn = reinterpret_cast<DestroyFn>(
+                        dlsym(RTLD_DEFAULT,
+                              "_ZN30SoundBooster_Interface_Factory7DestroyEP24SoundBooster_"
+                              "Interface_IF"));
+            }
+            if (fn == nullptr) {
+                ALOGE("SoundBoosterFactory::Destroy symbol not found");
+            }
+            return fn;
+        }();
         if (fnDestroy != nullptr) {
-            fnDestroy(interface);
+            fnDestroy(booster);
         }
     }
 };
+
+static inline int compatBuffClear(ISoundBooster* booster) {
+    if (booster == nullptr) {
+        return -EINVAL;
+    }
+    typedef int (*BuffClearFn)(void*);
+    static const auto fn = reinterpret_cast<BuffClearFn>(
+            dlsym(RTLD_DEFAULT, "_ZN22SoundBooster_Interface9BuffClearEv"));
+    if (fn != nullptr) {
+        return fn(booster);
+    }
+    return booster->BuffClear();
+}
+
+static inline int compatExe(ISoundBooster* booster, void* in, void* out, int frames, float volume) {
+    if (booster == nullptr) {
+        return -EINVAL;
+    }
+    typedef int (*ExeFn)(void*, void*, const void*, int, float);
+    static const auto fn =
+            reinterpret_cast<ExeFn>(dlsym(RTLD_DEFAULT, "_ZN22SoundBooster_Interface3ExeEPvPKvif"));
+    if (fn != nullptr) {
+        return fn(booster, in, out, frames, volume);
+    }
+    return booster->Exe(in, out, frames, volume);
+}
