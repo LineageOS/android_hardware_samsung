@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11ae41bc_1b55a6ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-06T21:49:58Z",
+      "side": 1,
+      "message": "Reason: Pixel also disabled it.\n\nhttps://android.googlesource.com/platform/hardware/google/pixel/+/c48f61dfb0a02733a2eecedcc167861416e04706",
+      "revId": "6a8e7d9109dae89b898f2f634e923241f848ec1c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
