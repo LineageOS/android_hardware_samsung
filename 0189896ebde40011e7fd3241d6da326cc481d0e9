@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6bf94e4e_1b29e135",
+        "filename": "aidl/consumerir/ConsumerIr.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-06T19:01:51Z",
+      "side": 1,
+      "message": "https://github.com/LineageOS/android_hardware_lineage_interfaces/blob/805d25348106e8cc6f378c0b153789f3cf8da667/ir/ConsumerIr.cpp#L6 ?",
+      "parentUuid": "3483d2fc_cdcb75b4",
+      "revId": "0189896ebde40011e7fd3241d6da326cc481d0e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a01464c5_f8d63198",
         "filename": "aidl/consumerir/service.cpp",
         "patchSetId": 14
