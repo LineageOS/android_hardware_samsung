@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3483d2fc_cdcb75b4",
+        "filename": "aidl/consumerir/ConsumerIr.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-06T18:55:26Z",
+      "side": 1,
+      "message": "I don\u0027t see other reference service doing this.",
+      "revId": "0189896ebde40011e7fd3241d6da326cc481d0e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a01464c5_f8d63198",
+        "filename": "aidl/consumerir/service.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-06T18:55:26Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "0189896ebde40011e7fd3241d6da326cc481d0e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
