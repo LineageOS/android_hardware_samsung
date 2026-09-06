@@ -16,6 +16,23 @@
       "message": "tested on lineageos 23.2 on v1awifi tablet works",
       "revId": "d4a5b5010d0b58d3b118ec527e167f4b8fad00bc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f21a72a_1814655a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-06T18:00:12Z",
+      "side": 1,
+      "message": "How is this different from lineage one?",
+      "revId": "d4a5b5010d0b58d3b118ec527e167f4b8fad00bc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
