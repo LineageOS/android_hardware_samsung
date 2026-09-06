@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6382eb89_eeda9a2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37184
+      },
+      "writtenOn": "2026-09-06T19:48:19Z",
+      "side": 1,
+      "message": "Tested and works fine on a55x (ZM918)",
+      "revId": "f960165441bbbe2aa2032018a7c6c8988501eaab",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
