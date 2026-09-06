@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79baca51_6cb7d802",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-09-06T19:07:47Z",
+      "side": 1,
+      "message": "The undef would only be needed if it was already defined for some reason. Given that it\u0027s the first statement in the file and it\u0027s not defined in the cflags (which might be the better option here, actually), it\u0027s useless.",
+      "parentUuid": "04ff4ece_9fbda974",
+      "revId": "0189896ebde40011e7fd3241d6da326cc481d0e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3483d2fc_cdcb75b4",
         "filename": "aidl/consumerir/ConsumerIr.cpp",
         "patchSetId": 14
