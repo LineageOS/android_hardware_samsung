@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79151516_ad9eb3bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-09-07T08:03:05Z",
+      "side": 1,
+      "message": "Additionally, this has never worked as the label in sepolicy is incorrect (which should also be removed).",
+      "revId": "c9011cf1d0d2cb50e9d730c4e926118db9a13c74",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
