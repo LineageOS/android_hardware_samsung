@@ -8,6 +8,7 @@ cc_library_shared {
     vendor: true,
     soc_specific: true,
     relative_install_path: "soundfx",
+    compile_multilib: "64",
 
     srcs: ["SoundBoosterEffect.cpp"],
 
