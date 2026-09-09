@@ -12,6 +12,13 @@ cc_binary {
     vendor: true,
 }
 
+cc_binary {
+    name: "tzdaemon",
+    init_rc: ["tzdaemon.rc"],
+    srcs: ["tz.c"],
+    vendor: true,
+}
+
 cc_library_headers {
     name: "libteecl_headers",
     export_include_dirs: ["."],
