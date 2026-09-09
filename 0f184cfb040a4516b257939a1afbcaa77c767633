@@ -16,6 +16,24 @@
       "message": "Please make these private? Why would you clutter up the repo for no reason?",
       "revId": "0f184cfb040a4516b257939a1afbcaa77c767633",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e31b63fa_948a9e20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 37437
+      },
+      "writtenOn": "2026-09-09T00:07:29Z",
+      "side": 1,
+      "message": "I\u0027m sorry, I didnt know it would instantly submit",
+      "parentUuid": "d1eb4cbf_69be3e84",
+      "revId": "0f184cfb040a4516b257939a1afbcaa77c767633",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": [
