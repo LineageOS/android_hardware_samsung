@@ -22,6 +22,30 @@
       },
       "revId": "50befddadded8555d04e043ca9135533ca81e465",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f6b1c1c_39cdd10a",
+        "filename": "teegris/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-10T22:26:08Z",
+      "side": 1,
+      "message": "Was about to, wouldn\u0027t submit it without testing even if it looks like it.",
+      "parentUuid": "a84c566e_d4bcafb2",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "50befddadded8555d04e043ca9135533ca81e465",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
