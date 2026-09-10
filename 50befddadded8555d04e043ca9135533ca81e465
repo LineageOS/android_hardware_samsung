@@ -94,6 +94,30 @@
       },
       "revId": "50befddadded8555d04e043ca9135533ca81e465",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eb34cd8_85597163",
+        "filename": "teegris/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-10T22:48:12Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "a7bd41e5_5cc6b2b5",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "50befddadded8555d04e043ca9135533ca81e465",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
