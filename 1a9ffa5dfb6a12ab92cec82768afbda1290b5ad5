@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7338d066_f01a8677",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-10T22:25:21Z",
+      "side": 1,
+      "message": "Also, seriously, doesn\u0027t make sense for this gatekeeper aidl hal to live outside aidl dir of this repository.",
+      "revId": "1a9ffa5dfb6a12ab92cec82768afbda1290b5ad5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
