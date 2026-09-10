@@ -5,10 +5,18 @@
 
 cc_binary {
     name: "hermesd",
-    init_rc: ["hermesd.rc"],
+    required: ["hermesd.rc"],
     shared_libs: ["libteecl"],
     header_libs: ["libteecl_headers"],
     srcs: ["hermes.c"],
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "hermesd.rc",
+    src: "hermesd.rc",
+    filename: "hermesd-source.rc",
+    sub_dir: "init",
     vendor: true,
 }
 
