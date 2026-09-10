@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+soong_namespace {}
+
 cc_library_shared {
     name: "libsamsungSoundbooster_plus",
     vendor: true,
