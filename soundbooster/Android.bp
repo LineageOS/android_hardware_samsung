@@ -5,6 +5,11 @@
 
 cc_library_shared {
     name: "libsamsungSoundbooster_plus",
+    enabled: select(soong_config_variable("samsungAudioVars", "soundbooster_dsp_library"), {
+        "": false,
+        any @ flag_val: true,
+        default: false,
+    }),
     vendor: true,
     soc_specific: true,
     relative_install_path: "soundfx",
