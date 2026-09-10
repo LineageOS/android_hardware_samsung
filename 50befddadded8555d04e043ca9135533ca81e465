@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a84c566e_d4bcafb2",
+        "filename": "teegris/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-09-10T22:22:55Z",
+      "side": 1,
+      "message": "Pretty sure that this doesn\u0027t build. Are you even testing these changes?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "50befddadded8555d04e043ca9135533ca81e465",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
