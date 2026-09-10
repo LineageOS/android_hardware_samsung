@@ -16,6 +16,24 @@
       "message": "What is this?",
       "revId": "abcc4bb7920b25a7eca28045936f84378e93b20c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62ab3613_e117d8fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-10T22:18:13Z",
+      "side": 1,
+      "message": "Forgot to git add the moved files. Purpose along with the other one in the chain is to fix build on devices that broke.",
+      "parentUuid": "73332970_d0257dd2",
+      "revId": "abcc4bb7920b25a7eca28045936f84378e93b20c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
