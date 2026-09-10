@@ -9,6 +9,10 @@ soong_namespace {
     ],
 }
 
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
 cc_binary {
     name: "hermesd",
     init_rc: ["hermesd.rc"],
@@ -25,5 +29,33 @@ cc_library_headers {
 
 cc_library_shared {
     name: "libteecl",
+    vendor: true,
+}
+
+cc_binary {
+    name: "android.hardware.gatekeeper-service.teegris",
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    relative_install_path: "hw",
+    init_rc: ["gatekeeper/android.hardware.gatekeeper-service.teegris.rc"],
+    vintf_fragments: ["gatekeeper/android.hardware.gatekeeper-service.teegris.xml"],
+    shared_libs: [
+        "android.hardware.gatekeeper-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libgatekeeper",
+        "libteecl",
+    ],
+    header_libs: [
+        "libhardware_headers",
+        "libteecl_headers",
+    ],
+    srcs: [
+        "gatekeeper/TeegrisGateKeeper.cpp",
+        "gatekeeper/GateKeeper.cpp",
+        "gatekeeper/service.cpp",
+    ],
     vendor: true,
 }
