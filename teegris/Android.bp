@@ -3,6 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+soong_namespace {
+    imports: [
+        "hardware/samsung",
+    ],
+}
+
 cc_binary {
     name: "hermesd",
     init_rc: ["hermesd.rc"],
