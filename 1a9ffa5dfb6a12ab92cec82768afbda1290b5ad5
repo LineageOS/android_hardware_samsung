@@ -16,6 +16,24 @@
       "message": "Also, seriously, doesn\u0027t make sense for this gatekeeper aidl hal to live outside aidl dir of this repository.",
       "revId": "1a9ffa5dfb6a12ab92cec82768afbda1290b5ad5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20a21650_86ce3ba4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-10T22:26:33Z",
+      "side": 1,
+      "message": "I agree, but there\u0027s no other way to properly namespace it.",
+      "parentUuid": "7338d066_f01a8677",
+      "revId": "1a9ffa5dfb6a12ab92cec82768afbda1290b5ad5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
