@@ -52,6 +52,24 @@
       "parentUuid": "62ab3613_e117d8fc",
       "revId": "abcc4bb7920b25a7eca28045936f84378e93b20c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd6823ce_5d096218",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-09-10T22:22:43Z",
+      "side": 1,
+      "message": "Good catch, done. Any other reason for the -2?",
+      "parentUuid": "b9bd2bc3_f630227f",
+      "revId": "abcc4bb7920b25a7eca28045936f84378e93b20c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
