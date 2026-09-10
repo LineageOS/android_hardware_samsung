@@ -1,0 +1,19 @@
+//
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+soong_namespace {
+    imports: [
+        "hardware/samsung",
+    ],
+}
+
+cc_binary {
+    name: "hermesd",
+    init_rc: ["hermesd.rc"],
+    shared_libs: ["libteecl"],
+    header_libs: ["libteecl_headers"],
+    srcs: ["hermes.c"],
+    vendor: true,
+}
