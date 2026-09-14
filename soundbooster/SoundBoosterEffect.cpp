@@ -3,529 +3,350 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#define LOG_TAG "SoundBoosterEffectPlus"
+#define LOG_TAG "SoundBoosterEffect"
+// #define LOG_NDEBUG 0
 
 #include <errno.h>
 #include <math.h>
 #include <string.h>
-#include <unistd.h>
+#include <new>
 
-#include <hardware/audio_effect.h>
+
 #include <log/log.h>
 #include <system/audio.h>
 
-#include "SoundBoosterInterface.h"
+#include "SoundBoosterEffect.h"
 
-static const effect_uuid_t SOUNDBOOSTER_EFFECT_TYPE = {
-        0xee8aeac0, 0x5d4b, 0x11e5, 0xa837, {0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66}};
+// effect_handle_t interface implementation for SoundBooster
+extern "C" const struct effect_interface_s gSoundBoosterEffectInterface;
 
-static const effect_uuid_t SOUNDBOOSTER_EFFECT_IMPL = {
-        0x50de45f0, 0x5d4c, 0x11e5, 0xa837, {0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66}};
+#define CHECK_ARG(cond)                           \
+    {                                             \
+        if (!(cond)) {                            \
+            ALOGE("Invalid argument: %s", #cond); \
+            return -EINVAL;                       \
+        }                                         \
+    }
 
-static const char* const SOUNDBOOSTER_PARAM_FILE = "/vendor/etc/SoundBoosterParam.txt";
+namespace android {
+namespace {
 
-static const effect_descriptor_t SOUNDBOOSTER_DESCRIPTOR = {
-        SOUNDBOOSTER_EFFECT_TYPE,
-        SOUNDBOOSTER_EFFECT_IMPL,
+// Samsung SoundBooster Plus
+const effect_descriptor_t gSoundBoosterDescriptor = {
+        {0xee8aeac0, 0x5d4b, 0x11e5, 0xa837, {0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66}},  // type
+        {0x50de45f0, 0x5d4c, 0x11e5, 0xa837, {0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66}},  // uuid
         EFFECT_CONTROL_API_VERSION,
-        0x01000290,
-        75,
-        25,
+        (EFFECT_FLAG_TYPE_INSERT | EFFECT_FLAG_INSERT_LAST | EFFECT_FLAG_VOLUME_IND |
+         EFFECT_FLAG_DEVICE_IND | EFFECT_FLAG_NOT_ELIGIBLE_SUSPEND),
+        SOUNDBOOSTER_CUP_LOAD,
+        SOUNDBOOSTER_MEM_USAGE,
         "SoundBooster Plus",
         "Samsung",
 };
 
-constexpr uint32_t SB_MODE_DEFAULT = 2;
-constexpr uint32_t SB_MODE_MAX = 2;
-
-enum EffectState {
-    EFFECT_STATE_UNINITIALIZED = 0,
-    EFFECT_STATE_INITIALIZED = 1,
-    EFFECT_STATE_ACTIVE = 2,
-};
-
-enum EffectParam {
-    PARAM_READ_PARAM = 0,
-    PARAM_ROTATION = 1,
-    PARAM_FLAT_MOTION = 2,
-};
-
-class SoundBooster {
-  public:
-    explicit SoundBooster(uint32_t mode);
-    ~SoundBooster();
-
-    int init(uint32_t sampleRate, audio_format_t format);
-    int process(void* in, void* out, size_t frames, float volume);
-    void clear();
-    void setRotation(int rotation);
-    void setFlatMotion(int flat);
-    void readParam();
-    bool isEnabledDevice(uint32_t device);
-    void setSessionId(int32_t sessionId);
-
-  private:
-    ISoundBooster* mInterface;
-    uint32_t mMode;
-    int32_t mSessionId;
-    bool mEnabled;
-    uint32_t mSampleRate;
-    audio_format_t mFormat;
-    int mBitDepth;
-};
-
-SoundBooster::SoundBooster(uint32_t mode)
-    : mInterface(nullptr),
-      mMode(mode),
-      mSessionId(0),
-      mEnabled(false),
-      mSampleRate(0),
-      mFormat(AUDIO_FORMAT_INVALID),
-      mBitDepth(BIT_DEPTH_NONE) {
-    if (mMode > SB_MODE_MAX) {
-        ALOGE("Invalid SoundBooster mode %u", mMode);
-        mMode = SB_MODE_DEFAULT;
-    }
-    mInterface = SoundBoosterFactory::Create(static_cast<int>(mMode), 0);
-}
-
-SoundBooster::~SoundBooster() {
-    if (mInterface != nullptr) {
-        SoundBoosterFactory::Destroy(mInterface);
-        mInterface = nullptr;
-    }
-    mEnabled = false;
-}
-
-int SoundBooster::init(uint32_t sampleRate, audio_format_t format) {
-    if (mInterface == nullptr) {
-        mInterface = SoundBoosterFactory::Create(static_cast<int>(mMode), 0);
-        if (mInterface == nullptr) {
-            return -ENODEV;
-        }
-    }
-
-    int bitDepth = BIT_DEPTH_NONE;
-    if (format == AUDIO_FORMAT_PCM_FLOAT) {
-        bitDepth = BIT_DEPTH_FLOAT;
-    } else if (format == AUDIO_FORMAT_PCM_8_24_BIT) {
-        bitDepth = BIT_DEPTH_8_24;
-    }
-
-    mSampleRate = sampleRate;
-    mFormat = format;
-    mBitDepth = bitDepth;
-
-    mInterface->Init(static_cast<BitDepth>(bitDepth));
-    mInterface->SamplingRateConfig(static_cast<int>(sampleRate));
-
-    if (access(SOUNDBOOSTER_PARAM_FILE, 0) == 0) {
-        mInterface->LoadParameter(SOUNDBOOSTER_PARAM_FILE, 0, nullptr);
-    } else {
-        ALOGE("Cannot find SoundBoosterParam.txt");
-    }
-    return 0;
-}
-
-int SoundBooster::process(void* in, void* out, size_t frames, float volume) {
-    if (frames == 0 || mInterface == nullptr) {
-        return 0;
-    }
-    mEnabled = true;
-    return compatExe(mInterface, in, out, static_cast<int>(frames), volume);
-}
-
-void SoundBooster::clear() {
-    if (mInterface != nullptr) {
-        compatBuffClear(mInterface);
-    }
-}
-
-void SoundBooster::setRotation(int rotation) {
-    if (mInterface == nullptr) {
-        return;
-    }
-    if (rotation == 3) {
-        rotation = 1;
-    } else if (rotation == 1) {
-        rotation = 3;
-    }
-    mInterface->SetOrientation(static_cast<Orientation>(rotation));
-}
-
-void SoundBooster::setFlatMotion(int flat) {
-    if (mInterface == nullptr) {
-        return;
-    }
-    mInterface->SetMotion(flat);
-    ALOGI("[GOF] setFlatMotion : flat %d", flat);
-}
-
-void SoundBooster::readParam() {
-    if (mInterface == nullptr) {
-        return;
-    }
-    if (access(SOUNDBOOSTER_PARAM_FILE, 0) != 0) {
-        ALOGE("Cannot find SoundBoosterParam.txt");
-        return;
-    }
-    mInterface->LoadParameter(SOUNDBOOSTER_PARAM_FILE, 0, nullptr);
-}
-
-bool SoundBooster::isEnabledDevice(uint32_t device) {
-    return device == AUDIO_DEVICE_OUT_SPEAKER;
-}
-
-void SoundBooster::setSessionId(int32_t sessionId) {
-    mSessionId = sessionId;
-}
-
-struct SoundBoosterEffect {
-    const struct effect_interface_s* itfe;
-    int32_t sessionId;
-    EffectState state;
-    int32_t mode;
-    float logVolume;
-    float leftVolume;
-    float rightVolume;
-    uint32_t curDevice;
-    bool enabled;
-    int32_t rotation;
-    int32_t flatMotion;
-    int32_t spkMode;
-    SoundBooster* dsp;
-};
-
-static int SoundBooster_process(effect_handle_t self, audio_buffer_t* in, audio_buffer_t* out) {
-    SoundBoosterEffect* e = reinterpret_cast<SoundBoosterEffect*>(self);
-    if (e == nullptr) {
-        return -EINVAL;
-    }
-    if (e->state != EFFECT_STATE_ACTIVE) {
-        return -ENODATA;
-    }
-    if (e->dsp == nullptr) {
-        return -EINVAL;
-    }
-    if (in == nullptr || out == nullptr) {
-        return -EINVAL;
-    }
-    if (in->raw == nullptr || out->raw == nullptr) {
-        return -EINVAL;
-    }
-    if (in->frameCount == 0 || in->frameCount != out->frameCount) {
-        return -EINVAL;
-    }
-
-    if (!e->enabled) {
-        // Passthrough: device not processed, just copy the input through.
-        if (in->raw != out->raw) {
-            memcpy(out->raw, in->raw, in->frameCount * 8);
-        }
-        return 0;
-    }
-
-    e->dsp->process(in->raw, in->raw, in->frameCount, e->logVolume);
-
-    if (in->raw != out->raw) {
-        // Stereo float: 2 channels * 4 bytes per frame.
-        memcpy(out->raw, in->raw, in->frameCount * 8);
-    }
-    return 0;
-}
-
-static int SoundBooster_setDevice(SoundBoosterEffect* e, uint32_t device) {
-    if (e == nullptr) {
-        return -EINVAL;
-    }
-    if (e->state == EFFECT_STATE_UNINITIALIZED) {
-        ALOGE("Not initialized");
-        return -ENODATA;
-    }
-    bool wasEnabled = e->enabled;
-    e->curDevice = device;
-    bool enabled = e->dsp != nullptr ? e->dsp->isEnabledDevice(device) : false;
-    e->enabled = enabled;
-    if (!wasEnabled && enabled) {
-        ALOGI("SB_reset SoundBooster sessionId(%d)", e->sessionId);
-        if (e->dsp != nullptr) {
-            e->dsp->clear();
-        }
-    }
-    return 0;
-}
-
-static int SoundBooster_setVolume(SoundBoosterEffect* e, uint32_t* vol) {
-    if (e == nullptr) {
-        return -EINVAL;
-    }
-    if (e->state == EFFECT_STATE_UNINITIALIZED) {
-        ALOGE("Not initialized");
-        return -ENODATA;
-    }
-    float left = static_cast<float>(vol[0]) * 5.9604645e-08f;
-    float right = static_cast<float>(vol[1]) * 5.9604645e-08f;
-    if (e->leftVolume == left && e->rightVolume == right) {
-        return 0;
-    }
-    e->leftVolume = left;
-    e->rightVolume = right;
-    float maxVol = left > right ? left : right;
-    e->logVolume = logf(maxVol + 1e-05f) * 8.68589f;
-    return 0;
-}
-
-static int SoundBooster_init(SoundBoosterEffect* e, effect_config_t* config) {
+int Effect_init(EffectContext* pContext, effect_config_t* pConfig) {
     uint32_t mode = SB_MODE_DEFAULT;
-    if (config != nullptr && config->inputCfg.samplingRate > SB_MODE_MAX) {
-        mode = config->inputCfg.samplingRate;
-        if (mode > SB_MODE_MAX) {
-            ALOGE("Invalid SoundBooster mode");
-            mode = SB_MODE_DEFAULT;
-        }
+    if (pConfig != nullptr && pConfig->inputCfg.samplingRate > SB_MODE_MAX) {
+        ALOGE("Invalid SoundBooster mode %u", pConfig->inputCfg.samplingRate);
     }
-    e->mode = mode;
-    if (e->dsp == nullptr) {
-        e->dsp = new SoundBooster(mode);
-        ALOGI("Allocate SoundBooster mode:%d", e->mode);
+
+    pContext->mode = mode;
+    if (pContext->dsp == nullptr) {
+        pContext->dsp = new SoundBooster(mode);
+        ALOGV("%s: allocated SoundBooster mode %u", __func__, mode);
     }
-    e->dsp->setSessionId(e->sessionId);
-    e->rotation = 0;
-    e->spkMode = 0;
+    pContext->dsp->setSessionId(pContext->sessionId);
+    pContext->rotation = 0;
+    pContext->spkMode = 0;
     // EFFECT_CMD_ENABLE transitions state to active.
-    e->state = EFFECT_STATE_INITIALIZED;
+    pContext->state = EFFECT_STATE_INITIALIZED;
     return 0;
 }
 
-static int SoundBooster_setConfig(SoundBoosterEffect* e, effect_config_t* config) {
-    if (e == nullptr || config == nullptr) {
-        return -EINVAL;
-    }
-    if (config->inputCfg.samplingRate != config->outputCfg.samplingRate ||
-        config->inputCfg.format != config->outputCfg.format || e->dsp == nullptr) {
-        return -EINVAL;
-    }
-    e->dsp->init(config->inputCfg.samplingRate,
-                 static_cast<audio_format_t>(config->inputCfg.format));
+int Effect_setConfig(EffectContext* pContext, effect_config_t* pConfig) {
+    CHECK_ARG(pContext != nullptr && pConfig != nullptr && pContext->dsp != nullptr);
+    CHECK_ARG(pConfig->inputCfg.samplingRate == pConfig->outputCfg.samplingRate);
+    CHECK_ARG(pConfig->inputCfg.format == pConfig->outputCfg.format);
+
+    pContext->dsp->init(pConfig->inputCfg.samplingRate,
+                        static_cast<audio_format_t>(pConfig->inputCfg.format));
     return 0;
 }
 
-static int SoundBooster_command(effect_handle_t self, uint32_t cmdCode, uint32_t cmdSize,
-                                void* cmdData, uint32_t* replySize, void* replyData) {
-    SoundBoosterEffect* e = reinterpret_cast<SoundBoosterEffect*>(self);
-    if (e == nullptr) {
+int Effect_setDevice(EffectContext* pContext, uint32_t device) {
+    if (pContext->state == EFFECT_STATE_UNINITIALIZED) {
+        ALOGE("%s: not initialized", __func__);
+        return -ENODATA;
+    }
+
+    const bool wasEnabled = pContext->enabled;
+    pContext->curDevice = device;
+    pContext->enabled = pContext->dsp != nullptr && SoundBooster::isEnabledDevice(device);
+
+    if (!wasEnabled && pContext->enabled) {
+        ALOGV("%s: reset sessionId %d", __func__, pContext->sessionId);
+        pContext->dsp->clear();
+    }
+    return 0;
+}
+
+int Effect_setVolume(EffectContext* pContext, const uint32_t* pVolume) {
+    if (pContext->state == EFFECT_STATE_UNINITIALIZED) {
+        ALOGE("%s: not initialized", __func__);
+        return -ENODATA;
+    }
+
+    const float left = static_cast<float>(pVolume[0]) * SB_VOLUME_SCALE;
+    const float right = static_cast<float>(pVolume[1]) * SB_VOLUME_SCALE;
+    if (pContext->leftVolume == left && pContext->rightVolume == right) {
+        return 0;
+    }
+
+    pContext->leftVolume = left;
+    pContext->rightVolume = right;
+    const float maxVolume = left > right ? left : right;
+    pContext->logVolume = logf(maxVolume + SB_VOLUME_EPSILON) * SB_LINEAR_TO_DB_SCALE;
+    return 0;
+}
+
+int Effect_setParameter(EffectContext* pContext, effect_param_t* pParam) {
+    if (pParam->psize - sizeof(int32_t) >= 5 || pParam->vsize <= 3) {
         return -EINVAL;
     }
-    if (e->state == EFFECT_STATE_UNINITIALIZED) {
+
+    const int32_t* pData = reinterpret_cast<const int32_t*>(pParam->data);
+    const int32_t value = pData[1];
+
+    switch (pData[0]) {
+        case SB_PARAM_FLAT_MOTION:
+            pContext->flatMotion = value;
+            if (pContext->dsp != nullptr) {
+                pContext->dsp->setFlatMotion(value);
+            }
+            break;
+        case SB_PARAM_ROTATION:
+            if (pContext->rotation != value) {
+                pContext->rotation = value;
+                if (pContext->dsp != nullptr) {
+                    pContext->dsp->setRotation(value);
+                }
+            }
+            break;
+        case SB_PARAM_READ_PARAM:
+            if (pContext->dsp != nullptr) {
+                pContext->dsp->readParam();
+            }
+            break;
+        default:
+            break;
+    }
+    return 0;
+}
+
+}  // namespace
+
+/* Effect Library Interface Implementation */
+
+extern "C" int EffectCreate(const effect_uuid_t* uuid, int32_t sessionId,
+                            int32_t /* ioId __unused */, effect_handle_t* pHandle) {
+    if (pHandle == nullptr || uuid == nullptr) {
+        ALOGE("%s: called with NULL pointer", __func__);
+        return -EINVAL;
+    }
+
+    if (memcmp(uuid, &gSoundBoosterDescriptor.uuid, sizeof(effect_uuid_t)) != 0) {
+        ALOGE("%s: invalid UUID", __func__);
+        return -EINVAL;
+    }
+
+    EffectContext* pContext = new (std::nothrow) EffectContext;
+    if (pContext == nullptr) {
+        return -ENOMEM;
+    }
+    pContext->itfe = &gSoundBoosterEffectInterface;
+    pContext->sessionId = sessionId;
+    pContext->state = EFFECT_STATE_INITIALIZED;
+
+    *pHandle = reinterpret_cast<effect_handle_t>(pContext);
+    return 0;
+}
+
+extern "C" int EffectRelease(effect_handle_t handle) {
+    EffectContext* pContext = reinterpret_cast<EffectContext*>(handle);
+    if (pContext == nullptr) {
+        ALOGE("%s: called with NULL pointer", __func__);
+        return -EINVAL;
+    }
+
+    pContext->state = EFFECT_STATE_UNINITIALIZED;
+    delete pContext->dsp;
+    delete pContext;
+    return 0;
+}
+
+extern "C" int EffectGetDescriptor(const effect_uuid_t* uuid, effect_descriptor_t* pDescriptor) {
+    if (pDescriptor == nullptr || uuid == nullptr) {
+        ALOGE("%s: called with NULL pointer", __func__);
+        return -EINVAL;
+    }
+
+    if (memcmp(uuid, &gSoundBoosterDescriptor.uuid, sizeof(effect_uuid_t)) != 0) {
+        return -EINVAL;
+    }
+
+    *pDescriptor = gSoundBoosterDescriptor;
+    return 0;
+}
+
+}  // namespace android
+
+extern "C" {
+/* Effect Control Interface Implementation: Process */
+int Effect_process(effect_handle_t self, audio_buffer_t* inBuffer, audio_buffer_t* outBuffer) {
+    EffectContext* pContext = reinterpret_cast<EffectContext*>(self);
+
+    if (pContext == nullptr) {
+        ALOGE("%s: pContext == NULL", __func__);
+        return -EINVAL;
+    }
+    if (pContext->state != EFFECT_STATE_ACTIVE) {
+        return -ENODATA;
+    }
+    if (pContext->dsp == nullptr) {
+        ALOGE("%s: DSP not allocated", __func__);
+        return -EINVAL;
+    }
+    if (inBuffer == nullptr || inBuffer->raw == nullptr || outBuffer == nullptr ||
+        outBuffer->raw == nullptr || inBuffer->frameCount == 0 ||
+        inBuffer->frameCount != outBuffer->frameCount) {
+        ALOGE("%s: NULL input pointer or wrong frame count", __func__);
+        return -EINVAL;
+    }
+
+    if (pContext->enabled) {
+        pContext->dsp->process(inBuffer->raw, inBuffer->raw, inBuffer->frameCount,
+                               pContext->logVolume);
+    }
+
+    if (inBuffer->raw != outBuffer->raw) {
+        memcpy(outBuffer->raw, inBuffer->raw, inBuffer->frameCount * SB_BYTES_PER_FRAME);
+    }
+    return 0;
+}
+
+/* Effect Control Interface Implementation: Command */
+int Effect_command(effect_handle_t self, uint32_t cmdCode, uint32_t cmdSize, void* pCmdData,
+                   uint32_t* replySize, void* pReplyData) {
+    EffectContext* pContext = reinterpret_cast<EffectContext*>(self);
+
+    if (pContext == nullptr || pContext->state == EFFECT_STATE_UNINITIALIZED) {
+        ALOGE("%s: invalid context", __func__);
         return -EINVAL;
     }
 
     switch (cmdCode) {
         case EFFECT_CMD_INIT:
-            if (replySize == nullptr || replyData == nullptr || *replySize != sizeof(int)) {
-                ALOGE("EFFECT_CMD_INIT failed");
-                return -EINVAL;
-            }
-            SoundBooster_init(e, reinterpret_cast<effect_config_t*>(cmdData));
-            *reinterpret_cast<int*>(replyData) = 0;
-            return 0;
+            CHECK_ARG(pReplyData != nullptr && replySize != nullptr && *replySize == sizeof(int));
+            android::Effect_init(pContext, reinterpret_cast<effect_config_t*>(pCmdData));
+            *reinterpret_cast<int*>(pReplyData) = 0;
+            break;
 
         case EFFECT_CMD_SET_CONFIG:
-            if (cmdData == nullptr || replySize == nullptr || replyData == nullptr ||
-                cmdSize != sizeof(effect_config_t) || *replySize != sizeof(int)) {
-                return -EINVAL;
-            }
-            *reinterpret_cast<int*>(replyData) =
-                    SoundBooster_setConfig(e, reinterpret_cast<effect_config_t*>(cmdData));
-            return 0;
+            CHECK_ARG(pCmdData != nullptr && cmdSize == sizeof(effect_config_t) &&
+                      pReplyData != nullptr && replySize != nullptr && *replySize == sizeof(int));
+            *reinterpret_cast<int*>(pReplyData) = android::Effect_setConfig(
+                    pContext, reinterpret_cast<effect_config_t*>(pCmdData));
+            break;
+
+        case EFFECT_CMD_GET_CONFIG:
+            CHECK_ARG(pReplyData != nullptr && replySize != nullptr &&
+                      *replySize == sizeof(effect_config_t));
+            break;
 
         case EFFECT_CMD_RESET:
-            ALOGI("SB_reset SoundBooster sessionId(%d)", e->sessionId);
-            if (e->dsp != nullptr) {
-                e->dsp->clear();
+            ALOGV("%s: EFFECT_CMD_RESET sessionId %d", __func__, pContext->sessionId);
+            if (pContext->dsp != nullptr) {
+                pContext->dsp->clear();
             }
-            return 0;
+            break;
 
         case EFFECT_CMD_ENABLE:
-            if (replySize == nullptr || replyData == nullptr || *replySize != sizeof(int)) {
-                return -EINVAL;
-            }
-            if (e->state != EFFECT_STATE_INITIALIZED) {
+            CHECK_ARG(pReplyData != nullptr && replySize != nullptr && *replySize == sizeof(int));
+            if (pContext->state != EFFECT_STATE_INITIALIZED) {
                 return -ENODATA;
             }
-            e->state = EFFECT_STATE_ACTIVE;
-            *reinterpret_cast<int*>(replyData) = 0;
-            return 0;
+            pContext->state = EFFECT_STATE_ACTIVE;
+            *reinterpret_cast<int*>(pReplyData) = 0;
+            break;
 
         case EFFECT_CMD_DISABLE:
-            if (replySize == nullptr || replyData == nullptr || *replySize != sizeof(int)) {
-                return -EINVAL;
-            }
-            if (e->state != EFFECT_STATE_ACTIVE) {
+            CHECK_ARG(pReplyData != nullptr && replySize != nullptr && *replySize == sizeof(int));
+            if (pContext->state != EFFECT_STATE_ACTIVE) {
                 return -ENODATA;
             }
-            e->state = EFFECT_STATE_INITIALIZED;
-            *reinterpret_cast<int*>(replyData) = 0;
-            return 0;
+            pContext->state = EFFECT_STATE_INITIALIZED;
+            *reinterpret_cast<int*>(pReplyData) = 0;
+            break;
 
-        case EFFECT_CMD_SET_PARAM: {
-            if (replySize == nullptr || replyData == nullptr || cmdData == nullptr ||
-                cmdSize <= 0x13 || *replySize != sizeof(int)) {
-                return -EINVAL;
-            }
-            effect_param_t* param = reinterpret_cast<effect_param_t*>(cmdData);
-            *reinterpret_cast<int*>(replyData) = 0;
-            if (param->psize - 4 < 5 && param->vsize > 3) {
-                int32_t paramId = *reinterpret_cast<int32_t*>(param->data);
-                switch (paramId) {
-                    case PARAM_FLAT_MOTION: {
-                        int32_t value = *reinterpret_cast<int32_t*>(param->data + 4);
-                        e->flatMotion = value;
-                        if (e->dsp != nullptr) {
-                            e->dsp->setFlatMotion(value);
-                        }
-                        return 0;
-                    }
-                    case PARAM_ROTATION: {
-                        int32_t value = *reinterpret_cast<int32_t*>(param->data + 4);
-                        if (e->rotation != value) {
-                            e->rotation = value;
-                            if (e->dsp != nullptr) {
-                                e->dsp->setRotation(value);
-                            }
-                        }
-                        return 0;
-                    }
-                    case PARAM_READ_PARAM: {
-                        if (e->dsp != nullptr) {
-                            e->dsp->readParam();
-                        }
-                        return 0;
-                    }
-                    default:
-                        return 0;
-                }
-            }
-            *reinterpret_cast<int*>(replyData) = -EINVAL;
-            return 0;
-        }
+        case EFFECT_CMD_SET_PARAM:
+            CHECK_ARG(pCmdData != nullptr && cmdSize > SB_MIN_SET_PARAM_CMD_SIZE &&
+                      pReplyData != nullptr && replySize != nullptr && *replySize == sizeof(int));
+            *reinterpret_cast<int*>(pReplyData) = android::Effect_setParameter(
+                    pContext, reinterpret_cast<effect_param_t*>(pCmdData));
+            break;
 
         case EFFECT_CMD_SET_DEVICE:
-            if (cmdSize != sizeof(uint32_t) || cmdData == nullptr) {
-                return -EINVAL;
-            }
-            return SoundBooster_setDevice(e, *reinterpret_cast<uint32_t*>(cmdData));
+            CHECK_ARG(pCmdData != nullptr && cmdSize == sizeof(uint32_t));
+            return android::Effect_setDevice(pContext, *reinterpret_cast<uint32_t*>(pCmdData));
 
         case EFFECT_CMD_SET_VOLUME:
-            if (cmdSize != 2 * sizeof(uint32_t) || cmdData == nullptr) {
-                ALOGE("EFFECT_CMD_SET_VOLUME failed");
-                return -EINVAL;
-            }
-            return SoundBooster_setVolume(e, reinterpret_cast<uint32_t*>(cmdData));
+            CHECK_ARG(pCmdData != nullptr && cmdSize == 2 * sizeof(uint32_t));
+            return android::Effect_setVolume(pContext, reinterpret_cast<uint32_t*>(pCmdData));
 
         case EFFECT_CMD_GET_PARAM:
         case EFFECT_CMD_SET_AUDIO_MODE:
-            return 0;
-
-        case EFFECT_CMD_GET_CONFIG:
-            if (replyData == nullptr || replySize == nullptr || *replySize != 0x70) {
-                return -EINVAL;
-            }
-            return 0;
+            break;
 
         case EFFECT_CMD_DUMP:
-            ALOGI("[context] mCurDevice: %d, mSpkmode: %d, rotation_info: %d, flatMotion_info: %d",
-                  e->curDevice, e->spkMode, e->rotation, e->flatMotion);
-            return 0;
+            ALOGI("device: %u, spkMode: %d, rotation: %d, flatMotion: %d", pContext->curDevice,
+                  pContext->spkMode, pContext->rotation, pContext->flatMotion);
+            break;
 
         default:
-            ALOGW("SB_command invalid command %d", cmdCode);
+            ALOGW("%s: invalid command %u", __func__, cmdCode);
             return -EINVAL;
     }
-}
 
-static int SoundBooster_getDescriptor(effect_handle_t self, effect_descriptor_t* descriptor) {
-    if (self == nullptr || descriptor == nullptr) {
+    return 0;
+} /* end Effect_command */
+
+/* Effect Control Interface Implementation: get_descriptor */
+int Effect_getDescriptor(effect_handle_t self, effect_descriptor_t* pDescriptor) {
+    if (self == nullptr || pDescriptor == nullptr) {
+        ALOGE("%s: invalid param", __func__);
         return -EINVAL;
     }
-    *descriptor = SOUNDBOOSTER_DESCRIPTOR;
-    return 0;
-}
 
-static const struct effect_interface_s SOUNDBOOSTER_EFFECT_INTERFACE = {
-        SoundBooster_process,
-        SoundBooster_command,
-        SoundBooster_getDescriptor,
+    *pDescriptor = android::gSoundBoosterDescriptor;
+    return 0;
+} /* end Effect_getDescriptor */
+
+// effect_handle_t interface implementation for effect
+const struct effect_interface_s gSoundBoosterEffectInterface = {
+        Effect_process,
+        Effect_command,
+        Effect_getDescriptor,
         nullptr,
-};
+}; /* end gSoundBoosterEffectInterface */
 
-static int SoundBoosterLib_Create(const effect_uuid_t* uuid, int32_t sessionId, int32_t /* ioId */,
-                                  effect_handle_t* handle) {
-    if (handle == nullptr || uuid == nullptr) {
-        return -EINVAL;
-    }
-    // The EffectsFactory passes the implementation UUID (audio_effects.xml).
-    if (memcmp(uuid, &SOUNDBOOSTER_EFFECT_IMPL, sizeof(effect_uuid_t)) != 0) {
-        return -EINVAL;
-    }
-
-    SoundBoosterEffect* e = new SoundBoosterEffect();
-    if (e == nullptr) {
-        return -ENOMEM;
-    }
-    e->itfe = &SOUNDBOOSTER_EFFECT_INTERFACE;
-    e->sessionId = sessionId;
-    e->state = EFFECT_STATE_INITIALIZED;
-    e->mode = SB_MODE_DEFAULT;
-    e->logVolume = -100.0f;
-    e->leftVolume = -100.0f;
-    e->rightVolume = 0.0f;
-    e->curDevice = 0;
-    e->enabled = true;
-    e->rotation = 0;
-    e->flatMotion = 0;
-    e->spkMode = 0;
-    e->dsp = nullptr;
-
-    *handle = reinterpret_cast<effect_handle_t>(e);
-    return 0;
-}
-
-static int SoundBoosterLib_Release(effect_handle_t handle) {
-    SoundBoosterEffect* e = reinterpret_cast<SoundBoosterEffect*>(handle);
-    if (e == nullptr) {
-        return -EINVAL;
-    }
-    e->state = EFFECT_STATE_UNINITIALIZED;
-    if (e->dsp != nullptr) {
-        delete e->dsp;
-        e->dsp = nullptr;
-    }
-    delete e;
-    return 0;
-}
-
-static int SoundBoosterLib_GetDescriptor(const effect_uuid_t* uuid,
-                                         effect_descriptor_t* descriptor) {
-    if (descriptor == nullptr || uuid == nullptr) {
-        return -EINVAL;
-    }
-    if (memcmp(uuid, &SOUNDBOOSTER_EFFECT_TYPE, sizeof(effect_uuid_t)) != 0 &&
-        memcmp(uuid, &SOUNDBOOSTER_EFFECT_IMPL, sizeof(effect_uuid_t)) != 0) {
-        return -EINVAL;
-    }
-    *descriptor = SOUNDBOOSTER_DESCRIPTOR;
-    return 0;
-}
-
-static const audio_effect_library_t SOUNDBOOSTER_LIBRARY_INFO = {
+// This is the only symbol that needs to be exported
+__attribute__((visibility("default"))) audio_effect_library_t AUDIO_EFFECT_LIBRARY_INFO_SYM = {
         .tag = AUDIO_EFFECT_LIBRARY_TAG,
         .version = EFFECT_LIBRARY_API_VERSION,
         .name = "SoundBooster Plus Library",
         .implementor = "Samsung",
-        .create_effect = SoundBoosterLib_Create,
-        .release_effect = SoundBoosterLib_Release,
-        .get_descriptor = SoundBoosterLib_GetDescriptor,
+        .create_effect = android::EffectCreate,
+        .release_effect = android::EffectRelease,
+        .get_descriptor = android::EffectGetDescriptor,
 };
-
-audio_effect_library_t AUDIO_EFFECT_LIBRARY_INFO_SYM = SOUNDBOOSTER_LIBRARY_INFO;
+}
