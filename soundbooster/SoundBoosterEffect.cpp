@@ -5,9 +5,9 @@
 
 #define LOG_TAG "SoundBoosterEffectPlus"
 
-#include <errno.h>
-#include <math.h>
-#include <string.h>
+#include <cerrno>
+#include <cmath>
+#include <cstring>
 #include <unistd.h>
 
 #include <hardware/audio_effect.h>
@@ -16,27 +16,42 @@
 
 #include "SoundBoosterInterface.h"
 
-static const effect_uuid_t SOUNDBOOSTER_EFFECT_TYPE = {
-        0xee8aeac0, 0x5d4b, 0x11e5, 0xa837, {0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66}};
+namespace {
 
-static const effect_uuid_t SOUNDBOOSTER_EFFECT_IMPL = {
+constexpr char kParamFile[] = "/vendor/etc/SoundBoosterParam.txt";
+
+constexpr uint32_t kModeDefault = 2;
+constexpr uint32_t kModeMax = 2;
+
+// Stereo output, 4-byte samples (PCM float or PCM 8.24).
+constexpr size_t kBytesPerSample = sizeof(int32_t);
+constexpr size_t kChannelCount = 2;
+constexpr size_t kBytesPerFrame = kBytesPerSample * kChannelCount;
+
+constexpr float kMinVolumeDb = -100.0f;
+constexpr float kVolumeScale = 1.0f / static_cast<float>(1 << 24);
+constexpr float kVolumeEpsilon = 1e-5f;
+constexpr float kLinearToDbScale = 8.68589f;  // 20 / ln(10)
+
+constexpr uint32_t kMinSetParamCmdSize = 0x13;
+constexpr uint32_t kEffectConfigReplySize = 0x70;  // sizeof(effect_config_t)
+
+const effect_uuid_t kEffectTypeUuid = {
+        0xee8aeac0, 0x5d4b, 0x11e5, 0xa837, {0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66}};
+const effect_uuid_t kEffectImplUuid = {
         0x50de45f0, 0x5d4c, 0x11e5, 0xa837, {0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66}};
 
-static const char* const SOUNDBOOSTER_PARAM_FILE = "/vendor/etc/SoundBoosterParam.txt";
-
-static const effect_descriptor_t SOUNDBOOSTER_DESCRIPTOR = {
-        SOUNDBOOSTER_EFFECT_TYPE,
-        SOUNDBOOSTER_EFFECT_IMPL,
+const effect_descriptor_t kEffectDescriptor = {
+        kEffectTypeUuid,
+        kEffectImplUuid,
         EFFECT_CONTROL_API_VERSION,
-        0x01000290,
+        (EFFECT_FLAG_TYPE_INSERT | EFFECT_FLAG_INSERT_LAST | EFFECT_FLAG_VOLUME_IND |
+         EFFECT_FLAG_DEVICE_IND | EFFECT_FLAG_NOT_ELIGIBLE_SUSPEND),
         75,
         25,
         "SoundBooster Plus",
         "Samsung",
 };
-
-constexpr uint32_t SB_MODE_DEFAULT = 2;
-constexpr uint32_t SB_MODE_MAX = 2;
 
 enum EffectState {
     EFFECT_STATE_UNINITIALIZED = 0,
@@ -50,6 +65,8 @@ enum EffectParam {
     PARAM_FLAT_MOTION = 2,
 };
 
+}  // namespace
+
 class SoundBooster {
   public:
     explicit SoundBooster(uint32_t mode);
@@ -61,32 +78,30 @@ class SoundBooster {
     void setRotation(int rotation);
     void setFlatMotion(int flat);
     void readParam();
-    bool isEnabledDevice(uint32_t device);
     void setSessionId(int32_t sessionId);
+    static bool isEnabledDevice(uint32_t device);
 
   private:
     ISoundBooster* mInterface;
     uint32_t mMode;
     int32_t mSessionId;
-    bool mEnabled;
     uint32_t mSampleRate;
     audio_format_t mFormat;
-    int mBitDepth;
+    BitDepth mBitDepth;
 };
 
 SoundBooster::SoundBooster(uint32_t mode)
     : mInterface(nullptr),
       mMode(mode),
       mSessionId(0),
-      mEnabled(false),
       mSampleRate(0),
       mFormat(AUDIO_FORMAT_INVALID),
       mBitDepth(BIT_DEPTH_NONE) {
-    if (mMode > SB_MODE_MAX) {
+    if (mMode > kModeMax) {
         ALOGE("Invalid SoundBooster mode %u", mMode);
-        mMode = SB_MODE_DEFAULT;
+        mMode = kModeDefault;
     }
-    mInterface = SoundBoosterFactory::Create(static_cast<int>(mMode), 0);
+    mInterface = SoundBoosterFactory::Create(static_cast<int>(mMode));
 }
 
 SoundBooster::~SoundBooster() {
@@ -94,18 +109,17 @@ SoundBooster::~SoundBooster() {
         SoundBoosterFactory::Destroy(mInterface);
         mInterface = nullptr;
     }
-    mEnabled = false;
 }
 
 int SoundBooster::init(uint32_t sampleRate, audio_format_t format) {
     if (mInterface == nullptr) {
-        mInterface = SoundBoosterFactory::Create(static_cast<int>(mMode), 0);
+        mInterface = SoundBoosterFactory::Create(static_cast<int>(mMode));
         if (mInterface == nullptr) {
             return -ENODEV;
         }
     }
 
-    int bitDepth = BIT_DEPTH_NONE;
+    BitDepth bitDepth = BIT_DEPTH_NONE;
     if (format == AUDIO_FORMAT_PCM_FLOAT) {
         bitDepth = BIT_DEPTH_FLOAT;
     } else if (format == AUDIO_FORMAT_PCM_8_24_BIT) {
@@ -116,11 +130,11 @@ int SoundBooster::init(uint32_t sampleRate, audio_format_t format) {
     mFormat = format;
     mBitDepth = bitDepth;
 
-    mInterface->Init(static_cast<BitDepth>(bitDepth));
+    mInterface->Init(mBitDepth);
     mInterface->SamplingRateConfig(static_cast<int>(sampleRate));
 
-    if (access(SOUNDBOOSTER_PARAM_FILE, 0) == 0) {
-        mInterface->LoadParameter(SOUNDBOOSTER_PARAM_FILE, 0, nullptr);
+    if (access(kParamFile, F_OK) == 0) {
+        mInterface->LoadParameter(kParamFile, false, nullptr);
     } else {
         ALOGE("Cannot find SoundBoosterParam.txt");
     }
@@ -131,7 +145,6 @@ int SoundBooster::process(void* in, void* out, size_t frames, float volume) {
     if (frames == 0 || mInterface == nullptr) {
         return 0;
     }
-    mEnabled = true;
     return compatExe(mInterface, in, out, static_cast<int>(frames), volume);
 }
 
@@ -145,10 +158,11 @@ void SoundBooster::setRotation(int rotation) {
     if (mInterface == nullptr) {
         return;
     }
-    if (rotation == 3) {
-        rotation = 1;
-    } else if (rotation == 1) {
-        rotation = 3;
+
+    if (rotation == ORIENTATION_270) {
+        rotation = ORIENTATION_90;
+    } else if (rotation == ORIENTATION_90) {
+        rotation = ORIENTATION_270;
     }
     mInterface->SetOrientation(static_cast<Orientation>(rotation));
 }
@@ -158,18 +172,18 @@ void SoundBooster::setFlatMotion(int flat) {
         return;
     }
     mInterface->SetMotion(flat);
-    ALOGI("[GOF] setFlatMotion : flat %d", flat);
+    ALOGI("setFlatMotion: flat %d", flat);
 }
 
 void SoundBooster::readParam() {
     if (mInterface == nullptr) {
         return;
     }
-    if (access(SOUNDBOOSTER_PARAM_FILE, 0) != 0) {
+    if (access(kParamFile, F_OK) != 0) {
         ALOGE("Cannot find SoundBoosterParam.txt");
         return;
     }
-    mInterface->LoadParameter(SOUNDBOOSTER_PARAM_FILE, 0, nullptr);
+    mInterface->LoadParameter(kParamFile, false, nullptr);
 }
 
 bool SoundBooster::isEnabledDevice(uint32_t device) {
@@ -180,61 +194,50 @@ void SoundBooster::setSessionId(int32_t sessionId) {
     mSessionId = sessionId;
 }
 
+namespace {
+
 struct SoundBoosterEffect {
-    const struct effect_interface_s* itfe;
-    int32_t sessionId;
-    EffectState state;
-    int32_t mode;
-    float logVolume;
-    float leftVolume;
-    float rightVolume;
-    uint32_t curDevice;
-    bool enabled;
-    int32_t rotation;
-    int32_t flatMotion;
-    int32_t spkMode;
-    SoundBooster* dsp;
+    const effect_interface_s* itfe = nullptr;
+    int32_t sessionId = 0;
+    EffectState state = EFFECT_STATE_UNINITIALIZED;
+    int32_t mode = kModeDefault;
+    float logVolume = kMinVolumeDb;
+    float leftVolume = kMinVolumeDb;
+    float rightVolume = 0.0f;
+    uint32_t curDevice = 0;
+    bool enabled = true;
+    int32_t rotation = 0;
+    int32_t flatMotion = 0;
+    int32_t spkMode = 0;
+    SoundBooster* dsp = nullptr;
 };
 
-static int SoundBooster_process(effect_handle_t self, audio_buffer_t* in, audio_buffer_t* out) {
-    SoundBoosterEffect* e = reinterpret_cast<SoundBoosterEffect*>(self);
-    if (e == nullptr) {
+int SoundBooster_process(effect_handle_t self, audio_buffer_t* in, audio_buffer_t* out) {
+    auto* e = reinterpret_cast<SoundBoosterEffect*>(self);
+    if (e == nullptr || e->dsp == nullptr) {
         return -EINVAL;
     }
     if (e->state != EFFECT_STATE_ACTIVE) {
         return -ENODATA;
     }
-    if (e->dsp == nullptr) {
-        return -EINVAL;
-    }
-    if (in == nullptr || out == nullptr) {
-        return -EINVAL;
-    }
-    if (in->raw == nullptr || out->raw == nullptr) {
+    if (in == nullptr || out == nullptr || in->raw == nullptr || out->raw == nullptr) {
         return -EINVAL;
     }
     if (in->frameCount == 0 || in->frameCount != out->frameCount) {
         return -EINVAL;
     }
 
-    if (!e->enabled) {
-        // Passthrough: device not processed, just copy the input through.
-        if (in->raw != out->raw) {
-            memcpy(out->raw, in->raw, in->frameCount * 8);
-        }
-        return 0;
+    if (e->enabled) {
+        e->dsp->process(in->raw, in->raw, in->frameCount, e->logVolume);
     }
 
-    e->dsp->process(in->raw, in->raw, in->frameCount, e->logVolume);
-
     if (in->raw != out->raw) {
-        // Stereo float: 2 channels * 4 bytes per frame.
-        memcpy(out->raw, in->raw, in->frameCount * 8);
+        memcpy(out->raw, in->raw, in->frameCount * kBytesPerFrame);
     }
     return 0;
 }
 
-static int SoundBooster_setDevice(SoundBoosterEffect* e, uint32_t device) {
+int SoundBooster_setDevice(SoundBoosterEffect* e, uint32_t device) {
     if (e == nullptr) {
         return -EINVAL;
     }
@@ -242,11 +245,12 @@ static int SoundBooster_setDevice(SoundBoosterEffect* e, uint32_t device) {
         ALOGE("Not initialized");
         return -ENODATA;
     }
+
     bool wasEnabled = e->enabled;
     e->curDevice = device;
-    bool enabled = e->dsp != nullptr ? e->dsp->isEnabledDevice(device) : false;
-    e->enabled = enabled;
-    if (!wasEnabled && enabled) {
+    e->enabled = e->dsp != nullptr && SoundBooster::isEnabledDevice(device);
+
+    if (!wasEnabled && e->enabled) {
         ALOGI("SB_reset SoundBooster sessionId(%d)", e->sessionId);
         if (e->dsp != nullptr) {
             e->dsp->clear();
@@ -255,7 +259,7 @@ static int SoundBooster_setDevice(SoundBoosterEffect* e, uint32_t device) {
     return 0;
 }
 
-static int SoundBooster_setVolume(SoundBoosterEffect* e, uint32_t* vol) {
+int SoundBooster_setVolume(SoundBoosterEffect* e, uint32_t* vol) {
     if (e == nullptr) {
         return -EINVAL;
     }
@@ -263,27 +267,30 @@ static int SoundBooster_setVolume(SoundBoosterEffect* e, uint32_t* vol) {
         ALOGE("Not initialized");
         return -ENODATA;
     }
-    float left = static_cast<float>(vol[0]) * 5.9604645e-08f;
-    float right = static_cast<float>(vol[1]) * 5.9604645e-08f;
+
+    float left = static_cast<float>(vol[0]) * kVolumeScale;
+    float right = static_cast<float>(vol[1]) * kVolumeScale;
     if (e->leftVolume == left && e->rightVolume == right) {
         return 0;
     }
+
     e->leftVolume = left;
     e->rightVolume = right;
     float maxVol = left > right ? left : right;
-    e->logVolume = logf(maxVol + 1e-05f) * 8.68589f;
+    e->logVolume = logf(maxVol + kVolumeEpsilon) * kLinearToDbScale;
     return 0;
 }
 
-static int SoundBooster_init(SoundBoosterEffect* e, effect_config_t* config) {
-    uint32_t mode = SB_MODE_DEFAULT;
-    if (config != nullptr && config->inputCfg.samplingRate > SB_MODE_MAX) {
+int SoundBooster_init(SoundBoosterEffect* e, effect_config_t* config) {
+    uint32_t mode = kModeDefault;
+    if (config != nullptr && config->inputCfg.samplingRate > kModeMax) {
         mode = config->inputCfg.samplingRate;
-        if (mode > SB_MODE_MAX) {
+        if (mode > kModeMax) {
             ALOGE("Invalid SoundBooster mode");
-            mode = SB_MODE_DEFAULT;
+            mode = kModeDefault;
         }
     }
+
     e->mode = mode;
     if (e->dsp == nullptr) {
         e->dsp = new SoundBooster(mode);
@@ -297,12 +304,12 @@ static int SoundBooster_init(SoundBoosterEffect* e, effect_config_t* config) {
     return 0;
 }
 
-static int SoundBooster_setConfig(SoundBoosterEffect* e, effect_config_t* config) {
-    if (e == nullptr || config == nullptr) {
+int SoundBooster_setConfig(SoundBoosterEffect* e, effect_config_t* config) {
+    if (e == nullptr || config == nullptr || e->dsp == nullptr) {
         return -EINVAL;
     }
     if (config->inputCfg.samplingRate != config->outputCfg.samplingRate ||
-        config->inputCfg.format != config->outputCfg.format || e->dsp == nullptr) {
+        config->inputCfg.format != config->outputCfg.format) {
         return -EINVAL;
     }
     e->dsp->init(config->inputCfg.samplingRate,
@@ -310,9 +317,9 @@ static int SoundBooster_setConfig(SoundBoosterEffect* e, effect_config_t* config
     return 0;
 }
 
-static int SoundBooster_command(effect_handle_t self, uint32_t cmdCode, uint32_t cmdSize,
-                                void* cmdData, uint32_t* replySize, void* replyData) {
-    SoundBoosterEffect* e = reinterpret_cast<SoundBoosterEffect*>(self);
+int SoundBooster_command(effect_handle_t self, uint32_t cmdCode, uint32_t cmdSize, void* cmdData,
+                         uint32_t* replySize, void* replyData) {
+    auto* e = reinterpret_cast<SoundBoosterEffect*>(self);
     if (e == nullptr) {
         return -EINVAL;
     }
@@ -370,44 +377,44 @@ static int SoundBooster_command(effect_handle_t self, uint32_t cmdCode, uint32_t
 
         case EFFECT_CMD_SET_PARAM: {
             if (replySize == nullptr || replyData == nullptr || cmdData == nullptr ||
-                cmdSize <= 0x13 || *replySize != sizeof(int)) {
+                cmdSize <= kMinSetParamCmdSize || *replySize != sizeof(int)) {
                 return -EINVAL;
             }
-            effect_param_t* param = reinterpret_cast<effect_param_t*>(cmdData);
+            auto* param = reinterpret_cast<effect_param_t*>(cmdData);
             *reinterpret_cast<int*>(replyData) = 0;
-            if (param->psize - 4 < 5 && param->vsize > 3) {
-                int32_t paramId = *reinterpret_cast<int32_t*>(param->data);
-                switch (paramId) {
-                    case PARAM_FLAT_MOTION: {
-                        int32_t value = *reinterpret_cast<int32_t*>(param->data + 4);
-                        e->flatMotion = value;
-                        if (e->dsp != nullptr) {
-                            e->dsp->setFlatMotion(value);
-                        }
-                        return 0;
-                    }
-                    case PARAM_ROTATION: {
-                        int32_t value = *reinterpret_cast<int32_t*>(param->data + 4);
-                        if (e->rotation != value) {
-                            e->rotation = value;
-                            if (e->dsp != nullptr) {
-                                e->dsp->setRotation(value);
-                            }
-                        }
-                        return 0;
-                    }
-                    case PARAM_READ_PARAM: {
-                        if (e->dsp != nullptr) {
-                            e->dsp->readParam();
-                        }
-                        return 0;
-                    }
-                    default:
-                        return 0;
-                }
+            if (param->psize - sizeof(int32_t) >= 5 || param->vsize <= 3) {
+                *reinterpret_cast<int*>(replyData) = -EINVAL;
+                return 0;
             }
-            *reinterpret_cast<int*>(replyData) = -EINVAL;
-            return 0;
+
+            int32_t paramId = *reinterpret_cast<int32_t*>(param->data);
+            switch (paramId) {
+                case PARAM_FLAT_MOTION: {
+                    int32_t value = *reinterpret_cast<int32_t*>(param->data + sizeof(int32_t));
+                    e->flatMotion = value;
+                    if (e->dsp != nullptr) {
+                        e->dsp->setFlatMotion(value);
+                    }
+                    return 0;
+                }
+                case PARAM_ROTATION: {
+                    int32_t value = *reinterpret_cast<int32_t*>(param->data + sizeof(int32_t));
+                    if (e->rotation != value) {
+                        e->rotation = value;
+                        if (e->dsp != nullptr) {
+                            e->dsp->setRotation(value);
+                        }
+                    }
+                    return 0;
+                }
+                case PARAM_READ_PARAM:
+                    if (e->dsp != nullptr) {
+                        e->dsp->readParam();
+                    }
+                    return 0;
+                default:
+                    return 0;
+            }
         }
 
         case EFFECT_CMD_SET_DEVICE:
@@ -428,7 +435,8 @@ static int SoundBooster_command(effect_handle_t self, uint32_t cmdCode, uint32_t
             return 0;
 
         case EFFECT_CMD_GET_CONFIG:
-            if (replyData == nullptr || replySize == nullptr || *replySize != 0x70) {
+            if (replyData == nullptr || replySize == nullptr ||
+                *replySize != kEffectConfigReplySize) {
                 return -EINVAL;
             }
             return 0;
@@ -444,81 +452,64 @@ static int SoundBooster_command(effect_handle_t self, uint32_t cmdCode, uint32_t
     }
 }
 
-static int SoundBooster_getDescriptor(effect_handle_t self, effect_descriptor_t* descriptor) {
+int SoundBooster_getDescriptor(effect_handle_t self, effect_descriptor_t* descriptor) {
     if (self == nullptr || descriptor == nullptr) {
         return -EINVAL;
     }
-    *descriptor = SOUNDBOOSTER_DESCRIPTOR;
+    *descriptor = kEffectDescriptor;
     return 0;
 }
 
-static const struct effect_interface_s SOUNDBOOSTER_EFFECT_INTERFACE = {
+const effect_interface_s kSoundBoosterEffectInterface = {
         SoundBooster_process,
         SoundBooster_command,
         SoundBooster_getDescriptor,
         nullptr,
 };
 
-static int SoundBoosterLib_Create(const effect_uuid_t* uuid, int32_t sessionId, int32_t /* ioId */,
-                                  effect_handle_t* handle) {
+int SoundBoosterLib_Create(const effect_uuid_t* uuid, int32_t sessionId, int32_t /* ioId */,
+                           effect_handle_t* handle) {
     if (handle == nullptr || uuid == nullptr) {
         return -EINVAL;
     }
     // The EffectsFactory passes the implementation UUID (audio_effects.xml).
-    if (memcmp(uuid, &SOUNDBOOSTER_EFFECT_IMPL, sizeof(effect_uuid_t)) != 0) {
+    if (memcmp(uuid, &kEffectImplUuid, sizeof(effect_uuid_t)) != 0) {
         return -EINVAL;
     }
 
-    SoundBoosterEffect* e = new SoundBoosterEffect();
-    if (e == nullptr) {
-        return -ENOMEM;
-    }
-    e->itfe = &SOUNDBOOSTER_EFFECT_INTERFACE;
+    auto* e = new SoundBoosterEffect();
+    e->itfe = &kSoundBoosterEffectInterface;
     e->sessionId = sessionId;
     e->state = EFFECT_STATE_INITIALIZED;
-    e->mode = SB_MODE_DEFAULT;
-    e->logVolume = -100.0f;
-    e->leftVolume = -100.0f;
-    e->rightVolume = 0.0f;
-    e->curDevice = 0;
-    e->enabled = true;
-    e->rotation = 0;
-    e->flatMotion = 0;
-    e->spkMode = 0;
-    e->dsp = nullptr;
 
     *handle = reinterpret_cast<effect_handle_t>(e);
     return 0;
 }
 
-static int SoundBoosterLib_Release(effect_handle_t handle) {
-    SoundBoosterEffect* e = reinterpret_cast<SoundBoosterEffect*>(handle);
+int SoundBoosterLib_Release(effect_handle_t handle) {
+    auto* e = reinterpret_cast<SoundBoosterEffect*>(handle);
     if (e == nullptr) {
         return -EINVAL;
     }
     e->state = EFFECT_STATE_UNINITIALIZED;
-    if (e->dsp != nullptr) {
-        delete e->dsp;
-        e->dsp = nullptr;
-    }
+    delete e->dsp;
     delete e;
     return 0;
 }
 
-static int SoundBoosterLib_GetDescriptor(const effect_uuid_t* uuid,
-                                         effect_descriptor_t* descriptor) {
+int SoundBoosterLib_GetDescriptor(const effect_uuid_t* uuid, effect_descriptor_t* descriptor) {
     if (descriptor == nullptr || uuid == nullptr) {
         return -EINVAL;
     }
-    if (memcmp(uuid, &SOUNDBOOSTER_EFFECT_TYPE, sizeof(effect_uuid_t)) != 0 &&
-        memcmp(uuid, &SOUNDBOOSTER_EFFECT_IMPL, sizeof(effect_uuid_t)) != 0) {
+    if (memcmp(uuid, &kEffectTypeUuid, sizeof(effect_uuid_t)) != 0 &&
+        memcmp(uuid, &kEffectImplUuid, sizeof(effect_uuid_t)) != 0) {
         return -EINVAL;
     }
-    *descriptor = SOUNDBOOSTER_DESCRIPTOR;
+    *descriptor = kEffectDescriptor;
     return 0;
 }
 
-static const audio_effect_library_t SOUNDBOOSTER_LIBRARY_INFO = {
+const audio_effect_library_t kSoundBoosterLibraryInfo = {
         .tag = AUDIO_EFFECT_LIBRARY_TAG,
         .version = EFFECT_LIBRARY_API_VERSION,
         .name = "SoundBooster Plus Library",
@@ -528,4 +519,7 @@ static const audio_effect_library_t SOUNDBOOSTER_LIBRARY_INFO = {
         .get_descriptor = SoundBoosterLib_GetDescriptor,
 };
 
-audio_effect_library_t AUDIO_EFFECT_LIBRARY_INFO_SYM = SOUNDBOOSTER_LIBRARY_INFO;
+}  // namespace
+
+extern "C" __attribute__((visibility("default")))
+audio_effect_library_t AUDIO_EFFECT_LIBRARY_INFO_SYM = kSoundBoosterLibraryInfo;
