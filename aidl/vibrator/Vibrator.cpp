@@ -40,8 +40,8 @@ static std::map<Effect, HapticEffectSpec> CP_TRIGGER_EFFECTS{{Effect::CLICK, {10
 
 static std::map<Effect, HapticEffectSpec> FF_EFFECT_IDS{{Effect::CLICK, {1, 50}},
                                                         {Effect::DOUBLE_CLICK, {5, 250}},
-                                                        {Effect::TICK, {41, 25}},
-                                                        {Effect::HEAVY_CLICK, {14, 100}},
+                                                        {Effect::TICK, {23, 25}},
+                                                        {Effect::HEAVY_CLICK, {33, 100}},
                                                         {Effect::TEXTURE_TICK, {41, 25}}};
 
 static std::map<CompositePrimitive, HapticEffectSpec> FF_PRIMITIVE_IDS{
