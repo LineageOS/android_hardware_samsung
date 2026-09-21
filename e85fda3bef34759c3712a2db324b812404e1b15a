@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ede5383e_04c8b474",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3917
+      },
+      "writtenOn": "2026-09-21T06:18:09Z",
+      "side": 1,
+      "message": "Fixes:\n\nerror: hardware/samsung/aidl/usb/gadget/Android.bp:17:1: \"android.hardware.usb.gadget-service.samsung\" depends on undefined module \"libpixelusb-aidl\".\nModule \"android.hardware.usb.gadget-service.samsung\" is defined in namespace \"hardware/samsung\" which can read these 4 namespaces: [\"hardware/samsung\" \"hardware/google/pixel\" \"hardware/google/interfaces\" \".\"]\nModule \"libpixelusb-aidl\" can be found in these namespaces: [\"hardware/google/pixel/usb\"]\nOr did you mean [\"libpixelusb-usbdp\"]?",
+      "revId": "e85fda3bef34759c3712a2db324b812404e1b15a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
