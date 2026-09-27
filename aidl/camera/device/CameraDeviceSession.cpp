@@ -9,6 +9,10 @@
 
 #include "CameraDeviceSession.h"
 
+#ifdef CAMERA_HIGH_FPS_VIDEO
+#include "SamsungHighFpsVideo.h"
+#endif
+
 #include <SamsungCameraModule.h>
 #include <aidl/android/hardware/camera/device/ErrorMsg.h>
 #include <aidl/android/hardware/camera/device/ShutterMsg.h>
@@ -893,6 +897,22 @@ ndk::ScopedAStatus CameraDeviceSession::configureStreams(
         convertFromAidl(in_requestedConfiguration.sessionParams, &paramBuffer);
     }
 
+#ifdef CAMERA_HIGH_FPS_VIDEO
+    // Translate a high fps AE target range into the Samsung session parameters the HAL needs
+    // to leave its 30 fps sensor modes. Must stay alive until configure_streams returns.
+    ::android::hardware::camera::common::helper::CameraMetadata highFpsParams;
+    bool highFpsParamsLocked = false;
+    if (paramBuffer != nullptr &&
+        in_requestedConfiguration.operationMode ==
+                ::aidl::android::hardware::camera::device::StreamConfigurationMode::NORMAL_MODE) {
+        highFpsParams = paramBuffer;  // clones
+        if (SamsungHighFpsVideo::patchSessionParams(&highFpsParams)) {
+            paramBuffer = highFpsParams.getAndLock();
+            highFpsParamsLocked = true;
+        }
+    }
+#endif
+
     camera3_stream_configuration_t stream_list{};
     // Block reading mStreamConfigCounter until configureStream returns
     Mutex::Autolock _sccl(mStreamConfigCounterLock);
@@ -906,6 +926,12 @@ ndk::ScopedAStatus CameraDeviceSession::configureStreams(
     ATRACE_BEGIN("camera3->configure_streams");
     status_t ret = mDevice->ops->configure_streams(mDevice, &stream_list);
     ATRACE_END();
+
+#ifdef CAMERA_HIGH_FPS_VIDEO
+    if (highFpsParamsLocked) {
+        highFpsParams.unlock(paramBuffer);
+    }
+#endif
 
     // In case Hal returns error most likely it was not able to release
     // the corresponding resources of the deleted streams.
@@ -1145,6 +1171,20 @@ ndk::ScopedAStatus CameraDeviceSession::isReconfigurationRequired(
         bool* _aidl_return) {
     // reconfiguration required if there is any change in the session params
     *_aidl_return = in_oldSessionParams != in_newSessionParams;
+
+#ifdef CAMERA_HIGH_FPS_VIDEO
+    // The AE target fps range is only a session key so that high fps video can be configured.
+    // Don't restart the pipeline when an app merely switches between normal (<= 30 fps) ranges.
+    if (*_aidl_return) {
+        const camera_metadata_t* oldParams = nullptr;
+        const camera_metadata_t* newParams = nullptr;
+        if (convertFromAidl(in_oldSessionParams, &oldParams) &&
+            convertFromAidl(in_newSessionParams, &newParams)) {
+            *_aidl_return = SamsungHighFpsVideo::isReconfigurationRequired(oldParams, newParams);
+        }
+    }
+#endif
+
     return fromStatus(Status::OK);
 }
 

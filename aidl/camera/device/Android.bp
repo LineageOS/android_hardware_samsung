@@ -11,9 +11,17 @@ cc_library_shared {
         "samsung_camera3_defaults",
     ],
     vendor: true,
+    cppflags: select(soong_config_variable("samsungCameraVars", "high_fps_video"), {
+        true: ["-DCAMERA_HIGH_FPS_VIDEO"],
+        default: [],
+    }) + select(soong_config_variable("samsungCameraVars", "high_fps_video_client"), {
+        any @ flag_val: ["-DCAMERA_HIGH_FPS_VIDEO_CLIENT=" + flag_val],
+        default: [],
+    }),
     srcs: [
         "CameraDevice.cpp",
         "CameraDeviceSession.cpp",
+        "SamsungHighFpsVideo.cpp",
         "convert.cpp",
     ],
     shared_libs: [

@@ -9,6 +9,10 @@
 #include "CameraDevice.h"
 #include "convert.h"
 
+#ifdef CAMERA_HIGH_FPS_VIDEO
+#include "SamsungHighFpsVideo.h"
+#endif
+
 #include <cutils/trace.h>
 
 namespace android {
@@ -79,7 +83,18 @@ ndk::ScopedAStatus CameraDevice::getCameraCharacteristics(CameraMetadata* _aidl_
                 metadata.update(ANDROID_FLASH_INFO_STRENGTH_MAXIMUM_LEVEL, &torchStrengthLevels, 1);
             }
 
+#ifdef CAMERA_HIGH_FPS_VIDEO
+            // The static metadata buffer is owned by the HAL and entries are added here, which
+            // may reallocate it: patch a copy instead.
+            SamsungHighFpsVideo::init(mModule);
+            common::helper::CameraMetadata patched(clone_camera_metadata(metadata.release()));
+            SamsungHighFpsVideo::patchCharacteristics(&patched);
+            const camera_metadata_t* patchedRaw = patched.getAndLock();
+            convertToAidl(patchedRaw, _aidl_return);
+            patched.unlock(patchedRaw);
+#else
             convertToAidl(metadata.release(), _aidl_return);
+#endif
         } else {
             ALOGE("%s: get camera info failed!", __FUNCTION__);
             status = Status::INTERNAL_ERROR;
@@ -325,6 +340,10 @@ ndk::ScopedAStatus CameraDevice::open(const std::shared_ptr<ICameraDeviceCallbac
             mLock.unlock();
             return fromStatus(Status::ILLEGAL_ARGUMENT);
         }
+
+#ifdef CAMERA_HIGH_FPS_VIDEO
+        SamsungHighFpsVideo::init(mModule);
+#endif
 
         session = createSession(device, info.static_camera_characteristics, in_callback);
         if (session == nullptr) {
