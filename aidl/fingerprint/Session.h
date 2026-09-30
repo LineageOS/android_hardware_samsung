@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <atomic>
+
 #include <aidl/android/hardware/biometrics/fingerprint/BnSession.h>
 #include <aidl/android/hardware/biometrics/fingerprint/ISessionCallback.h>
 
@@ -74,7 +76,7 @@ class Session : public BnSession {
     LegacyHAL mHal;
     LockoutTracker mLockoutTracker;
     bool mClosed = false;
-    bool mCaptureReady = false;
+    std::atomic<bool> mCaptureReady = false;
 
     Error VendorErrorFilter(int32_t error, int32_t* vendorCode);
     AcquiredInfo VendorAcquiredFilter(int32_t info, int32_t* vendorCode);

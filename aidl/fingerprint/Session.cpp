@@ -20,6 +20,10 @@
 using namespace ::android::fingerprint::samsung;
 using namespace ::std::chrono_literals;
 
+namespace {
+constexpr auto kCaptureReadyTimeout = 3s;
+}  // namespace
+
 namespace aidl {
 namespace android {
 namespace hardware {
@@ -66,6 +70,7 @@ ndk::ScopedAStatus Session::enroll(const HardwareAuthToken& hat,
                                    std::shared_ptr<ICancellationSignal>* out) {
     LOG(INFO) << "enroll";
 
+    const auto calibrateStart = std::chrono::steady_clock::now();
     if (FingerprintHalProperties::force_calibrate().value_or(false)) {
         mCaptureReady = false;
         mHal.request(SEM_REQUEST_FORCE_CBGE, 1);
@@ -78,12 +83,28 @@ ndk::ScopedAStatus Session::enroll(const HardwareAuthToken& hat,
     if (error) {
         LOG(ERROR) << "ss_fingerprint_enroll failed: " << error;
         mCb->onError(Error::UNABLE_TO_PROCESS, error);
-    }
-
-    if (FingerprintHalProperties::force_calibrate().value_or(false)) {
+    } else if (FingerprintHalProperties::force_calibrate().value_or(false)) {
+        // Wait for the calibration to finish, but never block the binder
+        // thread forever: if CAPTURE_READY never arrives (sensor/TA still
+        // initialising on first boot, event routed to another session) the
+        // framework's biometric scheduler hangs on this call and the
+        // enrollment UI ends up with a generic "Something went wrong".
+        const auto deadline = std::chrono::steady_clock::now() + kCaptureReadyTimeout;
+        bool timedOut = false;
         while (!mCaptureReady) {
+            if (std::chrono::steady_clock::now() >= deadline) {
+                timedOut = true;
+                break;
+            }
             std::this_thread::sleep_for(100ms);
         }
+        // Log the real calibration time (from the CBGE request) so the
+        // timeout can be sized from field data.
+        const auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+                                       std::chrono::steady_clock::now() - calibrateStart)
+                                       .count();
+        LOG(INFO) << "Capture ready wait: " << elapsedMs << " ms since calibration request"
+                  << (timedOut ? " (timed out, continuing)" : "");
     }
 
     *out = SharedRefBase::make<CancellationSignal>(this);
