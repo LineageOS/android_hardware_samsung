@@ -1,0 +1,24 @@
+/*
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+package com.samsung.android.callmanager;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
+public class BootReceiver extends BroadcastReceiver {
+    private static final String TAG = "SamsungCallManager";
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        String action = intent != null ? intent.getAction() : "";
+        Log.i(TAG, "BootReceiver onReceive: " + action);
+
+        Intent svc = new Intent(context, SamsungCallManagerService.class);
+        context.startService(svc);
+    }
+}
