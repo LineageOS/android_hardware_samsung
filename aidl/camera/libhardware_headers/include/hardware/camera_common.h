@@ -1241,6 +1241,19 @@ typedef struct camera_module {
      */
     void (*notify_device_state_change)(uint64_t deviceState);
 
+#ifdef CAMERA_NEEDS_SEC_QCOM_RESERVED_FIELD
+    /** Slot 10 is unused, then the two concurrent-streaming members. Just 3 reserved ones because
+     * `concurrent_camera_combination` and `cameraid_stream_combination` do not exist in lineage
+     * tree.
+     *
+     * void* reserved0;
+     * int (*get_concurrent_streaming_camera_ids)(uint32_t*, concurrent_camera_combination**);
+     * int (*is_concurrent_stream_combination_supported)(uint32_t, const
+     * cameraid_stream_combination*);
+     */
+    void* reserved0[3];
+#endif
+
     /**
      * set_torch_mode_strength:
      *
@@ -1249,8 +1262,12 @@ typedef struct camera_module {
      */
     int (*set_torch_mode_strength)(const char* camera_id, bool enabled, int32_t strength);
 
+#ifdef CAMERA_NEEDS_SEC_QCOM_RESERVED_FIELD
+    void* reserved1[1];
+#else
     /* reserved for future use */
-    void* reserved[2];
+    void* reserved1[2];
+#endif
 } camera_module_t;
 
 __END_DECLS
