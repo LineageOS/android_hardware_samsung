@@ -22,6 +22,13 @@ using namespace ::std::chrono_literals;
 
 namespace {
 constexpr auto kCaptureReadyTimeout = 3s;
+// How long to keep watching for a failed enroll start after CAPTURE_READY.
+// On o1s the vendor reports it ~20-40 ms after the calibration finished.
+constexpr auto kEnrollStartGrace = 300ms;
+// Vendor error the o1s (QBT2608) library reports when the trustlet refuses
+// to start an enroll right after a forced CBGE calibration
+// ("do_enroll_stub failed : 48" -> error 8, vendor code 1).
+constexpr int32_t kVendorEnrollStartFailed = FINGERPRINT_ERROR_VENDOR_BASE + 1;
 }  // namespace
 
 namespace aidl {
@@ -71,8 +78,10 @@ ndk::ScopedAStatus Session::enroll(const HardwareAuthToken& hat,
     LOG(INFO) << "enroll";
 
     const auto calibrateStart = std::chrono::steady_clock::now();
-    if (FingerprintHalProperties::force_calibrate().value_or(false)) {
+    const bool forceCalibrate = FingerprintHalProperties::force_calibrate().value_or(false);
+    if (forceCalibrate) {
         mCaptureReady = false;
+        mEnrollStartWatch = kWatchArmed;
         mHal.request(SEM_REQUEST_FORCE_CBGE, 1);
     }
 
@@ -81,9 +90,10 @@ ndk::ScopedAStatus Session::enroll(const HardwareAuthToken& hat,
 
     int32_t error = mHal.ss_fingerprint_enroll(&authToken, mUserId, 0 /* timeoutSec */);
     if (error) {
+        mEnrollStartWatch = kWatchIdle;
         LOG(ERROR) << "ss_fingerprint_enroll failed: " << error;
         mCb->onError(Error::UNABLE_TO_PROCESS, error);
-    } else if (FingerprintHalProperties::force_calibrate().value_or(false)) {
+    } else if (forceCalibrate) {
         // Wait for the calibration to finish, but never block the binder
         // thread forever: if CAPTURE_READY never arrives (sensor/TA still
         // initialising on first boot, event routed to another session) the
@@ -105,6 +115,27 @@ ndk::ScopedAStatus Session::enroll(const HardwareAuthToken& hat,
                                        .count();
         LOG(INFO) << "Capture ready wait: " << elapsedMs << " ms since calibration request"
                   << (timedOut ? " (timed out, continuing)" : "");
+
+        // When the forced calibration actually runs (first enroll after boot
+        // or after a while), the vendor's queued enroll starts only once it
+        // has finished and the trustlet then rejects it ("do_enroll_stub
+        // failed : 48"), which surfaces as "Something went wrong" (error 8,
+        // vendor 1). An enroll started after that, without a new calibration
+        // request, works. notify() holds that one error back while we watch;
+        // if it shows up, start the enroll once more instead.
+        const auto graceEnd = std::chrono::steady_clock::now() + kEnrollStartGrace;
+        while (mEnrollStartWatch == kWatchArmed &&
+               std::chrono::steady_clock::now() < graceEnd) {
+            std::this_thread::sleep_for(20ms);
+        }
+        if (mEnrollStartWatch.exchange(kWatchIdle) == kWatchCaught) {
+            LOG(WARNING) << "Enroll failed to start after calibration, retrying once";
+            error = mHal.ss_fingerprint_enroll(&authToken, mUserId, 0 /* timeoutSec */);
+            if (error) {
+                LOG(ERROR) << "ss_fingerprint_enroll retry failed: " << error;
+                mCb->onError(Error::UNABLE_TO_PROCESS, error);
+            }
+        }
     }
 
     *out = SharedRefBase::make<CancellationSignal>(this);
@@ -420,6 +451,14 @@ void Session::lockoutTimerExpired() {
 void Session::notify(const fingerprint_msg_t* msg) {
     switch (msg->type) {
         case FINGERPRINT_ERROR: {
+            if (msg->data.error == kVendorEnrollStartFailed) {
+                int expected = kWatchArmed;
+                if (mEnrollStartWatch.compare_exchange_strong(expected, kWatchCaught)) {
+                    LOG(WARNING) << "Holding back vendor error " << msg->data.error
+                                 << " while the enroll is starting";
+                    break;
+                }
+            }
             int32_t vendorCode = 0;
             Error result = VendorErrorFilter(msg->data.error, &vendorCode);
             LOG(DEBUG) << "onError(" << static_cast<int>(result) << ")";

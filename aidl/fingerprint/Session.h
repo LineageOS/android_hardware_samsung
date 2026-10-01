@@ -77,6 +77,10 @@ class Session : public BnSession {
     LockoutTracker mLockoutTracker;
     bool mClosed = false;
     std::atomic<bool> mCaptureReady = false;
+    // Watches for the vendor failing to start an enroll right after a forced
+    // calibration, see Session::enroll().
+    enum EnrollStartWatch : int { kWatchIdle, kWatchArmed, kWatchCaught };
+    std::atomic<int> mEnrollStartWatch = kWatchIdle;
 
     Error VendorErrorFilter(int32_t error, int32_t* vendorCode);
     AcquiredInfo VendorAcquiredFilter(int32_t info, int32_t* vendorCode);
