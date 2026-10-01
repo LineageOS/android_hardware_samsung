@@ -1,0 +1,21 @@
+//
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "SamsungCallManager",
+    srcs: ["src/**/*.java"],
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    platform_apis: true,
+    required: ["privapp-permissions-samsungcallmanager.xml"],
+}
+
+prebuilt_etc {
+    name: "privapp-permissions-samsungcallmanager.xml",
+    src: "privapp-permissions-samsungcallmanager.xml",
+    sub_dir: "permissions",
+    system_ext_specific: true,
+}
