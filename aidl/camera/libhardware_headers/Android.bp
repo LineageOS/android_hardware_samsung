@@ -17,6 +17,9 @@ cc_defaults {
     }) + select(soong_config_variable("samsungCameraVars", "needs_sec_reserved_field"), {
         true: ["-DCAMERA_NEEDS_SEC_RESERVED_FIELD"],
         default: [],
+    }) + select(soong_config_variable("samsungCameraVars", "needs_sec_unihal_layout"), {
+        true: ["-DCAMERA_NEEDS_SEC_UNIHAL_LAYOUT"],
+        default: [],
     }) + select(soong_config_variable("samsungCameraVars", "usage_64bit"), {
         true: ["-DCAMERA_64BIT_USAGE"],
         default: [],
