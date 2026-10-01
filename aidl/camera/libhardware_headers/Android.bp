@@ -14,6 +14,9 @@ cc_defaults {
     }) + select(soong_config_variable("samsungCameraVars", "needs_sec_get_cam_pos_v2"), {
         true: ["-DCAMERA_NEEDS_SEC_GET_CAM_POS_V2"],
         default: [],
+    }) + select(soong_config_variable("samsungCameraVars", "needs_sec_qcom_reserved_field"), {
+        true: ["-DCAMERA_NEEDS_SEC_QCOM_RESERVED_FIELD"],
+        default: [],
     }) + select(soong_config_variable("samsungCameraVars", "needs_sec_reserved_field"), {
         true: ["-DCAMERA_NEEDS_SEC_RESERVED_FIELD"],
         default: [],
