@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9dc0116_5ed08403",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-03T18:42:37Z",
+      "side": 1,
+      "message": "A bunch of devices fix this by using in-tree audio impls that alter the parameter. This shim allows to get rid of the in-tree impl by directly shimming the stock audio HAL",
+      "revId": "71740500db456a3be115f71732d2587bdda0f348",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
