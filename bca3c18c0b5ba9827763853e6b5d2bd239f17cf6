@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b8ac2cb8_ecaab31c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36705
+      },
+      "writtenOn": "2026-10-03T19:06:24Z",
+      "side": 1,
+      "message": "Other packages don\u0027t use \u0027Samsung\u0027 prefix (e.g. SamsungDoze is under packages/Doze)",
+      "revId": "bca3c18c0b5ba9827763853e6b5d2bd239f17cf6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "70b719f9_eded2b4a",
         "filename": "packages/SamsungCallManager/src/com/samsung/android/callmanager/SamsungCallRedirectionService.java",
         "patchSetId": 2
