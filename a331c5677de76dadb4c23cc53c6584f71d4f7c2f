@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59351b28_9cb12cad",
+        "filename": "packages/SamsungCallManager/src/com/samsung/android/callmanager/SamsungCallManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-10-03T18:57:43Z",
+      "side": 1,
+      "message": "Not a member, so it shouldn\u0027t be named as such. Same for AudioManager, CallStateCallback, SubscriptionInfo and TelephonyManager.",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "a331c5677de76dadb4c23cc53c6584f71d4f7c2f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "392a9f31_c2e705fb",
+        "filename": "packages/SamsungCallManager/src/com/samsung/android/callmanager/SamsungCallManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-10-03T18:57:43Z",
+      "side": 1,
+      "message": "This is only used once, i wouldn\u0027t make it its own variable.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 2
+      },
+      "revId": "a331c5677de76dadb4c23cc53c6584f71d4f7c2f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3494fa89_4fdaf2a5",
+        "filename": "packages/SamsungCallManager/src/com/samsung/android/callmanager/SamsungCallManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-10-03T18:57:43Z",
+      "side": 1,
+      "message": "Cache as member?",
+      "range": {
+        "startLine": 135,
+        "startChar": 21,
+        "endLine": 135,
+        "endChar": 34
+      },
+      "revId": "a331c5677de76dadb4c23cc53c6584f71d4f7c2f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aa71cb5_badc06e0",
+        "filename": "packages/SamsungCallManager/src/com/samsung/android/callmanager/SamsungCallManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-10-03T18:57:43Z",
+      "side": 1,
+      "message": "Move this into CallStateCallback",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 2
+      },
+      "revId": "a331c5677de76dadb4c23cc53c6584f71d4f7c2f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3ccc4e9_f8c94f1f",
+        "filename": "packages/SamsungCallManager/src/com/samsung/android/callmanager/SamsungCallManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-10-03T18:57:43Z",
+      "side": 1,
+      "message": "Add @Annotation.CallState?",
+      "range": {
+        "startLine": 149,
+        "startChar": 39,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "a331c5677de76dadb4c23cc53c6584f71d4f7c2f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
