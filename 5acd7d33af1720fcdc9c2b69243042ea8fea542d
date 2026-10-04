@@ -67,6 +67,24 @@
       "message": "And please declare the AI usage if there is any.",
       "revId": "5acd7d33af1720fcdc9c2b69243042ea8fea542d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef827a8_e715f32c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-04T14:46:06Z",
+      "side": 1,
+      "message": "Checked on my devices, it doesnt seem to be actually related to unihal blobs being there or not. The patch still applies even when I remove the unihal blobs.\n\nCommit message should be updated, maybe something like \"Add Optional reserved fields for torch strength\"?",
+      "parentUuid": "2920f93f_f231ec1c",
+      "revId": "5acd7d33af1720fcdc9c2b69243042ea8fea542d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
