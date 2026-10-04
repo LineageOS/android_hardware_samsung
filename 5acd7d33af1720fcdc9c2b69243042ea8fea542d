@@ -85,6 +85,24 @@
       "parentUuid": "2920f93f_f231ec1c",
       "revId": "5acd7d33af1720fcdc9c2b69243042ea8fea542d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "562abe59_1c73bf06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36596
+      },
+      "writtenOn": "2026-10-04T14:50:08Z",
+      "side": 1,
+      "message": "The initial work of finding what the problem was (padding of 3 addresses) and the size of the struct was done by AI. Adding the comment to explain what can also be found in the padding was done by myself inspecting the vendored unihal_main shared object using readelf. I added Assisted-by to the commit message to reflect this.",
+      "parentUuid": "5a44c8ac_505d3bd0",
+      "revId": "5acd7d33af1720fcdc9c2b69243042ea8fea542d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
