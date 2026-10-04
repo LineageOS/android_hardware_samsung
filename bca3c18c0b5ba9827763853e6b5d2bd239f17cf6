@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "811e3870_54625258",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-04T15:45:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ac2cb8_ecaab31c",
+      "revId": "bca3c18c0b5ba9827763853e6b5d2bd239f17cf6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "70b719f9_eded2b4a",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-10-03T19:00:45Z",
       "side": 1,
       "message": "Maybe we could avoid duplicating this somehow?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "bca3c18c0b5ba9827763853e6b5d2bd239f17cf6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "feacc5cc_9ac4bf8d",
+        "filename": "packages/SamsungCallManager/src/com/samsung/android/callmanager/SamsungCallRedirectionService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-04T15:45:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70b719f9_eded2b4a",
       "range": {
         "startLine": 31,
         "startChar": 0,
