@@ -16,6 +16,23 @@
       "message": "Verified on sm7125 and sm7325. Torch strength levels can be successfully used via the torch QS tile",
       "revId": "5acd7d33af1720fcdc9c2b69243042ea8fea542d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2920f93f_f231ec1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2026-10-04T14:05:11Z",
+      "side": 1,
+      "message": "Commit message must be updated. It\u0027s most likely a common Samsung issue. The answer of why SM715/SM7325 affected is they ship UniHAL, while most Samsung do not.",
+      "revId": "5acd7d33af1720fcdc9c2b69243042ea8fea542d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
