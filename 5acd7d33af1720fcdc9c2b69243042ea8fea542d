@@ -50,6 +50,23 @@
       "message": "Also I suggest using \"sec_unihal_reserved_field\" for both soong and cpp flags",
       "revId": "5acd7d33af1720fcdc9c2b69243042ea8fea542d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a44c8ac_505d3bd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2026-10-04T14:10:55Z",
+      "side": 1,
+      "message": "And please declare the AI usage if there is any.",
+      "revId": "5acd7d33af1720fcdc9c2b69243042ea8fea542d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
