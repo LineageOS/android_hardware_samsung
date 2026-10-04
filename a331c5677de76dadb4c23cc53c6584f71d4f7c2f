@@ -210,6 +210,30 @@
       },
       "revId": "a331c5677de76dadb4c23cc53c6584f71d4f7c2f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8909fd3_8ca9d89f",
+        "filename": "packages/SamsungCallManager/src/com/samsung/android/callmanager/SamsungCallManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-04T18:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ccc4e9_f8c94f1f",
+      "range": {
+        "startLine": 149,
+        "startChar": 39,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "a331c5677de76dadb4c23cc53c6584f71d4f7c2f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
