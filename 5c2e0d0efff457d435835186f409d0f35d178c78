@@ -16,6 +16,24 @@
       "message": "There are lines with over 100 chars, please fix.",
       "revId": "5c2e0d0efff457d435835186f409d0f35d178c78",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ad9fd12_79c55776",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-10-05T17:37:42Z",
+      "side": 1,
+      "message": "You still have this comment to address.",
+      "parentUuid": "a2fa9c1d_17ca8a54",
+      "revId": "5c2e0d0efff457d435835186f409d0f35d178c78",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
