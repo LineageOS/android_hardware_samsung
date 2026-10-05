@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1a882bec_23288735",
+        "filename": "packages/CallManager/src/com/samsung/android/callmanager/BootReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-10-05T18:04:50Z",
+      "side": 1,
+      "message": "Sending that intent is pointless to begin with, and it\u0027s not like immediately retrying to start the service would do anything in the first place.",
+      "parentUuid": "42d6a537_4b541f81",
+      "range": {
+        "startLine": 28,
+        "startChar": 50,
+        "endLine": 28,
+        "endChar": 89
+      },
+      "revId": "eb05c30debb09b38e6fd9707a1ed280826e3b278",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d17739a7_022346ad",
         "filename": "packages/CallManager/src/com/samsung/android/callmanager/SamsungCallRedirectionService.java",
         "patchSetId": 5
