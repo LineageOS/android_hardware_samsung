@@ -16,6 +16,24 @@
       "message": "Are we going to remove the in-tree implementations (where possible) after this?",
       "revId": "b1b6bb363ebb212206d706d1da41d1fd2d4b2fbf",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "815fe07d_18d367c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-05T16:22:20Z",
+      "side": 1,
+      "message": "Yes, thats the plan:\nhttps://review.lineageos.org/c/LineageOS/android_device_samsung_sm7125-common/+/506252\nhttps://review.lineageos.org/c/LineageOS/android_device_samsung_sm7125-common/+/506253",
+      "parentUuid": "d750bb53_e1de157f",
+      "revId": "b1b6bb363ebb212206d706d1da41d1fd2d4b2fbf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
