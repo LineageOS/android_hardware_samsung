@@ -52,6 +52,7 @@ CameraDeviceSession::CameraDeviceSession(camera3_device_t* device,
       mDevice(device),
       mDeviceVersion(device->common.version),
       mFreeBufEarly(shouldFreeBufEarly()),
+      mStartupFlushWaitMs(getStartupFlushWaitMs()),
       mIsAELockAvailable(false),
       mDerivePostRawSensKey(false),
       mNumPartialResults(1),
@@ -148,6 +149,53 @@ bool CameraDeviceSession::initialize() {
 
 bool CameraDeviceSession::shouldFreeBufEarly() {
     return property_get_bool("ro.vendor.camera.free_buf_early", 0) == 1;
+}
+
+int32_t CameraDeviceSession::getStartupFlushWaitMs() {
+    return property_get_int32("ro.vendor.camera.startup_flush_wait_ms", 0);
+}
+
+void CameraDeviceSession::markStreamIdle() {
+    if (mStartupFlushWaitMs <= 0) return;
+
+    std::lock_guard<std::mutex> lock(mStreamStartLock);
+    mStreamIdle = true;
+    mStreamStarting = false;
+    mStreamStartCond.notify_all();
+}
+
+void CameraDeviceSession::markStreamStarting() {
+    if (mStartupFlushWaitMs <= 0) return;
+
+    std::lock_guard<std::mutex> lock(mStreamStartLock);
+    if (mStreamIdle) {
+        mStreamIdle = false;
+        mStreamStarting = true;
+    }
+}
+
+void CameraDeviceSession::markStreamStarted() {
+    if (mStartupFlushWaitMs <= 0) return;
+
+    std::lock_guard<std::mutex> lock(mStreamStartLock);
+    if (mStreamStarting) {
+        mStreamStarting = false;
+        mStreamStartCond.notify_all();
+    }
+}
+
+void CameraDeviceSession::waitForStreamStart(const char* caller) {
+    if (mStartupFlushWaitMs <= 0) return;
+
+    std::unique_lock<std::mutex> lock(mStreamStartLock);
+    if (!mStreamStarting) return;
+
+    ALOGW("%s: stream is still starting, waiting up to %d ms", caller, mStartupFlushWaitMs);
+    if (!mStreamStartCond.wait_for(lock, std::chrono::milliseconds(mStartupFlushWaitMs),
+                                   [this] { return !mStreamStarting; })) {
+        ALOGE("%s: stream did not start within %d ms, proceeding anyway", caller,
+              mStartupFlushWaitMs);
+    }
 }
 
 CameraDeviceSession::~CameraDeviceSession() {
@@ -922,6 +970,7 @@ ndk::ScopedAStatus CameraDeviceSession::configureStreams(
     } else {
         convertToAidl(stream_list, _aidl_return);
         mFirstRequest = true;
+        markStreamIdle();
     }
 
     return fromStatus(status);
@@ -1119,11 +1168,16 @@ Status CameraDeviceSession::constructDefaultRequestSettingsRaw(int type,
 ndk::ScopedAStatus CameraDeviceSession::flush() {
     Status status = initStatus();
     if (status == Status::OK) {
+        waitForStreamStart(__FUNCTION__);
+
         // Flush is always supported on device 3.1 or later
         status_t ret = mDevice->ops->flush(mDevice);
         if (ret != OK) {
             status = Status::INTERNAL_ERROR;
         }
+
+        // The stream has to be started again by the next request
+        markStreamIdle();
     }
     return fromStatus(status);
 }
@@ -1312,6 +1366,9 @@ Status CameraDeviceSession::processOneCaptureRequest(const CaptureRequest& reque
     halRequest.physcam_id = physicalCameraIds.data();
     halRequest.physcam_settings = physicalCameraSettings.data();
 
+    // Before the HAL call, as the first callback can arrive before it returns
+    markStreamStarting();
+
     ATRACE_ASYNC_BEGIN("frame capture", request.frameNumber);
     ATRACE_BEGIN("camera3->process_capture_request");
     status_t ret = mDevice->ops->process_capture_request(mDevice, &halRequest);
@@ -1367,6 +1424,9 @@ ndk::ScopedAStatus CameraDeviceSession::close() {
                       __FUNCTION__, mInflightRawBoostPresent.size());
             }
         }
+
+        // The HAL may flush internally on close
+        waitForStreamStart(__FUNCTION__);
 
         ATRACE_BEGIN("camera3->close");
         mDevice->common.close(&mDevice->common);
@@ -1630,6 +1690,7 @@ void CameraDeviceSession::sProcessCaptureResult(const camera3_callback_ops* cb,
                                                 const camera3_capture_result* hal_result) {
     CameraDeviceSession* d =
             const_cast<CameraDeviceSession*>(static_cast<const CameraDeviceSession*>(cb));
+    d->markStreamStarted();
 
     CaptureResult result = {};
     camera3_capture_result shadowResult;
@@ -1671,6 +1732,7 @@ void CameraDeviceSession::sProcessCaptureResult(const camera3_callback_ops* cb,
 void CameraDeviceSession::sNotify(const camera3_callback_ops* cb, const camera3_notify_msg* msg) {
     CameraDeviceSession* d =
             const_cast<CameraDeviceSession*>(static_cast<const CameraDeviceSession*>(cb));
+    d->markStreamStarted();
     NotifyMsg aidlMsg;
     convertToAidl(msg, &aidlMsg);
 
