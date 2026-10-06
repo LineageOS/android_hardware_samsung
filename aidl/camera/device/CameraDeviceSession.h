@@ -20,8 +20,10 @@
 #include <hardware/camera3.h>
 #include <utils/Mutex.h>
 
+#include <condition_variable>
 #include <deque>
 #include <map>
+#include <mutex>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -148,6 +150,7 @@ class CameraDeviceSession : public BnCameraDeviceSession, protected camera3_call
     camera3_device_t* mDevice;
     const uint32_t mDeviceVersion;
     const bool mFreeBufEarly;
+    const int32_t mStartupFlushWaitMs;
     bool mIsAELockAvailable;
     bool mDerivePostRawSensKey;
     uint32_t mNumPartialResults;
@@ -187,6 +190,17 @@ class CameraDeviceSession : public BnCameraDeviceSession, protected camera3_call
 
     bool mInitFail;
     bool mFirstRequest = false;
+
+    // Some HALs (e.g. Exynos libexynoscamera3) abort if flush() arrives while the stream
+    // is still starting up, and they flush internally on close(). Between the first request
+    // after configure/flush and the first HAL callback, hold off flush()/close() for up to
+    // mStartupFlushWaitMs. Disabled when ro.vendor.camera.startup_flush_wait_ms is 0.
+    std::mutex mStreamStartLock;  // protecting mStreamIdle and mStreamStarting
+    std::condition_variable mStreamStartCond;
+    // No request has been sent since the last configureStreams/flush
+    bool mStreamIdle = true;
+    // A request was sent while idle and the HAL has not called back yet
+    bool mStreamStarting = false;
 
     struct BufferHasher {
         size_t operator()(const buffer_handle_t& buf) const {
@@ -343,6 +357,12 @@ class CameraDeviceSession : public BnCameraDeviceSession, protected camera3_call
     bool initialize();
 
     static bool shouldFreeBufEarly();
+    static int32_t getStartupFlushWaitMs();
+
+    void markStreamIdle();
+    void markStreamStarting();
+    void markStreamStarted();
+    void waitForStreamStart(const char* caller);
 
     Status initStatus() const;
 
