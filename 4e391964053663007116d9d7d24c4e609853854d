@@ -35,6 +35,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaade100_f044895d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-06T17:20:49Z",
+      "side": 1,
+      "message": "Tried these before, as mentioned in the commit message, the parameter needs to be passed as soon as possible. CALL_STATE_OFFHOOK is useless since thats only triggered once the call is already dialing/established (which would be too late -\u003e no audio). Besides that, CALL_STATE_RINGING is only triggered for incoming calls, not for outgoing ones. I tried all possible combinations with CALL_STATE_*, none of those worked out for outgoing calls.",
+      "parentUuid": "75caa7f1_2c581e0e",
+      "revId": "4e391964053663007116d9d7d24c4e609853854d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddfb97fe_8efc8dad",
@@ -58,6 +76,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "071cfd66_035c5620",
+        "filename": "packages/CallManager/src/com/samsung/android/callmanager/SamsungCallManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-06T17:20:49Z",
+      "side": 1,
+      "message": "Yes, it is. Otherwise the app won\u0027t be registered as a call redirection service.",
+      "parentUuid": "ddfb97fe_8efc8dad",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 44
+      },
+      "revId": "4e391964053663007116d9d7d24c4e609853854d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a946c055_702cada5",
@@ -71,6 +113,30 @@
       "writtenOn": "2026-10-06T16:50:04Z",
       "side": 1,
       "message": "what happens if dsds device receives another call when you\u0027re already in a call?\nit\u0027ll switch the slot and you\u0027d lose the main call right?",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 55
+      },
+      "revId": "4e391964053663007116d9d7d24c4e609853854d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a27da51d_7f4bee6b",
+        "filename": "packages/CallManager/src/com/samsung/android/callmanager/SamsungCallManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-06T17:20:49Z",
+      "side": 1,
+      "message": "Not sure, but I assume it would. Need to check that on my devices. But I guess it should be possible to handle that",
+      "parentUuid": "a946c055_702cada5",
       "range": {
         "startLine": 156,
         "startChar": 0,
