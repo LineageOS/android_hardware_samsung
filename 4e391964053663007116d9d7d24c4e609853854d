@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c773e554_025a121d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34207
+      },
+      "writtenOn": "2026-10-06T16:22:38Z",
+      "side": 1,
+      "message": "Imho the \"Samsung\" prefix that all but one class has is unnecessary as the package it\u0027s in already implies that it\u0027s samsung-related.",
+      "revId": "4e391964053663007116d9d7d24c4e609853854d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
