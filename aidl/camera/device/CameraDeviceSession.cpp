@@ -15,6 +15,7 @@
 #include <aidlcommonsupport/NativeHandle.h>
 #include <cutils/properties.h>
 #include <cutils/trace.h>
+#include <sync/sync.h>
 
 namespace android {
 namespace hardware {
@@ -42,6 +43,9 @@ static constexpr int32_t CAMERA_RESULT_METADATA_QUEUE_SIZE = 1 << 20 /* 1MB */;
 static constexpr int METADATA_SHRINK_ABS_THRESHOLD = 4096;
 static constexpr int METADATA_SHRINK_REL_THRESHOLD = 2;
 
+// How long to wait for an acquire fence before handing it to the HAL instead
+static constexpr int ACQUIRE_FENCE_TIMEOUT_MS = 1000;
+
 HandleImporter CameraDeviceSession::sHandleImporter;
 buffer_handle_t CameraDeviceSession::sEmptyBuffer = nullptr;
 
@@ -52,6 +56,7 @@ CameraDeviceSession::CameraDeviceSession(camera3_device_t* device,
       mDevice(device),
       mDeviceVersion(device->common.version),
       mFreeBufEarly(shouldFreeBufEarly()),
+      mWaitAcquireFence(shouldWaitAcquireFence()),
       mIsAELockAvailable(false),
       mDerivePostRawSensKey(false),
       mNumPartialResults(1),
@@ -148,6 +153,27 @@ bool CameraDeviceSession::initialize() {
 
 bool CameraDeviceSession::shouldFreeBufEarly() {
     return property_get_bool("ro.vendor.camera.free_buf_early", 0) == 1;
+}
+
+bool CameraDeviceSession::shouldWaitAcquireFence() {
+    return property_get_bool("ro.vendor.camera.wait_acquire_fence", 0) == 1;
+}
+
+// Some HALs (e.g. Exynos libexynoscamera3) never close the acquire fences they are
+// given, leaking one fd per buffer until the provider runs out of file descriptors.
+// Wait for them here and pass -1 to the HAL instead, which camera3 allows.
+void CameraDeviceSession::waitAcquireFences(std::vector<int>& allFences) {
+    for (int& fence : allFences) {
+        if (fence < 0) continue;
+
+        if (sync_wait(fence, ACQUIRE_FENCE_TIMEOUT_MS) == 0) {
+            sHandleImporter.closeFence(fence);
+            fence = -1;
+        } else {
+            ALOGW("%s: acquire fence %d not signaled within %d ms, passing it to the HAL",
+                  __FUNCTION__, fence, ACQUIRE_FENCE_TIMEOUT_MS);
+        }
+    }
 }
 
 CameraDeviceSession::~CameraDeviceSession() {
@@ -1222,6 +1248,10 @@ Status CameraDeviceSession::processOneCaptureRequest(const CaptureRequest& reque
     status = importRequest(request, allBufPtrs, allFences);
     if (status != Status::OK) {
         return status;
+    }
+
+    if (mWaitAcquireFence) {
+        waitAcquireFences(allFences);
     }
 
     std::vector<camera3_stream_buffer_t> outHalBufs;

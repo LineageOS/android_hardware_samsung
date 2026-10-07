@@ -148,6 +148,7 @@ class CameraDeviceSession : public BnCameraDeviceSession, protected camera3_call
     camera3_device_t* mDevice;
     const uint32_t mDeviceVersion;
     const bool mFreeBufEarly;
+    const bool mWaitAcquireFence;
     bool mIsAELockAvailable;
     bool mDerivePostRawSensKey;
     uint32_t mNumPartialResults;
@@ -343,6 +344,9 @@ class CameraDeviceSession : public BnCameraDeviceSession, protected camera3_call
     bool initialize();
 
     static bool shouldFreeBufEarly();
+    static bool shouldWaitAcquireFence();
+
+    void waitAcquireFences(std::vector<int>& allFences);
 
     Status initStatus() const;
 
