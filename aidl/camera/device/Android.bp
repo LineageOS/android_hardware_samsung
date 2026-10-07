@@ -26,6 +26,7 @@ cc_library_shared {
         "libgralloctypes",
         "libhidlbase",
         "liblog",
+        "libsync",
         "libui",
         "libutils",
     ],
