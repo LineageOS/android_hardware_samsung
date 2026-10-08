@@ -5,10 +5,11 @@
 
 #pragma once
 
-#include <dlfcn.h>
 #include <log/log.h>
 #include <cerrno>
 #include <cstdint>
+
+#define SB_WEAK_SYMBOL(decl, mangled) decl __asm__(mangled) __attribute__((weak))
 
 enum BitDepth {
     BIT_DEPTH_NONE = 0,
@@ -55,21 +56,31 @@ class ISoundBooster {
     ~ISoundBooster() = default;
 };
 
-// SoundBooster_Interface_Factory is resolved dynamically because it lives in
-// a closed-source Samsung library whose symbol layout differs across devices.
+namespace SoundBoosterSymbols {
+
+SB_WEAK_SYMBOL(ISoundBooster* FactoryCreate2(int, int),
+               "_ZN30SoundBooster_Interface_Factory6CreateEii");
+SB_WEAK_SYMBOL(ISoundBooster* FactoryCreate1(int), "_ZN30SoundBooster_Interface_Factory6CreateEi");
+
+SB_WEAK_SYMBOL(void FactoryDestroyV1(ISoundBooster*),
+               "_ZN30SoundBooster_Interface_Factory7DestroyEP25SoundBooster_Interface_IF");
+SB_WEAK_SYMBOL(void FactoryDestroyV2(ISoundBooster*),
+               "_ZN30SoundBooster_Interface_Factory7DestroyEP24SoundBooster_Interface_IF");
+
+SB_WEAK_SYMBOL(int InterfaceBuffClear(void*), "_ZN22SoundBooster_Interface9BuffClearEv");
+SB_WEAK_SYMBOL(int InterfaceExe(void*, void*, const void*, int, float),
+               "_ZN22SoundBooster_Interface3ExeEPvPKvif");
+
+}  // namespace SoundBoosterSymbols
+
 namespace SoundBoosterFactory {
 
 inline ISoundBooster* Create(int mode, int fmFlag = 0) {
-    using CreateFn2 = ISoundBooster* (*)(int, int);
-    using CreateFn1 = ISoundBooster* (*)(int);
-
-    if (auto* fn2 = reinterpret_cast<CreateFn2>(
-                dlsym(RTLD_DEFAULT, "_ZN30SoundBooster_Interface_Factory6CreateEii"))) {
-        return fn2(mode, fmFlag);
+    if (SoundBoosterSymbols::FactoryCreate2 != nullptr) {
+        return SoundBoosterSymbols::FactoryCreate2(mode, fmFlag);
     }
-    if (auto* fn1 = reinterpret_cast<CreateFn1>(
-                dlsym(RTLD_DEFAULT, "_ZN30SoundBooster_Interface_Factory6CreateEi"))) {
-        return fn1(mode);
+    if (SoundBoosterSymbols::FactoryCreate1 != nullptr) {
+        return SoundBoosterSymbols::FactoryCreate1(mode);
     }
 
     ALOGE("SoundBoosterFactory::Create symbol not found");
@@ -80,18 +91,14 @@ inline void Destroy(ISoundBooster* booster) {
     using DestroyFn = void (*)(ISoundBooster*);
 
     static const DestroyFn fnDestroy = []() -> DestroyFn {
-        if (auto* fn = reinterpret_cast<DestroyFn>(dlsym(
-                    RTLD_DEFAULT,
-                    "_ZN30SoundBooster_Interface_Factory7DestroyEP25SoundBooster_Interface_IF"))) {
-            return fn;
+        if (SoundBoosterSymbols::FactoryDestroyV1 != nullptr) {
+            return SoundBoosterSymbols::FactoryDestroyV1;
         }
-        auto* fn = reinterpret_cast<DestroyFn>(
-                dlsym(RTLD_DEFAULT,
-                      "_ZN30SoundBooster_Interface_Factory7DestroyEP24SoundBooster_Interface_IF"));
-        if (fn == nullptr) {
-            ALOGE("SoundBoosterFactory::Destroy symbol not found");
+        if (SoundBoosterSymbols::FactoryDestroyV2 != nullptr) {
+            return SoundBoosterSymbols::FactoryDestroyV2;
         }
-        return fn;
+        ALOGE("SoundBoosterFactory::Destroy symbol not found");
+        return nullptr;
     }();
 
     if (fnDestroy != nullptr) {
@@ -105,19 +112,16 @@ inline int compatBuffClear(ISoundBooster* booster) {
     if (booster == nullptr) {
         return -EINVAL;
     }
-    using BuffClearFn = int (*)(void*);
-    static const auto fn = reinterpret_cast<BuffClearFn>(
-            dlsym(RTLD_DEFAULT, "_ZN22SoundBooster_Interface9BuffClearEv"));
-    return fn != nullptr ? fn(booster) : booster->BuffClear();
+    return SoundBoosterSymbols::InterfaceBuffClear != nullptr
+                   ? SoundBoosterSymbols::InterfaceBuffClear(booster)
+                   : booster->BuffClear();
 }
 
 inline int compatExe(ISoundBooster* booster, void* in, void* out, int frames, float volume) {
     if (booster == nullptr) {
         return -EINVAL;
     }
-    using ExeFn = int (*)(void*, void*, const void*, int, float);
-    static const auto fn =
-            reinterpret_cast<ExeFn>(dlsym(RTLD_DEFAULT, "_ZN22SoundBooster_Interface3ExeEPvPKvif"));
-    return fn != nullptr ? fn(booster, in, out, frames, volume)
-                         : booster->Exe(in, out, frames, volume);
+    return SoundBoosterSymbols::InterfaceExe != nullptr
+                   ? SoundBoosterSymbols::InterfaceExe(booster, in, out, frames, volume)
+                   : booster->Exe(in, out, frames, volume);
 }
