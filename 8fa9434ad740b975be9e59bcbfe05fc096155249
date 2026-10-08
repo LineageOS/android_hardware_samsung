@@ -22,6 +22,30 @@
       },
       "revId": "8fa9434ad740b975be9e59bcbfe05fc096155249",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63b2a3d2_0f0d2088",
+        "filename": "soundbooster/SoundBooster.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2026-10-08T19:31:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1791514_eb7d305d",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 31
+      },
+      "revId": "8fa9434ad740b975be9e59bcbfe05fc096155249",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
