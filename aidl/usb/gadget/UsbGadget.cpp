@@ -116,10 +116,10 @@ Status UsbGadget::tearDownGadget() {
 }
 
 static Status validateAndSetVidPid(int64_t functions) {
-    Status ret;
-    const char *vid, *pid;
+    Status ret = Status::CONFIGURATION_NOT_SUPPORTED;
+    const char *vid = nullptr, *pid = nullptr;
 
-    switch (functions) {
+    switch (functions & ~GadgetFunction::CTRL) {
         case GadgetFunction::MTP:
             vid = "0x04E8";
             pid = "0x6860";
@@ -165,20 +165,10 @@ static Status validateAndSetVidPid(int64_t functions) {
             pid = "0x2d01";
             break;
         case GadgetFunction::AUDIO_SOURCE:
-            vid = "0x18D1";
-            pid = "0x2D02";
-            break;
         case GadgetFunction::ADB | GadgetFunction::AUDIO_SOURCE:
-            vid = "0x18D1";
-            pid = "0x2D03";
-            break;
         case GadgetFunction::ACCESSORY | GadgetFunction::AUDIO_SOURCE:
-            vid = "0x18D1";
-            pid = "0x2D04";
-            break;
         case GadgetFunction::ADB | GadgetFunction::ACCESSORY | GadgetFunction::AUDIO_SOURCE:
-            vid = "0x18D1";
-            pid = "0x2D05";
+            ALOGE("Audio output deprecated in Android 8.0");
             break;
         case GadgetFunction::NCM:
             vid = "0x04E8";
@@ -203,7 +193,6 @@ static Status validateAndSetVidPid(int64_t functions) {
             break;
         default:
             ALOGE("Combination not supported");
-            ret = Status::CONFIGURATION_NOT_SUPPORTED;
             goto error;
     }
 
