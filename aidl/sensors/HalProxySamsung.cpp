@@ -7,6 +7,7 @@
 #include "HalProxySamsung.h"
 
 #include <ConvertUtils.h>
+#include <android-base/properties.h>
 
 // #define VERBOSE
 
@@ -15,6 +16,37 @@ namespace android {
 namespace hardware {
 namespace sensors {
 namespace implementation {
+
+using ::android::base::GetBoolProperty;
+using ::android::hardware::sensors::V2_0::implementation::ScopedWakelock;
+using ::android::hardware::sensors::V2_1::SensorType;
+
+HalProxySamsung::HalProxySamsung() {
+    if (!GetBoolProperty("ro.vendor.sensors.flip_orientation_when_folded", false)) return;
+
+    for (const auto& [handle, sensor] : getSensors()) {
+        if (sensor.typeAsString == "com.samsung.sensor.folding_state") mFoldingStateHandle = handle;
+    }
+}
+
+void HalProxySamsung::postEventsToMessageQueue(const std::vector<Event>& events,
+                                               size_t numWakeupEvents, ScopedWakelock wakelock) {
+    if (mFoldingStateHandle < 0) {
+        HalProxy::postEventsToMessageQueue(events, numWakeupEvents, std::move(wakelock));
+        return;
+    }
+
+    std::vector<Event> remapped(events);
+    for (Event& event : remapped) {
+        if (event.sensorHandle == mFoldingStateHandle) {
+            mFolded = event.u.scalar < 1.0f;
+        } else if (mFolded && event.sensorType == SensorType::DEVICE_ORIENTATION) {
+            // The cover screen faces the other way, so upright and upside down are swapped.
+            event.u.scalar = (6 - static_cast<int>(event.u.scalar)) % 4;
+        }
+    }
+    HalProxy::postEventsToMessageQueue(remapped, numWakeupEvents, std::move(wakelock));
+}
 
 ndk::ScopedAStatus HalProxySamsung::getSensorsList(
         std::vector<::aidl::android::hardware::sensors::SensorInfo>* _aidl_return) {
