@@ -50,8 +50,16 @@ void HalProxySamsung::postEventsToMessageQueue(const std::vector<Event>& events,
 
 ndk::ScopedAStatus HalProxySamsung::getSensorsList(
         std::vector<::aidl::android::hardware::sensors::SensorInfo>* _aidl_return) {
+    bool hideDeviceOrientation =
+            GetBoolProperty("ro.vendor.sensors.hide_device_orientation", false);
+
     for (const auto& sensor : HalProxy::getSensors()) {
         SensorInfo dst = sensor.second;
+
+        // Lets the framework derive screen orientation from the accelerometer instead.
+        if (hideDeviceOrientation && dst.type == SensorType::DEVICE_ORIENTATION) {
+            continue;
+        }
 
         if (dst.requiredPermission == "com.samsung.permission.SSENSOR") {
             dst.requiredPermission = "";
