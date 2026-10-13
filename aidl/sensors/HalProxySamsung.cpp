@@ -23,6 +23,10 @@ using ::android::hardware::sensors::V2_1::SensorType;
 
 HalProxySamsung::HalProxySamsung() {
     std::string workaround = GetProperty("ro.vendor.sensors.device_orientation_workaround", "");
+    if (workaround == "hide") {
+        mHideDeviceOrientation = true;
+        return;
+    }
     if (workaround != "swap_upright_when_folded") return;
 
     for (const auto& [handle, sensor] : getSensors()) {
@@ -60,6 +64,11 @@ ndk::ScopedAStatus HalProxySamsung::getSensorsList(
         std::vector<::aidl::android::hardware::sensors::SensorInfo>* _aidl_return) {
     for (const auto& sensor : HalProxy::getSensors()) {
         SensorInfo dst = sensor.second;
+
+        // Lets the framework derive screen orientation from the accelerometer instead.
+        if (mHideDeviceOrientation && dst.type == SensorType::DEVICE_ORIENTATION) {
+            continue;
+        }
 
         if (dst.requiredPermission == "com.samsung.permission.SSENSOR") {
             dst.requiredPermission = "";

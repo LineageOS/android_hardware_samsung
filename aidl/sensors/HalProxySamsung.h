@@ -29,6 +29,7 @@ class HalProxySamsung : public HalProxyAidl {
             const std::vector<Event>& events, size_t numWakeupEvents,
             ::android::hardware::sensors::V2_0::implementation::ScopedWakelock wakelock) override;
 
+    bool mHideDeviceOrientation = false;
     int32_t mFoldingStateHandle = -1;
     std::atomic<bool> mFolded = false;
 };
