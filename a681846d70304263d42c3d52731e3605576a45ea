@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18261bb4_682faf2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-10-13T21:17:14Z",
+      "side": 1,
+      "message": "IMO it\u0027s unnecessary to prepend Samsung in the dir name. See: https://github.com/LineageOS/android_hardware_oplus/tree/lineage-24.0/packages",
+      "revId": "a681846d70304263d42c3d52731e3605576a45ea",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
