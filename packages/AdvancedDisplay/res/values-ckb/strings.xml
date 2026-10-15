@@ -16,9 +16,9 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">پیشاندانی پێشکه‌وتوو</string>
+    <string name="app_name">پیشاندانی پێشکەوتوو</string>
     <string name="category_screen_title">ڕوونما</string>
-    <string name="screen_colors_title">ڕه‌نگه‌کان</string>
+    <string name="screen_colors_title">ڕەنگەکان</string>
     <string name="mdnie_scenario_title_head">سیناریۆ</string>
     <string name="mdnie_scenario_summary_head">دانانی دۆخی mDNIe سیناریۆ</string>
     <string name="mdnie_accessibility_title_head">دۆخی دەستپێگەیشتن</string>
@@ -33,7 +33,7 @@
     <string name="mdnie_scenario_vt">پەیوەندیی ڤیدیۆیی</string>
     <string name="mdnie_scenario_browser">وێبگەڕ</string>
     <string name="mdnie_scenario_ebook">کتێبی ئەلیکترۆنی</string>
-    <string name="mdnie_scenario_email">ئیمەیڵ</string>
+    <string name="mdnie_scenario_email">پۆستی ئەلیکترۆنی</string>
     <string name="mdnie_scenario_tdmb">تەلەفزیۆنی دیجیتاڵ</string>
     <string name="mdnie_accessibility_normal">ئاسایی</string>
     <string name="mdnie_accessibility_inverse">پێچەوانەکراو</string>
