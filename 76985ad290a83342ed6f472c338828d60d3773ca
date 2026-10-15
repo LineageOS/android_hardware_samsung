@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4f9989f_af7701f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-10-15T15:13:43Z",
+      "side": 1,
+      "message": "This doesn\u0027t fix it fully, I haven\u0027t been able to resolve it with a shim.\n\nCheck this out:\nhttps://github.com/ExtremeXT/android_device_samsung_r11s/commit/e2ba62f0c4037fa5c840922587fdea0b869c4f98",
+      "revId": "76985ad290a83342ed6f472c338828d60d3773ca",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
