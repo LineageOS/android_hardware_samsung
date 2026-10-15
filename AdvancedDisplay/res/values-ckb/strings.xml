@@ -33,7 +33,7 @@
     <string name="mdnie_scenario_vt">پەیوەندی ڤیدیۆیی</string>
     <string name="mdnie_scenario_browser">وێبگەڕ</string>
     <string name="mdnie_scenario_ebook">کتێبی ئەلیکترۆنی</string>
-    <string name="mdnie_scenario_email">ئیمەیڵ</string>
+    <string name="mdnie_scenario_email">پۆستی ئەلیکترۆنی</string>
     <string name="mdnie_scenario_tdmb">تەلەفزیۆنی دیجیتاڵی</string>
     <string name="mdnie_accessibility_normal">ئاسایی</string>
     <string name="mdnie_accessibility_inverse">پێچەوانەکراو</string>
