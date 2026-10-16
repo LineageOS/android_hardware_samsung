@@ -33,6 +33,23 @@
       "message": "Accident",
       "revId": "76985ad290a83342ed6f472c338828d60d3773ca",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8097c29c_9e6ff1dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-10-16T07:01:24Z",
+      "side": 1,
+      "message": "Either way, this should either go in hardware/lineage/compat or in your tree.",
+      "revId": "76985ad290a83342ed6f472c338828d60d3773ca",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
