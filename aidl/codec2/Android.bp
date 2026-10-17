@@ -49,10 +49,16 @@ cc_binary {
     ] + select(soong_config_variable("samsungCodec2Vars", "target_componentstore_library"), {
         any @ flag_val: [flag_val],
         default: [],
+    }) + select(soong_config_variable("samsungCodec2Vars", "uses_legacy_component_store"), {
+        true: ["libcodec2_hidl@1.0"],
+        default: [],
     }),
 
     cflags: select(soong_config_variable("samsungCodec2Vars", "uses_legacy_component_store"), {
         true: ["-DLEGACY_COMPONENT_STORE" ],
+        default: [],
+    }) + select(soong_config_variable("samsungCodec2Vars", "c2_instance_type"), {
+        "legacy_default0": ["-DLEGACY_COMPONENT_STORE_DEFAULT0"],
         default: [],
     }),
 

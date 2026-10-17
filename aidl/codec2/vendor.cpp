@@ -24,6 +24,7 @@
 // HIDL
 #ifdef LEGACY_COMPONENT_STORE
 #include <binder/ProcessState.h>
+#include <codec2/hidl/1.0/ComponentStore.h>
 #include <hidl/HidlTransportSupport.h>
 #endif
 
@@ -52,7 +53,9 @@ static constexpr int kThreadCount = 8;
 extern "C" void RegisterSECCodecAidlServices();
 extern "C" void RegisterSECCodecHidlServices();
 #else
-extern "C" void RegisterSECCodecServices();
+namespace android {
+std::shared_ptr<C2ComponentStore> GetCodec2SecComponentStore();
+}
 #endif
 
 void runAidlService() {
@@ -71,7 +74,16 @@ void runHidlService() {
     ProcessState::self()->startThreadPool();
     hardware::configureRpcThreadpool(kThreadCount, true /* callerWillJoin */);
 
-    RegisterSECCodecServices();
+    // Register explicitly: the legacy blob hardcodes the instance name "default".
+    sp<hardware::media::c2::V1_0::utils::ComponentStore> store =
+            new hardware::media::c2::V1_0::utils::ComponentStore(GetCodec2SecComponentStore());
+#ifdef LEGACY_COMPONENT_STORE_DEFAULT0
+    constexpr char kInstance[] = "default0";
+#else
+    constexpr char kInstance[] = "default";
+#endif
+    CHECK_EQ(store->registerAsService(kInstance), OK)
+            << "Failed to register Samsung Codec2 store as " << kInstance;
 
     hardware::joinRpcThreadpool();
 #else
