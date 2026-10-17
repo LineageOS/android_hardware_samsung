@@ -16,6 +16,24 @@
       "message": "Please rename, this isn\u0027t related to unihal at all.",
       "revId": "0ded2775c50b0574482ba14089474852d996198b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b35cef0_5965d65b",
+        "filename": "aidl/camera/libhardware_headers/include/hardware/camera_common.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 36596
+      },
+      "writtenOn": "2026-10-17T16:46:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7359511_a2eacc71",
+      "revId": "0ded2775c50b0574482ba14089474852d996198b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
