@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7359511_a2eacc71",
+        "filename": "aidl/camera/libhardware_headers/include/hardware/camera_common.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-10-17T13:23:46Z",
+      "side": 1,
+      "message": "Please rename, this isn\u0027t related to unihal at all.",
+      "revId": "0ded2775c50b0574482ba14089474852d996198b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
