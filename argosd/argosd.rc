@@ -1,0 +1,8 @@
+service argos-daemon /vendor/bin/argosd
+    class main
+    user system
+    group system radio
+    disabled
+
+on property:sys.boot_completed=1
+    start argos-daemon
