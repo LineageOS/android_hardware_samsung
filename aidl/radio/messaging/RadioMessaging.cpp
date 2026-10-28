@@ -13,6 +13,7 @@
 #include <cstring>
 
 #include "RadioSlot.h"
+#include "WakeLock.h"
 #include "messaging/SmscAddress.h"
 
 namespace aidl::android::hardware::radio::samsung {
@@ -60,6 +61,7 @@ ScopedAStatus RadioMessaging::setResponseFunctions(
 }
 
 ScopedAStatus RadioMessaging::responseAcknowledgement() {
+    WakeLock::get().release();
     return ok();
 }
 

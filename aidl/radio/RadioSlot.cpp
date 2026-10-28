@@ -13,6 +13,7 @@
 
 #include <algorithm>
 
+#include "WakeLock.h"
 #include "config/RadioConfig.h"
 #include "data/RadioData.h"
 #include "messaging/RadioMessaging.h"
@@ -134,15 +135,25 @@ void RadioSlot::onUnsolicited(int id, const void* data, size_t length) {
     const int service = id / kSecUnsolServiceDivisor;
     const int unsol = id % kSecUnsolServiceDivisor;
 
+    // Released on acknowledgement, or right away if nothing was sent.
+    const bool wake = service != SEC_UNSOL_CONFIG && unsol != RIL_UNSOL_SIGNAL_STRENGTH &&
+                      unsol != RIL_UNSOL_ON_USSD_REQUEST;
+    if (wake) {
+        WakeLock::get().acquire();
+    }
+    const auto type =
+            wake ? RadioIndicationType::UNSOLICITED_ACK_EXP : RadioIndicationType::UNSOLICITED;
+
+    bool sent = false;
     switch (service) {
         case SEC_UNSOL_CONFIG:
-            mConfig->onUnsolicited(unsol, data, length, kUnsolicited);
+            sent = mConfig->onUnsolicited(unsol, data, length, type);
             break;
         case SEC_UNSOL_MESSAGING:
-            mMessaging->onUnsolicited(unsol, data, length, kUnsolicited);
+            sent = mMessaging->onUnsolicited(unsol, data, length, type);
             break;
         case SEC_UNSOL_DATA:
-            mData->onUnsolicited(unsol, data, length, kUnsolicited);
+            sent = mData->onUnsolicited(unsol, data, length, type);
             break;
         case SEC_UNSOL_MODEM:
             if (unsol == RIL_UNSOL_MODEM_RESTART) {
@@ -150,28 +161,31 @@ void RadioSlot::onUnsolicited(int id, const void* data, size_t length) {
             } else if (unsol == RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED) {
                 CallStatePublisher::get().reset(mSocket);
             }
-            mModem->onUnsolicited(unsol, data, length, kUnsolicited);
+            sent = mModem->onUnsolicited(unsol, data, length, type);
             if (unsol == RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED) {
                 sendVendorConfiguration();
             }
             break;
         case SEC_UNSOL_NETWORK:
-            mNetwork->onUnsolicited(unsol, data, length, kUnsolicited);
+            sent = mNetwork->onUnsolicited(unsol, data, length, type);
             break;
         case SEC_UNSOL_SIM:
             // STK call setup arrives as a SIM indication but belongs to voice.
             if (unsol == RIL_UNSOL_STK_CALL_SETUP) {
-                mVoice->onUnsolicited(unsol, data, length, kUnsolicited);
+                sent = mVoice->onUnsolicited(unsol, data, length, type);
                 break;
             }
-            mSim->onUnsolicited(unsol, data, length, kUnsolicited);
+            sent = mSim->onUnsolicited(unsol, data, length, type);
             break;
         case SEC_UNSOL_VOICE:
-            mVoice->onUnsolicited(unsol, data, length, kUnsolicited);
+            sent = mVoice->onUnsolicited(unsol, data, length, type);
             break;
         default:
             LOG(DEBUG) << mInstance << ": unhandled unsolicited " << id << " (" << length
                        << " bytes)";
+    }
+    if (wake && !sent) {
+        WakeLock::get().release();
     }
 }
 

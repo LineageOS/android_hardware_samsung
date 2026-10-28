@@ -12,6 +12,7 @@
 #include <cstdio>
 
 #include "RadioSlot.h"
+#include "WakeLock.h"
 #include "sim/UiccSlots.h"
 
 namespace aidl::android::hardware::radio::samsung {
@@ -29,6 +30,7 @@ ScopedAStatus RadioSim::setResponseFunctions(
 }
 
 ScopedAStatus RadioSim::responseAcknowledgement() {
+    WakeLock::get().release();
     return ok();
 }
 

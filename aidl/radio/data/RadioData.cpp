@@ -14,6 +14,7 @@
 #include <string>
 
 #include "RadioSlot.h"
+#include "WakeLock.h"
 #include "data/DataConvert.h"
 
 namespace aidl::android::hardware::radio::samsung {
@@ -88,6 +89,7 @@ ScopedAStatus RadioData::setResponseFunctions(
 }
 
 ScopedAStatus RadioData::responseAcknowledgement() {
+    WakeLock::get().release();
     return ok();
 }
 

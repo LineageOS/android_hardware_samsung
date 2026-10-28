@@ -8,6 +8,7 @@
 #include "modem/RadioModem.h"
 
 #include "RadioSlot.h"
+#include "WakeLock.h"
 
 namespace aidl::android::hardware::radio::samsung {
 
@@ -27,6 +28,7 @@ ScopedAStatus RadioModem::setResponseFunctions(
 }
 
 ScopedAStatus RadioModem::responseAcknowledgement() {
+    WakeLock::get().release();
     return ok();
 }
 
