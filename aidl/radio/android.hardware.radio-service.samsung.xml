@@ -10,4 +10,10 @@
         <fqname>IRadioModem/slot1</fqname>
         <fqname>IRadioModem/slot2</fqname>
     </hal>
+    <hal format="aidl">
+        <name>android.hardware.radio.network</name>
+        <version>5</version>
+        <fqname>IRadioNetwork/slot1</fqname>
+        <fqname>IRadioNetwork/slot2</fqname>
+    </hal>
 </manifest>
