@@ -15,6 +15,7 @@
 
 #include "config/RadioConfig.h"
 #include "data/RadioData.h"
+#include "messaging/RadioMessaging.h"
 #include "modem/RadioModem.h"
 #include "network/RadioNetwork.h"
 #include "sim/RadioSim.h"
@@ -43,6 +44,7 @@ RadioSlot::RadioSlot(RIL_SOCKET_ID socket, std::shared_ptr<RadioConfig> config)
       mInstance("slot" + std::to_string(socket + 1)),
       mConfig(std::move(config)),
       mData(::ndk::SharedRefBase::make<RadioData>(*this)),
+      mMessaging(::ndk::SharedRefBase::make<RadioMessaging>(*this)),
       mModem(::ndk::SharedRefBase::make<RadioModem>(*this)),
       mNetwork(::ndk::SharedRefBase::make<RadioNetwork>(*this)),
       mSim(::ndk::SharedRefBase::make<RadioSim>(*this)),
@@ -54,6 +56,7 @@ RadioSlot::RadioSlot(RIL_SOCKET_ID socket, std::shared_ptr<RadioConfig> config)
 
 void RadioSlot::publish() {
     publishService(mData, mInstance);
+    publishService(mMessaging, mInstance);
     publishService(mModem, mInstance);
     publishService(mNetwork, mInstance);
     publishService(mSim, mInstance);
@@ -134,6 +137,9 @@ void RadioSlot::onUnsolicited(int id, const void* data, size_t length) {
     switch (service) {
         case SEC_UNSOL_CONFIG:
             mConfig->onUnsolicited(unsol, data, length, kUnsolicited);
+            break;
+        case SEC_UNSOL_MESSAGING:
+            mMessaging->onUnsolicited(unsol, data, length, kUnsolicited);
             break;
         case SEC_UNSOL_DATA:
             mData->onUnsolicited(unsol, data, length, kUnsolicited);
