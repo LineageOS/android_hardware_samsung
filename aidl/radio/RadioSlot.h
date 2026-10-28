@@ -20,6 +20,7 @@ class RadioData;
 class RadioModem;
 class RadioNetwork;
 class RadioSim;
+class RadioVoice;
 
 class RadioSlot {
   public:
@@ -59,6 +60,7 @@ class RadioSlot {
     std::shared_ptr<RadioModem> mModem;
     std::shared_ptr<RadioNetwork> mNetwork;
     std::shared_ptr<RadioSim> mSim;
+    std::shared_ptr<RadioVoice> mVoice;
 };
 
 }  // namespace aidl::android::hardware::radio::samsung

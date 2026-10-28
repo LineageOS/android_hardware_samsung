@@ -18,6 +18,8 @@
 #include "modem/RadioModem.h"
 #include "network/RadioNetwork.h"
 #include "sim/RadioSim.h"
+#include "voice/CallStatePublisher.h"
+#include "voice/RadioVoice.h"
 
 namespace aidl::android::hardware::radio::samsung {
 
@@ -43,7 +45,8 @@ RadioSlot::RadioSlot(RIL_SOCKET_ID socket, std::shared_ptr<RadioConfig> config)
       mData(::ndk::SharedRefBase::make<RadioData>(*this)),
       mModem(::ndk::SharedRefBase::make<RadioModem>(*this)),
       mNetwork(::ndk::SharedRefBase::make<RadioNetwork>(*this)),
-      mSim(::ndk::SharedRefBase::make<RadioSim>(*this)) {
+      mSim(::ndk::SharedRefBase::make<RadioSim>(*this)),
+      mVoice(::ndk::SharedRefBase::make<RadioVoice>(*this)) {
     VendorRil::get().setUnsolicitedCallback(
             mSocket,
             [this](int id, const void* data, size_t length) { onUnsolicited(id, data, length); });
@@ -54,6 +57,7 @@ void RadioSlot::publish() {
     publishService(mModem, mInstance);
     publishService(mNetwork, mInstance);
     publishService(mSim, mInstance);
+    publishService(mVoice, mInstance);
 }
 
 void RadioSlot::request(int id, const void* data, size_t length, ResponseCallback callback) {
@@ -135,6 +139,11 @@ void RadioSlot::onUnsolicited(int id, const void* data, size_t length) {
             mData->onUnsolicited(unsol, data, length, kUnsolicited);
             break;
         case SEC_UNSOL_MODEM:
+            if (unsol == RIL_UNSOL_MODEM_RESTART) {
+                CallStatePublisher::get().resetAll();
+            } else if (unsol == RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED) {
+                CallStatePublisher::get().reset(mSocket);
+            }
             mModem->onUnsolicited(unsol, data, length, kUnsolicited);
             if (unsol == RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED) {
                 sendVendorConfiguration();
@@ -144,7 +153,15 @@ void RadioSlot::onUnsolicited(int id, const void* data, size_t length) {
             mNetwork->onUnsolicited(unsol, data, length, kUnsolicited);
             break;
         case SEC_UNSOL_SIM:
+            // STK call setup arrives as a SIM indication but belongs to voice.
+            if (unsol == RIL_UNSOL_STK_CALL_SETUP) {
+                mVoice->onUnsolicited(unsol, data, length, kUnsolicited);
+                break;
+            }
             mSim->onUnsolicited(unsol, data, length, kUnsolicited);
+            break;
+        case SEC_UNSOL_VOICE:
+            mVoice->onUnsolicited(unsol, data, length, kUnsolicited);
             break;
         default:
             LOG(DEBUG) << mInstance << ": unhandled unsolicited " << id << " (" << length
