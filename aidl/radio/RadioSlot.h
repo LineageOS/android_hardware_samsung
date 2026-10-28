@@ -16,6 +16,7 @@
 namespace aidl::android::hardware::radio::samsung {
 
 class RadioConfig;
+class RadioData;
 class RadioModem;
 class RadioNetwork;
 class RadioSim;
@@ -54,6 +55,7 @@ class RadioSlot {
     bool mVendorConfigPending = false;
 
     std::shared_ptr<RadioConfig> mConfig;
+    std::shared_ptr<RadioData> mData;
     std::shared_ptr<RadioModem> mModem;
     std::shared_ptr<RadioNetwork> mNetwork;
     std::shared_ptr<RadioSim> mSim;
