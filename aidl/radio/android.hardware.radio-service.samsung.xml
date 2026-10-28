@@ -16,4 +16,10 @@
         <fqname>IRadioNetwork/slot1</fqname>
         <fqname>IRadioNetwork/slot2</fqname>
     </hal>
+    <hal format="aidl">
+        <name>android.hardware.radio.sim</name>
+        <version>5</version>
+        <fqname>IRadioSim/slot1</fqname>
+        <fqname>IRadioSim/slot2</fqname>
+    </hal>
 </manifest>
