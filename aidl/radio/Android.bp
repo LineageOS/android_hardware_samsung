@@ -53,6 +53,8 @@ cc_binary {
         "RadioSlot.cpp",
         "common.cpp",
         "config/RadioConfig.cpp",
+        "data/DataConvert.cpp",
+        "data/RadioData.cpp",
         "modem/RadioModem.cpp",
         "network/NetworkConvert.cpp",
         "network/RadioNetwork.cpp",
@@ -62,6 +64,7 @@ cc_binary {
     ],
     shared_libs: [
         "android.hardware.radio.config-V5-ndk",
+        "android.hardware.radio.data-V5-ndk",
         "android.hardware.radio.modem-V5-ndk",
         "android.hardware.radio.network-V5-ndk",
         "android.hardware.radio.sim-V5-ndk",

@@ -5,6 +5,12 @@
         <fqname>IRadioConfig/default</fqname>
     </hal>
     <hal format="aidl">
+        <name>android.hardware.radio.data</name>
+        <version>5</version>
+        <fqname>IRadioData/slot1</fqname>
+        <fqname>IRadioData/slot2</fqname>
+    </hal>
+    <hal format="aidl">
         <name>android.hardware.radio.modem</name>
         <version>5</version>
         <fqname>IRadioModem/slot1</fqname>
