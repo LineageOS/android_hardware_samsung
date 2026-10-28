@@ -51,6 +51,7 @@ cc_binary {
     local_include_dirs: ["include"],
     srcs: [
         "RadioSlot.cpp",
+        "WakeLock.cpp",
         "common.cpp",
         "config/RadioConfig.cpp",
         "data/DataConvert.cpp",
@@ -77,6 +78,7 @@ cc_binary {
         "android.hardware.radio.sim-V5-ndk",
         "android.hardware.radio.voice-V5-ndk",
         "libbinder_ndk",
+        "libhardware_legacy",
         "libhidlbase",
         "libril-samsung",
         "libutils",

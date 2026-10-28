@@ -12,6 +12,7 @@
 #include <chrono>
 
 #include "RadioSlot.h"
+#include "WakeLock.h"
 #include "network/NetworkConvert.h"
 
 namespace aidl::android::hardware::radio::samsung {
@@ -49,6 +50,7 @@ ScopedAStatus RadioNetwork::setResponseFunctions(
 }
 
 ScopedAStatus RadioNetwork::responseAcknowledgement() {
+    WakeLock::get().release();
     return ok();
 }
 

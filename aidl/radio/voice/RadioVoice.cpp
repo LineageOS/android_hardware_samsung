@@ -15,6 +15,7 @@
 #include <iterator>
 
 #include "RadioSlot.h"
+#include "WakeLock.h"
 #include "voice/CallStatePublisher.h"
 
 namespace aidl::android::hardware::radio::samsung {
@@ -154,6 +155,7 @@ ScopedAStatus RadioVoice::setResponseFunctions(
 }
 
 ScopedAStatus RadioVoice::responseAcknowledgement() {
+    WakeLock::get().release();
     return ok();
 }
 
