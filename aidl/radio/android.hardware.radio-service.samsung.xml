@@ -28,4 +28,10 @@
         <fqname>IRadioSim/slot1</fqname>
         <fqname>IRadioSim/slot2</fqname>
     </hal>
+    <hal format="aidl">
+        <name>android.hardware.radio.voice</name>
+        <version>5</version>
+        <fqname>IRadioVoice/slot1</fqname>
+        <fqname>IRadioVoice/slot2</fqname>
+    </hal>
 </manifest>
