@@ -15,6 +15,7 @@
 
 #include "config/RadioConfig.h"
 #include "modem/RadioModem.h"
+#include "network/RadioNetwork.h"
 
 namespace aidl::android::hardware::radio::samsung {
 
@@ -37,7 +38,8 @@ RadioSlot::RadioSlot(RIL_SOCKET_ID socket, std::shared_ptr<RadioConfig> config)
     : mSocket(socket),
       mInstance("slot" + std::to_string(socket + 1)),
       mConfig(std::move(config)),
-      mModem(::ndk::SharedRefBase::make<RadioModem>(*this)) {
+      mModem(::ndk::SharedRefBase::make<RadioModem>(*this)),
+      mNetwork(::ndk::SharedRefBase::make<RadioNetwork>(*this)) {
     VendorRil::get().setUnsolicitedCallback(
             mSocket,
             [this](int id, const void* data, size_t length) { onUnsolicited(id, data, length); });
@@ -45,6 +47,7 @@ RadioSlot::RadioSlot(RIL_SOCKET_ID socket, std::shared_ptr<RadioConfig> config)
 
 void RadioSlot::publish() {
     publishService(mModem, mInstance);
+    publishService(mNetwork, mInstance);
 }
 
 void RadioSlot::request(int id, const void* data, size_t length, ResponseCallback callback) {
@@ -127,6 +130,9 @@ void RadioSlot::onUnsolicited(int id, const void* data, size_t length) {
             if (unsol == RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED) {
                 sendVendorConfiguration();
             }
+            break;
+        case SEC_UNSOL_NETWORK:
+            mNetwork->onUnsolicited(unsol, data, length, kUnsolicited);
             break;
         default:
             LOG(DEBUG) << mInstance << ": unhandled unsolicited " << id << " (" << length
