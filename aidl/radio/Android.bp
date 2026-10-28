@@ -1,0 +1,66 @@
+//
+// SPDX-FileCopyrightText: 2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_defaults {
+    name: "android.hardware.radio-samsung-defaults",
+    vendor: true,
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-DANDROID_MULTI_SIM",
+        "-DANDROID_SIM_COUNT_2",
+        "-DRIL_SHLIB",
+    ],
+    header_libs: ["ril_headers"],
+    shared_libs: [
+        "libbase",
+        "liblog",
+    ],
+}
+
+cc_library_shared {
+    name: "libril-samsung",
+    defaults: ["android.hardware.radio-samsung-defaults"],
+    export_include_dirs: ["ril/include"],
+    // libsec-ril expects nanopb from libril_sem.
+    whole_static_libs: ["libprotobuf-c-nano-enable_malloc-32bit"],
+    export_header_lib_headers: ["ril_headers"],
+    srcs: [
+        "ril/SamsungExports.cpp",
+        "ril/VendorRil.cpp",
+    ],
+    shared_libs: ["libdl"],
+}
+
+vintf_fragment {
+    name: "android.hardware.radio-service.samsung.xml",
+    src: "android.hardware.radio-service.samsung.xml",
+    vendor: true,
+}
+
+cc_binary {
+    name: "android.hardware.radio-service.samsung",
+    defaults: ["android.hardware.radio-samsung-defaults"],
+    relative_install_path: "hw",
+    init_rc: ["android.hardware.radio-service.samsung.rc"],
+    vintf_fragment_modules: ["android.hardware.radio-service.samsung.xml"],
+    local_include_dirs: ["include"],
+    srcs: [
+        "RadioSlot.cpp",
+        "common.cpp",
+        "config/RadioConfig.cpp",
+        "modem/RadioModem.cpp",
+        "service.cpp",
+        "sim/UiccSlots.cpp",
+    ],
+    shared_libs: [
+        "android.hardware.radio.config-V5-ndk",
+        "android.hardware.radio.modem-V5-ndk",
+        "libbinder_ndk",
+        "libril-samsung",
+    ],
+}
