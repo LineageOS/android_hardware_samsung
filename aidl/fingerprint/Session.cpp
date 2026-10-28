@@ -373,6 +373,7 @@ bool Session::checkSensorLockout() {
 
 void Session::clearLockout(bool clearAttemptCounter) {
     mLockoutTracker.reset(clearAttemptCounter);
+    mHal.request(SEM_REQUEST_RESET_LOCKOUT, 0);
     mCb->onLockoutCleared();
 }
 
@@ -445,6 +446,7 @@ void Session::notify(const fingerprint_msg_t* msg) {
 
                 mCb->onAuthenticationSucceeded(msg->data.authenticated.finger.fid, authToken);
                 mLockoutTracker.reset(true);
+                mHal.request(SEM_REQUEST_RESET_LOCKOUT, 0);
             } else {
                 mCb->onAuthenticationFailed();
                 mLockoutTracker.addFailedAttempt();
