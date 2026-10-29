@@ -227,19 +227,22 @@ ndk::ScopedAStatus Session::onUiReady() {
 }
 
 ndk::ScopedAStatus Session::authenticateWithContext(int64_t operationId,
-                                                    const OperationContext& /*context*/,
+                                                    const OperationContext& context,
                                                     std::shared_ptr<ICancellationSignal>* out) {
+    onContextChanged(context);
     return authenticate(operationId, out);
 }
 
 ndk::ScopedAStatus Session::enrollWithContext(const HardwareAuthToken& hat,
-                                              const OperationContext& /*context*/,
+                                              const OperationContext& context,
                                               std::shared_ptr<ICancellationSignal>* out) {
+    onContextChanged(context);
     return enroll(hat, out);
 }
 
 ndk::ScopedAStatus Session::detectInteractionWithContext(
-        const OperationContext& /*context*/, std::shared_ptr<ICancellationSignal>* out) {
+        const OperationContext& context, std::shared_ptr<ICancellationSignal>* out) {
+    onContextChanged(context);
     return detectInteraction(out);
 }
 
@@ -251,7 +254,13 @@ ndk::ScopedAStatus Session::onPointerUpWithContext(const PointerContext& context
     return onPointerUp(context.pointerId);
 }
 
-ndk::ScopedAStatus Session::onContextChanged(const OperationContext& /*context*/) {
+ndk::ScopedAStatus Session::onContextChanged(const OperationContext& context) {
+    // 1 = Screen OFF / Doze, 2 = Screen ON
+    int displayStatus = (context.isAod || context.displayState == DisplayState::AOD ||
+                         context.displayState == DisplayState::NO_UI)
+                                ? 1
+                                : 2;
+    mHal.request(SEM_REQUEST_SET_DISPLAY_STATUS, displayStatus);
     return ndk::ScopedAStatus::ok();
 }
 
