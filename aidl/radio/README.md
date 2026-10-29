@@ -107,8 +107,11 @@ becomes a BCD service center address. An empty address still selects the SIM's d
 audio HAL used to wait for the blob's call properties during the call. `AudioCallSlot` now sets
 the audio HAL's `g_call_sim_slot` parameter before the HAL answers `GET_CURRENT_CALLS`, which
 Telephony waits for before it switches audio to the call, so the plain AOSP
-`android.hardware.audio@7.1-impl` works. `CallStatePublisher` also publishes each SIM's call
-states in `vendor.calls.state` for audio HALs that start voice sessions from it.
+`android.hardware.audio@7.1-impl` works. Nothing in Telephony starts a Qualcomm voice session,
+so `AudioCallSlot` also marks the SIM's session (`vsid`) active with `call_state`. The OSS
+primary HAL starts it once audio enters the call. When the slot changes or no call needs audio,
+both sessions go inactive. `CallStatePublisher` also publishes each SIM's call states in
+`vendor.calls.state` for audio HALs that start voice sessions from it.
 
 **SMS over IMS.** The modem has no IMS registration, as IMS runs on the AP. `libril_sem`
 rejected the request and Telephony then retried over CS. `RadioMessaging` sends it over CS
