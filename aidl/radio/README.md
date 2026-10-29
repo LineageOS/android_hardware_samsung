@@ -50,7 +50,8 @@ and forwards it. Indications that need Telephony to act hold a wakelock until Te
 acknowledges them.
 
 **Calls back into `libril_sem`.** The blob still imports a few functions from `libril_sem`.
-`libril-samsung` provides them, so `libril_sem` and `rild` are not needed.
+`libril-samsung` provides them, so with a blob fixup that points the blob at it, `libril_sem`
+and `rild` are not needed.
 
 ## What was reverse engineered
 
@@ -73,24 +74,76 @@ Samsung publishes none of this, so it was worked out from the blobs:
 - **Startup.** The blob holds back indications until it gets the settings from
   `/vendor/etc/sehradiomanager.conf` (`FW_READY=1` and so on) through OEM request 10051.
 
-## Workarounds for the blob
+## What it fixes
 
-- Reports UICC applications enablement itself: the blob only does this when
-  `ro.build.version.oneui` is 6.1 or later.
-- Fixes eSIM (eUICC) access: strips the blob's channel session id from APDU `CLA`, adds the
-  port to `EnableProfile` in MEP-A1 mode, reports the eUICC port and EID, and translates its
-  slot numbering.
-- Converts the SMSC address between text and the BCD form the blob requires.
-- Sends SMS over IMS through CS instead, as the modem has no IMS registration.
-- Routes STK call setup, which the blob reports as a SIM indication, to the voice service.
-- Sends the card reset status SAP requires after connecting, which the modem never reports.
+With stock `rild` and `libril_sem`, these needed device patches or did not work at all. The
+HAL now handles them itself.
 
-## Call audio (Qualcomm)
+**eSIM.** AOSP's path to the eUICC (ES10) broke in four places. It used to need a `libsec-ril`
+shim plus a binary patch of `libril_sem`.
+- The blob hands out logical channel session ids such as 101, and the framework ORs them into
+  the APDU `CLA` byte, so the card rejects the command. `RadioSim` strips the session id from
+  `CLA` before passing the APDU on.
+- After a slot switch the framework assumes MEP-B and leaves the port out of
+  `EnableProfile`. When `ril.esim.mep_mode` reports MEP-A1, `RadioSim::addMepA1Port` appends
+  the port TLV.
+- Slot status reports the eUICC as physical slot 1, but slot mapping addresses it as slot 2.
+  `RadioConfig` rewrites the physical slot in mappings that use port 1.
+- Card status reports port 0 and no EID for both eUICC ports. `UiccSlots` remembers the last
+  slot status, and `RadioSim` fills the port and EID in from it.
 
-Before answering `GET_CURRENT_CALLS`, the HAL sets the audio HAL's `g_call_sim_slot`
-parameter to the SIM with the active call, and publishes each SIM's call states in
-`vendor.calls.state`. This is what lets the plain AOSP `android.hardware.audio@7.1-impl` be
-used instead of a patched one.
+**SIM on/off toggle.** The blob only reports UICC applications enablement changes when
+`ro.build.version.oneui` is 6.1 or later, so the toggle in Settings never settled. This used to
+need two binary patches in `libsec-ril-impl`. `RadioSim` now tracks the state itself: it
+records the value after `enableUiccApplications`, asks the blob for it after every SIM status
+change, and reports to Telephony whenever it changes.
+
+**SMSC address.** Telephony sends back the address in the text form `GET_SMSC_ADDRESS`
+returned, but the blob only accepts it as BCD. A `libsec-ril` shim used to drop the address
+altogether. `SmscAddress` converts both ways instead: replies become dialable numbers, and text
+becomes a BCD service center address. An empty address still selects the SIM's default.
+
+**Call audio.** The audio HAL must know which SIM carries a CS call. A patched copy of the
+audio HAL used to wait for the blob's call properties during the call. `AudioCallSlot` now sets
+the audio HAL's `g_call_sim_slot` parameter before the HAL answers `GET_CURRENT_CALLS`, which
+Telephony waits for before it switches audio to the call, so the plain AOSP
+`android.hardware.audio@7.1-impl` works. `CallStatePublisher` also publishes each SIM's call
+states in `vendor.calls.state` for audio HALs that start voice sessions from it.
+
+**SMS over IMS.** The modem has no IMS registration, as IMS runs on the AP. `libril_sem`
+rejected the request and Telephony then retried over CS. `RadioMessaging` sends it over CS
+directly.
+
+**SIM Toolkit call setup.** The blob reports it as a SIM indication, and `libril_sem` dropped
+it. `RadioSlot` routes it to the voice service.
+
+**`FW_READY`.** A separate daemon, `sehradiomanager`, used to send the vendor configuration.
+`RadioSlot` sends it, and again whenever the radio becomes available.
+
+**Bluetooth SIM Access.** The modem never reports the card reset status SAP requires after a
+connection, and Android's Bluetooth server waits for it. `RadioSap` sends it after a
+successful connect.
+
+**SIM slot count.** Some devices only set `ro.multisim.simslotcount`, which made the HAL bring
+up a single slot. `service.cpp` falls back to it.
+
+## Hacks
+
+These are deliberate shortcuts around what the blob expects.
+
+| What | Why | How |
+|---|---|---|
+| Blob fixup | The blob links against `libril_sem.so` | Devices point it at `libril-samsung.so` with `replace_needed`. Without the fixup the blob keeps using `libril_sem`'s functions, which also works, but needs `libril_sem` and its Samsung libraries |
+| Stub `libril_sem` functions | The file, command, settings and APN calls are served by Samsung's framework | They return -1, and the blob falls back to its defaults (`ril/SamsungExports.cpp`) |
+| `RIL_GetClientHalVersion` | The blob also checks for the HIDL 1.x range | Returns the AIDL version plus 20 |
+| `RIL_RegisterSehBridge` | Would register Samsung's bridge service | Only sets `ril.halservice.registered.slotN`, as the blob expects |
+| nanopb symbols | The blob calls nanopb from `libril_sem` for SIM Access | `libril-samsung` links AOSP's nanopb with 32-bit fields, matching the `librilutils` message descriptors |
+| `onCancel` | In the blob it shuts down the RIL | Never called |
+| Requests from blob threads | The blob must not be called back from its own indication thread | `VendorRil::post()` runs such requests on our worker thread |
+| SIM Access results | `libril_sem` reads the result from the payload | `RadioSap` ignores the `RIL_Errno` and sends empty requests with a valid pointer, as `libril_sem` does |
+| `ISehRadioChannel` | The blob registers it for Samsung's IMS daemons | Devices declare it in their VINTF manifest |
+| `vendor.calls.state` | `rild` sets it | Devices need a `property_contexts` entry that `rild` can set |
+| Exynos modem restart | The Shannon modem must restart together with the RIL | Keep the stock `onrestart restart cpboot-daemon` lines in the init script |
 
 ## Other Samsung devices
 
