@@ -149,7 +149,7 @@ std::optional<int> CallStatePublisher::updateAudioSlotLocked() {
         return std::nullopt;
     }
     mAudioSlot = slot;
-    return slot >= 0 ? std::optional<int>(slot) : std::nullopt;
+    return slot;
 }
 
 void CallStatePublisher::publishLocked() {

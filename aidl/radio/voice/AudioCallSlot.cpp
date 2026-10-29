@@ -13,6 +13,7 @@
 namespace aidl::android::hardware::radio::samsung {
 
 using ::android::sp;
+using ::android::hardware::hidl_vec;
 using ::android::hardware::audio::V7_0::IDevice;
 using ::android::hardware::audio::V7_0::IDevicesFactory;
 using ::android::hardware::audio::V7_0::IPrimaryDevice;
@@ -48,19 +49,18 @@ sp<IDevice> AudioCallSlot::device() {
     return mDevice;
 }
 
-bool AudioCallSlot::set(int slot) {
-    const ParameterValue parameter = {"g_call_sim_slot", slot == 0 ? "0x01" : "0x02"};
-    std::lock_guard lock(mMutex);
+bool AudioCallSlot::setParameters(const hidl_vec<ParameterValue>& parameters) {
     // The audio HAL may have restarted.
     for (int attempt = 0; attempt < 2; attempt++) {
         const auto device = this->device();
         if (device == nullptr) {
             return false;
         }
-        const auto ret = device->setParameters({}, {parameter});
+        const auto ret = device->setParameters({}, parameters);
         if (ret.isOk()) {
             if (ret != Result::OK) {
-                LOG(ERROR) << "Failed to set " << parameter.key << ": " << toString(Result(ret));
+                LOG(ERROR) << "Failed to set " << parameters[0].key << ": "
+                           << toString(Result(ret));
             }
             return ret == Result::OK;
         }
@@ -68,6 +68,30 @@ bool AudioCallSlot::set(int slot) {
         mDevice = nullptr;
     }
     return false;
+}
+
+bool AudioCallSlot::set(int slot) {
+    // Voice session IDs of VOICEMMODE1 and VOICEMMODE2, one per SIM.
+    static constexpr const char* kVsid[] = {"297816064", "299651072"};
+    std::lock_guard lock(mMutex);
+    bool ok = true;
+    if (mSlot != -1) {
+        ok = setParameters({{"g_call_state", "1"}});
+        for (const char* vsid : kVsid) {
+            ok = setParameters({{"vsid", vsid}, {"call_state", "1"}}) && ok;
+        }
+    }
+    // The audio HAL keeps the session pending and starts it once it enters IN_CALL.
+    if (ok && slot >= 0) {
+        ok = setParameters({{"g_call_sim_slot", slot == 0 ? "0x01" : "0x02"}}) &&
+             setParameters({{"g_call_state", "2"}}) &&
+             setParameters({{"vsid", kVsid[slot]}, {"call_state", "2"}});
+    }
+    if (ok) {
+        LOG(INFO) << "CS voice session slot " << mSlot << " -> " << slot;
+    }
+    mSlot = ok ? slot : -2;
+    return ok;
 }
 
 }  // namespace aidl::android::hardware::radio::samsung
