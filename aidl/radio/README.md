@@ -11,7 +11,8 @@ Telephony ── AIDL radio HAL (this) ── libsec-ril-impl.so (Samsung blob) 
 ## What it does
 
 - Serves `IRadioConfig`, and `IRadioModem`, `IRadioNetwork`, `IRadioSim`, `IRadioData`,
-  `IRadioVoice` and `IRadioMessaging` for each SIM slot, all at AIDL version 5.
+  `IRadioVoice` and `IRadioMessaging` for each SIM slot, all at AIDL version 5, and `ISap`
+  (Bluetooth SIM Access Profile) at version 1.
 - Loads `libsec-ril-impl.so`, calls its `RIL_Init` and translates every request, response and
   indication between AIDL and the blob's structs.
 - Runs as `ril-daemon` (`android.hardware.radio-service.samsung`).
@@ -23,15 +24,15 @@ Telephony ── AIDL radio HAL (this) ── libsec-ril-impl.so (Samsung blob) 
 | `ril/` | `libril-samsung.so`: loads the blob and provides the `libril_sem` symbols it imports |
 | `ril/include/samsung_ril/` | Samsung's request ids, indication ids and struct layouts |
 | `RadioSlot.*` | One per SIM: owns the services and routes indications to them |
-| `config/`, `modem/`, `network/`, `sim/`, `data/`, `voice/`, `messaging/` | One AIDL service each |
+| `config/`, `modem/`, `network/`, `sim/`, `data/`, `voice/`, `messaging/`, `sap/` | One AIDL service each |
 | `WakeLock.*` | Holds a wakelock until the framework acknowledges an indication |
 
 ## How it works
 
 **Startup.** The service reads the SIM slot count, loads `libsec-ril-impl.so` and calls its
 `RIL_Init` with a table of callbacks. The blob connects to the modem and returns its own table
-of functions. Each slot then publishes its AIDL services, and the `FW_READY` settings are
-sent once the radio is available.
+of functions. `RIL_SAP_Init` does the same for SIM Access. Each slot then publishes its AIDL
+services, and the `FW_READY` settings are sent once the radio is available.
 
 **Requests.** Telephony calls an AIDL method with a serial number. The service converts the
 arguments into the C struct the blob expects and passes it to the blob's `onRequest` with a
@@ -67,6 +68,8 @@ Samsung publishes none of this, so it was worked out from the blobs:
 - **`libril_sem` exports.** The blob imports a few functions from it, such as
   `RIL_GetClientHalVersion`. `libril-samsung` provides them, plus the nanopb symbols the blob
   uses.
+- **SIM Access Profile.** `RIL_SAP_Init` returns a second function table. Requests and
+  responses are AOSP `sap-api.proto` messages, encoded with nanopb.
 - **Startup.** The blob holds back indications until it gets the settings from
   `/vendor/etc/sehradiomanager.conf` (`FW_READY=1` and so on) through OEM request 10051.
 
@@ -80,6 +83,7 @@ Samsung publishes none of this, so it was worked out from the blobs:
 - Converts the SMSC address between text and the BCD form the blob requires.
 - Sends SMS over IMS through CS instead, as the modem has no IMS registration.
 - Routes STK call setup, which the blob reports as a SIM indication, to the voice service.
+- Sends the card reset status SAP requires after connecting, which the modem never reports.
 
 ## Call audio (Qualcomm)
 
@@ -112,5 +116,5 @@ What to check on a new device:
 
 ## Not supported
 
-- `IRadioIms` and `ISap` (Bluetooth SIM Access Profile).
+- `IRadioIms`.
 - Samsung's own `ISehRadio*` interfaces, used only by Samsung's framework.
