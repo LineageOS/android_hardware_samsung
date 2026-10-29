@@ -51,8 +51,9 @@ std::vector<std::pair<std::string, std::string>> loadVendorConfiguration() {
 int main() {
     android::base::InitLogging(nullptr, android::base::LogdLogger(android::base::RADIO));
 
-    const int simCount = std::clamp(GetIntProperty("ro.vendor.multisim.simslotcount", 1), 1,
-                                    static_cast<int>(RIL_SOCKET_NUM));
+    const int simCount = std::clamp(GetIntProperty("ro.vendor.multisim.simslotcount",
+                                                   GetIntProperty("ro.multisim.simslotcount", 1)),
+                                    1, static_cast<int>(RIL_SOCKET_NUM));
 
     auto config = ndk::SharedRefBase::make<RadioConfig>();
 
