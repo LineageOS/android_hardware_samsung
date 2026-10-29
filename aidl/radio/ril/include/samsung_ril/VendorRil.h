@@ -32,6 +32,13 @@ class VendorRil {
 
     void request(RIL_SOCKET_ID socket, int id, const void* data, size_t length,
                  ResponseCallback callback);
+
+    // SIM Access Profile, through the blob's RIL_SAP_Init. Ids are sap-api.proto MsgIds and
+    // payloads are nanopb encoded.
+    bool hasSap() const { return mSapFunctions != nullptr; }
+    void setSapUnsolicitedCallback(RIL_SOCKET_ID socket, UnsolicitedCallback callback);
+    void sapRequest(RIL_SOCKET_ID socket, int id, const void* data, size_t length,
+                    ResponseCallback callback);
     RIL_RadioState radioState(RIL_SOCKET_ID socket);
     // Runs a task on the timer thread, where requests can be sent.
     void post(std::function<void()> task);
@@ -58,15 +65,21 @@ class VendorRil {
 
     void onRequestComplete(RIL_Token token, RIL_Errno error, void* response, size_t length);
     void onUnsolicitedResponse(int id, const void* data, size_t length, RIL_SOCKET_ID socket);
+    void onSapUnsolicitedResponse(int id, const void* data, size_t length, RIL_SOCKET_ID socket);
+    void deliver(const UnsolicitedCallback (&callbacks)[RIL_SOCKET_NUM], int id, const void* data,
+                 size_t length, RIL_SOCKET_ID socket);
     void requestTimedCallback(RIL_TimedCallback callback, void* param,
                               const struct timeval* relativeTime);
     void onRequestAck(RIL_Token token);
 
+    void dispatch(const SecRilFunctions* functions, RIL_SOCKET_ID socket, int id, const void* data,
+                  size_t length, ResponseCallback callback);
     Request* takeRequest(RIL_Token token);
     void schedule(Task task);
     void timerLoop();
 
     const SecRilFunctions* mFunctions = nullptr;
+    const SecRilFunctions* mSapFunctions = nullptr;
     std::atomic<int> mClientHalVersion[RIL_SOCKET_NUM] = {};
 
     std::mutex mRequestsMutex;
@@ -74,6 +87,7 @@ class VendorRil {
 
     std::mutex mUnsolicitedMutex;
     UnsolicitedCallback mUnsolicited[RIL_SOCKET_NUM];
+    UnsolicitedCallback mSapUnsolicited[RIL_SOCKET_NUM];
 
     std::mutex mTimerMutex;
     std::condition_variable mTimerCondition;

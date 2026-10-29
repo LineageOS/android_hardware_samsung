@@ -49,6 +49,12 @@ cc_binary {
     init_rc: ["android.hardware.radio-service.samsung.rc"],
     vintf_fragment_modules: ["android.hardware.radio-service.samsung.xml"],
     local_include_dirs: ["include"],
+    // Must match librilutils, which provides the SAP message descriptors.
+    cflags: [
+        "-DPB_ENABLE_MALLOC",
+        "-DPB_FIELD_32BIT",
+    ],
+    static_libs: ["libprotobuf-c-nano-enable_malloc-32bit"],
     srcs: [
         "RadioSlot.cpp",
         "WakeLock.cpp",
@@ -61,6 +67,7 @@ cc_binary {
         "modem/RadioModem.cpp",
         "network/NetworkConvert.cpp",
         "network/RadioNetwork.cpp",
+        "sap/RadioSap.cpp",
         "service.cpp",
         "sim/RadioSim.cpp",
         "sim/UiccSlots.cpp",
@@ -75,12 +82,14 @@ cc_binary {
         "android.hardware.radio.messaging-V5-ndk",
         "android.hardware.radio.modem-V5-ndk",
         "android.hardware.radio.network-V5-ndk",
+        "android.hardware.radio.sap-V1-ndk",
         "android.hardware.radio.sim-V5-ndk",
         "android.hardware.radio.voice-V5-ndk",
         "libbinder_ndk",
         "libhardware_legacy",
         "libhidlbase",
         "libril-samsung",
+        "librilutils",
         "libutils",
     ],
 }

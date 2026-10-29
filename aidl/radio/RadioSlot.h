@@ -20,6 +20,7 @@ class RadioData;
 class RadioMessaging;
 class RadioModem;
 class RadioNetwork;
+class RadioSap;
 class RadioSim;
 class RadioVoice;
 
@@ -61,6 +62,7 @@ class RadioSlot {
     std::shared_ptr<RadioMessaging> mMessaging;
     std::shared_ptr<RadioModem> mModem;
     std::shared_ptr<RadioNetwork> mNetwork;
+    std::shared_ptr<RadioSap> mSap;
     std::shared_ptr<RadioSim> mSim;
     std::shared_ptr<RadioVoice> mVoice;
 };

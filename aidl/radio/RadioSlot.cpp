@@ -19,6 +19,7 @@
 #include "messaging/RadioMessaging.h"
 #include "modem/RadioModem.h"
 #include "network/RadioNetwork.h"
+#include "sap/RadioSap.h"
 #include "sim/RadioSim.h"
 #include "voice/CallStatePublisher.h"
 #include "voice/RadioVoice.h"
@@ -48,6 +49,7 @@ RadioSlot::RadioSlot(RIL_SOCKET_ID socket, std::shared_ptr<RadioConfig> config)
       mMessaging(::ndk::SharedRefBase::make<RadioMessaging>(*this)),
       mModem(::ndk::SharedRefBase::make<RadioModem>(*this)),
       mNetwork(::ndk::SharedRefBase::make<RadioNetwork>(*this)),
+      mSap(::ndk::SharedRefBase::make<RadioSap>(*this)),
       mSim(::ndk::SharedRefBase::make<RadioSim>(*this)),
       mVoice(::ndk::SharedRefBase::make<RadioVoice>(*this)) {
     VendorRil::get().setUnsolicitedCallback(
@@ -60,6 +62,9 @@ void RadioSlot::publish() {
     publishService(mMessaging, mInstance);
     publishService(mModem, mInstance);
     publishService(mNetwork, mInstance);
+    if (VendorRil::get().hasSap()) {
+        publishService(mSap, mInstance);
+    }
     publishService(mSim, mInstance);
     publishService(mVoice, mInstance);
 }

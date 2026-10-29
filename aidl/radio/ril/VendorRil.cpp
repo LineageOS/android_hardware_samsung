@@ -30,6 +30,11 @@ void VendorRil::setUnsolicitedCallback(RIL_SOCKET_ID socket, UnsolicitedCallback
     mUnsolicited[socket] = std::move(callback);
 }
 
+void VendorRil::setSapUnsolicitedCallback(RIL_SOCKET_ID socket, UnsolicitedCallback callback) {
+    std::lock_guard lock(mUnsolicitedMutex);
+    mSapUnsolicited[socket] = std::move(callback);
+}
+
 bool VendorRil::load(const std::string& path, const std::vector<std::string>& args) {
     static const RIL_Env env = {
             .OnRequestComplete = [](RIL_Token t, RIL_Errno e, void* r,
@@ -43,6 +48,15 @@ bool VendorRil::load(const std::string& path, const std::vector<std::string>& ar
                         get().requestTimedCallback(c, p, t);
                     },
             .OnRequestAck = [](RIL_Token t) { get().onRequestAck(t); },
+    };
+    static const RIL_Env sapEnv = {
+            .OnRequestComplete = env.OnRequestComplete,
+            .OnUnsolicitedResponse =
+                    [](int id, const void* d, size_t l, RIL_SOCKET_ID s) {
+                        get().onSapUnsolicitedResponse(id, d, l, s);
+                    },
+            .RequestTimedCallback = env.RequestTimedCallback,
+            .OnRequestAck = nullptr,
     };
 
     void* handle = dlopen(path.c_str(), RTLD_NOW);
@@ -75,17 +89,33 @@ bool VendorRil::load(const std::string& path, const std::vector<std::string>& ar
     }
 
     LOG(INFO) << "Loaded " << path << ", RIL version " << mFunctions->version << ", " << version();
+
+    if (auto sapInit = reinterpret_cast<RilInit>(dlsym(handle, "RIL_SAP_Init"))) {
+        mSapFunctions = reinterpret_cast<const SecRilFunctions*>(
+                sapInit(&sapEnv, static_cast<int>(argv.size() - 1), argv.data()));
+    }
+    LOG(INFO) << "SIM Access Profile " << (hasSap() ? "available" : "not available");
     return true;
 }
 
 void VendorRil::request(RIL_SOCKET_ID socket, int id, const void* data, size_t length,
                         ResponseCallback callback) {
+    dispatch(mFunctions, socket, id, data, length, std::move(callback));
+}
+
+void VendorRil::sapRequest(RIL_SOCKET_ID socket, int id, const void* data, size_t length,
+                           ResponseCallback callback) {
+    dispatch(mSapFunctions, socket, id, data, length, std::move(callback));
+}
+
+void VendorRil::dispatch(const SecRilFunctions* functions, RIL_SOCKET_ID socket, int id,
+                         const void* data, size_t length, ResponseCallback callback) {
     auto* request = new Request{id, socket, std::move(callback)};
     {
         std::lock_guard lock(mRequestsMutex);
         mRequests.insert(request);
     }
-    mFunctions->onRequest(id, const_cast<void*>(data), length, request, socket);
+    functions->onRequest(id, const_cast<void*>(data), length, request, socket);
 }
 
 RIL_RadioState VendorRil::radioState(RIL_SOCKET_ID socket) {
@@ -128,11 +158,21 @@ void VendorRil::onRequestComplete(RIL_Token token, RIL_Errno error, void* respon
 
 void VendorRil::onUnsolicitedResponse(int id, const void* data, size_t length,
                                       RIL_SOCKET_ID socket) {
+    deliver(mUnsolicited, id, data, length, socket);
+}
+
+void VendorRil::onSapUnsolicitedResponse(int id, const void* data, size_t length,
+                                         RIL_SOCKET_ID socket) {
+    deliver(mSapUnsolicited, id, data, length, socket);
+}
+
+void VendorRil::deliver(const UnsolicitedCallback (&callbacks)[RIL_SOCKET_NUM], int id,
+                        const void* data, size_t length, RIL_SOCKET_ID socket) {
     UnsolicitedCallback callback;
     {
         std::lock_guard lock(mUnsolicitedMutex);
         if (socket >= 0 && socket < RIL_SOCKET_NUM) {
-            callback = mUnsolicited[socket];
+            callback = callbacks[socket];
         }
     }
     if (!callback) {
