@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2026 The LineageOS Project
+ * Copyright (C) 2024 The LineageOS Project
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -244,14 +244,6 @@ ndk::ScopedAStatus Session::detectInteractionWithContext(
 }
 
 ndk::ScopedAStatus Session::onPointerDownWithContext(const PointerContext& context) {
-    int screenOffPressDelayMs = FingerprintHalProperties::screen_off_press_delay().value_or(0);
-
-    if (screenOffPressDelayMs > 0) {
-        if (context.isAod && mDisplayState == DisplayState::NO_UI) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(screenOffPressDelayMs));
-        }
-    }
-
     return onPointerDown(context.pointerId, context.x, context.y, context.minor, context.major);
 }
 
@@ -259,8 +251,7 @@ ndk::ScopedAStatus Session::onPointerUpWithContext(const PointerContext& context
     return onPointerUp(context.pointerId);
 }
 
-ndk::ScopedAStatus Session::onContextChanged(const OperationContext& context) {
-    mDisplayState = context.displayState;
+ndk::ScopedAStatus Session::onContextChanged(const OperationContext& /*context*/) {
     return ndk::ScopedAStatus::ok();
 }
 
