@@ -16,6 +16,7 @@
 
 #define FINGERPRINT_DATA_DIR "/data/vendor/biometrics/fp/User_%d/"
 
+using ::aidl::android::hardware::biometrics::common::DisplayState;
 using ::aidl::android::hardware::biometrics::common::ICancellationSignal;
 using ::aidl::android::hardware::biometrics::common::OperationContext;
 using ::aidl::android::hardware::biometrics::fingerprint::PointerContext;
@@ -74,7 +75,11 @@ class Session : public BnSession {
     LockoutTracker mLockoutTracker;
     bool mClosed = false;
     bool mCaptureReady = false;
+    bool mNotifyScreenStatus = false;
+    bool mIsAuthenticating = false;
+    int mLastDisplayStatus = 0;
 
+    void notifyDisplayStatus(const OperationContext& context);
     Error VendorErrorFilter(int32_t error, int32_t* vendorCode);
     AcquiredInfo VendorAcquiredFilter(int32_t info, int32_t* vendorCode);
     bool checkSensorLockout();
