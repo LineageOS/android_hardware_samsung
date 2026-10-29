@@ -45,6 +45,11 @@ Session::Session(LegacyHAL hal, int userId, std::shared_ptr<ISessionCallback> cb
     char filename[64];
     snprintf(filename, sizeof(filename), FINGERPRINT_DATA_DIR, userId);
     mHal.ss_fingerprint_set_active_group(userId, filename);
+
+    int tzBuildType = mHal.request(SEM_REQUEST_GET_TZ_BUILD_TYPE, 0);
+    mNotifyScreenStatus = (tzBuildType == 1);
+    LOG(INFO) << "TZ build type=" << tzBuildType
+              << ", notifyScreenStatus=" << mNotifyScreenStatus;
 }
 
 ndk::ScopedAStatus Session::generateChallenge() {
@@ -101,6 +106,9 @@ ndk::ScopedAStatus Session::authenticate(int64_t operationId,
     if (error) {
         LOG(ERROR) << "ss_fingerprint_authenticate failed: " << error;
         mCb->onError(Error::UNABLE_TO_PROCESS, error);
+    } else {
+        mIsAuthenticating = true;
+        mLastDisplayStatus = 0;
     }
 
     *out = SharedRefBase::make<CancellationSignal>(this);
@@ -193,6 +201,8 @@ ndk::ScopedAStatus Session::resetLockout(const HardwareAuthToken& /*hat*/) {
 ndk::ScopedAStatus Session::close() {
     LOG(INFO) << "close";
     mClosed = true;
+    mIsAuthenticating = false;
+    mLastDisplayStatus = 0;
     mCb->onSessionClosed();
     AIBinder_DeathRecipient_delete(mDeathRecipient);
     return ndk::ScopedAStatus::ok();
@@ -235,9 +245,11 @@ ndk::ScopedAStatus Session::onUiReady() {
 }
 
 ndk::ScopedAStatus Session::authenticateWithContext(int64_t operationId,
-                                                    const OperationContext& /*context*/,
+                                                    const OperationContext& context,
                                                     std::shared_ptr<ICancellationSignal>* out) {
-    return authenticate(operationId, out);
+    ndk::ScopedAStatus status = authenticate(operationId, out);
+    notifyDisplayStatus(context);
+    return status;
 }
 
 ndk::ScopedAStatus Session::enrollWithContext(const HardwareAuthToken& hat,
@@ -259,7 +271,24 @@ ndk::ScopedAStatus Session::onPointerUpWithContext(const PointerContext& context
     return onPointerUp(context.pointerId);
 }
 
-ndk::ScopedAStatus Session::onContextChanged(const OperationContext& /*context*/) {
+void Session::notifyDisplayStatus(const OperationContext& context) {
+    if (!mNotifyScreenStatus || !mIsAuthenticating) {
+        return;
+    }
+    // 1 = Screen OFF / Doze, 2 = Screen ON
+    int displayStatus = (context.isAod || context.displayState == DisplayState::AOD ||
+                         context.displayState == DisplayState::NO_UI)
+                                ? 1
+                                : 2;
+    if (mLastDisplayStatus == displayStatus) {
+        return;
+    }
+    mLastDisplayStatus = displayStatus;
+    mHal.request(SEM_REQUEST_SET_DISPLAY_STATUS, displayStatus);
+}
+
+ndk::ScopedAStatus Session::onContextChanged(const OperationContext& context) {
+    notifyDisplayStatus(context);
     return ndk::ScopedAStatus::ok();
 }
 
@@ -273,6 +302,8 @@ ndk::ScopedAStatus Session::setIgnoreDisplayTouches(bool /*shouldIgnore*/) {
 }
 
 ndk::ScopedAStatus Session::cancel() {
+    mIsAuthenticating = false;
+    mLastDisplayStatus = 0;
     auto seh = SehFingerprint::getInstance();
     seh->sendTouchEvent(false);
     seh->notifyOpticalCaptureFinished();
@@ -403,6 +434,8 @@ void Session::lockoutTimerExpired() {
 void Session::notify(const fingerprint_msg_t* msg) {
     switch (msg->type) {
         case FINGERPRINT_ERROR: {
+            mIsAuthenticating = false;
+            mLastDisplayStatus = 0;
             auto seh = SehFingerprint::getInstance();
             seh->sendTouchEvent(false);
             seh->notifyOpticalCaptureFinished();
@@ -460,6 +493,8 @@ void Session::notify(const fingerprint_msg_t* msg) {
             LOG(DEBUG) << "onAuthenticated(fid=" << msg->data.authenticated.finger.fid
                        << ", gid=" << msg->data.authenticated.finger.gid << ")";
             if (msg->data.authenticated.finger.fid != 0) {
+                mIsAuthenticating = false;
+                mLastDisplayStatus = 0;
                 const hw_auth_token_t hat = msg->data.authenticated.hat;
                 HardwareAuthToken authToken;
                 translate(hat, authToken);
