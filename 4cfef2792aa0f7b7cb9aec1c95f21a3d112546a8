@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "405a1d23_d4050331",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2026-10-30T10:12:17Z",
+      "side": 1,
+      "message": "Tested on a52q (optical Goodix sensor) which is affected by said issue. This chain breaks screen off UDFPS again",
+      "revId": "4cfef2792aa0f7b7cb9aec1c95f21a3d112546a8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
