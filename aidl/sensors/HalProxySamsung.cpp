@@ -19,8 +19,31 @@ namespace hardware {
 namespace sensors {
 namespace implementation {
 
+using ::android::hardware::sensors::V1_0::Result;
 using ::android::hardware::sensors::V2_0::implementation::ScopedWakelock;
 using ::android::hardware::sensors::V2_1::SensorType;
+
+namespace {
+
+// Mirrors HalProxyAidl, whose activate() is private.
+ndk::ScopedAStatus resultToAStatus(Result result) {
+    switch (result) {
+        case Result::OK:
+            return ndk::ScopedAStatus::ok();
+        case Result::PERMISSION_DENIED:
+            return ndk::ScopedAStatus::fromExceptionCode(EX_SECURITY);
+        case Result::NO_MEMORY:
+            return ndk::ScopedAStatus::fromServiceSpecificError(ISensors::ERROR_NO_MEMORY);
+        case Result::BAD_VALUE:
+            return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_ARGUMENT);
+        case Result::INVALID_OPERATION:
+            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+        default:
+            return ndk::ScopedAStatus::fromExceptionCode(EX_TRANSACTION_FAILED);
+    }
+}
+
+}  // namespace
 
 HalProxySamsung::HalProxySamsung() {
     using Workaround = SensorsHalProperties::device_orientation_workaround_values;
@@ -34,6 +57,32 @@ HalProxySamsung::HalProxySamsung() {
             }
         }
     }
+
+    auto companion = SensorsHalProperties::proximity_companion();
+    if (companion.has_value()) {
+        mProximityCompanion.emplace(*this, *companion);
+    }
+}
+
+ndk::ScopedAStatus HalProxySamsung::activate(int32_t in_sensorHandle, bool in_enabled) {
+    if (!mProximityCompanion) {
+        return resultToAStatus(HalProxy::activate(in_sensorHandle, in_enabled));
+    }
+
+    if (mProximityCompanion->isCompanion(in_sensorHandle)) {
+        mProximityCompanion->setRequested(in_enabled);
+        return ndk::ScopedAStatus::ok();
+    }
+
+    // The companion must run before the proximity driver starts and until it has stopped.
+    if (in_enabled) {
+        mProximityCompanion->setProximityActive(in_sensorHandle, true);
+    }
+    Result result = HalProxy::activate(in_sensorHandle, in_enabled);
+    if (!in_enabled || result != Result::OK) {
+        mProximityCompanion->setProximityActive(in_sensorHandle, false);
+    }
+    return resultToAStatus(result);
 }
 
 void HalProxySamsung::postEventsToMessageQueue(const std::vector<Event>& events,
@@ -64,6 +113,12 @@ void HalProxySamsung::postEventsToMessageQueue(const std::vector<Event>& events,
 
 ndk::ScopedAStatus HalProxySamsung::getSensorsList(
         std::vector<::aidl::android::hardware::sensors::SensorInfo>* _aidl_return) {
+    // SensorService calls this right after initialize(), which disabled every sensor
+    // without going through activate().
+    if (mProximityCompanion) {
+        mProximityCompanion->reset();
+    }
+
     for (const auto& sensor : HalProxy::getSensors()) {
         SensorInfo dst = sensor.second;
 
