@@ -59,6 +59,7 @@ cc_binary {
         "RadioSlot.cpp",
         "WakeLock.cpp",
         "common.cpp",
+        "config/HybridSlots.cpp",
         "config/RadioConfig.cpp",
         "data/DataConvert.cpp",
         "data/RadioData.cpp",

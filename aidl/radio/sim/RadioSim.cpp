@@ -13,6 +13,7 @@
 
 #include "RadioSlot.h"
 #include "WakeLock.h"
+#include "config/HybridSlots.h"
 #include "sim/UiccSlots.h"
 
 namespace aidl::android::hardware::radio::samsung {
@@ -471,7 +472,7 @@ bool RadioSim::convertCardStatus(const SecCardStatus& status, sim::CardStatus& o
     out.iccid = toString(status.iccid);
     out.eid = eid;
     out.slotMap = {
-            .physicalSlotId = status.physicalSlotId,
+            .physicalSlotId = HybridSlots::get().toFramework(status.physicalSlotId),
             .portId = mapped ? logical.port : 0,
     };
     for (int i = 0; i < numApps; i++) {

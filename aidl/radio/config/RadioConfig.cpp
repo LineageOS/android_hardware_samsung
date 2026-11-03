@@ -8,6 +8,7 @@
 #include "config/RadioConfig.h"
 
 #include "RadioSlot.h"
+#include "config/HybridSlots.h"
 #include "sim/UiccSlots.h"
 
 #include <algorithm>
@@ -75,8 +76,9 @@ ScopedAStatus RadioConfig::getSimSlotsStatus(int32_t serial) {
                 if (list != nullptr) {
                     UiccSlots::get().update(*list);
                 }
-                respond()->getSimSlotsStatusResponse(responseInfo(serial, e, list != nullptr),
-                                                     convertSlotStatus(list));
+                respond()->getSimSlotsStatusResponse(
+                        responseInfo(serial, e, list != nullptr),
+                        HybridSlots::get().present(convertSlotStatus(list)));
             });
     return ok();
 }
@@ -98,22 +100,9 @@ ScopedAStatus RadioConfig::setPreferredDataModem(int32_t serial, int8_t modemId)
 ScopedAStatus RadioConfig::setSimSlotsMapping(int32_t serial,
                                               const std::vector<config::SlotPortMapping>& slotMap) {
     LOG_CALL;
-    std::vector<SecSlotMapping> mappings;
-    for (const auto& mapping : slotMap) {
-        mappings.push_back({mapping.physicalSlotId, mapping.portId});
-    }
-
-    // Only the eUICC has a second port; mappings address it as physical slot 2.
-    constexpr int kTrayPhysicalSlot = 1;
-    constexpr int kEuiccPhysicalSlot = 2;
-    const bool usesEuiccPort1 = std::any_of(mappings.begin(), mappings.end(), [](auto& m) {
-        return m.physicalSlot == kTrayPhysicalSlot && m.port == 1;
-    });
+    auto mappings = HybridSlots::get().toRil(slotMap);
     std::vector<SecSlotMapping*> pointers;
     for (auto& mapping : mappings) {
-        if (usesEuiccPort1 && mapping.physicalSlot == kTrayPhysicalSlot) {
-            mapping.physicalSlot = kEuiccPhysicalSlot;
-        }
         LOG(INFO) << "Slot mapping: logical " << pointers.size() << " -> physical "
                   << mapping.physicalSlot << " port " << mapping.port;
         pointers.push_back(&mapping);
@@ -210,7 +199,8 @@ bool RadioConfig::onUnsolicited(int id, const void* data, size_t length, RadioIn
     }
     UiccSlots::get().update(*list);
     if (const auto indication = indicate()) {
-        indication->simSlotsStatusChanged(type, convertSlotStatus(list));
+        indication->simSlotsStatusChanged(type,
+                                          HybridSlots::get().present(convertSlotStatus(list)));
     }
     return false;
 }
