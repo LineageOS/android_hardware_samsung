@@ -12,3 +12,12 @@ prop {
     enum_values: "hide|swap_upright_when_folded"
     api_name: "device_orientation_workaround"
 }
+
+# sensor type kept active while a proximity sensor is active
+prop {
+    prop_name: "ro.vendor.sensors.proximity_companion"
+    type: String
+    scope: Internal
+    access: Readonly
+    api_name: "proximity_companion"
+}
