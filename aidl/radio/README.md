@@ -88,9 +88,21 @@ shim plus a binary patch of `libril_sem`.
   `EnableProfile`. When `ril.esim.mep_mode` reports MEP-A1, `RadioSim::addMepA1Port` appends
   the port TLV.
 - Slot status reports the eUICC as physical slot 1, but slot mapping addresses it as slot 2.
-  `RadioConfig` rewrites the physical slot in mappings that use port 1.
+  `HybridSlots` rewrites the physical slot in mappings that use port 1.
 - Card status reports port 0 and no EID for both eUICC ports. `UiccSlots` remembers the last
   slot status, and `RadioSim` fills the port and EID in from it.
+
+**Hybrid SIM slot.** On tsds2 devices the second tray slot and the eUICC share one SIM path,
+and the blob only reports whichever is connected, as physical slot 1. AOSP could not switch
+between them, so an app had to send stock TelephonyUI's fixed slot mappings. `HybridSlots`
+reports three physical slots instead: the first tray, the eUICC and the second tray, with the
+disconnected one inactive. It translates slot mappings and card status between that numbering
+and the blob's. The framework recognises an inactive eUICC only by its ATR, and offers an
+inactive SIM only if a slot reports its ICCID. `HybridSlots` therefore caches the eUICC's ATR
+and EID and the tray SIM's ICCID in `/data/vendor/secradio`. It also reports the eUICC as MEP-B:
+for MEP-A the framework shifts mapping ports by one until card status arrives, but the blob
+counts them from 0. Settings then switches between SIMs it already knows. The LPA refuses to switch slots on multi-SIM devices, so downloading a profile
+still needs `eSimSwitcher` to connect the eUICC first.
 
 **SIM on/off toggle.** The blob only reports UICC applications enablement changes when
 `ro.build.version.oneui` is 6.1 or later, so the toggle in Settings never settled. This used to
@@ -146,6 +158,7 @@ These are deliberate shortcuts around what the blob expects.
 | SIM Access results | `libril_sem` reads the result from the payload | `RadioSap` ignores the `RIL_Errno` and sends empty requests with a valid pointer, as `libril_sem` does |
 | `ISehRadioChannel` | The blob registers it for Samsung's IMS daemons | Devices declare it in their VINTF manifest |
 | `vendor.calls.state` | `rild` sets it | Devices need a `property_contexts` entry that `rild` can set |
+| `ro.telephony.sim_slots.count` | The blob's init script sets it to the logical SIM count, and the framework sizes its slot list from it | tsds2 devices set it to 3 in their vendor properties, which load first |
 | Exynos modem restart | The Shannon modem must restart together with the RIL | Keep the stock `onrestart restart cpboot-daemon` lines in the init script |
 
 ## Other Samsung devices
