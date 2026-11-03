@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "609c5773_0ace1342",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29914
+      },
+      "writtenOn": "2026-11-03T15:57:27Z",
+      "side": 1,
+      "message": "Because there is a bug in sm8650 ADSP firmware, i need this for sm8650 in order to keep ADSP from crashing and killing audio/sensors.",
+      "revId": "1fc9ea908e20b7b07a866e1da83860535062bbc5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
