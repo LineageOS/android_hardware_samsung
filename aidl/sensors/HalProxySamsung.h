@@ -8,7 +8,10 @@
 
 #include <HalProxyAidl.h>
 
+#include "ProximityCompanion.h"
+
 #include <atomic>
+#include <optional>
 
 namespace aidl {
 namespace android {
@@ -21,6 +24,7 @@ class HalProxySamsung : public HalProxyAidl {
     HalProxySamsung();
 
   private:
+    ndk::ScopedAStatus activate(int32_t in_sensorHandle, bool in_enabled) override;
     ndk::ScopedAStatus getSensorsList(
             std::vector<::aidl::android::hardware::sensors::SensorInfo>* _aidl_return) override;
 
@@ -31,6 +35,7 @@ class HalProxySamsung : public HalProxyAidl {
     bool mHideDeviceOrientation = false;
     int32_t mFoldingStateHandle = -1;
     std::atomic<bool> mFolded = false;
+    std::optional<ProximityCompanion> mProximityCompanion;
 };
 
 }  // namespace implementation

@@ -26,6 +26,7 @@ cc_binary {
     relative_install_path: "hw",
     srcs: [
         "HalProxySamsung.cpp",
+        "ProximityCompanion.cpp",
         "service.cpp",
     ],
     init_rc: ["android.hardware.sensors-service.samsung-multihal.rc"],
