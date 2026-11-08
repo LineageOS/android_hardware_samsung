@@ -1,0 +1,4 @@
+service vendor.gnss-default /apex/com.android.hardware.gnss.samsung/bin/hw/android.hardware.gnss-service.samsung
+    class hal
+    user system
+    group system gps

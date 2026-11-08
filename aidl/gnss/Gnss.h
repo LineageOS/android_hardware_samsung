@@ -30,19 +30,18 @@
 #include <aidl/android/hardware/gnss/measurement_corrections/BnMeasurementCorrectionsInterface.h>
 #include <aidl/android/hardware/gnss/visibility_control/BnGnssVisibilityControl.h>
 #include <atomic>
+#include <cstdint>
 #include <mutex>
-#include <thread>
 #include "GnssConfiguration.h"
 #include "GnssMeasurementInterface.h"
 #include "GnssPowerIndication.h"
-#include "Utils.h"
 
 namespace aidl::android::hardware::gnss {
 
 class Gnss : public BnGnss {
   public:
     Gnss();
-    ~Gnss() { stop(); };
+    ~Gnss() override;
     ndk::ScopedAStatus setCallback(const std::shared_ptr<IGnssCallback>& callback) override;
     ndk::ScopedAStatus start() override;
     ndk::ScopedAStatus stop() override;
@@ -97,29 +96,24 @@ class Gnss : public BnGnss {
     std::shared_ptr<GnssMeasurementInterface> mGnssMeasurementInterface;
 
   private:
-    void reportLocation(const GnssLocation&);
-    void reportSvStatus(const std::vector<IGnssCallback::GnssSvInfo>& svInfoList) const;
-    void reportGnssStatusValue(const IGnssCallback::GnssStatusValue gnssStatusValue) const;
-    void reportNmea() const;
-    std::vector<IGnssCallback::GnssSvInfo> filterBlocklistedSatellites(
-            std::vector<IGnssCallback::GnssSvInfo> gnssSvInfoList) const;
-    std::unique_ptr<GnssLocation> getLocationFromHW();
+    std::shared_ptr<IGnssCallback> getCallback() const;
+    void onLocation(const std::vector<uint8_t>& payload);
+    void onSvStatus(const std::vector<uint8_t>& payload);
+    void onNmea(const std::vector<uint8_t>& payload);
+    void sendPositionMode();
 
-    static std::shared_ptr<IGnssCallback> sGnssCallback;
-
-    std::atomic<long> mMinIntervalMs;
-    std::atomic<long> mGnssMeasurementIntervalMs;
-    std::atomic<bool> mIsActive;
-    std::atomic<bool> mIsInitialized;
-    std::atomic<bool> mIsSvStatusActive;
-    std::atomic<bool> mIsNmeaActive;
-    std::atomic<bool> mFirstFixReceived;
-    std::atomic<bool> mGnssMeasurementEnabled;
-    std::atomic<int> mReportedLocationCount;
+    std::shared_ptr<IGnssCallback> mCallback;
+    std::atomic<long> mGnssMeasurementIntervalMs{1000};
+    std::atomic<bool> mGnssMeasurementEnabled{false};
     std::shared_ptr<GnssLocation> mLastLocation;
-    std::thread mThread;
-    ::android::hardware::gnss::common::ThreadBlocker mThreadBlocker;
-
+    PositionModeOptions mPositionMode;
+    bool mPositionModeSet = false;
+    bool mEverConnected = false;
+    std::atomic<bool> mIsActive{false};
+    std::atomic<bool> mIsSvStatusActive{false};
+    std::atomic<bool> mIsNmeaActive{false};
+    uint32_t mLastNmeaTime = 0;
+    uint32_t mLastInjectionSeconds = 0;
     mutable std::mutex mMutex;
 };
 
