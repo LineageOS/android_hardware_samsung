@@ -16,25 +16,13 @@
 
 #pragma once
 
-#include <aidl/android/hardware/gnss/BnAGnss.h>
-#include <aidl/android/hardware/gnss/BnAGnssRil.h>
 #include <aidl/android/hardware/gnss/BnGnss.h>
-#include <aidl/android/hardware/gnss/BnGnssAntennaInfo.h>
-#include <aidl/android/hardware/gnss/BnGnssBatching.h>
-#include <aidl/android/hardware/gnss/BnGnssConfiguration.h>
-#include <aidl/android/hardware/gnss/BnGnssDebug.h>
-#include <aidl/android/hardware/gnss/BnGnssMeasurementInterface.h>
-#include <aidl/android/hardware/gnss/BnGnssPowerIndication.h>
-#include <aidl/android/hardware/gnss/BnGnssPsds.h>
-#include <aidl/android/hardware/gnss/gnss_assistance/BnGnssAssistanceInterface.h>
-#include <aidl/android/hardware/gnss/measurement_corrections/BnMeasurementCorrectionsInterface.h>
-#include <aidl/android/hardware/gnss/visibility_control/BnGnssVisibilityControl.h>
 #include <atomic>
 #include <cstdint>
+#include <memory>
 #include <mutex>
+#include <vector>
 #include "GnssConfiguration.h"
-#include "GnssMeasurementInterface.h"
-#include "GnssPowerIndication.h"
 
 namespace aidl::android::hardware::gnss {
 
@@ -87,14 +75,6 @@ class Gnss : public BnGnss {
             std::shared_ptr<android::hardware::gnss::gnss_assistance::IGnssAssistanceInterface>*
                     iGnssAssistanceInterface) override;
 
-    void reportSvStatus() const;
-    void setGnssMeasurementEnabled(const bool enabled);
-    void setGnssMeasurementInterval(const long intervalMs);
-    std::shared_ptr<GnssLocation> getLastLocation() const;
-    std::shared_ptr<GnssConfiguration> mGnssConfiguration;
-    std::shared_ptr<GnssPowerIndication> mGnssPowerIndication;
-    std::shared_ptr<GnssMeasurementInterface> mGnssMeasurementInterface;
-
   private:
     std::shared_ptr<IGnssCallback> getCallback() const;
     void onLocation(const std::vector<uint8_t>& payload);
@@ -103,9 +83,7 @@ class Gnss : public BnGnss {
     void sendPositionMode();
 
     std::shared_ptr<IGnssCallback> mCallback;
-    std::atomic<long> mGnssMeasurementIntervalMs{1000};
-    std::atomic<bool> mGnssMeasurementEnabled{false};
-    std::shared_ptr<GnssLocation> mLastLocation;
+    std::shared_ptr<GnssConfiguration> mGnssConfiguration;
     PositionModeOptions mPositionMode;
     bool mPositionModeSet = false;
     bool mEverConnected = false;

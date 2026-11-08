@@ -16,36 +16,11 @@
 
 #pragma once
 
-#include <aidl/android/hardware/gnss/BnGnssCallback.h>
 #include <aidl/android/hardware/gnss/BnGnssConfiguration.h>
-#include <android/hardware/gnss/2.1/IGnssCallback.h>
-#include <mutex>
-#include <unordered_set>
-#include <vector>
 
 namespace aidl::android::hardware::gnss {
 
-struct BlocklistedSourceHash {
-    inline int operator()(const BlocklistedSource& source) const {
-        return int(source.constellation) * 1000 + int(source.svid);
-    }
-};
-
-struct BlocklistedSourceEqual {
-    inline bool operator()(const BlocklistedSource& s1, const BlocklistedSource& s2) const {
-        return (s1.constellation == s2.constellation) && (s1.svid == s2.svid);
-    }
-};
-
-using GnssSvInfoV2_1 = ::android::hardware::gnss::V2_1::IGnssCallback::GnssSvInfo;
-using std::vector;
-using BlocklistedSourceSet =
-        std::unordered_set<BlocklistedSource, BlocklistedSourceHash, BlocklistedSourceEqual>;
-using BlocklistedConstellationSet =
-        std::unordered_set<android::hardware::gnss::GnssConstellationType>;
-
 struct GnssConfiguration : public BnGnssConfiguration {
-  public:
     ndk::ScopedAStatus setSuplVersion(int) override { return ndk::ScopedAStatus::ok(); }
 
     ndk::ScopedAStatus setSuplMode(int) override { return ndk::ScopedAStatus::ok(); }
@@ -60,15 +35,9 @@ struct GnssConfiguration : public BnGnssConfiguration {
 
     ndk::ScopedAStatus setEsExtensionSec(int) override { return ndk::ScopedAStatus::ok(); }
 
-    ndk::ScopedAStatus setBlocklist(const vector<BlocklistedSource>& blocklist) override;
-
-    bool isBlocklistedV2_1(const GnssSvInfoV2_1& gnssSvInfo) const;
-    bool isBlocklisted(const IGnssCallback::GnssSvInfo& gnssSvInfo) const;
-
-  private:
-    BlocklistedSourceSet mBlocklistedSourceSet;
-    BlocklistedConstellationSet mBlocklistedConstellationSet;
-    mutable std::recursive_mutex mMutex;
+    ndk::ScopedAStatus setBlocklist(const std::vector<BlocklistedSource>&) override {
+        return ndk::ScopedAStatus::ok();
+    }
 };
 
 }  // namespace aidl::android::hardware::gnss

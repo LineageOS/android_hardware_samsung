@@ -23,20 +23,8 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
-#include "AGnss.h"
-#include "AGnssRil.h"
-#include "GnssAntennaInfo.h"
-#include "GnssAssistanceInterface.h"
 #include "GnssBackend.h"
-#include "GnssBatching.h"
-#include "GnssConfiguration.h"
-#include "GnssDebug.h"
-#include "GnssGeofence.h"
-#include "GnssNavigationMessageInterface.h"
 #include "GnssProtocol.h"
-#include "GnssPsds.h"
-#include "GnssVisibilityControl.h"
-#include "MeasurementCorrectionsInterface.h"
 
 namespace aidl::android::hardware::gnss {
 
@@ -169,7 +157,6 @@ void Gnss::onLocation(const std::vector<uint8_t>& payload) {
     {
         std::lock_guard lock(mMutex);
         if (!mIsActive) return;
-        mLastLocation = std::make_shared<GnssLocation>(location);
     }
     GnssBackend::get().postCallback([this, location] {
         if (auto callback = getCallback()) {
@@ -303,8 +290,6 @@ ScopedAStatus Gnss::close() {
     return ScopedAStatus::ok();
 }
 
-void Gnss::reportSvStatus() const {}
-
 ScopedAStatus Gnss::startSvStatus() {
     ALOGD("startSvStatus");
     mIsSvStatusActive = true;
@@ -328,9 +313,8 @@ ScopedAStatus Gnss::stopNmea() {
 }
 
 ScopedAStatus Gnss::getExtensionAGnss(std::shared_ptr<IAGnss>* iAGnss) {
-    ALOGD("Gnss::getExtensionAGnss");
-    *iAGnss = SharedRefBase::make<AGnss>();
-    return ndk::ScopedAStatus::ok();
+    *iAGnss = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ScopedAStatus Gnss::injectTime(int64_t timeMs, int64_t timeReferenceMs, int uncertaintyMs) {
@@ -347,9 +331,8 @@ ScopedAStatus Gnss::injectTime(int64_t timeMs, int64_t timeReferenceMs, int unce
 }
 
 ScopedAStatus Gnss::getExtensionAGnssRil(std::shared_ptr<IAGnssRil>* iAGnssRil) {
-    ALOGD("Gnss::getExtensionAGnssRil");
-    *iAGnssRil = SharedRefBase::make<AGnssRil>();
-    return ndk::ScopedAStatus::ok();
+    *iAGnssRil = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ScopedAStatus Gnss::injectLocation(const GnssLocation& location) {
@@ -409,14 +392,14 @@ ScopedAStatus Gnss::setPositionMode(const PositionModeOptions& options) {
 }
 
 ScopedAStatus Gnss::getExtensionPsds(std::shared_ptr<IGnssPsds>* iGnssPsds) {
-    ALOGD("getExtensionPsds");
-    *iGnssPsds = SharedRefBase::make<GnssPsds>();
-    return ScopedAStatus::ok();
+    *iGnssPsds = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ScopedAStatus Gnss::getExtensionGnssConfiguration(
         std::shared_ptr<IGnssConfiguration>* iGnssConfiguration) {
     ALOGD("getExtensionGnssConfiguration");
+    std::lock_guard lock(mMutex);
     if (mGnssConfiguration == nullptr) {
         mGnssConfiguration = SharedRefBase::make<GnssConfiguration>();
     }
@@ -426,101 +409,60 @@ ScopedAStatus Gnss::getExtensionGnssConfiguration(
 
 ScopedAStatus Gnss::getExtensionGnssPowerIndication(
         std::shared_ptr<IGnssPowerIndication>* iGnssPowerIndication) {
-    ALOGD("getExtensionGnssPowerIndication");
-    if (mGnssPowerIndication == nullptr) {
-        mGnssPowerIndication = SharedRefBase::make<GnssPowerIndication>();
-    }
-
-    *iGnssPowerIndication = mGnssPowerIndication;
-    return ScopedAStatus::ok();
+    *iGnssPowerIndication = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ScopedAStatus Gnss::getExtensionGnssMeasurement(
         std::shared_ptr<IGnssMeasurementInterface>* iGnssMeasurement) {
-    ALOGD("getExtensionGnssMeasurement");
-    if (mGnssMeasurementInterface == nullptr) {
-        mGnssMeasurementInterface = SharedRefBase::make<GnssMeasurementInterface>();
-        mGnssMeasurementInterface->setGnssInterface(ref<Gnss>());
-    }
-    *iGnssMeasurement = mGnssMeasurementInterface;
-    return ScopedAStatus::ok();
+    *iGnssMeasurement = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ScopedAStatus Gnss::getExtensionGnssBatching(std::shared_ptr<IGnssBatching>* iGnssBatching) {
-    ALOGD("getExtensionGnssBatching");
-
-    *iGnssBatching = SharedRefBase::make<GnssBatching>();
-    return ScopedAStatus::ok();
+    *iGnssBatching = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ScopedAStatus Gnss::getExtensionGnssGeofence(std::shared_ptr<IGnssGeofence>* iGnssGeofence) {
-    ALOGD("getExtensionGnssGeofence");
-
-    *iGnssGeofence = SharedRefBase::make<GnssGeofence>();
-    return ScopedAStatus::ok();
+    *iGnssGeofence = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ScopedAStatus Gnss::getExtensionGnssNavigationMessage(
         std::shared_ptr<IGnssNavigationMessageInterface>* iGnssNavigationMessage) {
-    ALOGD("getExtensionGnssNavigationMessage");
-
-    *iGnssNavigationMessage = SharedRefBase::make<GnssNavigationMessageInterface>();
-    return ScopedAStatus::ok();
+    *iGnssNavigationMessage = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ndk::ScopedAStatus Gnss::getExtensionGnssDebug(std::shared_ptr<IGnssDebug>* iGnssDebug) {
-    ALOGD("Gnss::getExtensionGnssDebug");
-    *iGnssDebug = SharedRefBase::make<GnssDebug>();
-    return ndk::ScopedAStatus::ok();
+    *iGnssDebug = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ndk::ScopedAStatus Gnss::getExtensionGnssVisibilityControl(
         std::shared_ptr<visibility_control::IGnssVisibilityControl>* iGnssVisibilityControl) {
-    ALOGD("Gnss::getExtensionGnssVisibilityControl");
-
-    *iGnssVisibilityControl = SharedRefBase::make<visibility_control::GnssVisibilityControl>();
-    return ndk::ScopedAStatus::ok();
+    *iGnssVisibilityControl = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ndk::ScopedAStatus Gnss::getExtensionGnssAntennaInfo(
         std::shared_ptr<IGnssAntennaInfo>* iGnssAntennaInfo) {
-    ALOGD("Gnss::getExtensionGnssAntennaInfo");
-
-    *iGnssAntennaInfo = SharedRefBase::make<GnssAntennaInfo>();
-    return ndk::ScopedAStatus::ok();
+    *iGnssAntennaInfo = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ndk::ScopedAStatus Gnss::getExtensionMeasurementCorrections(
         std::shared_ptr<measurement_corrections::IMeasurementCorrectionsInterface>*
                 iMeasurementCorrections) {
-    ALOGD("Gnss::getExtensionMeasurementCorrections");
-
-    *iMeasurementCorrections =
-            SharedRefBase::make<measurement_corrections::MeasurementCorrectionsInterface>();
-    return ndk::ScopedAStatus::ok();
+    *iMeasurementCorrections = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 ndk::ScopedAStatus Gnss::getExtensionGnssAssistanceInterface(
         std::shared_ptr<gnss_assistance::IGnssAssistanceInterface>* iGnssAssistanceInterface) {
-    ALOGD("Gnss::getExtensionGnssAssistanceInterface");
-
-    *iGnssAssistanceInterface = SharedRefBase::make<gnss_assistance::GnssAssistanceInterface>();
-    return ndk::ScopedAStatus::ok();
-}
-
-void Gnss::reportSvStatus() const {}
-
-void Gnss::setGnssMeasurementEnabled(const bool enabled) {
-    mGnssMeasurementEnabled = enabled;
-}
-
-void Gnss::setGnssMeasurementInterval(const long intervalMs) {
-    mGnssMeasurementIntervalMs = intervalMs;
-}
-
-std::shared_ptr<GnssLocation> Gnss::getLastLocation() const {
-    std::lock_guard lock(mMutex);
-    return mLastLocation;
+    *iGnssAssistanceInterface = nullptr;
+    return ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
 
 }  // namespace aidl::android::hardware::gnss
