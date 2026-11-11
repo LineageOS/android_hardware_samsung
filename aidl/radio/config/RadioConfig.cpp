@@ -12,12 +12,52 @@
 #include "sim/UiccSlots.h"
 
 #include <algorithm>
+#include <array>
+#include <memory>
 
 namespace aidl::android::hardware::radio::samsung {
 
 using ::ndk::ScopedAStatus;
 
-RadioConfig::RadioConfig() {}
+namespace {
+
+// libsec-ril's answer when the modem never reports slot status, unlike a radio still starting.
+bool slotStatusUnsupported(RIL_Errno e) {
+    return e == RIL_E_INTERNAL_ERR || e == RIL_E_REQUEST_NOT_SUPPORTED;
+}
+
+}  // namespace
+
+RadioConfig::RadioConfig() {
+    HybridSlots::get().setCallbacks([this](const auto& slots) { indicateSlotStatus(slots); },
+                                    [this] { probeSlotStatus(); });
+}
+
+void RadioConfig::indicateSlotStatus(const std::vector<config::SimSlotStatus>& slots) {
+    if (const auto indication = indicate()) {
+        indication->simSlotsStatusChanged(kUnsolicited, slots);
+    }
+}
+
+void RadioConfig::probeSlotStatus() {
+    // Card status arrives on libsec-ril's response thread, which must not send requests.
+    RadioSlot::VendorRil::get().post([this] {
+        request(SEC_REQUEST_GET_SLOT_STATUS, nullptr, 0, [this](auto e, auto data, auto length) {
+            std::optional<std::vector<config::SimSlotStatus>> slots;
+            if (const auto* list = e == RIL_E_SUCCESS ? slotStatusList(data, length) : nullptr) {
+                UiccSlots::get().update(*list);
+                slots = HybridSlots::get().present(convertSlotStatus(list));
+            } else if (slotStatusUnsupported(e)) {
+                slots = HybridSlots::get().slotStatusUnsupported();
+            } else {
+                HybridSlots::get().slotStatusProbeInconclusive();
+            }
+            if (slots) {
+                indicateSlotStatus(*slots);
+            }
+        });
+    });
+}
 
 ScopedAStatus RadioConfig::setResponseFunctions(
         const std::shared_ptr<config::IRadioConfigResponse>& response,
@@ -72,9 +112,15 @@ ScopedAStatus RadioConfig::getSimSlotsStatus(int32_t serial) {
     LOG_CALL;
     request(SEC_REQUEST_GET_SLOT_STATUS, nullptr, 0,
             [this, serial](auto e, auto data, auto length) {
-                const auto* list = slotStatusList(data, length);
+                const auto* list = e == RIL_E_SUCCESS ? slotStatusList(data, length) : nullptr;
                 if (list != nullptr) {
                     UiccSlots::get().update(*list);
+                } else if (slotStatusUnsupported(e)) {
+                    if (const auto slots = HybridSlots::get().slotStatusUnsupported()) {
+                        respond()->getSimSlotsStatusResponse(responseInfo(serial, RIL_E_SUCCESS),
+                                                             *slots);
+                        return;
+                    }
                 }
                 respond()->getSimSlotsStatusResponse(
                         responseInfo(serial, e, list != nullptr),
@@ -109,9 +155,44 @@ ScopedAStatus RadioConfig::setSimSlotsMapping(int32_t serial,
     }
 
     request(SEC_REQUEST_SET_LOGICAL_TO_PHYSICAL_SLOT_MAPPING, pointers.data(),
-            pointers.size() * sizeof(SecSlotMapping*),
-            statusResponse(serial, &config::IRadioConfigResponse::setSimSlotsMappingResponse));
+            pointers.size() * sizeof(SecSlotMapping*), [this, serial](auto e, auto, auto) {
+                const auto respondWith = [this, serial](RIL_Errno error) {
+                    respond()->setSimSlotsMappingResponse(responseInfo(serial, error));
+                };
+                auto actions = HybridSlots::get().switchActions();
+                if (e == RIL_E_SUCCESS || actions.empty()) {
+                    respondWith(e);
+                    return;
+                }
+                LOG(INFO) << "Slot mapping failed (" << e << "), switching the hybrid slot";
+                switchHybridSlot(std::move(actions), respondWith);
+            });
     return ok();
+}
+
+void RadioConfig::switchHybridSlot(std::vector<uint8_t> actions,
+                                   std::function<void(RIL_Errno)> done) {
+    // Runs on libsec-ril's response thread, which must not send requests.
+    RadioSlot::VendorRil::get().post([actions = std::move(actions), done = std::move(done)] {
+        if (actions.empty()) {
+            done(RIL_E_SUCCESS);
+            return;
+        }
+        // OEM SIM low level control: main and sub command, total length, type, action.
+        auto raw = std::make_shared<std::array<uint8_t, 6>>(
+                std::array<uint8_t, 6>{0x15, 0x14, 0x00, 0x06, 0x01, actions.front()});
+        RadioSlot::VendorRil::get().request(
+                RIL_SOCKET_2, RIL_REQUEST_OEM_HOOK_RAW, raw->data(), raw->size(),
+                [raw, actions, done](auto e, auto, auto) {
+                    if (e != RIL_E_SUCCESS) {
+                        LOG(ERROR) << "Hybrid slot action " << int(actions.front())
+                                   << " failed: " << e;
+                        done(e);
+                        return;
+                    }
+                    switchHybridSlot({actions.begin() + 1, actions.end()}, done);
+                });
+    });
 }
 
 ScopedAStatus RadioConfig::getSimultaneousCallingSupport(int32_t serial) {

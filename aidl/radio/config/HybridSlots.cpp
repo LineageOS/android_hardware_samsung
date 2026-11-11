@@ -25,6 +25,11 @@ constexpr int kHybridTray = 2;
 constexpr int kRilHybridSlot = 1;
 constexpr int kRilHybridTray = 1;
 constexpr int kRilEuicc = 2;
+// libsec-ril's SIM low level control actions.
+constexpr uint8_t kSwitchStart = 0x21;
+constexpr uint8_t kSwitchToEuicc = 0x10;
+constexpr uint8_t kSwitchToTray = 0x11;
+constexpr uint8_t kSwitchFinish = 0x20;
 
 // The framework only recognises an inactive slot as an eUICC by its ATR, and only offers an
 // inactive SIM whose ICCID a slot reports.
@@ -55,6 +60,11 @@ bool isEuicc(const config::SimSlotStatus& slot) {
     return !slot.eid.empty() || slot.portInfo.size() > 1;
 }
 
+// libsec-ril records which side of the hybrid path is connected.
+bool euiccConnected() {
+    return ::android::base::GetProperty("ril.simslottype2", "0") == "1";
+}
+
 }  // namespace
 
 HybridSlots& HybridSlots::get() {
@@ -67,7 +77,7 @@ HybridSlots::HybridSlots() {
     mEnabled = ::android::base::ReadFileToString(kFloatingFeature, &features)
                        ? features.find(kTsds2Feature) != std::string::npos
                        : ::android::base::GetProperty("persist.ril.esim.slotswitch", "") == "tsds2";
-    mEuiccActive = ::android::base::GetProperty("ril.simslottype2", "0") == "1";
+    mEuiccActive = euiccConnected();
     load();
 }
 
@@ -80,10 +90,19 @@ std::vector<config::SimSlotStatus> HybridSlots::present(std::vector<config::SimS
         return slots;
     }
     std::lock_guard lock(mMutex);
+    mSlotStatusSeen = true;
     const auto& hybrid = slots[kRilHybridSlot];
     LOG(DEBUG) << "Hybrid slot: card " << hybrid.cardState << ", " << hybrid.portInfo.size()
                << " ports, eid " << (hybrid.eid.empty() ? "none" : "set");
-    mEuiccActive = isEuicc(hybrid) || (mEuicc && !hybrid.atr.empty() && hybrid.atr == mEuicc->atr);
+    const bool euiccActive =
+            isEuicc(hybrid) || (mEuicc && !hybrid.atr.empty() && hybrid.atr == mEuicc->atr);
+    return presentLocked(std::move(slots), euiccActive);
+}
+
+std::vector<config::SimSlotStatus> HybridSlots::presentLocked(
+        std::vector<config::SimSlotStatus> slots, bool euiccActive) {
+    const auto& hybrid = slots[kRilHybridSlot];
+    mEuiccActive = euiccActive;
     auto& cached = mEuiccActive ? mEuicc : mTray;
     if (const auto seen = inactive(hybrid); cached != seen) {
         cached = seen;
@@ -142,7 +161,93 @@ int HybridSlots::toFramework(int rilSlot) {
         return rilSlot;
     }
     std::lock_guard lock(mMutex);
+    // Some modems never report slot status, but libsec-ril records which side is connected.
+    if (!mSlotStatusSeen) {
+        return euiccConnected() ? kEuicc : kHybridTray;
+    }
     return mEuiccActive ? kEuicc : kHybridTray;
+}
+
+std::vector<uint8_t> HybridSlots::switchActions() {
+    if (!enabled()) {
+        return {};
+    }
+    std::lock_guard lock(mMutex);
+    if (mSlotStatusSeen) {
+        return {};
+    }
+    return {kSwitchStart, mEuiccActive ? kSwitchToEuicc : kSwitchToTray, kSwitchFinish};
+}
+
+std::optional<std::vector<config::SimSlotStatus>> HybridSlots::slotStatusUnsupported() {
+    if (!enabled()) {
+        return std::nullopt;
+    }
+    std::lock_guard lock(mMutex);
+    if (mSlotStatusSeen) {
+        return std::nullopt;
+    }
+    mSlotStatusUnsupported = true;
+    mProbing = false;
+    if (auto slots = cardSlotStatusLocked()) {
+        mCardSlotStatus = slots;
+    }
+    return mCardSlotStatus;
+}
+
+void HybridSlots::slotStatusProbeInconclusive() {
+    std::lock_guard lock(mMutex);
+    mProbing = false;
+}
+
+void HybridSlots::onCardStatus(int socket, const sim::CardStatus& status) {
+    if (!enabled() || socket < 0 || socket >= static_cast<int>(mCardSlots.size())) {
+        return;
+    }
+    std::optional<std::vector<config::SimSlotStatus>> slots;
+    SlotStatusListener listener;
+    std::function<void()> probe;
+    {
+        std::lock_guard lock(mMutex);
+        if (mSlotStatusSeen) {
+            return;
+        }
+        mCardSlots[socket] = config::SimSlotStatus{
+                .cardState = status.cardState,
+                .atr = status.atr,
+                .eid = status.eid,
+                .portInfo = {{.iccId = status.iccid, .logicalSlotId = socket, .portActive = true}},
+        };
+        if (!mSlotStatusUnsupported) {
+            if (!mProbing && mCardSlots[0] && mCardSlots[1]) {
+                mProbing = true;
+                probe = mProbe;
+            }
+        } else if (slots = cardSlotStatusLocked(); slots && slots != mCardSlotStatus) {
+            mCardSlotStatus = slots;
+            listener = mListener;
+        }
+    }
+    if (probe) {
+        probe();
+    }
+    if (listener && slots) {
+        listener(*slots);
+    }
+}
+
+std::optional<std::vector<config::SimSlotStatus>> HybridSlots::cardSlotStatusLocked() {
+    // A slot reported absent would take the other SIM away from the framework.
+    if (!mSlotStatusUnsupported || !mCardSlots[0] || !mCardSlots[1]) {
+        return std::nullopt;
+    }
+    return presentLocked({*mCardSlots[0], *mCardSlots[1]}, euiccConnected());
+}
+
+void HybridSlots::setCallbacks(SlotStatusListener listener, std::function<void()> probe) {
+    std::lock_guard lock(mMutex);
+    mListener = std::move(listener);
+    mProbe = std::move(probe);
 }
 
 // Lines: eUICC ATR, EID, port count and MEP mode, then hybrid tray card state and ICCID.
