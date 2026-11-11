@@ -119,6 +119,9 @@ ScopedAStatus RadioSim::getIccCardStatus(int32_t serial) {
         sim::CardStatus cardStatus;
         const bool valid = status != nullptr && convertCardStatus(*status, cardStatus);
         respond()->getIccCardStatusResponse(responseInfo(serial, e, valid), cardStatus);
+        if (valid) {
+            HybridSlots::get().onCardStatus(mSlot.socket(), cardStatus);
+        }
     });
     return ok();
 }

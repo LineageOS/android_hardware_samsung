@@ -43,6 +43,9 @@ class RadioConfig
                         RadioSlot::ResponseCallback callback);
     static const SecSimSlotStatusList* slotStatusList(const void* data, size_t length);
     static std::vector<config::SimSlotStatus> convertSlotStatus(const SecSimSlotStatusList* list);
+    void indicateSlotStatus(const std::vector<config::SimSlotStatus>& slots);
+    void probeSlotStatus();
+    static void switchHybridSlot(std::vector<uint8_t> actions, std::function<void(RIL_Errno)> done);
 };
 
 }  // namespace aidl::android::hardware::radio::samsung

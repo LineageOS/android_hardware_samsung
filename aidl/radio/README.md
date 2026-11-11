@@ -101,8 +101,11 @@ and the blob's. The framework recognises an inactive eUICC only by its ATR, and 
 inactive SIM only if a slot reports its ICCID. `HybridSlots` therefore caches the eUICC's ATR
 and EID and the tray SIM's ICCID in `/data/vendor/secradio`. It also reports the eUICC as MEP-B:
 for MEP-A the framework shifts mapping ports by one until card status arrives, but the blob
-counts them from 0. Settings then switches between SIMs it already knows. The LPA refuses to switch slots on multi-SIM devices, so downloading a profile
-still needs `eSimSwitcher` to connect the eUICC first.
+counts them from 0. Settings then switches between SIMs it already knows. The LPA refuses to
+switch slots on multi-SIM devices, so downloading a profile still needs `eSimSwitcher` to
+connect the eUICC first. Some modems report no slot status and reject slot mappings. Once the
+blob refuses slot status, `HybridSlots` builds it from each SIM's card status and
+`ril.simslottype2`, and switches sides with the blob's OEM SIM control requests instead.
 
 **SIM on/off toggle.** The blob only reports UICC applications enablement changes when
 `ro.build.version.oneui` is 6.1 or later, so the toggle in Settings never settled. This used to
