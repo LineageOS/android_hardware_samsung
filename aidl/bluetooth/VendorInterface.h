@@ -14,11 +14,10 @@
 #include "bt_vendor_lib.h"
 #include "hci_protocol.h"
 
-namespace android {
-namespace hardware {
-namespace bluetooth {
-namespace V1_0 {
-namespace implementation {
+namespace aidl::android::hardware::bluetooth::impl {
+
+namespace async = ::android::hardware::bluetooth::async;
+namespace hci = ::android::hardware::bluetooth::hci;
 
 using ::android::hardware::hidl_vec;
 using InitializeCompleteCallback = std::function<void(bool success)>;
@@ -60,8 +59,4 @@ class VendorInterface {
     FirmwareStartupTimer* firmware_startup_timer_ = nullptr;
 };
 
-}  // namespace implementation
-}  // namespace V1_0
-}  // namespace bluetooth
-}  // namespace hardware
-}  // namespace android
+}  // namespace aidl::android::hardware::bluetooth::impl

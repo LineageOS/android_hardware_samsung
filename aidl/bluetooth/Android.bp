@@ -9,22 +9,21 @@ package {
 }
 
 cc_binary {
-    name: "android.hardware.bluetooth@1.0-service.samsung",
-    defaults: ["hidl_defaults"],
+    name: "android.hardware.bluetooth-service.samsung",
     relative_install_path: "hw",
-    vendor: true,
-    init_rc: ["android.hardware.bluetooth@1.0-service.samsung.rc"],
+    init_rc: ["android.hardware.bluetooth-service.samsung.rc"],
+    vintf_fragments: ["android.hardware.bluetooth-service.samsung.xml"],
     srcs: [
-        "bluetooth_address.cc",
-        "bluetooth_hci.cc",
+        "BluetoothAddress.cpp",
+        "BluetoothHci.cpp",
+        "VendorInterface.cpp",
         "service.cpp",
-        "vendor_interface.cc",
     ],
     shared_libs: [
-        "android.hardware.bluetooth@1.0",
+        "android.hardware.bluetooth-V1-ndk",
         "libbase",
+        "libbinder_ndk",
         "libcutils",
-        "libhardware",
         "libhidlbase",
         "liblog",
         "libutils",
@@ -33,4 +32,5 @@ cc_binary {
         "android.hardware.bluetooth-async",
         "android.hardware.bluetooth-hci",
     ],
+    vendor: true,
 }
