@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-#include "bluetooth_address.h"
+#include "BluetoothAddress.h"
 
 #include <cutils/properties.h>
 #include <errno.h>
@@ -22,11 +22,7 @@
 #include <unistd.h>
 #include <utils/Log.h>
 
-namespace android {
-namespace hardware {
-namespace bluetooth {
-namespace V1_0 {
-namespace implementation {
+namespace aidl::android::hardware::bluetooth::impl {
 
 void BluetoothAddress::bytes_to_string(const uint8_t* addr, char* addr_str) {
     sprintf(addr_str, "%02x:%02x:%02x:%02x:%02x:%02x", addr[0], addr[1], addr[2], addr[3], addr[4],
@@ -90,8 +86,4 @@ bool BluetoothAddress::get_local_address(uint8_t* local_addr) {
     return false;
 }
 
-}  // namespace implementation
-}  // namespace V1_0
-}  // namespace bluetooth
-}  // namespace hardware
-}  // namespace android
+}  // namespace aidl::android::hardware::bluetooth::impl

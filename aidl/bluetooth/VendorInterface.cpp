@@ -14,16 +14,16 @@
 // limitations under the License.
 //
 
-#include "vendor_interface.h"
+#include "VendorInterface.h"
 
-#define LOG_TAG "android.hardware.bluetooth@1.0-impl"
+#define LOG_TAG "android.hardware.bluetooth-service.samsung"
 #include <cutils/properties.h>
 #include <utils/Log.h>
 
 #include <dlfcn.h>
 #include <fcntl.h>
 
-#include "bluetooth_address.h"
+#include "BluetoothAddress.h"
 #include "h4_protocol.h"
 #include "mct_protocol.h"
 
@@ -39,7 +39,7 @@ static const int INVALID_FD = -1;
 namespace {
 
 using android::hardware::hidl_vec;
-using android::hardware::bluetooth::V1_0::implementation::VendorInterface;
+using aidl::android::hardware::bluetooth::impl::VendorInterface;
 
 struct {
     tINT_CMD_CBACK cb;
@@ -138,11 +138,7 @@ const bt_vendor_callbacks_t lib_callbacks = {
 
 }  // namespace
 
-namespace android {
-namespace hardware {
-namespace bluetooth {
-namespace V1_0 {
-namespace implementation {
+namespace aidl::android::hardware::bluetooth::impl {
 
 class FirmwareStartupTimer {
   public:
@@ -372,8 +368,4 @@ void VendorInterface::HandleIncomingEvent(const hidl_vec<uint8_t>& hci_packet) {
     }
 }
 
-}  // namespace implementation
-}  // namespace V1_0
-}  // namespace bluetooth
-}  // namespace hardware
-}  // namespace android
+}  // namespace aidl::android::hardware::bluetooth::impl
