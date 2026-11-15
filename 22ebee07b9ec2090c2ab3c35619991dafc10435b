@@ -16,6 +16,41 @@
       "message": "Why are you basing this onto hidl if there\u0027s also aidl default in AOSP?",
       "revId": "22ebee07b9ec2090c2ab3c35619991dafc10435b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2296aa6d_d775fed7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36705
+      },
+      "writtenOn": "2026-11-15T18:12:38Z",
+      "side": 1,
+      "message": "We could use the AIDL default but IMO it\u0027s not worth it, because it doesn\u0027t have libbt-vendor support. Restoring support for that alone is 3x bigger than this whole commit, so is it really worth it if this works just fine?",
+      "parentUuid": "66c1e64b_64fc3a7c",
+      "revId": "22ebee07b9ec2090c2ab3c35619991dafc10435b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3c5a173_cadb18a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36705
+      },
+      "writtenOn": "2026-11-15T18:12:38Z",
+      "side": 1,
+      "message": "Works fine on a53x (s5e8825) too",
+      "revId": "22ebee07b9ec2090c2ab3c35619991dafc10435b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
