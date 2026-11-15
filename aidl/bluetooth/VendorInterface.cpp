@@ -1,45 +1,34 @@
-//
-// Copyright 2016 The Android Open Source Project
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+/*
+ * SPDX-FileCopyrightText: 2016 The Android Open Source Project
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-#include "vendor_interface.h"
+#define LOG_TAG "android.hardware.bluetooth-service.samsung"
 
-#define LOG_TAG "android.hardware.bluetooth@1.0-impl"
+#include "VendorInterface.h"
+#include "BluetoothAddress.h"
+
+#include <android-base/logging.h>
+#include <android-base/stringprintf.h>
 #include <cutils/properties.h>
-#include <utils/Log.h>
 
 #include <dlfcn.h>
 #include <fcntl.h>
 
-#include "bluetooth_address.h"
 #include "h4_protocol.h"
 #include "mct_protocol.h"
 
-#ifdef BT_FUZZER
-static const char* VENDOR_LIBRARY_NAME = "libbt-vendor-fuzz.so";
-#else
 static const char* VENDOR_LIBRARY_NAME = "libbt-vendor.so";
-#endif
 static const char* VENDOR_LIBRARY_SYMBOL_NAME = "BLUETOOTH_VENDOR_LIB_INTERFACE";
 
 static const int INVALID_FD = -1;
 
 namespace {
 
+using aidl::android::hardware::bluetooth::impl::VendorInterface;
+using android::base::StringPrintf;
 using android::hardware::hidl_vec;
-using android::hardware::bluetooth::V1_0::implementation::VendorInterface;
 
 struct {
     tINT_CMD_CBACK cb;
@@ -70,7 +59,7 @@ HC_BT_HDR* WrapPacketAndCopy(uint16_t event, const hidl_vec<uint8_t>& data) {
 bool internal_command_event_match(const hidl_vec<uint8_t>& packet) {
     uint8_t event_code = packet[0];
     if (event_code != HCI_COMMAND_COMPLETE_EVENT) {
-        ALOGE("%s: Unhandled event type %02X", __func__, event_code);
+        LOG(ERROR) << __func__ << StringPrintf(": Unhandled event type %02X", event_code);
         return false;
     }
 
@@ -78,13 +67,15 @@ bool internal_command_event_match(const hidl_vec<uint8_t>& packet) {
 
     uint16_t opcode = packet[opcode_offset] | (packet[opcode_offset + 1] << 8);
 
-    ALOGV("%s internal_command.opcode = %04X opcode = %04x", __func__, internal_command.opcode,
-          opcode);
+    LOG(VERBOSE) << __func__
+                 << StringPrintf(" internal_command.opcode = %04X opcode = %04x",
+                                 internal_command.opcode, opcode);
     return opcode == internal_command.opcode;
 }
 
 uint8_t transmit_cb(uint16_t opcode, void* buffer, tINT_CMD_CBACK callback) {
-    ALOGV("%s opcode: 0x%04x, ptr: %p, cb: %p", __func__, opcode, buffer, callback);
+    LOG(VERBOSE) << __func__
+                 << StringPrintf(" opcode: 0x%04x, ptr: %p, cb: %p", opcode, buffer, callback);
     internal_command.cb = callback;
     internal_command.opcode = opcode;
     uint8_t type = HCI_PACKET_TYPE_COMMAND;
@@ -95,39 +86,40 @@ uint8_t transmit_cb(uint16_t opcode, void* buffer, tINT_CMD_CBACK callback) {
 }
 
 void firmware_config_cb(bt_vendor_op_result_t result) {
-    ALOGV("%s result: %d", __func__, result);
+    LOG(VERBOSE) << __func__ << " result: " << result;
     VendorInterface::get()->OnFirmwareConfigured(result);
 }
 
 void sco_config_cb(bt_vendor_op_result_t result) {
-    ALOGD("%s result: %d", __func__, result);
+    LOG(DEBUG) << __func__ << " result: " << result;
 }
 
 void low_power_mode_cb(bt_vendor_op_result_t result) {
-    ALOGD("%s result: %d", __func__, result);
+    LOG(DEBUG) << __func__ << " result: " << result;
 }
 
 void sco_audiostate_cb(bt_vendor_op_result_t result) {
-    ALOGD("%s result: %d", __func__, result);
+    LOG(DEBUG) << __func__ << " result: " << result;
 }
 
 void* buffer_alloc_cb(int size) {
     void* p = new uint8_t[size];
-    ALOGV("%s pts: %p, size: %d", __func__, p, size);
+    LOG(VERBOSE) << __func__ << " pts: " << p << ", size: " << size;
     return p;
 }
 
 void buffer_free_cb(void* buffer) {
-    ALOGV("%s ptr: %p", __func__, buffer);
+    LOG(VERBOSE) << __func__ << " ptr: " << buffer;
     delete[] reinterpret_cast<uint8_t*>(buffer);
 }
 
 void epilog_cb(bt_vendor_op_result_t result) {
-    ALOGD("%s result: %d", __func__, result);
+    LOG(DEBUG) << __func__ << " result: " << result;
 }
 
 void a2dp_offload_cb(bt_vendor_op_result_t result, bt_vendor_opcode_t op, uint8_t av_handle) {
-    ALOGD("%s result: %d, op: %d, handle: %d", __func__, result, op, av_handle);
+    LOG(DEBUG) << __func__ << " result: " << result << ", op: " << op
+               << ", handle: " << static_cast<int>(av_handle);
 }
 
 const bt_vendor_callbacks_t lib_callbacks = {
@@ -138,11 +130,7 @@ const bt_vendor_callbacks_t lib_callbacks = {
 
 }  // namespace
 
-namespace android {
-namespace hardware {
-namespace bluetooth {
-namespace V1_0 {
-namespace implementation {
+namespace aidl::android::hardware::bluetooth::impl {
 
 class FirmwareStartupTimer {
   public:
@@ -152,7 +140,7 @@ class FirmwareStartupTimer {
         std::chrono::duration<double> duration = std::chrono::steady_clock::now() - start_time_;
         double s = duration.count();
         if (s == 0) return;
-        ALOGI("Firmware configured in %.3fs", s);
+        LOG(INFO) << StringPrintf("Firmware configured in %.3fs", s);
     }
 
   private:
@@ -163,7 +151,7 @@ bool VendorInterface::Initialize(InitializeCompleteCallback initialize_complete_
                                  PacketReadCallback event_cb, PacketReadCallback acl_cb,
                                  PacketReadCallback sco_cb, PacketReadCallback iso_cb) {
     if (g_vendor_interface) {
-        ALOGE("%s: No previous Shutdown()?", __func__);
+        LOG(ERROR) << __func__ << ": No previous Shutdown()?";
         return false;
     }
     g_vendor_interface = new VendorInterface();
@@ -171,7 +159,7 @@ bool VendorInterface::Initialize(InitializeCompleteCallback initialize_complete_
 }
 
 void VendorInterface::Shutdown() {
-    LOG_ALWAYS_FATAL_IF(!g_vendor_interface, "%s: No Vendor interface!", __func__);
+    CHECK(g_vendor_interface) << __func__ << ": No Vendor interface!";
     g_vendor_interface->Close();
     delete g_vendor_interface;
     g_vendor_interface = nullptr;
@@ -190,15 +178,16 @@ bool VendorInterface::Open(InitializeCompleteCallback initialize_complete_cb,
 
     lib_handle_ = dlopen(VENDOR_LIBRARY_NAME, RTLD_NOW);
     if (!lib_handle_) {
-        ALOGE("%s unable to open %s (%s)", __func__, VENDOR_LIBRARY_NAME, dlerror());
+        LOG(ERROR) << __func__ << " unable to open " << VENDOR_LIBRARY_NAME << " (" << dlerror()
+                   << ")";
         return false;
     }
 
     lib_interface_ = reinterpret_cast<bt_vendor_interface_t*>(
             dlsym(lib_handle_, VENDOR_LIBRARY_SYMBOL_NAME));
     if (!lib_interface_) {
-        ALOGE("%s unable to find symbol %s in %s (%s)", __func__, VENDOR_LIBRARY_SYMBOL_NAME,
-              VENDOR_LIBRARY_NAME, dlerror());
+        LOG(ERROR) << __func__ << " unable to find symbol " << VENDOR_LIBRARY_SYMBOL_NAME << " in "
+                   << VENDOR_LIBRARY_NAME << " (" << dlerror() << ")";
         return false;
     }
 
@@ -206,15 +195,15 @@ bool VendorInterface::Open(InitializeCompleteCallback initialize_complete_cb,
 
     uint8_t local_bda[BluetoothAddress::kBytes];
     if (!BluetoothAddress::get_local_address(local_bda)) {
-        LOG_ALWAYS_FATAL("%s: No Bluetooth Address!", __func__);
+        LOG(FATAL) << __func__ << ": No Bluetooth Address!";
     }
     int status = lib_interface_->init(&lib_callbacks, (unsigned char*)local_bda);
     if (status) {
-        ALOGE("%s unable to initialize vendor library: %d", __func__, status);
+        LOG(ERROR) << __func__ << " unable to initialize vendor library: " << status;
         return false;
     }
 
-    ALOGD("%s vendor library loaded", __func__);
+    LOG(DEBUG) << __func__ << " vendor library loaded";
 
     // Power on the controller
 
@@ -227,13 +216,13 @@ bool VendorInterface::Open(InitializeCompleteCallback initialize_complete_cb,
     int fd_count = lib_interface_->op(BT_VND_OP_USERIAL_OPEN, &fd_list);
 
     if (fd_count < 1 || fd_count > CH_MAX - 1) {
-        ALOGE("%s: fd_count %d is invalid!", __func__, fd_count);
+        LOG(ERROR) << __func__ << ": fd_count " << fd_count << " is invalid!";
         return false;
     }
 
     for (int i = 0; i < fd_count; i++) {
         if (fd_list[i] == INVALID_FD) {
-            ALOGE("%s: fd %d is invalid!", __func__, fd_list[i]);
+            LOG(ERROR) << __func__ << ": fd " << fd_list[i] << " is invalid!";
             return false;
         }
     }
@@ -316,14 +305,15 @@ size_t VendorInterface::Send(uint8_t type, const uint8_t* data, size_t length) {
         lpm_wake_deasserted = false;
         bt_vendor_lpm_wake_state_t wakeState = BT_VND_LPM_WAKE_ASSERT;
         lib_interface_->op(BT_VND_OP_LPM_WAKE_SET_STATE, &wakeState);
-        ALOGV("%s: Sent wake before (%02x)", __func__, data[0] | (data[1] << 8));
+        LOG(VERBOSE) << __func__
+                     << StringPrintf(": Sent wake before (%02x)", data[0] | (data[1] << 8));
     }
 
     return hci_->Send(type, data, length);
 }
 
 void VendorInterface::OnFirmwareConfigured(uint8_t result) {
-    ALOGD("%s result: %d", __func__, result);
+    LOG(DEBUG) << __func__ << " result: " << result;
 
     if (firmware_startup_timer_ != nullptr) {
         delete firmware_startup_timer_;
@@ -336,25 +326,25 @@ void VendorInterface::OnFirmwareConfigured(uint8_t result) {
     }
 
     lib_interface_->op(BT_VND_OP_GET_LPM_IDLE_TIMEOUT, &lpm_timeout_ms);
-    ALOGI("%s: lpm_timeout_ms %d", __func__, lpm_timeout_ms);
+    LOG(INFO) << __func__ << ": lpm_timeout_ms " << lpm_timeout_ms;
 
     bt_vendor_lpm_mode_t mode = BT_VND_LPM_ENABLE;
     lib_interface_->op(BT_VND_OP_LPM_SET_MODE, &mode);
 
-    ALOGD("%s Calling StartLowPowerWatchdog()", __func__);
+    LOG(DEBUG) << __func__ << " Calling StartLowPowerWatchdog()";
     fd_watcher_.ConfigureTimeout(std::chrono::milliseconds(lpm_timeout_ms),
                                  [this]() { OnTimeout(); });
 }
 
 void VendorInterface::OnTimeout() {
-    ALOGV("%s", __func__);
+    LOG(VERBOSE) << __func__;
     std::unique_lock<std::mutex> lock(wakeup_mutex_);
     if (recent_activity_flag == false) {
         lpm_wake_deasserted = true;
         bt_vendor_lpm_wake_state_t wakeState = BT_VND_LPM_WAKE_DEASSERT;
         lib_interface_->op(BT_VND_OP_LPM_WAKE_SET_STATE, &wakeState);
         fd_watcher_.ConfigureTimeout(std::chrono::seconds(0),
-                                     []() { ALOGE("Zero timeout! Should never happen."); });
+                                     []() { LOG(ERROR) << "Zero timeout! Should never happen."; });
     }
     recent_activity_flag = false;
 }
@@ -372,8 +362,4 @@ void VendorInterface::HandleIncomingEvent(const hidl_vec<uint8_t>& hci_packet) {
     }
 }
 
-}  // namespace implementation
-}  // namespace V1_0
-}  // namespace bluetooth
-}  // namespace hardware
-}  // namespace android
+}  // namespace aidl::android::hardware::bluetooth::impl

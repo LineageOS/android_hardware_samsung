@@ -1,32 +1,32 @@
-//
-// Copyright 2016 The Android Open Source Project
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+/*
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-#define LOG_TAG "android.hardware.bluetooth@1.0-service"
+#define LOG_TAG "android.hardware.bluetooth-service.samsung"
 
-#include <android/hardware/bluetooth/1.0/IBluetoothHci.h>
+#include <android-base/logging.h>
+#include <android/binder_manager.h>
+#include <android/binder_process.h>
 
-#include <hidl/LegacySupport.h>
+#include "BluetoothHci.h"
+
+using aidl::android::hardware::bluetooth::impl::BluetoothHci;
 
 // Extra threads make priority inheritance faster.
 static const size_t kMaxThreads = 5;
 
-// Generated HIDL files
-using android::hardware::defaultPassthroughServiceImplementation;
-using android::hardware::bluetooth::V1_0::IBluetoothHci;
-
 int main() {
-    return defaultPassthroughServiceImplementation<IBluetoothHci>(kMaxThreads);
+    // The main thread joins the pool as well
+    ABinderProcess_setThreadPoolMaxThreadCount(kMaxThreads - 1);
+    ABinderProcess_startThreadPool();
+
+    std::shared_ptr<BluetoothHci> hci = ndk::SharedRefBase::make<BluetoothHci>();
+
+    const std::string instance = std::string(BluetoothHci::descriptor) + "/default";
+    binder_status_t status = AServiceManager_addService(hci->asBinder().get(), instance.c_str());
+    CHECK_EQ(status, STATUS_OK);
+
+    ABinderProcess_joinThreadPool();
+    return EXIT_FAILURE;  // should not reach
 }
