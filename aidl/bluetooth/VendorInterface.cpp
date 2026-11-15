@@ -1,29 +1,20 @@
-//
-// Copyright 2016 The Android Open Source Project
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) The LineageOS Project
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-#include "vendor_interface.h"
+#include "VendorInterface.h"
 
-#define LOG_TAG "android.hardware.bluetooth@1.0-impl"
+#define LOG_TAG "android.hardware.bluetooth-service.samsung"
 #include <cutils/properties.h>
 #include <utils/Log.h>
 
 #include <dlfcn.h>
 #include <fcntl.h>
 
-#include "bluetooth_address.h"
+#include "BluetoothAddress.h"
 #include "h4_protocol.h"
 #include "mct_protocol.h"
 
@@ -39,7 +30,7 @@ static const int INVALID_FD = -1;
 namespace {
 
 using android::hardware::hidl_vec;
-using android::hardware::bluetooth::V1_0::implementation::VendorInterface;
+using aidl::android::hardware::bluetooth::impl::VendorInterface;
 
 struct {
     tINT_CMD_CBACK cb;
@@ -138,11 +129,7 @@ const bt_vendor_callbacks_t lib_callbacks = {
 
 }  // namespace
 
-namespace android {
-namespace hardware {
-namespace bluetooth {
-namespace V1_0 {
-namespace implementation {
+namespace aidl::android::hardware::bluetooth::impl {
 
 class FirmwareStartupTimer {
   public:
@@ -372,8 +359,4 @@ void VendorInterface::HandleIncomingEvent(const hidl_vec<uint8_t>& hci_packet) {
     }
 }
 
-}  // namespace implementation
-}  // namespace V1_0
-}  // namespace bluetooth
-}  // namespace hardware
-}  // namespace android
+}  // namespace aidl::android::hardware::bluetooth::impl
