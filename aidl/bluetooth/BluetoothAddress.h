@@ -12,11 +12,7 @@
 #include <string>
 #include <vector>
 
-namespace android {
-namespace hardware {
-namespace bluetooth {
-namespace V1_0 {
-namespace implementation {
+namespace aidl::android::hardware::bluetooth::impl {
 
 // The property key stores the storage location of Bluetooth Device Address
 static constexpr char PROPERTY_BT_BDADDR_PATH[] = "ro.bt.bdaddr_path";
@@ -43,8 +39,4 @@ class BluetoothAddress {
     static bool get_local_address(uint8_t* addr);
 };
 
-}  // namespace implementation
-}  // namespace V1_0
-}  // namespace bluetooth
-}  // namespace hardware
-}  // namespace android
+}  // namespace aidl::android::hardware::bluetooth::impl

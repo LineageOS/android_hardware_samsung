@@ -4,19 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "bluetooth_address.h"
+#define LOG_TAG "android.hardware.bluetooth-service.samsung"
 
+#include "BluetoothAddress.h"
+
+#include <android-base/logging.h>
 #include <cutils/properties.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <utils/Log.h>
 
-namespace android {
-namespace hardware {
-namespace bluetooth {
-namespace V1_0 {
-namespace implementation {
+namespace aidl::android::hardware::bluetooth::impl {
 
 void BluetoothAddress::bytes_to_string(const uint8_t* addr, char* addr_str) {
     sprintf(addr_str, "%02x:%02x:%02x:%02x:%02x:%02x", addr[0], addr[1], addr[2], addr[3], addr[4],
@@ -37,14 +35,14 @@ bool BluetoothAddress::get_local_address(uint8_t* local_addr) {
 
     // Get local bdaddr storage path from a system property.
     if (property_get(PROPERTY_BT_BDADDR_PATH, property, NULL)) {
-        ALOGD("%s: Trying %s", __func__, property);
+        LOG(DEBUG) << __func__ << ": Trying " << property;
 
         int addr_fd = open(property, O_RDONLY);
         if (addr_fd != -1) {
             char address[kStringLength + 1] = {0};
             int bytes_read = read(addr_fd, address, kStringLength);
             if (bytes_read == -1) {
-                ALOGE("%s: Error reading address from %s: %s", __func__, property, strerror(errno));
+                PLOG(ERROR) << __func__ << ": Error reading address from " << property;
             }
             close(addr_fd);
 
@@ -55,10 +53,10 @@ bool BluetoothAddress::get_local_address(uint8_t* local_addr) {
             const uint8_t zero_bdaddr[kBytes] = {0, 0, 0, 0, 0, 0};
             if ((string_to_bytes(address, local_addr)) &&
                 (memcmp(local_addr, zero_bdaddr, kBytes) != 0)) {
-                ALOGD("%s: Got Factory BDA", __func__);
+                LOG(DEBUG) << __func__ << ": Got Factory BDA";
                 return true;
             } else {
-                ALOGE("%s: Got Invalid BDA '%s' from %s", __func__, address, property);
+                LOG(ERROR) << __func__ << ": Got Invalid BDA '" << address << "' from " << property;
             }
         }
     }
@@ -66,22 +64,18 @@ bool BluetoothAddress::get_local_address(uint8_t* local_addr) {
     // No BDADDR found in the file. Look for BDA in a factory property.
     if (property_get(FACTORY_BDADDR_PROPERTY, property, NULL) &&
         string_to_bytes(property, local_addr)) {
-        ALOGD("%s: Using FACTORY_BDADDR_PROPERTY", __func__);
+        LOG(DEBUG) << __func__ << ": Using FACTORY_BDADDR_PROPERTY";
         return true;
     }
 
     // No factory BDADDR found. Look for a previously stored BDA.
     if (property_get(PERSIST_BDADDR_PROPERTY, property, NULL) &&
         string_to_bytes(property, local_addr)) {
-        ALOGD("%s: Using PERSIST_BDADDR_PROPERTY", __func__);
+        LOG(DEBUG) << __func__ << ": Using PERSIST_BDADDR_PROPERTY";
         return true;
     }
 
     return false;
 }
 
-}  // namespace implementation
-}  // namespace V1_0
-}  // namespace bluetooth
-}  // namespace hardware
-}  // namespace android
+}  // namespace aidl::android::hardware::bluetooth::impl
