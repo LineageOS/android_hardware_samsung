@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66c1e64b_64fc3a7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-11-15T18:05:24Z",
+      "side": 1,
+      "message": "Why are you basing this onto hidl if there\u0027s also aidl default in AOSP?",
+      "revId": "22ebee07b9ec2090c2ab3c35619991dafc10435b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
