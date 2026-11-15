@@ -1,18 +1,8 @@
-//
-// Copyright 2016 The Android Open Source Project
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+/*
+ * SPDX-FileCopyrightText: 2016 The Android Open Source Project
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #pragma once
 
@@ -24,11 +14,10 @@
 #include "bt_vendor_lib.h"
 #include "hci_protocol.h"
 
-namespace android {
-namespace hardware {
-namespace bluetooth {
-namespace V1_0 {
-namespace implementation {
+namespace aidl::android::hardware::bluetooth::impl {
+
+namespace async = ::android::hardware::bluetooth::async;
+namespace hci = ::android::hardware::bluetooth::hci;
 
 using ::android::hardware::hidl_vec;
 using InitializeCompleteCallback = std::function<void(bool success)>;
@@ -70,8 +59,4 @@ class VendorInterface {
     FirmwareStartupTimer* firmware_startup_timer_ = nullptr;
 };
 
-}  // namespace implementation
-}  // namespace V1_0
-}  // namespace bluetooth
-}  // namespace hardware
-}  // namespace android
+}  // namespace aidl::android::hardware::bluetooth::impl
