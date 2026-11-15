@@ -51,6 +51,40 @@
       "message": "Works fine on a53x (s5e8825) too",
       "revId": "22ebee07b9ec2090c2ab3c35619991dafc10435b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63500fc6_d605ad14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-11-15T18:20:14Z",
+      "side": 1,
+      "message": "Leave all namespaces in the expanded format, please.",
+      "revId": "22ebee07b9ec2090c2ab3c35619991dafc10435b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddb276bc_c3cdcf65",
+        "filename": "aidl/bluetooth/BluetoothAddress.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-11-15T18:20:14Z",
+      "side": 1,
+      "message": "Please leave in the expanded format.",
+      "revId": "22ebee07b9ec2090c2ab3c35619991dafc10435b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
