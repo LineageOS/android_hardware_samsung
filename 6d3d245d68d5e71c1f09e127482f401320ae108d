@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2b89d22d_2102701a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2026-11-16T17:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36568803_8fcc04d0",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 59
+      },
+      "revId": "6d3d245d68d5e71c1f09e127482f401320ae108d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "1168936c_a914e481",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 7
@@ -64,6 +88,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0362d68a_954aa5ee",
+        "filename": "aidl/bluetooth/BluetoothAddress.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2026-11-16T17:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90c23b31_5e5f5d29",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "6d3d245d68d5e71c1f09e127482f401320ae108d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03861243_e5228413",
@@ -77,6 +125,30 @@
       "writtenOn": "2026-11-16T13:07:43Z",
       "side": 1,
       "message": "This is legacy and not consistent with \u003clog/log.h\u003e usage in aidl/bluetooth/BluetoothHci.cpp",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "6d3d245d68d5e71c1f09e127482f401320ae108d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d903a73_2442fdc5",
+        "filename": "aidl/bluetooth/VendorInterface.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2026-11-16T17:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03861243_e5228413",
       "range": {
         "startLine": 13,
         "startChar": 10,
