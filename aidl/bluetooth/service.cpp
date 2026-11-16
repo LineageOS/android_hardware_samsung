@@ -13,13 +13,9 @@
 
 using aidl::android::hardware::bluetooth::impl::BluetoothHci;
 
-// Extra threads make priority inheritance faster.
-static const size_t kMaxThreads = 5;
-
 int main() {
-    // The main thread joins the pool as well
-    ABinderProcess_setThreadPoolMaxThreadCount(kMaxThreads - 1);
-    ABinderProcess_startThreadPool();
+    // Packets have to be handled in order, serve the calls on a single thread
+    ABinderProcess_setThreadPoolMaxThreadCount(0);
 
     std::shared_ptr<BluetoothHci> hci = ndk::SharedRefBase::make<BluetoothHci>();
 
