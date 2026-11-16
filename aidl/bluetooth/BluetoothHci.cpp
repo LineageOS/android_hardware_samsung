@@ -18,6 +18,7 @@ namespace {
 constexpr uint8_t kHciDataTypeCommand = 1;
 constexpr uint8_t kHciDataTypeAcl = 2;
 constexpr uint8_t kHciDataTypeSco = 3;
+constexpr uint8_t kHciDataTypeIso = 5;
 
 std::vector<uint8_t> toVector(const hidl_vec<uint8_t>& packet) {
     return std::vector<uint8_t>(packet.data(), packet.data() + packet.size());
@@ -76,12 +77,16 @@ ndk::ScopedAStatus BluetoothHci::initialize(const std::shared_ptr<IBluetoothHciC
             [cb](const hidl_vec<uint8_t>& packet) {
                 logIfFailed(cb->scoDataReceived(toVector(packet)), "scoDataReceived");
             },
-            [](const hidl_vec<uint8_t>&) {
-                LOG(ERROR) << "No callback for ISO packets, they are not supported";
+            [cb](const hidl_vec<uint8_t>& packet) {
+                logIfFailed(cb->isoDataReceived(toVector(packet)), "isoDataReceived");
             });
 
     if (!ok) {
         LOG(ERROR) << __func__ << ": unable to open the vendor interface";
+        // Release what was opened, so that the next initialize() can try again
+        if (VendorInterface::get() != nullptr) {
+            VendorInterface::Shutdown();
+        }
         logIfFailed(cb->initializationComplete(Status::UNABLE_TO_OPEN_INTERFACE),
                     "initializationComplete");
         return ndk::ScopedAStatus::ok();
@@ -128,8 +133,8 @@ ndk::ScopedAStatus BluetoothHci::sendScoData(const std::vector<uint8_t>& packet)
     return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus BluetoothHci::sendIsoData(const std::vector<uint8_t>&) {
-    LOG(ERROR) << __func__ << ": ISO packets are not supported";
+ndk::ScopedAStatus BluetoothHci::sendIsoData(const std::vector<uint8_t>& packet) {
+    send(kHciDataTypeIso, packet);
     return ndk::ScopedAStatus::ok();
 }
 
