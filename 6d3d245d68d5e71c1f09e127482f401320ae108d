@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1168936c_a914e481",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-11-16T13:07:43Z",
+      "side": 1,
+      "message": "Logging usage here is inconsistent. Use \u003candroid-base/logging.h\u003e everywhere.",
+      "revId": "6d3d245d68d5e71c1f09e127482f401320ae108d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90c23b31_5e5f5d29",
+        "filename": "aidl/bluetooth/BluetoothAddress.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-11-16T13:07:43Z",
+      "side": 1,
+      "message": "This is legacy and not consistent with \u003clog/log.h\u003e usage in aidl/bluetooth/BluetoothHci.cpp",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "6d3d245d68d5e71c1f09e127482f401320ae108d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03861243_e5228413",
+        "filename": "aidl/bluetooth/VendorInterface.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-11-16T13:07:43Z",
+      "side": 1,
+      "message": "This is legacy and not consistent with \u003clog/log.h\u003e usage in aidl/bluetooth/BluetoothHci.cpp",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "6d3d245d68d5e71c1f09e127482f401320ae108d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
