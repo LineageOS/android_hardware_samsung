@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71257afa_341fba3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-11-16T13:09:23Z",
+      "side": 1,
+      "message": "Goes with https://review.lineageos.org/q/Ibde14cc80ba48ced4a220c3adde1b4ff3d39c1b8. Do you see any better way of doing it?",
+      "revId": "09bdc1489f7bdef7cb646e9c13539bbda3a52b3b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
