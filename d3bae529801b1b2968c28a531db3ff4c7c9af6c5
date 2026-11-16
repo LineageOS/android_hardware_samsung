@@ -16,6 +16,24 @@
       "message": "You overwrote my patchsets.",
       "revId": "d3bae529801b1b2968c28a531db3ff4c7c9af6c5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b149445c_a1d88965",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2026-11-16T17:41:20Z",
+      "side": 1,
+      "message": "gerrit hid the patchset from me, apologies\n\nand you didn\u0027t respond to Maja\u0027s comment properly, instead you just pushed your opinion on it..",
+      "parentUuid": "8db3c40a_e27e2a2f",
+      "revId": "d3bae529801b1b2968c28a531db3ff4c7c9af6c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
