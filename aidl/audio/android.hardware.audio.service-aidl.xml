@@ -1,0 +1,39 @@
+<manifest version="1.0" type="device">
+  <hal format="aidl">
+    <name>android.hardware.audio.core</name>
+    <version>4</version>
+    <fqname>IModule/default</fqname>
+  </hal>
+  <hal format="aidl">
+    <name>android.hardware.audio.core</name>
+    <version>4</version>
+    <fqname>IModule/r_submix</fqname>
+  </hal>
+  <hal format="aidl">
+    <name>android.hardware.audio.core</name>
+    <version>4</version>
+    <fqname>IModule/bluetooth</fqname>
+  </hal>
+  <hal format="aidl">
+    <name>android.hardware.audio.core</name>
+    <version>4</version>
+    <fqname>IConfig/default</fqname>
+  </hal>
+  <!-- Uncomment when these modules present in the configuration
+  <hal format="aidl">
+    <name>android.hardware.audio.core</name>
+    <version>4</version>
+    <fqname>IModule/stub</fqname>
+  </hal>
+  <hal format="aidl">
+    <name>android.hardware.audio.core</name>
+    <version>4</version>
+    <fqname>IModule/usb</fqname>
+  </hal>
+  -->
+  <hal format="aidl">
+    <name>android.hardware.audio.effect</name>
+    <version>4</version>
+    <fqname>IFactory/default</fqname>
+  </hal>
+</manifest>
