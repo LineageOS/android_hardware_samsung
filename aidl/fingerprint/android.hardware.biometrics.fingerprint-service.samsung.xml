@@ -4,4 +4,9 @@
         <version>4</version>
         <fqname>IFingerprint/default</fqname>
     </hal>
+    <hal format="aidl">
+        <name>vendor.samsung.hardware.biometrics.fingerprint</name>
+        <version>1</version>
+        <fqname>ISehFingerprint/default</fqname>
+    </hal>
 </manifest>
