@@ -51,13 +51,21 @@ cc_binary {
 cc_binary {
     name: "android.hardware.audio.effect.service-aidl.samsung",
     relative_install_path: "hw",
-    defaults: ["aidlaudioeffectservice_defaults"],
+    defaults: [
+        "aidlaudioeffectservice_defaults",
+        "latest_android_hardware_audio_common_ndk_shared",
+    ],
     srcs: [
         "EffectFactory.cpp",
+        "EffectLegacy.cpp",
         "EffectMain.cpp",
     ],
     shared_libs: [
+        "libaudio_aidl_conversion_effect_ndk",
         "libeffectconfig",
+    ],
+    header_libs: [
+        "libhardware_headers",
     ],
     vendor: true,
 }
