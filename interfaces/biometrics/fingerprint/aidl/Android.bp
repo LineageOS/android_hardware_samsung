@@ -1,0 +1,30 @@
+//
+// SPDX-FileCopyrightText: 2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+aidl_interface {
+    name: "vendor.samsung.hardware.biometrics.fingerprint",
+    srcs: ["vendor/samsung/hardware/biometrics/fingerprint/*.aidl"],
+    stability: "vintf",
+    vendor_available: true,
+    owner: "samsung",
+
+    backend: {
+        java: {
+            enabled: true,
+            platform_apis: true,
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+    frozen: true,
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+    ],
+
+}
