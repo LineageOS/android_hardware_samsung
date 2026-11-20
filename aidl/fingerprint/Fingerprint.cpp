@@ -5,6 +5,7 @@
  */
 
 #include "Fingerprint.h"
+#include "SehFingerprint.h"
 #include "VendorConstants.h"
 
 #include <fingerprint.sysprop.h>
@@ -45,6 +46,9 @@ Fingerprint::Fingerprint() {
     sInstance = this;  // keep track of the most recent instance
     if (!mHal.openHal(Fingerprint::notify)) {
         LOG(ERROR) << "Can't open HAL module";
+    } else {
+        ::aidl::vendor::samsung::hardware::biometrics::fingerprint::SehFingerprint::getInstance()
+                ->setLegacyHal(&mHal);
     }
 
     std::string sensorTypeProp = FingerprintHalProperties::type().value_or("");
@@ -223,6 +227,25 @@ void Fingerprint::handleEvent(int eventCode) {
             if (mSession != nullptr && !mSession->isClosed()) {
                 mSession->onCaptureReady();
             }
+        } break;
+        case SEM_FINGERPRINT_EVENT_CAPTURE_STARTED: {
+            LOG(DEBUG) << "SEM_FINGERPRINT_EVENT_CAPTURE_STARTED";
+            ::aidl::vendor::samsung::hardware::biometrics::fingerprint::SehFingerprint::getInstance()
+                    ->notifyOpticalCaptureStarted();
+        } break;
+        case SEM_FINGERPRINT_EVENT_CAPTURE_COMPLETED:
+        case SEM_FINGERPRINT_EVENT_CAPTURE_SUCCESS:
+        case SEM_FINGERPRINT_EVENT_CAPTURE_FAILED: {
+            LOG(DEBUG) << "SEM_FINGERPRINT_EVENT_CAPTURE_FINISHED (" << eventCode << ")";
+            ::aidl::vendor::samsung::hardware::biometrics::fingerprint::SehFingerprint::getInstance()
+                    ->notifyOpticalCaptureFinished();
+        } break;
+        case SEM_FINGERPRINT_EVENT_FINGER_LEAVE: {
+            LOG(DEBUG) << "SEM_FINGERPRINT_EVENT_FINGER_LEAVE";
+            auto seh = ::aidl::vendor::samsung::hardware::biometrics::fingerprint::
+                    SehFingerprint::getInstance();
+            seh->notifyOpticalCaptureFinished();
+            seh->dispatchFingerUp();
         } break;
     }
 }

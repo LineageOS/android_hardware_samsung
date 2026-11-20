@@ -70,11 +70,21 @@ bool LegacyHAL::openHal(fingerprint_notify_t notify) {
     return false;
 }
 
-int LegacyHAL::request(int cmd, int param) {
-    // TO-DO: input, output handling not implemented
-    int result = ss_fingerprint_request(cmd, nullptr, 0, nullptr, 0, param);
-    LOG(INFO) << "request(cmd=" << cmd << ", param=" << param << ", result=" << result << ")";
+int LegacyHAL::request(int cmd, const char* inBuf, size_t inBufLen, char* outBuf,
+                       size_t outBufLen, int param) {
+    if (!ss_fingerprint_request) {
+        LOG(ERROR) << "ss_fingerprint_request is null";
+        return -1;
+    }
+    int result = ss_fingerprint_request(cmd, const_cast<char*>(inBuf), inBufLen, outBuf, outBufLen,
+                                        param);
+    LOG(INFO) << "request(cmd=" << cmd << ", inBufLen=" << inBufLen
+              << ", outBufLen=" << outBufLen << ", param=" << param << ", result=" << result << ")";
     return result;
+}
+
+int LegacyHAL::request(int cmd, int param) {
+    return request(cmd, nullptr, 0, nullptr, 0, param);
 }
 
 }  // namespace fingerprint

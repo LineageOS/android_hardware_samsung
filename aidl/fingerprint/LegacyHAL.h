@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hardware/fingerprint.h>
+#include <cstddef>
 
 namespace aidl {
 namespace android {
@@ -18,6 +19,8 @@ class LegacyHAL {
   public:
     bool openHal(fingerprint_notify_t notify);
     int request(int cmd, int param);
+    int request(int cmd, const char* inBuf, size_t inBufLen, char* outBuf,
+                       size_t outBufLen, int param);
 
     int (*ss_fingerprint_close)();
     int (*ss_fingerprint_open)(const char* id);
