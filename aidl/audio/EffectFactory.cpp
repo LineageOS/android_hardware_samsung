@@ -19,6 +19,7 @@
 #include <system/audio_effects/effect_uuid.h>
 #include <system/thread_defs.h>
 
+#include "EffectLegacy.h"
 #include "effect-impl/EffectTypes.h"
 #include "effectFactory-impl/EffectFactory.h"
 
@@ -207,6 +208,19 @@ bool Factory::openEffectLibrary(const AudioUuid& impl,
     LOG(DEBUG) << __func__ << " dlopen lib: " << path
                << "\nimpl:" << ::android::audio::utils::toString(impl) << "\nhandle:" << libHandle;
     auto interface = new effect_dl_interface_s{nullptr, nullptr, nullptr};
+
+    // Libraries without AIDL entry points are legacy effect libraries, wrap their effects
+    if (dlsym(libHandle.get(), "createEffect") == nullptr) {
+        if (auto legacyLibrary = static_cast<const audio_effect_library_t*>(
+                    dlsym(libHandle.get(), AUDIO_EFFECT_LIBRARY_INFO_SYM_AS_STR));
+            legacyLibrary != nullptr && legacyLibrary->tag == AUDIO_EFFECT_LIBRARY_TAG) {
+            LOG(INFO) << __func__ << ": " << path << " is a legacy effect library";
+            registerLegacyEffectLibrary(impl, legacyLibrary);
+            interface->createEffectFunc = createLegacyEffect;
+            interface->destroyEffectFunc = destroyLegacyEffect;
+            interface->queryEffectFunc = queryLegacyEffect;
+        }
+    }
     mEffectLibMap.insert(
             {impl,
              std::make_tuple(std::move(libHandle),
