@@ -15,9 +15,6 @@
 
 #include <dirent.h>
 #include <endian.h>
-#include <fcntl.h>
-#include <poll.h>
-#include <unistd.h>
 #include <thread>
 
 using namespace ::android::fingerprint::samsung;
@@ -28,47 +25,6 @@ namespace android {
 namespace hardware {
 namespace biometrics {
 namespace fingerprint {
-
-namespace {
-
-constexpr int kMaskBrightnessTimeoutMs = 100;
-
-bool isMaskBrightnessOn(int fd) {
-    char buf[16] = {};
-
-    if (pread(fd, buf, sizeof(buf) - 1, 0) <= 0) {
-        return false;
-    }
-
-    return atoi(buf) > 0;
-}
-
-// The sensor captures as soon as it gets the touch event, so wait for the panel
-// to report finger mask brightness, otherwise the first image is too dark.
-void waitForMaskBrightness() {
-    auto path = FingerprintHalProperties::mask_brightness_path();
-    if (!path.has_value()) {
-        return;
-    }
-
-    int fd = open(path->c_str(), O_RDONLY);
-    if (fd < 0) {
-        PLOG(ERROR) << "Failed to open " << *path;
-        return;
-    }
-
-    if (!isMaskBrightnessOn(fd)) {
-        struct pollfd pfd = {.fd = fd, .events = POLLPRI | POLLERR};
-
-        if (poll(&pfd, 1, kMaskBrightnessTimeoutMs) <= 0) {
-            LOG(WARNING) << "Timed out waiting for finger mask brightness";
-        }
-    }
-
-    close(fd);
-}
-
-}  // namespace
 
 void onClientDeath(void* cookie) {
     LOG(INFO) << "FingerprintService has died";
@@ -244,7 +200,6 @@ ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t /*x*/, 
     LOG(INFO) << "onPointerDown";
 
     if (FingerprintHalProperties::request_touch_event().value_or(false)) {
-        waitForMaskBrightness();
         mHal.request(SEM_REQUEST_TOUCH_EVENT, 2);
     }
     checkSensorLockout();

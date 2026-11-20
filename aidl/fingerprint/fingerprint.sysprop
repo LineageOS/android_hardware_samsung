@@ -85,12 +85,3 @@ prop {
     access: Readonly
     api_name: "screen_off_press_delay"
 }
-
-# sysfs node notified once the panel has enabled finger mask brightness, waited on before touch events
-prop {
-    prop_name: "ro.vendor.fingerprint.mask_brightness_path"
-    type: String
-    scope: Internal
-    access: Readonly
-    api_name: "mask_brightness_path"
-}
