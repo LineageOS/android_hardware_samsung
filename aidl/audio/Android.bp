@@ -1,22 +1,31 @@
+//
+// SPDX-FileCopyrightText: 2022 The Android Open Source Project
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
 package {
-    default_team: "trendy_team_android_media_audio_framework",
-    // See: http://go/android-license-faq
-    // A large-scale-change added 'default_applicable_licenses' to import
-    // all of the 'license_kinds' from "hardware_interfaces_license"
-    // to get the below license kinds:
-    //   SPDX-license-identifier-Apache-2.0
-    default_applicable_licenses: ["hardware_interfaces_license"],
+    default_applicable_licenses: ["Android-Apache-2.0"],
 }
 
 cc_binary {
-    name: "android.hardware.audio.service-aidl.example",
+    name: "android.hardware.audio.service-aidl.samsung",
     relative_install_path: "hw",
+    init_rc: ["android.hardware.audio.service-aidl.samsung.rc"],
+    vintf_fragments: ["android.hardware.audio.service-aidl.samsung.xml"],
     defaults: [
         "aidlaudioservice_defaults",
-        "latest_android_hardware_audio_core_sounddose_ndk_shared",
         "latest_android_hardware_audio_core_ndk_shared",
+        "latest_android_hardware_audio_core_sounddose_ndk_shared",
         "latest_android_hardware_bluetooth_audio_ndk_shared",
         "latest_android_media_audio_common_types_ndk_shared",
+    ],
+    srcs: [
+        "LegacyUtils.cpp",
+        "ModuleLegacy.cpp",
+        "StreamLegacy.cpp",
+        "TelephonyLegacy.cpp",
+        "main.cpp",
     ],
     static_libs: [
         "libaudioserviceexampleimpl",
@@ -25,11 +34,10 @@ cc_binary {
         "android.hardware.bluetooth.audio-impl",
         "libaudio_aidl_conversion_common_ndk",
         "libbluetooth_audio_session_aidl",
-        "liblog",
+        "libhardware",
         "libmedia_helper",
         "libstagefright_foundation",
     ],
-    srcs: ["main.cpp"],
     cflags: [
         "-Wall",
         "-Wextra",
@@ -37,20 +45,19 @@ cc_binary {
         "-Wthread-safety",
         "-DBACKEND_NDK",
     ],
-    installable: false, //installed in apex com.android.hardware.audio
+    vendor: true,
 }
 
 cc_binary {
-    name: "android.hardware.audio.effect.service-aidl.example",
+    name: "android.hardware.audio.effect.service-aidl.samsung",
     relative_install_path: "hw",
     defaults: ["aidlaudioeffectservice_defaults"],
-    shared_libs: [
-        "libapexsupport",
-        "libeffectconfig",
-    ],
     srcs: [
         "EffectFactory.cpp",
         "EffectMain.cpp",
     ],
-    installable: false, //installed in apex com.android.hardware.audio
+    shared_libs: [
+        "libeffectconfig",
+    ],
+    vendor: true,
 }
