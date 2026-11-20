@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!--
+         Screen brightness backlight lookup values.
+         Used for dimming alpha and HBM brightness calculations.
+         Refer to config_Screen_Brightness_Backlight_Value in stock resources.
+    -->
+    <string-array name="config_screenBrightnessBaclightValue">
+        <item>0.0</item>
+    </string-array>
+
+    <!--
+         Screen brightness luminance (nits) lookup values.
+         Used for dimming alpha and HBM brightness calculations.
+         Refer to config_Screen_Brightness_Nits_Value in stock resources.
+    -->
+    <string-array name="config_screenBrightnessNitsValue">
+        <item>0</item>
+    </string-array>
+
+    <!--
+         Display gamma correction values.
+         Used for dimming alpha calculations.
+    -->
+    <string-array name="config_displaySolutionGammaValue">
+        <item>2.2</item>
+    </string-array>
+
+    <!--
+         AOD brightness thresholds matching Samsung's 2/10/30/60 nit buckets.
+         Overlaid per device from the panel's aod_candela_map_table.
+    -->
+    <integer-array name="config_aodBrightnessValues">
+    </integer-array>
+</resources>
