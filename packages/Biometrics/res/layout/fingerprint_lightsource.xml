@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fingerprint_lightsource_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--
+         Optical UDFPS illumination circle hosted in its own "FP LightSource" window above
+         "Dim Layer for UDFPS". Starts INVISIBLE; LightSourceView.show()/hide() manages
+         visibility and canvas clearing.
+    -->
+    <org.lineageos.biometricservice.LightSourceView
+        android:id="@+id/fingerprint_lightsource_surfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+</FrameLayout>
