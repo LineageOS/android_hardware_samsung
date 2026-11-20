@@ -76,3 +76,12 @@ prop {
     access: Readonly
     api_name: "cancel_on_enroll_completion"
 }
+
+# panel supports hardware self-mask light source (/sys/class/lcd/panel/fp_green_circle)
+prop {
+    prop_name: "ro.vendor.fingerprint.hw_light_source"
+    type: Boolean
+    scope: Internal
+    access: Readonly
+    api_name: "hw_light_source"
+}

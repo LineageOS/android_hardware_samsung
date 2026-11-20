@@ -7,6 +7,7 @@
 #include "Session.h"
 #include "CancellationSignal.h"
 #include "Legacy2Aidl.h"
+#include "SehFingerprint.h"
 #include "VendorConstants.h"
 
 #include <fingerprint.sysprop.h>
@@ -19,6 +20,8 @@
 
 using namespace ::android::fingerprint::samsung;
 using namespace ::std::chrono_literals;
+
+using ::aidl::vendor::samsung::hardware::biometrics::fingerprint::SehFingerprint;
 
 namespace aidl {
 namespace android {
@@ -78,6 +81,8 @@ ndk::ScopedAStatus Session::enroll(const HardwareAuthToken& hat,
     if (error) {
         LOG(ERROR) << "ss_fingerprint_enroll failed: " << error;
         mCb->onError(Error::UNABLE_TO_PROCESS, error);
+    } else {
+        SehFingerprint::getInstance()->setIgnoreDisplayTouches(false);
     }
 
     if (FingerprintHalProperties::force_calibrate().value_or(false)) {
@@ -98,6 +103,8 @@ ndk::ScopedAStatus Session::authenticate(int64_t operationId,
     if (error) {
         LOG(ERROR) << "ss_fingerprint_authenticate failed: " << error;
         mCb->onError(Error::UNABLE_TO_PROCESS, error);
+    } else {
+        SehFingerprint::getInstance()->setIgnoreDisplayTouches(false);
     }
 
     *out = SharedRefBase::make<CancellationSignal>(this);
@@ -195,12 +202,20 @@ ndk::ScopedAStatus Session::close() {
     return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t /*x*/, int32_t /*y*/,
+ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t x, int32_t y,
                                           float /*minor*/, float /*major*/) {
     LOG(INFO) << "onPointerDown";
 
-    if (FingerprintHalProperties::request_touch_event().value_or(false)) {
-        mHal.request(SEM_REQUEST_TOUCH_EVENT, 2);
+    auto seh = SehFingerprint::getInstance();
+    if (seh->isIgnoringDisplayTouches()) {
+        LOG(DEBUG) << "onPointerDown ignored (display touches ignored)";
+        return ndk::ScopedAStatus::ok();
+    }
+    if (seh->hasCallbacks()) {
+        seh->dispatchFingerDown(x, y);
+    } else {
+        seh->sendTouchEvent(true);
+        seh->notifyOpticalCaptureStarted();
     }
     checkSensorLockout();
     mCb->onAcquired(AcquiredInfo::START, 0);
@@ -211,9 +226,10 @@ ndk::ScopedAStatus Session::onPointerDown(int32_t /*pointerId*/, int32_t /*x*/, 
 ndk::ScopedAStatus Session::onPointerUp(int32_t /*pointerId*/) {
     LOG(INFO) << "onPointerUp";
 
-    if (FingerprintHalProperties::request_touch_event().value_or(false)) {
-        mHal.request(SEM_REQUEST_TOUCH_EVENT, 1);
-    }
+    auto seh = SehFingerprint::getInstance();
+    seh->sendTouchEvent(false);
+    seh->notifyOpticalCaptureFinished();
+    seh->dispatchFingerUp();
 
     return ndk::ScopedAStatus::ok();
 }
@@ -255,15 +271,21 @@ ndk::ScopedAStatus Session::onContextChanged(const OperationContext& /*context*/
     return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Session::onPointerCancelWithContext(const PointerContext& /*context*/) {
-    return ndk::ScopedAStatus::ok();
+ndk::ScopedAStatus Session::onPointerCancelWithContext(const PointerContext& context) {
+    LOG(INFO) << "onPointerCancelWithContext";
+    return onPointerUp(context.pointerId);
 }
 
-ndk::ScopedAStatus Session::setIgnoreDisplayTouches(bool /*shouldIgnore*/) {
+ndk::ScopedAStatus Session::setIgnoreDisplayTouches(bool shouldIgnore) {
+    LOG(INFO) << "setIgnoreDisplayTouches(" << shouldIgnore << ")";
+    SehFingerprint::getInstance()->setIgnoreDisplayTouches(shouldIgnore);
     return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus Session::cancel() {
+    auto seh = SehFingerprint::getInstance();
+    seh->sendTouchEvent(false);
+    seh->notifyOpticalCaptureFinished();
     int32_t ret = mHal.ss_fingerprint_cancel();
 
     if (ret == 0) {
@@ -391,6 +413,9 @@ void Session::lockoutTimerExpired() {
 void Session::notify(const fingerprint_msg_t* msg) {
     switch (msg->type) {
         case FINGERPRINT_ERROR: {
+            auto seh = SehFingerprint::getInstance();
+            seh->sendTouchEvent(false);
+            seh->notifyOpticalCaptureFinished();
             int32_t vendorCode = 0;
             Error result = VendorErrorFilter(msg->data.error, &vendorCode);
             LOG(DEBUG) << "onError(" << static_cast<int>(result) << ")";
@@ -400,10 +425,23 @@ void Session::notify(const fingerprint_msg_t* msg) {
             int32_t vendorCode = 0;
             AcquiredInfo result =
                     VendorAcquiredFilter(msg->data.acquired.acquired_info, &vendorCode);
+            switch (result) {
+                case AcquiredInfo::GOOD:
+                case AcquiredInfo::PARTIAL:
+                case AcquiredInfo::INSUFFICIENT:
+                case AcquiredInfo::SENSOR_DIRTY:
+                case AcquiredInfo::TOO_SLOW:
+                case AcquiredInfo::TOO_FAST:
+                    SehFingerprint::getInstance()->notifyOpticalCaptureFinished();
+                    break;
+                default:
+                    break;
+            }
             LOG(DEBUG) << "onAcquired(" << static_cast<int>(result) << ")";
             mCb->onAcquired(result, vendorCode);
         } break;
         case FINGERPRINT_TEMPLATE_ENROLLING:
+            SehFingerprint::getInstance()->notifyOpticalCaptureFinished();
             if (FingerprintHalProperties::uses_percentage_samples().value_or(false)) {
                 const_cast<fingerprint_msg_t*>(msg)->data.enroll.samples_remaining =
                         100 - msg->data.enroll.samples_remaining;
@@ -428,6 +466,7 @@ void Session::notify(const fingerprint_msg_t* msg) {
             mCb->onEnrollmentsRemoved(enrollments);
         } break;
         case FINGERPRINT_AUTHENTICATED: {
+            SehFingerprint::getInstance()->notifyOpticalCaptureFinished();
             LOG(DEBUG) << "onAuthenticated(fid=" << msg->data.authenticated.finger.fid
                        << ", gid=" << msg->data.authenticated.finger.gid << ")";
             if (msg->data.authenticated.finger.fid != 0) {
