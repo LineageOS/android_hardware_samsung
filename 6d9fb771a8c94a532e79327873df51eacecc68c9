@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68873e5a_f100d08b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-11-21T14:23:36Z",
+      "side": 1,
+      "message": "PS5 fixes wrong illumination on tablets with rotated lockscreen.",
+      "revId": "6d9fb771a8c94a532e79327873df51eacecc68c9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
