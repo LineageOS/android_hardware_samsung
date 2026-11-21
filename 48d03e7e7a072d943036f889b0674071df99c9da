@@ -16,6 +16,24 @@
       "message": "You have inconsistent naming here. Maybe use lowerCamelCase for them all?",
       "revId": "48d03e7e7a072d943036f889b0674071df99c9da",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "934e2170_41fb5522",
+        "filename": "packages/Biometrics/res/values/arrays.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2026-11-21T12:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47341c84_a2f56a89",
+      "revId": "48d03e7e7a072d943036f889b0674071df99c9da",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
