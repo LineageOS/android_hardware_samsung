@@ -5,6 +5,7 @@
 
 cc_library_shared {
     name: "libsamsungSoundbooster_plus",
+    defaults: ["android_hardware_audio_config_defaults"],
     vendor: true,
     soc_specific: true,
     relative_install_path: "soundfx",
