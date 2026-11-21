@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8385c38_509f86ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2026-11-21T14:46:59Z",
+      "side": 1,
+      "message": "PS6 fixes first unlock attempt always failing whith screen off.",
+      "revId": "2ca21d08f77693cc53f6eb5b6ca7df7636f48eec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
