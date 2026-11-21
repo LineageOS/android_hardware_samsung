@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f48f8e6f_472fe737",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 36705
+      },
+      "writtenOn": "2026-11-21T14:26:32Z",
+      "side": 1,
+      "message": "```suggestion\nAs observed on One UI.\n```\n\nThat\u0027s the correct name",
+      "revId": "73650c2ef40bd9c7a116c0abeb504f29367fda8d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
