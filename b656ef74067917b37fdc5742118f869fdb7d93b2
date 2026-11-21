@@ -16,6 +16,24 @@
       "message": "add version tag as well",
       "revId": "b656ef74067917b37fdc5742118f869fdb7d93b2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6db010d5_3cc0c6de",
+        "filename": "aidl/fingerprint/android.hardware.biometrics.fingerprint-service.samsung.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2026-11-21T12:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a7a0a05_b1c346c0",
+      "revId": "b656ef74067917b37fdc5742118f869fdb7d93b2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
