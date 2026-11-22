@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeacb75d_240e8ce1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33569
+      },
+      "writtenOn": "2026-11-22T15:24:54Z",
+      "side": 1,
+      "message": "Patchset 4 introduces setIgnoreDisplayTouches support.",
+      "revId": "1cee571bce8f27d1ebc1ced0f79b59b37effa21e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
