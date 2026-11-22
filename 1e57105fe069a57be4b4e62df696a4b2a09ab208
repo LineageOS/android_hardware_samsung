@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4473e020_8b26abee",
+        "filename": "interfaces/biometrics/fingerprint/aidl/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 36705
+      },
+      "writtenOn": "2026-11-22T07:27:57Z",
+      "side": 1,
+      "message": "```suggestion\n    srcs: [\"vendor/**/*.aidl\"],\n```",
+      "revId": "1e57105fe069a57be4b4e62df696a4b2a09ab208",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
