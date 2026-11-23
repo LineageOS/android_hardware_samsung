@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c79a4931_80d1068f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 35850
+      },
+      "writtenOn": "2026-11-23T20:32:13Z",
+      "side": 1,
+      "message": "```suggestion\nvintf: Add AIDL EDEN Runtime and ENN AUX interfaces\n```",
+      "revId": "e44b5a85718a55c0165c2622b6beeb7c0fa5234d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
