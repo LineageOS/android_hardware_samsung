@@ -17,7 +17,10 @@ cc_binary {
     cflags: [
         "-Wall",
         "-Wextra",
-    ],
+    ] + select(soong_config_variable("samsungGnssVars", "legacy_betp"), {
+        true: ["-DGNSS_LEGACY_BETP"],
+        default: [],
+    }),
     defaults: [
         "gnss_use_latest_hal_aidl_ndk_shared",
     ],

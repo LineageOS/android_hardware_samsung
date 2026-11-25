@@ -133,8 +133,10 @@ void Gnss::onLocation(const std::vector<uint8_t>& payload) {
     location.timestampMillis = low | (high << 32);
     reader.u32();
     reader.u32();
+#ifndef GNSS_LEGACY_BETP
     reader.u16();
     reader.u32();
+#endif
     location.verticalAccuracyMeters = reader.f32();
     location.speedAccuracyMetersPerSecond = reader.f32();
     location.bearingAccuracyDegrees = reader.f32();
@@ -159,7 +161,11 @@ void Gnss::onSvStatus(const std::vector<uint8_t>& payload) {
     Reader reader(payload);
     const uint8_t type = reader.u8();
     if (type != 10 && type != 11) return;
+#ifdef GNSS_LEGACY_BETP
+    reader.skip(3);
+#else
     reader.skip(3 + 8 * sizeof(float));
+#endif
     const auto count = reader.u8();
     if (count > 64) return;
     std::vector<IGnssCallback::GnssSvInfo> satellites;
@@ -171,16 +177,22 @@ void Gnss::onSvStatus(const std::vector<uint8_t>& payload) {
         satellite.constellation = constellation < 8
                                           ? static_cast<GnssConstellationType>(constellation)
                                           : GnssConstellationType::UNKNOWN;
+#ifdef GNSS_LEGACY_BETP
+        satellite.svFlag = reader.u8();
+#else
         reader.u8();
         satellite.svFlag = reader.u8();
         reader.u8();
+#endif
         const float cn0 = reader.f32();
         satellite.cN0Dbhz = std::min(63.0f, cn0 + loss);
         satellite.basebandCN0DbHz = std::min(63.0f, cn0);
         satellite.elevationDegrees = reader.f32();
         satellite.azimuthDegrees = reader.f32();
         const float frequency = reader.f32();
+#ifndef GNSS_LEGACY_BETP
         reader.f64();
+#endif
         satellite.carrierFrequencyHz = std::isnan(frequency)  ? 0
                                        : frequency >= 0x1p63f ? std::numeric_limits<int64_t>::max()
                                        : frequency < -0x1p63f ? std::numeric_limits<int64_t>::min()
