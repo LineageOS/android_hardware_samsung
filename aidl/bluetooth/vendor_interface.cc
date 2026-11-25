@@ -27,11 +27,7 @@
 #include "h4_protocol.h"
 #include "mct_protocol.h"
 
-#ifdef BT_FUZZER
-static const char* VENDOR_LIBRARY_NAME = "libbt-vendor-fuzz.so";
-#else
 static const char* VENDOR_LIBRARY_NAME = "libbt-vendor.so";
-#endif
 static const char* VENDOR_LIBRARY_SYMBOL_NAME = "BLUETOOTH_VENDOR_LIB_INTERFACE";
 
 static const int INVALID_FD = -1;

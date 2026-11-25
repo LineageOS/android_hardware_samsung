@@ -54,17 +54,6 @@ cc_library {
     ],
 }
 
-cc_library {
-    name: "android.hardware.bluetooth@1.0-impl-test",
-    defaults: [
-        "hidl_defaults",
-        "android.hardware.bluetooth@1.0-defaults",
-    ],
-    cflags: [
-        "-DBT_FUZZER",
-    ],
-}
-
 cc_library_static {
     name: "android.hardware.bluetooth-async",
     vendor: true,
