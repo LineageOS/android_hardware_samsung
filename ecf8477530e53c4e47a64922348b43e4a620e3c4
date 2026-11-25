@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f82e9f2_2fe9b42a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 36705
+      },
+      "writtenOn": "2026-11-25T21:06:45Z",
+      "side": 1,
+      "message": "```suggestion\naidl: bluetooth: Rebrand to Samsung\n```",
+      "revId": "ecf8477530e53c4e47a64922348b43e4a620e3c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
