@@ -1,18 +1,8 @@
-//
-// Copyright 2016 The Android Open Source Project
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+/*
+ * SPDX-FileCopyrightText: 2016 The Android Open Source Project
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #include "vendor_interface.h"
 
@@ -27,11 +17,7 @@
 #include "h4_protocol.h"
 #include "mct_protocol.h"
 
-#ifdef BT_FUZZER
-static const char* VENDOR_LIBRARY_NAME = "libbt-vendor-fuzz.so";
-#else
 static const char* VENDOR_LIBRARY_NAME = "libbt-vendor.so";
-#endif
 static const char* VENDOR_LIBRARY_SYMBOL_NAME = "BLUETOOTH_VENDOR_LIB_INTERFACE";
 
 static const int INVALID_FD = -1;
