@@ -31,7 +31,12 @@ void Reader::skip(size_t size) {
 }
 
 std::vector<uint8_t> makeStartRequest() {
+#ifdef GNSS_LEGACY_BETP
+    // Session type: 0 is navigation, 1 is measurements
+    return {0};
+#else
     return std::vector<uint8_t>(12);
+#endif
 }
 
 namespace {
